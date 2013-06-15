@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3D98E1DB-E752-4C18-BFD8-BE1F4F354D3B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Catharsis.Commons</RootNamespace>
+    <AssemblyName>Catharsis.Commons.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsPlatformPath />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
+    <CodeContractsExtraRewriteOptions />
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Catharsis.Commons.Tests.xml</DocumentationFile>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>False</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsPlatformPath />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>../Catharsis.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.1\lib\net20\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssertionTests.cs" />
+    <Compile Include="DictionaryBaseTests.cs" />
+    <Compile Include="Domain\ArticleExtensionsTests.cs" />
+    <Compile Include="Domain\ArticlesCategoryTests.cs" />
+    <Compile Include="Domain\ArticleTests.cs" />
+    <Compile Include="Domain\AudioExtensionsTests.cs" />
+    <Compile Include="Domain\AudiosCategoryTests.cs" />
+    <Compile Include="Domain\AudioTests.cs" />
+    <Compile Include="Domain\BlogEntryTests.cs" />
+    <Compile Include="Domain\BlogTests.cs" />
+    <Compile Include="Domain\CategoryExtensionsTests.cs" />
+    <Compile Include="Domain\CategoryUnitTests.cs" />
+    <Compile Include="Domain\CommentTests.cs" />
+    <Compile Include="Domain\DomainExtensionsTests.cs" />
+    <Compile Include="Domain\EntityUnitTests.cs" />
+    <Compile Include="Domain\FaqTests.cs" />
+    <Compile Include="Domain\FileExtensionsTests.cs" />
+    <Compile Include="Domain\FileTests.cs" />
+    <Compile Include="Domain\ImagesCategoryTests.cs" />
+    <Compile Include="Domain\ImageTests.cs" />
+    <Compile Include="Domain\ItemTests.cs" />
+    <Compile Include="Domain\LocationExtensionsTests.cs" />
+    <Compile Include="Domain\LocationTests.cs" />
+    <Compile Include="Domain\PersonTests.cs" />
+    <Compile Include="Domain\PlaycastExtensionsTests.cs" />
+    <Compile Include="Domain\PlaycastsCategoryTests.cs" />
+    <Compile Include="Domain\PlaycastTests.cs" />
+    <Compile Include="Domain\ProfileExtensionsTests.cs" />
+    <Compile Include="Domain\ProfileTests.cs" />
+    <Compile Include="Domain\QuoteTests.cs" />
+    <Compile Include="Domain\SubscriptionExtensionsTests.cs" />
+    <Compile Include="Domain\SubscriptionTests.cs" />
+    <Compile Include="Domain\TextExtensionsTests.cs" />
+    <Compile Include="Domain\TextsCategoryTests.cs" />
+    <Compile Include="Domain\TextTests.cs" />
+    <Compile Include="Domain\UserExtensionsTests.cs" />
+    <Compile Include="Domain\UserTests.cs" />
+    <Compile Include="Domain\VideoExtensionsTests.cs" />
+    <Compile Include="Domain\VideosCategoryTests.cs" />
+    <Compile Include="Domain\VideoTests.cs" />
+    <Compile Include="Domain\WebLinkExtensionsTests.cs" />
+    <Compile Include="Domain\WebLinksCategoryTests.cs" />
+    <Compile Include="Domain\WebLinkTests.cs" />
+    <Compile Include="EqualsAndHashCodeAttributeTests.cs" />
+    <Compile Include="Extensions\ArrayExtensionsTests.cs" />
+    <Compile Include="CollectionBaseTests.cs" />
+    <Compile Include="Extensions\BooleanExtensionsTests.cs" />
+    <Compile Include="Extensions\DelegateExtensionsTests.cs" />
+    <Compile Include="Extensions\FieldInfoExtensionsTests.cs" />
+    <Compile Include="Extensions\FileInfoExtensionsTests.cs" />
+    <Compile Include="Extensions\MethodInfoExtensionsTests.cs" />
+    <Compile Include="Extensions\NumberExtensionsTests.cs" />
+    <Compile Include="Extensions\PropertyInfoExtensionsTests.cs" />
+    <Compile Include="Extensions\RandomExtensionsTests.cs" />
+    <Compile Include="Extensions\SymmetricAlgorithmExtensionsTests.cs" />
+    <Compile Include="Extensions\TestObject.cs" />
+    <Compile Include="Extensions\TextReaderExtensionsTests.cs" />
+    <Compile Include="Extensions\TextWriterExtensionsTests.cs" />
+    <Compile Include="Extensions\UriExtensionsTests.cs" />
+    <Compile Include="Extensions\XmlDocumentExtensionsTests.cs" />
+    <Compile Include="Extensions\XmlWriterExtensionsTests.cs" />
+    <Compile Include="ListBaseTests.cs" />
+    <Compile Include="Extensions\ICollectionExtensionsTests.cs" />
+    <Compile Include="Extensions\IDictionaryExtensionsTests.cs" />
+    <Compile Include="Extensions\IListExtensionsTests.cs" />
+    <Compile Include="Extensions\UniqueCollectionTests.cs" />
+    <Compile Include="Extensions\UniqueDictionaryTests.cs" />
+    <Compile Include="Extensions\UniqueListTests.cs" />
+    <Compile Include="Extensions\NonNullableCollectionTests.cs" />
+    <Compile Include="Extensions\NonNullableDictionaryTests.cs" />
+    <Compile Include="Extensions\NonNullableListTests.cs" />
+    <Compile Include="Extensions\ConstrainedCollectionTests.cs" />
+    <Compile Include="Extensions\ConstrainedDictionaryTests.cs" />
+    <Compile Include="Extensions\ConstrainedListTests.cs" />
+    <Compile Include="Extensions\ImmutableCollectionTests.cs" />
+    <Compile Include="Extensions\ImmutableDictionaryTests.cs" />
+    <Compile Include="Extensions\ImmutableListTests.cs" />
+    <Compile Include="Extensions\SizedCollectionTests.cs" />
+    <Compile Include="Extensions\SizedDictionaryTests.cs" />
+    <Compile Include="Extensions\SizedListTests.cs" />
+    <Compile Include="Extensions\DateTimeExtensionsTests.cs" />
+    <Compile Include="Extensions\IEnumerableExtensionsTests.cs" />
+    <Compile Include="Extensions\StreamExtensionsTests.cs" />
+    <Compile Include="Extensions\MemberInfoExtensionsTests.cs" />
+    <Compile Include="Extensions\ObjectExtensionsTests.cs" />
+    <Compile Include="Extensions\StringExtensionsTests.cs" />
+    <Compile Include="Extensions\TypeExtensionsTests.cs" />
+    <Compile Include="Extensions\XmlReaderExtensionsTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Catharsis.Commons\Catharsis.Commons.csproj">
+      <Project>{E643EA81-71C3-4611-8350-6F42AB37D27B}</Project>
+      <Name>Catharsis.Commons</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
