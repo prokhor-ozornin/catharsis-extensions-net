@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Xunit;
 
 
@@ -295,7 +294,7 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<MissingMethodException>(() => typeof(TestObject).NewInstance(new object(), new object()));
 
       Assert.True(typeof(TestObject).NewInstance("property").To<TestObject>().PublicProperty.Equals("property"));
-      Assert.True(typeof(TestObject).NewInstance(new Dictionary<string, object>().AddNext("PublicProperty", "property")).To<TestObject>().PublicProperty == "property");
+      Assert.True(typeof(TestObject).NewInstance(new Dictionary<string, object>().AddNext("PublicProperty", "property")).To<TestObject>().PublicProperty.ToString() == "property");
     }
   }
 }

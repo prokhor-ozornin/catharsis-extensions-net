@@ -83,7 +83,7 @@
     </CodeContractsBaseLineFile>
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
     <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
     <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
@@ -98,6 +98,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -105,18 +106,33 @@
     <Compile Include="Assertion.cs" />
     <Compile Include="CollectionBase.cs" />
     <Compile Include="DictionaryBase.cs" />
+    <Compile Include="Domain\Announcement.cs" />
+    <Compile Include="Domain\AnnouncementExtensions.cs" />
+    <Compile Include="Domain\AnnouncementsCategory.cs" />
+    <Compile Include="Domain\Art.cs" />
+    <Compile Include="Domain\ArtExtensions.cs" />
     <Compile Include="Domain\Article.cs" />
     <Compile Include="Domain\ArticleExtensions.cs" />
     <Compile Include="Domain\ArticlesCategory.cs" />
+    <Compile Include="Domain\ArtsAlbum.cs" />
+    <Compile Include="Domain\ArtsAlbumExtensions.cs" />
     <Compile Include="Domain\Audio.cs" />
     <Compile Include="Domain\AudioExtensions.cs" />
     <Compile Include="Domain\AudiosCategory.cs" />
     <Compile Include="Domain\Blog.cs" />
+    <Compile Include="Domain\BlogEntryExtensions.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\CategoryExtensions.cs" />
+    <Compile Include="Domain\City.cs" />
+    <Compile Include="Domain\CityExtensions.cs" />
     <Compile Include="Domain\Comment.cs" />
+    <Compile Include="Domain\Country.cs" />
+    <Compile Include="Domain\CountryExtensions.cs" />
     <Compile Include="Domain\DomainExtensions.cs" />
     <Compile Include="Domain\BlogEntry.cs" />
+    <Compile Include="Domain\Download.cs" />
+    <Compile Include="Domain\DownloadExtensions.cs" />
+    <Compile Include="Domain\DownloadsCategory.cs" />
     <Compile Include="Domain\EntityBase.cs" />
     <Compile Include="Domain\Faq.cs" />
     <Compile Include="Domain\File.cs" />
@@ -150,14 +166,22 @@
     <Compile Include="Domain\Playcast.cs" />
     <Compile Include="Domain\PlaycastExtensions.cs" />
     <Compile Include="Domain\PlaycastsCategory.cs" />
+    <Compile Include="Domain\Poll.cs" />
+    <Compile Include="Domain\PollAnswer.cs" />
+    <Compile Include="Domain\PollOption.cs" />
     <Compile Include="Domain\Profile.cs" />
     <Compile Include="Domain\ProfileExtensions.cs" />
     <Compile Include="Domain\Quote.cs" />
+    <Compile Include="Domain\Song.cs" />
+    <Compile Include="Domain\SongExtensions.cs" />
+    <Compile Include="Domain\SongsAlbum.cs" />
+    <Compile Include="Domain\SongsAlbumExtensions.cs" />
     <Compile Include="Domain\Subscription.cs" />
     <Compile Include="Domain\SubscriptionExtensions.cs" />
     <Compile Include="Domain\Text.cs" />
     <Compile Include="Domain\TextExtensions.cs" />
     <Compile Include="Domain\TextsCategory.cs" />
+    <Compile Include="Domain\TextTranslation.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserExtensions.cs" />
     <Compile Include="Domain\Video.cs" />
@@ -179,6 +203,9 @@
     <Compile Include="Extensions\TextReaderExtensions.cs" />
     <Compile Include="Extensions\TextWriterExtensions.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
+    <Compile Include="Extensions\XContainerExtensions.cs" />
+    <Compile Include="Extensions\XDocumentExtensions.cs" />
+    <Compile Include="Extensions\XElementExtensions.cs" />
     <Compile Include="Extensions\XmlDocumentExtensions.cs" />
     <Compile Include="Extensions\XmlWriterExtensions.cs" />
     <Compile Include="ListBase.cs" />

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 
 namespace Catharsis.Commons.Domain
 {
@@ -11,11 +11,11 @@ namespace Catharsis.Commons.Domain
   public static class ArticleExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of articles, leaving those belonging to specified category.</para>
     /// </summary>
-    /// <param name="articles"></param>
-    /// <param name="category"></param>
-    /// <returns></returns>
+    /// <param name="articles">Source sequence of articles to filter.</param>
+    /// <param name="category">Category of articles to search for.</param>
+    /// <returns>Filtered sequence of articles with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="articles"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Article> InArticlesCategory(this IEnumerable<Article> articles, ArticlesCategory category)
     {
@@ -25,11 +25,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of articles by category's name in ascending order.</para>
     /// </summary>
-    /// <param name="articles"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="article"/> is a <c>null</c> reference.</exception>
+    /// <param name="articles">Source sequence of articles for sorting.</param>
+    /// <returns>Sorted sequence of articles.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="articles"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Article> OrderByArticlesCategoryName(this IEnumerable<Article> articles)
     {
       Assertion.NotNull(articles);
@@ -38,10 +38,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of articles by category's name in descending order.</para>
     /// </summary>
-    /// <param name="articles"></param>
-    /// <returns></returns>
+    /// <param name="articles">Source sequence of articles for sorting.</param>
+    /// <returns>Sorted sequence of articles.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="articles"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Article> OrderByArticlesCategoryNameDescending(this IEnumerable<Article> articles)
     {

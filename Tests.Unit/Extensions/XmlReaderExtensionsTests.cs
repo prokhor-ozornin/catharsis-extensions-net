@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using Xunit;
 
@@ -56,7 +58,41 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Tests set for class <see cref="XmlReaderExtensions.Read{READER, RESULT}(READER, Func{READER, RESULT})"/>.</para>
+    ///   <para>Performs testing of <see cref="XmlReaderExtensions.Dictionary(XmlReader, bool)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Dictionary_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => XmlReaderExtensions.Dictionary(null));
+
+      var xml = new XDocument(
+        new XElement("Articles",
+          new XElement("Article",
+            new XComment("Comment"),
+            new XAttribute("Id", "id"),
+            new XElement("Name", "name"),
+            new XElement("Date", DateTime.MaxValue),
+            new XElement("Description", new XCData("description")),
+            new XElement("Tags",
+              new XElement("Tag", "tag1"),
+              new XElement("Tag", "tag2")))));
+      var xmlDictionary = xml.Dictionary();
+      
+      IDictionary<string, object> dictionary;
+      new StringReader(xml.ToString()).XmlReader(true).With(reader =>
+      {
+        dictionary = reader.Dictionary();
+        Assert.True(dictionary.Keys.SequenceEqual(xmlDictionary.Keys));
+      });
+
+      var xmlReader = new StringReader(xml.ToString()).XmlReader(true);
+      dictionary = xmlReader.Dictionary(true);
+      Assert.False(xmlReader.Read());
+      Assert.True(dictionary.Keys.SequenceEqual(xmlDictionary.Keys));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="XmlReaderExtensions.Read{READER, RESULT}(READER, Func{READER, RESULT})"/> method.</para>
     /// </summary>
     [Fact]
     public void Read_Method()

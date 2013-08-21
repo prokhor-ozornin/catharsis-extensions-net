@@ -6,7 +6,6 @@ namespace Catharsis.Commons.Extensions
 {
   /// <summary>
   ///   <para></para>
-  ///   <seealso cref="byte[]"/>
   /// </summary>
   public static class ArrayExtensions
   {
@@ -40,9 +39,9 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="array"></param>
+    /// <param name="bytes"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="array"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
     public static string EncodeHex(this byte[] bytes)
     {
       Assertion.NotNull(bytes);

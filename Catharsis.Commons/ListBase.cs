@@ -15,13 +15,13 @@ namespace Catharsis.Commons
     private readonly bool isReadOnly;
     private readonly IList<T> items = new List<T>();
     private readonly object syncRoot = new object();
-
-
+    
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="allowNulls"></param>
     /// <param name="allowCopies"></param>
+    /// <param name="isReadOnly"></param>
     public ListBase(bool allowNulls = true, bool allowCopies = true, bool isReadOnly = false)
     {
       if (!allowNulls)

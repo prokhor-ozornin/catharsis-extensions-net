@@ -15,6 +15,9 @@ namespace Catharsis.Commons.Extensions
     private readonly Delegate IncrementDelegate;
     private readonly Delegate DecrementDelegate;
 
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     public DelegateExtensionsTests()
     {
       this.IncrementDelegate = Delegate.CreateDelegate(typeof(Increment), this.GetType().GetAnyMethod("IncrementValue"));

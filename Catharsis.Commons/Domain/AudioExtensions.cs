@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Catharsis.Commons.Domain
@@ -10,11 +11,11 @@ namespace Catharsis.Commons.Domain
   public static class AudioExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of audios, leaving those belonging to specified category.</para>
     /// </summary>
-    /// <param name="audios"></param>
-    /// <param name="category"></param>
-    /// <returns></returns>
+    /// <param name="audios">Source sequence of audios to filter.</param>
+    /// <param name="category">Category of audios to search for.</param>
+    /// <returns>Filtered sequence of audios with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="audios"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Audio> InAudiosCategory(this IEnumerable<Audio> audios, AudiosCategory category)
     {
@@ -24,10 +25,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of audios by category's name in ascending order.</para>
     /// </summary>
-    /// <param name="audios"></param>
-    /// <returns></returns>
+    /// <param name="audios">Source sequence of audios for sorting.</param>
+    /// <returns>Sorted sequence of audios.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="audios"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Audio> OrderByAudiosCategoryName(this IEnumerable<Audio> audios)
     {
@@ -37,10 +38,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of audios by category's name in descending order.</para>
     /// </summary>
-    /// <param name="audios"></param>
-    /// <returns></returns>
+    /// <param name="audios">Source sequence of audios for sorting.</param>
+    /// <returns>Sorted sequence of audios.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="audios"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Audio> OrderByAudiosCategoryNameDescending(this IEnumerable<Audio> audios)
     {
@@ -50,11 +51,11 @@ namespace Catharsis.Commons.Domain
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of audios, leaving those with specified bitrate.</para>
     /// </summary>
-    /// <param name="audios"></param>
-    /// <param name="bitrate"></param>
-    /// <returns></returns>
+    /// <param name="audios">Source sequence of audios to filter.</param>
+    /// <param name="bitrate">Bitrate of audios to search for.</param>
+    /// <returns>Filtered sequence of audios with specified bitrate.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="audios"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Audio> WithBitrate(this IEnumerable<Audio> audios, short bitrate)
     {

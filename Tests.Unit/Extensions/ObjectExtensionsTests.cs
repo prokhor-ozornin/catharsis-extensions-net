@@ -248,18 +248,56 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
+    ///   <para>Performs testing of <see cref="ObjectExtensions.GetField(object, string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetField_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.GetField(null, "field"));
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.GetField(new object(), null));
+      Assert.Throws<ArgumentException>(() => ObjectExtensions.GetField(new object(), string.Empty));
+
+      Assert.True(new object().GetField("field") == null);
+      
+      var subject = new TestObject { PublicField = "value" };
+      Assert.True(subject.GetField("PublicField").To<string>() == "value" );
+    }
+
+    /// <summary>
     ///   <para>Performs testing of <see cref="ObjectExtensions.GetProperty(object, string)"/> method.</para>
     /// </summary>
     [Fact]
-    public void GetProperty_Methods()
+    public void GetProperty_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.GetProperty(null, "property"));
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.GetProperty(new object(), null));
       Assert.Throws<ArgumentException>(() => ObjectExtensions.GetProperty(new object(), string.Empty));
 
       Assert.True(new object().GetProperty("property") == null);
-      Assert.True((int) string.Empty.GetProperty("Length") == 0);
-      Assert.True(DateTime.Today.GetProperty("UtcNow").To<DateTime>() <= DateTime.UtcNow);
+      
+      var subject = new TestObject { PublicProperty = "value" };
+      Assert.True(subject.GetProperty("PublicProperty").To<string>() == "value");
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="ObjectExtensions.HasField(object, string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void HasField_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasField(null, "name"));
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasField(new object(), null));
+      Assert.Throws<ArgumentException>(() => ObjectExtensions.HasField(new object(), string.Empty));
+
+      Assert.False(new object().HasField("field"));
+      
+      var subject = new TestObject();
+      Assert.True(subject.HasField("PublicStaticField"));
+      Assert.True(subject.HasField("ProtectedStaticField"));
+      Assert.True(subject.HasField("PrivateStaticField"));
+      Assert.True(subject.HasField("PublicField"));
+      Assert.True(subject.HasField("ProtectedField"));
+      Assert.True(subject.HasField("PrivateField"));
     }
 
     /// <summary>
@@ -273,7 +311,14 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentException>(() => ObjectExtensions.HasMethod(new object(), string.Empty));
 
       Assert.False(new object().HasMethod("method"));
-      Assert.True(new object().HasMethod("ToString"));
+
+      var subject = new TestObject();
+      Assert.True(subject.HasMethod("PublicStaticMethod"));
+      Assert.True(subject.HasMethod("ProtectedStaticMethod"));
+      Assert.True(subject.HasMethod("PrivateStaticMethod"));
+      Assert.True(subject.HasMethod("PublicMethod"));
+      Assert.True(subject.HasMethod("ProtectedMethod"));
+      Assert.True(subject.HasMethod("PrivateMethod"));
     }
     
     /// <summary>
@@ -287,7 +332,14 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentException>(() => ObjectExtensions.HasProperty(new object(), string.Empty));
 
       Assert.False(new object().HasProperty("property"));
-      Assert.True(string.Empty.HasProperty("Length"));
+
+      var subject = new TestObject();
+      Assert.True(subject.HasProperty("PublicStaticProperty"));
+      Assert.True(subject.HasProperty("ProtectedStaticProperty"));
+      Assert.True(subject.HasProperty("PrivateStaticProperty"));
+      Assert.True(subject.HasProperty("PublicProperty"));
+      Assert.True(subject.HasProperty("ProtectedProperty"));
+      Assert.True(subject.HasProperty("PrivateProperty"));
     }
 
     /// <summary>

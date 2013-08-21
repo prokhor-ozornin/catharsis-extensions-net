@@ -37,8 +37,6 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para>Adds specified element to the collection and returns collection reference back to perform further operations.</para>
     ///   <seealso cref="ICollection{T}.Add(T)"/>
-    ///   <seealso cref="ClearNext{T}"/>
-    ///   <seealso cref="CopyToNext{T}"/>
     ///   <seealso cref="RemoveNext{T}"/>
     /// </summary>
     /// <typeparam name="T">Type of collection's elements.</typeparam>
@@ -286,7 +284,7 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para>Removes specified element from the collection, it if exists, and returns collection reference back to perform further operations.</para>
     ///   <seealso cref="ICollection{T}.Remove(T)"/>
-    ///   <seealso cref="AddNext{T}"/>
+    ///   <seealso cref="AddContent{T}"/>
     ///   <seealso cref="ClearNext{T}"/>
     ///   <seealso cref="CopyToNext{T}"/>
     ///   <seealso cref="RemoveNext{T}"/>

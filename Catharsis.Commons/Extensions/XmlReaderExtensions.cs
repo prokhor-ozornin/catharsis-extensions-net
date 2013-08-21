@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace Catharsis.Commons.Extensions
@@ -26,7 +27,7 @@ namespace Catharsis.Commons.Extensions
       Assertion.NotNull(reader);
       Assertion.NotNull(type);
 
-      object result = null;
+      object result;
       try
       {
         result = (types != null ? new XmlSerializer(type, types.ToArray()) : new XmlSerializer(type)).Deserialize(reader);
@@ -55,6 +56,32 @@ namespace Catharsis.Commons.Extensions
       Assertion.NotNull(reader);
 
       return reader.Deserialize(typeof(T), types, close).As<T>();
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="reader"></param>
+    /// <param name="close"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is a <c>null</c> reference.</exception>
+    public static IDictionary<string, object> Dictionary(this XmlReader reader, bool close = false)
+    {
+      Assertion.NotNull(reader);
+
+      IDictionary<string, object> result;
+      try
+      {
+        result = XDocument.Load(reader).Dictionary();
+      }
+      finally
+      {
+        if (close)
+        {
+          reader.Close();
+        }
+      }
+      return result;
     }
 
     /// <summary>

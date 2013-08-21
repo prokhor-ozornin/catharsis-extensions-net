@@ -127,7 +127,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="value"></param>
     /// <param name="pattern"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="value"/> or <paramref name="regexp"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="value"/> or <paramref name="pattern"/> is a <c>null</c> reference.</exception>
     public static bool Match(this string value, string pattern)
     {
       Assertion.NotNull(value);

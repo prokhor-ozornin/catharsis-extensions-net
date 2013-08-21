@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Catharsis.Commons.Domain
@@ -10,11 +11,11 @@ namespace Catharsis.Commons.Domain
   public static class TextExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of texts, leaving those belonging to specified category.</para>
     /// </summary>
-    /// <param name="texts"></param>
-    /// <param name="category"></param>
-    /// <returns></returns>
+    /// <param name="texts">Source sequence of texts to filter.</param>
+    /// <param name="category">Category of texts to search for.</param>
+    /// <returns>Filtered sequence of texts with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="texts"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Text> InTextsCategory(this IEnumerable<Text> texts, TextsCategory category)
     {
@@ -24,7 +25,7 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of texts by category's name in ascending order.</para>
     /// </summary>
     /// <param name="texts"></param>
     /// <returns></returns>
@@ -49,17 +50,18 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of texts, leaving those written by specified person.</para>
     /// </summary>
-    /// <param name="texts"></param>
-    /// <param name="person"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="texts"/> is a <c>null</c> reference.</exception>
+    /// <param name="texts">Source sequence of texts to filter.</param>
+    /// <param name="person">Author of texts to search for.</param>
+    /// <returns>Filtered sequence of texts with specified author.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="texts"/> or <paramref name="person"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Text> WithPerson(this IEnumerable<Text> texts, Person person)
     {
       Assertion.NotNull(texts);
+      Assertion.NotNull(person);
 
-      return person != null ? texts.Where(text => text != null && text.Person.Id == person.Id) : texts.Where(text => text != null && text.Person == null);
+      return texts.Where(text => text != null && text.Person.Id == person.Id);
     }
   }
 }

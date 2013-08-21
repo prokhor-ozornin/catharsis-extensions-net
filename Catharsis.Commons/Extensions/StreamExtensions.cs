@@ -57,11 +57,11 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte[]"/>. The input is closed before this method returns.</para>
+    ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte"/> array. The input is closed before this method returns.</para>
     /// </summary>
     /// <param name="stream"></param>
     /// <param name="close"></param>
-    /// <returns>The <see cref="byte[]"/> from that <paramref name="stream"/></returns>
+    /// <returns>The <see cref="byte"/> array from that <paramref name="stream"/></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
     public static byte[] Bytes(this Stream stream, bool close = false)
     {

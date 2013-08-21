@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 
 namespace Catharsis.Commons.Extensions
@@ -58,7 +59,7 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <param name="algorithm"></param>
-    /// <param name="stream"></param>
+    /// <param name="source"></param>
     /// <param name="close"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="algorithm"/> or <paramref name="source"/> is a <c>null</c> reference.</exception>

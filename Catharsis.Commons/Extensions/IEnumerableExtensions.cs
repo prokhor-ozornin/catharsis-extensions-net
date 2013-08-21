@@ -58,7 +58,7 @@ namespace Catharsis.Commons.Extensions
     /// </summary>
     /// <param name="enumerable">Enumerator to iterate through set of elements which are target for concatenation.</param>
     /// <returns>Resulting concatenation string.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="elements" /> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable" /> is a <c>null</c> reference.</exception>
     public static string ToListString<T>(this IEnumerable<T> enumerable)
     {
       Assertion.NotNull(enumerable);
@@ -70,7 +70,7 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="elements"></param>
+    /// <param name="enumerable"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is a <c>null</c> reference.</exception>
     public static ISet<T> ToSet<T>(this IEnumerable<T> enumerable)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Catharsis.Commons.Extensions;
 using Xunit;
 
 namespace Catharsis.Commons.Domain
@@ -168,8 +167,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByAuthor_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByAuthor<IAuthorable>(null));
-
       Assert.Throws<NullReferenceException>(() => new AuthorableEntity[] { null }.OrderByAuthor().Any());
+
       var entities = new[] { new AuthorableEntity { AuthorId = "Second" }, new AuthorableEntity { AuthorId = "First" } };
       Assert.True(entities.OrderByAuthor().SequenceEqual(entities.Reverse()));
     }
@@ -181,8 +180,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByAuthorDescending_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByAuthorDescending<IAuthorable>(null));
-
       Assert.Throws<NullReferenceException>(() => new AuthorableEntity[] { null }.OrderByAuthorDescending().Any());
+
       var entities = new[] { new AuthorableEntity { AuthorId = "First" }, new AuthorableEntity { AuthorId = "Second" } };
       Assert.True(entities.OrderByAuthorDescending().SequenceEqual(entities.Reverse()));
     }
@@ -226,8 +225,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByHeight_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByHeight<IDimensionable>(null));
-
       Assert.Throws<NullReferenceException>(() => new DimensionableEntity[] { null }.OrderByHeight().Any());
+
       var entities = new[] { new DimensionableEntity { Height = 2 }, new DimensionableEntity { Height = 1 } };
       Assert.True(entities.OrderByHeight().SequenceEqual(entities.Reverse()));
     }
@@ -239,8 +238,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByHeightDescending_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByHeight<IDimensionable>(null));
-
       Assert.Throws<NullReferenceException>(() => new DimensionableEntity[] { null }.OrderByHeightDescending().Any());
+
       var entities = new[] { new DimensionableEntity { Height = 1 }, new DimensionableEntity { Height = 2 } };
       Assert.True(entities.OrderByHeightDescending().SequenceEqual(entities.Reverse()));
     }
@@ -271,8 +270,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByWidth_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByWidth<IDimensionable>(null));
-
       Assert.Throws<NullReferenceException>(() => new DimensionableEntity[] { null }.OrderByWidth().Any());
+
       var entities = new[] { new DimensionableEntity { Width = 2 }, new DimensionableEntity { Width = 1 } };
       Assert.True(entities.OrderByWidth().SequenceEqual(entities.Reverse()));
     }
@@ -284,8 +283,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByWidthDescending_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByWidthDescending<IDimensionable>(null));
-
       Assert.Throws<NullReferenceException>(() => new DimensionableEntity[] { null }.OrderByWidthDescending().Any());
+
       var entities = new[] { new DimensionableEntity { Width = 1 }, new DimensionableEntity { Width = 2 } };
       Assert.True(entities.OrderByWidthDescending().SequenceEqual(entities.Reverse()));
     }
@@ -362,8 +361,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByName_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByName<INameable>(null));
-
       Assert.Throws<NullReferenceException>(() => new NameableEntity[] { null }.OrderByName().Any());
+
       var entities = new[] { new NameableEntity { Name = "Second" }, new NameableEntity { Name = "First" } };
       Assert.True(entities.OrderByName().SequenceEqual(entities.Reverse()));
     }
@@ -375,8 +374,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByNameDescending_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByNameDescending<INameable>(null));
-
       Assert.Throws<NullReferenceException>(() => new NameableEntity[] { null }.OrderByNameDescending().Any());
+
       var entities = new[] { new NameableEntity { Name = "First" }, new NameableEntity { Name = "Second" } };
       Assert.True(entities.OrderByNameDescending().SequenceEqual(entities.Reverse()));
     }
@@ -401,8 +400,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByFirstName_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByFirstName<IPersonalizable>(null));
-
       Assert.Throws<NullReferenceException>(() => new PersonalizableEntity[] { null }.OrderByFirstName().Any());
+
       var entities = new[] { new PersonalizableEntity { NameFirst = "Second" }, new PersonalizableEntity { NameFirst = "First" } };
       Assert.True(entities.OrderByFirstName().SequenceEqual(entities.Reverse()));
     }
@@ -414,8 +413,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByFirstNameDescending_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByFirstNameDescending<IPersonalizable>(null));
-
       Assert.Throws<NullReferenceException>(() => new PersonalizableEntity[] { null }.OrderByFirstNameDescending().Any());
+
       var entities = new[] { new PersonalizableEntity { NameFirst = "First" }, new PersonalizableEntity { NameFirst = "Second" } };
       Assert.True(entities.OrderByFirstNameDescending().SequenceEqual(entities.Reverse()));
     }
@@ -440,8 +439,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByLastName_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByLastName<IPersonalizable>(null));
-
       Assert.Throws<NullReferenceException>(() => new PersonalizableEntity[] { null }.OrderByLastName().Any());
+
       var entities = new[] { new PersonalizableEntity { NameLast = "Second" }, new PersonalizableEntity { NameLast = "First" } };
       Assert.True(entities.OrderByLastName().SequenceEqual(entities.Reverse()));
     }
@@ -453,8 +452,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByLastNameDescending_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByLastNameDescending<IPersonalizable>(null));
-
       Assert.Throws<NullReferenceException>(() => new PersonalizableEntity[] { null }.OrderByLastNameDescending().Any());
+
       var entities = new[] { new PersonalizableEntity { NameLast = "First" }, new PersonalizableEntity { NameLast = "Second" } };
       Assert.True(entities.OrderByLastNameDescending().SequenceEqual(entities.Reverse()));
     }
@@ -479,8 +478,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByMiddleName_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByMiddleName<IPersonalizable>(null));
-
       Assert.Throws<NullReferenceException>(() => new PersonalizableEntity[] { null }.OrderByMiddleName().Any());
+
       var entities = new[] { new PersonalizableEntity { NameMiddle = "Second" }, new PersonalizableEntity { NameMiddle = "First" } };
       Assert.True(entities.OrderByMiddleName().SequenceEqual(entities.Reverse()));
     }
@@ -492,8 +491,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByMiddleNameDescending_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByMiddleNameDescending<IPersonalizable>(null));
-
       Assert.Throws<NullReferenceException>(() => new PersonalizableEntity[] { null }.OrderByMiddleNameDescending().Any());
+
       var entities = new[] { new PersonalizableEntity { NameMiddle = "First" }, new PersonalizableEntity { NameMiddle = "Second" } };
       Assert.True(entities.OrderByMiddleNameDescending().SequenceEqual(entities.Reverse()));
     }
@@ -536,8 +535,8 @@ namespace Catharsis.Commons.Domain
     public void OrderBySize_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderBySize<ISizable>(null));
-
       Assert.Throws<NullReferenceException>(() => new SizableEntity[] { null }.OrderBySize().Any());
+
       var entities = new[] { new SizableEntity { Size = 2 }, new SizableEntity { Size = 1 } };
       Assert.True(entities.OrderBySize().SequenceEqual(entities.Reverse()));
     }
@@ -549,8 +548,8 @@ namespace Catharsis.Commons.Domain
     public void OrderBySizeDescending_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderBySizeDescending<ISizable>(null));
-
       Assert.Throws<NullReferenceException>(() => new SizableEntity[] { null }.OrderBySizeDescending().Any());
+
       var entities = new[] { new SizableEntity { Size = 1 }, new SizableEntity { Size = 2 } };
       Assert.True(entities.OrderBySizeDescending().SequenceEqual(entities.Reverse()));
     }
@@ -602,8 +601,8 @@ namespace Catharsis.Commons.Domain
       Assert.True(dates.CreatedOn(null, DateTime.MaxValue).SequenceEqual(filteredDates));
       Assert.True(dates.CreatedOn(DateTime.MinValue, DateTime.MaxValue).SequenceEqual(filteredDates));
       Assert.True(dates.CreatedOn(firstDate, secondDate).SequenceEqual(filteredDates));
-      Assert.True(dates.CreatedOn(DateTime.MinValue, DateTime.MinValue).Count() == 0);
-      Assert.True(dates.CreatedOn(DateTime.MaxValue, DateTime.MaxValue).Count() == 0);
+      Assert.False(dates.CreatedOn(DateTime.MinValue, DateTime.MinValue).Any());
+      Assert.False(dates.CreatedOn(DateTime.MaxValue, DateTime.MaxValue).Any());
     }
 
     /// <summary>
@@ -613,8 +612,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByCreatedOn_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByCreatedOn<ITimeable>(null));
-
       Assert.Throws<NullReferenceException>(() => new TimeableEntity[] { null }.OrderByCreatedOn().Any());
+
       var entities = new[] { new TimeableEntity { DateCreated = new DateTime(2000, 1, 2) }, new TimeableEntity { DateCreated = new DateTime(2000, 1, 1) } };
       Assert.True(entities.OrderByCreatedOn().SequenceEqual(entities.Reverse()));
     }
@@ -625,9 +624,9 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void OrderByCreatedOnDescending_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByCreatedOn<ITimeable>(null));
-
+      Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByCreatedOnDescending<ITimeable>(null));
       Assert.Throws<NullReferenceException>(() => new TimeableEntity[] { null }.OrderByCreatedOnDescending().Any());
+
       var entities = new[] { new TimeableEntity { DateCreated = new DateTime(2000, 1, 1) }, new TimeableEntity { DateCreated = new DateTime(2000, 1, 2) } };
       Assert.True(entities.OrderByCreatedOnDescending().SequenceEqual(entities.Reverse()));
     }
@@ -649,8 +648,8 @@ namespace Catharsis.Commons.Domain
       Assert.True(dates.UpdatedOn(null, DateTime.MaxValue).SequenceEqual(filteredDates));
       Assert.True(dates.UpdatedOn(DateTime.MinValue, DateTime.MaxValue).SequenceEqual(filteredDates));
       Assert.True(dates.UpdatedOn(firstDate, secondDate).SequenceEqual(filteredDates));
-      Assert.True(dates.UpdatedOn(DateTime.MinValue, DateTime.MinValue).Count() == 0);
-      Assert.True(dates.UpdatedOn(DateTime.MaxValue, DateTime.MaxValue).Count() == 0);
+      Assert.False(dates.UpdatedOn(DateTime.MinValue, DateTime.MinValue).Any());
+      Assert.False(dates.UpdatedOn(DateTime.MaxValue, DateTime.MaxValue).Any());
     }
 
     /// <summary>
@@ -660,8 +659,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByUpdatedOn_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByUpdatedOn<ITimeable>(null));
-
       Assert.Throws<NullReferenceException>(() => new TimeableEntity[] { null }.OrderByUpdatedOn().Any());
+
       var entities = new[] { new TimeableEntity { LastUpdated = new DateTime(2000, 1, 2) }, new TimeableEntity { LastUpdated = new DateTime(2000, 1, 1) } };
       Assert.True(entities.OrderByUpdatedOn().SequenceEqual(entities.Reverse()));
     }
@@ -673,8 +672,8 @@ namespace Catharsis.Commons.Domain
     public void OrderByUpdatedDescending_Method()
     {
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByUpdatedOnDescending<ITimeable>(null));
-
       Assert.Throws<NullReferenceException>(() => new TimeableEntity[] { null }.OrderByUpdatedOnDescending().Any());
+
       var entities = new[] { new TimeableEntity { LastUpdated = new DateTime(2000, 1, 1) }, new TimeableEntity { LastUpdated = new DateTime(2000, 1, 2) } };
       Assert.True(entities.OrderByUpdatedOnDescending().SequenceEqual(entities.Reverse()));
     }

@@ -110,7 +110,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="type"></param>
     /// <param name="attributeType"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNulException">If either <paramref name="type"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
     public static object GetAttribute(this Type type, Type attributeType)
     {
       Assertion.NotNull(type);

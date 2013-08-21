@@ -56,7 +56,7 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Makes an assertion that specified condition if <c>false</c>. Throws an exception if assertion failed.</para>
-    ///   <seealso cref="True(bool)"/>
+    ///   <seealso cref="True(bool, string)"/>
     /// </summary>
     /// <param name="condition">Condition to be evaluated.</param>
     /// <param name="message"></param>
@@ -165,7 +165,7 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Makes an assertion that specified condition is <c>true</c>. Throws an exception if assertion failed.</para>
-    ///   <seealso cref="False(bool)"/>
+    ///   <seealso cref="False(bool, string)"/>
     /// </summary>
     /// <param name="condition">Condition to be evaluated.</param>
     /// <param name="message"></param>

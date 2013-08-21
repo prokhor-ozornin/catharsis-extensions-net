@@ -41,9 +41,9 @@ namespace Catharsis.Commons.Domain
     public void WithToken_Method()
     {
       Assert.Throws<ArgumentNullException>(() => SubscriptionExtensions.WithToken(null, string.Empty));
+      Assert.Throws<ArgumentNullException>(() => SubscriptionExtensions.WithToken(Enumerable.Empty<Subscription>(), null));
+      Assert.Throws<ArgumentException>(() => SubscriptionExtensions.WithToken(Enumerable.Empty<Subscription>(), string.Empty));
 
-      Assert.True(Enumerable.Empty<Subscription>().WithToken(null) == null);
-      Assert.True(Enumerable.Empty<Subscription>().WithToken(string.Empty) == null);
       Assert.True(new[] { null, new Subscription { Token = "Token" }, null, new Subscription { Token = "Token_2" } }.WithToken("Token") != null);
     }
   }

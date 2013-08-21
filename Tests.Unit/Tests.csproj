@@ -81,7 +81,7 @@
     <CodeContractsBaseLineFile />
     <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
     <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
     <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
@@ -104,22 +104,38 @@
   <ItemGroup>
     <Compile Include="AssertionTests.cs" />
     <Compile Include="DictionaryBaseTests.cs" />
+    <Compile Include="Domain\AnnouncementExtensionsTests.cs" />
+    <Compile Include="Domain\AnnouncementsCategoryTests.cs" />
+    <Compile Include="Domain\AnnouncementTests.cs" />
     <Compile Include="Domain\ArticleExtensionsTests.cs" />
     <Compile Include="Domain\ArticlesCategoryTests.cs" />
     <Compile Include="Domain\ArticleTests.cs" />
+    <Compile Include="Domain\ArtsAlbumExtensionsTests.cs" />
+    <Compile Include="Domain\ArtsAlbumTests.cs" />
+    <Compile Include="Domain\ArtsExtensionsTests.cs" />
+    <Compile Include="Domain\ArtTests.cs" />
     <Compile Include="Domain\AudioExtensionsTests.cs" />
     <Compile Include="Domain\AudiosCategoryTests.cs" />
     <Compile Include="Domain\AudioTests.cs" />
+    <Compile Include="Domain\BlogEntryExtensionsTests.cs" />
     <Compile Include="Domain\BlogEntryTests.cs" />
     <Compile Include="Domain\BlogTests.cs" />
     <Compile Include="Domain\CategoryExtensionsTests.cs" />
     <Compile Include="Domain\CategoryUnitTests.cs" />
+    <Compile Include="Domain\CityExtensionsTests.cs" />
+    <Compile Include="Domain\CityTests.cs" />
     <Compile Include="Domain\CommentTests.cs" />
+    <Compile Include="Domain\CountryExtensionsTests.cs" />
+    <Compile Include="Domain\CountryTests.cs" />
     <Compile Include="Domain\DomainExtensionsTests.cs" />
+    <Compile Include="Domain\DownloadExtensionsTests.cs" />
+    <Compile Include="Domain\DownloadsCategoryTests.cs" />
+    <Compile Include="Domain\DownloadTests.cs" />
     <Compile Include="Domain\EntityUnitTests.cs" />
     <Compile Include="Domain\FaqTests.cs" />
     <Compile Include="Domain\FileExtensionsTests.cs" />
     <Compile Include="Domain\FileTests.cs" />
+    <Compile Include="Domain\IEntityExtensionsTests.cs" />
     <Compile Include="Domain\ImagesCategoryTests.cs" />
     <Compile Include="Domain\ImageTests.cs" />
     <Compile Include="Domain\ItemTests.cs" />
@@ -129,14 +145,22 @@
     <Compile Include="Domain\PlaycastExtensionsTests.cs" />
     <Compile Include="Domain\PlaycastsCategoryTests.cs" />
     <Compile Include="Domain\PlaycastTests.cs" />
+    <Compile Include="Domain\PollAnswerTests.cs" />
+    <Compile Include="Domain\PollOptionTests.cs" />
+    <Compile Include="Domain\PollTests.cs" />
     <Compile Include="Domain\ProfileExtensionsTests.cs" />
     <Compile Include="Domain\ProfileTests.cs" />
     <Compile Include="Domain\QuoteTests.cs" />
+    <Compile Include="Domain\SongExtensionsTests.cs" />
+    <Compile Include="Domain\SongsAlbumExtensionsTests.cs" />
+    <Compile Include="Domain\SongsAlbumTests.cs" />
+    <Compile Include="Domain\SongTests.cs" />
     <Compile Include="Domain\SubscriptionExtensionsTests.cs" />
     <Compile Include="Domain\SubscriptionTests.cs" />
     <Compile Include="Domain\TextExtensionsTests.cs" />
     <Compile Include="Domain\TextsCategoryTests.cs" />
     <Compile Include="Domain\TextTests.cs" />
+    <Compile Include="Domain\TextTranslationTests.cs" />
     <Compile Include="Domain\UserExtensionsTests.cs" />
     <Compile Include="Domain\UserTests.cs" />
     <Compile Include="Domain\VideoExtensionsTests.cs" />
@@ -161,6 +185,9 @@
     <Compile Include="Extensions\TextReaderExtensionsTests.cs" />
     <Compile Include="Extensions\TextWriterExtensionsTests.cs" />
     <Compile Include="Extensions\UriExtensionsTests.cs" />
+    <Compile Include="Extensions\XContainerExtensionsTests.cs" />
+    <Compile Include="Extensions\XDocumentExtensionsTests.cs" />
+    <Compile Include="Extensions\XElementExtensionsTests.cs" />
     <Compile Include="Extensions\XmlDocumentExtensionsTests.cs" />
     <Compile Include="Extensions\XmlWriterExtensionsTests.cs" />
     <Compile Include="ListBaseTests.cs" />

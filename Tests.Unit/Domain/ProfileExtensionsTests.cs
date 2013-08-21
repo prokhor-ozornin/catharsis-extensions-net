@@ -17,9 +17,9 @@ namespace Catharsis.Commons.Domain
     public void WithType_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ProfileExtensions.WithType(null, string.Empty));
+      Assert.Throws<ArgumentNullException>(() => ProfileExtensions.WithType(Enumerable.Empty<Profile>(), null));
+      Assert.Throws<ArgumentException>(() => ProfileExtensions.WithType(Enumerable.Empty<Profile>(), string.Empty));
 
-      Assert.False(Enumerable.Empty<Profile>().WithType(null).Any());
-      Assert.False(Enumerable.Empty<Profile>().WithType(string.Empty).Any());
       Assert.True(new[] { null, new Profile { Type = "Type" }, null, new Profile { Type = "Type_2" } }.WithType("Type").Count() == 1);
     }
 
@@ -30,9 +30,9 @@ namespace Catharsis.Commons.Domain
     public void WithUsername_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ProfileExtensions.WithUsername(null, string.Empty));
+      Assert.Throws<ArgumentNullException>(() => ProfileExtensions.WithUsername(Enumerable.Empty<Profile>(), null));
+      Assert.Throws<ArgumentException>(() => ProfileExtensions.WithUsername(Enumerable.Empty<Profile>(), string.Empty));
 
-      Assert.True(Enumerable.Empty<Profile>().WithUsername(null) == null);
-      Assert.True(Enumerable.Empty<Profile>().WithUsername(string.Empty) == null);
       Assert.True(new[] { null, new Profile { Username = "Username" }, null, new Profile { Username = "Username_2" } }.WithUsername("Username") != null);
     }
   }

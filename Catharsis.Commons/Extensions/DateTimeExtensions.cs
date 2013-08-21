@@ -25,7 +25,8 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="date"></param>
+    /// <param name="self"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
     public static bool EqualsDate(this DateTime self, DateTime other)
     {

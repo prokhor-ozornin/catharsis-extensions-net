@@ -147,7 +147,7 @@ namespace Catharsis.Commons.Extensions
         {
           second = property.GetValue(other, null);
         }
-        catch (TargetException exception)
+        catch (TargetException)
         {
         }
         
@@ -213,6 +213,7 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <param name="subject"></param>
+    /// <param name="finalize"></param>
     /// <remarks></remarks>
     /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
     public static object Finalize(this object subject, bool finalize = true)
@@ -285,6 +286,23 @@ namespace Catharsis.Commons.Extensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public static object GetField(this object subject, string name)
+    {
+      Assertion.NotNull(subject);
+      Assertion.NotEmpty(name);
+
+      var subjectField = subject.GetType().GetAnyField(name);
+      return subjectField != null ? subjectField.GetValue(subject) : null;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="subject"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public static object GetProperty(this object subject, string name)
     {
       Assertion.NotNull(subject);
@@ -292,6 +310,22 @@ namespace Catharsis.Commons.Extensions
 
       var subjectProperty = subject.GetType().GetAnyProperty(name);
       return subjectProperty != null ? subjectProperty.GetValue(subject, null) : null;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="subject"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public static bool HasField(this object subject, string name)
+    {
+      Assertion.NotNull(subject);
+      Assertion.NotEmpty(name);
+
+      return subject.GetType().GetAnyField(name) != null;
     }
 
     /// <summary>

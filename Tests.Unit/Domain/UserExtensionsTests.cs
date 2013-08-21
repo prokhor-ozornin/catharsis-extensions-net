@@ -17,9 +17,9 @@ namespace Catharsis.Commons.Domain
     public void WithUsername_Method()
     {
       Assert.Throws<ArgumentNullException>(() => UserExtensions.WithUsername(null, string.Empty));
+      Assert.Throws<ArgumentNullException>(() => UserExtensions.WithUsername(Enumerable.Empty<User>(), null));
+      Assert.Throws<ArgumentException>(() => UserExtensions.WithUsername(Enumerable.Empty<User>(), string.Empty));
 
-      Assert.True(Enumerable.Empty<User>().WithUsername(null) == null);
-      Assert.True(Enumerable.Empty<User>().WithUsername(string.Empty) == null);
       Assert.True(new[] { null, new User { Username = "Username" }, null, new User { Username = "Username_2" } }.WithUsername("Username") != null);
     }
   }

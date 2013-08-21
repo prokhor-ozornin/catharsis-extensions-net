@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Catharsis.Commons.Domain
@@ -10,11 +11,11 @@ namespace Catharsis.Commons.Domain
   public static class VideoExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of videos, leaving those belonging to specified category.</para>
     /// </summary>
-    /// <param name="videos"></param>
-    /// <param name="category"></param>
-    /// <returns></returns>
+    /// <param name="videos">Source sequence of videos to filter.</param>
+    /// <param name="category">Category of videos to search for.</param>
+    /// <returns>Filtered sequence of videos with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Video> InVideosCategory(this IEnumerable<Video> videos, VideosCategory category)
     {
@@ -50,11 +51,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of videos, leaving those with specified bitrate.</para>
     /// </summary>
-    /// <param name="videos"></param>
-    /// <param name="bitrate"></param>
-    /// <returns></returns>
+    /// <param name="videos">Source sequence of videos to filter.</param>
+    /// <param name="bitrate">Bitrate of videos to search for.</param>
+    /// <returns>Filtered sequence of videos with specified bitrate.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Video> WithBitrate(this IEnumerable<Video> videos, short bitrate)
     {
@@ -90,12 +91,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of videos, leaving those with duration in specified range.</para>
     /// </summary>
-    /// <param name="videos"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="videos">Source sequence of videos to filter.</param>
+    /// <param name="from">Lower border of duration range.</param>
+    /// <param name="to">Upper border of duration range.</param>
+    /// <returns>Filtered sequence of videos with duration ranging inclusively from <paramref name="from"/> to <paramref name="to"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Video> WithDuration(this IEnumerable<Video> videos, long? from = null, long? to = null)
     {
@@ -106,12 +107,12 @@ namespace Catharsis.Commons.Domain
         return videos.Where(video => video != null && video.Duration >= from.Value && video.Duration <= to.Value);
       }
 
-      if (from.HasValue && !to.HasValue)
+      if (from.HasValue)
       {
         return videos.Where(video => video != null && video.Duration >= from.Value);
       }
 
-      if (!from.HasValue && to.HasValue)
+      if (to.HasValue)
       {
         return videos.Where(video => video != null && video.Duration <= to.Value);
       }

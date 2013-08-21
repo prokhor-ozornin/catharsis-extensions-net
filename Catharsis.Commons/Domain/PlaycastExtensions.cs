@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Catharsis.Commons.Domain
@@ -10,11 +11,11 @@ namespace Catharsis.Commons.Domain
   public static class PlaycastExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of playcasts, leaving those belonging to specified category.</para>
     /// </summary>
-    /// <param name="playcasts"></param>
-    /// <param name="category"></param>
-    /// <returns></returns>
+    /// <param name="playcasts">Source sequence of playcasts to filter.</param>
+    /// <param name="category">Category of playcasts to search for.</param>
+    /// <returns>Filtered sequence of playcasts with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="playcasts"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Playcast> InPlaycastsCategory(this IEnumerable<Playcast> playcasts, PlaycastsCategory category)
     {
@@ -24,10 +25,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of playcasts by category's name in ascending order.</para>
     /// </summary>
-    /// <param name="playcasts"></param>
-    /// <returns></returns>
+    /// <param name="playcasts">Source sequence of playcasts for sorting.</param>
+    /// <returns>Sorted sequence of playcasts.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="playcasts"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Playcast> OrderByPlaycastsCategoryName(this IEnumerable<Playcast> playcasts)
     {
@@ -37,10 +38,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of playcasts by category's name in descending order.</para>
     /// </summary>
-    /// <param name="playcasts"></param>
-    /// <returns></returns>
+    /// <param name="playcasts">Source sequence of playcasts for sorting.</param>
+    /// <returns>Sorted sequence of playcasts.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="playcasts"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Playcast> OrderByPlaycastsCategoryNameDescending(this IEnumerable<Playcast> playcasts)
     {

@@ -6,14 +6,17 @@ using Catharsis.Commons.Extensions;
 
 namespace Catharsis.Commons.Domain
 {
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   public static class DomainExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving only allowed ones.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
+    /// <returns>Filtered sequence of allowed entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> Allowed<T>(this IEnumerable<T> entities) where T : IAccessable
     {
@@ -23,10 +26,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving only disallowed ones.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> Denied<T>(this IEnumerable<T> entities) where T : IAccessable
@@ -39,8 +42,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="authorId"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -52,11 +55,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by author in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByAuthor<T>(this IEnumerable<T> entities) where T : IAuthorable
     {
@@ -66,11 +69,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by author in descending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByAuthorDescending<T>(this IEnumerable<T> entities) where T : IAuthorable
     {
@@ -82,8 +85,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="description"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -97,8 +100,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
@@ -112,12 +115,12 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.Height >= from.Value && entity.Height <= to.Value);
       }
       
-      if (from.HasValue && !to.HasValue)
+      if (@from.HasValue)
       {
         return entities.Where(entity => entity != null && entity.Height >= from.Value);
       }
       
-      if (!from.HasValue && to.HasValue)
+      if (to.HasValue)
       {
         return entities.Where(entity => entity != null && entity.Height <= to.Value);
       }
@@ -126,11 +129,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by height in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByHeight<T>(this IEnumerable<T> entities) where T : IDimensionable
     {
@@ -140,11 +143,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by height in descending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByHeightDescending<T>(this IEnumerable<T> entities) where T : IDimensionable
     {
@@ -156,8 +159,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
@@ -171,12 +174,12 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.Width >= from.Value && entity.Width <= to.Value);
       }
       
-      if (from.HasValue && !to.HasValue)
+      if (from.HasValue)
       {
         return entities.Where(entity => entity != null && entity.Width >= from.Value);
       }
       
-      if (!from.HasValue && to.HasValue)
+      if (to.HasValue)
       {
         return entities.Where(entity => entity != null && entity.Width <= to.Value);
       }
@@ -185,11 +188,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by width in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByWidth<T>(this IEnumerable<T> entities) where T : IDimensionable
     {
@@ -199,11 +202,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by width in descending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByWidthDescending<T>(this IEnumerable<T> entities) where T : IDimensionable
     {
@@ -215,8 +218,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="email"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -230,8 +233,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="inetAddress"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -245,8 +248,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="language"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -260,8 +263,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="culture"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -275,8 +278,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="name"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -288,11 +291,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by name in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByName<T>(this IEnumerable<T> entities) where T : INameable
     {
@@ -302,11 +305,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by name in descending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByNameDescending<T>(this IEnumerable<T> entities) where T : INameable
     {
@@ -318,8 +321,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="name"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -331,11 +334,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by first name in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByFirstName<T>(this IEnumerable<T> entities) where T : IPersonalizable
     {
@@ -345,11 +348,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by first name in descending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByFirstNameDescending<T>(this IEnumerable<T> entities) where T : IPersonalizable
     {
@@ -361,8 +364,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="name"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -374,11 +377,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by last name in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByLastName<T>(this IEnumerable<T> entities) where T : IPersonalizable
     {
@@ -388,11 +391,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by last name in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByLastNameDescending<T>(this IEnumerable<T> entities) where T : IPersonalizable
     {
@@ -404,7 +407,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities"></param>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -417,11 +420,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by middle name in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByMiddleName<T>(this IEnumerable<T> entities) where T : IPersonalizable
     {
@@ -431,11 +434,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by middle name in descending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByMiddleNameDescending<T>(this IEnumerable<T> entities) where T : IPersonalizable
     {
@@ -447,7 +450,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entity"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entity"/> is a <c>null</c> reference.</exception>
@@ -461,8 +464,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
@@ -476,12 +479,12 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.Size >= from.Value && entity.Size <= to.Value);
       }
 
-      if (from.HasValue && !to.HasValue)
+      if (from.HasValue)
       {
         return entities.Where(entity => entity != null && entity.Size >= from.Value);
       }
 
-      if (!from.HasValue && to.HasValue)
+      if (to.HasValue)
       {
         return entities.Where(entity => entity != null && entity.Size <= to.Value);
       }
@@ -490,11 +493,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by size in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderBySize<T>(this IEnumerable<T> entities) where T : ISizable
     {
@@ -504,11 +507,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by size in descending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderBySizeDescending<T>(this IEnumerable<T> entities) where T : ISizable
     {
@@ -520,8 +523,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="status"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -535,8 +538,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="text"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -550,8 +553,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
@@ -565,12 +568,12 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.DateCreated >= from.Value && entity.DateCreated <= to.Value);
       }
 
-      if (from.HasValue && !to.HasValue)
+      if (from.HasValue)
       {
         return entities.Where(entity => entity != null && entity.DateCreated >= from.Value);
       }
 
-      if (!from.HasValue && to.HasValue)
+      if (to.HasValue)
       {
         return entities.Where(entity => entity != null && entity.DateCreated <= to.Value);
       }
@@ -579,11 +582,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by creation date in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByCreatedOn<T>(this IEnumerable<T> entities) where T : ITimeable
     {
@@ -593,11 +596,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by creation date in descending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByCreatedOnDescending<T>(this IEnumerable<T> entities) where T : ITimeable
     {
@@ -609,8 +612,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
@@ -624,12 +627,12 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.LastUpdated >= from.Value && entity.LastUpdated <= to.Value);
       }
 
-      if (from.HasValue && !to.HasValue)
+      if (from.HasValue)
       {
         return entities.Where(entity => entity != null && entity.LastUpdated >= from.Value);
       }
 
-      if (!from.HasValue && to.HasValue)
+      if (to.HasValue)
       {
         return entities.Where(entity => entity != null && entity.LastUpdated <= to.Value);
       }
@@ -638,11 +641,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by last update date in ascending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByUpdatedOn<T>(this IEnumerable<T> entities) where T : ITimeable
     {
@@ -652,11 +655,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of entities by last update date in descending order.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities for sorting.</param>
+    /// <returns>Sorted sequence of entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> OrderByUpdatedOnDescending<T>(this IEnumerable<T> entities) where T : ITimeable
     {
@@ -668,8 +671,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="type"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
@@ -683,8 +686,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entities"></param>
+    /// <typeparam name="T">Type of entities.</typeparam>
+    /// <param name="entities">Source sequence of entities to filter.</param>
     /// <param name="url"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>

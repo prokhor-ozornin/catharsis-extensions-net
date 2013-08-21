@@ -4,8 +4,16 @@ using Xunit;
 
 namespace Catharsis.Commons.Domain
 {
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="ENTITY"></typeparam>
   public abstract class EntityUnitTests<ENTITY>
   {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="properties"></param>
     protected void TestEqualsAndHashCode(IDictionary<string, object[]> properties)
     {
       var entity = typeof(ENTITY).NewInstance();

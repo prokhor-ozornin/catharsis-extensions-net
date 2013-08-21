@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 using Catharsis.Commons.Domain;
 using Catharsis.Commons.Extensions;
+using Xunit;
+using File = Catharsis.Commons.Domain.File;
 
 namespace Example
 {
@@ -10,7 +13,7 @@ namespace Example
   {
     static void Main(string[] args)
     {
-      // Will return "second,third"
+      /*// Will return "second,third"
       new HashSet<string>().AddNext("first").AddNext("second").RemoveNext("first").AddNext("third").Join(",");
 
       // Output word "Test" to console ten times
@@ -50,7 +53,7 @@ namespace Example
       new Uri("http://yandex.ru").Text();
 
       // Create new dictionary, populate it and serialize to binary format
-      new Dictionary<string, object>().AddNext("article", new Article()).AddNext("blog", new Blog()).AddNext("text", new Text()).Binary();
+      new Dictionary<string, object>().AddNext("article", new Article()).AddNext("blog", new Blog()).AddNext("text", new Text()).Binary();*/
     }
   }
 }

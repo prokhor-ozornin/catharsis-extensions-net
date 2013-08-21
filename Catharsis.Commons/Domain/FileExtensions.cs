@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Catharsis.Commons.Extensions;
 
 namespace Catharsis.Commons.Domain
 {
@@ -11,12 +11,12 @@ namespace Catharsis.Commons.Domain
   public static class FileExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of files, leaving those with specified MIME content type.</para>
     /// </summary>
-    /// <param name="files"></param>
-    /// <param name="contentType"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
+    /// <param name="files">Source sequence of files to filter.</param>
+    /// <param name="contentType">MIME content type of files to search for.</param>
+    /// <returns>Filtered sequence of files with specified MIME content type.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="files"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<File> WithContentType(this IEnumerable<File> files, string contentType)
     {
       Assertion.NotNull(files);
@@ -25,10 +25,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of files by MIME content type in ascending order.</para>
     /// </summary>
-    /// <param name="files"></param>
-    /// <returns></returns>
+    /// <param name="files">Source sequence of files for sorting.</param>
+    /// <returns>Sorted sequence of files.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="files"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<File> OrderByContentType(this IEnumerable<File> files)
     {
@@ -38,10 +38,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of files by MIME content type in descending order.</para>
     /// </summary>
-    /// <param name="files"></param>
-    /// <returns></returns>
+    /// <param name="files">Source sequence of files for sorting.</param>
+    /// <returns>Sorted sequence of files.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="files"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<File> OrderByContentTypeDescending(this IEnumerable<File> files)
     {
@@ -51,11 +51,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of files, leaving those with specified original name.</para>
     /// </summary>
-    /// <param name="files"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="files">Source sequence of files to filter.</param>
+    /// <param name="name">Original name of files to search for.</param>
+    /// <returns>Filtered sequence of files.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="files"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<File> WithOriginalName(this IEnumerable<File> files, string name)
     {
@@ -65,10 +65,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of files by original name in ascending order.</para>
     /// </summary>
-    /// <param name="files"></param>
-    /// <returns></returns>
+    /// <param name="files">Source sequence of files for sorting.</param>
+    /// <returns>Filtered sequence of files.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="files"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<File> OrderByOriginalName(this IEnumerable<File> files)
     {
@@ -78,10 +78,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sort sequence of files by original name in descending order.</para>
     /// </summary>
-    /// <param name="files"></param>
-    /// <returns></returns>
+    /// <param name="files">Source sequence of files for sorting.</param>
+    /// <returns>Sorted sequence of file.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="files"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<File> OrderByOriginalNameDescending(this IEnumerable<File> files)
     {
