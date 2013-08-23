@@ -54,6 +54,7 @@ namespace Example
 
       // Create new dictionary, populate it and serialize to binary format
       new Dictionary<string, object>().AddNext("article", new Article()).AddNext("blog", new Blog()).AddNext("text", new Text()).Binary();*/
+
     }
   }
 }

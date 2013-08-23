@@ -131,10 +131,14 @@
     <Compile Include="Domain\DownloadExtensionsTests.cs" />
     <Compile Include="Domain\DownloadsCategoryTests.cs" />
     <Compile Include="Domain\DownloadTests.cs" />
+    <Compile Include="Domain\DreamExtensionsTests.cs" />
+    <Compile Include="Domain\DreamTests.cs" />
     <Compile Include="Domain\EntityUnitTests.cs" />
     <Compile Include="Domain\FaqTests.cs" />
     <Compile Include="Domain\FileExtensionsTests.cs" />
     <Compile Include="Domain\FileTests.cs" />
+    <Compile Include="Domain\IdeaExtensionsTests.cs" />
+    <Compile Include="Domain\IdeaTests.cs" />
     <Compile Include="Domain\IEntityExtensionsTests.cs" />
     <Compile Include="Domain\ImagesCategoryTests.cs" />
     <Compile Include="Domain\ImageTests.cs" />

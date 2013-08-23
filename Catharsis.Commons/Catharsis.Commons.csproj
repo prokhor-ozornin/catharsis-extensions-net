@@ -133,6 +133,9 @@
     <Compile Include="Domain\Download.cs" />
     <Compile Include="Domain\DownloadExtensions.cs" />
     <Compile Include="Domain\DownloadsCategory.cs" />
+    <Compile Include="Domain\Dream.cs" />
+    <Compile Include="Domain\DreamExtensions.cs" />
+    <Compile Include="Domain\DreamsCategory.cs" />
     <Compile Include="Domain\EntityBase.cs" />
     <Compile Include="Domain\Faq.cs" />
     <Compile Include="Domain\File.cs" />
@@ -140,6 +143,9 @@
     <Compile Include="Domain\IAccessable.cs" />
     <Compile Include="Domain\IAuthorable.cs" />
     <Compile Include="Domain\ICommentable.cs" />
+    <Compile Include="Domain\Idea.cs" />
+    <Compile Include="Domain\IdeaExtensions.cs" />
+    <Compile Include="Domain\IdeasCategory.cs" />
     <Compile Include="Domain\IDescriptable.cs" />
     <Compile Include="Domain\IDimensionable.cs" />
     <Compile Include="Domain\IEmailable.cs" />

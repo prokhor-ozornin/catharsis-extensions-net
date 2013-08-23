@@ -14,6 +14,7 @@ The list of extended structures, classes and interfaces includes:
 * _System.Array_
 * _System.Boolean_
 * _System.DateTime_
+* _System.Delegate_
 * _System.Reflection.FieldInfo_
 * _System.IO.FileInfo_
 * _System.Collections.Generic.ICollection<T>_
@@ -33,6 +34,9 @@ The list of extended structures, classes and interfaces includes:
 * _System.IO.TextWriter_
 * _System.Type_
 * _System.Uri_
+* _System.Xml.Linq.XContainer_
+* _System.Xml.Linq.XDocument_
+* _System.Xml.Linq.XElement_
 * _System.Xml.XmlDocument_
 * _System.Xml.XmlReader_
 * _System.Xml.XmlWriter_
@@ -42,50 +46,51 @@ See **Examples** page for more usage detail, as well as API documentation in dis
 
 **Part II**
 Set of common domain classes, representing generic business domain entities, which can be used in many typical .NET applications. These classes are located in the _Catharsis.Commons.Domain_ namespace. The list of domain classes includes :
-* _Catharsis.Commons.Domain.Article_
-* _Catharsis.Commons.Domain.ArticlesCategory_
-* _Catharsis.Commons.Domain.Audio_
-* _Catharsis.Commons.Domain.AudiosCategory_
-* _Catharsis.Commons.Domain.Blog_
-* _Catharsis.Commons.Domain.BlogEntry_
-* _Catharsis.Commons.Domain.Comment_
-* _Catharsis.Commons.Domain.Faq_
-* _Catharsis.Commons.Domain.File_
-* _Catharsis.Commons.Domain.Image_
-* _Catharsis.Commons.Domain.ImagesCategory_
-* _Catharsis.Commons.Domain.Location_
-* _Catharsis.Commons.Domain.Person_
-* _Catharsis.Commons.Domain.Playcast_
-* _Catharsis.Commons.Domain.PlaycastsCategory_
-* _Catharsis.Commons.Domain.Profile_
-* _Catharsis.Commons.Domain.Quote_
-* _Catharsis.Commons.Domain.Subscription_
-* _Catharsis.Commons.Domain.Text_
-* _Catharsis.Commons.Domain.TextsCategory_
-* _Catharsis.Commons.Domain.User_
-* _Catharsis.Commons.Domain.Video_
-* _Catharsis.Commons.Domain.VideosCategory_
-* _Catharsis.Commons.Domain.WebLink_
-* _Catharsis.Commons.Domain.WebLinksCategory_
+* _Announcement_, _AnnouncementsCategory_
+* _Art_, _ArtsAlbum_
+* _Article, _ArticlesCategory_
+* _Audio_, _AudiosCategory_
+* _Blog_, _BlogEntry_
+* _City_
+* _Comment_
+* _Country_
+* _Download_, _DownloadsCategory_
+* _Dream_, _DreamsCategory_
+* _Faq_
+* _File_
+* _Idea_, _IdeasCategory_
+* _Image_, _ImagesCategory_
+* _Location_
+* _Person_
+* _Playcast_, _PlaycastsCategory_
+* _Poll_, _PollAnswer_, _PollOption_
+* _Profile_
+* _Quote_
+* _Song_, _SongsAlbum_
+* _Subscription_
+* _Text_, _TextsCategory_
+* _User_
+* _Video_, _VideosCategory_
+* _WebLink_, _WebLinksCategory_
 
 As well several domain interfaces with extension methods are provided, and many of domain classes implement one or more of them. You can make your domain classes implement any of provided interface to quickly add additional functionality. The list of domain interfaces includes :
-* _Catharsis.Commons.Domain.IAccessable_
-* _Catharsis.Commons.Domain.IAuthorable_
-* _Catharsis.Commons.Domain.ICommentable_
-* _Catharsis.Commons.Domain.IDescriptable_
-* _Catharsis.Commons.Domain.IEmailable_
-* _Catharsis.Commons.Domain.IEntity_
-* _Catharsis.Commons.Domain.IImageable_
-* _Catharsis.Commons.Domain.IInetAddressable_
-* _Catharsis.Commons.Domain.INameable_
-* _Catharsis.Commons.Domain.IPersonalizable_
-* _Catharsis.Commons.Domain.ISizeable_
-* _Catharsis.Commons.Domain.IStatusable_
-* _Catharsis.Commons.Domain.ITaggable_
-* _Catharsis.Commons.Domain.ITextable_
-* _Catharsis.Commons.Domain.ITimeable_
-* _Catharsis.Commons.Domain.ITypeable_
-* _Catharsis.Commons.Domain.IUrlAddressable_
+* _IAccessable_
+* _IAuthorable_
+* _ICommentable_
+* _IDescriptable_
+* _IEmailable_
+* _IEntity_
+* _IImageable_
+* _IInetAddressable_
+* _INameable_
+* _IPersonalizable_
+* _ISizeable_
+* _IStatusable_
+* _ITaggable_
+* _ITextable_
+* _ITimeable_
+* _ITypeable_
+* _IUrlAddressable_
 
 In addition, extension methods for _Enumerable<T>_ generic interfaces for theses classes are provided for easy quering, searching and sorting.
 
