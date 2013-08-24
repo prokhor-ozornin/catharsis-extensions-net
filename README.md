@@ -4,6 +4,8 @@ This library is extensively unit-tested, greatly reducing the possibility of bug
 
 **Purpose** : Provide extension methods for common .NET types and common domain classes to simplify and speedup typical .NET business applications development process.
 
+**Target** : .NET Framework 4.0/Silverlight 4-5
+
 ### Structure
 This library consists of two main parts :
 
@@ -42,13 +44,13 @@ The list of extended structures, classes and interfaces includes:
 * _System.Xml.XmlWriter_
 
 More extension methods can be added to the library on request.
-See **Examples** page for more usage detail, as well as API documentation in distribution packages (work in progress).
+See **Examples** for more usage detail, as well as API documentation in distribution packages (work in progress).
 
 **Part II**
 Set of common domain classes, representing generic business domain entities, which can be used in many typical .NET applications. These classes are located in the _Catharsis.Commons.Domain_ namespace. The list of domain classes includes :
 * _Announcement_, _AnnouncementsCategory_
 * _Art_, _ArtsAlbum_
-* _Article, _ArticlesCategory_
+* _Article_, _ArticlesCategory_
 * _Audio_, _AudiosCategory_
 * _Blog_, _BlogEntry_
 * _City_
@@ -98,3 +100,47 @@ As a bonus, _Catharsis.Commons.Assertion_ class is provided, which fills the gap
 
 **The story of name**
 You may wonder, why the name - "Catharsis" ? The true answer, however, has been lost in times. Some folks say that it's a word that represents a spiritual inspiration, moving a man forward, while others argue that it has something to do with cats. Who really knows ...
+
+
+**Examples**
+    // Will return "second,third"
+    new HashSet<string>().AddNext("first").AddNext("second").RemoveNext("first").AddNext("third").Join(",");
+
+    // Output word "Test" to console ten times
+    1.UpTo(10, () => Console.Out.WriteLine("Test"));
+
+    // HEX-encoded 1001 random bytes, and then replace "A" to "C" and "B" to "D" in encoded string
+    new Random().Bytes(1001).EncodeHex().Replace(new[] { "A", "B" }, new[] { "C", "D" });
+
+    // Creates instances of Article class by calling its default no-args constructor
+    typeof(Article).NewInstance();
+
+    // Creates instance of Article class by calling constructor with two arguments, and then serialize it to XML format
+    typeof(Article).NewInstance("first", 10).Xml();
+
+    // Won't add null element
+    try
+    {
+      new List<string>().AsNonNullable().AddNext("first").AddNext("second").AddAll(new[] { "third", "fourth" }).Add(null);
+    }
+    catch (Exception e)
+    {
+    }
+
+    // Returns text contents of file
+    new FileInfo("myfile").Text();
+
+    // Decode GZIP'ped file, and calculates SHA512 hash from decoded data
+    new FileInfo("myfile.gz").OpenRead().GZip().EncodeSHA512();
+
+    // MD5 encoded data of file
+    new FileInfo("myfile").Bytes().EncodeMD5();
+
+    // Returns BASE-64 encoded HTML content of downloaded web page
+    new Uri("http://yandex.ru").Stream().Bytes().EncodeBase64();
+
+    // Load web page and return its contents
+    new Uri("http://yandex.ru").Text();
+
+    // Create new dictionary, populate it and serialize to binary format
+    new Dictionary<string, object>().AddNext("article", new Article()).AddNext("blog", new Blog()).AddNext("text", new Text()).Binary();
