@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("Username")]
   public class User : EntityBase, IComparable<User>, IEmailable, INameable, ITimeable
   {

@@ -9,7 +9,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   public class Poll : Item
   {
     private readonly ICollection<PollAnswer> answers = new HashSet<PollAnswer>();

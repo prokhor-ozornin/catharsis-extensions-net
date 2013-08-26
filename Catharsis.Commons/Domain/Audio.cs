@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("Category", "File")]
   public class Audio : EntityBase, IComparable<Audio>
   {
@@ -32,6 +31,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public File File
     {
       get { return this.file; }

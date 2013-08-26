@@ -272,7 +272,7 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(entities);
 
-      return entities.WithLanguage(culture != null ? culture.ThreeLetterISOLanguageName : null);
+      return entities.WithLanguage(culture != null ? culture.TwoLetterISOLanguageName : null);
     }
 
     /// <summary>

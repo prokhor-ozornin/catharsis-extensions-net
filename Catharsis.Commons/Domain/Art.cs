@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("Album", "Person")]
   public class Art : Item, IComparable<Art>, IImageable
   {
@@ -22,6 +21,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public Image Image
     {
       get { return this.image; }

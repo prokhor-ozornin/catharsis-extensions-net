@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("Type")]
   public class Quote : Item, IComparable<Quote>, ITypeable
   {

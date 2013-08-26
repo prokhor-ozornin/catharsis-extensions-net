@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("Category", "Url")]
   public class WebLink : Item, IUrlAddressable
   {

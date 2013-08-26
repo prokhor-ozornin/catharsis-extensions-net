@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("IsoCode")]
   public class Country : EntityBase, IComparable<Country>, IImageable, INameable
   {

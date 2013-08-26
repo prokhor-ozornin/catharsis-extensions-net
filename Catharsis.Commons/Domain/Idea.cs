@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("Category")]
   public class Idea : Item, IDescriptable, IImageable
   {
@@ -79,7 +78,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="xml"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
-    public static Idea Xml(XElement xml)
+    public new static Idea Xml(XElement xml)
     {
       Assertion.NotNull(xml);
 

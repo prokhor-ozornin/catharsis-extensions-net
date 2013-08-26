@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("AuthorId", "Type", "Username")]
   public class Profile : EntityBase, IComparable<Profile>, IAuthorable, INameable, IUrlAddressable
   {

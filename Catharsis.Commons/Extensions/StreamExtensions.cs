@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.IO.Compression;
-using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -43,20 +41,6 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="bufferSize"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static BufferedStream Buffered(this Stream stream, int? bufferSize = null)
-    {
-      Assertion.NotNull(stream);
-
-      return bufferSize.HasValue ? new BufferedStream(stream, bufferSize.Value) : new BufferedStream(stream);
-    }
-
-    /// <summary>
     ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte"/> array. The input is closed before this method returns.</para>
     /// </summary>
     /// <param name="stream"></param>
@@ -83,101 +67,6 @@ namespace Catharsis.Commons.Extensions
       return destination.ToArray();
     }
     
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="mode"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static DeflateStream Deflate(this Stream stream, CompressionMode mode)
-    {
-      Assertion.NotNull(stream);
-
-      return new DeflateStream(stream, mode);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <typeparam name="STREAM"></typeparam>
-    /// <param name="stream"></param>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static STREAM Deflate<STREAM>(this STREAM stream, byte[] bytes) where STREAM : Stream
-    {
-      Assertion.NotNull(stream);
-      Assertion.NotNull(bytes);
-
-      if (bytes.Length > 0)
-      {
-        new DeflateStream(stream, CompressionMode.Compress, true).Write(bytes).Close();
-      }
-
-      return stream;
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static byte[] Deflate(this Stream stream)
-    {
-      Assertion.NotNull(stream);
-
-      return new DeflateStream(stream, CompressionMode.Decompress, true).Bytes(true);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="mode"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static GZipStream GZip(this Stream stream, CompressionMode mode)
-    {
-      Assertion.NotNull(stream);
-
-      return new GZipStream(stream, mode);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static STREAM GZip<STREAM>(this STREAM stream, byte[] bytes) where STREAM : Stream
-    {
-      Assertion.NotNull(stream);
-      Assertion.NotNull(bytes);
-
-      if (bytes.Length > 0)
-      {
-        new GZipStream(stream, CompressionMode.Compress, true).Write(bytes).Close();
-      }
-
-      return stream;
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static byte[] GZip(this Stream stream)
-    {
-      Assertion.NotNull(stream);
-
-      return new GZipStream(stream, CompressionMode.Decompress, true).Bytes(true);
-    }
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -234,7 +123,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(stream);
 
-      return encoding != null ? new StreamReader(stream, encoding) : new StreamReader(stream, Encoding.Default);
+      return encoding != null ? new StreamReader(stream, encoding) : new StreamReader(stream, Encoding.UTF8);
     }
 
     /// <summary>
@@ -248,7 +137,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(stream);
 
-      return encoding != null ? new StreamWriter(stream, encoding) : new StreamWriter(stream, Encoding.Default);
+      return encoding != null ? new StreamWriter(stream, encoding) : new StreamWriter(stream, Encoding.UTF8);
     }
 
     /// <summary>
@@ -327,32 +216,6 @@ namespace Catharsis.Commons.Extensions
       Assertion.NotNull(stream);
 
       return System.Xml.XmlReader.Create(stream, new XmlReaderSettings { CloseInput = close }).Read(System.Xml.Linq.XDocument.Load);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="close"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static XmlDocument XmlDocument(this Stream stream, bool close = false)
-    {
-      Assertion.NotNull(stream);
-
-      var document = new XmlDocument();
-      try
-      {
-        document.Load(stream);
-      }
-      finally
-      {
-        if (close)
-        {
-          stream.Close();
-        }
-      }
-      return document;
     }
 
     /// <summary>

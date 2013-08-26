@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("Country", "Name", "Region")]
   public class City : EntityBase, IComparable<City>, INameable
   {

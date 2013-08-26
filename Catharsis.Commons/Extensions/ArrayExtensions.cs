@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Catharsis.Commons.Extensions
@@ -20,7 +19,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(chars);
 
-      return (encoding ?? Encoding.Default).GetBytes(chars);
+      return (encoding ?? Encoding.UTF8).GetBytes(chars);
     }
 
     /// <summary>
@@ -47,70 +46,6 @@ namespace Catharsis.Commons.Extensions
       Assertion.NotNull(bytes);
 
       return BitConverter.ToString(bytes).Replace("-", "");
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="array"/> is a <c>null</c> reference.</exception>
-    public static byte[] EncodeMD5(this byte[] bytes)
-    {
-      Assertion.NotNull(bytes);
-
-      using (var hash = HashAlgorithm.Create("MD5"))
-      {
-        return hash.ComputeHash(bytes);
-      }
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static byte[] EncodeSHA1(this byte[] bytes)
-    {
-      Assertion.NotNull(bytes);
-
-      using (var hash = HashAlgorithm.Create("SHA1"))
-      {
-        return hash.ComputeHash(bytes);
-      }
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static byte[] EncodeSHA256(this byte[] bytes)
-    {
-      Assertion.NotNull(bytes);
-
-      using (var hash = HashAlgorithm.Create("SHA256"))
-      {
-        return hash.ComputeHash(bytes);
-      }
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static byte[] EncodeSHA512(this byte[] bytes)
-    {
-      Assertion.NotNull(bytes);
-
-      using (var hash = HashAlgorithm.Create("SHA512"))
-      {
-        return hash.ComputeHash(bytes);
-      }
     }
 
     /// <summary>
@@ -156,7 +91,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(bytes);
 
-      return (encoding ?? Encoding.Default).GetString(bytes);
+      return (encoding ?? Encoding.UTF8).GetString(bytes, 0, bytes.Length);
     }
   }
 }

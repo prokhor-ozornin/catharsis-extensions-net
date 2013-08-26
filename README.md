@@ -103,6 +103,7 @@ You may wonder, why the name - "Catharsis" ? The true answer, however, has been 
 
 
 **Examples**
+
     // Will return "second,third"
     new HashSet<string>().AddNext("first").AddNext("second").RemoveNext("first").AddNext("third").Join(",");
 

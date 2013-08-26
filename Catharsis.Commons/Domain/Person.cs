@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("BirthDay", "BirthMonth", "BirthYear", "DeathDay", "DeathMonth", "DeathYear", "NameFirst", "NameLast", "NameMiddle")]
   public class Person : EntityBase, IComparable<Person>, IDescriptable, IImageable, IPersonalizable
   {

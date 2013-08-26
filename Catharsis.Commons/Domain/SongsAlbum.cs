@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   public class SongsAlbum : Item, IComparable<SongsAlbum>, IImageable
   {
     /// <summary>

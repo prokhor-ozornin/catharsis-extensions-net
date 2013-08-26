@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("Language", "Name", "Translator")]
   public class TextTranslation : EntityBase, ILocalizable, INameable, ITextable
   {

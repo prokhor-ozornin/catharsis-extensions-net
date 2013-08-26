@@ -9,13 +9,11 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
-  [EqualsAndHashCode("Hash")]
+  [EqualsAndHashCode("Data", "Name")]
   public class File : EntityBase, IComparable<File>, INameable, ISizable, ITaggable, ITimeable
   {
     private string contentType;
     private byte[] data;
-    private string hash;
     private string name;
     private string originalName;
     private readonly ICollection<string> tags = new HashSet<string>();
@@ -52,21 +50,7 @@ namespace Catharsis.Commons.Domain
     ///   <para></para>
     /// </summary>
     public DateTime DateCreated { get; set; }
-    
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    public string Hash
-    {
-      get { return this.hash; }
-      set
-      {
-        Assertion.NotEmpty(value);
-
-        this.hash = value;
-      }
-    }
-    
+   
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -148,8 +132,7 @@ namespace Catharsis.Commons.Domain
       this.Name = name;
       this.OriginalName = originalName;
       this.Data = data;
-      this.Hash = data.EncodeSHA512().EncodeHex();
-      this.Size = data.LongLength;
+      this.Size = data.Length;
     }
 
     /// <summary>
@@ -207,7 +190,6 @@ namespace Catharsis.Commons.Domain
         new XElement("ContentType", this.ContentType),
         new XElement("Data", this.Data.EncodeBase64()),
         new XElement("DateCreated", this.DateCreated.ToRFC1123()),
-        new XElement("Hash", this.Hash),
         new XElement("LastUpdated", this.LastUpdated.ToRFC1123()),
         new XElement("Name", this.Name),
         new XElement("OriginalName", this.OriginalName),

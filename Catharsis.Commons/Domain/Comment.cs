@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("AuthorId", "Name", "Text")]
   public class Comment : EntityBase, IComparable<Comment>, IAuthorable, INameable, ITextable, ITimeable
   {

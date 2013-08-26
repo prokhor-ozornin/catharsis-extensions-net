@@ -7,7 +7,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   public class WebLinksCategory : Category
   {
     /// <summary>

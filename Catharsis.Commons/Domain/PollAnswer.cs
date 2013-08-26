@@ -9,7 +9,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("AuthorId")]
   public class PollAnswer : EntityBase, IComparable<PollAnswer>, IAuthorable, ITimeable
   {

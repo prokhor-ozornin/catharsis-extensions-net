@@ -194,7 +194,7 @@ namespace Catharsis.Commons.Extensions
         throw new ArgumentException("Type {0} does not represent interface".FormatValue(interfaceType), "interfaceType");
       }
 
-      return type.GetInterface(interfaceType.Name) != null;
+      return type.GetInterface(interfaceType.Name, true) != null;
     }
 
     /// <summary>

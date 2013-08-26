@@ -34,7 +34,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(left);
 
-      return Delegate.RemoveAll(left, right);
+      return Delegate.Remove(left, right);
     }
   }
 }

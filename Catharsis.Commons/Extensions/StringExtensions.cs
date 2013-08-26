@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -27,7 +26,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(value);
 
-      var textEncoding = encoding ?? Encoding.Default;
+      var textEncoding = encoding ?? Encoding.UTF8;
       return preamble ? textEncoding.GetPreamble().Join(textEncoding.GetBytes(value)) : textEncoding.GetBytes(value);
     }
 
@@ -71,19 +70,6 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <param name="value"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public static string DecodeHTML(this string value)
-    {
-      Assertion.NotNull(value);
-
-      return value.Length > 0 ? WebUtility.HtmlDecode(value) : value;
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="value"></param>
     /// <param name="action"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="value"/> or <paramref name="action"/> is a <c>null</c> reference.</exception>
     public static void EachLine(this string value, Action<string> action)
@@ -92,19 +78,6 @@ namespace Catharsis.Commons.Extensions
       Assertion.NotNull(action);
 
       value.Split(new [] { Environment.NewLine }, StringSplitOptions.None).Each(action);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public static string EncodeHTML(this string value)
-    {
-      Assertion.NotNull(value);
-
-      return value.Length > 0 ? WebUtility.HtmlEncode(value) : value;
     }
 
     /// <summary>
@@ -200,21 +173,6 @@ namespace Catharsis.Commons.Extensions
       return sb.ToString();
     }
 
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="unsecure"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="unsecure"/> is a <c>null</c> reference.</exception>
-    public static SecureString Secure(this string unsecure)
-    {
-      Assertion.NotNull(unsecure);
-
-      var secure = new SecureString();
-      unsecure.Each(secure.AppendChar);
-      return secure;
-    }
-    
     /// <summary>
     ///   <para>Converts the specified string representation of a logical value to its <see cref="Boolean"/> equivalent.</para>
     ///   <seealso cref="bool.Parse(string)"/>

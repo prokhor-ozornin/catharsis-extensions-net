@@ -8,7 +8,6 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [Serializable]
   [EqualsAndHashCode("Email", "Type")]
   public class Subscription : EntityBase, IComparable<Subscription>, IAuthorable, IEmailable, ITimeable, ITypeable
   {
