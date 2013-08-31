@@ -7,7 +7,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public sealed class ArticlesCategory : Category
+  public class ArticlesCategory : Category
   {
     /// <summary>
     ///   <para>Creates new category of articles.</para>

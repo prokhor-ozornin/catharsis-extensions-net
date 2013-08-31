@@ -90,7 +90,7 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>../Catharsis.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
@@ -131,14 +131,10 @@
     <Compile Include="Domain\DownloadExtensionsTests.cs" />
     <Compile Include="Domain\DownloadsCategoryTests.cs" />
     <Compile Include="Domain\DownloadTests.cs" />
-    <Compile Include="Domain\DreamExtensionsTests.cs" />
-    <Compile Include="Domain\DreamTests.cs" />
     <Compile Include="Domain\EntityUnitTests.cs" />
     <Compile Include="Domain\FaqTests.cs" />
     <Compile Include="Domain\FileExtensionsTests.cs" />
     <Compile Include="Domain\FileTests.cs" />
-    <Compile Include="Domain\IdeaExtensionsTests.cs" />
-    <Compile Include="Domain\IdeaTests.cs" />
     <Compile Include="Domain\IEntityExtensionsTests.cs" />
     <Compile Include="Domain\ImagesCategoryTests.cs" />
     <Compile Include="Domain\ImageTests.cs" />
@@ -154,7 +150,6 @@
     <Compile Include="Domain\PollTests.cs" />
     <Compile Include="Domain\ProfileExtensionsTests.cs" />
     <Compile Include="Domain\ProfileTests.cs" />
-    <Compile Include="Domain\QuoteTests.cs" />
     <Compile Include="Domain\SongExtensionsTests.cs" />
     <Compile Include="Domain\SongsAlbumExtensionsTests.cs" />
     <Compile Include="Domain\SongsAlbumTests.cs" />

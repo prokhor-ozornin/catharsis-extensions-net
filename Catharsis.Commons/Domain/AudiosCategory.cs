@@ -7,7 +7,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public sealed class AudiosCategory : Category
+  public class AudiosCategory : Category
   {
     /// <summary>
     ///   <para>Creates new category of audios.</para>

@@ -94,7 +94,7 @@
     <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>../Catharsis.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
@@ -134,9 +134,6 @@
     <Compile Include="Domain\Download.cs" />
     <Compile Include="Domain\DownloadExtensions.cs" />
     <Compile Include="Domain\DownloadsCategory.cs" />
-    <Compile Include="Domain\Dream.cs" />
-    <Compile Include="Domain\DreamExtensions.cs" />
-    <Compile Include="Domain\DreamsCategory.cs" />
     <Compile Include="Domain\EntityBase.cs" />
     <Compile Include="Domain\Faq.cs" />
     <Compile Include="Domain\File.cs" />
@@ -144,9 +141,6 @@
     <Compile Include="Domain\IAccessable.cs" />
     <Compile Include="Domain\IAuthorable.cs" />
     <Compile Include="Domain\ICommentable.cs" />
-    <Compile Include="Domain\Idea.cs" />
-    <Compile Include="Domain\IdeaExtensions.cs" />
-    <Compile Include="Domain\IdeasCategory.cs" />
     <Compile Include="Domain\IDescriptable.cs" />
     <Compile Include="Domain\IDimensionable.cs" />
     <Compile Include="Domain\IEmailable.cs" />
@@ -178,7 +172,6 @@
     <Compile Include="Domain\PollOption.cs" />
     <Compile Include="Domain\Profile.cs" />
     <Compile Include="Domain\ProfileExtensions.cs" />
-    <Compile Include="Domain\Quote.cs" />
     <Compile Include="Domain\Song.cs" />
     <Compile Include="Domain\SongExtensions.cs" />
     <Compile Include="Domain\SongsAlbum.cs" />

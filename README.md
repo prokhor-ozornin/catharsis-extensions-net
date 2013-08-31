@@ -57,17 +57,14 @@ Set of common domain classes, representing generic business domain entities, whi
 * _Comment_
 * _Country_
 * _Download_, _DownloadsCategory_
-* _Dream_, _DreamsCategory_
 * _Faq_
 * _File_
-* _Idea_, _IdeasCategory_
 * _Image_, _ImagesCategory_
 * _Location_
 * _Person_
 * _Playcast_, _PlaycastsCategory_
 * _Poll_, _PollAnswer_, _PollOption_
 * _Profile_
-* _Quote_
 * _Song_, _SongsAlbum_
 * _Subscription_
 * _Text_, _TextsCategory_

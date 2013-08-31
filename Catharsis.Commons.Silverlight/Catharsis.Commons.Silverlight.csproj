@@ -47,7 +47,7 @@
     <DocumentationFile>Bin\Release\Catharsis.Commons.Silverlight.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>../Catharsis.snk</AssemblyOriginatorKeyFile>
@@ -151,15 +151,6 @@
     <Compile Include="..\Catharsis.Commons\Domain\DownloadsCategory.cs">
       <Link>Domain\DownloadsCategory.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Dream.cs">
-      <Link>Domain\Dream.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\DreamExtensions.cs">
-      <Link>Domain\DreamExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\DreamsCategory.cs">
-      <Link>Domain\DreamsCategory.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons\Domain\EntityBase.cs">
       <Link>Domain\EntityBase.cs</Link>
     </Compile>
@@ -180,15 +171,6 @@
     </Compile>
     <Compile Include="..\Catharsis.Commons\Domain\ICommentable.cs">
       <Link>Domain\ICommentable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Idea.cs">
-      <Link>Domain\Idea.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IdeaExtensions.cs">
-      <Link>Domain\IdeaExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IdeasCategory.cs">
-      <Link>Domain\IdeasCategory.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\Domain\IDescriptable.cs">
       <Link>Domain\IDescriptable.cs</Link>
@@ -282,9 +264,6 @@
     </Compile>
     <Compile Include="..\Catharsis.Commons\Domain\ProfileExtensions.cs">
       <Link>Domain\ProfileExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Quote.cs">
-      <Link>Domain\Quote.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\Domain\Song.cs">
       <Link>Domain\Song.cs</Link>
