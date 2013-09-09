@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Country", "Name", "Region")]
+  [EqualsAndHashCode("Country,Name,Region")]
   public class City : EntityBase, IComparable<City>, INameable
   {
     private Country country;
@@ -17,6 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public Country Country
     {
       get { return this.country; }
@@ -31,6 +32,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Name
     {
       get { return this.name; }
@@ -64,10 +67,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new city.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="name"></param>
+    /// <param name="id">Unique identifier of city.</param>
+    /// <param name="name">Name of city.</param>
     /// <param name="country"></param>
     /// <param name="region"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="name"/> or <paramref name="country"/> is a <c>null</c> reference.</exception>
@@ -80,10 +83,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new city from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="City"/> type.</param>
+    /// <returns>Recreated city object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static City Xml(XElement xml)
     {
@@ -102,19 +105,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current city with another.</para>
     /// </summary>
-    /// <param name="city"></param>
-    /// <returns></returns>
-    public int CompareTo(City city)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="City"/> to compare with this instance.</param>
+    public int CompareTo(City other)
     {
-      return this.Name.CompareTo(city.Name);
+      return this.Name.CompareTo(other.Name);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="City"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

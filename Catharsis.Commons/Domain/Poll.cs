@@ -43,12 +43,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new poll.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
+    /// <param name="id">Unique identifier of poll.</param>
+    /// <param name="language">ISO language code of poll's text content.</param>
+    /// <param name="name">Title of poll.</param>
+    /// <param name="text">Poll's question text.</param>
     /// <param name="multiSelect"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
@@ -60,10 +60,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new poll from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Poll"/> type.</param>
+    /// <returns>Recreated poll object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static Poll Xml(XElement xml)
     {
@@ -86,9 +86,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Poll"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

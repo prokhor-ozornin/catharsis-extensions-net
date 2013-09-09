@@ -65,10 +65,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of announcements by currency's ISO code in ascending order.</para>
     /// </summary>
-    /// <param name="announcements"></param>
-    /// <returns></returns>
+    /// <param name="announcements">Source sequence of announcements for sorting.</param>
+    /// <returns>Sorted sequence of announcements.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="announcements"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Announcement> OrderByCurrency(this IEnumerable<Announcement> announcements)
     {
@@ -78,10 +78,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of announcements by currency's ISO code in descending order.</para>
     /// </summary>
-    /// <param name="announcements"></param>
-    /// <returns></returns>
+    /// <param name="announcements">Source sequence of announcements for sorting.</param>
+    /// <returns>Sorted sequence of announcements.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="announcements"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Announcement> OrderByCurrencyDescending(this IEnumerable<Announcement> announcements)
     {
@@ -91,12 +91,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of announcements, leaving those with a price in specified range.</para>
     /// </summary>
-    /// <param name="announcements"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="announcements">Source sequence of announcements to filter.</param>
+    /// <param name="from">Lower bound of price range.</param>
+    /// <param name="to">Upper bound of price range.</param>
+    /// <returns>Filtered sequence of announcements with a price between <paramref name="from"/> and <paramref name="to"/> inclusively.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="announcements"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Announcement> WithPrice(this IEnumerable<Announcement> announcements, decimal? from = null, decimal? to = null)
     {
@@ -121,10 +121,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of announcements by price in ascending order.</para>
     /// </summary>
-    /// <param name="announcements"></param>
-    /// <returns></returns>
+    /// <param name="announcements">Source sequence of announcements for sorting.</param>
+    /// <returns>Sorted sequence of announcements.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="announcements"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Announcement> OrderByPrice(this IEnumerable<Announcement> announcements)
     {
@@ -134,10 +134,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of announcements by price in descending order.</para>
     /// </summary>
-    /// <param name="announcements"></param>
-    /// <returns></returns>
+    /// <param name="announcements">Source sequence of announcements for sorting.</param>
+    /// <returns>Sorted sequence of announcements.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="announcements"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Announcement> OrderByPriceDescending(this IEnumerable<Announcement> announcements)
     {

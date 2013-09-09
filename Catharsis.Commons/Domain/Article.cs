@@ -12,17 +12,17 @@ namespace Catharsis.Commons.Domain
   public class Article : Item, IImageable
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Short summary description of article.</para>
     /// </summary>
     public string Annotation { get; set; }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Category of article.</para>
     /// </summary>
     public ArticlesCategory Category { get; set; }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Associated image, representing article's text contents.</para>
     /// </summary>
     public Image Image { get; set; }
 
@@ -43,15 +43,15 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new article.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="category"></param>
+    /// <param name="id">Unique identifier of article.</param>
+    /// <param name="language">ISO language code of article's text content.</param>
+    /// <param name="name">Title of article.</param>
+    /// <param name="category">Category of article's belongings, or a <c>null</c> reference.</param>
     /// <param name="annotation"></param>
-    /// <param name="text"></param>
-    /// <param name="authorId"></param>
+    /// <param name="text">Article's body text.</param>
+    /// <param name="authorId">Identifier of article's publisher.</param>
     /// <param name="image"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
@@ -63,10 +63,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new article from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Article"/> type.</param>
+    /// <returns>Recreated article object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static Article Xml(XElement xml)
     {
@@ -85,9 +85,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Article"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Name", "Parent")]
+  [EqualsAndHashCode("Name,Parent")]
   public abstract class Category : EntityBase, IComparable<Category>
   {
     private string language;
@@ -73,13 +73,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new category.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="parent"></param>
-    /// <param name="description"></param>
+    /// <param name="id">Unique identifier of category.</param>
+    /// <param name="language">ISO language code of category's text content.</param>
+    /// <param name="name">Name of category.</param>
+    /// <param name="parent">Parent of category, or <c>null</c> if there is no parent.</param>
+    /// <param name="description">Description of category.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     protected Category(string id, string language, string name, Category parent = null, string description = null)
@@ -101,19 +101,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current category with another.</para>
     /// </summary>
-    /// <param name="category"></param>
-    /// <returns></returns>
-    public int CompareTo(Category category)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Category"/> to compare with this instance.</param>
+    public int CompareTo(Category other)
     {
-      return this.Name.CompareTo(category.Name);
+      return this.Name.CompareTo(other.Name);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Category"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

@@ -45,12 +45,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new blog entry.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
+    /// <param name="id">Unique identifier of blogs entry.</param>
+    /// <param name="language">ISO language code of entry's text content.</param>
+    /// <param name="name">Name of entry.</param>
+    /// <param name="text">Entry's body text.</param>
     /// <param name="blog"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="blog"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
@@ -62,10 +62,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new blog entry from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="BlogEntry"/> type.</param>
+    /// <returns>Recreated blog entry object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static BlogEntry Xml(XElement xml)
     {
@@ -84,22 +84,23 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current blog entry with another.</para>
     /// </summary>
-    /// <param name="entry"></param>
-    /// <returns></returns>
-    public int CompareTo(BlogEntry entry)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="BlogEntry"/> to compare with this instance.</param>
+    public int CompareTo(BlogEntry other)
     {
-      return base.CompareTo(entry);
+      return base.CompareTo(other);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="BlogEntry"/>.</returns>
     public override XElement Xml()
     {
-      return base.Xml().AddContent(this.Blog.Xml());
+      return base.Xml().AddContent(
+        this.Blog.Xml());
     }
   }
 }

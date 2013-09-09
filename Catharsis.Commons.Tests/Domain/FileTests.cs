@@ -117,7 +117,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(file.OriginalName == null);
       Assert.True(file.Size == 0);
       Assert.True(file.Tags.Count == 0);
-      
+
       Assert.Throws<ArgumentNullException>(() => new File(null));
       var data = new byte[] { 1, 2, 3 };
       file = new File(new Dictionary<string, object>()
@@ -174,8 +174,8 @@ namespace Catharsis.Commons.Domain
     public void EqualsAndHashCode()
     {
       this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("Data", new[] { Guid.NewGuid().ToByteArray(), Guid.NewGuid().ToByteArray() })
-        .AddNext("Name", new[] { "Name", "Name" }));
+        .AddNext("Name", new[] { "Name", "Name_2" })
+        .AddNext("OriginalName", new[] { "OriginalName", "OriginalName_2" }));
     }
 
     /// <summary>

@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("AuthorId", "Name", "Text")]
+  [EqualsAndHashCode("AuthorId,Name,Text")]
   public class Comment : EntityBase, IComparable<Comment>, IAuthorable, INameable, ITextable, ITimeable
   {
     private string authorId;
@@ -18,6 +18,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string AuthorId
     {
       get { return this.authorId; }
@@ -30,18 +32,20 @@ namespace Catharsis.Commons.Domain
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time or comment's creation.</para>
     /// </summary>
     public DateTime DateCreated { get; set; }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of comment's last modification.</para>
     /// </summary>
     public DateTime LastUpdated { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Name
     {
       get { return this.name; }
@@ -56,6 +60,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Text
     {
       get { return this.text; }
@@ -87,12 +93,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new comment.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="authorId"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
+    /// <param name="id">Unique identifier of comment.</param>
+    /// <param name="authorId">Identifier of comment's author.</param>
+    /// <param name="name">Name of comment.</param>
+    /// <param name="text">Comment's body text.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
     public Comment(string id, string authorId, string name, string text) : this()
@@ -104,10 +110,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new comment from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Comment"/> type.</param>
+    /// <returns>Recreated comment object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static Comment Xml(XElement xml)
     {
@@ -135,19 +141,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current comment with another.</para>
     /// </summary>
-    /// <param name="comment"></param>
-    /// <returns></returns>
-    public int CompareTo(Comment comment)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Comment"/> to compare with this instance.</param>
+    public int CompareTo(Comment other)
     {
-      return this.DateCreated.CompareTo(comment.DateCreated);
+      return this.DateCreated.CompareTo(other.DateCreated);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Comment"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

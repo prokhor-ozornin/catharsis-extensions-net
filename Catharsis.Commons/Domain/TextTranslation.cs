@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Language", "Name", "Translator")]
+  [EqualsAndHashCode("Language,Name,Translator")]
   public class TextTranslation : EntityBase, ILocalizable, INameable, ITextable
   {
     private string language;
@@ -18,6 +18,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Language
     {
       get { return this.language; }
@@ -32,6 +34,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Name
     {
       get { return this.name; }
@@ -46,6 +50,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Text
     {
       get { return this.text; }
@@ -79,12 +85,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new translation.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
+    /// <param name="id">Unique identifier of translation.</param>
+    /// <param name="language">ISO language code of translation's text content.</param>
+    /// <param name="name">Title of translation.</param>
+    /// <param name="text">Translation's content text.</param>
     /// <param name="translator"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
@@ -119,9 +125,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="TextTranslation"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

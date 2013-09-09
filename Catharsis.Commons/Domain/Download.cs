@@ -14,7 +14,7 @@ namespace Catharsis.Commons.Domain
     private string url;
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Category of download.</para>
     /// </summary>
     public DownloadsCategory Category { get; set; }
 
@@ -26,6 +26,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Url
     {
       get { return this.url; }
@@ -54,14 +56,14 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new download.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="category"></param>
+    /// <param name="id">Unique identifier of download.</param>
+    /// <param name="language">ISO language code of download's text content.</param>
+    /// <param name="name">Name of download.</param>
+    /// <param name="category">Category of download's belongings, or a <c>null</c> reference.</param>
     /// <param name="url"></param>
-    /// <param name="text"></param>
+    /// <param name="text">Download's description text.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="category"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="url"/> is <see cref="string.Empty"/> string.</exception>
     public Download(string id, string language, string name, string url, DownloadsCategory category = null, string text = null) : base(id, language, name, text)
@@ -71,10 +73,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new download from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Download"/> type.</param>
+    /// <returns>Recreated download object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static Download Xml(XElement xml)
     {
@@ -97,19 +99,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current download with another.</para>
     /// </summary>
-    /// <param name="download"></param>
-    /// <returns></returns>
-    public int CompareTo(Download download)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Download"/> to compare with this instance.</param>
+    public int CompareTo(Download other)
     {
-      return this.Name.CompareTo(download.Name);
+      return this.Name.CompareTo(other.Name);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Download"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

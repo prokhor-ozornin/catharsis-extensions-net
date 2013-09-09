@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("AuthorId", "Language", "Name")]
+  [EqualsAndHashCode("AuthorId,Language,Name")]
   public class Item : EntityBase, ICommentable, IComparable<Item>, IAuthorable, ILocalizable, INameable, ITaggable, ITextable, ITimeable
   {
     private readonly ICollection<Comment> comments = new List<Comment>();
@@ -32,13 +32,15 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of item's creation.</para>
     /// </summary>
     public DateTime DateCreated { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Language
     {
       get { return this.language; }
@@ -51,13 +53,15 @@ namespace Catharsis.Commons.Domain
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of item's last modification.</para>
     /// </summary>
     public DateTime LastUpdated { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Name
     {
       get { return this.name; }
@@ -104,13 +108,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new item.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
-    /// <param name="authorId"></param>
+    /// <param name="id">Unique identifier of item.</param>
+    /// <param name="language">ISO language code of item's text content.</param>
+    /// <param name="name">Name of item.</param>
+    /// <param name="text">Item's content text.</param>
+    /// <param name="authorId">Identifier of item's author.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public Item(string id, string language, string name, string text = null, string authorId = null) : this()
@@ -121,12 +125,12 @@ namespace Catharsis.Commons.Domain
       this.Text = text;
       this.AuthorId = authorId;
     }
-    
+
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new item from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Item"/> type.</param>
+    /// <returns>Recreated item object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static Item Xml(XElement xml)
     {
@@ -162,19 +166,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current item with another.</para>
     /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    public int CompareTo(Item item)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Item"/> to compare with this instance.</param>
+    public int CompareTo(Item other)
     {
-      return this.DateCreated.CompareTo(item.DateCreated);
+      return this.DateCreated.CompareTo(other.DateCreated);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Item"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

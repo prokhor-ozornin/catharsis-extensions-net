@@ -32,12 +32,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new arts album.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
+    /// <param name="id">Unique identifier of arts album.</param>
+    /// <param name="language">ISO language code of album's text content.</param>
+    /// <param name="name">Name of album.</param>
+    /// <param name="text">Album's description text.</param>
     /// <param name="publishedOn"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
@@ -47,10 +47,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new arts album from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="ArtsAlbum"/> type.</param>
+    /// <returns>Recreated arts album object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static ArtsAlbum Xml(XElement xml)
     {
@@ -69,9 +69,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="ArtsAlbum"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(
@@ -79,13 +79,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current arts album with another.</para>
     /// </summary>
-    /// <param name="album"></param>
-    /// <returns></returns>
-    public int CompareTo(ArtsAlbum album)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="ArtsAlbum"/> to compare with this instance.</param>
+    public int CompareTo(ArtsAlbum other)
     {
-      return this.Name.CompareTo(album.Name);
+      return this.Name.CompareTo(other.Name);
     }
   }
 }

@@ -1,0 +1,108 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using Catharsis.Commons.Extensions;
+
+namespace Catharsis.Commons.Domain
+{
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  [EqualsAndHashCode("Name,Type")]
+  public class Setting : EntityBase, INameable, ITypeable
+  {
+    private string name;
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
+    public string Name
+    {
+      get { return this.name; }
+      set
+      {
+        Assertion.NotEmpty(value);
+
+        this.name = value;
+      }
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public int Type { get; set; }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Value { get; set; }
+
+    /// <summary>
+    ///   <para>Creates new setting.</para>
+    /// </summary>
+    public Setting()
+    {
+    }
+
+    /// <summary>
+    ///   <para>Creates new setting with specified properties values.</para>
+    /// </summary>
+    /// <param name="properties">Named collection of properties to set on setting after its creation.</param>
+    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
+    public Setting(IDictionary<string, object> properties) : base(properties)
+    {
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="id">Unique identifier of setting.</param>
+    /// <param name="name"></param>
+    /// <param name="value"></param>
+    /// <param name="type"></param>
+    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="name"/> or <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="name"/> or <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
+    public Setting(string id, string name, string value, int type = 0) : base(id)
+    {
+      this.Name = name;
+      this.Value = value;
+      this.Type = type;
+    }
+
+    /// <summary>
+    ///   <para>Creates new setting from its XML representation.</para>
+    /// </summary>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Setting"/> type.</param>
+    /// <returns>Recreated setting object.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
+    public static Setting Xml(XElement xml)
+    {
+      Assertion.NotNull(xml);
+
+      return new Setting((string) xml.Element("Id"), (string) xml.Element("Name"), (string) xml.Element("Value"), (int) xml.Element("Type"));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+      return this.Value;
+    }
+
+    /// <summary>
+    ///   <para>Transforms current object to XML representation.</para>
+    /// </summary>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Setting"/>.</returns>
+    public override XElement Xml()
+    {
+      return base.Xml().AddContent(
+        new XElement("Name", this.Name),
+        new XElement("Type", this.Type),
+        this.Value != null ? new XElement("Value", this.Value) : null);
+    }
+  }
+}

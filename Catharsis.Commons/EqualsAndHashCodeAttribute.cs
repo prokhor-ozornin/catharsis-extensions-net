@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Catharsis.Commons
 {
@@ -15,9 +16,13 @@ namespace Catharsis.Commons
     ///   <para></para>
     /// </summary>
     /// <param name="properties"></param>
-    public EqualsAndHashCodeAttribute(params string[] properties)
+    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="properties"/> is <see cref="string.Empty"/> string.</exception>
+    public EqualsAndHashCodeAttribute(string properties)
     {
-      this.properties = properties;
+      Assertion.NotEmpty(properties);
+
+      this.properties = properties.Split(',').Select(property => property.Trim()).ToArray();
     }
 
     /// <summary>

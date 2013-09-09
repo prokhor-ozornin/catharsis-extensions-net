@@ -5,7 +5,7 @@ using System.Xml.Linq;
 namespace Catharsis.Commons.Domain
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Category of audios.</para>
   /// </summary>
   public class AudiosCategory : Category
   {
@@ -26,13 +26,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new category of audios.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="parent"></param>
-    /// <param name="description"></param>
+    /// <param name="id">Unique identifier of category.</param>
+    /// <param name="language">ISO language code of category's text content.</param>
+    /// <param name="name">Name of category.</param>
+    /// <param name="parent">Parent of category, or <c>null</c> if there is no parent.</param>
+    /// <param name="description">Description of category.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public AudiosCategory(string id, string language, string name, AudiosCategory parent = null, string description = null) : base(id, language, name, parent, description)
@@ -40,10 +40,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new category of audios from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="AudiosCategory"/> type.</param>
+    /// <returns>Recreated category object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static AudiosCategory Xml(XElement xml)
     {

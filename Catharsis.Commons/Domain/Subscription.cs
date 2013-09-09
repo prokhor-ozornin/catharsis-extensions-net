@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Email", "Type")]
+  [EqualsAndHashCode("Email,Type")]
   public class Subscription : EntityBase, IComparable<Subscription>, IAuthorable, IEmailable, ITimeable, ITypeable
   {
     private string authorId;
@@ -18,6 +18,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string AuthorId
     {
       get { return this.authorId; }
@@ -35,13 +37,15 @@ namespace Catharsis.Commons.Domain
     public bool Active { get; set; }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of subscription's creation.</para>
     /// </summary>
     public DateTime DateCreated { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Email
     {
       get { return this.email; }
@@ -59,13 +63,15 @@ namespace Catharsis.Commons.Domain
     public DateTime? ExpiredOn { get; set; }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of subscription's last modification.</para>
     /// </summary>
     public DateTime LastUpdated { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Token
     {
       get { return this.token; }
@@ -104,10 +110,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new subscription.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="authorId"></param>
+    /// <param name="id">Unique identifier of subscription.</param>
+    /// <param name="authorId">Identifier of subscription's </param>
     /// <param name="email"></param>
     /// <param name="type"></param>
     /// <param name="expiredOn"></param>
@@ -123,10 +129,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new subscription from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Subscription"/> type.</param>
+    /// <returns>Recreated subscription object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static Subscription Xml(XElement xml)
     {
@@ -158,19 +164,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current subscription with another.</para>
     /// </summary>
-    /// <param name="subscription"></param>
-    /// <returns></returns>
-    public int CompareTo(Subscription subscription)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Subscription"/> to compare with this instance.</param>
+    public int CompareTo(Subscription other)
     {
-      return this.DateCreated.CompareTo(subscription.DateCreated);
+      return this.DateCreated.CompareTo(other.DateCreated);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Subscription"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

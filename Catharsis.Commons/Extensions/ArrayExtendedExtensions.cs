@@ -4,15 +4,15 @@ using System.Security.Cryptography;
 namespace Catharsis.Commons.Extensions
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Set of extension methods for <see cref="Array"/> or <see cref="byte"/>.</para>
   /// </summary>
   public static class ArrayExtendedExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Computes hash for the given sequence of bytes, using MD5 algorithm.</para>
     /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
+    /// <param name="bytes">Source sequence for hash computation.</param>
+    /// <returns>Hashed value </returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
     public static byte[] EncodeMD5(this byte[] bytes)
     {

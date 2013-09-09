@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Address", "City")]
+  [EqualsAndHashCode("Address,City")]
   public class Location : EntityBase
   {
     private string address;
@@ -17,6 +17,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Address
     {
       get { return this.address; }
@@ -31,6 +33,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public City City
     {
       get { return this.city; }
@@ -74,9 +77,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new location.</para>
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique identifier of location.</param>
     /// <param name="city"></param>
     /// <param name="address"></param>
     /// <param name="latitude"></param>
@@ -94,10 +97,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new location from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Location"/> type.</param>
+    /// <returns>Recreated location object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static Location Xml(XElement xml)
     {
@@ -116,9 +119,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Location"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

@@ -6,28 +6,28 @@ using Catharsis.Commons.Extensions;
 namespace Catharsis.Commons.Domain
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Announcement is a free or paid informational message, created by user.</para>
   /// </summary>
   [EqualsAndHashCode("Category")]
   public class Announcement : Item, IImageable
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Category of announcement.</para>
     /// </summary>
     public AnnouncementsCategory Category { get; set; }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Currency of announcement's price (if it's a paid one).</para>
     /// </summary>
     public string Currency { get; set; } 
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Associated image, representing announcement's nature and contents.</para>
     /// </summary>
     public Image Image { get; set; }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Price of announcement's contents (if it's paid one).</para>
     /// </summary>
     public decimal? Price { get; set; }
 
@@ -48,17 +48,17 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new announcement.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
-    /// <param name="authorId"></param>
-    /// <param name="category"></param>
-    /// <param name="image"></param>
-    /// <param name="currency"></param>
-    /// <param name="price"></param>
+    /// <param name="id">Unique identifier of announcement.</param>
+    /// <param name="language">ISO language code of announcement's text content.</param>
+    /// <param name="name">Name of announcement.</param>
+    /// <param name="text">Announcement's body text.</param>
+    /// <param name="authorId">Identifier of announcement's publisher.</param>
+    /// <param name="category">Category of announcement's belongings, or a <c>null</c> reference.</param>
+    /// <param name="image">Associated announcement's image, or a <c>null</c> reference.</param>
+    /// <param name="currency">Currency of announcement's price, or a <c>null</c> reference.</param>
+    /// <param name="price">Price of announcement's content, or a <c>null</c> reference.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="authorId"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="authorId"/> is a <c>null</c> reference.</exception>
     public Announcement(string id, string language, string name, string text, string authorId, AnnouncementsCategory category = null, Image image = null, string currency = null, decimal? price = null) : base(id, language, name, text, authorId)
@@ -73,10 +73,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new announcement from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Announcement"/> type.</param>
+    /// <returns>Recreated announcement object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static Announcement Xml(XElement xml)
     {
@@ -95,9 +95,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Announcement"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

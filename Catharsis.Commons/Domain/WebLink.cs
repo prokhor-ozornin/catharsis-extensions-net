@@ -8,19 +8,21 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Category", "Url")]
+  [EqualsAndHashCode("Category,Url")]
   public class WebLink : Item, IUrlAddressable
   {
     private string url;
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Category of web link.</para>
     /// </summary>
     public WebLinksCategory Category { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Url
     {
       get { return this.url; }
@@ -49,14 +51,14 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new web link.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
+    /// <param name="id">Unique identifier of web link.</param>
+    /// <param name="language">ISO language code of web link's text content.</param>
+    /// <param name="name">Name of web link.</param>
+    /// <param name="text">Web link's description text.</param>
     /// <param name="url"></param>
-    /// <param name="category"></param>
+    /// <param name="category">Category of web link's belongings, or a <c>null</c> reference.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
     public WebLink(string id, string language, string name, string text, string url, WebLinksCategory category = null) : base(id, language, name, text)
@@ -68,10 +70,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new web link from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="WebLink"/> type.</param>
+    /// <returns>Recreated web link object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static WebLink Xml(XElement xml)
     {
@@ -99,9 +101,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="WebLink"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

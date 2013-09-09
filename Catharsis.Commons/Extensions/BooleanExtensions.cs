@@ -1,7 +1,7 @@
 ﻿namespace Catharsis.Commons.Extensions
 {
   /// <summary>
-  ///   <para>Set of extension methods for structure <see cref="bool"/>.</para>
+  ///   <para>Set of extension methods for <see cref="bool"/> primitive type.</para>
   ///   <seealso cref="bool"/>
   /// </summary>
   public static class BooleanExtensions

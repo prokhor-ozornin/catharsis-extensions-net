@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     public Audio Audio { get; set; }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Category of playcast.</para>
     /// </summary>
     public PlaycastsCategory Category { get; set; }
 
@@ -38,20 +38,19 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="properties">Named collection of properties to set on playcast after its creation.</param>
     /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Playcast(IDictionary<string, object> properties)
-      : base(properties)
+    public Playcast(IDictionary<string, object> properties) : base(properties)
     {
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new playcast.</para>
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique identifier of playcast.</param>
     /// <param name="authorId"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
-    /// <param name="category"></param>
+    /// <param name="language">ISO language code of playcast's text content.</param>
+    /// <param name="name">Title of playcast.</param>
+    /// <param name="text">Playcast's body text.</param>
+    /// <param name="category">Category of playcast's belongings, or a <c>null</c> reference.</param>
     /// <param name="audio"></param>
     /// <param name="image"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
@@ -67,10 +66,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new playcast from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Playcast"/> type.</param>
+    /// <returns>Recreated playcast object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static Playcast Xml(XElement xml)
     {
@@ -89,9 +88,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Playcast"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

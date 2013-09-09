@@ -8,19 +8,20 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Category", "File")]
+  [EqualsAndHashCode("Category,File")]
   public class Image : EntityBase, IComparable<Image>, IDimensionable
   {
     private File file;
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Category of image.</para>
     /// </summary>
     public ImagesCategory Category { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public File File
     {
       get { return this.file; }
@@ -58,13 +59,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new image.</para>
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique identifier of image.</param>
     /// <param name="file"></param>
     /// <param name="height"></param>
     /// <param name="width"></param>
-    /// <param name="category"></param>
+    /// <param name="category">Category of image's belongings, or a <c>null</c> reference.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="id"/> is <see cref="string.Empty"/> string.</exception>
     public Image(string id, File file, short height, short width, ImagesCategory category = null) : base(id)
@@ -76,10 +77,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new image from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Image"/> type.</param>
+    /// <returns>Recreated image object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static Image Xml(XElement xml)
     {
@@ -108,9 +109,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Image"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

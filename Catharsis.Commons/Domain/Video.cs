@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Category", "File")]
+  [EqualsAndHashCode("Category,File")]
   public class Video : EntityBase, IComparable<Video>, IDimensionable
   {
     private File file;
@@ -19,7 +19,7 @@ namespace Catharsis.Commons.Domain
     public short Bitrate { get; set; }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Category of video.</para>
     /// </summary>
     public VideosCategory Category { get; set; }
     
@@ -31,6 +31,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public File File
     {
       get { return this.file; }
@@ -69,15 +70,15 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new video.</para>
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique identifier of video.</param>
     /// <param name="file"></param>
     /// <param name="bitrate"></param>
     /// <param name="duration"></param>
     /// <param name="height"></param>
     /// <param name="width"></param>
-    /// <param name="category"></param>
+    /// <param name="category">Category of video's belongings, or a <c>null</c> reference.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="id"/> is <see cref="string.Empty"/> string.</exception>
     public Video(string id, File file, short bitrate, long duration, short height, short width, VideosCategory category = null) : base(id)
@@ -91,10 +92,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new video from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Video"/> type.</param>
+    /// <returns>Recreated video object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static Video Xml(XElement xml)
     {
@@ -113,19 +114,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current video with another.</para>
     /// </summary>
-    /// <param name="video"></param>
-    /// <returns></returns>
-    public int CompareTo(Video video)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Video"/> to compare with this instance.</param>
+    public int CompareTo(Video other)
     {
-      return this.File.CompareTo(video.File);
+      return this.File.CompareTo(other.File);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Video"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

@@ -65,10 +65,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of audios by bitrate in ascending order.</para>
     /// </summary>
-    /// <param name="audios"></param>
-    /// <returns></returns>
+    /// <param name="audios">Source sequence of audios for sorting.</param>
+    /// <returns>Sorted sequence of audios.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="audios"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Audio> OrderByBitrate(this IEnumerable<Audio> audios)
     {
@@ -78,10 +78,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of audios by bitrate in descending order.</para>
     /// </summary>
-    /// <param name="audios"></param>
-    /// <returns></returns>
+    /// <param name="audios">Source sequence of audios for sorting.</param>
+    /// <returns>Sorted sequence of audios.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="audios"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Audio> OrderByBitrateDescending(this IEnumerable<Audio> audios)
     {

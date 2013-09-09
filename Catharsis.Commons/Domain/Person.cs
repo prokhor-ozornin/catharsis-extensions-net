@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("BirthDay", "BirthMonth", "BirthYear", "DeathDay", "DeathMonth", "DeathYear", "NameFirst", "NameLast", "NameMiddle")]
+  [EqualsAndHashCode("BirthDay,BirthMonth,BirthYear,DeathDay,DeathMonth,DeathYear,NameFirst,NameLast,NameMiddle")]
   public class Person : EntityBase, IComparable<Person>, IDescriptable, IImageable, IPersonalizable
   {
     private string nameFirst;
@@ -57,6 +57,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string NameFirst
     {
       get { return this.nameFirst; }
@@ -71,6 +73,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string NameLast
     {
       get { return this.nameLast; }
@@ -104,9 +108,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new person.</para>
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique identifier of person.</param>
     /// <param name="nameFirst"></param>
     /// <param name="nameLast"></param>
     /// <param name="nameMiddle"></param>
@@ -136,10 +140,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new person from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Person"/> type.</param>
+    /// <returns>Recreated person object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static Person Xml(XElement xml)
     {
@@ -168,9 +172,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Person"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

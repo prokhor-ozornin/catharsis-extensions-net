@@ -51,12 +51,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of downloads, leaving those with count of downloads in specified range.</para>
     /// </summary>
-    /// <param name="downloads"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="downloads">Source sequence of downloads to filter.</param>
+    /// <param name="from">Lower bound of downloads range.</param>
+    /// <param name="to">Upper bound of downloads range.</param>
+    /// <returns>Filtered sequence of downloads with count of downloads ranging inclusively from <paramref name="from"/> to <paramref name="to"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="downloads"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Download> WithDownloads(this IEnumerable<Download> downloads, long? from = null, long? to = null)
     {

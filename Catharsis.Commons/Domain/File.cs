@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Data", "Name")]
+  [EqualsAndHashCode("Name,OriginalName")]
   public class File : EntityBase, IComparable<File>, INameable, ISizable, ITaggable, ITimeable
   {
     private string contentType;
@@ -21,6 +21,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string ContentType
     {
       get { return this.contentType; }
@@ -35,6 +37,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public byte[] Data
     {
       get { return this.data; }
@@ -47,18 +50,20 @@ namespace Catharsis.Commons.Domain
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of file's creation.</para>
     /// </summary>
     public DateTime DateCreated { get; set; }
    
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of file's last modification.</para>
     /// </summary>
     public DateTime LastUpdated { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Name
     {
       get { return this.name; }
@@ -73,6 +78,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string OriginalName
     {
       get { return this.originalName; }
@@ -116,11 +123,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new file.</para>
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique identifier of file.</param>
     /// <param name="contentType"></param>
-    /// <param name="name"></param>
+    /// <param name="name">Name of file.</param>
     /// <param name="originalName"></param>
     /// <param name="data"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="contentType"/>, <paramref name="name"/>, <paramref name="originalName"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
@@ -136,10 +143,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new file from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="File"/> type.</param>
+    /// <returns>Recreated file object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static File Xml(XElement xml)
     {
@@ -171,19 +178,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current file with another.</para>
     /// </summary>
-    /// <param name="file"></param>
-    /// <returns></returns>
-    public int CompareTo(File file)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="File"/> to compare with this instance.</param>
+    public int CompareTo(File other)
     {
-      return this.DateCreated.CompareTo(file.DateCreated);
+      return this.DateCreated.CompareTo(other.DateCreated);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="File"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("AuthorId", "Type", "Username")]
+  [EqualsAndHashCode("AuthorId,Type,Username")]
   public class Profile : EntityBase, IComparable<Profile>, IAuthorable, INameable, IUrlAddressable
   {
     private string authorId;
@@ -20,6 +20,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string AuthorId
     {
       get { return this.authorId; }
@@ -39,6 +41,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Name
     {
       get { return this.name; }
@@ -58,6 +62,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Type
     {
       get { return this.type; }
@@ -72,6 +78,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Url
     {
       get { return this.url; }
@@ -86,6 +94,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Username
     {
       get { return this.username; }
@@ -114,11 +124,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new profile.</para>
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique identifier of profile.</param>
     /// <param name="authorId"></param>
-    /// <param name="name"></param>
+    /// <param name="name">Name of profile's user.</param>
     /// <param name="username"></param>
     /// <param name="type"></param>
     /// <param name="url"></param>
@@ -138,10 +148,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new profile from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Profile"/> type.</param>
+    /// <returns>Recreated profile object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static Profile Xml(XElement xml)
     {
@@ -160,19 +170,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current profile with another.</para>
     /// </summary>
-    /// <param name="profile"></param>
-    /// <returns></returns>
-    public int CompareTo(Profile profile)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Profile"/> to compare with this instance.</param>
+    public int CompareTo(Profile other)
     {
-      return this.Username.CompareTo(profile.Username);
+      return this.Username.CompareTo(other.Username);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Profile"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

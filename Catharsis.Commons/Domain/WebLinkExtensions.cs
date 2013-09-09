@@ -25,10 +25,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of web links by category's name in ascending order.</para>
     /// </summary>
-    /// <param name="weblinks"></param>
-    /// <returns></returns>
+    /// <param name="weblinks">Source sequence of web links for sorting.</param>
+    /// <returns>Sorted sequence of web links.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="weblinks"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<WebLink> OrderByWebLinksCategoryName(this IEnumerable<WebLink> weblinks)
     {
@@ -38,10 +38,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of web links by category's name in descending order.</para>
     /// </summary>
-    /// <param name="weblinks"></param>
-    /// <returns></returns>
+    /// <param name="weblinks">Source sequence of web links for sorting.</param>
+    /// <returns>Sorted sequence of web links.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="weblinks"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<WebLink> OrderByWebLinksCategoryNameDescending(this IEnumerable<WebLink> weblinks)
     {

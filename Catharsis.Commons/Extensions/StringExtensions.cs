@@ -22,7 +22,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="preamble"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public static byte[] Bytes(this string value, Encoding encoding = null, bool preamble = false)
+    public static byte[] Bytes(this string value, Encoding encoding = null, bool preamble = true)
     {
       Assertion.NotNull(value);
 

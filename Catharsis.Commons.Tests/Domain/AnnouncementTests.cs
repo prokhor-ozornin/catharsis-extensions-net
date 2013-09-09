@@ -192,7 +192,6 @@ namespace Catharsis.Commons.Domain
             new XElement("ContentType", "image.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
             new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-            new XElement("Hash", Guid.Empty.ToByteArray().EncodeSHA512().EncodeHex()),
             new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
             new XElement("Name", "image.file.name"),
             new XElement("OriginalName", "image.file.originalName"),

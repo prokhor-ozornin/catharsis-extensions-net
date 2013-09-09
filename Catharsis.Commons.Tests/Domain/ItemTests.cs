@@ -124,7 +124,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(item.Text == null);
 
       Assert.Throws<ArgumentNullException>(() => new Item(null));
-      item = new Blog(new Dictionary<string, object>()
+      item = new Item(new Dictionary<string, object>()
         .AddNext("Id", "id")
         .AddNext("AuthorId", "authorId")
         .AddNext("Language", "language")

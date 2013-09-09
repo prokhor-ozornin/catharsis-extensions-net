@@ -18,6 +18,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string AuthorId
     {
       get { return this.authorId; }
@@ -30,12 +32,12 @@ namespace Catharsis.Commons.Domain
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of answer's creation.</para>
     /// </summary>
     public DateTime DateCreated { get; set; }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of answers last modification.</para>
     /// </summary>
     public DateTime LastUpdated { get; set; }
 
@@ -68,11 +70,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new poll answer.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="authorId"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/> or <paramref name="poll"/> is a <c>null</c> reference.</exception>
+    /// <param name="id">Unique identifier of poll answer.</param>
+    /// <param name="authorId">Identifier of answer's author.</param>
+    /// <exception cref="ArgumentNullException">If either <paramref name="id"/> or <paramref name="authorId"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/> or <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
     public PollAnswer(string id, string authorId) : base(id)
     {
@@ -82,10 +84,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new poll answer from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="PollAnswer"/> type.</param>
+    /// <returns>Recreated poll answer object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static PollAnswer Xml(XElement xml)
     {
@@ -104,19 +106,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current poll answer with another.</para>
     /// </summary>
-    /// <param name="answer"></param>
-    /// <returns></returns>
-    public int CompareTo(PollAnswer answer)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="PollAnswer"/> to compare with this instance.</param>
+    public int CompareTo(PollAnswer other)
     {
-      return this.DateCreated.CompareTo(answer.DateCreated);
+      return this.DateCreated.CompareTo(other.DateCreated);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="PollAnswer"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

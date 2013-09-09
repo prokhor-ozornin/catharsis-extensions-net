@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <returns></returns>
+    /// <returns>Filtered sequence of disallowed entities.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> Denied<T>(this IEnumerable<T> entities) where T : IAccessable
     {
@@ -40,12 +40,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given author's identifier.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="authorId"></param>
-    /// <returns></returns>
+    /// <param name="authorId">Identifier of author to search for.</param>
+    /// <returns>Filtered sequence of entities with specified author.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithAuthor<T>(this IEnumerable<T> entities, string authorId) where T : IAuthorable
     {
@@ -83,12 +83,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given description text.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="description"></param>
-    /// <returns></returns>
+    /// <param name="description">Description text for search for.</param>
+    /// <returns>Filtered sequence of entities with specified description.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithDescription<T>(this IEnumerable<T> entities, string description) where T : IDescriptable
     {
@@ -98,13 +98,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with height in specified range.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="from">Lower bound of height range.</param>
+    /// <param name="to">Upper bound of height range.</param>
+    /// <returns>Filtered sequence of entities with height ranging inclusively from <paramref name="from"/> to <paramref name="to"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithHeight<T>(this IEnumerable<T> entities, short? from = null, short? to = null) where T : IDimensionable
     {
@@ -157,13 +157,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with width in specified range.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="from">Lower bound of width range.</param>
+    /// <param name="to">Upper bound of width range.</param>
+    /// <returns>Filtered sequence of entities with width ranging inclusively from <paramref name="from"/> to <paramref name="to"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithWidth<T>(this IEnumerable<T> entities, short? from = null, short? to = null) where T : IDimensionable
     {
@@ -216,12 +216,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given email address.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="email"></param>
-    /// <returns></returns>
+    /// <param name="email">Email address to search for.</param>
+    /// <returns>Filtered sequence of entities with specified email address.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithEmail<T>(this IEnumerable<T> entities, string email) where T : IEmailable
     {
@@ -231,12 +231,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given internet address.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="inetAddress"></param>
-    /// <returns></returns>
+    /// <param name="inetAddress">Internet network address to search for.</param>
+    /// <returns>Filtered sequence of entities with specified internet address.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithInetAddress<T>(this IEnumerable<T> entities, string inetAddress) where T : IInetAddressable
     {
@@ -246,12 +246,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given ISO language code of their text content.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="language"></param>
-    /// <returns></returns>
+    /// <param name="language">ISO language code to search for.</param>
+    /// <returns>Filtered sequence of entities with text content having specified ISO language code.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithLanguage<T>(this IEnumerable<T> entities, string language) where T : ILocalizable
     {
@@ -261,12 +261,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given culture of their text content.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
+    /// <param name="culture">Culture to search for.</param>
+    /// <returns>Filtered sequence of entities with text content having specified culture.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithCulture<T>(this IEnumerable<T> entities, CultureInfo culture) where T : ILocalizable
     {
@@ -276,12 +276,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given name.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="name">Name to search for.</param>
+    /// <returns>Filtered sequence of entities with specified name.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithName<T>(this IEnumerable<T> entities, string name) where T : INameable
     {
@@ -319,12 +319,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given first name.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="name">First name to search for.</param>
+    /// <returns>Filtered sequence of entities with specified first name.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithFirstName<T>(this IEnumerable<T> entities, string name) where T : IPersonalizable
     {
@@ -362,12 +362,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given last name.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="name">Last name to search for.</param>
+    /// <returns>Filtered sequence of entities with specified last name.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithLastName<T>(this IEnumerable<T> entities, string name) where T : IPersonalizable
     {
@@ -405,12 +405,12 @@ namespace Catharsis.Commons.Domain
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given middle name.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
-    /// <param name="entities"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="entities">Source sequence of entities to filter.</param>
+    /// <param name="name">Middle name to search for.</param>
+    /// <returns>Filtered sequence of entities with specified middle name.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithMiddleName<T>(this IEnumerable<T> entities, string name) where T : IPersonalizable
     {
@@ -448,11 +448,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a full name of entity that implements <see cref="IPersonalizable"/> interface.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
-    /// <param name="entity"></param>
-    /// <returns></returns>
+    /// <param name="entity">Named subject entity.</param>
+    /// <returns>Full name of named <paramref name="entity"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entity"/> is a <c>null</c> reference.</exception>
     public static string GetFullName<T>(this T entity) where T : IPersonalizable
     {
@@ -462,13 +462,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with size in specified range.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="from">Lower bound of size range.</param>
+    /// <param name="to">Upper bound of size range.</param>
+    /// <returns>Filtered sequence of entities with duration ranging inclusively from <paramref name="from"/> to <paramref name="to"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithSize<T>(this IEnumerable<T> entities, long? from = null, long? to = null) where T : ISizable
     {
@@ -521,12 +521,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given status.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="status"></param>
-    /// <returns></returns>
+    /// <param name="status">Status to search for.</param>
+    /// <returns>Filtered sequence of entities with specified status.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithStatus<T>(this IEnumerable<T> entities, string status) where T : IStatusable
     {
@@ -536,12 +536,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given text.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="text"></param>
-    /// <returns></returns>
+    /// <param name="text">Text to search for.</param>
+    /// <returns>Filtered sequence of entities with specified text.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithText<T>(this IEnumerable<T> entities, string text) where T : ITextable
     {
@@ -551,13 +551,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with creation date and time in specified range.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="from">Lower bound of date and time range.</param>
+    /// <param name="to">Upper bound of date and time range.</param>
+    /// <returns>Filtered sequence of entities with creation date and time ranging inclusively from <paramref name="from"/> to <paramref name="to"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> CreatedOn<T>(this IEnumerable<T> entities, DateTime? from = null, DateTime? to = null) where T : ITimeable
     {
@@ -610,13 +610,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with last modification date and time in specified range.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="from">Lower bound of date and time range.</param>
+    /// <param name="to">Upper bound of date and time range.</param>
+    /// <returns>Filtered sequence of entities with last modification date and time ranging inclusively from <paramref name="from"/> to <paramref name="to"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> UpdatedOn<T>(this IEnumerable<T> entities, DateTime? from = null, DateTime? to = null) where T : ITimeable
     {
@@ -669,12 +669,12 @@ namespace Catharsis.Commons.Domain
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given type.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="type"></param>
-    /// <returns></returns>
+    /// <param name="type">Type to search for.</param>
+    /// <returns>Filtered sequence of entities with specified type.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithType<T>(this IEnumerable<T> entities, int type) where T : ITypeable
     {
@@ -684,12 +684,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of entities, leaving those with given URL address.</para>
     /// </summary>
     /// <typeparam name="T">Type of entities.</typeparam>
     /// <param name="entities">Source sequence of entities to filter.</param>
-    /// <param name="url"></param>
-    /// <returns></returns>
+    /// <param name="url">URL to search for.</param>
+    /// <returns>Filtered sequence of entities with specified URL.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<T> WithUrl<T>(this IEnumerable<T> entities, string url) where T : IUrlAddressable
     {

@@ -91,7 +91,7 @@ namespace Catharsis.Commons.Extensions
       Assertion.NotNull(subject);
       Assertion.NotNull(destination);
 
-      destination.XmlWriter(Encoding.Unicode).Write(writer => subject.Xml(writer, types));
+      destination.XmlWriter(encoding: Encoding.Unicode).Write(writer => subject.Xml(writer, types));
       return subject;
     }
 
@@ -144,7 +144,7 @@ namespace Catharsis.Commons.Extensions
       Assertion.NotNull(writer);
 
       var serializer = types != null ? new XmlSerializer(typeof(T), types.ToArray()) : new XmlSerializer(typeof(T));
-      writer.XmlWriter(Encoding.Unicode).Write(xmlWriter => serializer.Serialize(xmlWriter, subject));
+      writer.XmlWriter(encoding: Encoding.Unicode).Write(xmlWriter => serializer.Serialize(xmlWriter, subject));
       return subject;
     }
 

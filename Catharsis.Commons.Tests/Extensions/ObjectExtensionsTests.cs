@@ -583,7 +583,7 @@ namespace Catharsis.Commons.Extensions
       new MemoryStream().With(stream =>
       {
         Assert.True(ReferenceEquals(subject.Xml(stream), subject));
-        Assert.True(stream.Rewind().Text(Encoding.Unicode) == xml);
+        Assert.True(stream.Rewind().Text(encoding: Encoding.Unicode) == xml);
         Assert.True(stream.CanWrite);
       });
 

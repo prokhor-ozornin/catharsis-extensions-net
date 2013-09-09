@@ -11,12 +11,12 @@ namespace Catharsis.Commons.Domain
   public static class SongsAlbumExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of songs albums, leaving those published in specified time span.</para>
     /// </summary>
-    /// <param name="albums"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="albums">Source sequence of albums to filters.</param>
+    /// <param name="from">Lower bound of publication date range.</param>
+    /// <param name="to">Upper bound of publication date range.</param>
+    /// <returns>Filtered sequence of songs albums with publication date ranging inclusively from <paramref name="from"/> to <paramref name="to"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="albums"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<SongsAlbum> PublishedOn(this IEnumerable<SongsAlbum> albums, DateTime? from = null, DateTime? to = null)
     {

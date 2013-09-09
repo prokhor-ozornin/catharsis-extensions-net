@@ -21,6 +21,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public Audio Audio
     {
       get { return this.audio; }
@@ -49,12 +50,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new song.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
+    /// <param name="id">Unique identifier of song.</param>
+    /// <param name="language">ISO language code of song's text content.</param>
+    /// <param name="name">Name of song.</param>
+    /// <param name="text">Song's lyrics text.</param>
     /// <param name="audio"></param>
     /// <param name="album"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="audio"/> is a <c>null</c> reference.</exception>
@@ -67,10 +68,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new song from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Song"/> type.</param>
+    /// <returns>Recreated song object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static Song Xml(XElement xml)
     {
@@ -89,19 +90,19 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current song with another.</para>
     /// </summary>
-    /// <param name="song"></param>
-    /// <returns></returns>
-    public int CompareTo(Song song)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Song"/> to compare with this instance.</param>
+    public int CompareTo(Song other)
     {
-      return this.Name.CompareTo(song.Name);
+      return this.Name.CompareTo(other.Name);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Song"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

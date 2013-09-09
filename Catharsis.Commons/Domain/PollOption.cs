@@ -16,6 +16,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Text
     {
       get { return this.text; }
@@ -44,10 +46,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new poll option.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="text"></param>
+    /// <param name="id">Unique identifier of poll option.</param>
+    /// <param name="text">Option's content text.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
     public PollOption(string id, string text) : base(id)
@@ -56,10 +58,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new poll option from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="PollOption"/> type.</param>
+    /// <returns>Recreated poll option object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static PollOption Xml(XElement xml)
     {
@@ -69,9 +71,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="PollOption"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

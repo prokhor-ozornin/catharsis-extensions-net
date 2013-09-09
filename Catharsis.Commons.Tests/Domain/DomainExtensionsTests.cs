@@ -35,7 +35,7 @@ namespace Catharsis.Commons.Domain
       public string Description { get; set; }
     }
 
-    [EqualsAndHashCode("Height", "Width")]
+    [EqualsAndHashCode("Height,Width")]
     private sealed class DimensionableEntity : EntityBase, IDimensionable
     {
       public short Height { get; set; }
@@ -72,7 +72,7 @@ namespace Catharsis.Commons.Domain
       public string Name { get; set; }
     }
 
-    [EqualsAndHashCode("NameFirst", "NameLast", "NameMiddle")]
+    [EqualsAndHashCode("NameFirst,NameLast,NameMiddle")]
     private sealed class PersonalizableEntity : EntityBase, IPersonalizable
     {
       public string NameFirst { get; set; }
@@ -104,7 +104,7 @@ namespace Catharsis.Commons.Domain
       public string Text { get; set; }
     }
 
-    [EqualsAndHashCode("DateCreated", "LastUpdated")]
+    [EqualsAndHashCode("DateCreated,LastUpdated")]
     private sealed class TimeableEntity : EntityBase, ITimeable
     {
       public DateTime DateCreated { get; set; }
@@ -338,7 +338,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.False(Enumerable.Empty<ILocalizable>().WithCulture(null).Any());
       Assert.False(Enumerable.Empty<ILocalizable>().WithCulture(CultureInfo.CurrentCulture).Any());
-      Assert.True(new[] { null, new LocalizableEntity { Language = "eng" }, null, new LocalizableEntity { Language = "rus" } }.WithCulture(CultureInfo.GetCultureInfo("ru")).Count() == 1);
+      Assert.True(new[] { null, new LocalizableEntity { Language = "en" }, null, new LocalizableEntity { Language = "ru" } }.WithCulture(CultureInfo.GetCultureInfo("ru")).Count() == 1);
     }
 
     /// <summary>

@@ -249,7 +249,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamExtensions.Text(Stream, Encoding, bool)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StreamExtensions.Text"/> method.</para>
     /// </summary>
     [Fact]
     public void Text_Method()
@@ -263,15 +263,15 @@ namespace Catharsis.Commons.Extensions
       Assert.True(text == stream.Rewind().TextReader().Text());
       Assert.True(text == bytes.String());
       Assert.True(stream.ReadByte() == -1);
-      Assert.True(text == stream.Rewind().Text(null, true));
+      Assert.True(text == stream.Rewind().Text(close: true, encoding: null));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
 
       stream = new MemoryStream(bytes);
-      text = stream.Text(Encoding.Unicode);
+      text = stream.Text(encoding: Encoding.Unicode);
       Assert.True(text == stream.Rewind().TextReader(Encoding.Unicode).Text());
       Assert.True(text == bytes.String(Encoding.Unicode));
       Assert.True(stream.ReadByte() == -1);
-      Assert.True(text == stream.Rewind().Text(Encoding.Unicode, true));
+      Assert.True(text == stream.Rewind().Text(close: true, encoding: Encoding.Unicode));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
     }
 
@@ -311,7 +311,7 @@ namespace Catharsis.Commons.Extensions
 
       stream = new MemoryStream();
       stream.TextWriter(Encoding.Unicode).WriteObject(text).Close();
-      Assert.True(stream.ToArray().SequenceEqual(text.Bytes(Encoding.Unicode, true)));
+      Assert.True(stream.ToArray().SequenceEqual(text.Bytes(Encoding.Unicode)));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
     }
 
@@ -367,7 +367,7 @@ namespace Catharsis.Commons.Extensions
       new MemoryStream().With(x =>
       {
         Assert.True(ReferenceEquals(x.Write(text, Encoding.Unicode), x));
-        Assert.True(x.Rewind().Text(Encoding.Unicode) == text);
+        Assert.True(x.Rewind().Text(encoding: Encoding.Unicode) == text);
       });
     }
 
@@ -458,7 +458,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamExtensions.XmlWriter(Stream, Encoding, bool)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StreamExtensions.XmlWriter"/> method.</para>
     /// </summary>
     [Fact]
     public void XmlWriter_Method()
@@ -479,7 +479,7 @@ namespace Catharsis.Commons.Extensions
         Assert.True(stream.Bytes().Length == 0);
         Assert.True(stream.ReadByte() == -1);
 
-        stream.Rewind().XmlWriter(null, true).Write(writer =>
+        stream.Rewind().XmlWriter(close: true, encoding: null).Write(writer =>
         {
           Assert.True(writer.Settings.CloseOutput);
           Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.UTF8.ToString()));
@@ -490,7 +490,7 @@ namespace Catharsis.Commons.Extensions
       xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
       new MemoryStream().With(stream =>
       {
-        stream.XmlWriter(Encoding.Unicode).Write(writer =>
+        stream.XmlWriter(encoding: Encoding.Unicode).Write(writer =>
         {
           Assert.False(writer.Settings.CloseOutput);
           Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.Unicode.ToString()));
@@ -500,7 +500,7 @@ namespace Catharsis.Commons.Extensions
         Assert.True(stream.Bytes().Length == 0);
         Assert.True(stream.ReadByte() ==-1);
 
-        stream.XmlWriter(Encoding.Unicode, true).Write(writer =>
+        stream.XmlWriter(close: true, encoding: Encoding.Unicode).Write(writer =>
         {
           Assert.True(writer.Settings.CloseOutput);
           Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.Unicode.ToString()));

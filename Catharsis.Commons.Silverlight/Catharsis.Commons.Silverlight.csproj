@@ -265,6 +265,15 @@
     <Compile Include="..\Catharsis.Commons\Domain\ProfileExtensions.cs">
       <Link>Domain\ProfileExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Catharsis.Commons\Domain\Rating.cs">
+      <Link>Domain\Rating.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\Domain\RatingExtensions.cs">
+      <Link>Domain\RatingExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\Domain\Setting.cs">
+      <Link>Domain\Setting.cs</Link>
+    </Compile>
     <Compile Include="..\Catharsis.Commons\Domain\Song.cs">
       <Link>Domain\Song.cs</Link>
     </Compile>

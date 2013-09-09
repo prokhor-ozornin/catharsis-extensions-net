@@ -22,7 +22,7 @@ namespace Catharsis.Commons.Extensions
 
       const string xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
       var stringWriter = new StringWriter();
-      var xmlWriter = stringWriter.XmlWriter(Encoding.Unicode, true);
+      var xmlWriter = stringWriter.XmlWriter(close: true, encoding: Encoding.Unicode);
       Assert.True(ReferenceEquals(xmlWriter.Write(writer =>
       {
         writer.WriteStartDocument();

@@ -26,12 +26,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new F.A.Q.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
+    /// <param name="id">Unique identifier of F.A.Q.</param>
+    /// <param name="language">ISO language code of F.A.Q.'s text content.</param>
+    /// <param name="name">Name of F.A.Q.</param>
+    /// <param name="text">F.A.Q.'s question text.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
     public Faq(string id, string language, string name, string text) : base(id, language, name, text)
@@ -40,10 +40,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new F.A.Q. from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Faq"/> type.</param>
+    /// <returns>Recreated F.A.Q. object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static Faq Xml(XElement xml)
     {
@@ -62,13 +62,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current F.A.Q. with another.</para>
     /// </summary>
-    /// <param name="faq"></param>
-    /// <returns></returns>
-    public int CompareTo(Faq faq)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Faq"/> to compare with this instance.</param>
+    public int CompareTo(Faq other)
     {
-      return base.CompareTo(faq);
+      return base.CompareTo(other);
     }
   }
 }

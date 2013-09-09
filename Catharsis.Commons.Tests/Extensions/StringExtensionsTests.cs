@@ -24,10 +24,12 @@ namespace Catharsis.Commons.Extensions
       var text = Guid.NewGuid().ToString();
 
       Assert.True(text.Bytes(Encoding.Unicode).Length * 2 == text.Bytes(Encoding.UTF32).Length);
-      Assert.True(text.Bytes().String() == text);
-      Assert.True(text.Bytes(Encoding.Unicode).String(Encoding.Unicode) == text);
-      Assert.True(text.Bytes(Encoding.Unicode, true).Length == text.Bytes(Encoding.Unicode).Length + 2);
-      Assert.True(text.Bytes(Encoding.Unicode, true).SequenceEqual(Encoding.Unicode.GetPreamble().Join(text.Bytes(Encoding.Unicode))));
+      Assert.True(text.Bytes(Encoding.Unicode, false).Length * 2 == text.Bytes(Encoding.UTF32, false).Length);
+      
+      Assert.True(text.Bytes().String() != text);
+      Assert.True(text.Bytes(null, false).String() == text);
+      Assert.True(text.Bytes(Encoding.Unicode).String(Encoding.Unicode) != text);
+      Assert.True(text.Bytes(Encoding.Unicode, false).String(Encoding.Unicode) == text);
     }
 
     /// <summary>

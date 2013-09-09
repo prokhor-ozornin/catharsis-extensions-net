@@ -16,13 +16,15 @@ namespace Catharsis.Commons.Domain
     private string username;
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of user's creation.</para>
     /// </summary>
     public DateTime DateCreated { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Email
     {
       get { return this.email; }
@@ -35,13 +37,15 @@ namespace Catharsis.Commons.Domain
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Date and time of user's last modification.</para>
     /// </summary>
     public DateTime LastUpdated { get; set; }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Name
     {
       get { return this.name; }
@@ -56,6 +60,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Username
     {
       get { return this.username; }
@@ -87,12 +93,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new user.</para>
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Unique identifier of user.</param>
     /// <param name="username"></param>
     /// <param name="email"></param>
-    /// <param name="name"></param>
+    /// <param name="name">Name of user.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="username"/>, <paramref name="email"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="username"/>, <paramref name="email"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public User(string id, string username, string email, string name) : this()
@@ -104,10 +110,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new user from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="User"/> type.</param>
+    /// <returns>Recreated user object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static User Xml(XElement xml)
     {
@@ -133,21 +139,21 @@ namespace Catharsis.Commons.Domain
     {
       return this.Name;
     }
-    
+
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current user with another.</para>
     /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
-    public int CompareTo(User user)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="User"/> to compare with this instance.</param>
+    public int CompareTo(User other)
     {
-      return this.Username.CompareTo(user.Username);
+      return this.Username.CompareTo(other.Username);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="User"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

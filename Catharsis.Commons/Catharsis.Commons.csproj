@@ -172,6 +172,9 @@
     <Compile Include="Domain\PollOption.cs" />
     <Compile Include="Domain\Profile.cs" />
     <Compile Include="Domain\ProfileExtensions.cs" />
+    <Compile Include="Domain\Rating.cs" />
+    <Compile Include="Domain\RatingExtensions.cs" />
+    <Compile Include="Domain\Setting.cs" />
     <Compile Include="Domain\Song.cs" />
     <Compile Include="Domain\SongExtensions.cs" />
     <Compile Include="Domain\SongsAlbum.cs" />

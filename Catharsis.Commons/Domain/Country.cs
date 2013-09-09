@@ -22,6 +22,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string IsoCode
     {
       get { return this.isoCode; }
@@ -36,6 +38,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
     public string Name
     {
       get { return this.name; }
@@ -64,10 +68,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new country.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="name"></param>
+    /// <param name="id">Unique identifier of country.</param>
+    /// <param name="name">Name of country.</param>
     /// <param name="isoCode"></param>
     /// <param name="image"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="name"/> or <paramref name="isoCode"/> is a <c>null</c> reference.</exception>
@@ -80,10 +84,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new country from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Country"/> type.</param>
+    /// <returns>Recreated country object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public static Country Xml(XElement xml)
     {
@@ -96,31 +100,31 @@ namespace Catharsis.Commons.Domain
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
-    public override XElement Xml()
-    {
-      return base.Xml().AddContent(
-        this.Image != null ? this.Image.Xml() : null,
-        new XElement("IsoCode", this.IsoCode),
-        new XElement("Name", this.Name));
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <returns></returns>
     public override string ToString()
     {
       return this.Name;
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Compares the current country with another.</para>
     /// </summary>
-    /// <param name="country"></param>
-    /// <returns></returns>
-    public int CompareTo(Country country)
+    /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+    /// <param name="other">The <see cref="Country"/> to compare with this instance.</param>
+    public int CompareTo(Country other)
     {
-      return this.Name.CompareTo(country.Name);
+      return this.Name.CompareTo(other.Name);
+    }
+
+    /// <summary>
+    ///   <para>Transforms current object to XML representation.</para>
+    /// </summary>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Country"/>.</returns>
+    public override XElement Xml()
+    {
+      return base.Xml().AddContent(
+        this.Image != null ? this.Image.Xml() : null,
+        new XElement("IsoCode", this.IsoCode),
+        new XElement("Name", this.Name));
     }
   }
 }

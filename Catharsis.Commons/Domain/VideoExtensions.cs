@@ -25,10 +25,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of videos by category's name in ascending order.</para>
     /// </summary>
-    /// <param name="videos"></param>
-    /// <returns></returns>
+    /// <param name="videos">Source sequence of videos for sorting.</param>
+    /// <returns>Sorted sequence of videos.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Video> OrderByVideosCategoryName(this IEnumerable<Video> videos)
     {
@@ -38,10 +38,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of videos by category's name in descending order.</para>
     /// </summary>
-    /// <param name="videos"></param>
-    /// <returns></returns>
+    /// <param name="videos">Source sequence of videos for sorting.</param>
+    /// <returns>Sorted sequence of videos.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Video> OrderByVideosCategoryNameDescending(this IEnumerable<Video> videos)
     {
@@ -65,10 +65,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of videos by bitrate in ascending order.</para>
     /// </summary>
-    /// <param name="videos"></param>
-    /// <returns></returns>
+    /// <param name="videos">Source sequence of videos for sorting.</param>
+    /// <returns>Sorted sequence of videos.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Video> OrderByBitrate(this IEnumerable<Video> videos)
     {
@@ -78,10 +78,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of videos by bitrate in descending order.</para>
     /// </summary>
-    /// <param name="videos"></param>
-    /// <returns></returns>
+    /// <param name="videos">Source sequence of videos for sorting.</param>
+    /// <returns>Sorted sequence of videos.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Video> OrderByBitrateDescending(this IEnumerable<Video> videos)
     {
@@ -121,10 +121,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of videos by duration in ascending order.</para>
     /// </summary>
-    /// <param name="videos"></param>
-    /// <returns></returns>
+    /// <param name="videos">Source sequence of videos for sorting.</param>
+    /// <returns>Sorted sequence of videos.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Video> OrderByDuration(this IEnumerable<Video> videos)
     {
@@ -134,10 +134,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of videos by duration in descending order.</para>
     /// </summary>
-    /// <param name="videos"></param>
-    /// <returns></returns>
+    /// <param name="videos">Source sequence of videos for sorting.</param>
+    /// <returns>Sorted sequence of videos.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Video> OrderByDurationDescending(this IEnumerable<Video> videos)
     {

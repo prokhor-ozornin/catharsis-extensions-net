@@ -9,20 +9,21 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  [EqualsAndHashCode("Category", "Person")]
+  [EqualsAndHashCode("Category,Person")]
   public class Text : Item
   {
     private Person person;
     private readonly ICollection<TextTranslation> translations = new HashSet<TextTranslation>();
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Category of text.</para>
     /// </summary>
     public TextsCategory Category { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public Person Person
     {
       get { return this.person; }
@@ -59,14 +60,14 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new text.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="authorId"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="text"></param>
-    /// <param name="category"></param>
+    /// <param name="id">Unique identifier of text.</param>
+    /// <param name="authorId">Identifier of author's text.</param>
+    /// <param name="language">ISO language code of text's content.</param>
+    /// <param name="name">Title of text.</param>
+    /// <param name="text">Text's content.</param>
+    /// <param name="category">Category of text's belongings, or a <c>null</c> reference.</param>
     /// <param name="person"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="person"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
@@ -80,10 +81,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new text from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Text"/> type.</param>
+    /// <returns>Recreated text object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static Text Xml(XElement xml)
     {
@@ -106,9 +107,9 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Transforms current object to XML representation.</para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="XElement"/> object, representing current <see cref="Text"/>.</returns>
     public override XElement Xml()
     {
       return base.Xml().AddContent(

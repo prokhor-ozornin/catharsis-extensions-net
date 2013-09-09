@@ -27,8 +27,8 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Sorts sequence of texts by category's name in ascending order.</para>
     /// </summary>
-    /// <param name="texts"></param>
-    /// <returns></returns>
+    /// <param name="texts">Source sequence of texts for sorting.</param>
+    /// <returns>Sorted sequence of texts.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="texts"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Text> OrderByTextsCategoryName(this IEnumerable<Text> texts)
     {
@@ -38,10 +38,11 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sorts sequence of texts by category's name in descending order.</para>
     /// </summary>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If p</exception>
+    /// <param name="texts">Source sequence of texts for sorting.</param>
+    /// <returns>Sorted sequence of texts.</returns>
+    /// <exception cref="ArgumentNullException">If <p</exception>
     public static IEnumerable<Text> OrderByTextsCategoryNameDescending(this IEnumerable<Text> texts)
     {
       Assertion.NotNull(texts);

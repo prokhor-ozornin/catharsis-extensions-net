@@ -6,6 +6,8 @@ This library is extensively unit-tested, greatly reducing the possibility of bug
 
 **Target** : .NET Framework 4.0/Silverlight 4-5
 
+**NuGet package** : https://www.nuget.org/packages/Catharsis.Commons
+
 ### Structure
 This library consists of two main parts :
 

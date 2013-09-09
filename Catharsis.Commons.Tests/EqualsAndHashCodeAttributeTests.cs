@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Xunit;
 
 namespace Catharsis.Commons
@@ -10,15 +11,15 @@ namespace Catharsis.Commons
   {
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
-    ///   <seealso cref="EqualsAndHashCodeAttribute(string[])"/>
+    ///   <seealso cref="EqualsAndHashCodeAttribute(string)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
-      Assert.True(!new EqualsAndHashCodeAttribute().Properties.Any());
-      Assert.True(!new EqualsAndHashCodeAttribute(Enumerable.Empty<string>().ToArray()).Properties.Any());
-      Assert.True(new EqualsAndHashCodeAttribute(string.Empty).Properties.SequenceEqual(new [] { string.Empty } ));
-      Assert.True(new EqualsAndHashCodeAttribute("first", "second").Properties.SequenceEqual(new [] { "first", "second" }));
+      Assert.Throws<ArgumentNullException>(() => new EqualsAndHashCodeAttribute(null));
+      Assert.Throws<ArgumentException>(() => new EqualsAndHashCodeAttribute(string.Empty));
+      Assert.True(new EqualsAndHashCodeAttribute("property").Properties.SequenceEqual(new [] { "property" }));
+      Assert.True(new EqualsAndHashCodeAttribute("first,second").Properties.SequenceEqual(new[] { "first", "second" }));
     }
   }
 }

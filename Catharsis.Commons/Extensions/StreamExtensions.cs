@@ -101,11 +101,11 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <param name="stream"></param>
-    /// <param name="encoding"></param>
     /// <param name="close"></param>
+    /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static string Text(this Stream stream, Encoding encoding = null, bool close = false)
+    public static string Text(this Stream stream, bool close = false, Encoding encoding = null)
     {
       Assertion.NotNull(stream);
 
@@ -236,11 +236,11 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <param name="stream"></param>
-    /// <param name="encoding"></param>
     /// <param name="close"></param>
+    /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static XmlWriter XmlWriter(this Stream stream, Encoding encoding = null, bool close = false)
+    public static XmlWriter XmlWriter(this Stream stream, bool close = false, Encoding encoding = null)
     {
       Assertion.NotNull(stream);
 

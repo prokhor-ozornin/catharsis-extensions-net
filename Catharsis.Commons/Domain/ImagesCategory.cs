@@ -26,13 +26,13 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new category of images.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="parent"></param>
-    /// <param name="description"></param>
+    /// <param name="id">Unique identifier of category.</param>
+    /// <param name="language">ISO language code of category's text content.</param>
+    /// <param name="name">Name of category.</param>
+    /// <param name="parent">Parent of category, or <c>null</c> if there is no parent.</param>
+    /// <param name="description">Description of category.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public ImagesCategory(string id, string language, string name, ImagesCategory parent = null, string description = null) : base(id, language,name,parent, description)

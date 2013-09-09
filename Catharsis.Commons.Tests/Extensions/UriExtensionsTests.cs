@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,7 +16,7 @@ namespace Catharsis.Commons.Extensions
     const string Yandex = "http://yandex.ru";
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Bytes(Uri)"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Bytes(Uri, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
     /// </summary>
     [Fact]
     public void Bytes_Method()
@@ -26,13 +27,13 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.DownloadFile(Uri, string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.DownloadFile(Uri, string, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
     /// </summary>
     [Fact]
     public void DownloadFile_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(null, "file"));
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(new Uri(Yandex), null));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(new Uri(Yandex), (string) null));
       Assert.Throws<ArgumentException>(() => UriExtensions.DownloadFile(new Uri(Yandex), string.Empty));
       Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(null));
 
@@ -44,7 +45,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Stream(Uri)"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Stream(Uri, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
     /// </summary>
     [Fact]
     public void Stream_Method()
@@ -56,7 +57,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.TextReader(Uri, Encoding)"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.TextReader(Uri, Encoding, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
     /// </summary>
     [Fact]
     public void TextReader_Method()
@@ -71,7 +72,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Text(Uri)"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Text(Uri, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
     /// </summary>
     [Fact]
     public void Text_Method()
@@ -84,8 +85,8 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, byte[])"/></description></item>
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, string)"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Upload(Uri, byte[], IDictionary{string, string}, IDictionary{string, string})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Upload(Uri, string, IDictionary{string, string}, IDictionary{string, string})"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
@@ -100,7 +101,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
     /// </summary>
     [Fact]
     public void UploadFile_Method()

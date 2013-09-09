@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -15,13 +16,28 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <param name="uri"></param>
+    /// <param name="parameters"></param>
+    /// <param name="headers"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static byte[] Bytes(this Uri uri)
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
+    public static byte[] Bytes(this Uri uri, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
 
-      return new WebClient().With(web => web.DownloadData(uri));
+      return new WebClient().With(web =>
+      {
+        if (parameters != null)
+        {
+          parameters.Each(parameter => web.QueryString.Add(parameter.Key, parameter.Value));
+        }
+
+        if (headers != null)
+        {
+          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+        }
+
+        return web.DownloadData(uri);
+      });
     }
 
     /// <summary>
@@ -29,15 +45,31 @@ namespace Catharsis.Commons.Extensions
     /// </summary>
     /// <param name="uri"></param>
     /// <param name="file"></param>
+    /// <param name="parameters"></param>
+    /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="file"/> is <see cref="string.Empty"/> string.</exception>
-    public static Uri DownloadFile(this Uri uri, string file)
+    public static Uri DownloadFile(this Uri uri, string file, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotEmpty(file);
 
-      new WebClient().With(web => web.DownloadFile(uri, file));
+      new WebClient().With(web =>
+      {
+        if (parameters != null)
+        {
+          parameters.Each(parameter => web.QueryString.Add(parameter.Key, parameter.Value));
+        }
+
+        if (headers != null)
+        {
+          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+        }
+
+        web.DownloadFile(uri, file);
+      });
+
       return uri;
     }
 
@@ -45,14 +77,16 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <param name="uri"></param>
+    /// <param name="parameters"></param>
+    /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
-    public static string DownloadFile(this Uri uri)
+    public static string DownloadFile(this Uri uri, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
 
       var file = Path.GetRandomFileName();
-      uri.DownloadFile(file);
+      uri.DownloadFile(file, parameters, headers);
       return file;
     }
 
@@ -60,13 +94,27 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <param name="uri"></param>
+    /// <param name="parameters"></param>
+    /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static Stream Stream(this Uri uri)
+    public static Stream Stream(this Uri uri, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
 
-      return new WebClient().OpenRead(uri);
+      var web = new WebClient();
+
+      if (parameters != null)
+      {
+        parameters.Each(parameter => web.QueryString.Add(parameter.Key, parameter.Value));
+      }
+
+      if (headers != null)
+      {
+        headers.Each(header => web.Headers.Add(header.Key, header.Value));
+      }
+      
+      return web.OpenRead(uri);
     }
 
     /// <summary>
@@ -74,26 +122,43 @@ namespace Catharsis.Commons.Extensions
     /// </summary>
     /// <param name="uri"></param>
     /// <param name="encoding"></param>
+    /// <param name="parameters"></param>
+    /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static TextReader TextReader(this Uri uri, Encoding encoding = null)
+    public static TextReader TextReader(this Uri uri, Encoding encoding = null, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
 
-      return uri.Stream().TextReader(encoding);
+      return uri.Stream(parameters, headers).TextReader(encoding);
     }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="uri"></param>
+    /// <param name="parameters"></param>
+    /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string Text(this Uri uri)
+    public static string Text(this Uri uri, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
 
-      return new WebClient().With(web => web.DownloadString(uri));
+      return new WebClient().With(web =>
+      {
+        if (parameters != null)
+        {
+          parameters.Each(parameter => web.QueryString.Add(parameter.Key, parameter.Value));
+        }
+
+        if (headers != null)
+        {
+          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+        }
+
+        return web.DownloadString(uri);
+      });
     }
 
     /// <summary>
@@ -101,14 +166,30 @@ namespace Catharsis.Commons.Extensions
     /// </summary>
     /// <param name="uri"></param>
     /// <param name="data"></param>
+    /// <param name="parameters"></param>
+    /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
-    public static Uri Upload(this Uri uri, byte[] data)
+    public static Uri Upload(this Uri uri, byte[] data, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotNull(data);
 
-      new WebClient().With(web => web.UploadData(uri, data));
+      new WebClient().With(web =>
+      {
+        if (parameters != null)
+        {
+          parameters.Each(parameter => web.QueryString.Add(parameter.Key, parameter.Value));
+        }
+
+        if (headers != null)
+        {
+          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+        }
+
+        web.UploadData(uri, data);
+      });
+
       return uri;
     }
 
@@ -117,14 +198,30 @@ namespace Catharsis.Commons.Extensions
     /// </summary>
     /// <param name="uri"></param>
     /// <param name="data"></param>
+    /// <param name="parameters"></param>
+    /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
-    public static Uri Upload(this Uri uri, string data)
+    public static Uri Upload(this Uri uri, string data, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotNull(data);
 
-      new WebClient().With(web => web.UploadString(uri, data));
+      new WebClient().With(web =>
+      {
+        if (parameters != null)
+        {
+          parameters.Each(parameter => web.QueryString.Add(parameter.Key, parameter.Value));
+        }
+
+        if (headers != null)
+        {
+          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+        }
+
+        web.UploadString(uri, data);
+      });
+    
       return uri;
     }
 
@@ -133,15 +230,31 @@ namespace Catharsis.Commons.Extensions
     /// </summary>
     /// <param name="uri"></param>
     /// <param name="file"></param>
+    /// <param name="parameters"></param>
+    /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="file"/> is <see cref="string.Empty"/> string.</exception>
-    public static Uri UploadFile(this Uri uri, string file)
+    public static Uri UploadFile(this Uri uri, string file, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotNull(file);
 
-      new WebClient().With(web => web.UploadFile(uri, file));
+      new WebClient().With(web =>
+      {
+        if (parameters != null)
+        {
+          parameters.Each(parameter => web.QueryString.Add(parameter.Key, parameter.Value));
+        }
+
+        if (headers != null)
+        {
+          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+        }
+
+        web.UploadFile(uri, file);
+      });
+
       return uri;
     }
   }

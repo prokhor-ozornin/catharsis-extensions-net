@@ -26,12 +26,12 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new blog.</para>
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="language"></param>
-    /// <param name="name"></param>
-    /// <param name="authorId"></param>
+    /// <param name="id">Unique identifier of blog.</param>
+    /// <param name="language">ISO language code of blog's text content.</param>
+    /// <param name="name">Title of blog.</param>
+    /// <param name="authorId">Identifier of blog's author.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="authorId"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
     public Blog(string id, string language, string name, string authorId) : base(id, language, name, null, authorId)
@@ -40,10 +40,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new blog from its XML representation.</para>
     /// </summary>
-    /// <param name="xml"></param>
-    /// <returns></returns>
+    /// <param name="xml"><see cref="XElement"/> object, representing instance of <see cref="Blog"/> type.</param>
+    /// <returns>Recreated blog object.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     public new static Blog Xml(XElement xml)
     {

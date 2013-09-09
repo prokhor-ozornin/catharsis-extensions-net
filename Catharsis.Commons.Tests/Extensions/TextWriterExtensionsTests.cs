@@ -33,7 +33,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="TextWriterExtensions.XmlWriter(TextWriter, Encoding, bool)"/> method.</para>
+    ///   <para>Performs testing of <see cref="TextWriterExtensions.XmlWriter"/> method.</para>
     /// </summary>
     [Fact]
     public void XmlWriter_Method()
@@ -55,7 +55,7 @@ namespace Catharsis.Commons.Extensions
       textWriter.Close();
 
       textWriter = new StringWriter();
-      textWriter.XmlWriter(null, true).Write(writer =>
+      textWriter.XmlWriter(close: true, encoding: null).Write(writer =>
       {
         Assert.True(writer.Settings.CloseOutput);
         Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.Unicode.ToString()));

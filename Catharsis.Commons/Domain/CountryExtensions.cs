@@ -11,11 +11,11 @@ namespace Catharsis.Commons.Domain
   public static class CountryExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Filters sequence of countries, returning the one with specified ISO code.</para>
     /// </summary>
     /// <param name="countries">Source sequence of countries to filter.</param>
-    /// <param name="isoCode"></param>
-    /// <returns></returns>
+    /// <param name="isoCode">ISO code of searched country.</param>
+    /// <returns>Country with specified ISO code.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="countries"/> is a <c>null</c> reference.</exception>
     public static Country WithIsoCode(this IEnumerable<Country> countries, string isoCode)
     {
