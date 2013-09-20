@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Category,Url")]
-  public class WebLink : Item, IUrlAddressable
+  public class WebLink : Item, IEquatable<WebLink>, IUrlAddressable
   {
     private string url;
 
@@ -89,6 +89,16 @@ namespace Catharsis.Commons.Domain
         weblink.LastUpdated = (DateTime) xml.Element("LastUpdated");
       }
       return weblink;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(WebLink other)
+    {
+      return base.Equals(other);
     }
 
     /// <summary>

@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     public void InBlog_Method()
     {
       Assert.Throws<ArgumentNullException>(() => BlogEntryExtensions.InBlog(null, new Blog()));
-      Assert.Throws<ArgumentNullException>(() => BlogEntryExtensions.InBlog(Enumerable.Empty<BlogEntry>(), null));
+      Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<BlogEntry>().InBlog(null));
 
       Assert.False(Enumerable.Empty<BlogEntry>().InBlog(new Blog()).Any());
       Assert.True(new[] { null, new BlogEntry { Blog = new Blog { Id = "Id" } }, null, new BlogEntry { Blog = new Blog { Id = "Id_2" } } }.InBlog(new Blog { Id = "Id" }).Count() == 1);

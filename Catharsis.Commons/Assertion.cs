@@ -121,15 +121,17 @@ namespace Catharsis.Commons
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     public static void NotNull(object value, string message = null)
     {
-      if (value == null)
+      if (value != null)
       {
-        if (message.Whitespace())
-        {
-          throw new ArgumentNullException();
-        }
-
-        throw new ArgumentNullException(message);
+        return;
       }
+
+      if (message.Whitespace())
+      {
+        throw new ArgumentNullException();
+      }
+
+      throw new ArgumentNullException(message);
     }
 
     /// <summary>

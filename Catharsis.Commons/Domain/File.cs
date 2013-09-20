@@ -10,10 +10,12 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Name,OriginalName")]
-  public class File : EntityBase, IComparable<File>, INameable, ISizable, ITaggable, ITimeable
+  public class File : EntityBase, IComparable<File>, IEquatable<File>, INameable, ISizable, ITaggable, ITimeable
   {
     private string contentType;
     private byte[] data;
+    private DateTime dateCreated = DateTime.UtcNow;
+    private DateTime lastUpdated = DateTime.UtcNow;
     private string name;
     private string originalName;
     private readonly ICollection<string> tags = new HashSet<string>();
@@ -52,12 +54,20 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of file's creation.</para>
     /// </summary>
-    public DateTime DateCreated { get; set; }
+    public DateTime DateCreated
+    {
+      get { return this.dateCreated; }
+      set { this.dateCreated = value; }
+    }
    
     /// <summary>
     ///   <para>Date and time of file's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated { get; set; }
+    public DateTime LastUpdated
+    {
+      get { return this.lastUpdated; }
+      set { this.lastUpdated = value; }
+    }
     
     /// <summary>
     ///   <para></para>
@@ -109,17 +119,14 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     public File()
     {
-      this.DateCreated = DateTime.UtcNow;
-      this.LastUpdated = DateTime.UtcNow;
     }
 
     /// <summary>
     ///   <para>Creates new file with specified properties values.</para>
     /// </summary>
     /// <param name="properties">Named collection of properties to set on file after its creation.</param>
-    public File(IDictionary<string, object> properties) : this()
+    public File(IDictionary<string, object> properties) : base(properties)
     {
-      this.SetProperties(properties);
     }
 
     /// <summary>
@@ -132,9 +139,8 @@ namespace Catharsis.Commons.Domain
     /// <param name="data"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="contentType"/>, <paramref name="name"/>, <paramref name="originalName"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="contentType"/>, <paramref name="name"/> or <paramref name="originalName"/> is <see cref="string.Empty"/> string.</exception>
-    public File(string id, string contentType, string name, string originalName, byte[] data) : this()
+    public File(string id, string contentType, string name, string originalName, byte[] data) : base(id)
     {
-      this.Id = id;
       this.ContentType = contentType;
       this.Name = name;
       this.OriginalName = originalName;
@@ -169,6 +175,16 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(File other)
+    {
+      return base.Equals(other);
+    }
+
+    /// <summary>
     ///   <para>Returns a <see cref="string"/> that represents the current file.</para>
     /// </summary>
     /// <returns>A string that represents the current file.</returns>
@@ -196,8 +212,8 @@ namespace Catharsis.Commons.Domain
       return base.Xml().AddContent(
         new XElement("ContentType", this.ContentType),
         new XElement("Data", this.Data.EncodeBase64()),
-        new XElement("DateCreated", this.DateCreated.ToRFC1123()),
-        new XElement("LastUpdated", this.LastUpdated.ToRFC1123()),
+        new XElement("DateCreated", this.DateCreated.ToRfc1123()),
+        new XElement("LastUpdated", this.LastUpdated.ToRfc1123()),
         new XElement("Name", this.Name),
         new XElement("OriginalName", this.OriginalName),
         new XElement("Size", this.Size),

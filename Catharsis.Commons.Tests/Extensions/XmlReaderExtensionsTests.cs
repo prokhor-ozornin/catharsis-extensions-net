@@ -98,11 +98,11 @@ namespace Catharsis.Commons.Extensions
     public void Read_Method()
     {
       Assert.Throws<ArgumentNullException>(() => XmlReaderExtensions.Read<XmlReader, object>(null, x => new object()));
-      Assert.Throws<ArgumentNullException>(() => XmlReaderExtensions.Read<XmlReader, object>(XmlReader.Create(Stream.Null), null));
+      Assert.Throws<ArgumentNullException>(() => XmlReader.Create(Stream.Null).Read<XmlReader, object>(null));
 
-      const string xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
 
-      var reader = new StringReader(xml).XmlReader();
+      var reader = new StringReader(Xml).XmlReader();
       Assert.True(reader.Read(x => x.ReadElementString("article")) == "text");
       Assert.False(reader.Read());
     }

@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Category,File")]
-  public class Image : EntityBase, IComparable<Image>, IDimensionable
+  public class Image : EntityBase, IComparable<Image>, IEquatable<Image>, IDimensionable
   {
     private File file;
 
@@ -87,6 +87,16 @@ namespace Catharsis.Commons.Domain
       Assertion.NotNull(xml);
 
       return new Image((string) xml.Element("Id"), File.Xml(xml.Element("File")), (short) xml.Element("Height"), (short) xml.Element("Width"), xml.Element("ImagesCategory") != null ? ImagesCategory.Xml(xml.Element("ImagesCategory")) : null);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Image other)
+    {
+      return base.Equals(other);
     }
 
     /// <summary>

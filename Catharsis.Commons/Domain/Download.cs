@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Category")]
-  public class Download : Item, IComparable<Download>, IUrlAddressable
+  public class Download : Item, IComparable<Download>, IEquatable<Download>, IUrlAddressable
   {
     private string url;
 
@@ -105,7 +105,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="other">The <see cref="Download"/> to compare with this instance.</param>
     public int CompareTo(Download other)
     {
-      return this.Name.CompareTo(other.Name);
+      return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>
@@ -118,6 +118,16 @@ namespace Catharsis.Commons.Domain
         this.Category != null ? this.Category.Xml() : null,
         new XElement("Downloads", this.Downloads),
         new XElement("Url", this.Url));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Download other)
+    {
+      return base.Equals(other);
     }
   }
 }

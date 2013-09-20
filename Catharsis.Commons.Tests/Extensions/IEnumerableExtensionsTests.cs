@@ -18,7 +18,7 @@ namespace Catharsis.Commons.Extensions
     public void Each_Method()
     {
       Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.Each<object>(null, x => {}));
-      Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.Each(Enumerable.Empty<object>(), null));
+      Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<object>().Each(null));
 
       var strings = new [] { "first", "second", "third" };
       var list = new List<string>();
@@ -36,7 +36,7 @@ namespace Catharsis.Commons.Extensions
     public void Join_Method()
     {
       Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.Join<object>(null, "separator"));
-      Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.Join(Enumerable.Empty<object>(), null));
+      Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<object>().Join(null));
 
       Assert.True(Enumerable.Empty<object>().Join("separator") == string.Empty);
       Assert.True(new[] { 1 }.Join(",") == "1");

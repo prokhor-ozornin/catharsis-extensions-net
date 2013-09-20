@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public class Poll : Item
+  public class Poll : Item, IEquatable<Poll>
   {
     private readonly ICollection<PollAnswer> answers = new HashSet<PollAnswer>();
 
@@ -94,6 +94,16 @@ namespace Catharsis.Commons.Domain
       return base.Xml().AddContent(
         this.Answers.Count > 0 ? new XElement("Answers", this.Answers.Select(answer => answer.Xml())) : null,
         new XElement("MultiSelect", this.MultiSelect));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Poll other)
+    {
+      return base.Equals(other);
     }
   }
 }

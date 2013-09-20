@@ -17,8 +17,8 @@ namespace Catharsis.Commons.Domain
     public void WithIsoCode_Method()
     {
       Assert.Throws<ArgumentNullException>(() => CountryExtensions.WithIsoCode(null, "IsoCode"));
-      Assert.Throws<InvalidOperationException>(() => CountryExtensions.WithIsoCode(Enumerable.Empty<Country>(), null));
-      Assert.Throws<InvalidOperationException>(() => CountryExtensions.WithIsoCode(Enumerable.Empty<Country>(), string.Empty));
+      Assert.Throws<InvalidOperationException>(() => Enumerable.Empty<Country>().WithIsoCode(null));
+      Assert.Throws<InvalidOperationException>(() => Enumerable.Empty<Country>().WithIsoCode(string.Empty));
 
       Assert.True(new[] { null, new Country { IsoCode = "IsoCode" }, null, new Country { IsoCode = "IsoCode_2" } }.WithIsoCode("IsoCode").Equals(new Country { IsoCode = "IsoCode" }));
     }

@@ -40,7 +40,7 @@ namespace Catharsis.Commons.Extensions
 
       return new StringWriter().With(writer =>
       {
-        writer.XmlWriter(close: true, encoding: Encoding.UTF8).Write(document.Save).Close();
+        writer.XmlWriter(true, Encoding.UTF8).Write(document.Save).Close();
         return writer;
       }).ToString();
     }

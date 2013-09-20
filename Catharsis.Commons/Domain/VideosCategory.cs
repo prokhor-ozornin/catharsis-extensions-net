@@ -7,7 +7,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para>Category of videos.</para>
   /// </summary>
-  public class VideosCategory : Category
+  public class VideosCategory : Category, IEquatable<VideosCategory>
   {
     /// <summary>
     ///   <para>Creates new category of videos.</para>
@@ -49,7 +49,17 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new VideosCategory((string)xml.Element("Id"), (string)xml.Element("Language"), (string)xml.Element("Name"), xml.Element("Parent") != null ? VideosCategory.Xml(xml.Element("Parent")) : null, (string)xml.Element("Description"));
+      return new VideosCategory((string)xml.Element("Id"), (string)xml.Element("Language"), (string)xml.Element("Name"), xml.Element("Parent") != null ? Xml(xml.Element("Parent")) : null, (string)xml.Element("Description"));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(VideosCategory other)
+    {
+      return base.Equals(other);
     }
   }
 }

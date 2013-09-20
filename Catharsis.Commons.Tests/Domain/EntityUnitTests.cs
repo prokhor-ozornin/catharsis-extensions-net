@@ -14,7 +14,7 @@ namespace Catharsis.Commons.Domain
     ///   <para></para>
     /// </summary>
     /// <param name="properties"></param>
-    protected void TestEqualsAndHashCode(IDictionary<string, object[]> properties)
+    protected void TestEqualsAndHashCode(IEnumerable<KeyValuePair<string, object[]>> properties)
     {
       var entity = typeof(ENTITY).NewInstance();
 

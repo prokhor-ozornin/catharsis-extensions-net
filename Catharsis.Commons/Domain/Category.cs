@@ -107,7 +107,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="other">The <see cref="Category"/> to compare with this instance.</param>
     public int CompareTo(Category other)
     {
-      return this.Name.CompareTo(other.Name);
+      return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>

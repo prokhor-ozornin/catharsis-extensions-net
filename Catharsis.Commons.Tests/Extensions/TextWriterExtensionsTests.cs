@@ -40,7 +40,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assert.Throws<ArgumentNullException>(() => TextWriterExtensions.XmlWriter(null));
 
-      const string xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
       
       var textWriter = new StringWriter();
       textWriter.XmlWriter().Write(writer =>
@@ -50,12 +50,12 @@ namespace Catharsis.Commons.Extensions
         Assert.False(writer.Settings.Indent);
         writer.WriteElementString("article", "text");
       });
-      Assert.True(textWriter.ToString() == xml);
+      Assert.True(textWriter.ToString() == Xml);
       textWriter.Write(string.Empty);
       textWriter.Close();
 
       textWriter = new StringWriter();
-      textWriter.XmlWriter(close: true, encoding: null).Write(writer =>
+      textWriter.XmlWriter(true).Write(writer =>
       {
         Assert.True(writer.Settings.CloseOutput);
         Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.Unicode.ToString()));

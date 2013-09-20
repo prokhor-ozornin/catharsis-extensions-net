@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -122,15 +121,15 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="ATTRIBUTE"></typeparam>
+    /// <typeparam name="T"></typeparam>
     /// <param name="type"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
-    public static ATTRIBUTE GetAttribute<ATTRIBUTE>(this Type type)
+    public static T GetAttribute<T>(this Type type)
     {
       Assertion.NotNull(type);
 
-      return type.GetAttribute(typeof(ATTRIBUTE)).As<ATTRIBUTE>();
+      return type.GetAttribute(typeof(T)).As<T>();
     }
 
     /// <summary>
@@ -140,7 +139,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="attributeType"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
-    public static object[] GetAttributes(this Type type, Type attributeType)
+    public static IEnumerable<object> GetAttributes(this Type type, Type attributeType)
     {
       Assertion.NotNull(type);
       Assertion.NotNull(attributeType);
@@ -151,15 +150,15 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="ATTRIBUTE"></typeparam>
+    /// <typeparam name="T"></typeparam>
     /// <param name="type"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
-    public static ATTRIBUTE[] GetAttributes<ATTRIBUTE>(this Type type)
+    public static IEnumerable<T> GetAttributes<T>(this Type type)
     {
       Assertion.NotNull(type);
 
-      return type.GetAttributes(typeof(ATTRIBUTE)).Cast<ATTRIBUTE>().ToArray();
+      return type.GetAttributes(typeof(T)).Cast<T>();
     }
 
     /// <summary>
@@ -224,19 +223,19 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Determines whether instances of <paramref name="type"/> parameter implement interface, specified by <typeparamref name="INTERFACE"/>.</para>
+    ///   <para>Determines whether instances of <paramref name="type"/> parameter implement interface, specified by <typeparamref name="T"/>.</para>
     ///   <seealso cref="Implements(Type, Type)"/>
     /// </summary>
-    /// <typeparam name="INTERFACE">Interface type.</typeparam>
+    /// <typeparam name="T">Interface type.</typeparam>
     /// <param name="type">The type to evaluate.</param>
-    /// <returns><c>true</c> if <paramref name="type"/> implements interface <typeparamref name="INTERFACE"/>, <c>false</c> otherwise.</returns>
+    /// <returns><c>true</c> if <paramref name="type"/> implements interface <typeparamref name="T"/>, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <typeparamref name="INTERFACE"/> type does not represent interface.</exception>
-    public static bool Implements<INTERFACE>(this Type type)
+    /// <exception cref="ArgumentException">If <typeparamref name="T"/> type does not represent interface.</exception>
+    public static bool Implements<T>(this Type type)
     {
       Assertion.NotNull(type);
 
-      return type.Implements(typeof(INTERFACE));
+      return type.Implements(typeof(T));
     }
     
     /// <summary>

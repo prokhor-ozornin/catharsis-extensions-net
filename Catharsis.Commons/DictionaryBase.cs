@@ -9,14 +9,14 @@ namespace Catharsis.Commons
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <typeparam name="TKey"></typeparam>
-  /// <typeparam name="TValue"></typeparam>
-  public class DictionaryBase<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
+  /// <typeparam name="KEY"></typeparam>
+  /// <typeparam name="VALUE"></typeparam>
+  public class DictionaryBase<KEY, VALUE> : IDictionary<KEY, VALUE>, IDictionary
   {
     private readonly bool allowCopies;
     private readonly bool allowNulls;
     private readonly bool isReadOnly;
-    private readonly IDictionary<TKey, TValue> items = new Dictionary<TKey, TValue>();
+    private readonly IDictionary<KEY, VALUE> items = new Dictionary<KEY, VALUE>();
     private readonly object syncRoot = new object();
 
 
@@ -99,7 +99,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.Keys"/> property.</para>
     /// </summary>
-    public virtual ICollection<TKey> Keys
+    public virtual ICollection<KEY> Keys
     {
       get
       {
@@ -123,7 +123,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.Values"/> property.</para>
     /// </summary>
-    public virtual ICollection<TValue> Values
+    public virtual ICollection<VALUE> Values
     {
       get
       {
@@ -137,23 +137,23 @@ namespace Catharsis.Commons
     /// </summary>
     public void Add(object key, object value)
     {
-      this.Add(key.To<TKey>(), value.To<TValue>());
+      this.Add(key.To<KEY>(), value.To<VALUE>());
     }
 
 
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.Add(TKey, TValue)"/> method.</para>
     /// </summary>
-    public virtual void Add(TKey key, TValue value)
+    public virtual void Add(KEY key, VALUE value)
     {
       this.items.Add(key, value);
     }
 
 
     /// <summary>
-    ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.Add(KeyValuePair{TKey, TValue})"/> method.</para>
+    ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.Add(TKey, TValue)"/> method.</para>
     /// </summary>
-    public void Add(KeyValuePair<TKey, TValue> item)
+    public void Add(KeyValuePair<KEY, VALUE> item)
     {
       this.Add(item.Key, item.Value);
     }
@@ -173,14 +173,14 @@ namespace Catharsis.Commons
     /// </summary>
     public bool Contains(object key)
     {
-      return this.ContainsKey(key.To<TKey>());
+      return this.ContainsKey(key.To<KEY>());
     }
 
 
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.Contains(KeyValuePair{TKey, TValue})"/> method.</para>
     /// </summary>
-    public bool Contains(KeyValuePair<TKey, TValue> item)
+    public bool Contains(KeyValuePair<KEY, VALUE> item)
     {
       return this.Contains(item.Key);
     }
@@ -189,7 +189,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.ContainsKey(TKey)"/> method.</para>
     /// </summary>
-    public virtual bool ContainsKey(TKey key)
+    public virtual bool ContainsKey(KEY key)
     {
       return this.items.ContainsKey(key);
     }
@@ -200,14 +200,14 @@ namespace Catharsis.Commons
     /// </summary>
     public void CopyTo(Array array, int index)
     {
-      this.CopyTo(array.To<KeyValuePair<TKey, TValue>[]>(), index);
+      this.CopyTo(array.To<KeyValuePair<KEY, VALUE>[]>(), index);
     }
 
 
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.CopyTo(KeyValuePair{TKey, TValue}[], int)"/> method.</para>
     /// </summary>
-    public virtual void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+    public virtual void CopyTo(KeyValuePair<KEY, VALUE>[] array, int arrayIndex)
     {
       this.items.CopyTo(array, arrayIndex);
     }
@@ -216,7 +216,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.GetEnumerator()"/> method.</para>
     /// </summary>
-    public virtual IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+    public virtual IEnumerator<KeyValuePair<KEY, VALUE>> GetEnumerator()
     {
       return this.items.GetEnumerator();
     }
@@ -227,14 +227,14 @@ namespace Catharsis.Commons
     /// </summary>
     public void Remove(object key)
     {
-      this.Remove(key.To<TKey>());
+      this.Remove(key.To<KEY>());
     }
 
 
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.Remove(TKey)"/> method.</para>
     /// </summary>
-    public virtual bool Remove(TKey key)
+    public virtual bool Remove(KEY key)
     {
       return this.items.Remove(key);
     }
@@ -243,7 +243,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.Remove(KeyValuePair{TKey, TValue})"/> method.</para>
     /// </summary>
-    public bool Remove(KeyValuePair<TKey, TValue> item)
+    public bool Remove(KeyValuePair<KEY, VALUE> item)
     {
       return this.Remove(item.Key);
     }
@@ -252,7 +252,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.TryGetValue(TKey, out TValue)"/> method.</para>
     /// </summary>
-    public virtual bool TryGetValue(TKey key, out TValue value)
+    public virtual bool TryGetValue(KEY key, out VALUE value)
     {
       return this.items.TryGetValue(key, out value);
     }
@@ -265,11 +265,11 @@ namespace Catharsis.Commons
     {
       get
       {
-        return this[key.To<TKey>()];
+        return this[key.To<KEY>()];
       }
       set
       {
-        this[key.To<TKey>()] = value.To<TValue>();
+        this[key.To<KEY>()] = value.To<VALUE>();
       }
     }
 
@@ -277,7 +277,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Implementation of <see cref="IDictionary{TKey, TValue}.this[TKey]"/> indexer.</para>
     /// </summary>
-    public virtual TValue this[TKey key]
+    public virtual VALUE this[KEY key]
     {
       get
       {
@@ -294,7 +294,7 @@ namespace Catharsis.Commons
     {
       get
       {
-        var collection = new CollectionBase<TKey>(false, false, true);
+        var collection = new CollectionBase<KEY>(false, false, true);
         collection.AddAll(this.Keys);
         return collection;
       }
@@ -305,7 +305,7 @@ namespace Catharsis.Commons
     {
       get
       {
-        var collection = new CollectionBase<TValue>(this.allowNulls, this.allowCopies, true);
+        var collection = new CollectionBase<VALUE>(this.allowNulls, this.allowCopies, true);
         collection.AddAll(this.Values);
         return collection;
       }

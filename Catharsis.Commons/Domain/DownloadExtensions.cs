@@ -72,12 +72,7 @@ namespace Catharsis.Commons.Domain
         return downloads.Where(download => download != null && download.Downloads >= from.Value);
       }
 
-      if (to.HasValue)
-      {
-        return downloads.Where(download => download != null && download.Downloads <= to.Value);
-      }
-
-      return downloads;
+      return to.HasValue ? downloads.Where(download => download != null && download.Downloads <= to.Value) : downloads;
     }
 
     /// <summary>

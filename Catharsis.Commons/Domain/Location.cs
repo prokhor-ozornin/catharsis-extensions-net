@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Address,City")]
-  public class Location : EntityBase
+  public class Location : EntityBase, IEquatable<Location>
   {
     private string address;
     private City city;
@@ -107,6 +107,16 @@ namespace Catharsis.Commons.Domain
       Assertion.NotNull(xml);
 
       return new Location((string) xml.Element("Id"), City.Xml(xml.Element("City")), (string) xml.Element("Address"), (decimal?) xml.Element("Latitude"), (decimal?) xml.Element("Longitude"), (string) xml.Element("PostalCode"));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Location other)
+    {
+      return base.Equals(other);
     }
 
     /// <summary>

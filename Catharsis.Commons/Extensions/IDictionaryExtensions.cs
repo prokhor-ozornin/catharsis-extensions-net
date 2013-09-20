@@ -14,14 +14,14 @@ namespace Catharsis.Commons.Extensions
     ///   <para>Adds specified element with key to the dictionary and returns dictionary reference back to perform further operations.</para>
     ///   <seealso cref="IDictionary{TKey, TValue}.Add(TKey, TValue)"/>
     /// </summary>
-    /// <typeparam name="TKey">Type of keys, stored in a dictionary.</typeparam>
-    /// <typeparam name="TValue">Type of values, stored in a dictionary.</typeparam>
+    /// <typeparam name="KEY">Type of keys, stored in a dictionary.</typeparam>
+    /// <typeparam name="VALUE">Type of values, stored in a dictionary.</typeparam>
     /// <param name="dictionary">Dictionary to add element to.</param>
     /// <param name="key">Key, under which the element will be stored in the dictionary.</param>
     /// <param name="value">Value to store in the dictionary.</param>
     /// <returns>Reference to the supplied dictionary <paramref name="dictionary"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="dictionary"/> or <paramref name="key"/> is a <c>null</c> reference.</exception>
-    public static IDictionary<TKey, TValue> AddNext<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+    public static IDictionary<KEY, VALUE> AddNext<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary, KEY key, VALUE value)
     {
       Assertion.NotNull(dictionary);
       Assertion.NotNull(key);
@@ -39,8 +39,8 @@ namespace Catharsis.Commons.Extensions
     ///   <seealso cref="AsMinSized{TKey, TValue}(IDictionary{TKey, TValue}, int)"/>
     ///   <seealso cref="AsUnique{TKey, TValue}(IDictionary{TKey, TValue})"/>
     /// </summary>
-    /// <typeparam name="TKey">Type of keys, stored in a dictionary.</typeparam>
-    /// <typeparam name="TValue">Type of values, stored in a dictionary.</typeparam>
+    /// <typeparam name="KEY">Type of keys, stored in a dictionary.</typeparam>
+    /// <typeparam name="VALUE">Type of values, stored in a dictionary.</typeparam>
     /// <param name="dictionary">Target dictionary for wrapping.</param>
     /// <param name="predicate">Predicate that specifies the condition for key/value pairs to match.</param>
     /// <returns>Wrapped dictionary reference.</returns>
@@ -53,12 +53,12 @@ namespace Catharsis.Commons.Extensions
     ///     <item><description><see cref="IDictionary{TKey, TValue}.this[TKey]"/></description></item>
     ///   </list>
     /// </remarks>
-    public static IDictionary<TKey, TValue> AsConstrained<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, Predicate<KeyValuePair<TKey, TValue>> predicate)
+    public static IDictionary<KEY, VALUE> AsConstrained<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary, Predicate<KeyValuePair<KEY, VALUE>> predicate)
     {
       Assertion.NotNull(dictionary);
       Assertion.NotNull(predicate);
 
-      return new ConstrainedDictionary<TKey, TValue>(dictionary, predicate);
+      return new ConstrainedDictionary<KEY, VALUE>(dictionary, predicate);
     }
 
     /// <summary>
@@ -70,8 +70,8 @@ namespace Catharsis.Commons.Extensions
     ///   <seealso cref="AsUnique{TKey, TValue}(IDictionary{TKey, TValue})"/>
     ///   <seealso cref="AsConstrained{TKey, TValue}(IDictionary{TKey, TValue}, Predicate{KeyValuePair{TKey, TValue}})"/>
     /// </summary>
-    /// <typeparam name="TKey">Type of keys, stored in a dictionary.</typeparam>
-    /// <typeparam name="TValue">Type of values, stored in a dictionary.</typeparam>
+    /// <typeparam name="KEY">Type of keys, stored in a dictionary.</typeparam>
+    /// <typeparam name="VALUE">Type of values, stored in a dictionary.</typeparam>
     /// <param name="dictionary">Target dictionary for wrapping.</param>
     /// <returns>Wrapped dictionary reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is a <c>null</c> reference.</exception>
@@ -82,11 +82,11 @@ namespace Catharsis.Commons.Extensions
     ///     <item><description><see cref="IDictionary{TKey, TValue}.Remove(TKey)"/></description></item>
     ///   </list>
     /// </remarks>
-    public static IDictionary<TKey, TValue> AsImmutable<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+    public static IDictionary<KEY, VALUE> AsImmutable<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary)
     {
       Assertion.NotNull(dictionary);
 
-      return new ImmutableDictionary<TKey, TValue>(dictionary);
+      return new ImmutableDictionary<KEY, VALUE>(dictionary);
     }
 
     /// <summary>
@@ -98,8 +98,8 @@ namespace Catharsis.Commons.Extensions
     ///   <seealso cref="AsUnique{TKey, TValue}(IDictionary{TKey, TValue})"/>
     ///   <seealso cref="AsConstrained{TKey, TValue}(IDictionary{TKey, TValue}, Predicate{KeyValuePair{TKey, TValue}})"/>
     /// </summary>
-    /// <typeparam name="TKey">Type of keys, stored in a dictionary.</typeparam>
-    /// <typeparam name="TValue">Type of values, stored in a dictionary.</typeparam>
+    /// <typeparam name="KEY">Type of keys, stored in a dictionary.</typeparam>
+    /// <typeparam name="VALUE">Type of values, stored in a dictionary.</typeparam>
     /// <param name="dictionary">Target dictionary for wrapping.</param>
     /// <param name="size">Dictionary maximum size (number of key/value pairs allowed).</param>
     /// <returns>Wrapped dictionary reference.</returns>
@@ -112,11 +112,11 @@ namespace Catharsis.Commons.Extensions
     ///     <item><description><see cref="IDictionary{TKey, TValue}.this[TKey]"/></description></item>
     ///   </list>
     /// </remarks>
-    public static IDictionary<TKey, TValue> AsMaxSized<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, int size)
+    public static IDictionary<KEY, VALUE> AsMaxSized<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary, int size)
     {
       Assertion.NotNull(dictionary);
 
-      return new SizedDictionary<TKey, TValue>(dictionary, size);
+      return new SizedDictionary<KEY, VALUE>(dictionary, size);
     }
 
 
@@ -129,8 +129,8 @@ namespace Catharsis.Commons.Extensions
     ///   <seealso cref="AsUnique{TKey, TValue}(IDictionary{TKey, TValue})"/>
     ///   <seealso cref="AsConstrained{TKey, TValue}(IDictionary{TKey, TValue}, Predicate{KeyValuePair{TKey, TValue}})"/>
     /// </summary>
-    /// <typeparam name="TKey">Type of keys, stored in a dictionary.</typeparam>
-    /// <typeparam name="TValue">Type of values, stored in a dictionary.</typeparam>
+    /// <typeparam name="KEY">Type of keys, stored in a dictionary.</typeparam>
+    /// <typeparam name="VALUE">Type of values, stored in a dictionary.</typeparam>
     /// <param name="dictionary">Target dictionary for wrapping.</param>
     /// <param name="size">Dictionary minimum size (number of key/value pairs required).</param>
     /// <returns>Wrapped dictionary reference.</returns>
@@ -142,11 +142,11 @@ namespace Catharsis.Commons.Extensions
     ///     <item><description><see cref="IDictionary{TKey, TValue}.Remove(TKey)"/></description></item>
     ///   </list>
     /// </remarks>
-    public static IDictionary<TKey, TValue> AsMinSized<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, int size)
+    public static IDictionary<KEY, VALUE> AsMinSized<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary, int size)
     {
       Assertion.NotNull(dictionary);
 
-      return new SizedDictionary<TKey, TValue>(dictionary, null, size);
+      return new SizedDictionary<KEY, VALUE>(dictionary, null, size);
     }
 
     /// <summary>
@@ -158,8 +158,8 @@ namespace Catharsis.Commons.Extensions
     ///   <seealso cref="AsUnique{TKey, TValue}(IDictionary{TKey, TValue})"/>
     ///   <seealso cref="AsConstrained{TKey, TValue}(IDictionary{TKey, TValue}, Predicate{KeyValuePair{TKey, TValue}})"/>
     /// </summary>
-    /// <typeparam name="TKey">Type of keys, stored in a dictionary.</typeparam>
-    /// <typeparam name="TValue">Type of values, stored in a dictionary.</typeparam>
+    /// <typeparam name="KEY">Type of keys, stored in a dictionary.</typeparam>
+    /// <typeparam name="VALUE">Type of values, stored in a dictionary.</typeparam>
     /// <param name="dictionary">Target dictionary for wrapping.</param>
     /// <returns>Wrapped dictionary reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is a <c>null</c> reference.</exception>
@@ -174,11 +174,11 @@ namespace Catharsis.Commons.Extensions
     ///     <item><description><see cref="IDictionary{TKey, TValue}.this[TKey]"/></description></item>
     ///   </list>
     /// </remarks>
-    public static IDictionary<TKey, TValue> AsNonNullable<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+    public static IDictionary<KEY, VALUE> AsNonNullable<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary)
     {
       Assertion.NotNull(dictionary);
 
-      return new NonNullableDictionary<TKey, TValue>(dictionary);
+      return new NonNullableDictionary<KEY, VALUE>(dictionary);
     }
 
     /// <summary>
@@ -190,8 +190,8 @@ namespace Catharsis.Commons.Extensions
     ///   <seealso cref="AsUnique{TKey, TValue}(IDictionary{TKey, TValue})"/>
     ///   <seealso cref="AsConstrained{TKey, TValue}(IDictionary{TKey, TValue}, Predicate{KeyValuePair{TKey, TValue}})"/>
     /// </summary>
-    /// <typeparam name="TKey">Type of keys, stored in a dictionary.</typeparam>
-    /// <typeparam name="TValue">Type of values, stored in a dictionary.</typeparam>
+    /// <typeparam name="KEY">Type of keys, stored in a dictionary.</typeparam>
+    /// <typeparam name="VALUE">Type of values, stored in a dictionary.</typeparam>
     /// <param name="dictionary">Target dictionary for wrapping.</param>
     /// <param name="max">Dictionary maximum size (number of key/value pairs allowed).</param>
     /// <param name="min">Collection minimum size (number of elements required).</param>
@@ -207,11 +207,11 @@ namespace Catharsis.Commons.Extensions
     ///     <item><description><see cref="IDictionary{TKey, TValue}.this[TKey]"/></description></item>
     ///   </list>
     /// </remarks>
-    public static IDictionary<TKey, TValue> AsSized<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, int? max = null, int min = 0)
+    public static IDictionary<KEY, VALUE> AsSized<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary, int? max = null, int min = 0)
     {
       Assertion.NotNull(dictionary);
 
-      return new SizedDictionary<TKey, TValue>(dictionary, max, min);
+      return new SizedDictionary<KEY, VALUE>(dictionary, max, min);
     }
     
     /// <summary>
@@ -223,8 +223,8 @@ namespace Catharsis.Commons.Extensions
     ///   <seealso cref="AsMinSized{TKey, TValue}(IDictionary{TKey, TValue}, int)"/>
     ///   <seealso cref="AsConstrained{TKey, TValue}(IDictionary{TKey, TValue}, Predicate{KeyValuePair{TKey, TValue}})"/>
     /// </summary>
-    /// <typeparam name="TKey">Type of keys, stored in a dictionary.</typeparam>
-    /// <typeparam name="TValue">Type of values, stored in a dictionary.</typeparam>
+    /// <typeparam name="KEY">Type of keys, stored in a dictionary.</typeparam>
+    /// <typeparam name="VALUE">Type of values, stored in a dictionary.</typeparam>
     /// <param name="dictionary">Target dictionary for wrapping.</param>
     /// <returns>Wrapped dictionary reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is a <c>null</c> reference.</exception>
@@ -234,14 +234,13 @@ namespace Catharsis.Commons.Extensions
     ///   <list type="bullet">
     ///     <item><description><see cref="IDictionary{TKey, TValue}.Add(TKey, TValue)"/></description></item>
     ///     <item><description><see cref="IDictionary{TKey, TValue}.this[TKey]"/></description></item>
-    ///     <item><description><see cref="IDictionary{TKey, TValue}.Add(KeyValuePair{TKey, TValue})"/></description></item>
     ///   </list>
     /// </remarks>
-    public static IDictionary<TKey, TValue> AsUnique<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+    public static IDictionary<KEY, VALUE> AsUnique<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary)
     {
       Assertion.NotNull(dictionary);
 
-      return new UniqueDictionary<TKey, TValue>(dictionary);
+      return new UniqueDictionary<KEY, VALUE>(dictionary);
     }
   }
 }

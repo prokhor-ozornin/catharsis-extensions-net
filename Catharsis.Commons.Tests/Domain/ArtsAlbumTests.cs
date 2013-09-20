@@ -112,17 +112,17 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("ArtsAlbum",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"));
       var album = ArtsAlbum.Xml(xml);
       Assert.True(album.Id == "id");
       Assert.True(album.AuthorId == null);
       Assert.True(album.Comments.Count == 0);
-      Assert.True(album.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(album.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(album.Language == "language");
-      Assert.True(album.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(album.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(album.Name == "name");
       Assert.False(album.PublishedOn.HasValue);
       Assert.True(album.Tags.Count == 0);
@@ -132,21 +132,21 @@ namespace Catharsis.Commons.Domain
 
       xml = new XElement("ArtsAlbum",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
-        new XElement("PublishedOn", DateTime.MinValue.ToRFC1123()));
+        new XElement("PublishedOn", DateTime.MinValue.ToRfc1123()));
       album = ArtsAlbum.Xml(xml);
       Assert.True(album.Id == "id");
       Assert.True(album.AuthorId == null);
       Assert.True(album.Comments.Count == 0);
-      Assert.True(album.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(album.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(album.Language == "language");
-      Assert.True(album.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(album.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(album.Name == "name");
-      Assert.True(album.PublishedOn.GetValueOrDefault().ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(album.PublishedOn.GetValueOrDefault().ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(album.Tags.Count == 0);
       Assert.True(album.Text == "text");
       Assert.True(new ArtsAlbum("id", "language", "name", "text", DateTime.MinValue) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());

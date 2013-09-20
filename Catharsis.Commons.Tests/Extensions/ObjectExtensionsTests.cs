@@ -70,7 +70,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Binary(null));
       Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Binary(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Binary(new object(), null));
+      Assert.Throws<ArgumentNullException>(() => new object().Binary(null));
 
       var subject = new object();
       var serialized = new object().Binary();
@@ -254,8 +254,8 @@ namespace Catharsis.Commons.Extensions
     public void GetField_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.GetField(null, "field"));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.GetField(new object(), null));
-      Assert.Throws<ArgumentException>(() => ObjectExtensions.GetField(new object(), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => new object().GetField(null));
+      Assert.Throws<ArgumentException>(() => new object().GetField(string.Empty));
 
       Assert.True(new object().GetField("field") == null);
       
@@ -270,8 +270,8 @@ namespace Catharsis.Commons.Extensions
     public void GetProperty_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.GetProperty(null, "property"));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.GetProperty(new object(), null));
-      Assert.Throws<ArgumentException>(() => ObjectExtensions.GetProperty(new object(), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => new object().GetProperty(null));
+      Assert.Throws<ArgumentException>(() => new object().GetProperty(string.Empty));
 
       Assert.True(new object().GetProperty("property") == null);
       
@@ -286,8 +286,8 @@ namespace Catharsis.Commons.Extensions
     public void HasField_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasField(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasField(new object(), null));
-      Assert.Throws<ArgumentException>(() => ObjectExtensions.HasField(new object(), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => new object().HasField(null));
+      Assert.Throws<ArgumentException>(() => new object().HasField(string.Empty));
 
       Assert.False(new object().HasField("field"));
       
@@ -307,8 +307,8 @@ namespace Catharsis.Commons.Extensions
     public void HasMethod_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasMethod(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasMethod(new object(), null));
-      Assert.Throws<ArgumentException>(() => ObjectExtensions.HasMethod(new object(), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => new object().HasMethod(null));
+      Assert.Throws<ArgumentException>(() => new object().HasMethod(string.Empty));
 
       Assert.False(new object().HasMethod("method"));
 
@@ -328,8 +328,8 @@ namespace Catharsis.Commons.Extensions
     public void HasProperty_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasProperty(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.HasProperty(new object(), null));
-      Assert.Throws<ArgumentException>(() => ObjectExtensions.HasProperty(new object(), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => new object().HasProperty(null));
+      Assert.Throws<ArgumentException>(() => new object().HasProperty(string.Empty));
 
       Assert.False(new object().HasProperty("property"));
 
@@ -349,8 +349,8 @@ namespace Catharsis.Commons.Extensions
     public void InvokeMethod_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.InvokeMethod(null, string.Empty));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.InvokeMethod(new object(), null));
-      Assert.Throws<ArgumentException>(() => ObjectExtensions.InvokeMethod(new object(), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => new object().InvokeMethod(null));
+      Assert.Throws<ArgumentException>(() => new object().InvokeMethod(string.Empty));
       Assert.Throws<TargetParameterCountException>(() => new object().InvokeMethod("ToString", new object()));
       Assert.Throws<AmbiguousMatchException>(() => string.Empty.InvokeMethod("ToString").To<string>() == string.Empty);
 
@@ -365,8 +365,8 @@ namespace Catharsis.Commons.Extensions
     [Fact]
     public void Member_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Member<object, object>(null, Enumerable.Empty<Expression<Func<object, object>>>().FirstOrDefault()));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Member<object, object>(new object(), null));
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Member(null, Enumerable.Empty<Expression<Func<object, object>>>().FirstOrDefault()));
+      Assert.Throws<ArgumentNullException>(() => new object().Member<object, object>(null));
 
       var text = Guid.NewGuid().ToString();
       Assert.True(text.Member(x => x.Length) == text.Length);
@@ -408,8 +408,8 @@ namespace Catharsis.Commons.Extensions
     public void SetProperty_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.SetProperty(null, "property", new object()));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.SetProperty(new object(), null, new object()));
-      Assert.Throws<ArgumentException>(() => ObjectExtensions.SetProperty(new object(), string.Empty, new object()));
+      Assert.Throws<ArgumentNullException>(() => new object().SetProperty(null, new object()));
+      Assert.Throws<ArgumentException>(() => new object().SetProperty(string.Empty, new object()));
       
       var subject = new TestObject();
       var property = Guid.NewGuid().ToString();
@@ -442,7 +442,7 @@ namespace Catharsis.Commons.Extensions
     public void SetProperties_Method()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.SetProperties(null, new Dictionary<string, object>()));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.SetProperties(new object(), null));
+      Assert.Throws<ArgumentNullException>(() => new object().SetProperties(null));
 
       var subject = new TestObject();
       var property = Guid.NewGuid().ToString();
@@ -527,7 +527,7 @@ namespace Catharsis.Commons.Extensions
     public void With_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.With<object>(null, subject => {}));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.With(new object(), null));
+      Assert.Throws<ArgumentNullException>(() => new object().With(null));
       
       var text = Guid.NewGuid().ToString();
       Assert.Throws<ObjectDisposedException>(() => new StringReader(text).With(disposable =>
@@ -560,11 +560,11 @@ namespace Catharsis.Commons.Extensions
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Xml<object>(null));
       Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Xml<object>(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Xml(new object(), (Stream)null));
+      Assert.Throws<ArgumentNullException>(() => new object().Xml((Stream)null));
       Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Xml<object>(null, TextWriter.Null));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Xml(new object(), (TextWriter)null));
+      Assert.Throws<ArgumentNullException>(() => new object().Xml((TextWriter)null));
       Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Xml<object>(null, XmlWriter.Create(Stream.Null)));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Xml(new object(), (XmlWriter)null));
+      Assert.Throws<ArgumentNullException>(() => new object().Xml((XmlWriter)null));
 
       var subject = Guid.NewGuid().ToString();
       

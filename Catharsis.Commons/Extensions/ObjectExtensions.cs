@@ -92,7 +92,7 @@ namespace Catharsis.Commons.Extensions
 
       return subjectProperties.All(property =>
       {
-        object first = property.GetValue(self, null);
+        var first = property.GetValue(self, null);
         object second = null;
         try
         {
@@ -318,8 +318,8 @@ namespace Catharsis.Commons.Extensions
     /// <param name="name"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="method"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="method"/> is <see cref="string.Empty"/> string.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public static object InvokeMethod(this object subject, string name, params object[] parameters)
     {
       Assertion.NotNull(subject);
@@ -333,12 +333,12 @@ namespace Catharsis.Commons.Extensions
     ///   <para></para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <typeparam name="R"></typeparam>
+    /// <typeparam name="MEMBER"></typeparam>
     /// <param name="subject"></param>
     /// <param name="expression"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="expression"/> is a <c>null</c> reference.</exception>
-    public static R Member<T, R>(this T subject, Expression<Func<T, R>> expression)
+    public static MEMBER Member<T, MEMBER>(this T subject, Expression<Func<T, MEMBER>> expression)
     {
       Assertion.NotNull(subject);
       Assertion.NotNull(expression);
@@ -438,15 +438,15 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(subject);
 
-      const string separator = ", ";
+      const string Separator = ", ";
       var sb = new StringBuilder();
       if (properties != null)
       {
-        properties.Where(property => subject.HasProperty(property)).Each(property => sb.AppendFormat("{0}:\"{1}\"{2}", property, subject.GetProperty(property), separator));
+        properties.Where(property => subject.HasProperty(property)).Each(property => sb.AppendFormat("{0}:\"{1}\"{2}", property, subject.GetProperty(property), Separator));
       }
       if (sb.Length > 0)
       {
-        sb.Remove(sb.Length - separator.Length, separator.Length);
+        sb.Remove(sb.Length - Separator.Length, Separator.Length);
       }
       return "[{0}]".FormatValue(sb.ToString());
     }
@@ -463,15 +463,15 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(subject);
 
-      const string separator = ", ";
+      const string Separator = ", ";
       var sb = new StringBuilder();
       if (properties != null)
       {
-        properties.Each(property => sb.AppendFormat("{0}:\"{1}\"{2}", property.Body.To<UnaryExpression>().Operand.To<MemberExpression>().Member.Name, property.Compile()(subject), separator));
+        properties.Each(property => sb.AppendFormat("{0}:\"{1}\"{2}", property.Body.To<UnaryExpression>().Operand.To<MemberExpression>().Member.Name, property.Compile()(subject), Separator));
       }
       if (sb.Length > 0)
       {
-        sb.Remove(sb.Length - separator.Length, separator.Length);
+        sb.Remove(sb.Length - Separator.Length, Separator.Length);
       }
       return "[{0}]".FormatValue(sb.ToString());
     }

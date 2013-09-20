@@ -9,10 +9,12 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Email,Type")]
-  public class Subscription : EntityBase, IComparable<Subscription>, IAuthorable, IEmailable, ITimeable, ITypeable
+  public class Subscription : EntityBase, IComparable<Subscription>, IEquatable<Subscription>, IAuthorable, IEmailable, ITimeable, ITypeable
   {
     private string authorId;
+    private DateTime dateCreated = DateTime.UtcNow;
     private string email;
+    private DateTime lastUpdated = DateTime.UtcNow;
     private string token;
 
     /// <summary>
@@ -39,7 +41,11 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of subscription's creation.</para>
     /// </summary>
-    public DateTime DateCreated { get; set; }
+    public DateTime DateCreated
+    {
+      get { return this.dateCreated; }
+      set { this.dateCreated = value; }
+    }
     
     /// <summary>
     ///   <para></para>
@@ -65,7 +71,11 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of subscription's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated { get; set; }
+    public DateTime LastUpdated
+    {
+      get { return this.lastUpdated; }
+      set { this.lastUpdated = value; }
+    }
     
     /// <summary>
     ///   <para></para>
@@ -94,8 +104,6 @@ namespace Catharsis.Commons.Domain
     public Subscription()
     {
       this.Active = true;
-      this.DateCreated = DateTime.UtcNow;
-      this.LastUpdated = DateTime.UtcNow;
       this.Token = Guid.NewGuid().ToString();
     }
 
@@ -104,9 +112,8 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="properties">Named collection of properties to set on subscription after its creation.</param>
     /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Subscription(IDictionary<string, object> properties) : this()
+    public Subscription(IDictionary<string, object> properties) : base(properties)
     {
-      this.SetProperties(properties);
     }
 
     /// <summary>
@@ -119,11 +126,12 @@ namespace Catharsis.Commons.Domain
     /// <param name="expiredOn"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/> or <paramref name="email"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="authorId"/> or <paramref name="email"/> is <see cref="string.Empty"/> string.</exception>
-    public Subscription(string id, string authorId, string email, int type = 0, DateTime? expiredOn = null) : this()
+    public Subscription(string id, string authorId, string email, int type = 0, DateTime? expiredOn = null) : base(id)
     {
-      this.Id = id;
+      this.Active = true;
       this.AuthorId = authorId;
       this.Email = email;
+      this.Token = Guid.NewGuid().ToString();
       this.Type = type;
       this.ExpiredOn = expiredOn;
     }
@@ -155,6 +163,18 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
+    /// Indicates whether the current object is equal to another object of the same type.
+    /// </summary>
+    /// <returns>
+    /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+    /// </returns>
+    /// <param name="other">An object to compare with this object.</param>
+    public bool Equals(Subscription other)
+    {
+      return base.Equals(other);
+    }
+
+    /// <summary>
     ///   <para>Returns a <see cref="string"/> that represents the current subscription.</para>
     /// </summary>
     /// <returns>A string that represents the current subscription.</returns>
@@ -182,10 +202,10 @@ namespace Catharsis.Commons.Domain
       return base.Xml().AddContent(
         new XElement("AuthorId", this.AuthorId),
         new XElement("Active", this.Active),
-        new XElement("DateCreated", this.DateCreated.ToRFC1123()),
+        new XElement("DateCreated", this.DateCreated.ToRfc1123()),
         new XElement("Email", this.Email),
-        this.ExpiredOn.HasValue ? new XElement("ExpiredOn", this.ExpiredOn.GetValueOrDefault().ToRFC1123()) : null,
-        new XElement("LastUpdated", this.LastUpdated.ToRFC1123()),
+        this.ExpiredOn.HasValue ? new XElement("ExpiredOn", this.ExpiredOn.GetValueOrDefault().ToRfc1123()) : null,
+        new XElement("LastUpdated", this.LastUpdated.ToRfc1123()),
         new XElement("Token", this.Token),
         new XElement("Type", this.Type));
     }

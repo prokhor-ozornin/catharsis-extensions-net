@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("AuthorId,Type,Username")]
-  public class Profile : EntityBase, IComparable<Profile>, IAuthorable, INameable, IUrlAddressable
+  public class Profile : EntityBase, IComparable<Profile>, IEquatable<Profile>, IAuthorable, INameable, IUrlAddressable
   {
     private string authorId;
     private string name;
@@ -161,6 +161,16 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Profile other)
+    {
+      return base.Equals(other);
+    }
+
+    /// <summary>
     ///   <para>Returns a <see cref="string"/> that represents the current profile.</para>
     /// </summary>
     /// <returns>A string that represents the current profile.</returns>
@@ -176,7 +186,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="other">The <see cref="Profile"/> to compare with this instance.</param>
     public int CompareTo(Profile other)
     {
-      return this.Username.CompareTo(other.Username);
+      return this.Username.Compare(other.Username, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>

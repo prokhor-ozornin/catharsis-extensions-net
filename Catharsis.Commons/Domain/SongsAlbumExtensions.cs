@@ -32,12 +32,7 @@ namespace Catharsis.Commons.Domain
         return albums.Where(album => album != null && album.PublishedOn >= from.Value);
       }
 
-      if (to.HasValue)
-      {
-        return albums.Where(album => album != null && album.PublishedOn <= to.Value);
-      }
-
-      return albums;
+      return to.HasValue ? albums.Where(album => album != null && album.PublishedOn <= to.Value) : albums;
     }
 
     /// <summary>

@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Category")]
-  public class Playcast : Item, IImageable
+  public class Playcast : Item, IEquatable<Playcast>, IImageable
   {
     /// <summary>
     ///   <para></para>
@@ -97,6 +97,16 @@ namespace Catharsis.Commons.Domain
         this.Audio != null ? this.Audio.Xml() : null,
         this.Category != null ? this.Category.Xml() : null,
         this.Image != null ? this.Image.Xml() : null);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Playcast other)
+    {
+      return base.Equals(other);
     }
   }
 }

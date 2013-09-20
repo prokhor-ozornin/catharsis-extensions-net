@@ -112,12 +112,7 @@ namespace Catharsis.Commons.Domain
         return announcements.Where(announcement => announcement != null && announcement.Price >= from.Value);
       }
 
-      if (to.HasValue)
-      {
-        return announcements.Where(announcement => announcement != null && announcement.Price <= to.Value);
-      }
-
-      return announcements;
+      return to.HasValue ? announcements.Where(announcement => announcement != null && announcement.Price <= to.Value) : announcements;
     }
 
     /// <summary>

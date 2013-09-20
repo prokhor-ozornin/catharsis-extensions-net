@@ -14,12 +14,12 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="WRITER"></typeparam>
+    /// <typeparam name="T"></typeparam>
     /// <param name="writer"></param>
     /// <param name="subject"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is a <c>null</c> reference.</exception>
-    public static WRITER WriteObject<WRITER>(this WRITER writer, object subject) where WRITER : TextWriter
+    public static T WriteObject<T>(this T writer, object subject) where T : TextWriter
     {
       Assertion.NotNull(writer);
 

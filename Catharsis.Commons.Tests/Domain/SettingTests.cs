@@ -95,7 +95,7 @@ namespace Catharsis.Commons.Domain
     {
       this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
         .AddNext("Name", new[] { "Name", "Name_2" })
-        .AddNext("Type", new[] { (object) 1, (object) 2 }));
+        .AddNext("Type", new[] { (object) 1, 2 }));
     }
 
     /// <summary>

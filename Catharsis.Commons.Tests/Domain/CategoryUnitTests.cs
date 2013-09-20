@@ -9,8 +9,8 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <typeparam name="CATEGORY"></typeparam>
-  public abstract class CategoryUnitTests<CATEGORY> : EntityUnitTests<CATEGORY> where CATEGORY : Category
+  /// <typeparam name="T"></typeparam>
+  public abstract class CategoryUnitTests<T> : EntityUnitTests<T> where T : Category
   {
     /// <summary>
     ///   <para></para>
@@ -18,33 +18,33 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void Constructors()
     {
-      var category = typeof(CATEGORY).NewInstance().To<CATEGORY>();
+      var category = typeof(T).NewInstance().To<T>();
       Assert.True(category.Id == null);
       Assert.True(category.Language == null);
       Assert.True(category.Name == null);
       Assert.True(category.Parent == null);
       Assert.True(category.Description == null);
 
-      Assert.Throws<ArgumentNullException>(() => typeof(CATEGORY).NewInstance((IDictionary<string, object>) null));
-      category = typeof(CATEGORY).NewInstance(new Dictionary<string, object>()
+      Assert.Throws<ArgumentNullException>(() => typeof(T).NewInstance((IDictionary<string, object>) null));
+      category = typeof(T).NewInstance(new Dictionary<string, object>()
         .AddNext("Id", "id")
         .AddNext("Language", "language")
         .AddNext("Name", "name")
         .AddNext("Parent", new ArticlesCategory())
-        .AddNext("Description", "description")).To<CATEGORY>();
+        .AddNext("Description", "description")).To<T>();
       Assert.True(category.Id == "id", "ID = " + category.Id);
       Assert.True(category.Language == "language");
       Assert.True(category.Name == "name");
       Assert.True(category.Parent != null);
       Assert.True(category.Description == "description");
 
-      Assert.Throws<TargetInvocationException>(() => typeof(CATEGORY).NewInstance((string) null, "language", "name", null, null));
-      Assert.Throws<TargetInvocationException>(() => typeof(CATEGORY).NewInstance("id", (string)null, "name", null, null));
-      Assert.Throws<TargetInvocationException>(() => typeof(CATEGORY).NewInstance("id", "language", null, null, null));
-      Assert.Throws<TargetInvocationException>(() => typeof(CATEGORY).NewInstance(string.Empty, "language", "name", null, null));
-      Assert.Throws<TargetInvocationException>(() => typeof(CATEGORY).NewInstance("id", string.Empty, "name", null, null));
-      Assert.Throws<TargetInvocationException>(() => typeof(CATEGORY).NewInstance("id", "language", string.Empty, null, null));
-      category = typeof(CATEGORY).NewInstance("id", "language", "name", typeof(CATEGORY).NewInstance().To<CATEGORY>(), "description").To<CATEGORY>();
+      Assert.Throws<TargetInvocationException>(() => typeof(T).NewInstance((string) null, "language", "name", null, null));
+      Assert.Throws<TargetInvocationException>(() => typeof(T).NewInstance("id", (string)null, "name", null, null));
+      Assert.Throws<TargetInvocationException>(() => typeof(T).NewInstance("id", "language", null, null, null));
+      Assert.Throws<TargetInvocationException>(() => typeof(T).NewInstance(string.Empty, "language", "name", null, null));
+      Assert.Throws<TargetInvocationException>(() => typeof(T).NewInstance("id", string.Empty, "name", null, null));
+      Assert.Throws<TargetInvocationException>(() => typeof(T).NewInstance("id", "language", string.Empty, null, null));
+      category = typeof(T).NewInstance("id", "language", "name", typeof(T).NewInstance().To<T>(), "description").To<T>();
       Assert.True(category.Id == "id");
       Assert.True(category.Language == "language");
       Assert.True(category.Name == "name");
@@ -58,7 +58,7 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void ToString_Method()
     {
-      var category = typeof(CATEGORY).NewInstance().To<CATEGORY>();
+      var category = typeof(T).NewInstance().To<T>();
       category.Name = "Name";
       Assert.True(category.ToString() == "Name");
     }
@@ -80,10 +80,10 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void CompareTo_Method()
     {
-      var first = typeof(CATEGORY).NewInstance().To<CATEGORY>();
+      var first = typeof(T).NewInstance().To<T>();
       first.Name = "Name";
 
-      var second = typeof(CATEGORY).NewInstance().To<CATEGORY>();
+      var second = typeof(T).NewInstance().To<T>();
       second.Name = "Name";
 
       Assert.True(first.CompareTo(second) == 0);

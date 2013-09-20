@@ -42,12 +42,12 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="STREAM"></typeparam>
+    /// <typeparam name="T"></typeparam>
     /// <param name="stream"></param>
     /// <param name="bytes"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static STREAM Deflate<STREAM>(this STREAM stream, byte[] bytes) where STREAM : Stream
+    public static T Deflate<T>(this T stream, byte[] bytes) where T : Stream
     {
       Assertion.NotNull(stream);
       Assertion.NotNull(bytes);
@@ -90,11 +90,12 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <typeparam name="T"></typeparam>
     /// <param name="stream"></param>
     /// <param name="bytes"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static STREAM GZip<STREAM>(this STREAM stream, byte[] bytes) where STREAM : Stream
+    public static T GZip<T>(this T stream, byte[] bytes) where T : Stream
     {
       Assertion.NotNull(stream);
       Assertion.NotNull(bytes);

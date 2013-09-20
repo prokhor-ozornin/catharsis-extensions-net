@@ -127,18 +127,18 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("SongsAlbum",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"));
       var album = SongsAlbum.Xml(xml);
       Assert.True(album.Id == "id");
       Assert.True(album.AuthorId == null);
       Assert.True(album.Comments.Count == 0);
-      Assert.True(album.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(album.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(album.Image == null);
       Assert.True(album.Language == "language");
-      Assert.True(album.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(album.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(album.Name == "name");
       Assert.False(album.PublishedOn.HasValue);
       Assert.True(album.Tags.Count == 0);
@@ -148,9 +148,9 @@ namespace Catharsis.Commons.Domain
 
       xml = new XElement("SongsAlbum",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("Image",
@@ -159,34 +159,34 @@ namespace Catharsis.Commons.Domain
             new XElement("Id", "image.file.id"),
             new XElement("ContentType", "image.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-            new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-            new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+            new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+            new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
             new XElement("Name", "image.file.name"),
             new XElement("OriginalName", "image.file.originalName"),
             new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
           new XElement("Height", 1),
           new XElement("Width", 2)),
-        new XElement("PublishedOn", DateTime.MinValue.ToRFC1123()));
+        new XElement("PublishedOn", DateTime.MinValue.ToRfc1123()));
       album = SongsAlbum.Xml(xml);
       Assert.True(album.Id == "id");
       Assert.True(album.AuthorId == null);
       Assert.True(album.Comments.Count == 0);
-      Assert.True(album.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(album.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(album.Image.Id == "image.id");
       Assert.True(album.Image.File.Id == "image.file.id");
       Assert.True(album.Image.File.ContentType == "image.file.contentType");
       Assert.True(album.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(album.Image.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(album.Image.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(album.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(album.Image.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(album.Image.File.Name == "image.file.name");
       Assert.True(album.Image.File.OriginalName == "image.file.originalName");
       Assert.True(album.Image.File.Size == Guid.Empty.ToByteArray().LongLength);
       Assert.True(album.Image.Height == 1);
       Assert.True(album.Image.Width == 2);
       Assert.True(album.Language == "language");
-      Assert.True(album.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(album.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(album.Name == "name");
-      Assert.True(album.PublishedOn.GetValueOrDefault().ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(album.PublishedOn.GetValueOrDefault().ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(album.Tags.Count == 0);
       Assert.True(album.Text == "text");
       Assert.True(new SongsAlbum("id", "language", "name", "text", new Image("image.id", new File("image.file.id", "image.file.contentType", "image.file.name", "image.file.originalName", Guid.Empty.ToByteArray()) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2), DateTime.MinValue) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());

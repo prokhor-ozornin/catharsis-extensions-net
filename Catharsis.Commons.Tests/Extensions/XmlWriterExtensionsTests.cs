@@ -20,9 +20,9 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => XmlWriterExtensions.Write<XmlWriter>(null, writer => {}));
       Assert.Throws<ArgumentNullException>(() => XmlWriterExtensions.Write(XmlWriter.Create(Path.GetTempFileName()), null));
 
-      const string xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
       var stringWriter = new StringWriter();
-      var xmlWriter = stringWriter.XmlWriter(close: true, encoding: Encoding.Unicode);
+      var xmlWriter = stringWriter.XmlWriter(true, Encoding.Unicode);
       Assert.True(ReferenceEquals(xmlWriter.Write(writer =>
       {
         writer.WriteStartDocument();
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Extensions
         writer.WriteEndDocument();
       }), xmlWriter));
       Assert.Throws<InvalidOperationException>(() => xmlWriter.WriteRaw(string.Empty));
-      Assert.True(stringWriter.ToString() == xml);
+      Assert.True(stringWriter.ToString() == Xml);
       Assert.Throws<ObjectDisposedException>(() => stringWriter.WriteLine());
     }
   }

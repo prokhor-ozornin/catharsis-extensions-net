@@ -126,9 +126,9 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Article",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"));
       var article = Article.Xml(xml);
       Assert.True(article.Id == "id");
@@ -136,10 +136,10 @@ namespace Catharsis.Commons.Domain
       Assert.True(article.AuthorId == null);
       Assert.True(article.Category == null);
       Assert.True(article.Comments.Count == 0);
-      Assert.True(article.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(article.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(article.Image == null);
       Assert.True(article.Language == "language");
-      Assert.True(article.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(article.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(article.Name == "name");
       Assert.True(article.Tags.Count == 0);
       Assert.True(article.Text == null);
@@ -149,9 +149,9 @@ namespace Catharsis.Commons.Domain
       xml = new XElement("Article",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("Annotation", "annotation"),
@@ -165,8 +165,8 @@ namespace Catharsis.Commons.Domain
           new XElement("Id", "image.file.id"),
           new XElement("ContentType", "image.file.contentType"),
           new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-          new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-          new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+          new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+          new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
           new XElement("Name", "image.file.name"),
           new XElement("OriginalName", "image.file.originalName"),
           new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
@@ -180,20 +180,20 @@ namespace Catharsis.Commons.Domain
       Assert.True(article.Category.Language == "category.language");
       Assert.True(article.Category.Name == "category.name");
       Assert.True(article.Comments.Count == 0);
-      Assert.True(article.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(article.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(article.Image.Id == "image.id");
       Assert.True(article.Image.File.Id == "image.file.id");
       Assert.True(article.Image.File.ContentType == "image.file.contentType");
       Assert.True(article.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(article.Image.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(article.Image.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(article.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(article.Image.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(article.Image.File.Name == "image.file.name");
       Assert.True(article.Image.File.OriginalName == "image.file.originalName");
       Assert.True(article.Image.File.Size == Guid.Empty.ToByteArray().LongLength);
       Assert.True(article.Image.Height == 1);
       Assert.True(article.Image.Width == 2);
       Assert.True(article.Language == "language");
-      Assert.True(article.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(article.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(article.Name == "name");
       Assert.True(article.Tags.Count == 0);
       Assert.True(article.Text == "text");

@@ -167,8 +167,8 @@ namespace Catharsis.Commons.Domain
           new XElement("Id", "file.id"),
           new XElement("ContentType", "file.contentType"),
           new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-          new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-          new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+          new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+          new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
           new XElement("Name", "file.name"),
           new XElement("OriginalName", "file.originalName"),
           new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
@@ -182,8 +182,8 @@ namespace Catharsis.Commons.Domain
       Assert.True(video.File.Id == "file.id");
       Assert.True(video.File.ContentType == "file.contentType");
       Assert.True(video.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(video.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(video.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(video.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(video.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(video.File.Name == "file.name");
       Assert.True(video.File.OriginalName == "file.originalName");
       Assert.True(video.File.Size == Guid.Empty.ToByteArray().LongLength);
@@ -204,8 +204,8 @@ namespace Catharsis.Commons.Domain
           new XElement("Id", "file.id"),
           new XElement("ContentType", "file.contentType"),
           new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-          new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-          new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+          new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+          new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
           new XElement("Name", "file.name"),
           new XElement("OriginalName", "file.originalName"),
           new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
@@ -221,8 +221,8 @@ namespace Catharsis.Commons.Domain
       Assert.True(video.File.Id == "file.id");
       Assert.True(video.File.ContentType == "file.contentType");
       Assert.True(video.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(video.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(video.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(video.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(video.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(video.File.Name == "file.name");
       Assert.True(video.File.OriginalName == "file.originalName");
       Assert.True(video.File.Size == Guid.Empty.ToByteArray().LongLength);

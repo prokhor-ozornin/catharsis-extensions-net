@@ -133,9 +133,9 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Song",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("Audio",
@@ -146,8 +146,8 @@ namespace Catharsis.Commons.Domain
             new XElement("Id", "audio.file.id"),
             new XElement("ContentType", "audio.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-            new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-            new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+            new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+            new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
             new XElement("Name", "audio.file.name"),
             new XElement("OriginalName", "audio.file.originalName"),
             new XElement("Size", Guid.Empty.ToByteArray().LongLength))));
@@ -160,16 +160,16 @@ namespace Catharsis.Commons.Domain
       Assert.True(song.Audio.File.Id == "audio.file.id");
       Assert.True(song.Audio.File.ContentType == "audio.file.contentType");
       Assert.True(song.Audio.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(song.Audio.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(song.Audio.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(song.Audio.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(song.Audio.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(song.Audio.File.Name == "audio.file.name");
       Assert.True(song.Audio.File.OriginalName == "audio.file.originalName");
       Assert.True(song.Audio.File.Size == Guid.Empty.ToByteArray().LongLength);
       Assert.True(song.AuthorId == null);
       Assert.True(song.Comments.Count == 0);
-      Assert.True(song.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(song.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(song.Language == "language");
-      Assert.True(song.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(song.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(song.Name == "name");
       Assert.True(song.Tags.Count == 0);
       Assert.True(song.Text == "text");
@@ -178,16 +178,16 @@ namespace Catharsis.Commons.Domain
 
       xml = new XElement("Song",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("SongsAlbum",
           new XElement("Id", "album.id"),
-          new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+          new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
           new XElement("Language", "album.language"),
-          new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+          new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
           new XElement("Name", "album.name")),
         new XElement("Audio",
           new XElement("Id", "audio.id"),
@@ -197,17 +197,17 @@ namespace Catharsis.Commons.Domain
             new XElement("Id", "audio.file.id"),
             new XElement("ContentType", "audio.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-            new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-            new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+            new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+            new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
             new XElement("Name", "audio.file.name"),
             new XElement("OriginalName", "audio.file.originalName"),
             new XElement("Size", Guid.Empty.ToByteArray().LongLength))));
       song = Song.Xml(xml);
       Assert.True(song.Id == "id");
       Assert.True(song.Album.Id == "album.id");
-      Assert.True(song.Album.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(song.Album.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(song.Album.Language == "album.language");
-      Assert.True(song.Album.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(song.Album.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(song.Album.Name == "album.name");
       Assert.True(song.Audio.Id == "audio.id");
       Assert.True(song.Audio.Bitrate == 1);
@@ -215,16 +215,16 @@ namespace Catharsis.Commons.Domain
       Assert.True(song.Audio.File.Id == "audio.file.id");
       Assert.True(song.Audio.File.ContentType == "audio.file.contentType");
       Assert.True(song.Audio.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(song.Audio.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(song.Audio.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(song.Audio.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(song.Audio.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(song.Audio.File.Name == "audio.file.name");
       Assert.True(song.Audio.File.OriginalName == "audio.file.originalName");
       Assert.True(song.Audio.File.Size == Guid.Empty.ToByteArray().LongLength);
       Assert.True(song.AuthorId == null);
       Assert.True(song.Comments.Count == 0);
-      Assert.True(song.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(song.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(song.Language == "language");
-      Assert.True(song.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(song.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(song.Name == "name");
       Assert.True(song.Tags.Count == 0);
       Assert.True(song.Text == "text");

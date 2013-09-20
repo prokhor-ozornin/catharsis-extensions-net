@@ -198,7 +198,7 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Idea"/> type.</para>
+    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Person"/> type.</para>
     /// </summary>
     [Fact]
     public void EqualsAndHashCode()
@@ -266,8 +266,8 @@ namespace Catharsis.Commons.Domain
             new XElement("Id", "image.file.id"),
             new XElement("ContentType", "image.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-            new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-            new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+            new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+            new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
             new XElement("Name", "image.file.name"),
             new XElement("OriginalName", "image.file.originalName"),
             new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
@@ -289,8 +289,8 @@ namespace Catharsis.Commons.Domain
       Assert.True(person.Image.File.Id == "image.file.id");
       Assert.True(person.Image.File.ContentType == "image.file.contentType");
       Assert.True(person.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(person.Image.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(person.Image.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(person.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(person.Image.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(person.Image.File.Name == "image.file.name");
       Assert.True(person.Image.File.OriginalName == "image.file.originalName");
       Assert.True(person.Image.File.Size == Guid.Empty.ToByteArray().LongLength);

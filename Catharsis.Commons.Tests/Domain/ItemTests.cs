@@ -203,17 +203,17 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Item",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"));
       var item = Item.Xml(xml);
       Assert.True(item.Id == "id");
       Assert.True(item.Comments.Count == 0);
       Assert.True(item.AuthorId == null);
-      Assert.True(item.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(item.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(item.Language == "language");
-      Assert.True(item.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(item.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(item.Name == "name");
       Assert.True(item.Tags.Count == 0);
       Assert.True(item.Text == null);
@@ -223,18 +223,18 @@ namespace Catharsis.Commons.Domain
       xml = new XElement("Item",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"));
       item = Item.Xml(xml);
       Assert.True(item.Id == "id");
       Assert.True(item.AuthorId == "authorId");
       Assert.True(item.Comments.Count == 0);
-      Assert.True(item.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(item.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(item.Language == "language");
-      Assert.True(item.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(item.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(item.Name == "name");
       Assert.True(item.Tags.Count == 0);
       Assert.True(item.Text == "text");

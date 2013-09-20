@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("BirthDay,BirthMonth,BirthYear,DeathDay,DeathMonth,DeathYear,NameFirst,NameLast,NameMiddle")]
-  public class Person : EntityBase, IComparable<Person>, IDescriptable, IImageable, IPersonalizable
+  public class Person : EntityBase, IComparable<Person>, IEquatable<Person>, IDescriptable, IImageable, IPersonalizable
   {
     private string nameFirst;
     private string nameLast;
@@ -153,6 +153,16 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Person other)
+    {
+      return base.Equals(other);
+    }
+
+    /// <summary>
     ///   <para>Returns a <see cref="string"/> that represents the current person.</para>
     /// </summary>
     /// <returns>A string that represents the current person.</returns>
@@ -168,7 +178,7 @@ namespace Catharsis.Commons.Domain
     /// <returns></returns>
     public int CompareTo(Person person)
     {
-      return this.NameLast.CompareTo(person.NameLast);
+      return this.NameLast.Compare(person.NameLast, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>

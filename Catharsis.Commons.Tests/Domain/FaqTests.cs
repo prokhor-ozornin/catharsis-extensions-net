@@ -75,18 +75,18 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Faq",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"));
       var faq = Faq.Xml(xml);
       Assert.True(faq.Id == "id");
       Assert.True(faq.AuthorId == null);
       Assert.True(faq.Comments.Count == 0);
-      Assert.True(faq.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(faq.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(faq.Language == "language");
-      Assert.True(faq.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(faq.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(faq.Name == "name");
       Assert.True(faq.Tags.Count == 0);
       Assert.True(faq.Text == "text");

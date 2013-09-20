@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Album")]
-  public class Song : Item, IComparable<Song>
+  public class Song : Item, IComparable<Song>, IEquatable<Song>
   {
     private Audio audio;
 
@@ -96,7 +96,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="other">The <see cref="Song"/> to compare with this instance.</param>
     public int CompareTo(Song other)
     {
-      return this.Name.CompareTo(other.Name);
+      return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>
@@ -108,6 +108,16 @@ namespace Catharsis.Commons.Domain
       return base.Xml().AddContent(
        this.Album != null ? this.Album.Xml() : null,
        this.Audio.Xml());
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Song other)
+    {
+      return base.Equals(other);
     }
   }
 }

@@ -7,7 +7,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public sealed class ImagesCategory : Category
+  public sealed class ImagesCategory : Category, IEquatable<ImagesCategory>
   {
     /// <summary>
     ///   <para>Creates new category of images.</para>
@@ -49,7 +49,17 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new ImagesCategory((string)xml.Element("Id"), (string)xml.Element("Language"), (string)xml.Element("Name"), xml.Element("Parent") != null ? ImagesCategory.Xml(xml.Element("Parent")) : null, (string)xml.Element("Description"));
+      return new ImagesCategory((string)xml.Element("Id"), (string)xml.Element("Language"), (string)xml.Element("Name"), xml.Element("Parent") != null ? Xml(xml.Element("Parent")) : null, (string)xml.Element("Description"));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(ImagesCategory other)
+    {
+      return base.Equals(other);
     }
   }
 }

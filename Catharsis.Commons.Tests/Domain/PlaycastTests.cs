@@ -132,9 +132,9 @@ namespace Catharsis.Commons.Domain
       var xml = new XElement("Playcast",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"));
       var playcast = Playcast.Xml(xml);
@@ -143,10 +143,10 @@ namespace Catharsis.Commons.Domain
       Assert.True(playcast.AuthorId == "authorId");
       Assert.True(playcast.Category == null);
       Assert.True(playcast.Comments.Count == 0);
-      Assert.True(playcast.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(playcast.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(playcast.Image == null);
       Assert.True(playcast.Language == "language");
-      Assert.True(playcast.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(playcast.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(playcast.Name == "name");
       Assert.True(playcast.Tags.Count == 0);
       Assert.True(playcast.Text == "text");
@@ -156,9 +156,9 @@ namespace Catharsis.Commons.Domain
       xml = new XElement("Playcast",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("Audio",
@@ -169,8 +169,8 @@ namespace Catharsis.Commons.Domain
               new XElement("Id", "audio.file.id"),
               new XElement("ContentType", "audio.file.contentType"),
               new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-              new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-              new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+              new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+              new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
               new XElement("Name", "audio.file.name"),
               new XElement("OriginalName", "audio.file.originalName"),
               new XElement("Size", Guid.Empty.ToByteArray().LongLength))),
@@ -184,8 +184,8 @@ namespace Catharsis.Commons.Domain
               new XElement("Id", "image.file.id"),
               new XElement("ContentType", "image.file.contentType"),
               new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-              new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-              new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+              new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+              new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
               new XElement("Name", "image.file.name"),
               new XElement("OriginalName", "image.file.originalName"),
               new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
@@ -199,8 +199,8 @@ namespace Catharsis.Commons.Domain
       Assert.True(playcast.Audio.File.Id == "audio.file.id");
       Assert.True(playcast.Audio.File.ContentType == "audio.file.contentType");
       Assert.True(playcast.Audio.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(playcast.Audio.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(playcast.Audio.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(playcast.Audio.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(playcast.Audio.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(playcast.Audio.File.Name == "audio.file.name");
       Assert.True(playcast.Audio.File.OriginalName == "audio.file.originalName");
       Assert.True(playcast.Audio.File.Size == Guid.Empty.ToByteArray().LongLength);
@@ -209,21 +209,21 @@ namespace Catharsis.Commons.Domain
       Assert.True(playcast.Category.Language == "category.language");
       Assert.True(playcast.Category.Name == "category.name");
       Assert.True(playcast.Comments.Count == 0);
-      Assert.True(playcast.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(playcast.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(playcast.Image.Id == "image.id");
       Assert.True(playcast.Image.Category == null);
       Assert.True(playcast.Image.File.Id == "image.file.id");
       Assert.True(playcast.Image.File.ContentType == "image.file.contentType");
       Assert.True(playcast.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(playcast.Image.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(playcast.Image.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(playcast.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(playcast.Image.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(playcast.Image.File.Name == "image.file.name");
       Assert.True(playcast.Image.File.OriginalName == "image.file.originalName");
       Assert.True(playcast.Image.File.Size == Guid.Empty.ToByteArray().LongLength);
       Assert.True(playcast.Image.Height == 1);
       Assert.True(playcast.Image.Width == 2);
       Assert.True(playcast.Language == "language");
-      Assert.True(playcast.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(playcast.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(playcast.Name == "name");
       Assert.True(playcast.Tags.Count == 0);
       Assert.True(playcast.Text == "text");

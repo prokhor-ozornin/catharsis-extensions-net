@@ -142,9 +142,9 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Download",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Downloads", 1),
         new XElement("Url", "url"));
@@ -152,10 +152,10 @@ namespace Catharsis.Commons.Domain
       Assert.True(download.Id == "id");
       Assert.True(download.AuthorId == null);
       Assert.True(download.Category == null);
-      Assert.True(download.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(download.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(download.Downloads == 1);
       Assert.True(download.Language == "language");
-      Assert.True(download.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(download.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(download.Name == "name");
       Assert.True(download.Text == null);
       Assert.True(download.Url == "url");
@@ -164,9 +164,9 @@ namespace Catharsis.Commons.Domain
 
       xml = new XElement("Download",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("DownloadsCategory",
@@ -181,10 +181,10 @@ namespace Catharsis.Commons.Domain
       Assert.True(download.Category.Id == "category.id");
       Assert.True(download.Category.Language == "category.language");
       Assert.True(download.Category.Name == "category.name");
-      Assert.True(download.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(download.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(download.Downloads == 1);
       Assert.True(download.Language == "language");
-      Assert.True(download.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(download.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(download.Name == "name");
       Assert.True(download.Text == "text");
       Assert.True(download.Url == "url");

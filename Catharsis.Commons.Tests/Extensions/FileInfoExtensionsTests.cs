@@ -24,11 +24,11 @@ namespace Catharsis.Commons.Extensions
     {
       var fileInfo = new FileInfo(Path.GetTempFileName());
       Assert.Throws<ArgumentNullException>(() => FileInfoExtensions.Append(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => FileInfoExtensions.Append(fileInfo, (byte[]) null));
+      Assert.Throws<ArgumentNullException>(() => fileInfo.Append((byte[]) null));
       Assert.Throws<ArgumentNullException>(() => FileInfoExtensions.Append(null, string.Empty));
-      Assert.Throws<ArgumentNullException>(() => FileInfoExtensions.Append(fileInfo, (string)null));
+      Assert.Throws<ArgumentNullException>(() => fileInfo.Append((string)null));
       Assert.Throws<ArgumentNullException>(() => FileInfoExtensions.Append(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => FileInfoExtensions.Append(fileInfo, (Stream)null));
+      Assert.Throws<ArgumentNullException>(() => fileInfo.Append((Stream)null));
 
       var bytes = Guid.NewGuid().ToByteArray();
       WithFile(file =>

@@ -22,7 +22,7 @@ namespace Catharsis.Commons.Extensions
     public void Delegate_Method()
     {
       Assert.Throws<ArgumentNullException>(() => MethodInfoExtensions.Delegate(null, typeof(object)));
-      Assert.Throws<ArgumentNullException>(() => MethodInfoExtensions.Delegate(typeof(object).GetMethod("ToString"), null));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).GetMethod("ToString").Delegate(null));
       Assert.Throws<ArgumentNullException>(() => MethodInfoExtensions.Delegate<object>(null));
 
       var method = typeof(object).GetMethod("ToString");

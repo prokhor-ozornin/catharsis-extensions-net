@@ -71,17 +71,17 @@ namespace Catharsis.Commons.Extensions
     public void XDocument_Method()
     {
       Assert.Throws<ArgumentNullException>(() => TextReaderExtensions.XDocument(null));
-      Assert.Throws<XmlException>(() => TextReaderExtensions.XDocument(TextReader.Null));
+      Assert.Throws<XmlException>(() => TextReader.Null.XDocument());
 
-      const string xml = "<?xml version=\"1.0\"?><article>text</article>";
+      const string Xml = "<?xml version=\"1.0\"?><article>text</article>";
 
-      new StringReader(xml).With(reader =>
+      new StringReader(Xml).With(reader =>
       {
         Assert.True(reader.XDocument().ToString() == "<article>text</article>");
         Assert.True(reader.Read() == -1);
       });
 
-      new StringReader(xml).With(reader =>
+      new StringReader(Xml).With(reader =>
       {
         Assert.True(reader.XDocument(true).ToString() == "<article>text</article>");
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
@@ -95,19 +95,19 @@ namespace Catharsis.Commons.Extensions
     public void XmlDocument_Method()
     {
       Assert.Throws<ArgumentNullException>(() => TextReaderExtendedExtensions.XmlDocument(null));
-      Assert.Throws<XmlException>(() => TextReaderExtendedExtensions.XmlDocument(TextReader.Null));
+      Assert.Throws<XmlException>(() => TextReader.Null.XmlDocument());
 
-      const string xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
       
-      new StringReader(xml).With(reader =>
+      new StringReader(Xml).With(reader =>
       {
-        Assert.True(reader.XmlDocument().String() == xml);
+        Assert.True(reader.XmlDocument().String() == Xml);
         Assert.True(reader.Read() == -1);
       });
 
-      new StringReader(xml).With(reader =>
+      new StringReader(Xml).With(reader =>
       {
-        Assert.True(reader.XmlDocument(true).String() == xml);
+        Assert.True(reader.XmlDocument(true).String() == Xml);
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
       });
     }
@@ -120,9 +120,9 @@ namespace Catharsis.Commons.Extensions
     {
       Assert.Throws<ArgumentNullException>(() => TextReaderExtensions.XmlReader(null));
 
-      const string xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
       
-      var textReader = new StringReader(xml);
+      var textReader = new StringReader(Xml);
       Assert.True(textReader.XmlReader().Read(reader =>
       {
         Assert.False(reader.Settings.CloseInput);
@@ -133,7 +133,7 @@ namespace Catharsis.Commons.Extensions
       }) == "text");
       Assert.True(textReader.Read() == -1);
 
-      textReader = new StringReader(xml);
+      textReader = new StringReader(Xml);
       Assert.True(textReader.XmlReader(true).Read(reader =>
       {
         //Assert.True(reader.Settings.CloseInput);

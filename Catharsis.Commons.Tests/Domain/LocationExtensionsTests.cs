@@ -17,8 +17,8 @@ namespace Catharsis.Commons.Domain
     public void WithAddress_Method()
     {
       Assert.Throws<ArgumentNullException>(() => LocationExtensions.WithAddress(null, string.Empty));
-      Assert.Throws<ArgumentNullException>(() => LocationExtensions.WithAddress(Enumerable.Empty<Location>(), null));
-      Assert.Throws<ArgumentException>(() => LocationExtensions.WithAddress(Enumerable.Empty<Location>(), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<Location>().WithAddress(null));
+      Assert.Throws<ArgumentException>(() => Enumerable.Empty<Location>().WithAddress(string.Empty));
 
       Assert.True(new[] { null, new Location { Address = "Address" }, null, new Location { Address = "Address_2" } }.WithAddress("Address").Count() == 1);
     }
@@ -56,7 +56,7 @@ namespace Catharsis.Commons.Domain
     public void InCity_Method()
     {
       Assert.Throws<ArgumentNullException>(() => LocationExtensions.InCity(null, new City()));
-      Assert.Throws<ArgumentNullException>(() => LocationExtensions.InCity(Enumerable.Empty<Location>(), null));
+      Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<Location>().InCity(null));
 
       Assert.False(Enumerable.Empty<Location>().InCity(new City()).Any());
       Assert.True(new[] { null, new Location { City = new City { Id = "Id" } }, null, new Location { City = new City { Id = "Id_2" } } }.InCity(new City { Id = "Id" }).Count() == 1);

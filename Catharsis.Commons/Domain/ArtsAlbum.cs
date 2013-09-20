@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public class ArtsAlbum : Item, IComparable<ArtsAlbum>
+  public class ArtsAlbum : Item, IComparable<ArtsAlbum>, IEquatable<ArtsAlbum>
   {
     /// <summary>
     ///   <para></para>
@@ -75,7 +75,7 @@ namespace Catharsis.Commons.Domain
     public override XElement Xml()
     {
       return base.Xml().AddContent(
-        this.PublishedOn.HasValue ? new XElement("PublishedOn", this.PublishedOn.GetValueOrDefault().ToRFC1123()) : null);
+        this.PublishedOn.HasValue ? new XElement("PublishedOn", this.PublishedOn.GetValueOrDefault().ToRfc1123()) : null);
     }
 
     /// <summary>
@@ -85,7 +85,17 @@ namespace Catharsis.Commons.Domain
     /// <param name="other">The <see cref="ArtsAlbum"/> to compare with this instance.</param>
     public int CompareTo(ArtsAlbum other)
     {
-      return this.Name.CompareTo(other.Name);
+      return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(ArtsAlbum other)
+    {
+      return base.Equals(other);
     }
   }
 }

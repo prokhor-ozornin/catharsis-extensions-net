@@ -33,6 +33,38 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <param name="self"></param>
+    /// <param name="other"></param>
+    /// <param name="comparison"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static int Compare(this string self, string other, StringComparison comparison)
+    {
+      Assertion.NotNull(self);
+
+      return string.Compare(self, other, comparison);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="other"></param>
+    /// <param name="culture"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="culture"/> is a <c>null</c> reference.</exception>
+    public static int Compare(this string self, string other, CultureInfo culture, CompareOptions options = CompareOptions.None)
+    {
+      Assertion.NotNull(self);
+      Assertion.NotNull(culture);
+
+      return string.Compare(self, other, culture, options);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
@@ -115,7 +147,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="where"></param>
     /// <param name="replacements"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="where"/> or <paramref name="replacements"/> is a <c>null</c> reference.</exception>
-    public static string Replace(this string where, IDictionary<string, string> replacements)
+    public static string Replace(this string where, IEnumerable<KeyValuePair<string, string>> replacements)
     {
       Assertion.NotNull(where);
       Assertion.NotNull(replacements);
@@ -179,8 +211,8 @@ namespace Catharsis.Commons.Extensions
     /// </summary>
     /// <param name="boolean">A string containing the value to convert.</param>
     /// <returns><c>true</c> if value is equivalent to <see cref="Boolean.TrueString"/>; otherwise, <c>false</c>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="value"/> is empty string.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="boolean"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="boolean"/> is <see cref="string.Empty"/> string.</exception>
     public static bool ToBoolean(this string boolean)
     {
       Assertion.NotEmpty(boolean);
@@ -413,7 +445,7 @@ namespace Catharsis.Commons.Extensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public static IPAddress ToIPAddress(this string value)
+    public static IPAddress ToIpAddress(this string value)
     {
       Assertion.NotEmpty(value);
 
@@ -426,7 +458,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="value"></param>
     /// <param name="result"></param>
     /// <returns></returns>
-    public static bool ToIPAddress(this string value, out IPAddress result)
+    public static bool ToIpAddress(this string value, out IPAddress result)
     {
       return IPAddress.TryParse(value, out result);
     }

@@ -15,11 +15,11 @@ namespace Catharsis.Commons.Extensions
     public void Bytes_Method()
     {
       Assert.Throws<ArgumentNullException>(() => RandomExtensions.Bytes(null, 1));
-      Assert.Throws<ArgumentException>(() => RandomExtensions.Bytes(new Random(), -1));
-      Assert.Throws<ArgumentException>(() => RandomExtensions.Bytes(new Random(), 0));
+      Assert.Throws<ArgumentException>(() => new Random().Bytes(-1));
+      Assert.Throws<ArgumentException>(() => new Random().Bytes(0));
 
-      const int count = 100;
-      Assert.True(new Random().Bytes(count).Length == count);
+      const int Count = 100;
+      Assert.True(new Random().Bytes(Count).Length == Count);
     }
   }
 }

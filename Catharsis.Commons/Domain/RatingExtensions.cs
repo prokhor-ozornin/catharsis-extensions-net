@@ -47,12 +47,7 @@ namespace Catharsis.Commons.Domain
         return ratings.Where(rating => rating != null && rating.Value >= from.Value);
       }
 
-      if (to.HasValue)
-      {
-        return ratings.Where(rating => rating != null && rating.Value <= to.Value);
-      }
-
-      return ratings;
+      return to.HasValue ? ratings.Where(rating => rating != null && rating.Value <= to.Value) : ratings;
     }
 
     /// <summary>

@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("IsoCode")]
-  public class Country : EntityBase, IComparable<Country>, IImageable, INameable
+  public class Country : EntityBase, IComparable<Country>, IEquatable<Country>, IImageable, INameable
   {
     private string isoCode;
     private string name;
@@ -99,6 +99,16 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Country other)
+    {
+      return base.Equals(other);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <returns></returns>
     public override string ToString()
     {
@@ -112,7 +122,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="other">The <see cref="Country"/> to compare with this instance.</param>
     public int CompareTo(Country other)
     {
-      return this.Name.CompareTo(other.Name);
+      return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>

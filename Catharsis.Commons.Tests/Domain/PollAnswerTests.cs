@@ -131,13 +131,13 @@ namespace Catharsis.Commons.Domain
       var xml = new XElement("PollAnswer",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()));
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()));
       var answer = PollAnswer.Xml(xml);
       Assert.True(answer.Id == "id");
       Assert.True(answer.AuthorId == "authorId");
-      Assert.True(answer.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(answer.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(answer.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(answer.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(new PollAnswer("id", "authorId") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(PollAnswer.Xml(answer.Xml()).Equals(answer));
     }

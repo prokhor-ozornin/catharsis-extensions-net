@@ -76,17 +76,17 @@ namespace Catharsis.Commons.Domain
       var xml = new XElement("Blog",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"));
       var blog = Blog.Xml(xml);
       Assert.True(blog.Id == "id");
       Assert.True(blog.AuthorId == "authorId");
       Assert.True(blog.Comments.Count == 0);
-      Assert.True(blog.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(blog.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(blog.Language == "language");
-      Assert.True(blog.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(blog.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(blog.Name == "name");
       Assert.True(blog.Tags.Count == 0);
       Assert.True(blog.Text == null);

@@ -20,10 +20,10 @@ namespace Catharsis.Commons.Extensions
     [Fact]
     public void DownTo_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.DownTo((byte) 0, (byte) 0, (Action) null));
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.DownTo((short) 0, (short) 0, (Action) null));
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.DownTo((int) 0, (int) 0, (Action) null));
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.DownTo((long) 0, (long) 0, (Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((byte) 0).DownTo((byte) 0, (Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((short) 0).DownTo((short) 0, (Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((int) 0).DownTo((int) 0, (Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((long) 0).DownTo((long) 0, (Action) null));
 
       long sum = 0;
       byte.MaxValue.DownTo(1, () => sum += 1);
@@ -54,10 +54,10 @@ namespace Catharsis.Commons.Extensions
     [Fact]
     public void Times_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.Times((byte) 0, (Action) null));
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.Times((short) 0, (Action) null));
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.Times((int) 0, (Action) null));
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.Times((long)0, (Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((byte) 0).Times((Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((short) 0).Times((Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((int) 0).Times((Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((long)0).Times((Action) null));
 
       long sum = 0;
       byte.MinValue.Times(() => sum += 1);
@@ -115,10 +115,10 @@ namespace Catharsis.Commons.Extensions
     [Fact]
     public void UpTo_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.UpTo((byte) 0, (byte) 0, (Action) null));
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.UpTo((short)0, (short)0, (Action) null));
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.UpTo((int)0, (int)0, (Action) null));
-      Assert.Throws<ArgumentNullException>(() => NumbersExtensions.UpTo((long)0, (long)0, (Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((byte) 0).UpTo((byte) 0, (Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((short)0).UpTo((short)0, (Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((int)0).UpTo((int)0, (Action) null));
+      Assert.Throws<ArgumentNullException>(() => ((long)0).UpTo((long)0, (Action) null));
 
       long sum = 0;
       ((byte) 1).UpTo(byte.MaxValue, () => sum += 1);

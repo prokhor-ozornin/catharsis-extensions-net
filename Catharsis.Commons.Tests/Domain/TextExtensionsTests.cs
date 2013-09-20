@@ -56,7 +56,7 @@ namespace Catharsis.Commons.Domain
     public void WithPerson_Method()
     {
       Assert.Throws<ArgumentNullException>(() => TextExtensions.WithPerson(null, new Person()));
-      Assert.Throws<ArgumentNullException>(() => TextExtensions.WithPerson(Enumerable.Empty<Text>(), null));
+      Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<Text>().WithPerson(null));
 
       Assert.False(Enumerable.Empty<Text>().WithPerson(new Person()).Any());
       Assert.True(new[] { null, new Text { Person = new Person { Id = "1" } }, null, new Text { Person = new Person { Id = "2" } } }.WithPerson(new Person { Id = "1" }).Count() == 1);

@@ -172,9 +172,9 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Art",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Image",
           new XElement("Id", "image.id"),
@@ -182,8 +182,8 @@ namespace Catharsis.Commons.Domain
             new XElement("Id", "image.file.id"),
             new XElement("ContentType", "image.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-            new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-            new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+            new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+            new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
             new XElement("Name", "image.file.name"),
             new XElement("OriginalName", "image.file.originalName"),
             new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
@@ -194,20 +194,20 @@ namespace Catharsis.Commons.Domain
       Assert.True(art.Album == null);
       Assert.True(art.AuthorId == null);
       Assert.True(art.Comments.Count == 0);
-      Assert.True(art.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(art.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(art.Image.Id == "image.id");
       Assert.True(art.Image.File.Id == "image.file.id");
       Assert.True(art.Image.File.ContentType == "image.file.contentType");
       Assert.True(art.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(art.Image.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(art.Image.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(art.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(art.Image.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(art.Image.File.Name == "image.file.name");
       Assert.True(art.Image.File.OriginalName == "image.file.originalName");
       Assert.True(art.Image.File.Size == Guid.Empty.ToByteArray().LongLength);
       Assert.True(art.Image.Height == 1);
       Assert.True(art.Image.Width == 2);
       Assert.True(art.Language == "language");
-      Assert.True(art.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(art.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(art.Material == null);
       Assert.True(art.Name == "name");
       Assert.True(art.Person == null);
@@ -219,16 +219,16 @@ namespace Catharsis.Commons.Domain
 
       xml = new XElement("Art",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("ArtsAlbum",
           new XElement("Id", "album.id"),
-          new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+          new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
           new XElement("Language", "album.language"),
-          new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+          new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
           new XElement("Name", "album.name")),
         new XElement("Image",
           new XElement("Id", "image.id"),
@@ -236,8 +236,8 @@ namespace Catharsis.Commons.Domain
             new XElement("Id", "image.file.id"),
             new XElement("ContentType", "image.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-            new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-            new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+            new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+            new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
             new XElement("Name", "image.file.name"),
             new XElement("OriginalName", "image.file.originalName"),
             new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
@@ -254,25 +254,25 @@ namespace Catharsis.Commons.Domain
       Assert.True(art.Album.Id == "album.id");
       Assert.True(art.Album.AuthorId == null);
       Assert.True(art.Comments.Count == 0);
-      Assert.True(art.Album.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(art.Album.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(art.Album.Language == "album.language");
-      Assert.True(art.Album.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(art.Album.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(art.Album.Name == "album.name");
       Assert.True(art.AuthorId == null);
-      Assert.True(art.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(art.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(art.Image.Id == "image.id");
       Assert.True(art.Image.File.Id == "image.file.id");
       Assert.True(art.Image.File.ContentType == "image.file.contentType");
       Assert.True(art.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(art.Image.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(art.Image.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(art.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(art.Image.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(art.Image.File.Name == "image.file.name");
       Assert.True(art.Image.File.OriginalName == "image.file.originalName");
       Assert.True(art.Image.File.Size == Guid.Empty.ToByteArray().LongLength);
       Assert.True(art.Image.Height == 1);
       Assert.True(art.Image.Width == 2);
       Assert.True(art.Language == "language");
-      Assert.True(art.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(art.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(art.Material == "material");
       Assert.True(art.Name == "name");
       Assert.True(art.Person.Id == "person.id");

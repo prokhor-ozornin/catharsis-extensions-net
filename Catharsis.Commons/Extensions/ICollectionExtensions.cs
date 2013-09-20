@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace Catharsis.Commons.Extensions
 {
   /// <summary>
@@ -284,10 +283,6 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para>Removes specified element from the collection, it if exists, and returns collection reference back to perform further operations.</para>
     ///   <seealso cref="ICollection{T}.Remove(T)"/>
-    ///   <seealso cref="AddContent{T}"/>
-    ///   <seealso cref="ClearNext{T}"/>
-    ///   <seealso cref="CopyToNext{T}"/>
-    ///   <seealso cref="RemoveNext{T}"/>
     /// </summary>
     /// <typeparam name="T">Type of collection's elements.</typeparam>
     /// <param name="collection">Collection to remove element from.</param>

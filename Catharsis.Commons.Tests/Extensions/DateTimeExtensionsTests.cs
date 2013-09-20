@@ -79,13 +79,13 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="DateTimeExtensions.ToRFC1123(DateTime)"/> method.</para>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.ToRfc1123(DateTime)"/> method.</para>
     /// </summary>
     [Fact]
-    public void ToRFC1123_Method()
+    public void ToRfc1123_Method()
     {
       var time = DateTime.Today;
-      Assert.True(DateTime.ParseExact(time.ToRFC1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Equals(time), "Parsed = " + DateTime.ParseExact(time.ToRFC1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Ticks + ", Exact = " + time.Ticks);
+      Assert.True(DateTime.ParseExact(time.ToRfc1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Equals(time), "Parsed = " + DateTime.ParseExact(time.ToRfc1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Ticks + ", Exact = " + time.Ticks);
     }
   }
 }

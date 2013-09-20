@@ -12,16 +12,16 @@ namespace Catharsis.Commons.Extensions
     private delegate int Increment(int value);
     private delegate int Decrement(int value);
 
-    private readonly Delegate IncrementDelegate;
-    private readonly Delegate DecrementDelegate;
+    private readonly Delegate incrementDelegate;
+    private readonly Delegate decrementDelegate;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     public DelegateExtensionsTests()
     {
-      this.IncrementDelegate = Delegate.CreateDelegate(typeof(Increment), this.GetType().GetAnyMethod("IncrementValue"));
-      this.DecrementDelegate = Delegate.CreateDelegate(typeof(Decrement), this.GetType().GetAnyMethod("DecrementValue"));
+      this.incrementDelegate = Delegate.CreateDelegate(typeof(Increment), this.GetType().GetAnyMethod("IncrementValue"));
+      this.decrementDelegate = Delegate.CreateDelegate(typeof(Decrement), this.GetType().GetAnyMethod("DecrementValue"));
     }
     
     /// <summary>
@@ -30,15 +30,15 @@ namespace Catharsis.Commons.Extensions
     [Fact]
     public void And_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => DelegateExtensions.And(null, IncrementDelegate));
-      Assert.Throws<ArgumentNullException>(() => DelegateExtensions.And(IncrementDelegate, null));
-      Assert.Throws<ArgumentException>(() => this.IncrementDelegate.And(DecrementDelegate));
+      Assert.Throws<ArgumentNullException>(() => DelegateExtensions.And(null, this.incrementDelegate));
+      Assert.Throws<ArgumentNullException>(() => this.incrementDelegate.And(null));
+      Assert.Throws<ArgumentException>(() => this.incrementDelegate.And(this.decrementDelegate));
 
-      var andDelegate = IncrementDelegate.And(IncrementDelegate);
+      var andDelegate = this.incrementDelegate.And(this.incrementDelegate);
       Assert.True(andDelegate is MulticastDelegate);
       Assert.True(andDelegate.Method == this.GetType().GetAnyMethod("IncrementValue"));
       Assert.True(andDelegate.Target == null);
-      Assert.True(andDelegate.GetInvocationList().SequenceEqual(new [] { IncrementDelegate, IncrementDelegate }));
+      Assert.True(andDelegate.GetInvocationList().SequenceEqual(new [] { this.incrementDelegate, this.incrementDelegate }));
       Assert.True(andDelegate.DynamicInvoke(0).To<int>() == 1);
     }
 
@@ -48,11 +48,11 @@ namespace Catharsis.Commons.Extensions
     [Fact]
     public void Not_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => DelegateExtensions.Not(null, IncrementDelegate));
-      Assert.Throws<ArgumentException>(() => this.IncrementDelegate.Not(DecrementDelegate));
+      Assert.Throws<ArgumentNullException>(() => DelegateExtensions.Not(null, this.incrementDelegate));
+      Assert.Throws<ArgumentException>(() => this.incrementDelegate.Not(this.decrementDelegate));
 
-      Assert.True(ReferenceEquals(IncrementDelegate.Not(null), IncrementDelegate));
-      Assert.True(IncrementDelegate.Not(IncrementDelegate) == null);
+      Assert.True(ReferenceEquals(this.incrementDelegate.Not(null), this.incrementDelegate));
+      Assert.True(this.incrementDelegate.Not(this.incrementDelegate) == null);
     }
 
     private static int IncrementValue(int value)

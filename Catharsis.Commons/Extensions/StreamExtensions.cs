@@ -70,11 +70,11 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="STREAM"></typeparam>
+    /// <typeparam name="T"></typeparam>
     /// <param name="stream"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static STREAM Rewind<STREAM>(this STREAM stream) where STREAM : Stream
+    public static T Rewind<T>(this T stream) where T : Stream
     {
       Assertion.NotNull(stream);
 
@@ -85,11 +85,11 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="STREAM"></typeparam>
+    /// <typeparam name="T"></typeparam>
     /// <param name="stream"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static STREAM Shutdown<STREAM>(this STREAM stream) where STREAM : Stream
+    public static T Shutdown<T>(this T stream) where T : Stream
     {
       Assertion.NotNull(stream);
 
@@ -143,12 +143,12 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="STREAM"></typeparam>
+    /// <typeparam name="T"></typeparam>
     /// <param name="stream"></param>
     /// <param name="bytes"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static STREAM Write<STREAM>(this STREAM stream, byte[] bytes) where STREAM : Stream
+    public static T Write<T>(this T stream, byte[] bytes) where T : Stream
     {
       Assertion.NotNull(stream);
       Assertion.NotNull(bytes);
@@ -164,12 +164,12 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="STREAM"></typeparam>
+    /// <typeparam name="T"></typeparam>
     /// <param name="to"></param>
     /// <param name="from"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="to"/> or <paramref name="from"/> is a <c>null</c> reference.</exception>
-    public static STREAM Write<STREAM>(this STREAM to, Stream from) where STREAM : Stream
+    public static T Write<T>(this T to, Stream from) where T : Stream
     {
       Assertion.NotNull(to);
       Assertion.NotNull(from);
@@ -185,13 +185,13 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="STREAM"></typeparam>
+    /// <typeparam name="T"></typeparam>
     /// <param name="stream"></param>
     /// <param name="text"></param>
     /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
-    public static STREAM Write<STREAM>(this STREAM stream, string text, Encoding encoding = null) where STREAM : Stream
+    public static T Write<T>(this T stream, string text, Encoding encoding = null) where T : Stream
     {
       Assertion.NotNull(stream);
       Assertion.NotNull(text);

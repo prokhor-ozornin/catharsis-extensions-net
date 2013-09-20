@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Language,Name,Translator")]
-  public class TextTranslation : EntityBase, ILocalizable, INameable, ITextable
+  public class TextTranslation : EntityBase, IEquatable<TextTranslation>, ILocalizable, INameable, ITextable
   {
     private string language;
     private string name;
@@ -113,6 +113,16 @@ namespace Catharsis.Commons.Domain
       Assertion.NotNull(xml);
 
       return new TextTranslation((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (string) xml.Element("Translator"));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(TextTranslation other)
+    {
+      return base.Equals(other);
     }
 
     /// <summary>

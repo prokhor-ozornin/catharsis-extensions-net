@@ -7,7 +7,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public class Faq : Item, IComparable<Faq>
+  public class Faq : Item, IComparable<Faq>, IEquatable<Faq>
   {
     /// <summary>
     ///   <para>Creates new F.A.Q.</para>
@@ -69,6 +69,16 @@ namespace Catharsis.Commons.Domain
     public int CompareTo(Faq other)
     {
       return base.CompareTo(other);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Faq other)
+    {
+      return base.Equals(other);
     }
   }
 }

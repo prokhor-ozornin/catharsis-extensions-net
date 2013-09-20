@@ -22,9 +22,9 @@ namespace Catharsis.Commons.Extensions
     public void Decrypt_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => SymmetricAlgorithmExtensions.Encrypt(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => SymmetricAlgorithmExtensions.Encrypt(Aes.Create(), (byte[])null));
+      Assert.Throws<ArgumentNullException>(() => Aes.Create().Encrypt((byte[])null));
       Assert.Throws<ArgumentNullException>(() => SymmetricAlgorithmExtensions.Encrypt(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => SymmetricAlgorithmExtensions.Encrypt(Aes.Create(), null, false));
+      Assert.Throws<ArgumentNullException>(() => Aes.Create().Encrypt(null, false));
 
       var bytes = Guid.NewGuid().ToByteArray();
       var algorithm = Aes.Create();
@@ -81,9 +81,9 @@ namespace Catharsis.Commons.Extensions
     public void Encrypt_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => SymmetricAlgorithmExtensions.Encrypt(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => SymmetricAlgorithmExtensions.Encrypt(Aes.Create(), (byte[]) null));
+      Assert.Throws<ArgumentNullException>(() => Aes.Create().Encrypt((byte[]) null));
       Assert.Throws<ArgumentNullException>(() => SymmetricAlgorithmExtensions.Encrypt(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => SymmetricAlgorithmExtensions.Encrypt(Aes.Create(), null, false));
+      Assert.Throws<ArgumentNullException>(() => Aes.Create().Encrypt(null, false));
 
       var bytes = Guid.NewGuid().ToByteArray();
       var algorithm = Aes.Create();
@@ -106,10 +106,7 @@ namespace Catharsis.Commons.Extensions
         encryptor.IV = algorithm.IV;
         Assert.False(encryptor.Encrypt(bytes).SequenceEqual(encrypted));
       });
-      Aes.Create().With(encryptor =>
-      {
-        Assert.False(encryptor.Encrypt(bytes).SequenceEqual(encrypted));
-      });
+      Aes.Create().With(encryptor => Assert.False(encryptor.Encrypt(bytes).SequenceEqual(encrypted)));
 
       new MemoryStream(bytes).With(stream =>
       {
@@ -136,10 +133,7 @@ namespace Catharsis.Commons.Extensions
         encryptor.IV = algorithm.IV;
         Assert.False(encryptor.Encrypt(new MemoryStream(bytes), true).SequenceEqual(encrypted));
       });
-      Aes.Create().With(encryptor =>
-      {
-        Assert.False(encryptor.Encrypt(new MemoryStream(bytes), true).SequenceEqual(encrypted));
-      });
+      Aes.Create().With(encryptor => Assert.False(encryptor.Encrypt(new MemoryStream(bytes), true).SequenceEqual(encrypted)));
 
       algorithm.Clear();
     }

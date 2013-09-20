@@ -53,7 +53,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="id">Unique identifier of entity.</param>
     /// <exception cref="ArgumentNullException">If <paramref name="id"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="id"/> is <see cref="string.Empty"/> string.</exception>
-    public EntityBase(string id)
+    protected EntityBase(string id)
     {
       this.Id = id;
     }

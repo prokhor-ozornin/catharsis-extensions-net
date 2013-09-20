@@ -150,29 +150,29 @@ namespace Catharsis.Commons.Domain
       var xml = new XElement("Rating",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Item",
           new XElement("Id", "item.id"),
-          new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+          new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
           new XElement("Language", "item.language"),
-          new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+          new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
           new XElement("Name", "item.name")),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Value", 1));
       var rating = Rating.Xml(xml);
       Assert.True(rating.Id == "id");
       Assert.True(rating.AuthorId == "authorId");
-      Assert.True(rating.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(rating.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(rating.Item.Id == "item.id");
       Assert.True(rating.Item.Comments.Count == 0);
       Assert.True(rating.Item.AuthorId == null);
-      Assert.True(rating.Item.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(rating.Item.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(rating.Item.Language == "item.language");
-      Assert.True(rating.Item.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(rating.Item.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(rating.Item.Name == "item.name");
       Assert.True(rating.Item.Tags.Count == 0);
       Assert.True(rating.Item.Text == null);
-      Assert.True(rating.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(rating.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(rating.Value == 1);
       Assert.True(new Rating("id", "authorId", new Item("item.id", "item.language", "item.name") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Rating.Xml(rating.Xml()).Equals(rating));

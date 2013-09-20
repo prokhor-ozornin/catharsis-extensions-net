@@ -16,7 +16,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="value"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public static string DecodeHTML(this string value)
+    public static string DecodeHtml(this string value)
     {
       Assertion.NotNull(value);
 
@@ -29,7 +29,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="value"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public static string EncodeHTML(this string value)
+    public static string EncodeHtml(this string value)
     {
       Assertion.NotNull(value);
 

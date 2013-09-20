@@ -137,9 +137,9 @@ namespace Catharsis.Commons.Domain
       var xml = new XElement("Text",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("Person",
@@ -151,9 +151,9 @@ namespace Catharsis.Commons.Domain
       Assert.True(text.AuthorId == "authorId");
       Assert.True(text.Category == null);
       Assert.True(text.Comments.Count == 0);
-      Assert.True(text.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(text.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(text.Language == "language");
-      Assert.True(text.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(text.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(text.Name == "name");
       Assert.True(text.Person.Id == "person.id");
       Assert.True(text.Person.NameFirst == "person.nameFirst");
@@ -166,9 +166,9 @@ namespace Catharsis.Commons.Domain
       xml = new XElement("Text",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("TextsCategory",
@@ -186,9 +186,9 @@ namespace Catharsis.Commons.Domain
       Assert.True(text.Category.Language == "category.language");
       Assert.True(text.Category.Name == "category.name");
       Assert.True(text.Comments.Count == 0);
-      Assert.True(text.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(text.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(text.Language == "language");
-      Assert.True(text.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(text.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(text.Name == "name");
       Assert.True(text.Person.Id == "person.id");
       Assert.True(text.Person.NameFirst == "person.nameFirst");

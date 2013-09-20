@@ -155,16 +155,16 @@ namespace Catharsis.Commons.Domain
       var xml = new XElement("Comment",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"));
       var comment = Comment.Xml(xml);
       Assert.True(comment.Id == "id");
       Assert.True(comment.AuthorId == "authorId");
-      Assert.True(comment.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(comment.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
-      Assert.True(comment.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(comment.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(comment.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
+      Assert.True(comment.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(comment.Name == "name");
       Assert.True(comment.Text == "text");
       Assert.True(new Comment("id", "authorId", "name", "text") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());

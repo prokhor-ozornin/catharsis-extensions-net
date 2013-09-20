@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Category,File")]
-  public class Audio : EntityBase, IComparable<Audio>
+  public class Audio : EntityBase, IComparable<Audio>, IEquatable<Audio>
   {
     private File file;
 
@@ -88,6 +88,16 @@ namespace Catharsis.Commons.Domain
       Assertion.NotNull(xml);
 
       return new Audio((string) xml.Element("Id"), File.Xml(xml.Element("File")), (short) xml.Element("Bitrate"), (short) xml.Element("Duration"), xml.Element("AudiosCategory") != null ? AudiosCategory.Xml(xml.Element("AudiosCategory")) : null);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Audio other)
+    {
+      return base.Equals(other);
     }
 
     /// <summary>

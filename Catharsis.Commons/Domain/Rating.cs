@@ -9,10 +9,12 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("AuthorId,Item")]
-  public class Rating : EntityBase, IComparable<Rating>, IAuthorable, ITimeable
+  public class Rating : EntityBase, IComparable<Rating>, IEquatable<Rating>, IAuthorable, ITimeable
   {
     private string authorId;
+    private DateTime dateCreated = DateTime.UtcNow;
     private Item item;
+    private DateTime lastUpdated = DateTime.UtcNow;
 
     /// <summary>
     ///   <para>Identifier of the user who has rated an item.</para>
@@ -33,7 +35,11 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of rating's creation.</para>
     /// </summary>
-    public DateTime DateCreated { get; set; }
+    public DateTime DateCreated
+    {
+      get { return this.dateCreated; }
+      set { this.dateCreated = value; }
+    }
 
     /// <summary>
     ///   <para>Subject item that was rated.</para>
@@ -53,7 +59,11 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of rating's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated { get; set; }
+    public DateTime LastUpdated
+    {
+      get { return this.lastUpdated; }
+      set { this.lastUpdated = value; }
+    }
     
     /// <summary>
     ///   <para></para>
@@ -65,8 +75,6 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     public Rating()
     {
-      this.DateCreated = DateTime.UtcNow;
-      this.LastUpdated = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -76,8 +84,6 @@ namespace Catharsis.Commons.Domain
     /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
     public Rating(IDictionary<string, object> properties) : base(properties)
     {
-      this.DateCreated = DateTime.UtcNow;
-      this.LastUpdated = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -91,9 +97,6 @@ namespace Catharsis.Commons.Domain
     /// <exception cref="ArgumentException">If either <paramref name="id"/> or <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
     public Rating(string id, string authorId, Item item, byte value) : base(id)
     {
-      this.DateCreated = DateTime.UtcNow;
-      this.LastUpdated = DateTime.UtcNow;
-
       this.AuthorId = authorId;
       this.Item = item;
       this.Value = value;
@@ -124,6 +127,16 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Rating other)
+    {
+      return base.Equals(other);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <returns></returns>
     public override string ToString()
     {
@@ -148,9 +161,9 @@ namespace Catharsis.Commons.Domain
     {
       return base.Xml().AddContent(
         new XElement("AuthorId", this.AuthorId),
-        new XElement("DateCreated", this.DateCreated.ToRFC1123()),
+        new XElement("DateCreated", this.DateCreated.ToRfc1123()),
         this.Item.Xml(),
-        new XElement("LastUpdated", this.LastUpdated.ToRFC1123()),
+        new XElement("LastUpdated", this.LastUpdated.ToRfc1123()),
         new XElement("Value", this.Value));
     }
   }

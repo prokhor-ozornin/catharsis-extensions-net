@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para>Art represents a creative image, usually displayed publically.</para>
   /// </summary>
   [EqualsAndHashCode("Album,Person")]
-  public class Art : Item, IComparable<Art>, IImageable
+  public class Art : Item, IComparable<Art>, IEquatable<Art>, IImageable
   {
     private Image image;
 
@@ -130,7 +130,17 @@ namespace Catharsis.Commons.Domain
     /// <param name="other">The <see cref="Art"/> to compare with this instance.</param>
     public int CompareTo(Art other)
     {
-      return this.Name.CompareTo(other.Name);
+      return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Art other)
+    {
+      return base.Equals(other);
     }
   }
 }

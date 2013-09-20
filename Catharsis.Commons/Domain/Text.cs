@@ -10,7 +10,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Category,Person")]
-  public class Text : Item
+  public class Text : Item, IEquatable<Text>
   {
     private Person person;
     private readonly ICollection<TextTranslation> translations = new HashSet<TextTranslation>();
@@ -91,6 +91,7 @@ namespace Catharsis.Commons.Domain
       Assertion.NotNull(xml);
 
       var text = new Text((string)xml.Element("Id"), (string)xml.Element("AuthorId"), (string)xml.Element("Language"), (string)xml.Element("Name"), (string)xml.Element("Text"), Person.Xml(xml.Element("Person")), xml.Element("TextsCategory") != null ? TextsCategory.Xml(xml.Element("TextsCategory")) : null);
+      
       if (xml.Element("DateCreated") != null)
       {
         text.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -101,8 +102,9 @@ namespace Catharsis.Commons.Domain
       }
       if (xml.Element("Translations") != null)
       {
-        text.Translations.AddAll(xml.Element("Translations").Descendants().Select(translation => TextTranslation.Xml(translation)));
+        text.Translations.AddAll(xml.Element("Translations").Descendants().Select(TextTranslation.Xml));
       }
+
       return text;
     }
 
@@ -116,6 +118,16 @@ namespace Catharsis.Commons.Domain
         this.Category != null ? this.Category.Xml() : null,
         this.Person.Xml(),
         this.Translations.Count > 0 ? new XElement("Translations", this.Translations.Select(translation => translation.Xml())) : null);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Text other)
+    {
+      return base.Equals(other);
     }
   }
 }

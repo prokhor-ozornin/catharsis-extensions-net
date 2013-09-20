@@ -112,12 +112,7 @@ namespace Catharsis.Commons.Domain
         return videos.Where(video => video != null && video.Duration >= from.Value);
       }
 
-      if (to.HasValue)
-      {
-        return videos.Where(video => video != null && video.Duration <= to.Value);
-      }
-
-      return videos;
+      return to.HasValue ? videos.Where(video => video != null && video.Duration <= to.Value) : videos;
     }
 
     /// <summary>

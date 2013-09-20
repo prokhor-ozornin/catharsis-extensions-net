@@ -20,7 +20,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
-    public static byte[] Bytes(this Uri uri, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
+    public static byte[] Bytes(this Uri uri, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
     {
       Assertion.NotNull(uri);
 
@@ -50,7 +50,7 @@ namespace Catharsis.Commons.Extensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="file"/> is <see cref="string.Empty"/> string.</exception>
-    public static Uri DownloadFile(this Uri uri, string file, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
+    public static Uri DownloadFile(this Uri uri, string file, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotEmpty(file);
@@ -81,7 +81,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
-    public static string DownloadFile(this Uri uri, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
+    public static string DownloadFile(this Uri uri, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
     {
       Assertion.NotNull(uri);
 
@@ -98,7 +98,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static Stream Stream(this Uri uri, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
+    public static Stream Stream(this Uri uri, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
     {
       Assertion.NotNull(uri);
 
@@ -126,7 +126,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static TextReader TextReader(this Uri uri, Encoding encoding = null, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
+    public static TextReader TextReader(this Uri uri, Encoding encoding = null, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
     {
       Assertion.NotNull(uri);
 
@@ -141,7 +141,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static string Text(this Uri uri, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
+    public static string Text(this Uri uri, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
     {
       Assertion.NotNull(uri);
 
@@ -170,7 +170,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
-    public static Uri Upload(this Uri uri, byte[] data, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
+    public static Uri Upload(this Uri uri, byte[] data, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotNull(data);
@@ -202,7 +202,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
-    public static Uri Upload(this Uri uri, string data, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
+    public static Uri Upload(this Uri uri, string data, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotNull(data);
@@ -235,7 +235,7 @@ namespace Catharsis.Commons.Extensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="file"/> is <see cref="string.Empty"/> string.</exception>
-    public static Uri UploadFile(this Uri uri, string file, IDictionary<string, string> parameters = null, IDictionary<string, string> headers = null)
+    public static Uri UploadFile(this Uri uri, string file, IEnumerable<KeyValuePair<string, string>> parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotNull(file);

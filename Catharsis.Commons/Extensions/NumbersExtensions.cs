@@ -69,7 +69,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(action);
 
-      for (long value = from; value >= to; value--)
+      for (var value = from; value >= to; value--)
       {
         action();
       }
@@ -211,7 +211,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assertion.NotNull(action);
 
-      for (long value = from; value <= to; value++)
+      for (var value = from; value <= to; value++)
       {
         action();
       }

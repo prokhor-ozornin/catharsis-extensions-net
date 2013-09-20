@@ -101,17 +101,17 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("BlogEntry",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
           new XElement("Blog",
             new XElement("Id", "blog.id"),
             new XElement("AuthorId", "blog.authorId"),
-            new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+            new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
             new XElement("Language", "blog.language"),
-            new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+            new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
             new XElement("Name", "blog.name")));
       var entry = BlogEntry.Xml(xml);
       Assert.True(entry.Id == "id");
@@ -119,13 +119,13 @@ namespace Catharsis.Commons.Domain
       Assert.True(entry.Comments.Count == 0);
       Assert.True(entry.Blog.Id == "blog.id");
       Assert.True(entry.Blog.AuthorId == "blog.authorId");
-      Assert.True(entry.Blog.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(entry.Blog.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(entry.Blog.Language == "blog.language");
-      Assert.True(entry.Blog.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(entry.Blog.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(entry.Blog.Name == "blog.name");
-      Assert.True(entry.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(entry.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(entry.Language == "language");
-      Assert.True(entry.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(entry.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(entry.Name == "name");
       Assert.True(entry.Tags.Count == 0);
       Assert.True(entry.Text == "text");

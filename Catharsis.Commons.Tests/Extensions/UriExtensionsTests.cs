@@ -16,7 +16,7 @@ namespace Catharsis.Commons.Extensions
     const string Yandex = "http://yandex.ru";
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Bytes(Uri, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Bytes(Uri, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void Bytes_Method()
@@ -27,14 +27,18 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.DownloadFile(Uri, string, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="UriExtensions.DownloadFile(Uri, string, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.DownloadFile(Uri, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
     public void DownloadFile_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(null, "file"));
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(new Uri(Yandex), (string) null));
-      Assert.Throws<ArgumentException>(() => UriExtensions.DownloadFile(new Uri(Yandex), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => Yandex.ToUri().DownloadFile((string) null));
+      Assert.Throws<ArgumentException>(() => Yandex.ToUri().DownloadFile(string.Empty));
       Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(null));
 
       var uri = new Uri(Yandex);
@@ -45,7 +49,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Stream(Uri, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Stream(Uri, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void Stream_Method()
@@ -57,7 +61,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.TextReader(Uri, Encoding, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.TextReader(Uri, Encoding, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void TextReader_Method()
@@ -72,7 +76,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Text(Uri, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Text(Uri, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void Text_Method()
@@ -85,30 +89,30 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, byte[], IDictionary{string, string}, IDictionary{string, string})"/></description></item>
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, string, IDictionary{string, string}, IDictionary{string, string})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Upload(Uri, byte[], IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Upload(Uri, string, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void Upload_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => UriExtensions.Upload(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.Upload(new Uri(Yandex), (byte[]) null));
+      Assert.Throws<ArgumentNullException>(() => Yandex.ToUri().Upload((byte[]) null));
       Assert.Throws<ArgumentNullException>(() => UriExtensions.Upload(null, string.Empty));
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.Upload(new Uri(Yandex), (string)null));
+      Assert.Throws<ArgumentNullException>(() => Yandex.ToUri().Upload((string)null));
       
       throw new NotImplementedException();
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string, IDictionary{string, string}, IDictionary{string, string})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void UploadFile_Method()
     {
       Assert.Throws<ArgumentNullException>(() => UriExtensions.UploadFile(null, "file"));
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.UploadFile(new Uri(Yandex), null));
-      Assert.Throws<WebException>(() => UriExtensions.UploadFile(new Uri(Yandex), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => Yandex.ToUri().UploadFile(null));
+      Assert.Throws<WebException>(() => Yandex.ToUri().UploadFile(string.Empty));
 
       throw new NotImplementedException();
     }

@@ -63,7 +63,7 @@ namespace Catharsis.Commons.Extensions
     /// <param name="date">Date/time object instance.</param>
     /// <returns>Formatted date/time value as a string.</returns>
     /// <remarks>Returned formatted date/time string represents date in UTC timezone, formatted for invariant culture.</remarks>
-    public static string ToRFC1123(this DateTime date)
+    public static string ToRfc1123(this DateTime date)
     {
       return date.ToString("r");
     }

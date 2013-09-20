@@ -7,7 +7,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public class Blog : Item
+  public class Blog : Item, IEquatable<Blog>
   {
     /// <summary>
     ///   <para>Creates new blog.</para>
@@ -59,6 +59,16 @@ namespace Catharsis.Commons.Domain
         blog.LastUpdated = (DateTime) xml.Element("LastUpdated");
       }
       return blog;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Blog other)
+    {
+      return base.Equals(other);
     }
   }
 }

@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Category,File")]
-  public class Video : EntityBase, IComparable<Video>, IDimensionable
+  public class Video : EntityBase, IComparable<Video>, IEquatable<Video>, IDimensionable
   {
     private File file;
 
@@ -102,6 +102,18 @@ namespace Catharsis.Commons.Domain
       Assertion.NotNull(xml);
 
       return new Video((string) xml.Element("Id"), File.Xml(xml.Element("File")), (short) xml.Element("Bitrate"), (long) xml.Element("Duration"), (short) xml.Element("Height"), (short) xml.Element("Width"), xml.Element("VideosCategory") != null ? VideosCategory.Xml(xml.Element("VideosCategory")) : null);
+    }
+
+    /// <summary>
+    /// Indicates whether the current object is equal to another object of the same type.
+    /// </summary>
+    /// <returns>
+    /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+    /// </returns>
+    /// <param name="other">An object to compare with this object.</param>
+    public bool Equals(Video other)
+    {
+      return base.Equals(other);
     }
 
     /// <summary>

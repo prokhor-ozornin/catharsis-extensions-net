@@ -120,12 +120,7 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.Height >= from.Value);
       }
       
-      if (to.HasValue)
-      {
-        return entities.Where(entity => entity != null && entity.Height <= to.Value);
-      }
-
-      return entities;
+      return to.HasValue ? entities.Where(entity => entity != null && entity.Height <= to.Value) : entities;
     }
 
     /// <summary>
@@ -179,12 +174,7 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.Width >= from.Value);
       }
       
-      if (to.HasValue)
-      {
-        return entities.Where(entity => entity != null && entity.Width <= to.Value);
-      }
-
-      return entities;
+      return to.HasValue ? entities.Where(entity => entity != null && entity.Width <= to.Value) : entities;
     }
 
     /// <summary>
@@ -484,12 +474,7 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.Size >= from.Value);
       }
 
-      if (to.HasValue)
-      {
-        return entities.Where(entity => entity != null && entity.Size <= to.Value);
-      }
-
-      return entities;
+      return to.HasValue ? entities.Where(entity => entity != null && entity.Size <= to.Value) : entities;
     }
 
     /// <summary>
@@ -573,12 +558,7 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.DateCreated >= from.Value);
       }
 
-      if (to.HasValue)
-      {
-        return entities.Where(entity => entity != null && entity.DateCreated <= to.Value);
-      }
-
-      return entities;
+      return to.HasValue ? entities.Where(entity => entity != null && entity.DateCreated <= to.Value) : entities;
     }
 
     /// <summary>
@@ -632,12 +612,7 @@ namespace Catharsis.Commons.Domain
         return entities.Where(entity => entity != null && entity.LastUpdated >= from.Value);
       }
 
-      if (to.HasValue)
-      {
-        return entities.Where(entity => entity != null && entity.LastUpdated <= to.Value);
-      }
-
-      return entities;
+      return to.HasValue ? entities.Where(entity => entity != null && entity.LastUpdated <= to.Value) : entities;
     }
 
     /// <summary>

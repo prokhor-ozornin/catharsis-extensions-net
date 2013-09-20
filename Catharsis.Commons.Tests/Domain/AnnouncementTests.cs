@@ -150,9 +150,9 @@ namespace Catharsis.Commons.Domain
       var xml = new XElement("Announcement",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"));
       var announcement = Announcement.Xml(xml);
@@ -161,10 +161,10 @@ namespace Catharsis.Commons.Domain
       Assert.True(announcement.Category == null);
       Assert.True(announcement.Comments.Count == 0);
       Assert.True(announcement.Currency == null);
-      Assert.True(announcement.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(announcement.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(announcement.Image == null);
       Assert.True(announcement.Language == "language");
-      Assert.True(announcement.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(announcement.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(announcement.Name == "name");
       Assert.False(announcement.Price.HasValue);
       Assert.True(announcement.Tags.Count == 0);
@@ -175,9 +175,9 @@ namespace Catharsis.Commons.Domain
       xml = new XElement("Announcement",
         new XElement("Id", "id"),
         new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("AnnouncementsCategory",
@@ -191,8 +191,8 @@ namespace Catharsis.Commons.Domain
             new XElement("Id", "image.file.id"),
             new XElement("ContentType", "image.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-            new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-            new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+            new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+            new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
             new XElement("Name", "image.file.name"),
             new XElement("OriginalName", "image.file.originalName"),
             new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
@@ -207,20 +207,20 @@ namespace Catharsis.Commons.Domain
       Assert.True(announcement.Category.Name == "category.name");
       Assert.True(announcement.Comments.Count == 0);
       Assert.True(announcement.Currency == "currency");
-      Assert.True(announcement.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(announcement.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(announcement.Image.Id == "image.id");
       Assert.True(announcement.Image.File.Id == "image.file.id");
       Assert.True(announcement.Image.File.ContentType == "image.file.contentType");
       Assert.True(announcement.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(announcement.Image.File.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(announcement.Image.File.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(announcement.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(announcement.Image.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(announcement.Image.File.Name == "image.file.name");
       Assert.True(announcement.Image.File.OriginalName == "image.file.originalName");
       Assert.True(announcement.Image.File.Size == Guid.Empty.ToByteArray().LongLength);
       Assert.True(announcement.Image.Height == 1);
       Assert.True(announcement.Image.Width == 2);
       Assert.True(announcement.Language == "language");
-      Assert.True(announcement.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(announcement.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(announcement.Name == "name");
       Assert.True(announcement.Price == decimal.One);
       Assert.True(announcement.Tags.Count == 0);

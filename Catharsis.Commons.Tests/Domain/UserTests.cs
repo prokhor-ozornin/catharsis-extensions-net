@@ -152,16 +152,16 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("User",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Email", "email"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Username", "username"));
       var user = User.Xml(xml);
       Assert.True(user.Id == "id");
-      Assert.True(user.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(user.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(user.Email == "email");
-      Assert.True(user.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(user.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(user.Name == "name");
       Assert.True(user.Username == "username");
       Assert.True(new User("id", "username", "email", "name") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());

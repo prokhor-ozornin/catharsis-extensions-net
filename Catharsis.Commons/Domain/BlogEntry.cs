@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Blog")]
-  public class BlogEntry : Item, IComparable<BlogEntry>
+  public class BlogEntry : Item, IComparable<BlogEntry>, IEquatable<BlogEntry>
   {
     private Blog blog;
 
@@ -101,6 +101,16 @@ namespace Catharsis.Commons.Domain
     {
       return base.Xml().AddContent(
         this.Blog.Xml());
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(BlogEntry other)
+    {
+      return base.Equals(other);
     }
   }
 }

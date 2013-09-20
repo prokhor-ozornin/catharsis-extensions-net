@@ -42,7 +42,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="texts">Source sequence of texts for sorting.</param>
     /// <returns>Sorted sequence of texts.</returns>
-    /// <exception cref="ArgumentNullException">If <p</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="texts"/> is a <c>null</c> reference.</exception>
     public static IEnumerable<Text> OrderByTextsCategoryNameDescending(this IEnumerable<Text> texts)
     {
       Assertion.NotNull(texts);

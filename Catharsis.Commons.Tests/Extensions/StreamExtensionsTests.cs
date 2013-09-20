@@ -57,8 +57,8 @@ namespace Catharsis.Commons.Extensions
     public void Buffered_Method()
     {
       Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.Buffered(null));
-      Assert.Throws<ArgumentOutOfRangeException>(() => StreamExtendedExtensions.Buffered(Stream.Null, -1));
-      Assert.Throws<ArgumentOutOfRangeException>(() => StreamExtendedExtensions.Buffered(Stream.Null, 0));
+      Assert.Throws<ArgumentOutOfRangeException>(() => Stream.Null.Buffered(-1));
+      Assert.Throws<ArgumentOutOfRangeException>(() => Stream.Null.Buffered(0));
 
       var bytes = Guid.NewGuid().ToByteArray();
       var stream = new MemoryStream(bytes);
@@ -103,7 +103,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.Deflate(null, CompressionMode.Compress));
       Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.Deflate<Stream>(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.Deflate(Stream.Null, null));
+      Assert.Throws<ArgumentNullException>(() => Stream.Null.Deflate(null));
       Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.Deflate(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
@@ -163,7 +163,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.GZip(null, CompressionMode.Compress));
       Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.GZip<Stream>(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.GZip(Stream.Null, null));
+      Assert.Throws<ArgumentNullException>(() => Stream.Null.GZip(null));
       Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.GZip(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
@@ -263,7 +263,7 @@ namespace Catharsis.Commons.Extensions
       Assert.True(text == stream.Rewind().TextReader().Text());
       Assert.True(text == bytes.String());
       Assert.True(stream.ReadByte() == -1);
-      Assert.True(text == stream.Rewind().Text(close: true, encoding: null));
+      Assert.True(text == stream.Rewind().Text(true));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
 
       stream = new MemoryStream(bytes);
@@ -271,7 +271,7 @@ namespace Catharsis.Commons.Extensions
       Assert.True(text == stream.Rewind().TextReader(Encoding.Unicode).Text());
       Assert.True(text == bytes.String(Encoding.Unicode));
       Assert.True(stream.ReadByte() == -1);
-      Assert.True(text == stream.Rewind().Text(close: true, encoding: Encoding.Unicode));
+      Assert.True(text == stream.Rewind().Text(true, Encoding.Unicode));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
     }
 
@@ -327,11 +327,11 @@ namespace Catharsis.Commons.Extensions
     public void Write_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => StreamExtensions.Write<Stream>(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Write(Stream.Null, (byte[])null));
+      Assert.Throws<ArgumentNullException>(() => Stream.Null.Write((byte[])null));
       Assert.Throws<ArgumentNullException>(() => StreamExtensions.Write<Stream>(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Write(Stream.Null, (Stream)null));
+      Assert.Throws<ArgumentNullException>(() => Stream.Null.Write((Stream)null));
       Assert.Throws<ArgumentNullException>(() => StreamExtensions.Write<Stream>(null, "text"));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Write(Stream.Null, (string)null));
+      Assert.Throws<ArgumentNullException>(() => Stream.Null.Write((string)null));
 
       var bytes = Guid.NewGuid().ToByteArray();
       var text = bytes.ToString();
@@ -378,20 +378,20 @@ namespace Catharsis.Commons.Extensions
     public void XDocument_Method()
     {
       Assert.Throws<ArgumentNullException>(() => StreamExtensions.XDocument(null));
-      Assert.Throws<XmlException>(() => StreamExtensions.XDocument(Stream.Null));
+      Assert.Throws<XmlException>(() => Stream.Null.XDocument());
 
-      const string xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
 
-      new MemoryStream(xml.Bytes(Encoding.UTF32)).With(x => Assert.Throws<XmlException>(() => x.XDocument()));
+      new MemoryStream(Xml.Bytes(Encoding.UTF32)).With(x => Assert.Throws<XmlException>(() => x.XDocument()));
       
-      new MemoryStream(xml.Bytes(Encoding.Unicode)).With(stream =>
+      new MemoryStream(Xml.Bytes(Encoding.Unicode)).With(stream =>
       {
         Assert.True(stream.XDocument().ToString() == "<article>text</article>");
         Assert.True(stream.Bytes().Length == 0);
         Assert.True(stream.ReadByte() == -1);
       });
 
-      new MemoryStream(xml.Bytes(Encoding.Unicode)).With(stream =>
+      new MemoryStream(Xml.Bytes(Encoding.Unicode)).With(stream =>
       {
         Assert.True(stream.XDocument(true).ToString() == "<article>text</article>");
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
@@ -405,22 +405,22 @@ namespace Catharsis.Commons.Extensions
     public void XmlDocument_Method()
     {
       Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.XmlDocument(null));
-      Assert.Throws<XmlException>(() => StreamExtendedExtensions.XmlDocument(Stream.Null));
+      Assert.Throws<XmlException>(() => Stream.Null.XmlDocument());
 
-      const string xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
       
-      new MemoryStream(xml.Bytes(Encoding.UTF32)).With(x => Assert.Throws<XmlException>(() => x.XmlDocument()));
+      new MemoryStream(Xml.Bytes(Encoding.UTF32)).With(x => Assert.Throws<XmlException>(() => x.XmlDocument()));
       
-      new MemoryStream(xml.Bytes(Encoding.Unicode)).With(stream =>
+      new MemoryStream(Xml.Bytes(Encoding.Unicode)).With(stream =>
       {
-        Assert.True(stream.XmlDocument().String() == xml);
+        Assert.True(stream.XmlDocument().String() == Xml);
         Assert.True(stream.Bytes().Length == 0);
         Assert.True(stream.ReadByte() == -1);
       });
 
-      new MemoryStream(xml.Bytes(Encoding.Unicode)).With(stream =>
+      new MemoryStream(Xml.Bytes(Encoding.Unicode)).With(stream =>
       {
-        Assert.True(stream.XmlDocument(true).String() == xml);
+        Assert.True(stream.XmlDocument(true).String() == Xml);
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
       });
     }
@@ -433,9 +433,9 @@ namespace Catharsis.Commons.Extensions
     {
       Assert.Throws<ArgumentNullException>(() => StreamExtensions.XmlReader(null));
 
-      const string xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
 
-      new MemoryStream(xml.Bytes()).With(stream =>
+      new MemoryStream(Xml.Bytes()).With(stream =>
       {
         var reader = stream.XmlReader();
         Assert.False(reader.Settings.CloseInput);
@@ -449,7 +449,7 @@ namespace Catharsis.Commons.Extensions
         Assert.True(stream.ReadByte() == -1);
       });
 
-      new MemoryStream(xml.Bytes()).With(stream =>
+      new MemoryStream(Xml.Bytes()).With(stream =>
       {
         stream.XmlReader(true).Close();
         //Assert.True(reader.Settings.CloseInput);
@@ -475,11 +475,11 @@ namespace Catharsis.Commons.Extensions
           Assert.False(writer.Settings.Indent);
           writer.WriteElementString("article", "text");
         });
-        Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.UTF8, true)));
+        Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.UTF8)));
         Assert.True(stream.Bytes().Length == 0);
         Assert.True(stream.ReadByte() == -1);
 
-        stream.Rewind().XmlWriter(close: true, encoding: null).Write(writer =>
+        stream.Rewind().XmlWriter(true).Write(writer =>
         {
           Assert.True(writer.Settings.CloseOutput);
           Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.UTF8.ToString()));
@@ -496,11 +496,11 @@ namespace Catharsis.Commons.Extensions
           Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.Unicode.ToString()));
           writer.WriteElementString("article", "text");
         });
-        Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.Unicode, true)));
+        Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.Unicode)));
         Assert.True(stream.Bytes().Length == 0);
         Assert.True(stream.ReadByte() ==-1);
 
-        stream.XmlWriter(close: true, encoding: Encoding.Unicode).Write(writer =>
+        stream.XmlWriter(true, Encoding.Unicode).Write(writer =>
         {
           Assert.True(writer.Settings.CloseOutput);
           Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.Unicode.ToString()));

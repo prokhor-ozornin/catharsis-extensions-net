@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Text")]
-  public class PollOption : EntityBase, ITextable
+  public class PollOption : EntityBase, IEquatable<PollOption>, ITextable
   {
     private string text;
 
@@ -78,6 +78,16 @@ namespace Catharsis.Commons.Domain
     {
       return base.Xml().AddContent(
         new XElement("Text", this.Text));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(PollOption other)
+    {
+      return base.Equals(other);
     }
   }
 }

@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Category")]
-  public class Article : Item, IImageable
+  public class Article : Item, IEquatable<Article>, IImageable
   {
     /// <summary>
     ///   <para>Short summary description of article.</para>
@@ -94,6 +94,16 @@ namespace Catharsis.Commons.Domain
         this.Annotation != null ? new XElement("Annotation", this.Annotation) : null,
         this.Category != null ? this.Category.Xml() : null,
         this.Image != null ? this.Image.Xml() : null);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Article other)
+    {
+      return base.Equals(other);
     }
   }
 }

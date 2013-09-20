@@ -1,5 +1,4 @@
 using System;
-using Catharsis.Commons;
 using Xunit;
 
 namespace Catharsis.Commons

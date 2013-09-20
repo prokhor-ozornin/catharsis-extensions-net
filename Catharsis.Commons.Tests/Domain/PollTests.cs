@@ -104,9 +104,9 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Poll",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("MultiSelect", true));
@@ -115,9 +115,9 @@ namespace Catharsis.Commons.Domain
       Assert.True(poll.Answers.Count == 0);
       Assert.True(poll.AuthorId == null);
       Assert.True(poll.Comments.Count == 0);
-      Assert.True(poll.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(poll.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(poll.Language == "language");
-      Assert.True(poll.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(poll.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(poll.Name == "name");
       Assert.True(poll.Tags.Count == 0);
       Assert.True(poll.Text == "text");

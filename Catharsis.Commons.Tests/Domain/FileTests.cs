@@ -204,8 +204,8 @@ namespace Catharsis.Commons.Domain
         new XElement("Id", "id"),
         new XElement("ContentType", "contentType"),
         new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("OriginalName", "originalName"),
         new XElement("Size", Guid.Empty.ToByteArray().LongLength));
@@ -213,8 +213,8 @@ namespace Catharsis.Commons.Domain
       Assert.True(file.Id == "id");
       Assert.True(file.ContentType == "contentType");
       Assert.True(file.Data.SequenceEqual(Guid.Empty.ToByteArray()));
-      Assert.True(file.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
-      Assert.True(file.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(file.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(file.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(file.Name == "name");
       Assert.True(file.OriginalName == "originalName");
       Assert.True(file.Size == Guid.Empty.ToByteArray().LongLength);

@@ -7,7 +7,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para>Category of texts.</para>
   /// </summary>
-  public class TextsCategory : Category
+  public class TextsCategory : Category, IEquatable<TextsCategory>
   {
     /// <summary>
     ///   <para>Creates new category of texts.</para>
@@ -48,7 +48,17 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new TextsCategory((string)xml.Element("Id"), (string)xml.Element("Language"), (string)xml.Element("Name"), xml.Element("Parent") != null ? TextsCategory.Xml(xml.Element("Parent")) : null, (string)xml.Element("Description"));
+      return new TextsCategory((string)xml.Element("Id"), (string)xml.Element("Language"), (string)xml.Element("Name"), xml.Element("Parent") != null ? Xml(xml.Element("Parent")) : null, (string)xml.Element("Description"));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(TextsCategory other)
+    {
+      return base.Equals(other);
     }
   }
 }

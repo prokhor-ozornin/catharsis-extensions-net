@@ -126,9 +126,9 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("WebLink",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("Url", "url"));
@@ -137,9 +137,9 @@ namespace Catharsis.Commons.Domain
       Assert.True(weblink.AuthorId == null);
       Assert.True(weblink.Category == null);
       Assert.True(weblink.Comments.Count == 0);
-      Assert.True(weblink.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(weblink.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(weblink.Language == "language");
-      Assert.True(weblink.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(weblink.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(weblink.Name == "name");
       Assert.True(weblink.Tags.Count == 0);
       Assert.True(weblink.Text == "text");
@@ -149,9 +149,9 @@ namespace Catharsis.Commons.Domain
 
       xml = new XElement("WebLink",
         new XElement("Id", "id"),
-        new XElement("DateCreated", DateTime.MinValue.ToRFC1123()),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRFC1123()),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("WebLinksCategory",
@@ -166,9 +166,9 @@ namespace Catharsis.Commons.Domain
       Assert.True(weblink.Category.Language == "category.language");
       Assert.True(weblink.Category.Name == "category.name");
       Assert.True(weblink.Comments.Count == 0);
-      Assert.True(weblink.DateCreated.ToRFC1123() == DateTime.MinValue.ToRFC1123());
+      Assert.True(weblink.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(weblink.Language == "language");
-      Assert.True(weblink.LastUpdated.ToRFC1123() == DateTime.MaxValue.ToRFC1123());
+      Assert.True(weblink.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(weblink.Name == "name");
       Assert.True(weblink.Tags.Count == 0);
       Assert.True(weblink.Text == "text");

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -33,6 +34,22 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="StringExtensions.Compare(string, string, StringComparison)"/></description></item>
+    ///     <item><description><see cref="StringExtensions.Compare(string, string, CultureInfo, CompareOptions)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Compare_Methods()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.Compare(null, "other", StringComparison.Ordinal));
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.Compare(null, "other", CultureInfo.InvariantCulture));
+
+      throw new NotImplementedException();
+    }
+
+    /// <summary>
     ///   <para>Performs testing of <see cref="StringExtensions.DecodeBase64(string)"/> method.</para>
     /// </summary>
     [Fact]
@@ -61,19 +78,19 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtendedExtensions.DecodeHTML(string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StringExtendedExtensions.DecodeHtml(string)"/> method.</para>
     /// </summary>
     [Fact]
-    public void DecodeHTML_Method()
+    public void DecodeHtml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.DecodeHTML(null));
+      Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.DecodeHtml(null));
 
-      Assert.True(ReferenceEquals(string.Empty.DecodeHTML(), string.Empty));
+      Assert.True(ReferenceEquals(string.Empty.DecodeHtml(), string.Empty));
       
-      const string encoded = "<p>5 is &lt; 10 and &gt; 1</p>";
-      const string decoded = "<p>5 is < 10 and > 1</p>";
-      Assert.True(encoded.DecodeHTML() == decoded);
-      Assert.True(decoded.EncodeHTML().DecodeHTML() == decoded);
+      const string Encoded = "<p>5 is &lt; 10 and &gt; 1</p>";
+      const string Decoded = "<p>5 is < 10 and > 1</p>";
+      Assert.True(Encoded.DecodeHtml() == Decoded);
+      Assert.True(Decoded.EncodeHtml().DecodeHtml() == Decoded);
     }
 
     /// <summary>
@@ -83,7 +100,7 @@ namespace Catharsis.Commons.Extensions
     public void EachLine_Method()
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.EachLine(null, s => { }));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.EachLine(string.Empty, null));
+      Assert.Throws<ArgumentNullException>(() => string.Empty.EachLine(null));
 
       var text = "First{0}Second{0}Third{0}".FormatValue(Environment.NewLine);
       var list = new List<string>();
@@ -96,20 +113,20 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtendedExtensions.EncodeHTML(string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StringExtendedExtensions.EncodeHtml(string)"/> method.</para>
     /// </summary>
     [Fact]
-    public void EncodeHTML_Method()
+    public void EncodeHtml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.EncodeHTML(null));
+      Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.EncodeHtml(null));
 
-      Assert.True(ReferenceEquals(string.Empty.EncodeHTML(), string.Empty));
+      Assert.True(ReferenceEquals(string.Empty.EncodeHtml(), string.Empty));
 
-      const string decoded = "<p>5 is < 10 and > 1</p>";
-      const string encoded = "<p>5 is &lt; 10 and &gt; 1</p>";
+      const string Decoded = "<p>5 is < 10 and > 1</p>";
+      const string Encoded = "<p>5 is &lt; 10 and &gt; 1</p>";
 
-      Assert.True(encoded.DecodeHTML() == decoded);
-      Assert.True(decoded.EncodeHTML().DecodeHTML() == decoded);
+      Assert.True(Encoded.DecodeHtml() == Decoded);
+      Assert.True(Decoded.EncodeHtml().DecodeHtml() == Decoded);
     }
 
     /// <summary>
@@ -121,8 +138,8 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.FormatValue(null));
 
       Assert.True(string.Empty.FormatValue() == string.Empty);
-      const string text = "{0} is lesser than {1}";
-      Assert.True(text.FormatValue(5, 10) == string.Format(text, 5, 10));
+      const string Text = "{0} is lesser than {1}";
+      Assert.True(Text.FormatValue(5, 10) == string.Format(Text, 5, 10));
     }
 
     /// <summary>
@@ -132,7 +149,7 @@ namespace Catharsis.Commons.Extensions
     public void Match_Method()
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Match(null, string.Empty));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Match(string.Empty, null));
+      Assert.Throws<ArgumentNullException>(() => string.Empty.Match(null));
 
       Assert.False(string.Empty.Match("anything"));
       Assert.True("ab4Zg95kf".Match("[a-zA-z0-9]"));
@@ -142,7 +159,7 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="StringExtensions.Replace(string, IDictionary{string, string})"/></description></item>
+    ///     <item><description><see cref="StringExtensions.Replace(string, IEnumerable{KeyValuePair{string, string}})"/></description></item>
     ///     <item><description><see cref="StringExtensions.Replace(string, IList{string}, IList{string})"/></description></item>
     ///   </list>
     /// </summary>
@@ -150,21 +167,21 @@ namespace Catharsis.Commons.Extensions
     public void Replace_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Replace(null, new Dictionary<string, string>()));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Replace("where", null));
+      Assert.Throws<ArgumentNullException>(() => "where".Replace(null));
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Replace(null, Enumerable.Empty<string>().ToList(), Enumerable.Empty<string>().ToList()));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Replace("where", null, Enumerable.Empty<string>().ToList()));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Replace("where", Enumerable.Empty<string>().ToList(), null));
-      Assert.Throws<ArgumentException>(() => StringExtensions.Replace("where", new [] { "first" }.ToList(), new [] { "second", "third" }.ToList()));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Replace("where", null, Enumerable.Empty<string>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Replace("where", Enumerable.Empty<string>().ToArray(), null));
-      Assert.Throws<ArgumentException>(() => StringExtensions.Replace("where", new [] { "first" }, new [] { "second", "third" }));
+      Assert.Throws<ArgumentNullException>(() => "where".Replace(null, Enumerable.Empty<string>().ToList()));
+      Assert.Throws<ArgumentNullException>(() => "where".Replace(Enumerable.Empty<string>().ToList(), null));
+      Assert.Throws<ArgumentException>(() => "where".Replace(new [] { "first" }.ToList(), new [] { "second", "third" }.ToList()));
+      Assert.Throws<ArgumentNullException>(() => "where".Replace(null, Enumerable.Empty<string>().ToArray()));
+      Assert.Throws<ArgumentNullException>(() => "where".Replace(Enumerable.Empty<string>().ToArray(), null));
+      Assert.Throws<ArgumentException>(() => "where".Replace(new [] { "first" }, new [] { "second", "third" }));
       
-      const string original = "The quick brown fox jumped over the lazy dog";
-      const string replaced = "The slow hazy fox jumped over the lazy bear";
+      const string Original = "The quick brown fox jumped over the lazy dog";
+      const string Replaced = "The slow hazy fox jumped over the lazy bear";
       
-      Assert.True(original.Replace(new Dictionary<string, string>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")) == replaced);
-      Assert.True(original.Replace(new [] { "quick", "dog", "nothing", "brown" }.ToList(), new [] { "slow", "bear", string.Empty, "hazy" }.ToList()) == replaced);
-      Assert.True(original.Replace(new[] { "quick", "dog", "nothing", "brown" }, new[] { "slow", "bear", string.Empty, "hazy" }) == replaced);
+      Assert.True(Original.Replace(new Dictionary<string, string>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")) == Replaced);
+      Assert.True(Original.Replace(new [] { "quick", "dog", "nothing", "brown" }.ToList(), new [] { "slow", "bear", string.Empty, "hazy" }.ToList()) == Replaced);
+      Assert.True(Original.Replace(new[] { "quick", "dog", "nothing", "brown" }, new[] { "slow", "bear", string.Empty, "hazy" }) == Replaced);
     }
 
     /// <summary>
@@ -197,18 +214,18 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToBoolean(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToBoolean());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
 
       Assert.False(bool.FalseString.ToBoolean());
       Assert.True(bool.TrueString.ToBoolean());
-      Assert.Throws<FormatException>(() => invalid.ToBoolean());
+      Assert.Throws<FormatException>(() => Invalid.ToBoolean());
       
       bool result;
       Assert.True(bool.TrueString.ToBoolean(out result));
       Assert.True(result);
       Assert.True(bool.FalseString.ToBoolean(out result));
       Assert.False(result);
-      Assert.False(invalid.ToBoolean(out result));
+      Assert.False(Invalid.ToBoolean(out result));
       Assert.False(result);
     }
 
@@ -225,15 +242,15 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToByte(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToByte());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
 
       Assert.True(byte.MaxValue.ToString().ToByte() == byte.MaxValue);
-      Assert.Throws<FormatException>(() => invalid.ToByte());
+      Assert.Throws<FormatException>(() => Invalid.ToByte());
 
       byte result;
       Assert.True(byte.MaxValue.ToString().ToByte(out result));
       Assert.True(result == byte.MaxValue);
-      Assert.False(invalid.ToByte(out result));
+      Assert.False(Invalid.ToByte(out result));
       Assert.True(result == default(byte));
     }
 
@@ -250,18 +267,18 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToDateTime(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToDateTime());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
       var date = DateTime.UtcNow;
 
       Assert.True(date.EqualsDate(date.ToString().ToDateTime()));
       Assert.True(date.EqualsTime(date.ToString().ToDateTime()));
-      Assert.Throws<FormatException>(() => invalid.ToDateTime());
+      Assert.Throws<FormatException>(() => Invalid.ToDateTime());
 
       DateTime result;
       Assert.True(date.ToString().ToDateTime(out result));
       Assert.True(result.EqualsDate(date));
       Assert.True(result.EqualsTime(date));
-      Assert.False(invalid.ToDateTime(out result));
+      Assert.False(Invalid.ToDateTime(out result));
       Assert.True(result == default(DateTime));
     }
 
@@ -278,15 +295,15 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToDecimal(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToDecimal());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
 
       Assert.True(decimal.MaxValue.ToString().ToDecimal() == decimal.MaxValue);
-      Assert.Throws<FormatException>(() => invalid.ToDecimal());
+      Assert.Throws<FormatException>(() => Invalid.ToDecimal());
 
       decimal result;
       Assert.True(decimal.MaxValue.ToString().ToDecimal(out result));
       Assert.True(result == decimal.MaxValue);
-      Assert.False(invalid.ToDecimal(out result));
+      Assert.False(Invalid.ToDecimal(out result));
       Assert.True(result == default(decimal));
     }
 
@@ -303,15 +320,15 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToDouble(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToDouble());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
 
       Assert.True(double.Epsilon.ToString().ToDouble() == double.Epsilon);
-      Assert.Throws<FormatException>(() => invalid.ToDouble());
+      Assert.Throws<FormatException>(() => Invalid.ToDouble());
 
       double result;
       Assert.True(double.Epsilon.ToString().ToDouble(out result));
       Assert.True(result == double.Epsilon);
-      Assert.False(invalid.ToDouble(out result));
+      Assert.False(Invalid.ToDouble(out result));
       Assert.True(result == default(double));
     }
     
@@ -328,15 +345,15 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToGuid(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToGuid());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
 
       Assert.True(Guid.Empty.ToString().ToGuid() == Guid.Empty);
-      Assert.Throws<FormatException>(() => invalid.ToGuid());
+      Assert.Throws<FormatException>(() => Invalid.ToGuid());
 
       Guid result;
       Assert.True(Guid.Empty.ToString().ToGuid(out result));
       Assert.True(result == Guid.Empty);
-      Assert.False(invalid.ToGuid(out result));
+      Assert.False(Invalid.ToGuid(out result));
       Assert.True(result == default(Guid));
     }
     
@@ -353,14 +370,14 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToInt16(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToInt16());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
       Assert.True(short.MaxValue.ToString().ToInt16() == short.MaxValue);
-      Assert.Throws<FormatException>(() => invalid.ToInt16());
+      Assert.Throws<FormatException>(() => Invalid.ToInt16());
 
       short result;
       Assert.True(short.MaxValue.ToString().ToInt16(out result));
       Assert.True(result == short.MaxValue);
-      Assert.False(invalid.ToInt16(out result));
+      Assert.False(Invalid.ToInt16(out result));
       Assert.True(result == default(short));
     }
 
@@ -377,15 +394,15 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToInt32(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToInt32());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
       
       Assert.True(int.MaxValue.ToString().ToInt32() == int.MaxValue);
-      Assert.Throws<FormatException>(() => invalid.ToInt32());
+      Assert.Throws<FormatException>(() => Invalid.ToInt32());
       
       int result;
       Assert.True(int.MaxValue.ToString().ToInt32(out result));
       Assert.True(result == int.MaxValue);
-      Assert.False(invalid.ToInt32(out result));
+      Assert.False(Invalid.ToInt32(out result));
       Assert.True(result == default(int));
     }
     
@@ -402,35 +419,35 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToInt64(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToInt64());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
 
       Assert.True(long.MaxValue.ToString().ToInt64() == long.MaxValue);
-      Assert.Throws<FormatException>(() => invalid.ToInt64());
+      Assert.Throws<FormatException>(() => Invalid.ToInt64());
 
       long result;
       Assert.True(long.MaxValue.ToString().ToInt64(out result));
       Assert.True(result == long.MaxValue);
-      Assert.False(invalid.ToInt64(out result));
+      Assert.False(Invalid.ToInt64(out result));
       Assert.True(result == default(long));
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtensions.ToIPAddress(string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StringExtensions.ToIpAddress(string)"/> method.</para>
     /// </summary>
     [Fact]
-    public void ToIPAddress_Methods()
+    public void ToIpAddress_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.ToIPAddress(null));
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.ToIpAddress(null));
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
 
-      Assert.True(IPAddress.Loopback.ToString().ToIPAddress().Equals(IPAddress.Loopback));
-      Assert.Throws<FormatException>(() => invalid.ToIPAddress());
+      Assert.True(IPAddress.Loopback.ToString().ToIpAddress().Equals(IPAddress.Loopback));
+      Assert.Throws<FormatException>(() => Invalid.ToIpAddress());
 
       IPAddress result;
-      Assert.True(IPAddress.Loopback.ToString().ToIPAddress(out result));
+      Assert.True(IPAddress.Loopback.ToString().ToIpAddress(out result));
       Assert.True(result.Equals(IPAddress.Loopback));
-      Assert.False(invalid.ToIPAddress(out result));
+      Assert.False(Invalid.ToIpAddress(out result));
       Assert.True(result == null);
     }
 
@@ -442,8 +459,8 @@ namespace Catharsis.Commons.Extensions
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToRegex(null));
 
-      const string pattern = "pattern";
-      Assert.True(pattern.ToRegex().ToString() == pattern);
+      const string Pattern = "pattern";
+      Assert.True(Pattern.ToRegex().ToString() == Pattern);
     }
 
     /// <summary>
@@ -459,15 +476,15 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToSingle(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToSingle());
 
-      const string invalid = "invalid";
+      const string Invalid = "invalid";
 
       Assert.True(Single.Epsilon.ToString().ToSingle() == Single.Epsilon);
-      Assert.Throws<FormatException>(() => invalid.ToSingle());
+      Assert.Throws<FormatException>(() => Invalid.ToSingle());
 
       Single result;
       Assert.True(Single.Epsilon.ToString().ToSingle(out result));
       Assert.True(result == Single.Epsilon);
-      Assert.False(invalid.ToSingle(out result));
+      Assert.False(Invalid.ToSingle(out result));
       Assert.True(result == default(Single));
     }
 
@@ -484,11 +501,11 @@ namespace Catharsis.Commons.Extensions
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToUri(null));
       Assert.Throws<ArgumentException>(() => string.Empty.ToUri());
 
-      const string invalid = "invalid";
-      const string uri = "http://yandex.ru";
+      const string Invalid = "invalid";
+      const string Uri = "http://yandex.ru";
 
-      Assert.True(uri.ToUri() == new Uri(uri));
-      Assert.Throws<UriFormatException>(() => invalid.ToUri());
+      Assert.True(Uri.ToUri() == new Uri(Uri));
+      Assert.Throws<UriFormatException>(() => Invalid.ToUri());
 
       /*Uri result;
       Assert.True(uri.ToUri(out result));
@@ -504,14 +521,14 @@ namespace Catharsis.Commons.Extensions
     public void Tokenize_Method()
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Tokenize(null, new Dictionary<string, object>()));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Tokenize(string.Empty, null));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Tokenize(string.Empty, new Dictionary<string, object>(), null));
-      Assert.Throws<ArgumentException>(() => StringExtensions.Tokenize(string.Empty, new Dictionary<string, object>(), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => string.Empty.Tokenize(null));
+      Assert.Throws<ArgumentNullException>(() => string.Empty.Tokenize(new Dictionary<string, object>(), null));
+      Assert.Throws<ArgumentException>(() => string.Empty.Tokenize(new Dictionary<string, object>(), string.Empty));
 
-      const string original = "The :quick :brown fox jumped over the lazy :dog";
-      const string replaced = "The slow hazy fox jumped over the lazy bear";
+      const string Original = "The :quick :brown fox jumped over the lazy :dog";
+      const string Replaced = "The slow hazy fox jumped over the lazy bear";
 
-      Assert.True(original.Tokenize(new Dictionary<string, object>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")) == replaced);
+      Assert.True(Original.Tokenize(new Dictionary<string, object>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")) == Replaced);
     }
 
     /// <summary>

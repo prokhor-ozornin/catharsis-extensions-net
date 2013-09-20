@@ -67,6 +67,8 @@ Set of common domain classes, representing generic business domain entities, whi
 * _Playcast_, _PlaycastsCategory_
 * _Poll_, _PollAnswer_, _PollOption_
 * _Profile_
+* _Rating_
+* _Setting_
 * _Song_, _SongsAlbum_
 * _Subscription_
 * _Text_, _TextsCategory_

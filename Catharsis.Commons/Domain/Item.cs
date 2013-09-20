@@ -10,12 +10,13 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("AuthorId,Language,Name")]
-  public class Item : EntityBase, ICommentable, IComparable<Item>, IAuthorable, ILocalizable, INameable, ITaggable, ITextable, ITimeable
+  public class Item : EntityBase, ICommentable, IComparable<Item>, IEquatable<Item>, IAuthorable, ILocalizable, INameable, ITaggable, ITextable, ITimeable
   {
     private readonly ICollection<Comment> comments = new List<Comment>();
     private readonly ICollection<string> tags = new HashSet<string>();
-
+    private DateTime dateCreated = DateTime.UtcNow;
     private string language;
+    private DateTime lastUpdated = DateTime.UtcNow;
     private string name;
 
     /// <summary>
@@ -34,7 +35,11 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of item's creation.</para>
     /// </summary>
-    public DateTime DateCreated { get; set; }
+    public DateTime DateCreated
+    {
+      get { return this.dateCreated; }
+      set { this.dateCreated = value; }
+    }
     
     /// <summary>
     ///   <para></para>
@@ -55,7 +60,11 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of item's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated { get; set; }
+    public DateTime LastUpdated
+    {
+      get { return this.lastUpdated; }
+      set { this.lastUpdated = value; }
+    }
     
     /// <summary>
     ///   <para></para>
@@ -91,8 +100,6 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     public Item()
     {
-      this.DateCreated = DateTime.UtcNow;
-      this.LastUpdated = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -100,11 +107,8 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="properties">Named collection of properties to set on item after its creation.</param>
     /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Item(IDictionary<string, object> properties) : this()
+    public Item(IDictionary<string, object> properties) : base(properties)
     {
-      Assertion.NotNull(properties);
-
-      this.SetProperties(properties);
     }
 
     /// <summary>
@@ -117,9 +121,8 @@ namespace Catharsis.Commons.Domain
     /// <param name="authorId">Identifier of item's author.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public Item(string id, string language, string name, string text = null, string authorId = null) : this()
+    public Item(string id, string language, string name, string text = null, string authorId = null) : base(id)
     {
-      this.Id = id;
       this.Language = language;
       this.Name = name;
       this.Text = text;
@@ -157,6 +160,16 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Item other)
+    {
+      return base.Equals(other);
+    }
+
+    /// <summary>
     ///   <para>Returns a <see cref="string"/> that represents the current item.</para>
     /// </summary>
     /// <returns>A string that represents the current item.</returns>
@@ -184,9 +197,9 @@ namespace Catharsis.Commons.Domain
       return base.Xml().AddContent(
         this.AuthorId != null ? new XElement("AuthorId", this.AuthorId) : null,
         this.Comments.Count > 0 ? new XElement("Comments", this.Comments.Select(comment => comment.Xml())) : null,
-        new XElement("DateCreated", this.DateCreated.ToRFC1123()),
+        new XElement("DateCreated", this.DateCreated.ToRfc1123()),
         new XElement("Language", this.Language),
-        new XElement("LastUpdated", this.LastUpdated.ToRFC1123()),
+        new XElement("LastUpdated", this.LastUpdated.ToRfc1123()),
         new XElement("Name", this.Name),
         this.Tags.Count > 0 ? new XElement("Tags", this.Tags.Select(tag => new XElement("Tag", tag))) : null,
         this.Text !=null ? new XElement("Text", this.Text) : null);

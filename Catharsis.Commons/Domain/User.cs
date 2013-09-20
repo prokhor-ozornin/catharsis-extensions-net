@@ -9,16 +9,22 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Username")]
-  public class User : EntityBase, IComparable<User>, IEmailable, INameable, ITimeable
+  public class User : EntityBase, IComparable<User>, IEquatable<User>, IEmailable, INameable, ITimeable
   {
+    private DateTime dateCreated = DateTime.UtcNow;
     private string email;
+    private DateTime lastUpdated = DateTime.UtcNow;
     private string name;
     private string username;
 
     /// <summary>
     ///   <para>Date and time of user's creation.</para>
     /// </summary>
-    public DateTime DateCreated { get; set; }
+    public DateTime DateCreated
+    {
+      get { return this.dateCreated; }
+      set { this.dateCreated = value; }
+    }
     
     /// <summary>
     ///   <para></para>
@@ -39,7 +45,11 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of user's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated { get; set; }
+    public DateTime LastUpdated
+    {
+      get { return this.lastUpdated; }
+      set { this.lastUpdated = value; }
+    }
 
     /// <summary>
     ///   <para></para>
@@ -78,8 +88,6 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     public User()
     {
-      this.DateCreated = DateTime.UtcNow;
-      this.LastUpdated = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -87,9 +95,8 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="properties">Named collection of properties to set on user after its creation.</param>
     /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public User(IDictionary<string, object> properties) : this()
+    public User(IDictionary<string, object> properties) : base(properties)
     {
-      this.SetProperties(properties);
     }
 
     /// <summary>
@@ -101,9 +108,8 @@ namespace Catharsis.Commons.Domain
     /// <param name="name">Name of user.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="username"/>, <paramref name="email"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="username"/>, <paramref name="email"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public User(string id, string username, string email, string name) : this()
+    public User(string id, string username, string email, string name) : base(id)
     {
-      this.Id = id;
       this.Username = username;
       this.Email = email;
       this.Name = name;
@@ -132,6 +138,16 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(User other)
+    {
+      return base.Equals(other);
+    }
+
+    /// <summary>
     ///   <para>Returns a <see cref="string"/> that represents the current user.</para>
     /// </summary>
     /// <returns>A string that represents the current user.</returns>
@@ -147,7 +163,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="other">The <see cref="User"/> to compare with this instance.</param>
     public int CompareTo(User other)
     {
-      return this.Username.CompareTo(other.Username);
+      return this.Username.Compare(other.Username, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>
@@ -157,9 +173,9 @@ namespace Catharsis.Commons.Domain
     public override XElement Xml()
     {
       return base.Xml().AddContent(
-        new XElement("DateCreated", this.DateCreated.ToRFC1123()),
+        new XElement("DateCreated", this.DateCreated.ToRfc1123()),
         new XElement("Email", this.Email),
-        new XElement("LastUpdated", this.LastUpdated.ToRFC1123()),
+        new XElement("LastUpdated", this.LastUpdated.ToRfc1123()),
         new XElement("Name", this.Name),
         new XElement("Username", this.Username));
     }

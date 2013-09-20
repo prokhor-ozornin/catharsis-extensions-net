@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Name,Type")]
-  public class Setting : EntityBase, INameable, ITypeable
+  public class Setting : EntityBase, IEquatable<Setting>, INameable, ITypeable
   {
     private string name;
 
@@ -82,6 +82,16 @@ namespace Catharsis.Commons.Domain
       Assertion.NotNull(xml);
 
       return new Setting((string) xml.Element("Id"), (string) xml.Element("Name"), (string) xml.Element("Value"), (int) xml.Element("Type"));
+    }
+
+    /// <summary>
+    ///   <paramref name=">"/>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Setting other)
+    {
+      return base.Equals(other);
     }
 
     /// <summary>

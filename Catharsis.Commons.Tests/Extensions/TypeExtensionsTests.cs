@@ -51,8 +51,8 @@ namespace Catharsis.Commons.Extensions
     public void GetAnyEvent_Method()
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAnyEvent(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAnyEvent(typeof(object), null));
-      Assert.Throws<ArgumentException>(() => TypeExtensions.GetAnyEvent(typeof(object), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).GetAnyEvent(null));
+      Assert.Throws<ArgumentException>(() => typeof(object).GetAnyEvent(string.Empty));
 
       var type = typeof(TestObject);
       Assert.True(type.GetAnyEvent("PublicEvent") != null);
@@ -67,8 +67,8 @@ namespace Catharsis.Commons.Extensions
     public void GetAnyField_Method()
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAnyField(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAnyField(typeof(object), null));
-      Assert.Throws<ArgumentException>(() => TypeExtensions.GetAnyField(typeof(object), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).GetAnyField(null));
+      Assert.Throws<ArgumentException>(() => typeof(object).GetAnyField(string.Empty));
 
       var type = typeof(TestObject);
       
@@ -116,8 +116,8 @@ namespace Catharsis.Commons.Extensions
     public void GetAnyMethod_Method()
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAnyMethod(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAnyMethod(typeof(object), null));
-      Assert.Throws<ArgumentException>(() => TypeExtensions.GetAnyMethod(typeof(object), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).GetAnyMethod(null));
+      Assert.Throws<ArgumentException>(() => typeof(object).GetAnyMethod(string.Empty));
 
       var type = typeof(TestObject);
 
@@ -165,8 +165,8 @@ namespace Catharsis.Commons.Extensions
     public void GetAnyProperty_Method()
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAnyProperty(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAnyProperty(typeof(object), null));
-      Assert.Throws<ArgumentException>(() => TypeExtensions.GetAnyProperty(typeof(object), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).GetAnyProperty(null));
+      Assert.Throws<ArgumentException>(() => typeof(object).GetAnyProperty(string.Empty));
 
       var type = typeof(TestObject);
 
@@ -189,7 +189,7 @@ namespace Catharsis.Commons.Extensions
     public void GetAttribute_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAttribute(null, typeof(object)));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAttribute(typeof(object), null));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).GetAttribute(null));
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAttribute<object>(null));
 
       Assert.True(typeof(TestObject).GetAttribute(typeof(NonSerializedAttribute)) == null);
@@ -210,11 +210,11 @@ namespace Catharsis.Commons.Extensions
     public void GetAttributes_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAttribute(null, typeof(object)));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAttribute(typeof(object), null));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).GetAttribute(null));
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.GetAttributes<object>(null));
 
-      Assert.True(typeof(TestObject).GetAttributes(typeof(NonSerializedAttribute)).Length == 0);
-      Assert.True(typeof(TestObject).GetAttributes<NonSerializedAttribute>().Length == 0);
+      Assert.True(!typeof(TestObject).GetAttributes(typeof(NonSerializedAttribute)).Any());
+      Assert.True(!typeof(TestObject).GetAttributes<NonSerializedAttribute>().Any());
 
       Assert.True(typeof(TestObject).GetAttributes(typeof(SerializableAttribute)).SequenceEqual(new [] { new SerializableAttribute() }));
       Assert.True(typeof(TestObject).GetAttributes<SerializableAttribute>().SequenceEqual(new [] { new SerializableAttribute() }));
@@ -243,10 +243,10 @@ namespace Catharsis.Commons.Extensions
     public void Implements_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.Implements(null, typeof(ICloneable)));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.Implements(typeof(object), null));
-      Assert.Throws<ArgumentException>(() => TypeExtensions.Implements(typeof(object), typeof(object)));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).Implements(null));
+      Assert.Throws<ArgumentException>(() => typeof(object).Implements(typeof(object)));
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.Implements<ICloneable>(null));
-      Assert.Throws<ArgumentException>(() => TypeExtensions.Implements<object>(typeof(object)));
+      Assert.Throws<ArgumentException>(() => typeof(object).Implements<object>());
 
       Assert.False(typeof(TestObject).Implements(typeof(ICloneable)));
       Assert.False(typeof(TestObject).Implements<ICloneable>());
@@ -287,7 +287,7 @@ namespace Catharsis.Commons.Extensions
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null));
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null, new Dictionary<string, object>()));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(typeof(object), (IDictionary<string, object>) null));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((IDictionary<string, object>) null));
 
       Assert.True(typeof(TestObject).NewInstance() != null);
       Assert.True(typeof(TestObject).NewInstance(new Dictionary<string, object>()) != null);

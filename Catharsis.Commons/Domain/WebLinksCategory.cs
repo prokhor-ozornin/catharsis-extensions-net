@@ -7,7 +7,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para>Category of web links.</para>
   /// </summary>
-  public class WebLinksCategory : Category
+  public class WebLinksCategory : Category, IEquatable<WebLinksCategory>
   {
     /// <summary>
     ///   <para>Creates new category of web links.</para>
@@ -49,7 +49,17 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new WebLinksCategory((string)xml.Element("Id"), (string)xml.Element("Language"), (string)xml.Element("Name"), xml.Element("Parent") != null ? WebLinksCategory.Xml(xml.Element("Parent")) : null, (string)xml.Element("Description"));
+      return new WebLinksCategory((string)xml.Element("Id"), (string)xml.Element("Language"), (string)xml.Element("Name"), xml.Element("Parent") != null ? Xml(xml.Element("Parent")) : null, (string)xml.Element("Description"));
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(WebLinksCategory other)
+    {
+      return base.Equals(other);
     }
   }
 }

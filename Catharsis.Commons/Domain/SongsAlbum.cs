@@ -8,7 +8,7 @@ namespace Catharsis.Commons.Domain
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public class SongsAlbum : Item, IComparable<SongsAlbum>, IImageable
+  public class SongsAlbum : Item, IComparable<SongsAlbum>, IEquatable<SongsAlbum>, IImageable
   {
     /// <summary>
     ///   <para></para>
@@ -82,7 +82,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="other">The <see cref="SongsAlbum"/> to compare with this instance.</param>
     public int CompareTo(SongsAlbum other)
     {
-      return this.Name.CompareTo(other.Name);
+      return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>
@@ -93,7 +93,17 @@ namespace Catharsis.Commons.Domain
     {
       return base.Xml().AddContent(
         this.Image != null ? this.Image.Xml() : null,
-        this.PublishedOn.HasValue ? new XElement("PublishedOn", this.PublishedOn.GetValueOrDefault().ToRFC1123()) : null);
+        this.PublishedOn.HasValue ? new XElement("PublishedOn", this.PublishedOn.GetValueOrDefault().ToRfc1123()) : null);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(SongsAlbum other)
+    {
+      return base.Equals(other);
     }
   }
 }

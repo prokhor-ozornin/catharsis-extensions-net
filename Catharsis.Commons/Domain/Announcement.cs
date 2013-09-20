@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para>Announcement is a free or paid informational message, created by user.</para>
   /// </summary>
   [EqualsAndHashCode("Category")]
-  public class Announcement : Item, IImageable
+  public class Announcement : Item, IEquatable<Announcement>, IImageable
   {
     /// <summary>
     ///   <para>Category of announcement.</para>
@@ -105,6 +105,16 @@ namespace Catharsis.Commons.Domain
         this.Currency != null ? new XElement("Currency", this.Currency) : null,
         this.Image != null ? this.Image.Xml() : null,
         this.Price.HasValue ? new XElement("Price", this.Price.GetValueOrDefault()) : null);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool Equals(Announcement other)
+    {
+      return base.Equals(other);
     }
   }
 }
