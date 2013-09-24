@@ -16,13 +16,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public SongsAlbum Album { get; set; }
+    public virtual SongsAlbum Album { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public Audio Audio
+    public virtual Audio Audio
     {
       get { return this.audio; }
       set
@@ -52,14 +52,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new song.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of song.</param>
     /// <param name="language">ISO language code of song's text content.</param>
     /// <param name="name">Name of song.</param>
     /// <param name="text">Song's lyrics text.</param>
     /// <param name="audio"></param>
     /// <param name="album"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="audio"/> is a <c>null</c> reference.</exception>
-    public Song(string id, string language, string name, string text, Audio audio, SongsAlbum album = null) : base(id, language, name, text)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="audio"/> is a <c>null</c> reference.</exception>
+    public Song(string language, string name, string text, Audio audio, SongsAlbum album = null) : base( language, name, text)
     {
       Assertion.NotEmpty(text);
 
@@ -77,7 +76,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var song = new Song((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), Audio.Xml(xml.Element("Audio")), xml.Element("SongsAlbum") != null ? SongsAlbum.Xml(xml.Element("SongsAlbum")) : null);
+      var song = new Song((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), Audio.Xml(xml.Element("Audio")), xml.Element("SongsAlbum") != null ? SongsAlbum.Xml(xml.Element("SongsAlbum")) : null);
+      if (xml.Element("Id") != null)
+      {
+        song.Id = (long)xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         song.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -94,7 +97,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Song"/> to compare with this instance.</param>
-    public int CompareTo(Song other)
+    public virtual int CompareTo(Song other)
     {
       return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
@@ -115,7 +118,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Song other)
+    public virtual bool Equals(Song other)
     {
       return base.Equals(other);
     }

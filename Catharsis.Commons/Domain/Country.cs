@@ -17,14 +17,14 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public Image Image { get; set; }
+    public virtual Image Image { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string IsoCode
+    public virtual string IsoCode
     {
       get { return this.isoCode; }
       set
@@ -40,7 +40,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Name
+    public virtual string Name
     {
       get { return this.name; }
       set
@@ -70,13 +70,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new country.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of country.</param>
     /// <param name="name">Name of country.</param>
     /// <param name="isoCode"></param>
     /// <param name="image"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="name"/> or <paramref name="isoCode"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="name"/> or <paramref name="isoCode"/> is <see cref="string.Empty"/> string.</exception>
-    public Country(string id, string name, string isoCode, Image image = null) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="name"/> or <paramref name="isoCode"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="name"/> or <paramref name="isoCode"/> is <see cref="string.Empty"/> string.</exception>
+    public Country(string name, string isoCode, Image image = null)
     {
       this.Name = name;
       this.IsoCode = isoCode;
@@ -93,7 +92,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new Country((string) xml.Element("Id"), (string) xml.Element("Name"), (string) xml.Element("IsoCode"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null);
+      var country = new Country((string) xml.Element("Name"), (string) xml.Element("IsoCode"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null);
+      if (xml.Element("Id") != null)
+      {
+        country.Id = (long) xml.Element("Id");
+      }
+      return country;
     }
 
     /// <summary>
@@ -101,7 +105,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Country other)
+    public virtual bool Equals(Country other)
     {
       return base.Equals(other);
     }
@@ -120,7 +124,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Country"/> to compare with this instance.</param>
-    public int CompareTo(Country other)
+    public virtual int CompareTo(Country other)
     {
       return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }

@@ -28,13 +28,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new blog.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of blog.</param>
     /// <param name="language">ISO language code of blog's text content.</param>
     /// <param name="name">Title of blog.</param>
     /// <param name="authorId">Identifier of blog's author.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="authorId"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
-    public Blog(string id, string language, string name, string authorId) : base(id, language, name, null, authorId)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="authorId"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
+    public Blog(string language, string name, string authorId) : base(language, name, null, authorId)
     {
       Assertion.NotEmpty(authorId);
     }
@@ -49,7 +48,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var blog = new Blog((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("AuthorId"));
+      var blog = new Blog((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("AuthorId"));
+      if (xml.Element("Id") != null)
+      {
+        blog.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         blog.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -66,7 +69,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Blog other)
+    public virtual bool Equals(Blog other)
     {
       return base.Equals(other);
     }

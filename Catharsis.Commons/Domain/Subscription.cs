@@ -22,7 +22,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string AuthorId
+    public virtual string AuthorId
     {
       get { return this.authorId; }
       set
@@ -36,12 +36,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public bool Active { get; set; }
+    public virtual bool Active { get; set; }
     
     /// <summary>
     ///   <para>Date and time of subscription's creation.</para>
     /// </summary>
-    public DateTime DateCreated
+    public virtual DateTime DateCreated
     {
       get { return this.dateCreated; }
       set { this.dateCreated = value; }
@@ -52,7 +52,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Email
+    public virtual string Email
     {
       get { return this.email; }
       set
@@ -66,12 +66,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public DateTime? ExpiredOn { get; set; }
+    public virtual DateTime? ExpiredOn { get; set; }
     
     /// <summary>
     ///   <para>Date and time of subscription's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated
+    public virtual DateTime LastUpdated
     {
       get { return this.lastUpdated; }
       set { this.lastUpdated = value; }
@@ -82,7 +82,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Token
+    public virtual string Token
     {
       get { return this.token; }
       set
@@ -96,7 +96,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public int Type { get; set; }
+    public virtual int Type { get; set; }
 
     /// <summary>
     ///   <para>Creates new subscription.</para>
@@ -119,14 +119,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new subscription.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of subscription.</param>
     /// <param name="authorId">Identifier of subscription's </param>
     /// <param name="email"></param>
     /// <param name="type"></param>
     /// <param name="expiredOn"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/> or <paramref name="email"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="authorId"/> or <paramref name="email"/> is <see cref="string.Empty"/> string.</exception>
-    public Subscription(string id, string authorId, string email, int type = 0, DateTime? expiredOn = null) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/> or <paramref name="email"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="authorId"/> or <paramref name="email"/> is <see cref="string.Empty"/> string.</exception>
+    public Subscription(string authorId, string email, int type = 0, DateTime? expiredOn = null)
     {
       this.Active = true;
       this.AuthorId = authorId;
@@ -146,7 +145,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var subscription = new Subscription((string) xml.Element("Id"), (string) xml.Element("AuthorId"), (string) xml.Element("Email"), (int) xml.Element("Type"), (DateTime?) xml.Element("ExpiredOn"));
+      var subscription = new Subscription((string) xml.Element("AuthorId"), (string) xml.Element("Email"), (int) xml.Element("Type"), (DateTime?) xml.Element("ExpiredOn"));
+      if (xml.Element("Id") != null)
+      {
+        subscription.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         subscription.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -169,7 +172,7 @@ namespace Catharsis.Commons.Domain
     /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
     /// </returns>
     /// <param name="other">An object to compare with this object.</param>
-    public bool Equals(Subscription other)
+    public virtual bool Equals(Subscription other)
     {
       return base.Equals(other);
     }
@@ -188,7 +191,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Subscription"/> to compare with this instance.</param>
-    public int CompareTo(Subscription other)
+    public virtual int CompareTo(Subscription other)
     {
       return this.DateCreated.CompareTo(other.DateCreated);
     }

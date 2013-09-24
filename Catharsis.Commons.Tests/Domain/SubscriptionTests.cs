@@ -93,13 +93,13 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Subscription()"/>
     ///   <seealso cref="Subscription(IDictionary{string, object})"/>
-    ///   <seealso cref="Subscription(string, string, string, int, DateTime?)"/>
+    ///   <seealso cref="Subscription(string, string, int, DateTime?)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var subscription = new Subscription();
-      Assert.True(subscription.Id == null);
+      Assert.True(subscription.Id == 0);
       Assert.True(subscription.AuthorId == null);
       Assert.True(subscription.Active);
       Assert.True(subscription.DateCreated <= DateTime.UtcNow);
@@ -111,14 +111,14 @@ namespace Catharsis.Commons.Domain
 
       Assert.Throws<ArgumentNullException>(() => new Subscription(null));
       subscription = new Subscription(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("AuthorId", "authorId")
         .AddNext("Active", false)
         .AddNext("Email", "email@mail.ru")
         .AddNext("ExpiredOn", new DateTime(2000, 1, 1))
         .AddNext("Token", "token")
         .AddNext("Type", 1));
-      Assert.True(subscription.Id == "id");
+      Assert.True(subscription.Id == 1);
       Assert.True(subscription.AuthorId == "authorId");
       Assert.False(subscription.Active);
       Assert.True(subscription.DateCreated <= DateTime.UtcNow);
@@ -128,14 +128,12 @@ namespace Catharsis.Commons.Domain
       Assert.True(subscription.Token != null);
       Assert.True(subscription.Type == 1);
 
-      Assert.Throws<ArgumentNullException>(() => new Subscription(null, "authorId", "email"));
-      Assert.Throws<ArgumentNullException>(() => new Subscription("id", null, "email"));
-      Assert.Throws<ArgumentNullException>(() => new Subscription("id", "authorId", null));
-      Assert.Throws<ArgumentException>(() => new Subscription(string.Empty, "authorId", "email"));
-      Assert.Throws<ArgumentException>(() => new Subscription("id", string.Empty, "email"));
-      Assert.Throws<ArgumentException>(() => new Subscription("id", "authorId", string.Empty));
-      subscription = new Subscription("id", "authorId", "email@mail.ru", 1, new DateTime(2000, 1, 1));
-      Assert.True(subscription.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new Subscription(null, "email"));
+      Assert.Throws<ArgumentNullException>(() => new Subscription("authorId", null));
+      Assert.Throws<ArgumentException>(() => new Subscription(string.Empty, "email"));
+      Assert.Throws<ArgumentException>(() => new Subscription("authorId", string.Empty));
+      subscription = new Subscription("authorId", "email@mail.ru", 1, new DateTime(2000, 1, 1));
+      Assert.True(subscription.Id == 0);
       Assert.True(subscription.AuthorId == "authorId");
       Assert.True(subscription.Active);
       Assert.True(subscription.DateCreated <= DateTime.UtcNow);
@@ -156,14 +154,27 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Subscription"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="Subscription.Equals(Subscription)"/></description></item>
+    ///     <item><description><see cref="Subscription.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("Email", new[] { "email@mail.ru", "email@mail_2.ru" })
-        .AddNext("Type", new[] { (object) 1, 2 }));
+      this.TestEquality("Email", "email@mail.ru", "email@mail_2.ru");
+      this.TestEquality("Type", (object) 1, 2);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="Subscription.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("Email", "email@mail.ru", "email@mail_2.ru");
+      this.TestHashCode("Type", (object)1, 2);
     }
 
     /// <summary>
@@ -189,7 +200,7 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Subscription.Xml(null));
 
       var xml = new XElement("Subscription",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("AuthorId", "authorId"),
         new XElement("Active", true),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
@@ -198,7 +209,7 @@ namespace Catharsis.Commons.Domain
         new XElement("Token", "token"),
         new XElement("Type", 1));
       var subscription = Subscription.Xml(xml);
-      Assert.True(subscription.Id == "id");
+      Assert.True(subscription.Id == 1);
       Assert.True(subscription.Active);
       Assert.True(subscription.AuthorId == "authorId");
       Assert.True(subscription.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
@@ -207,11 +218,11 @@ namespace Catharsis.Commons.Domain
       Assert.True(subscription.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(subscription.Token == "token");
       Assert.True(subscription.Type == 1);
-      Assert.True(new Subscription("id", "authorId", "email", 1) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue, Token = "token" }.Xml().ToString() == xml.ToString());
+      Assert.True(new Subscription("authorId", "email", 1) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue, Token = "token" }.Xml().ToString() == xml.ToString());
       Assert.True(Subscription.Xml(subscription.Xml()).Equals(subscription));
 
       xml = new XElement("Subscription",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("AuthorId", "authorId"),
         new XElement("Active", true),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
@@ -221,7 +232,7 @@ namespace Catharsis.Commons.Domain
         new XElement("Token", "token"),
         new XElement("Type", 1));
       subscription = Subscription.Xml(xml);
-      Assert.True(subscription.Id == "id");
+      Assert.True(subscription.Id == 1);
       Assert.True(subscription.Active);
       Assert.True(subscription.AuthorId == "authorId");
       Assert.True(subscription.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
@@ -230,7 +241,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(subscription.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(subscription.Token == "token");
       Assert.True(subscription.Type == 1);
-      Assert.True(new Subscription("id", "authorId", "email", 1, DateTime.MaxValue) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue, Token = "token" }.Xml().ToString() == xml.ToString());
+      Assert.True(new Subscription("authorId", "email", 1, DateTime.MaxValue) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue, Token = "token" }.Xml().ToString() == xml.ToString());
       Assert.True(Subscription.Xml(subscription.Xml()).Equals(subscription));
     }
   }

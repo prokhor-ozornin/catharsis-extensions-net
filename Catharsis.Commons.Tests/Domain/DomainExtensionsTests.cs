@@ -390,7 +390,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.False(Enumerable.Empty<IPersonalizable>().WithFirstName(null).Any());
       Assert.False(Enumerable.Empty<IPersonalizable>().WithFirstName(string.Empty).Any());
-      Assert.True(new[] { null, new Article { Category = new ArticlesCategory { Id = "1" } }, null, new Article { Category = new ArticlesCategory { Id = "2" } } }.InArticlesCategory(new ArticlesCategory { Id = "1" }).Count() == 1);
+      Assert.True(new[] { null, new Article { Category = new ArticlesCategory { Id = 1 } }, null, new Article { Category = new ArticlesCategory { Id = 2 } } }.InArticlesCategory(new ArticlesCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>

@@ -11,12 +11,12 @@ namespace Catharsis.Commons.Domain
   /// </summary>
   public class Poll : Item, IEquatable<Poll>
   {
-    private readonly ICollection<PollAnswer> answers = new HashSet<PollAnswer>();
+    private ICollection<PollAnswer> answers = new HashSet<PollAnswer>();
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public ICollection<PollAnswer> Answers
+    public virtual ICollection<PollAnswer> Answers
     {
       get { return this.answers; }  
     }
@@ -24,7 +24,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public bool MultiSelect { get; set; }
+    public virtual bool MultiSelect { get; set; }
 
     /// <summary>
     ///   <para>Creates new poll.</para>
@@ -45,14 +45,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new poll.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of poll.</param>
     /// <param name="language">ISO language code of poll's text content.</param>
     /// <param name="name">Title of poll.</param>
     /// <param name="text">Poll's question text.</param>
     /// <param name="multiSelect"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
-    public Poll(string id, string language, string name, string text, bool multiSelect) : base(id, language, name, text)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
+    public Poll(string language, string name, string text, bool multiSelect) : base(language, name, text)
     {
       Assertion.NotEmpty(text);
 
@@ -69,7 +68,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var poll = new Poll((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (bool) xml.Element("MultiSelect"));
+      var poll = new Poll((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (bool) xml.Element("MultiSelect"));
+      if (xml.Element("Id") != null)
+      {
+        poll.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         poll.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -101,7 +104,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Poll other)
+    public virtual bool Equals(Poll other)
     {
       return base.Equals(other);
     }

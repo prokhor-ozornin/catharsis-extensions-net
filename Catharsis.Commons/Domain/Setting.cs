@@ -18,7 +18,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Name
+    public virtual string Name
     {
       get { return this.name; }
       set
@@ -32,12 +32,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public int Type { get; set; }
+    public virtual int Type { get; set; }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string Value { get; set; }
+    public virtual string Value { get; set; }
 
     /// <summary>
     ///   <para>Creates new setting.</para>
@@ -58,13 +58,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="id">Unique identifier of setting.</param>
     /// <param name="name"></param>
     /// <param name="value"></param>
     /// <param name="type"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="name"/> or <paramref name="value"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="name"/> or <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public Setting(string id, string name, string value, int type = 0) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="name"/> or <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="name"/> or <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
+    public Setting(string name, string value, int type = 0)
     {
       this.Name = name;
       this.Value = value;
@@ -81,7 +80,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new Setting((string) xml.Element("Id"), (string) xml.Element("Name"), (string) xml.Element("Value"), (int) xml.Element("Type"));
+      var setting = new Setting((string) xml.Element("Name"), (string) xml.Element("Value"), (int) xml.Element("Type"));
+      if (xml.Element("Id") != null)
+      {
+        setting.Id = (long)xml.Element("Id");
+      }
+      return setting;
     }
 
     /// <summary>
@@ -89,7 +93,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Setting other)
+    public virtual bool Equals(Setting other)
     {
       return base.Equals(other);
     }

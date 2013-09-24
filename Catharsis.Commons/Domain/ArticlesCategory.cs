@@ -28,14 +28,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new category of articles.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of category.</param>
     /// <param name="language">ISO language code of category's text content.</param>
     /// <param name="name">Name of category.</param>
     /// <param name="parent">Parent of category, or <c>null</c> if there is no parent.</param>
     /// <param name="description">Description of category.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public ArticlesCategory(string id, string language, string name, ArticlesCategory parent = null, string description = null) : base(id, language,name,parent, description)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public ArticlesCategory(string language, string name, ArticlesCategory parent = null, string description = null) : base(language, name,parent, description)
     {
     }
 
@@ -49,7 +48,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new ArticlesCategory((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), xml.Element("Parent") != null ? Xml(xml.Element("Parent")) : null, (string) xml.Element("Description"));
+      var category = new ArticlesCategory((string) xml.Element("Language"), (string) xml.Element("Name"), xml.Element("Parent") != null ? Xml(xml.Element("Parent")) : null, (string) xml.Element("Description"));
+      if (xml.Element("Id") != null)
+      {
+        category.Id = (long) xml.Element("Id");
+      }
+      return category;
     }
 
     /// <summary>
@@ -57,7 +61,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(ArticlesCategory other)
+    public virtual bool Equals(ArticlesCategory other)
     {
       return base.Equals(other);
     }

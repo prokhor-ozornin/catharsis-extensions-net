@@ -13,7 +13,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public DateTime? PublishedOn { get; set; }
+    public virtual DateTime? PublishedOn { get; set; }
 
     /// <summary>
     ///   <para>Creates new arts album.</para>
@@ -34,14 +34,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new arts album.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of arts album.</param>
     /// <param name="language">ISO language code of album's text content.</param>
     /// <param name="name">Name of album.</param>
     /// <param name="text">Album's description text.</param>
     /// <param name="publishedOn"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public ArtsAlbum(string id, string language, string name, string text = null, DateTime? publishedOn = null) : base(id, language, name, text)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public ArtsAlbum(string language, string name, string text = null, DateTime? publishedOn = null) : base(language, name, text)
     {
       this.PublishedOn = publishedOn;
     }
@@ -56,7 +55,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var album = new ArtsAlbum((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (DateTime?) xml.Element("PublishedOn"));
+      var album = new ArtsAlbum((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (DateTime?) xml.Element("PublishedOn"));
+      if (xml.Element("Id") != null)
+      {
+        album.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         album.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -83,7 +86,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="ArtsAlbum"/> to compare with this instance.</param>
-    public int CompareTo(ArtsAlbum other)
+    public virtual int CompareTo(ArtsAlbum other)
     {
       return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
@@ -93,7 +96,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(ArtsAlbum other)
+    public virtual bool Equals(ArtsAlbum other)
     {
       return base.Equals(other);
     }

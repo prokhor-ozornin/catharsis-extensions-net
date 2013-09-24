@@ -21,7 +21,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string AuthorId
+    public virtual string AuthorId
     {
       get { return this.authorId; }
       set
@@ -35,7 +35,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of rating's creation.</para>
     /// </summary>
-    public DateTime DateCreated
+    public virtual DateTime DateCreated
     {
       get { return this.dateCreated; }
       set { this.dateCreated = value; }
@@ -45,7 +45,7 @@ namespace Catharsis.Commons.Domain
     ///   <para>Subject item that was rated.</para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public Item Item
+    public virtual Item Item
     {
       get { return this.item; }
       set
@@ -59,7 +59,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of rating's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated
+    public virtual DateTime LastUpdated
     {
       get { return this.lastUpdated; }
       set { this.lastUpdated = value; }
@@ -68,7 +68,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public byte Value { get; set; }
+    public virtual byte Value { get; set; }
 
     /// <summary>
     ///   <para>Creates new rating.</para>
@@ -89,13 +89,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="id">Unique identifier of rating.</param>
     /// <param name="authorId">Identifier of rating's maker.</param>
     /// <param name="item"></param>
     /// <param name="value"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/> or <paramref name="item"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/> or <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
-    public Rating(string id, string authorId, Item item, byte value) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/> or <paramref name="item"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
+    public Rating(string authorId, Item item, byte value)
     {
       this.AuthorId = authorId;
       this.Item = item;
@@ -112,7 +111,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var rating = new Rating((string) xml.Element("Id"), (string) xml.Element("AuthorId"), Item.Xml(xml.Element("Item")), (byte) (int) xml.Element("Value"));
+      var rating = new Rating((string) xml.Element("AuthorId"), Item.Xml(xml.Element("Item")), (byte) (int) xml.Element("Value"));
+      if (xml.Element("Id") != null)
+      {
+        rating.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         rating.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -129,7 +132,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Rating other)
+    public virtual bool Equals(Rating other)
     {
       return base.Equals(other);
     }
@@ -148,7 +151,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Rating"/> to compare with this instance.</param>
-    public int CompareTo(Rating other)
+    public virtual int CompareTo(Rating other)
     {
       return this.Value.CompareTo(other.Value);
     }

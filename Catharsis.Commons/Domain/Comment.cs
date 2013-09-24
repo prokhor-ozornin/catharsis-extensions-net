@@ -22,7 +22,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string AuthorId
+    public virtual string AuthorId
     {
       get { return this.authorId; }
       set
@@ -36,7 +36,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time or comment's creation.</para>
     /// </summary>
-    public DateTime DateCreated
+    public virtual DateTime DateCreated
     {
       get { return this.dateCreated; }
       set { this.dateCreated = value; }
@@ -45,7 +45,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of comment's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated
+    public virtual DateTime LastUpdated
     {
       get { return this.lastUpdated; }
       set { this.lastUpdated = value; }
@@ -56,7 +56,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Name
+    public virtual string Name
     {
       get { return this.name; }
       set
@@ -72,7 +72,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Text
+    public virtual string Text
     {
       get { return this.text; }
       set
@@ -102,13 +102,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new comment.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of comment.</param>
     /// <param name="authorId">Identifier of comment's author.</param>
     /// <param name="name">Name of comment.</param>
     /// <param name="text">Comment's body text.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
-    public Comment(string id, string authorId, string name, string text) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="authorId"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
+    public Comment(string authorId, string name, string text)
     {
       this.AuthorId = authorId;
       this.Name = name;
@@ -125,7 +124,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var comment = new Comment((string) xml.Element("Id"), (string) xml.Element("AuthorId"), (string) xml.Element("Name"), (string) xml.Element("Text"));
+      var comment = new Comment((string) xml.Element("AuthorId"), (string) xml.Element("Name"), (string) xml.Element("Text"));
+      if (xml.Element("Id") != null)
+      {
+        comment.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         comment.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -142,7 +145,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Comment other)
+    public virtual bool Equals(Comment other)
     {
       return base.Equals(other);
     }
@@ -161,7 +164,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Comment"/> to compare with this instance.</param>
-    public int CompareTo(Comment other)
+    public virtual int CompareTo(Comment other)
     {
       return this.DateCreated.CompareTo(other.DateCreated);
     }

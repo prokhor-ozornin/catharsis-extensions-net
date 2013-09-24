@@ -45,34 +45,32 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Setting()"/>
     ///   <seealso cref="Setting(IDictionary{string, object})"/>
-    ///   <seealso cref="Setting(string, string, string, int)"/>
+    ///   <seealso cref="Setting(string, string, int)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var setting = new Setting();
-      Assert.True(setting.Id == null);
+      Assert.True(setting.Id == 0);
       Assert.True(setting.Name == null);
       Assert.True(setting.Type == 0);
       Assert.True(setting.Value == null);
 
       Assert.Throws<ArgumentNullException>(() => new City(null));
       setting = new Setting(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("Name", "name")
         .AddNext("Type", 1)
         .AddNext("Value", "value"));
-      Assert.True(setting.Id == "id");
+      Assert.True(setting.Id == 1);
       Assert.True(setting.Name == "name");
       Assert.True(setting.Type == 1);
       Assert.True(setting.Value == "value");
 
-      Assert.Throws<ArgumentNullException>(() => new Setting(null, "name", "value"));
-      Assert.Throws<ArgumentNullException>(() => new Setting("id", null, "value"));
-      Assert.Throws<ArgumentException>(() => new Setting(string.Empty, "name", "value"));
-      Assert.Throws<ArgumentException>(() => new Setting("id", string.Empty, "value"));
-      setting = new Setting("id", "name", "value", 1);
-      Assert.True(setting.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new Setting(null, "value"));
+      Assert.Throws<ArgumentException>(() => new Setting(string.Empty, "value"));
+      setting = new Setting("name", "value", 1);
+      Assert.True(setting.Id == 0);
       Assert.True(setting.Name == "name");
       Assert.True(setting.Type == 1);
       Assert.True(setting.Value == "value");
@@ -88,14 +86,27 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Setting"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="Setting.Equals(Setting)"/></description></item>
+    ///     <item><description><see cref="Setting.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("Name", new[] { "Name", "Name_2" })
-        .AddNext("Type", new[] { (object) 1, 2 }));
+      this.TestEquality("Name", "Name", "Name_2");
+      this.TestEquality("Type", (object) 1, 2);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="Setting.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("Name", "Name", "Name_2");
+      this.TestHashCode("Type", (object)1, 2);
     }
 
     /// <summary>
@@ -111,28 +122,28 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Setting.Xml(null));
 
       var xml = new XElement("Setting",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("Name", "name"),
         new XElement("Type", 1));
       var setting = Setting.Xml(xml);
-      Assert.True(setting.Id == "id");
+      Assert.True(setting.Id == 1);
       Assert.True(setting.Name == "name");
       Assert.True(setting.Type == 1);
       Assert.True(setting.Value == null);
-      Assert.True(new Setting("id", "name", null, 1).Xml().ToString() == xml.ToString());
+      Assert.True(new Setting("name", null, 1) { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Setting.Xml(setting.Xml()).Equals(setting));
 
       xml = new XElement("Setting",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("Name", "name"),
         new XElement("Type", 1),
         new XElement("Value", "value"));
       setting = Setting.Xml(xml);
-      Assert.True(setting.Id == "id");
+      Assert.True(setting.Id == 1);
       Assert.True(setting.Name == "name");
       Assert.True(setting.Type == 1);
       Assert.True(setting.Value == "value");
-      Assert.True(new Setting("id", "name", "value", 1).Xml().ToString() == xml.ToString());
+      Assert.True(new Setting("name", "value", 1) { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Setting.Xml(setting.Xml()).Equals(setting));
     }
   }

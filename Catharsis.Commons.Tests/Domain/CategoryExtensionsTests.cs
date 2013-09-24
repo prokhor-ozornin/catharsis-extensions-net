@@ -24,7 +24,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.False(Enumerable.Empty<Category>().WithParent(null).Any());
       Assert.False(Enumerable.Empty<Category>().WithParent(new TestCategory()).Any());
-      Assert.True(new[] { null, new TestCategory(), new TestCategory { Parent = new TestCategory() }, new TestCategory { Parent = new TestCategory { Id = "1" }}, new TestCategory { Parent = new TestCategory { Id = "2" }}}.WithParent(new TestCategory { Id = "1"}).Count() == 1);
+      Assert.True(new[] { null, new TestCategory(), new TestCategory { Parent = new TestCategory() }, new TestCategory { Parent = new TestCategory { Id = 1 } }, new TestCategory { Parent = new TestCategory { Id = 2 } } }.WithParent(new TestCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ namespace Catharsis.Commons.Domain
     {
       Assert.Throws<ArgumentNullException>(() => CategoryExtensions.Root<TestCategory>(null));
 
-      Assert.True(new[] { null, new TestCategory(), new TestCategory { Parent = new TestCategory() }, new TestCategory { Parent = new TestCategory { Id = "1" } }, new TestCategory { Parent = new TestCategory { Id = "2" } } }.Root().Count() == 1);
+      Assert.True(new[] { null, new TestCategory(), new TestCategory { Parent = new TestCategory() }, new TestCategory { Parent = new TestCategory { Id = 1 } }, new TestCategory { Parent = new TestCategory { Id = 2 } } }.Root().Count() == 1);
     }
   }
 }

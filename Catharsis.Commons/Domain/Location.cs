@@ -19,7 +19,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Address
+    public virtual string Address
     {
       get { return this.address; }
       set
@@ -34,7 +34,7 @@ namespace Catharsis.Commons.Domain
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public City City
+    public virtual City City
     {
       get { return this.city; }
       set
@@ -48,17 +48,17 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public decimal? Latitude { get; set; }
+    public virtual decimal? Latitude { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public decimal? Longitude { get; set; }
+    public virtual decimal? Longitude { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string PostalCode { get; set; }
+    public virtual string PostalCode { get; set; }
     
     /// <summary>
     ///   <para>Creates new location.</para>
@@ -79,15 +79,14 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new location.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of location.</param>
     /// <param name="city"></param>
     /// <param name="address"></param>
     /// <param name="latitude"></param>
     /// <param name="longitude"></param>
     /// <param name="postalCode"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="city"/> or <paramref name="address"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/> or <paramref name="address"/> is <see cref="string.Empty"/> string.</exception>
-    public Location(string id, City city, string address, decimal? latitude = null, decimal? longitude = null, string postalCode = null) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="city"/> or <paramref name="address"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="address"/> is <see cref="string.Empty"/> string.</exception>
+    public Location(City city, string address, decimal? latitude = null, decimal? longitude = null, string postalCode = null)
     {
       this.City = city;
       this.Address = address;
@@ -106,7 +105,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new Location((string) xml.Element("Id"), City.Xml(xml.Element("City")), (string) xml.Element("Address"), (decimal?) xml.Element("Latitude"), (decimal?) xml.Element("Longitude"), (string) xml.Element("PostalCode"));
+      var location = new Location(City.Xml(xml.Element("City")), (string) xml.Element("Address"), (decimal?) xml.Element("Latitude"), (decimal?) xml.Element("Longitude"), (string) xml.Element("PostalCode"));
+      if (xml.Element("Id") != null)
+      {
+        location.Id = (long) xml.Element("Id");
+      }
+      return location;
     }
 
     /// <summary>
@@ -114,7 +118,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Location other)
+    public virtual bool Equals(Location other)
     {
       return base.Equals(other);
     }

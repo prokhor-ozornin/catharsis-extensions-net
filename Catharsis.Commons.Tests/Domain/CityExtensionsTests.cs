@@ -20,7 +20,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.False(Enumerable.Empty<City>().WithCountry(null).Any());
       Assert.False(Enumerable.Empty<City>().WithCountry(new Country()).Any());
-      Assert.True(new[] { null, new City { Country = new Country { Id = "Id" } }, null, new City { Country = new Country { Id = "Id_2" } } }.WithCountry(new Country { Id = "Id" }).Count() == 1);
+      Assert.True(new[] { null, new City { Country = new Country { Id = 1 } }, null, new City { Country = new Country { Id = 2 } } }.WithCountry(new Country { Id = 1 }).Count() == 1);
     }
 
     /// <summary>

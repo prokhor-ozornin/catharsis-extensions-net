@@ -15,14 +15,14 @@ namespace Catharsis.Commons.Domain
     private string authorId;
     private DateTime dateCreated = DateTime.UtcNow;
     private DateTime lastUpdated = DateTime.UtcNow;
-    private readonly ICollection<PollOption> options = new HashSet<PollOption>();
+    private ICollection<PollOption> options = new HashSet<PollOption>();
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string AuthorId
+    public virtual string AuthorId
     {
       get { return this.authorId; }
       set
@@ -36,7 +36,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of answer's creation.</para>
     /// </summary>
-    public DateTime DateCreated
+    public virtual DateTime DateCreated
     {
       get { return this.dateCreated; }
       set { this.dateCreated = value; }
@@ -45,7 +45,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of answers last modification.</para>
     /// </summary>
-    public DateTime LastUpdated
+    public virtual DateTime LastUpdated
     {
       get { return this.lastUpdated; }
       set { this.lastUpdated = value; }
@@ -54,7 +54,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public ICollection<PollOption> Options
+    public virtual ICollection<PollOption> Options
     {
       get { return this.options; }
     }
@@ -78,11 +78,10 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new poll answer.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of poll answer.</param>
     /// <param name="authorId">Identifier of answer's author.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/> or <paramref name="authorId"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/> or <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
-    public PollAnswer(string id, string authorId) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
+    public PollAnswer(string authorId)
     {
       this.AuthorId = authorId;
     }
@@ -97,7 +96,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var answer = new PollAnswer((string) xml.Element("Id"), (string) xml.Element("AuthorId"));
+      var answer = new PollAnswer((string) xml.Element("AuthorId"));
+      if (xml.Element("Id") != null)
+      {
+        answer.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         answer.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -114,7 +117,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="PollAnswer"/> to compare with this instance.</param>
-    public int CompareTo(PollAnswer other)
+    public virtual int CompareTo(PollAnswer other)
     {
       return this.DateCreated.CompareTo(other.DateCreated);
     }
@@ -137,7 +140,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(PollAnswer other)
+    public virtual bool Equals(PollAnswer other)
     {
       return base.Equals(other);
     }

@@ -20,7 +20,7 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<BlogEntry>().InBlog(null));
 
       Assert.False(Enumerable.Empty<BlogEntry>().InBlog(new Blog()).Any());
-      Assert.True(new[] { null, new BlogEntry { Blog = new Blog { Id = "Id" } }, null, new BlogEntry { Blog = new Blog { Id = "Id_2" } } }.InBlog(new Blog { Id = "Id" }).Count() == 1);
+      Assert.True(new[] { null, new BlogEntry { Blog = new Blog { Id = 1 } }, null, new BlogEntry { Blog = new Blog { Id = 2 } } }.InBlog(new Blog { Id = 1 }).Count() == 1);
     }
 
     /// <summary>

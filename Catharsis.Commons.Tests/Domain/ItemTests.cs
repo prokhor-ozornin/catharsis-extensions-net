@@ -107,13 +107,13 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Item()"/>
     ///   <seealso cref="Item(IDictionary{string, object})"/>
-    ///   <seealso cref="Item(string, string, string, string, string)"/>
+    ///   <seealso cref="Item(string, string, string, string)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var item = new Item();
-      Assert.True(item.Id == null);
+      Assert.True(item.Id == 0);
       Assert.True(item.AuthorId == null);
       Assert.True(item.Comments.Count == 0);
       Assert.True(item.DateCreated <= DateTime.UtcNow);
@@ -125,12 +125,12 @@ namespace Catharsis.Commons.Domain
 
       Assert.Throws<ArgumentNullException>(() => new Item(null));
       item = new Item(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("AuthorId", "authorId")
         .AddNext("Language", "language")
         .AddNext("Name", "name")
         .AddNext("Text", "text"));
-      Assert.True(item.Id == "id");
+      Assert.True(item.Id == 1);
       Assert.True(item.AuthorId == "authorId");
       Assert.True(item.Comments.Count == 0);
       Assert.True(item.DateCreated <= DateTime.UtcNow);
@@ -140,14 +140,12 @@ namespace Catharsis.Commons.Domain
       Assert.True(item.Tags.Count == 0);
       Assert.True(item.Text == "text");
 
-      Assert.Throws<ArgumentNullException>(() => new Item(null, "language", "name"));
-      Assert.Throws<ArgumentNullException>(() => new Item("id", null, "name"));
-      Assert.Throws<ArgumentNullException>(() => new Item("id", "language", null));
-      Assert.Throws<ArgumentException>(() => new Item(string.Empty, "language", "name"));
-      Assert.Throws<ArgumentException>(() => new Item("id", string.Empty, "name"));
-      Assert.Throws<ArgumentException>(() => new Item("id", "language", string.Empty));
-      item = new Item("id", "language", "name", "text", "authorId");
-      Assert.True(item.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new Item(null, "name"));
+      Assert.Throws<ArgumentNullException>(() => new Item("language", null));
+      Assert.Throws<ArgumentException>(() => new Item(string.Empty, "name"));
+      Assert.Throws<ArgumentException>(() => new Item("language", string.Empty));
+      item = new Item("language", "name", "text", "authorId");
+      Assert.True(item.Id == 0);
       Assert.True(item.AuthorId == "authorId");
       Assert.True(item.Comments.Count == 0);
       Assert.True(item.DateCreated <= DateTime.UtcNow);
@@ -168,15 +166,29 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Item"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="Item.Equals(Item)"/></description></item>
+    ///     <item><description><see cref="Item.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("AuthorId", new[] { "AuthorId", "AuthorId_2" })
-        .AddNext("Language", new[] { "Language", "Language_2" })
-        .AddNext("Name", new[] { "Name", "Name_2" }));
+      this.TestEquality("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestEquality("Language", "Language", "Language_2");
+      this.TestEquality("Name", "Name", "Name_2");
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="Item.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestHashCode("Language", "Language", "Language_2");
+      this.TestHashCode("Name", "Name", "Name_2");
     }
 
     /// <summary>
@@ -202,13 +214,13 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Item.Xml(null));
 
       var xml = new XElement("Item",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"));
       var item = Item.Xml(xml);
-      Assert.True(item.Id == "id");
+      Assert.True(item.Id == 1);
       Assert.True(item.Comments.Count == 0);
       Assert.True(item.AuthorId == null);
       Assert.True(item.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
@@ -217,11 +229,11 @@ namespace Catharsis.Commons.Domain
       Assert.True(item.Name == "name");
       Assert.True(item.Tags.Count == 0);
       Assert.True(item.Text == null);
-      Assert.True(new Item("id", "language", "name") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new Item("language", "name") { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Item.Xml(item.Xml()).Equals(item));
 
       xml = new XElement("Item",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("AuthorId", "authorId"),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
@@ -229,7 +241,7 @@ namespace Catharsis.Commons.Domain
         new XElement("Name", "name"),
         new XElement("Text", "text"));
       item = Item.Xml(xml);
-      Assert.True(item.Id == "id");
+      Assert.True(item.Id == 1);
       Assert.True(item.AuthorId == "authorId");
       Assert.True(item.Comments.Count == 0);
       Assert.True(item.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
@@ -238,7 +250,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(item.Name == "name");
       Assert.True(item.Tags.Count == 0);
       Assert.True(item.Text == "text");
-      Assert.True(new Item("id", "language", "name", "text", "authorId") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new Item("language", "name", "text", "authorId") { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Item.Xml(item.Xml()).Equals(item));
     }
   }

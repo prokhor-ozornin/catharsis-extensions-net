@@ -18,14 +18,14 @@ namespace Catharsis.Commons.Domain
     private DateTime lastUpdated = DateTime.UtcNow;
     private string name;
     private string originalName;
-    private readonly ICollection<string> tags = new HashSet<string>();
+    private ICollection<string> tags = new HashSet<string>();
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string ContentType
+    public virtual string ContentType
     {
       get { return this.contentType; }
       set
@@ -40,7 +40,7 @@ namespace Catharsis.Commons.Domain
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public byte[] Data
+    public virtual byte[] Data
     {
       get { return this.data; }
       set
@@ -54,7 +54,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of file's creation.</para>
     /// </summary>
-    public DateTime DateCreated
+    public virtual DateTime DateCreated
     {
       get { return this.dateCreated; }
       set { this.dateCreated = value; }
@@ -63,7 +63,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of file's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated
+    public virtual DateTime LastUpdated
     {
       get { return this.lastUpdated; }
       set { this.lastUpdated = value; }
@@ -74,7 +74,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Name
+    public virtual string Name
     {
       get { return this.name; }
       set
@@ -90,7 +90,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string OriginalName
+    public virtual string OriginalName
     {
       get { return this.originalName; }
       set
@@ -104,12 +104,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public long Size { get; set; }
+    public virtual long Size { get; set; }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public ICollection<string> Tags
+    public virtual ICollection<string> Tags
     {
       get { return this.tags; }
     }
@@ -132,14 +132,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new file.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of file.</param>
     /// <param name="contentType"></param>
     /// <param name="name">Name of file.</param>
     /// <param name="originalName"></param>
     /// <param name="data"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="contentType"/>, <paramref name="name"/>, <paramref name="originalName"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="contentType"/>, <paramref name="name"/> or <paramref name="originalName"/> is <see cref="string.Empty"/> string.</exception>
-    public File(string id, string contentType, string name, string originalName, byte[] data) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="contentType"/>, <paramref name="name"/>, <paramref name="originalName"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="contentType"/>, <paramref name="name"/> or <paramref name="originalName"/> is <see cref="string.Empty"/> string.</exception>
+    public File(string contentType, string name, string originalName, byte[] data)
     {
       this.ContentType = contentType;
       this.Name = name;
@@ -158,7 +157,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var file = new File((string) xml.Element("Id"), (string) xml.Element("ContentType"), (string) xml.Element("Name"), (string) xml.Element("OriginalName"), ((string) xml.Element("Data")).DecodeBase64());
+      var file = new File((string) xml.Element("ContentType"), (string) xml.Element("Name"), (string) xml.Element("OriginalName"), ((string) xml.Element("Data")).DecodeBase64());
+      if (xml.Element("Id") != null)
+      {
+        file.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         file.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -179,7 +182,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(File other)
+    public virtual bool Equals(File other)
     {
       return base.Equals(other);
     }
@@ -198,7 +201,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="File"/> to compare with this instance.</param>
-    public int CompareTo(File other)
+    public virtual int CompareTo(File other)
     {
       return this.DateCreated.CompareTo(other.DateCreated);
     }

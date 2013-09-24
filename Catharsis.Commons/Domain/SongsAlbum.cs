@@ -13,12 +13,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public Image Image { get; set; }
+    public virtual Image Image { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public DateTime? PublishedOn { get; set; }
+    public virtual DateTime? PublishedOn { get; set; }
 
     /// <summary>
     ///   <para>Creates new songs album.</para>
@@ -39,15 +39,14 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new songs album.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of songs album.</param>
     /// <param name="language">ISO language code of album's text content.</param>
     /// <param name="name">Name of album.</param>
     /// <param name="text">Album's description text.</param>
     /// <param name="image"></param>
     /// <param name="publishedOn"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public SongsAlbum(string id, string language, string name, string text = null, Image image = null, DateTime? publishedOn = null) : base(id, language, name, text)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public SongsAlbum(string language, string name, string text = null, Image image = null, DateTime? publishedOn = null) : base(language, name, text)
     {
       this.Image = image;
       this.PublishedOn = publishedOn;
@@ -63,7 +62,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var album = new SongsAlbum((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null, (DateTime?) xml.Element("PublishedOn"));
+      var album = new SongsAlbum((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null, (DateTime?) xml.Element("PublishedOn"));
+      if (xml.Element("Id") != null)
+      {
+        album.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         album.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -80,7 +83,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="SongsAlbum"/> to compare with this instance.</param>
-    public int CompareTo(SongsAlbum other)
+    public virtual int CompareTo(SongsAlbum other)
     {
       return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
@@ -101,7 +104,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(SongsAlbum other)
+    public virtual bool Equals(SongsAlbum other)
     {
       return base.Equals(other);
     }

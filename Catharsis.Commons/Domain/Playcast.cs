@@ -14,17 +14,17 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public Audio Audio { get; set; }
+    public virtual Audio Audio { get; set; }
 
     /// <summary>
     ///   <para>Category of playcast.</para>
     /// </summary>
-    public PlaycastsCategory Category { get; set; }
+    public virtual PlaycastsCategory Category { get; set; }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public Image Image { get; set; }
+    public virtual Image Image { get; set; }
 
     /// <summary>
     ///   <para>Creates new playcast.</para>
@@ -45,7 +45,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new playcast.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of playcast.</param>
     /// <param name="authorId"></param>
     /// <param name="language">ISO language code of playcast's text content.</param>
     /// <param name="name">Title of playcast.</param>
@@ -53,9 +52,9 @@ namespace Catharsis.Commons.Domain
     /// <param name="category">Category of playcast's belongings, or a <c>null</c> reference.</param>
     /// <param name="audio"></param>
     /// <param name="image"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
-    public Playcast(string id, string authorId, string language, string name, string text, PlaycastsCategory category = null, Audio audio = null, Image image = null) : base(id, language, name, text, authorId)
+    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
+    public Playcast(string authorId, string language, string name, string text, PlaycastsCategory category = null, Audio audio = null, Image image = null) : base(language, name, text, authorId)
     {
       Assertion.NotEmpty(authorId);
       Assertion.NotEmpty(text);
@@ -75,7 +74,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var playcast = new Playcast((string)xml.Element("Id"), (string)xml.Element("AuthorId"), (string)xml.Element("Language"), (string)xml.Element("Name"), (string)xml.Element("Text"), xml.Element("PlaycastsCategory") != null ? PlaycastsCategory.Xml(xml.Element("PlaycastsCategory")) : null, xml.Element("Audio") != null ? Audio.Xml(xml.Element("Audio")) : null, xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null);
+      var playcast = new Playcast((string)xml.Element("AuthorId"), (string)xml.Element("Language"), (string)xml.Element("Name"), (string)xml.Element("Text"), xml.Element("PlaycastsCategory") != null ? PlaycastsCategory.Xml(xml.Element("PlaycastsCategory")) : null, xml.Element("Audio") != null ? Audio.Xml(xml.Element("Audio")) : null, xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null);
+      if (xml.Element("Id") != null)
+      {
+        playcast.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         playcast.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -104,7 +107,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Playcast other)
+    public virtual bool Equals(Playcast other)
     {
       return base.Equals(other);
     }

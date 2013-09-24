@@ -88,13 +88,13 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Profile()"/>
     ///   <seealso cref="Profile(IDictionary{string, object})"/>
-    ///   <seealso cref="Profile(string, string, string, string, string, string, string, string)"/>
+    ///   <seealso cref="Profile(string, string, string, string, string, string, string)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var profile = new Profile();
-      Assert.True(profile.Id == null);
+      Assert.True(profile.Id == 0);
       Assert.True(profile.AuthorId == null);
       Assert.True(profile.Email == null);
       Assert.True(profile.Name == null);
@@ -105,7 +105,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.Throws<ArgumentNullException>(() => new Profile(null));
       profile = new Profile(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("AuthorId", "authorId")
         .AddNext("Email", "email@mail.ru")
         .AddNext("Name", "name")
@@ -113,7 +113,7 @@ namespace Catharsis.Commons.Domain
         .AddNext("Type", "type")
         .AddNext("Url", "url")
         .AddNext("Username", "username"));
-      Assert.True(profile.Id == "id");
+      Assert.True(profile.Id == 1);
       Assert.True(profile.AuthorId == "authorId");
       Assert.True(profile.Email == "email@mail.ru");
       Assert.True(profile.Name == "name");
@@ -122,20 +122,18 @@ namespace Catharsis.Commons.Domain
       Assert.True(profile.Url == "url");
       Assert.True(profile.Username == "username");
 
-      Assert.Throws<ArgumentNullException>(() => new Profile(null, "authorId", "name", "username", "type", "url"));
-      Assert.Throws<ArgumentNullException>(() => new Profile("id", null, "name", "username", "type", "url"));
-      Assert.Throws<ArgumentNullException>(() => new Profile("id", "authorId", null, "username", "type", "url"));
-      Assert.Throws<ArgumentNullException>(() => new Profile("id", "authorId", "name", null, "type", "url"));
-      Assert.Throws<ArgumentNullException>(() => new Profile("id", "authorId", "name", "username", null, "url"));
-      Assert.Throws<ArgumentNullException>(() => new Profile("id", "authorId", "name", "username", "type", null));
-      Assert.Throws<ArgumentException>(() => new Profile(string.Empty, "authorId", "name", "username", "type", "url"));
-      Assert.Throws<ArgumentException>(() => new Profile("id", string.Empty, "name", "username", "type", "url"));
-      Assert.Throws<ArgumentException>(() => new Profile("id", "authorId", string.Empty, "username", "type", "url"));
-      Assert.Throws<ArgumentException>(() => new Profile("id", "authorId", "name", string.Empty, "type", "url"));
-      Assert.Throws<ArgumentException>(() => new Profile("id", "authorId", "name", "username", string.Empty, "url"));
-      Assert.Throws<ArgumentException>(() => new Profile("id", "authorId", "name", "username", "type", string.Empty));
-      profile = new Profile("id", "authorId", "name", "username", "type", "url", "email@mail.ru", "photo");
-      Assert.True(profile.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new Profile(null, "name", "username", "type", "url"));
+      Assert.Throws<ArgumentNullException>(() => new Profile("authorId", null, "username", "type", "url"));
+      Assert.Throws<ArgumentNullException>(() => new Profile("authorId", "name", null, "type", "url"));
+      Assert.Throws<ArgumentNullException>(() => new Profile("authorId", "name", "username", null, "url"));
+      Assert.Throws<ArgumentNullException>(() => new Profile("authorId", "name", "username", "type", null));
+      Assert.Throws<ArgumentException>(() => new Profile(string.Empty, "name", "username", "type", "url"));
+      Assert.Throws<ArgumentException>(() => new Profile("authorId", string.Empty, "username", "type", "url"));
+      Assert.Throws<ArgumentException>(() => new Profile("authorId", "name", string.Empty, "type", "url"));
+      Assert.Throws<ArgumentException>(() => new Profile("authorId", "name", "username", string.Empty, "url"));
+      Assert.Throws<ArgumentException>(() => new Profile("authorId", "name", "username", "type", string.Empty));
+      profile = new Profile("authorId", "name", "username", "type", "url", "email@mail.ru", "photo");
+      Assert.True(profile.Id == 0);
       Assert.True(profile.AuthorId == "authorId");
       Assert.True(profile.Email == "email@mail.ru");
       Assert.True(profile.Name == "name");
@@ -155,15 +153,29 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Profile"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="Profile.Equals(Profile)"/></description></item>
+    ///     <item><description><see cref="Profile.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("AuthorId", new[] { "AuthorId", "AuthorId_2" })
-        .AddNext("Type", new[] { "Type", "Type_2" })
-        .AddNext("Username", new[] { "Username", "Username_2" }));
+      this.TestEquality("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestEquality("Type", "Type", "Type_2");
+      this.TestEquality("Username", "Username", "Username_2");
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="Profile.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestHashCode("Type", "Type", "Type_2");
+      this.TestHashCode("Username", "Username", "Username_2");
     }
 
     /// <summary>
@@ -189,14 +201,14 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Profile.Xml(null));
 
       var xml = new XElement("Profile",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("AuthorId", "authorId"),
         new XElement("Name", "name"),
         new XElement("Type", "type"),
         new XElement("Url", "url"),
         new XElement("Username", "username"));
       var profile = Profile.Xml(xml);
-      Assert.True(profile.Id == "id");
+      Assert.True(profile.Id == 1);
       Assert.True(profile.AuthorId == "authorId");
       Assert.True(profile.Email == null);
       Assert.True(profile.Name == "name");
@@ -204,11 +216,11 @@ namespace Catharsis.Commons.Domain
       Assert.True(profile.Type == "type");
       Assert.True(profile.Url == "url");
       Assert.True(profile.Username == "username");
-      Assert.True(new Profile("id", "authorId", "name", "username", "type", "url").Xml().ToString() == xml.ToString());
+      Assert.True(new Profile("authorId", "name", "username", "type", "url") { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Profile.Xml(profile.Xml()).Equals(profile));
 
       xml = new XElement("Profile",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("AuthorId", "authorId"),
         new XElement("Email", "email"),
         new XElement("Name", "name"),
@@ -217,7 +229,7 @@ namespace Catharsis.Commons.Domain
         new XElement("Url", "url"),
         new XElement("Username", "username"));
       profile = Profile.Xml(xml);
-      Assert.True(profile.Id == "id");
+      Assert.True(profile.Id == 1);
       Assert.True(profile.AuthorId == "authorId");
       Assert.True(profile.Email == "email");
       Assert.True(profile.Name == "name");
@@ -225,7 +237,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(profile.Type == "type");
       Assert.True(profile.Url == "url");
       Assert.True(profile.Username == "username");
-      Assert.True(new Profile("id", "authorId", "name", "username", "type", "url", "email", "photo").Xml().ToString() == xml.ToString());
+      Assert.True(new Profile("authorId", "name", "username", "type", "url", "email", "photo") { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Profile.Xml(profile.Xml()).Equals(profile));
     }
   }

@@ -18,7 +18,7 @@ namespace Catharsis.Commons.Domain
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public Country Country
+    public virtual Country Country
     {
       get { return this.country; }
       set
@@ -34,7 +34,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Name
+    public virtual string Name
     {
       get { return this.name; }
       set
@@ -48,7 +48,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string Region { get; set; }
+    public virtual string Region { get; set; }
 
     /// <summary>
     ///   <para>Creates new city.</para>
@@ -69,13 +69,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new city.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of city.</param>
     /// <param name="name">Name of city.</param>
     /// <param name="country"></param>
     /// <param name="region"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="name"/> or <paramref name="country"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public City(string id, string name, Country country, string region = null) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="name"/> or <paramref name="country"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public City(string name, Country country, string region = null)
     {
       this.Name = name;
       this.Country = country;
@@ -92,7 +91,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new City((string) xml.Element("Id"), (string) xml.Element("Name"), Country.Xml(xml.Element("Country")), (string) xml.Element("Region"));
+      var city = new City((string) xml.Element("Name"), Country.Xml(xml.Element("Country")), (string) xml.Element("Region"));
+      if (xml.Element("Id") != null)
+      {
+        city.Id = (long) xml.Element("Id");
+      }
+      return city;
     }
 
     /// <summary>
@@ -100,7 +104,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(City other)
+    public virtual bool Equals(City other)
     {
       return base.Equals(other);
     }

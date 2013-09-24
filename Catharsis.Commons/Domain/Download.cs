@@ -16,19 +16,19 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Category of download.</para>
     /// </summary>
-    public DownloadsCategory Category { get; set; }
+    public virtual DownloadsCategory Category { get; set; }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public long Downloads { get; set; }
+    public virtual long Downloads { get; set; }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Url
+    public virtual string Url
     {
       get { return this.url; }
       set
@@ -58,15 +58,14 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new download.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of download.</param>
     /// <param name="language">ISO language code of download's text content.</param>
     /// <param name="name">Name of download.</param>
     /// <param name="category">Category of download's belongings, or a <c>null</c> reference.</param>
     /// <param name="url"></param>
     /// <param name="text">Download's description text.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="category"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="url"/> is <see cref="string.Empty"/> string.</exception>
-    public Download(string id, string language, string name, string url, DownloadsCategory category = null, string text = null) : base(id, language, name, text)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/>, <paramref name="category"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="url"/> is <see cref="string.Empty"/> string.</exception>
+    public Download(string language, string name, string url, DownloadsCategory category = null, string text = null) : base(language, name, text)
     {
       this.Category = category;
       this.Url = url;
@@ -82,7 +81,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var download = new Download((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Url"), xml.Element("DownloadsCategory") != null ? DownloadsCategory.Xml(xml.Element("DownloadsCategory")) : null, (string) xml.Element("Text"));
+      var download = new Download((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Url"), xml.Element("DownloadsCategory") != null ? DownloadsCategory.Xml(xml.Element("DownloadsCategory")) : null, (string) xml.Element("Text"));
+      if (xml.Element("Id") != null)
+      {
+        download.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         download.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -103,7 +106,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Download"/> to compare with this instance.</param>
-    public int CompareTo(Download other)
+    public virtual int CompareTo(Download other)
     {
       return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
@@ -125,7 +128,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Download other)
+    public virtual bool Equals(Download other)
     {
       return base.Equals(other);
     }

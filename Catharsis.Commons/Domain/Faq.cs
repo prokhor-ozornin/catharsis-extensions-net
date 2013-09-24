@@ -28,13 +28,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new F.A.Q.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of F.A.Q.</param>
     /// <param name="language">ISO language code of F.A.Q.'s text content.</param>
     /// <param name="name">Name of F.A.Q.</param>
     /// <param name="text">F.A.Q.'s question text.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
-    public Faq(string id, string language, string name, string text) : base(id, language, name, text)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
+    public Faq(string language, string name, string text) : base(language, name, text)
     {
       Assertion.NotEmpty(text);
     }
@@ -49,7 +48,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var faq = new Faq((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"));
+      var faq = new Faq((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"));
+      if (xml.Element("Id") != null)
+      {
+        faq.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         faq.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -66,7 +69,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Faq"/> to compare with this instance.</param>
-    public int CompareTo(Faq other)
+    public virtual int CompareTo(Faq other)
     {
       return base.CompareTo(other);
     }
@@ -76,7 +79,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Faq other)
+    public virtual bool Equals(Faq other)
     {
       return base.Equals(other);
     }

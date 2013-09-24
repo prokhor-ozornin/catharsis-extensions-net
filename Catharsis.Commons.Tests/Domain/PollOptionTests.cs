@@ -26,28 +26,26 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="PollOption()"/>
     ///   <seealso cref="PollOption(IDictionary{string, object})"/>
-    ///   <seealso cref="PollOption(string, string)"/>
+    ///   <seealso cref="PollOption(string)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var option = new PollOption();
-      Assert.True(option.Id == null);
+      Assert.True(option.Id == 0);
       Assert.True(option.Text == null);
 
-      Assert.Throws<ArgumentNullException>(() => new PollOption(null));
+      Assert.Throws<ArgumentNullException>(() => new PollOption((IDictionary<string, object>) null));
       option = new PollOption(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("Text", "text"));
-      Assert.True(option.Id == "id");
+      Assert.True(option.Id == 1);
       Assert.True(option.Text == "text");
 
-      Assert.Throws<ArgumentNullException>(() => new PollOption(null, "text"));
-      Assert.Throws<ArgumentNullException>(() => new PollOption("id", null));
-      Assert.Throws<ArgumentException>(() => new PollOption(string.Empty, "text"));
-      Assert.Throws<ArgumentException>(() => new PollOption("id", string.Empty));
-      option = new PollOption("id", "text");
-      Assert.True(option.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new PollOption((string) null));
+      Assert.Throws<ArgumentException>(() => new PollOption(string.Empty));
+      option = new PollOption("text");
+      Assert.True(option.Id == 0);
       Assert.True(option.Text == "text");
     }
 
@@ -64,12 +62,12 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => PollOption.Xml(null));
 
       var xml = new XElement("PollOption",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("Text", "text"));
       var option = PollOption.Xml(xml);
-      Assert.True(option.Id == "id");
+      Assert.True(option.Id == 1);
       Assert.True(option.Text == "text");
-      Assert.True(new PollOption("id", "text").Xml().ToString() == xml.ToString());
+      Assert.True(new PollOption("text") { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(PollOption.Xml(option.Xml()).Equals(option));
     }
   }

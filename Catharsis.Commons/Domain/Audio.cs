@@ -16,23 +16,23 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public short Bitrate { get; set; }
+    public virtual short Bitrate { get; set; }
     
     /// <summary>
     ///   <para>Category of audio.</para>
     /// </summary>
-    public AudiosCategory Category { get; set; }
+    public virtual AudiosCategory Category { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public long Duration { get; set; }
+    public virtual long Duration { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public File File
+    public virtual File File
     {
       get { return this.file; }
       set
@@ -62,14 +62,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new audio.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of audio.</param>
     /// <param name="file"></param>
     /// <param name="bitrate"></param>
     /// <param name="duration"></param>
     /// <param name="category">Category of audio's belongings, or a <c>null</c> reference.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="id"/> is <see cref="string.Empty"/> string.</exception>
-    public Audio(string id, File file, short bitrate, short duration, AudiosCategory category = null) : base(id)
+    /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
+    public Audio(File file, short bitrate, short duration, AudiosCategory category = null)
     {
       this.File = file;
       this.Bitrate = bitrate;
@@ -87,7 +85,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new Audio((string) xml.Element("Id"), File.Xml(xml.Element("File")), (short) xml.Element("Bitrate"), (short) xml.Element("Duration"), xml.Element("AudiosCategory") != null ? AudiosCategory.Xml(xml.Element("AudiosCategory")) : null);
+      var audio = new Audio(File.Xml(xml.Element("File")), (short) xml.Element("Bitrate"), (short) xml.Element("Duration"), xml.Element("AudiosCategory") != null ? AudiosCategory.Xml(xml.Element("AudiosCategory")) : null);
+      if (xml.Element("Id") != null)
+      {
+        audio.Id = (long) xml.Element("Id");
+      }
+      return audio;
     }
 
     /// <summary>
@@ -95,7 +98,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Audio other)
+    public virtual bool Equals(Audio other)
     {
       return base.Equals(other);
     }
@@ -114,7 +117,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Audio"/> to compare with this instance.</param>
-    public int CompareTo(Audio other)
+    public virtual int CompareTo(Audio other)
     {
       return this.File.CompareTo(other.File);
     }

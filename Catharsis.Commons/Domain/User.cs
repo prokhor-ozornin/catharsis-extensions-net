@@ -20,7 +20,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of user's creation.</para>
     /// </summary>
-    public DateTime DateCreated
+    public virtual DateTime DateCreated
     {
       get { return this.dateCreated; }
       set { this.dateCreated = value; }
@@ -31,7 +31,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Email
+    public virtual string Email
     {
       get { return this.email; }
       set
@@ -45,7 +45,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of user's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated
+    public virtual DateTime LastUpdated
     {
       get { return this.lastUpdated; }
       set { this.lastUpdated = value; }
@@ -56,7 +56,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Name
+    public virtual string Name
     {
       get { return this.name; }
       set
@@ -72,7 +72,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Username
+    public virtual string Username
     {
       get { return this.username; }
       set
@@ -102,13 +102,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new user.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of user.</param>
     /// <param name="username"></param>
     /// <param name="email"></param>
     /// <param name="name">Name of user.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="username"/>, <paramref name="email"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="username"/>, <paramref name="email"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public User(string id, string username, string email, string name) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="username"/>, <paramref name="email"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="username"/>, <paramref name="email"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public User(string username, string email, string name)
     {
       this.Username = username;
       this.Email = email;
@@ -125,7 +124,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var user = new User((string) xml.Element("Id"), (string) xml.Element("Username"), (string) xml.Element("Email"), (string) xml.Element("Name"));
+      var user = new User((string) xml.Element("Username"), (string) xml.Element("Email"), (string) xml.Element("Name"));
+      if (xml.Element("Id") != null)
+      {
+        user.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         user.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -142,7 +145,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(User other)
+    public virtual bool Equals(User other)
     {
       return base.Equals(other);
     }
@@ -161,7 +164,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="User"/> to compare with this instance.</param>
-    public int CompareTo(User other)
+    public virtual int CompareTo(User other)
     {
       return this.Username.Compare(other.Username, StringComparison.InvariantCultureIgnoreCase);
     }

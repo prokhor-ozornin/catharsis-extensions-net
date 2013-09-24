@@ -16,14 +16,14 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Category of web link.</para>
     /// </summary>
-    public WebLinksCategory Category { get; set; }
+    public virtual WebLinksCategory Category { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Url
+    public virtual string Url
     {
       get { return this.url; }
       set
@@ -53,15 +53,14 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new web link.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of web link.</param>
     /// <param name="language">ISO language code of web link's text content.</param>
     /// <param name="name">Name of web link.</param>
     /// <param name="text">Web link's description text.</param>
     /// <param name="url"></param>
     /// <param name="category">Category of web link's belongings, or a <c>null</c> reference.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
-    public WebLink(string id, string language, string name, string text, string url, WebLinksCategory category = null) : base(id, language, name, text)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
+    public WebLink(string language, string name, string text, string url, WebLinksCategory category = null) : base(language, name, text)
     {
       Assertion.NotEmpty(text);
 
@@ -79,7 +78,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var weblink = new WebLink((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (string) xml.Element("Url"), xml.Element("WebLinksCategory") != null ? WebLinksCategory.Xml(xml.Element("WebLinksCategory")) : null);
+      var weblink = new WebLink((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (string) xml.Element("Url"), xml.Element("WebLinksCategory") != null ? WebLinksCategory.Xml(xml.Element("WebLinksCategory")) : null);
+      if (xml.Element("Id") != null)
+      {
+        weblink.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         weblink.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -96,7 +99,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(WebLink other)
+    public virtual bool Equals(WebLink other)
     {
       return base.Equals(other);
     }

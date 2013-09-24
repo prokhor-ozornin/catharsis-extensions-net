@@ -12,8 +12,8 @@ namespace Catharsis.Commons.Domain
   [EqualsAndHashCode("AuthorId,Language,Name")]
   public class Item : EntityBase, ICommentable, IComparable<Item>, IEquatable<Item>, IAuthorable, ILocalizable, INameable, ITaggable, ITextable, ITimeable
   {
-    private readonly ICollection<Comment> comments = new List<Comment>();
-    private readonly ICollection<string> tags = new HashSet<string>();
+    private ICollection<Comment> comments = new List<Comment>();
+    private ICollection<string> tags = new HashSet<string>();
     private DateTime dateCreated = DateTime.UtcNow;
     private string language;
     private DateTime lastUpdated = DateTime.UtcNow;
@@ -22,12 +22,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string AuthorId { get; set; }
+    public virtual string AuthorId { get; set; }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public ICollection<Comment> Comments
+    public virtual ICollection<Comment> Comments
     {
       get { return this.comments; }  
     }
@@ -35,7 +35,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of item's creation.</para>
     /// </summary>
-    public DateTime DateCreated
+    public virtual DateTime DateCreated
     {
       get { return this.dateCreated; }
       set { this.dateCreated = value; }
@@ -46,7 +46,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Language
+    public virtual string Language
     {
       get { return this.language; }
       set
@@ -60,7 +60,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Date and time of item's last modification.</para>
     /// </summary>
-    public DateTime LastUpdated
+    public virtual DateTime LastUpdated
     {
       get { return this.lastUpdated; }
       set { this.lastUpdated = value; }
@@ -71,7 +71,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Name
+    public virtual string Name
     {
       get { return this.name; }
       set
@@ -85,7 +85,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public ICollection<string> Tags
+    public virtual ICollection<string> Tags
     {
       get { return  this.tags; }
     }
@@ -93,7 +93,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string Text { get; set; }
+    public virtual string Text { get; set; }
 
     /// <summary>
     ///   <para>Creates new item.</para>
@@ -114,14 +114,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new item.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of item.</param>
     /// <param name="language">ISO language code of item's text content.</param>
     /// <param name="name">Name of item.</param>
     /// <param name="text">Item's content text.</param>
     /// <param name="authorId">Identifier of item's author.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public Item(string id, string language, string name, string text = null, string authorId = null) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public Item(string language, string name, string text = null, string authorId = null)
     {
       this.Language = language;
       this.Name = name;
@@ -139,7 +138,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var item = new Item((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (string) xml.Element("AuthorId"));
+      var item = new Item((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (string) xml.Element("AuthorId"));
+      if (xml.Element("Id") != null)
+      {
+        item.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("Comments") != null)
       {
         item.Comments.AddAll(xml.Element("Comments").Descendants().Select(Comment.Xml));
@@ -164,7 +167,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Item other)
+    public virtual bool Equals(Item other)
     {
       return base.Equals(other);
     }
@@ -183,7 +186,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Item"/> to compare with this instance.</param>
-    public int CompareTo(Item other)
+    public virtual int CompareTo(Item other)
     {
       return this.DateCreated.CompareTo(other.DateCreated);
     }

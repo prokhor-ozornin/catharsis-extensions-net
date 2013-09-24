@@ -57,13 +57,13 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="TextTranslation()"/>
     ///   <seealso cref="TextTranslation(IDictionary{string, object})"/>
-    ///   <seealso cref="TextTranslation(string, string, string, string, string)"/>
+    ///   <seealso cref="TextTranslation(string, string, string, string)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var translation = new TextTranslation();
-      Assert.True(translation.Id == null);
+      Assert.True(translation.Id == 0);
       Assert.True(translation.Language == null);
       Assert.True(translation.Name == null);
       Assert.True(translation.Text == null);
@@ -71,28 +71,26 @@ namespace Catharsis.Commons.Domain
 
       Assert.Throws<ArgumentNullException>(() => new TextTranslation(null));
       translation = new TextTranslation(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("Language", "language")
         .AddNext("Name", "name")
         .AddNext("Text", "text")
         .AddNext("Translator", "translator"));
-      Assert.True(translation.Id == "id");
+      Assert.True(translation.Id == 1);
       Assert.True(translation.Language == "language");
       Assert.True(translation.Name == "name");
       Assert.True(translation.Text == "text");
       Assert.True(translation.Translator == "translator");
 
-      Assert.Throws<ArgumentNullException>(() => new TextTranslation(null, "language", "name", "text"));
-      Assert.Throws<ArgumentNullException>(() => new TextTranslation("id", null, "name", "text"));
-      Assert.Throws<ArgumentNullException>(() => new TextTranslation("id", "language", null, "text"));
-      Assert.Throws<ArgumentNullException>(() => new TextTranslation("id", "language", "name", null));
-      Assert.Throws<ArgumentException>(() => new TextTranslation(string.Empty, "language", "name", "text"));
-      Assert.Throws<ArgumentException>(() => new TextTranslation("id", string.Empty, "name", "text"));
-      Assert.Throws<ArgumentException>(() => new TextTranslation("id", "language", string.Empty, "text"));
-      Assert.Throws<ArgumentException>(() => new TextTranslation("id", "language", "name", string.Empty));
+      Assert.Throws<ArgumentNullException>(() => new TextTranslation(null, "name", "text"));
+      Assert.Throws<ArgumentNullException>(() => new TextTranslation("language", null, "text"));
+      Assert.Throws<ArgumentNullException>(() => new TextTranslation("language", "name", null));
+      Assert.Throws<ArgumentException>(() => new TextTranslation(string.Empty, "name", "text"));
+      Assert.Throws<ArgumentException>(() => new TextTranslation("language", string.Empty, "text"));
+      Assert.Throws<ArgumentException>(() => new TextTranslation("language", "name", string.Empty));
 
-      translation = new TextTranslation("id", "language", "name", "text", "translator");
-      Assert.True(translation.Id == "id");
+      translation = new TextTranslation("language", "name", "text", "translator");
+      Assert.True(translation.Id == 0);
       Assert.True(translation.Language == "language");
       Assert.True(translation.Name == "name");
       Assert.True(translation.Text == "text");
@@ -109,15 +107,29 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="TextTranslation"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="TextTranslation.Equals(TextTranslation)"/></description></item>
+    ///     <item><description><see cref="TextTranslation.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("Language", new[] { "Language", "Language_2" })
-        .AddNext("Name", new[] { "Name", "Name_2" })
-        .AddNext("Translator", new[] { "Translator", "Translator_2" }));
+      this.TestEquality("Language", "Language", "Language_2");
+      this.TestEquality("Name", "Name", "Name_2");
+      this.TestEquality("Translator", "Translator", "Translator_2");
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="TextTranslation.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("Language", "Language", "Language_2");
+      this.TestHashCode("Name", "Name", "Name_2");
+      this.TestHashCode("Translator", "Translator", "Translator_2");
     }
 
     /// <summary>
@@ -133,32 +145,32 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => TextTranslation.Xml(null));
 
       var xml = new XElement("TextTranslation",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("Language", "language"),
         new XElement("Name", "name"),
         new XElement("Text", "text"));
       var translation = TextTranslation.Xml(xml);
-      Assert.True(translation.Id == "id");
+      Assert.True(translation.Id == 1);
       Assert.True(translation.Language == "language");
       Assert.True(translation.Name == "name");
       Assert.True(translation.Text == "text");
       Assert.True(translation.Translator == null);
-      Assert.True(new TextTranslation("id", "language", "name", "text").Xml().ToString() == xml.ToString());
+      Assert.True(new TextTranslation("language", "name", "text") { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(TextTranslation.Xml(translation.Xml()).Equals(translation));
 
       xml = new XElement("TextTranslation",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("Language", "language"),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("Translator", "translator"));
       translation = TextTranslation.Xml(xml);
-      Assert.True(translation.Id == "id");
+      Assert.True(translation.Id == 1);
       Assert.True(translation.Language == "language");
       Assert.True(translation.Name == "name");
       Assert.True(translation.Text == "text");
       Assert.True(translation.Translator == "translator");
-      Assert.True(new TextTranslation("id", "language", "name", "text", "translator").Xml().ToString() == xml.ToString());
+      Assert.True(new TextTranslation("language", "name", "text", "translator") { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(TextTranslation.Xml(translation.Xml()).Equals(translation));
     }
   }

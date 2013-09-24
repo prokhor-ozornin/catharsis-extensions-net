@@ -66,13 +66,13 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Comment()"/>
     ///   <seealso cref="Comment(IDictionary{string, object})"/>
-    ///   <seealso cref="Comment(string, string, string, string)"/>
+    ///   <seealso cref="Comment(string, string, string)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var comment = new Comment();
-      Assert.True(comment.Id == null);
+      Assert.True(comment.Id == 0);
       Assert.True(comment.AuthorId == null);
       Assert.True(comment.DateCreated <= DateTime.UtcNow);
       Assert.True(comment.LastUpdated <= DateTime.UtcNow);
@@ -81,28 +81,26 @@ namespace Catharsis.Commons.Domain
 
       Assert.Throws<ArgumentNullException>(() => new Comment(null));
       comment = new Comment(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("AuthorId", "authorId")
         .AddNext("Item", new Item())
         .AddNext("Name", "name")
         .AddNext("Text", "text"));
-      Assert.True(comment.Id == "id");
+      Assert.True(comment.Id == 1);
       Assert.True(comment.AuthorId == "authorId");
       Assert.True(comment.DateCreated <= DateTime.UtcNow);
       Assert.True(comment.LastUpdated <= DateTime.UtcNow);
       Assert.True(comment.Name == "name");
       Assert.True(comment.Text == "text");
 
-      Assert.Throws<ArgumentNullException>(() => new Comment(null, "authorId", "name", "text"));
-      Assert.Throws<ArgumentNullException>(() => new Comment("id", null, "name", "text"));
-      Assert.Throws<ArgumentNullException>(() => new Comment("id", "authorId", null, "text"));
-      Assert.Throws<ArgumentNullException>(() => new Comment("id", "authorId", "name", null));
-      Assert.Throws<ArgumentException>(() => new Comment(string.Empty, "authorId", "name", "text"));
-      Assert.Throws<ArgumentException>(() => new Comment("id", string.Empty, "name", "text"));
-      Assert.Throws<ArgumentException>(() => new Comment("id", "authorId", string.Empty, "text"));
-      Assert.Throws<ArgumentException>(() => new Comment("id", "authorId", "name", string.Empty));
-      comment = new Comment("id", "authorId", "name", "text");
-      Assert.True(comment.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new Comment(null, "name", "text"));
+      Assert.Throws<ArgumentNullException>(() => new Comment("authorId", null, "text"));
+      Assert.Throws<ArgumentNullException>(() => new Comment("authorId", "name", null));
+      Assert.Throws<ArgumentException>(() => new Comment(string.Empty, "name", "text"));
+      Assert.Throws<ArgumentException>(() => new Comment("authorId", string.Empty, "text"));
+      Assert.Throws<ArgumentException>(() => new Comment("authorId", "name", string.Empty));
+      comment = new Comment("authorId", "name", "text");
+      Assert.True(comment.Id == 0);
       Assert.True(comment.AuthorId == "authorId");
       Assert.True(comment.DateCreated <= DateTime.UtcNow);
       Assert.True(comment.LastUpdated <= DateTime.UtcNow);
@@ -120,14 +118,27 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Comment"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="Comment.Equals(Comment)"/></description></item>
+    ///     <item><description><see cref="Comment.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("AuthorId", new[] { "AuthorId", "AuthorId_2" })
-        .AddNext("Name", new[] { "Name", "Name_2" }));
+      this.TestEquality("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestEquality("Name", "Name", "Name_2");
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="Comment.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestHashCode("Name", "Name", "Name_2");
     }
 
     /// <summary>
@@ -153,21 +164,21 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Comment.Xml(null));
 
       var xml = new XElement("Comment",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("AuthorId", "authorId"),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"));
       var comment = Comment.Xml(xml);
-      Assert.True(comment.Id == "id");
+      Assert.True(comment.Id == 1);
       Assert.True(comment.AuthorId == "authorId");
       Assert.True(comment.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(comment.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(comment.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(comment.Name == "name");
       Assert.True(comment.Text == "text");
-      Assert.True(new Comment("id", "authorId", "name", "text") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new Comment("authorId", "name", "text") { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Comment.Xml(comment.Xml()).Equals(comment));
     }
   }

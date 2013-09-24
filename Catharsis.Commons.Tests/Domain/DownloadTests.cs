@@ -43,13 +43,13 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Download()"/>
     ///   <seealso cref="Download(IDictionary{string, object})"/>
-    ///   <seealso cref="Download(string, string, string, string, DownloadsCategory, string)"/>
+    ///   <seealso cref="Download(string, string, string, DownloadsCategory, string)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var download = new Download();
-      Assert.True(download.Id == null);
+      Assert.True(download.Id == 0);
       Assert.True(download.AuthorId == null);
       Assert.True(download.Category == null);
       Assert.True(download.Comments.Count == 0);
@@ -64,7 +64,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.Throws<ArgumentNullException>(() => new Download(null));
       download = new Download(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("AuthorId", "authorId")
         .AddNext("Language", "language")
         .AddNext("Name", "name")
@@ -72,7 +72,7 @@ namespace Catharsis.Commons.Domain
         .AddNext("Category", new DownloadsCategory())
         .AddNext("Downloads", 1)
         .AddNext("Url", "url"));
-      Assert.True(download.Id == "id");
+      Assert.True(download.Id == 1);
       Assert.True(download.AuthorId == "authorId");
       Assert.True(download.Category != null);
       Assert.True(download.Comments.Count == 0);
@@ -85,16 +85,14 @@ namespace Catharsis.Commons.Domain
       Assert.True(download.Text == "text");
       Assert.True(download.Url == "url");
 
-      Assert.Throws<ArgumentNullException>(() => new Download(null, "language", "name", "url"));
-      Assert.Throws<ArgumentNullException>(() => new Download("id", null, "name", "url"));
-      Assert.Throws<ArgumentNullException>(() => new Download("id", "language", null, "url"));
-      Assert.Throws<ArgumentNullException>(() => new Download("id", "language", "name", null));
-      Assert.Throws<ArgumentException>(() => new Download(string.Empty, "language", "name", "url"));
-      Assert.Throws<ArgumentException>(() => new Download("id", string.Empty, "name", "url"));
-      Assert.Throws<ArgumentException>(() => new Download("id", "language", string.Empty, "url"));
-      Assert.Throws<ArgumentException>(() => new Download("id", "language", "name", string.Empty));
-      download = new Download("id", "language", "name", "url", new DownloadsCategory(), "text");
-      Assert.True(download.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new Download(null, "name", "url"));
+      Assert.Throws<ArgumentNullException>(() => new Download("language", null, "url"));
+      Assert.Throws<ArgumentNullException>(() => new Download("language", "name", null));
+      Assert.Throws<ArgumentException>(() => new Download(string.Empty, "name", "url"));
+      Assert.Throws<ArgumentException>(() => new Download("language", string.Empty, "url"));
+      Assert.Throws<ArgumentException>(() => new Download("language", "name", string.Empty));
+      download = new Download("language", "name", "url", new DownloadsCategory(), "text");
+      Assert.True(download.Id == 0);
       Assert.True(download.AuthorId == null);
       Assert.True(download.Category != null);
       Assert.True(download.Comments.Count == 0);
@@ -109,13 +107,25 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Download"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="Download.Equals(Download)"/></description></item>
+    ///     <item><description><see cref="Download.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("Category", new[] { new DownloadsCategory { Name = "Name" }, new DownloadsCategory { Name = "Name_2" } }));
+      this.TestEquality("Category", new DownloadsCategory { Name = "Name" }, new DownloadsCategory { Name = "Name_2" });
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="Download.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("Category", new DownloadsCategory { Name = "Name" }, new DownloadsCategory { Name = "Name_2" });
     }
 
     /// <summary>
@@ -141,7 +151,7 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Download.Xml(null));
 
       var xml = new XElement("Download",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
@@ -149,7 +159,7 @@ namespace Catharsis.Commons.Domain
         new XElement("Downloads", 1),
         new XElement("Url", "url"));
       var download = Download.Xml(xml);
-      Assert.True(download.Id == "id");
+      Assert.True(download.Id == 1);
       Assert.True(download.AuthorId == null);
       Assert.True(download.Category == null);
       Assert.True(download.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
@@ -159,26 +169,26 @@ namespace Catharsis.Commons.Domain
       Assert.True(download.Name == "name");
       Assert.True(download.Text == null);
       Assert.True(download.Url == "url");
-      Assert.True(new Download("id", "language", "name", "url") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue, Downloads = 1 }.Xml().ToString() == xml.ToString());
+      Assert.True(new Download("language", "name", "url") { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue, Downloads = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Download.Xml(download.Xml()).Equals(download));
-
+      
       xml = new XElement("Download",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("DownloadsCategory",
-          new XElement("Id", "category.id"),
+          new XElement("Id", 2),
           new XElement("Language", "category.language"),
           new XElement("Name", "category.name")),
         new XElement("Downloads", 1),
         new XElement("Url", "url"));
       download = Download.Xml(xml);
-      Assert.True(download.Id == "id");
+      Assert.True(download.Id == 1);
       Assert.True(download.AuthorId == null);
-      Assert.True(download.Category.Id == "category.id");
+      Assert.True(download.Category.Id == 2);
       Assert.True(download.Category.Language == "category.language");
       Assert.True(download.Category.Name == "category.name");
       Assert.True(download.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
@@ -188,7 +198,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(download.Name == "name");
       Assert.True(download.Text == "text");
       Assert.True(download.Url == "url");
-      Assert.True(new Download("id", "language", "name", "url", new DownloadsCategory("category.id", "category.language", "category.name"), "text") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue, Downloads = 1 }.Xml().ToString() == xml.ToString());
+      Assert.True(new Download("language", "name", "url", new DownloadsCategory("category.language", "category.name") { Id = 2 }, "text") { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue, Downloads = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Download.Xml(download.Xml()).Equals(download));
     }
   }

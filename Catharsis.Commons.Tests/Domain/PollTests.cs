@@ -24,13 +24,13 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Poll()"/>
     ///   <seealso cref="Poll(IDictionary{string, object})"/>
-    ///   <seealso cref="Poll(string, string, string, string, bool)"/>
+    ///   <seealso cref="Poll(string, string, string, bool)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var poll = new Poll();
-      Assert.True(poll.Id == null);
+      Assert.True(poll.Id == 0);
       Assert.True(poll.AuthorId == null);
       Assert.True(poll.Comments.Count == 0);
       Assert.True(poll.DateCreated <= DateTime.UtcNow);
@@ -43,13 +43,13 @@ namespace Catharsis.Commons.Domain
 
       Assert.Throws<ArgumentNullException>(() => new Poll(null));
       poll = new Poll(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("AuthorId", "authorId")
         .AddNext("Language", "language")
         .AddNext("MultiSelect", true)
         .AddNext("Name", "name")
         .AddNext("Text", "text"));
-      Assert.True(poll.Id == "id");
+      Assert.True(poll.Id == 1);
       Assert.True(poll.AuthorId == "authorId");
       Assert.True(poll.Comments.Count == 0);
       Assert.True(poll.DateCreated <= DateTime.UtcNow);
@@ -60,16 +60,14 @@ namespace Catharsis.Commons.Domain
       Assert.True(poll.Tags.Count == 0);
       Assert.True(poll.Text == "text");
 
-      Assert.Throws<ArgumentNullException>(() => new Poll(null, "language", "name", "text", true));
-      Assert.Throws<ArgumentNullException>(() => new Poll("id", null, "name", "text", true));
-      Assert.Throws<ArgumentNullException>(() => new Poll("id", "language", null, "text", true));
-      Assert.Throws<ArgumentNullException>(() => new Poll("id", "language", "name", null, true));
-      Assert.Throws<ArgumentException>(() => new Poll(string.Empty, "language", "name", "text", true));
-      Assert.Throws<ArgumentException>(() => new Poll("id", string.Empty, "name", "text", true));
-      Assert.Throws<ArgumentException>(() => new Poll("id", "language", string.Empty, "text", true));
-      Assert.Throws<ArgumentException>(() => new Poll("id", "language", "name", string.Empty, true));
-      poll = new Poll("id", "language", "name", "text", true);
-      Assert.True(poll.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new Poll(null, "name", "text", true));
+      Assert.Throws<ArgumentNullException>(() => new Poll("language", null, "text", true));
+      Assert.Throws<ArgumentNullException>(() => new Poll("language", "name", null, true));
+      Assert.Throws<ArgumentException>(() => new Poll(string.Empty, "name", "text", true));
+      Assert.Throws<ArgumentException>(() => new Poll("language", string.Empty, "text", true));
+      Assert.Throws<ArgumentException>(() => new Poll("language", "name", string.Empty, true));
+      poll = new Poll("language", "name", "text", true);
+      Assert.True(poll.Id == 0);
       Assert.True(poll.AuthorId == null);
       Assert.True(poll.Comments.Count == 0);
       Assert.True(poll.DateCreated <= DateTime.UtcNow);
@@ -79,15 +77,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(poll.Name == "name");
       Assert.True(poll.Tags.Count == 0);
       Assert.True(poll.Text == "text");
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Poll"/> type.</para>
-    /// </summary>
-    [Fact]
-    public void EqualsAndHashCode()
-    {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>());
     }
 
     /// <summary>
@@ -103,7 +92,7 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Poll.Xml(null));
 
       var xml = new XElement("Poll",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
@@ -111,7 +100,7 @@ namespace Catharsis.Commons.Domain
         new XElement("Text", "text"),
         new XElement("MultiSelect", true));
       var poll = Poll.Xml(xml);
-      Assert.True(poll.Id == "id");
+      Assert.True(poll.Id == 1);
       Assert.True(poll.Answers.Count == 0);
       Assert.True(poll.AuthorId == null);
       Assert.True(poll.Comments.Count == 0);
@@ -121,7 +110,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(poll.Name == "name");
       Assert.True(poll.Tags.Count == 0);
       Assert.True(poll.Text == "text");
-      Assert.True(new Poll("id", "language", "name", "text", true) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new Poll("language", "name", "text", true) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Poll.Xml(poll.Xml()).Equals(poll));
     }
   }

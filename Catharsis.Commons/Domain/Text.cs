@@ -13,18 +13,18 @@ namespace Catharsis.Commons.Domain
   public class Text : Item, IEquatable<Text>
   {
     private Person person;
-    private readonly ICollection<TextTranslation> translations = new HashSet<TextTranslation>();
+    private ICollection<TextTranslation> translations = new HashSet<TextTranslation>();
 
     /// <summary>
     ///   <para>Category of text.</para>
     /// </summary>
-    public TextsCategory Category { get; set; }
+    public virtual TextsCategory Category { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public Person Person
+    public virtual Person Person
     {
       get { return this.person; }
       set
@@ -38,7 +38,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public ICollection<TextTranslation> Translations
+    public virtual ICollection<TextTranslation> Translations
     {
       get { return this.translations; }
     }
@@ -62,16 +62,15 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new text.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of text.</param>
     /// <param name="authorId">Identifier of author's text.</param>
     /// <param name="language">ISO language code of text's content.</param>
     /// <param name="name">Title of text.</param>
     /// <param name="text">Text's content.</param>
     /// <param name="category">Category of text's belongings, or a <c>null</c> reference.</param>
     /// <param name="person"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="person"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
-    public Text(string id, string authorId, string language, string name, string text, Person person, TextsCategory category = null) : base(id, language, name, text, authorId)
+    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="person"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
+    public Text(string authorId, string language, string name, string text, Person person, TextsCategory category = null) : base(language, name, text, authorId)
     {
       Assertion.NotEmpty(authorId);
       Assertion.NotEmpty(text);
@@ -90,8 +89,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var text = new Text((string)xml.Element("Id"), (string)xml.Element("AuthorId"), (string)xml.Element("Language"), (string)xml.Element("Name"), (string)xml.Element("Text"), Person.Xml(xml.Element("Person")), xml.Element("TextsCategory") != null ? TextsCategory.Xml(xml.Element("TextsCategory")) : null);
-      
+      var text = new Text((string)xml.Element("AuthorId"), (string)xml.Element("Language"), (string)xml.Element("Name"), (string)xml.Element("Text"), Person.Xml(xml.Element("Person")), xml.Element("TextsCategory") != null ? TextsCategory.Xml(xml.Element("TextsCategory")) : null);
+      if (xml.Element("Id") != null)
+      {
+        text.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         text.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -125,7 +127,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Text other)
+    public virtual bool Equals(Text other)
     {
       return base.Equals(other);
     }

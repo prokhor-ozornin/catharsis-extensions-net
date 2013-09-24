@@ -17,49 +17,49 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public byte? BirthDay { get; set; }
+    public virtual byte? BirthDay { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public byte? BirthMonth { get; set; }
+    public virtual byte? BirthMonth { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public short? BirthYear { get; set; }
+    public virtual short? BirthYear { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public byte? DeathDay { get; set; }
+    public virtual byte? DeathDay { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public byte? DeathMonth { get; set; }
+    public virtual byte? DeathMonth { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public short? DeathYear { get; set; }
+    public virtual short? DeathYear { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string Description { get; set; }
+    public virtual string Description { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public Image Image { get; set; }
+    public virtual Image Image { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string NameFirst
+    public virtual string NameFirst
     {
       get { return this.nameFirst; }
       set
@@ -75,7 +75,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string NameLast
+    public virtual string NameLast
     {
       get { return this.nameLast; }
       set
@@ -89,7 +89,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string NameMiddle { get; set; }
+    public virtual string NameMiddle { get; set; }
 
     /// <summary>
     ///   <para>Creates new person.</para>
@@ -110,7 +110,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new person.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of person.</param>
     /// <param name="nameFirst"></param>
     /// <param name="nameLast"></param>
     /// <param name="nameMiddle"></param>
@@ -122,9 +121,9 @@ namespace Catharsis.Commons.Domain
     /// <param name="deathDay"></param>
     /// <param name="deathMonth"></param>
     /// <param name="deathYear"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="nameFirst"/> or <paramref name="nameLast"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="nameFirst"/> or <paramref name="nameLast"/> is <see cref="string.Empty"/> string.</exception>
-    public Person(string id, string nameFirst, string nameLast, string nameMiddle = null, string description = null, Image image = null, byte? birthDay = null, byte? birthMonth = null, short? birthYear = null, byte? deathDay = null, byte? deathMonth = null, short? deathYear = null) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="nameFirst"/> or <paramref name="nameLast"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="nameFirst"/> or <paramref name="nameLast"/> is <see cref="string.Empty"/> string.</exception>
+    public Person(string nameFirst, string nameLast, string nameMiddle = null, string description = null, Image image = null, byte? birthDay = null, byte? birthMonth = null, short? birthYear = null, byte? deathDay = null, byte? deathMonth = null, short? deathYear = null)
     {
       this.NameFirst = nameFirst;
       this.NameLast = nameLast;
@@ -149,7 +148,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new Person((string) xml.Element("Id"), (string) xml.Element("NameFirst"), (string) xml.Element("NameLast"), (string) xml.Element("NameMiddle"), (string) xml.Element("Description"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null, (byte?) (short?) xml.Element("BirthDay"), (byte?) (short?) xml.Element("BirthMonth"), (short?) xml.Element("BirthYear"), (byte?) (short?) xml.Element("DeathDay"), (byte?) (short?) xml.Element("DeathMonth"), (short?) xml.Element("DeathYear"));
+      var person = new Person((string) xml.Element("NameFirst"), (string) xml.Element("NameLast"), (string) xml.Element("NameMiddle"), (string) xml.Element("Description"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null, (byte?) (short?) xml.Element("BirthDay"), (byte?) (short?) xml.Element("BirthMonth"), (short?) xml.Element("BirthYear"), (byte?) (short?) xml.Element("DeathDay"), (byte?) (short?) xml.Element("DeathMonth"), (short?) xml.Element("DeathYear"));
+      if (xml.Element("Id") != null)
+      {
+        person.Id = (long) xml.Element("Id");
+      }
+      return person;
     }
 
     /// <summary>
@@ -157,7 +161,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Person other)
+    public virtual bool Equals(Person other)
     {
       return base.Equals(other);
     }
@@ -176,7 +180,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="person"></param>
     /// <returns></returns>
-    public int CompareTo(Person person)
+    public virtual int CompareTo(Person person)
     {
       return this.NameLast.Compare(person.NameLast, StringComparison.InvariantCultureIgnoreCase);
     }

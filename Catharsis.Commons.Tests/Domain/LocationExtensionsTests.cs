@@ -59,7 +59,7 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<Location>().InCity(null));
 
       Assert.False(Enumerable.Empty<Location>().InCity(new City()).Any());
-      Assert.True(new[] { null, new Location { City = new City { Id = "Id" } }, null, new Location { City = new City { Id = "Id_2" } } }.InCity(new City { Id = "Id" }).Count() == 1);
+      Assert.True(new[] { null, new Location { City = new City { Id = 1 } }, null, new Location { City = new City { Id = 2 } } }.InCity(new City { Id = 1 }).Count() == 1);
     }
 
     /// <summary>

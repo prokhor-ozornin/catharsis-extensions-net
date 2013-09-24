@@ -20,7 +20,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.False(Enumerable.Empty<Text>().InTextsCategory(null).Any());
       Assert.False(Enumerable.Empty<Text>().InTextsCategory(new TextsCategory()).Any());
-      Assert.True(new[] { null, new Text { Category = new TextsCategory { Id = "1" } }, null, new Text { Category = new TextsCategory { Id = "2" } } }.InTextsCategory(new TextsCategory { Id = "1" }).Count() == 1);
+      Assert.True(new[] { null, new Text { Category = new TextsCategory { Id = 1 } }, null, new Text { Category = new TextsCategory { Id = 2 } } }.InTextsCategory(new TextsCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<Text>().WithPerson(null));
 
       Assert.False(Enumerable.Empty<Text>().WithPerson(new Person()).Any());
-      Assert.True(new[] { null, new Text { Person = new Person { Id = "1" } }, null, new Text { Person = new Person { Id = "2" } } }.WithPerson(new Person { Id = "1" }).Count() == 1);
+      Assert.True(new[] { null, new Text { Person = new Person { Id = 1 } }, null, new Text { Person = new Person { Id = 2 } } }.WithPerson(new Person { Id = 1 }).Count() == 1);
     }
   }
 }

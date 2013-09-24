@@ -16,23 +16,23 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public short Bitrate { get; set; }
+    public virtual short Bitrate { get; set; }
     
     /// <summary>
     ///   <para>Category of video.</para>
     /// </summary>
-    public VideosCategory Category { get; set; }
+    public virtual VideosCategory Category { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public long Duration { get; set; }
+    public virtual long Duration { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public File File
+    public virtual File File
     {
       get { return this.file; }
       set
@@ -46,12 +46,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public short Height { get; set; }
+    public virtual short Height { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public short Width { get; set; }
+    public virtual short Width { get; set; }
 
     /// <summary>
     ///   <para>Creates new video.</para>
@@ -72,16 +72,14 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new video.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of video.</param>
     /// <param name="file"></param>
     /// <param name="bitrate"></param>
     /// <param name="duration"></param>
     /// <param name="height"></param>
     /// <param name="width"></param>
     /// <param name="category">Category of video's belongings, or a <c>null</c> reference.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="id"/> is <see cref="string.Empty"/> string.</exception>
-    public Video(string id, File file, short bitrate, long duration, short height, short width, VideosCategory category = null) : base(id)
+    /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
+    public Video(File file, short bitrate, long duration, short height, short width, VideosCategory category = null)
     {
       this.File = file;
       this.Bitrate = bitrate;
@@ -101,7 +99,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new Video((string) xml.Element("Id"), File.Xml(xml.Element("File")), (short) xml.Element("Bitrate"), (long) xml.Element("Duration"), (short) xml.Element("Height"), (short) xml.Element("Width"), xml.Element("VideosCategory") != null ? VideosCategory.Xml(xml.Element("VideosCategory")) : null);
+      var video = new Video(File.Xml(xml.Element("File")), (short) xml.Element("Bitrate"), (long) xml.Element("Duration"), (short) xml.Element("Height"), (short) xml.Element("Width"), xml.Element("VideosCategory") != null ? VideosCategory.Xml(xml.Element("VideosCategory")) : null);
+      if (xml.Element("Id") != null)
+      {
+        video.Id = (long) xml.Element("Id");
+      }
+      return video;
     }
 
     /// <summary>
@@ -111,7 +114,7 @@ namespace Catharsis.Commons.Domain
     /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
     /// </returns>
     /// <param name="other">An object to compare with this object.</param>
-    public bool Equals(Video other)
+    public virtual bool Equals(Video other)
     {
       return base.Equals(other);
     }
@@ -130,7 +133,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Video"/> to compare with this instance.</param>
-    public int CompareTo(Video other)
+    public virtual int CompareTo(Video other)
     {
       return this.File.CompareTo(other.File);
     }

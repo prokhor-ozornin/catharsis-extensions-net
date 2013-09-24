@@ -73,13 +73,13 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Video()"/>
     ///   <seealso cref="Video(IDictionary{string, object})"/>
-    ///   <seealso cref="Video(string, File, short, long, short, short, VideosCategory)"/>
+    ///   <seealso cref="Video(File, short, long, short, short, VideosCategory)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var video = new Video();
-      Assert.True(video.Id == null);
+      Assert.True(video.Id == 0);
       Assert.True(video.Bitrate == 0);
       Assert.True(video.Category == null);
       Assert.True(video.Duration == 0);
@@ -89,14 +89,14 @@ namespace Catharsis.Commons.Domain
 
       Assert.Throws<ArgumentNullException>(() => new Video(null));
       video = new Video(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("Bitrate", (short) 1)
         .AddNext("Category", new VideosCategory())
         .AddNext("Duration", 2)
         .AddNext("File", new File())
         .AddNext("Height", (short) 3)
         .AddNext("Width", (short) 4));
-      Assert.True(video.Id == "id");
+      Assert.True(video.Id == 1);
       Assert.True(video.Bitrate == 1);
       Assert.True(video.Category != null);
       Assert.True(video.Duration == 2);
@@ -104,11 +104,9 @@ namespace Catharsis.Commons.Domain
       Assert.True(video.Height == 3);
       Assert.True(video.Width == 4);
 
-      Assert.Throws<ArgumentNullException>(() => new Video(null, new File(), 1, 2, 3, 4));
-      Assert.Throws<ArgumentNullException>(() => new Video("id", null, 1, 2, 3, 4));
-      Assert.Throws<ArgumentException>(() => new Video(string.Empty, new File(), 1, 2, 3, 4));
-      video = new Video("id", new File(), 1, 2, 3, 4, new VideosCategory());
-      Assert.True(video.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new Video(null, 1, 2, 3, 4));
+      video = new Video(new File(), 1, 2, 3, 4, new VideosCategory());
+      Assert.True(video.Id == 0);
       Assert.True(video.Bitrate == 1);
       Assert.True(video.Category != null);
       Assert.True(video.Duration == 2);
@@ -127,14 +125,27 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Video"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="Video.Equals(Video)"/></description></item>
+    ///     <item><description><see cref="Video.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("Category", new[] { new VideosCategory { Name = "Name" }, new VideosCategory { Name = "Name_2" } })
-        .AddNext("File", new[] { new File { Name = "Name" }, new File { Name = "Name_2" } }));
+      this.TestEquality("Category", new VideosCategory { Name = "Name" }, new VideosCategory { Name = "Name_2" });
+      this.TestEquality("File", new File { Name = "Name" }, new File { Name = "Name_2" });
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="Video.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("Category", new VideosCategory { Name = "Name" }, new VideosCategory { Name = "Name_2" });
+      this.TestHashCode("File", new File { Name = "Name" }, new File { Name = "Name_2" });
     }
 
     /// <summary>
@@ -160,75 +171,75 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Video.Xml(null));
 
       var xml = new XElement("Video",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("Bitrate", 1),
         new XElement("Duration", 2),
         new XElement("File",
-          new XElement("Id", "file.id"),
+          new XElement("Id", 2),
           new XElement("ContentType", "file.contentType"),
           new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
           new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
           new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
           new XElement("Name", "file.name"),
           new XElement("OriginalName", "file.originalName"),
-          new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
+          new XElement("Size", Guid.Empty.ToByteArray().Length)),
         new XElement("Height", 10),
         new XElement("Width", 20));
       var video = Video.Xml(xml);
-      Assert.True(video.Id == "id");
+      Assert.True(video.Id == 1);
       Assert.True(video.Bitrate == 1);
       Assert.True(video.Category == null);
       Assert.True(video.Duration == 2);
-      Assert.True(video.File.Id == "file.id");
+      Assert.True(video.File.Id == 2);
       Assert.True(video.File.ContentType == "file.contentType");
       Assert.True(video.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
       Assert.True(video.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(video.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(video.File.Name == "file.name");
       Assert.True(video.File.OriginalName == "file.originalName");
-      Assert.True(video.File.Size == Guid.Empty.ToByteArray().LongLength);
+      Assert.True(video.File.Size == Guid.Empty.ToByteArray().Length);
       Assert.True(video.Height == 10);
       Assert.True(video.Width == 20);
-      Assert.True(new Video("id", new File("file.id", "file.contentType", "file.name", "file.originalName", Guid.Empty.ToByteArray()) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2, 10, 20).Xml().ToString() == xml.ToString());
+      Assert.True(new Video(new File("file.contentType", "file.name", "file.originalName", Guid.Empty.ToByteArray()) { Id = 2, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2, 10, 20) { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Video.Xml(video.Xml()).Equals(video));
 
       xml = new XElement("Video",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("Bitrate", 1),
         new XElement("VideosCategory",
-          new XElement("Id", "category.id"),
+          new XElement("Id", 2),
           new XElement("Language", "category.language"),
           new XElement("Name", "category.name")),
         new XElement("Duration", 2),
         new XElement("File",
-          new XElement("Id", "file.id"),
+          new XElement("Id", 3),
           new XElement("ContentType", "file.contentType"),
           new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
           new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
           new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
           new XElement("Name", "file.name"),
           new XElement("OriginalName", "file.originalName"),
-          new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
+          new XElement("Size", Guid.Empty.ToByteArray().Length)),
         new XElement("Height", 10),
         new XElement("Width", 20));
       video = Video.Xml(xml);
-      Assert.True(video.Id == "id");
+      Assert.True(video.Id == 1);
       Assert.True(video.Bitrate == 1);
-      Assert.True(video.Category.Id == "category.id");
+      Assert.True(video.Category.Id == 2);
       Assert.True(video.Category.Language == "category.language");
       Assert.True(video.Category.Name == "category.name");
       Assert.True(video.Duration == 2);
-      Assert.True(video.File.Id == "file.id");
+      Assert.True(video.File.Id == 3);
       Assert.True(video.File.ContentType == "file.contentType");
       Assert.True(video.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
       Assert.True(video.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(video.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(video.File.Name == "file.name");
       Assert.True(video.File.OriginalName == "file.originalName");
-      Assert.True(video.File.Size == Guid.Empty.ToByteArray().LongLength);
+      Assert.True(video.File.Size == Guid.Empty.ToByteArray().Length);
       Assert.True(video.Height == 10);
       Assert.True(video.Width == 20);
-      Assert.True(new Video("id", new File("file.id", "file.contentType", "file.name", "file.originalName", Guid.Empty.ToByteArray()) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2, 10, 20, new VideosCategory("category.id", "category.language", "category.name")).Xml().ToString() == xml.ToString());
+      Assert.True(new Video(new File("file.contentType", "file.name", "file.originalName", Guid.Empty.ToByteArray()) { Id = 3, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2, 10, 20, new VideosCategory("category.language", "category.name") { Id = 2 }) { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Video.Xml(video.Xml()).Equals(video));
     }
   }

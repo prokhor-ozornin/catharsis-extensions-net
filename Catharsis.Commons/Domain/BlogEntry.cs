@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public Blog Blog
+    public virtual Blog Blog
     {
       get { return this.blog; }
       set
@@ -47,14 +47,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new blog entry.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of blogs entry.</param>
     /// <param name="language">ISO language code of entry's text content.</param>
     /// <param name="name">Name of entry.</param>
     /// <param name="text">Entry's body text.</param>
     /// <param name="blog"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="blog"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
-    public BlogEntry(string id, string language, string name, string text, Blog blog) : base(id, language, name, text, null)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="blog"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
+    public BlogEntry(string language, string name, string text, Blog blog) : base(language, name, text, null)
     {
       Assertion.NotEmpty(text);
 
@@ -71,7 +70,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var entry = new BlogEntry((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), Blog.Xml(xml.Element("Blog")));
+      var entry = new BlogEntry((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), Blog.Xml(xml.Element("Blog")));
+      if (xml.Element("Id") != null)
+      {
+        entry.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         entry.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -88,7 +91,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="BlogEntry"/> to compare with this instance.</param>
-    public int CompareTo(BlogEntry other)
+    public virtual int CompareTo(BlogEntry other)
     {
       return base.CompareTo(other);
     }
@@ -108,7 +111,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(BlogEntry other)
+    public virtual bool Equals(BlogEntry other)
     {
       return base.Equals(other);
     }

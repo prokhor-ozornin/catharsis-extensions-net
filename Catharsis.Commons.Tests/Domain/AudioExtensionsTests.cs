@@ -20,7 +20,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.False(Enumerable.Empty<Audio>().InAudiosCategory(null).Any());
       Assert.False(Enumerable.Empty<Audio>().InAudiosCategory(new AudiosCategory()).Any());
-      Assert.True(new[] { null, new Audio { Category = new AudiosCategory { Id = "1" } }, null, new Audio { Category = new AudiosCategory { Id = "2" } } }.InAudiosCategory(new AudiosCategory { Id = "1" }).Count() == 1);
+      Assert.True(new[] { null, new Audio { Category = new AudiosCategory { Id = 1 } }, null, new Audio { Category = new AudiosCategory { Id = 2 } } }.InAudiosCategory(new AudiosCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>

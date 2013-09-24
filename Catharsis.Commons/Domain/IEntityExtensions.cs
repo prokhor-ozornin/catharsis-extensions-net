@@ -17,12 +17,10 @@ namespace Catharsis.Commons.Domain
     /// <param name="entities"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="entities"/> or <paramref name="id"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="id"/> is <see cref="string.Empty"/> string.</exception>
-    public static T WithId<T>(this IEnumerable<T> entities, string id) where T : IEntity
+    /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
+    public static T WithId<T>(this IEnumerable<T> entities, long id) where T : IEntity
     {
       Assertion.NotNull(entities);
-      Assertion.NotEmpty(id);
 
       return entities.First(entity => entity != null && entity.Id == id);
     }

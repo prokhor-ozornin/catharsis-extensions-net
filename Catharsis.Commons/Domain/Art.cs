@@ -16,13 +16,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Album that contains the art.</para>
     /// </summary>
-    public ArtsAlbum Album { get; set; }
+    public virtual ArtsAlbum Album { get; set; }
     
     /// <summary>
     ///   <para>Associated graphical image, representing a digital painting of the art.</para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public Image Image
+    public virtual Image Image
     {
       get { return this.image; }
       set
@@ -36,17 +36,17 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Name of art's material that used in the process of painting, if it has a physical form.</para>
     /// </summary>
-    public string Material { get; set; }
+    public virtual string Material { get; set; }
     
     /// <summary>
     ///   <para>A person that is the author or creator of the art.</para>
     /// </summary>
-    public Person Person { get; set; }
+    public virtual Person Person { get; set; }
     
     /// <summary>
     ///   <para>Place where the art in the physical form is displayed in public (for example, name of the arts gallery).</para>
     /// </summary>
-    public string Place { get; set; }
+    public virtual string Place { get; set; }
 
     /// <summary>
     ///   <para>Creates new art.</para>
@@ -67,7 +67,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new art.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of art.</param>
     /// <param name="language">ISO language code of art's text content.</param>
     /// <param name="name">Name of art.</param>
     /// <param name="image">Associated graphical image.</param>
@@ -76,9 +75,9 @@ namespace Catharsis.Commons.Domain
     /// <param name="person">Author of the art, or a <c>null</c> reference.</param>
     /// <param name="place">Place of art's public disposition, or a <c>null</c> reference.</param>
     /// <param name="material">Physical material, used in art's painting, or a <c>null</c> reference.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="image"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public Art(string id, string language, string name, Image image, ArtsAlbum album = null, string text = null, Person person = null, string place = null, string material = null) : base(id, language, name, text)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="image"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public Art(string language, string name, Image image, ArtsAlbum album = null, string text = null, Person person = null, string place = null, string material = null) : base(language, name, text)
     {
       this.Image = image;
       this.Album = album;
@@ -97,7 +96,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var art = new Art((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), Image.Xml(xml.Element("Image")), xml.Element("ArtsAlbum") != null ? ArtsAlbum.Xml(xml.Element("ArtsAlbum")) : null, (string) xml.Element("Text"), xml.Element("Person") != null ? Person.Xml(xml.Element("Person")) : null, (string) xml.Element("Place"), (string) xml.Element("Material"));
+      var art = new Art((string) xml.Element("Language"), (string) xml.Element("Name"), Image.Xml(xml.Element("Image")), xml.Element("ArtsAlbum") != null ? ArtsAlbum.Xml(xml.Element("ArtsAlbum")) : null, (string) xml.Element("Text"), xml.Element("Person") != null ? Person.Xml(xml.Element("Person")) : null, (string) xml.Element("Place"), (string) xml.Element("Material"));
+      if (xml.Element("Id") != null)
+      {
+        art.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         art.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -128,7 +131,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Art"/> to compare with this instance.</param>
-    public int CompareTo(Art other)
+    public virtual int CompareTo(Art other)
     {
       return this.Name.Compare(other.Name, StringComparison.InvariantCultureIgnoreCase);
     }
@@ -138,7 +141,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Art other)
+    public virtual bool Equals(Art other)
     {
       return base.Equals(other);
     }

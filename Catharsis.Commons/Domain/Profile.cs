@@ -22,7 +22,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string AuthorId
+    public virtual string AuthorId
     {
       get { return this.authorId; }
       set
@@ -36,14 +36,14 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string Email { get; set; }
+    public virtual string Email { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Name
+    public virtual string Name
     {
       get { return this.name; }
       set
@@ -57,14 +57,14 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string Photo { get; set; }
+    public virtual string Photo { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Type
+    public virtual string Type
     {
       get { return this.type; }
       set
@@ -80,7 +80,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Url
+    public virtual string Url
     {
       get { return this.url; }
       set
@@ -96,7 +96,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Username
+    public virtual string Username
     {
       get { return this.username; }
       set
@@ -126,7 +126,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new profile.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of profile.</param>
     /// <param name="authorId"></param>
     /// <param name="name">Name of profile's user.</param>
     /// <param name="username"></param>
@@ -134,9 +133,9 @@ namespace Catharsis.Commons.Domain
     /// <param name="url"></param>
     /// <param name="email"></param>
     /// <param name="photo"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="name"/>, <paramref name="username"/>, <paramref name="type"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="authorId"/>, <paramref name="name"/>, <paramref name="username"/>, <paramref name="type"/> or <paramref name="url"/> is <see cref="string.Empty"/> string.</exception>
-    public Profile(string id, string authorId, string name, string username, string type, string url, string email = null, string photo = null) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/>, <paramref name="name"/>, <paramref name="username"/>, <paramref name="type"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="authorId"/>, <paramref name="name"/>, <paramref name="username"/>, <paramref name="type"/> or <paramref name="url"/> is <see cref="string.Empty"/> string.</exception>
+    public Profile(string authorId, string name, string username, string type, string url, string email = null, string photo = null)
     {
       this.AuthorId = authorId;
       this.Name = name;
@@ -157,7 +156,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new Profile((string) xml.Element("Id"), (string) xml.Element("AuthorId"), (string) xml.Element("Name"), (string) xml.Element("Username"), (string) xml.Element("Type"), (string) xml.Element("Url"), (string) xml.Element("Email"), (string) xml.Element("Photo"));
+      var profile = new Profile((string) xml.Element("AuthorId"), (string) xml.Element("Name"), (string) xml.Element("Username"), (string) xml.Element("Type"), (string) xml.Element("Url"), (string) xml.Element("Email"), (string) xml.Element("Photo"));
+      if (xml.Element("Id") != null)
+      {
+        profile.Id = (long) xml.Element("Id");
+      }
+      return profile;
     }
 
     /// <summary>
@@ -165,7 +169,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Profile other)
+    public virtual bool Equals(Profile other)
     {
       return base.Equals(other);
     }
@@ -184,7 +188,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <returns>A value that indicates the relative order of the objects being compared.</returns>
     /// <param name="other">The <see cref="Profile"/> to compare with this instance.</param>
-    public int CompareTo(Profile other)
+    public virtual int CompareTo(Profile other)
     {
       return this.Username.Compare(other.Username, StringComparison.InvariantCultureIgnoreCase);
     }

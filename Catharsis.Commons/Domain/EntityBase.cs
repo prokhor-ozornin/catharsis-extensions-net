@@ -10,23 +10,10 @@ namespace Catharsis.Commons.Domain
   /// </summary>
   public abstract class EntityBase : IEntity
   {
-    private string id;
-
     /// <summary>
-    ///   <para></para>
+    ///   <para>Implementation of <see cref="IEntity.Id"/> property.</para>
     /// </summary>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Id
-    {
-      get { return this.id; }
-      set
-      {
-        Assertion.NotEmpty(value);
-        
-        this.id = value;
-      }
-    }
+    public long Id { get; set; }
 
     /// <summary>
     ///   <para></para>
@@ -45,17 +32,6 @@ namespace Catharsis.Commons.Domain
       Assertion.NotNull(properties);
 
       this.SetProperties(properties);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="id">Unique identifier of entity.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="id"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="id"/> is <see cref="string.Empty"/> string.</exception>
-    protected EntityBase(string id)
-    {
-      this.Id = id;
     }
 
     /// <summary>
@@ -84,7 +60,7 @@ namespace Catharsis.Commons.Domain
     public virtual XElement Xml()
     {
       return new XElement(this.GetType().Name,
-        new XElement("Id", this.Id));
+        this.Id > 0 ? new XElement("Id", this.Id) : null);
     }
   }
 }

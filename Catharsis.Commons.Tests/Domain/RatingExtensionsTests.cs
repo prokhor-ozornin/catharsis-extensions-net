@@ -19,7 +19,7 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => RatingExtensions.WithItem(null, new Item()));
 
       Assert.False(Enumerable.Empty<Rating>().WithItem(new Item()).Any());
-      Assert.True(new[] { null, new Rating { Item = new Item { Id = "Id" } }, null, new Rating { Item = new Item { Id = "Id_2" } } }.WithItem(new Item { Id = "Id" }).Count() == 1);
+      Assert.True(new[] { null, new Rating { Item = new Item { Id = 1 } }, null, new Rating { Item = new Item { Id = 2 } } }.WithItem(new Item { Id = 1 }).Count() == 1);
     }
 
     /// <summary>

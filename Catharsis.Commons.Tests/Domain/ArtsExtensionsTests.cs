@@ -20,7 +20,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.False(Enumerable.Empty<Art>().InArtsAlbum(null).Any());
       Assert.False(Enumerable.Empty<Art>().InArtsAlbum(new ArtsAlbum()).Any());
-      Assert.True(new[] { null, new Art { Album = new ArtsAlbum { Id = "Id" } }, null, new Art { Album = new ArtsAlbum { Id = "Id_2" } } }.InArtsAlbum(new ArtsAlbum { Id = "Id_2" }).Count() == 1);
+      Assert.True(new[] { null, new Art { Album = new ArtsAlbum { Id = 1 } }, null, new Art { Album = new ArtsAlbum { Id = 2 } } }.InArtsAlbum(new ArtsAlbum { Id = 2 }).Count() == 1);
     }
 
     /// <summary>

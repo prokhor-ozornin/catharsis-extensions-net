@@ -14,17 +14,17 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Short summary description of article.</para>
     /// </summary>
-    public string Annotation { get; set; }
+    public virtual string Annotation { get; set; }
     
     /// <summary>
     ///   <para>Category of article.</para>
     /// </summary>
-    public ArticlesCategory Category { get; set; }
+    public virtual ArticlesCategory Category { get; set; }
     
     /// <summary>
     ///   <para>Associated image, representing article's text contents.</para>
     /// </summary>
-    public Image Image { get; set; }
+    public virtual Image Image { get; set; }
 
     /// <summary>
     ///   <para>Creates new article.</para>
@@ -45,7 +45,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new article.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of article.</param>
     /// <param name="language">ISO language code of article's text content.</param>
     /// <param name="name">Title of article.</param>
     /// <param name="category">Category of article's belongings, or a <c>null</c> reference.</param>
@@ -53,9 +52,9 @@ namespace Catharsis.Commons.Domain
     /// <param name="text">Article's body text.</param>
     /// <param name="authorId">Identifier of article's publisher.</param>
     /// <param name="image"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public Article(string id, string language, string name, ArticlesCategory category = null, string annotation = null, string text = null, string authorId = null, Image image = null) : base(id, language, name, text, authorId)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    public Article(string language, string name, ArticlesCategory category = null, string annotation = null, string text = null, string authorId = null, Image image = null) : base(language, name, text, authorId)
     {
       this.Category = category;
       this.Annotation = annotation;
@@ -72,7 +71,11 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var article = new Article((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), xml.Element("ArticlesCategory") != null ? ArticlesCategory.Xml(xml.Element("ArticlesCategory")) : null, (string) xml.Element("Annotation"), (string) xml.Element("Text"), (string) xml.Element("AuthorId"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null);
+      var article = new Article((string) xml.Element("Language"), (string) xml.Element("Name"), xml.Element("ArticlesCategory") != null ? ArticlesCategory.Xml(xml.Element("ArticlesCategory")) : null, (string) xml.Element("Annotation"), (string) xml.Element("Text"), (string) xml.Element("AuthorId"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null);
+      if (xml.Element("Id") != null)
+      {
+        article.Id = (long) xml.Element("Id");
+      }
       if (xml.Element("DateCreated") != null)
       {
         article.DateCreated = (DateTime) xml.Element("DateCreated");
@@ -101,7 +104,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Article other)
+    public virtual bool Equals(Article other)
     {
       return base.Equals(other);
     }

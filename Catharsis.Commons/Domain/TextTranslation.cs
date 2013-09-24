@@ -20,7 +20,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Language
+    public virtual string Language
     {
       get { return this.language; }
       set
@@ -36,7 +36,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Name
+    public virtual string Name
     {
       get { return this.name; }
       set
@@ -52,7 +52,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public string Text
+    public virtual string Text
     {
       get { return this.text; }
       set
@@ -66,7 +66,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string Translator { get; set; }
+    public virtual string Translator { get; set; }
 
     /// <summary>
     ///   <para>Creates new translation.</para>
@@ -87,14 +87,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new translation.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of translation.</param>
     /// <param name="language">ISO language code of translation's text content.</param>
     /// <param name="name">Title of translation.</param>
     /// <param name="text">Translation's content text.</param>
     /// <param name="translator"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="id"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
-    public TextTranslation(string id, string language, string name, string text, string translator = null) : base(id)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
+    public TextTranslation(string language, string name, string text, string translator = null)
     {
       this.Language = language;
       this.Name = name;
@@ -112,7 +111,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new TextTranslation((string) xml.Element("Id"), (string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (string) xml.Element("Translator"));
+      var translation = new TextTranslation((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (string) xml.Element("Translator"));
+      if (xml.Element("Id") != null)
+      {
+        translation.Id = (long) xml.Element("Id");
+      }
+      return translation;
     }
 
     /// <summary>
@@ -120,7 +124,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(TextTranslation other)
+    public virtual bool Equals(TextTranslation other)
     {
       return base.Equals(other);
     }

@@ -61,35 +61,33 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="PollAnswer()"/>
     ///   <seealso cref="PollAnswer(IDictionary{string, object})"/>
-    ///   <seealso cref="PollAnswer(string, string)"/>
+    ///   <seealso cref="PollAnswer(string)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var answer = new PollAnswer();
-      Assert.True(answer.Id == null);
+      Assert.True(answer.Id == 0);
       Assert.True(answer.AuthorId == null);
       Assert.True(answer.DateCreated <= DateTime.UtcNow);
       Assert.True(answer.LastUpdated <= DateTime.UtcNow);
       Assert.True(answer.Options.Count == 0);
 
-      Assert.Throws<ArgumentNullException>(() => new PollAnswer(null));
+      Assert.Throws<ArgumentNullException>(() => new PollAnswer((IDictionary<string, object>) null));
       answer = new PollAnswer(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("AuthorId", "authorId")
         .AddNext("Poll", new Poll()));
-      Assert.True(answer.Id == "id");
+      Assert.True(answer.Id == 1);
       Assert.True(answer.AuthorId == "authorId");
       Assert.True(answer.DateCreated <= DateTime.UtcNow);
       Assert.True(answer.LastUpdated <= DateTime.UtcNow);
       Assert.True(answer.Options.Count == 0);
 
-      Assert.Throws<ArgumentNullException>(() => new PollAnswer(null, "authorId"));
-      Assert.Throws<ArgumentNullException>(() => new PollAnswer("id", null));
-      Assert.Throws<ArgumentException>(() => new PollAnswer(string.Empty, "authorId"));
-      Assert.Throws<ArgumentException>(() => new PollAnswer("id", string.Empty));
-      answer = new PollAnswer("id", "authorId");
-      Assert.True(answer.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new PollAnswer((string) null));
+      Assert.Throws<ArgumentException>(() => new PollAnswer(string.Empty));
+      answer = new PollAnswer("authorId");
+      Assert.True(answer.Id == 0);
       Assert.True(answer.AuthorId == "authorId");
       Assert.True(answer.DateCreated <= DateTime.UtcNow);
       Assert.True(answer.LastUpdated <= DateTime.UtcNow);
@@ -97,15 +95,27 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="PollAnswer"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="PollAnswer.Equals(PollAnswer)"/></description></item>
+    ///     <item><description><see cref="PollAnswer.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("AuthorId", new[] { "AuthorId", "AuthorId_2" }));
+      this.TestEquality("AuthorId", "AuthorId", "AuthorId_2");
     }
 
+    /// <summary>
+    ///   <para>Performs testing of <see cref="PollAnswer.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("AuthorId", "AuthorId", "AuthorId_2");
+    }
+    
     /// <summary>
     ///   <para>Performs testing of <see cref="PollAnswer.CompareTo(PollAnswer)"/> method.</para>
     /// </summary>
@@ -129,16 +139,16 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => PollAnswer.Xml(null));
 
       var xml = new XElement("PollAnswer",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("AuthorId", "authorId"),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()));
       var answer = PollAnswer.Xml(xml);
-      Assert.True(answer.Id == "id");
+      Assert.True(answer.Id == 1);
       Assert.True(answer.AuthorId == "authorId");
       Assert.True(answer.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(answer.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
-      Assert.True(new PollAnswer("id", "authorId") { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new PollAnswer("authorId") { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(PollAnswer.Xml(answer.Xml()).Equals(answer));
     }
   }

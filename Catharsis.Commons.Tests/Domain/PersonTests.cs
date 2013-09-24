@@ -120,13 +120,13 @@ namespace Catharsis.Commons.Domain
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Person()"/>
     ///   <seealso cref="Person(IDictionary{string, object})"/>
-    ///   <seealso cref="Person(string, string, string, string, string, Image, byte?, byte?, short?, byte?, byte?, short?)"/>
+    ///   <seealso cref="Person(string, string, string, string, Image, byte?, byte?, short?, byte?, byte?, short?)"/>
     /// </summary>
     [Fact]
     public void Constructors()
     {
       var person = new Person();
-      Assert.True(person.Id == null);
+      Assert.True(person.Id == 0);
       Assert.False(person.BirthDay.HasValue);
       Assert.False(person.BirthMonth.HasValue);
       Assert.False(person.BirthYear.HasValue);
@@ -141,7 +141,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.Throws<ArgumentNullException>(() => new Person(null));
       person = new Person(new Dictionary<string, object>()
-        .AddNext("Id", "id")
+        .AddNext("Id", 1)
         .AddNext("BirthDay", (byte) 1)
         .AddNext("BirthMonth", (byte) 2)
         .AddNext("BirthYear", (short) 2000)
@@ -153,7 +153,7 @@ namespace Catharsis.Commons.Domain
         .AddNext("NameFirst", "nameFirst")
         .AddNext("NameLast", "nameLast")
         .AddNext("NameMiddle", "nameMiddle"));
-      Assert.True(person.Id == "id");
+      Assert.True(person.Id == 1);
       Assert.True(person.BirthDay == 1);
       Assert.True(person.BirthMonth == 2);
       Assert.True(person.BirthYear == 2000);
@@ -166,14 +166,12 @@ namespace Catharsis.Commons.Domain
       Assert.True(person.NameLast == "nameLast");
       Assert.True(person.NameMiddle == "nameMiddle");
 
-      Assert.Throws<ArgumentNullException>(() => new Person(null, "nameFirst", "nameLast"));
-      Assert.Throws<ArgumentNullException>(() => new Person("id", null, "nameLast"));
-      Assert.Throws<ArgumentNullException>(() => new Person("id", "nameFirst", null));
-      Assert.Throws<ArgumentException>(() => new Person(string.Empty, "nameFirst", "nameLast"));
-      Assert.Throws<ArgumentException>(() => new Person("id", string.Empty, "nameLast"));
-      Assert.Throws<ArgumentException>(() => new Person("id", "nameFirst", string.Empty));
-      person = new Person("id", "nameFirst", "nameLast", "nameMiddle", "description", new Image(), 1, 2, 2000, 3, 4, 2030);
-      Assert.True(person.Id == "id");
+      Assert.Throws<ArgumentNullException>(() => new Person(null, "nameLast"));
+      Assert.Throws<ArgumentNullException>(() => new Person("nameFirst", null));
+      Assert.Throws<ArgumentException>(() => new Person(string.Empty, "nameLast"));
+      Assert.Throws<ArgumentException>(() => new Person("nameFirst", string.Empty));
+      person = new Person("nameFirst", "nameLast", "nameMiddle", "description", new Image(), 1, 2, 2000, 3, 4, 2030);
+      Assert.True(person.Id == 0);
       Assert.True(person.BirthDay == 1);
       Assert.True(person.BirthMonth == 2);
       Assert.True(person.BirthYear == 2000);
@@ -198,15 +196,29 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="object.Equals(object)"/> and <see cref="object.GetHashCode()"/> methods for the <see cref="Person"/> type.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="Person.Equals(Person)"/></description></item>
+    ///     <item><description><see cref="Person.Equals(object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void EqualsAndHashCode()
+    public void Equals_Methods()
     {
-      this.TestEqualsAndHashCode(new Dictionary<string, object[]>()
-        .AddNext("NameFirst", new[] { "NameFirst", "NameFirst_2" })
-        .AddNext("NameLast", new[] { "NameLast", "NameLast_2" })
-        .AddNext("NameMiddle", new[] { "NameMiddle", "NameMiddle_2" }));
+      this.TestEquality("NameFirst", "NameFirst", "NameFirst_2");
+      this.TestEquality("NameLast", "NameLast", "NameLast_2");
+      this.TestEquality("NameMiddle", "NameMiddle", "NameMiddle_2");
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="Person.GetHashCode()"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void GetHashCode_Method()
+    {
+      this.TestHashCode("NameFirst", "NameFirst", "NameFirst_2");
+      this.TestHashCode("NameLast", "NameLast", "NameLast_2");
+      this.TestHashCode("NameMiddle", "NameMiddle", "NameMiddle_2");
     }
 
     /// <summary>
@@ -232,11 +244,11 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => Person.Xml(null));
 
       var xml = new XElement("Person",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("NameFirst", "nameFirst"),
         new XElement("NameLast", "nameLast"));
       var person = Person.Xml(xml);
-      Assert.True(person.Id == "id");
+      Assert.True(person.Id == 1);
       Assert.False(person.BirthDay.HasValue);
       Assert.False(person.BirthMonth.HasValue);
       Assert.False(person.BirthYear.HasValue);
@@ -248,11 +260,11 @@ namespace Catharsis.Commons.Domain
       Assert.True(person.NameFirst == "nameFirst");
       Assert.True(person.NameLast == "nameLast");
       Assert.True(person.NameMiddle == null);
-      Assert.True(new Person("id", "nameFirst", "nameLast").Xml().ToString() == xml.ToString());
+      Assert.True(new Person("nameFirst", "nameLast") { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Person.Xml(person.Xml()).Equals(person));
 
       xml = new XElement("Person",
-        new XElement("Id", "id"),
+        new XElement("Id", 1),
         new XElement("BirthDay", 1),
         new XElement("BirthMonth", 1),
         new XElement("BirthYear", 2000),
@@ -261,23 +273,23 @@ namespace Catharsis.Commons.Domain
         new XElement("DeathYear", 2100),
         new XElement("Description", "description"),
         new XElement("Image",
-          new XElement("Id", "image.id"),
+          new XElement("Id", 2),
           new XElement("File",
-            new XElement("Id", "image.file.id"),
+            new XElement("Id", 3),
             new XElement("ContentType", "image.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
             new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
             new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
             new XElement("Name", "image.file.name"),
             new XElement("OriginalName", "image.file.originalName"),
-            new XElement("Size", Guid.Empty.ToByteArray().LongLength)),
+            new XElement("Size", Guid.Empty.ToByteArray().Length)),
           new XElement("Height", 1),
           new XElement("Width", 2)),
         new XElement("NameFirst", "nameFirst"),
         new XElement("NameLast", "nameLast"),
         new XElement("NameMiddle", "nameMiddle"));
       person = Person.Xml(xml);
-      Assert.True(person.Id == "id");
+      Assert.True(person.Id == 1);
       Assert.True(person.BirthDay == 1);
       Assert.True(person.BirthMonth == 1);
       Assert.True(person.BirthYear == 2000);
@@ -285,21 +297,21 @@ namespace Catharsis.Commons.Domain
       Assert.True(person.DeathMonth == 12);
       Assert.True(person.DeathYear == 2100);
       Assert.True(person.Description == "description");
-      Assert.True(person.Image.Id == "image.id");
-      Assert.True(person.Image.File.Id == "image.file.id");
+      Assert.True(person.Image.Id == 2);
+      Assert.True(person.Image.File.Id == 3);
       Assert.True(person.Image.File.ContentType == "image.file.contentType");
       Assert.True(person.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
       Assert.True(person.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(person.Image.File.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(person.Image.File.Name == "image.file.name");
       Assert.True(person.Image.File.OriginalName == "image.file.originalName");
-      Assert.True(person.Image.File.Size == Guid.Empty.ToByteArray().LongLength);
+      Assert.True(person.Image.File.Size == Guid.Empty.ToByteArray().Length);
       Assert.True(person.Image.Height == 1);
       Assert.True(person.Image.Width == 2);
       Assert.True(person.NameFirst == "nameFirst");
       Assert.True(person.NameLast == "nameLast");
       Assert.True(person.NameMiddle == "nameMiddle");
-      Assert.True(new Person("id", "nameFirst", "nameLast", "nameMiddle", "description", new Image("image.id", new File("image.file.id", "image.file.contentType", "image.file.name", "image.file.originalName", Guid.Empty.ToByteArray()) { DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2), 1, 1, 2000, 31, 12, 2100).Xml().ToString() == xml.ToString());
+      Assert.True(new Person("nameFirst", "nameLast", "nameMiddle", "description", new Image(new File("image.file.contentType", "image.file.name", "image.file.originalName", Guid.Empty.ToByteArray()) { Id = 3, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2) { Id = 2 }, 1, 1, 2000, 31, 12, 2100) { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Person.Xml(person.Xml()).Equals(person));
     }
   }

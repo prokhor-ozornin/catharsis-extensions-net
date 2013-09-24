@@ -16,13 +16,13 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Category of image.</para>
     /// </summary>
-    public ImagesCategory Category { get; set; }
+    public virtual ImagesCategory Category { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public File File
+    public virtual File File
     {
       get { return this.file; }
       set
@@ -36,12 +36,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public short Height { get; set; }
+    public virtual short Height { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public short Width { get; set; }
+    public virtual short Width { get; set; }
 
     /// <summary>
     ///   <para>Creates new image.</para>
@@ -61,14 +61,12 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new image.</para>
     /// </summary>
-    /// <param name="id">Unique identifier of image.</param>
     /// <param name="file"></param>
     /// <param name="height"></param>
     /// <param name="width"></param>
     /// <param name="category">Category of image's belongings, or a <c>null</c> reference.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="id"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="id"/> is <see cref="string.Empty"/> string.</exception>
-    public Image(string id, File file, short height, short width, ImagesCategory category = null) : base(id)
+    /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
+    public Image(File file, short height, short width, ImagesCategory category = null)
     {
       this.File = file;
       this.Height = height;
@@ -86,7 +84,12 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      return new Image((string) xml.Element("Id"), File.Xml(xml.Element("File")), (short) xml.Element("Height"), (short) xml.Element("Width"), xml.Element("ImagesCategory") != null ? ImagesCategory.Xml(xml.Element("ImagesCategory")) : null);
+      var image = new Image(File.Xml(xml.Element("File")), (short) xml.Element("Height"), (short) xml.Element("Width"), xml.Element("ImagesCategory") != null ? ImagesCategory.Xml(xml.Element("ImagesCategory")) : null);
+      if (xml.Element("Id") != null)
+      {
+        image.Id = (long) xml.Element("Id");
+      }
+      return image;
     }
 
     /// <summary>
@@ -94,7 +97,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
-    public bool Equals(Image other)
+    public virtual bool Equals(Image other)
     {
       return base.Equals(other);
     }
@@ -113,7 +116,7 @@ namespace Catharsis.Commons.Domain
     /// </summary>
     /// <param name="image"></param>
     /// <returns></returns>
-    public int CompareTo(Image image)
+    public virtual int CompareTo(Image image)
     {
       return this.File.CompareTo(image.File);
     }
