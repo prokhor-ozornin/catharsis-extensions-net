@@ -42,15 +42,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Create new web link with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on web link after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public WebLink(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new web link.</para>
     /// </summary>
     /// <param name="language">ISO language code of web link's text content.</param>

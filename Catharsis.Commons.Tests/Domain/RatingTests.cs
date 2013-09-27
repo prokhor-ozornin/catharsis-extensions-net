@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
 using Catharsis.Commons.Extensions;
 using Xunit;
@@ -17,10 +16,7 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void AuthorId_Property()
     {
-      Assert.Throws<ArgumentNullException>(() => new Rating { AuthorId = null });
-      Assert.Throws<ArgumentException>(() => new Rating { AuthorId = string.Empty });
-      
-      Assert.True(new Rating { AuthorId = "authorId" }.AuthorId == "authorId");
+      Assert.True(new Rating { AuthorId = 1 }.AuthorId == 1);
     }
 
     /// <summary>
@@ -64,8 +60,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Rating()"/>
-    ///   <seealso cref="Rating(IDictionary{string, object})"/>
-    ///   <seealso cref="Rating(string, Item, byte)"/>
+    ///   <seealso cref="Rating(long, Item, byte)"/>
     /// </summary>
     [Fact]
     public void Constructors()
@@ -78,25 +73,10 @@ namespace Catharsis.Commons.Domain
       Assert.True(rating.LastUpdated <= DateTime.UtcNow);
       Assert.True(rating.Value == 0);
 
-      Assert.Throws<ArgumentNullException>(() => new Rating(null));
-      rating = new Rating(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Item", new Item())
-        .AddNext("Value", (byte) 1));
-      Assert.True(rating.Id == 1);
-      Assert.True(rating.AuthorId == "authorId");
-      Assert.True(rating.DateCreated <= DateTime.UtcNow);
-      Assert.True(rating.Item != null);
-      Assert.True(rating.LastUpdated <= DateTime.UtcNow);
-      Assert.True(rating.Value == 1);
-
-      Assert.Throws<ArgumentNullException>(() => new Rating(null, new Item(), 1));
-      Assert.Throws<ArgumentNullException>(() => new Rating("authorId", null, 1));
-      Assert.Throws<ArgumentException>(() => new Rating(string.Empty, new Item(), 1));
-      rating = new Rating("authorId", new Item(), 1);
+      Assert.Throws<ArgumentNullException>(() => new Rating(1, null, 1));
+      rating = new Rating(1, new Item(), 1);
       Assert.True(rating.Id == 0);
-      Assert.True(rating.AuthorId == "authorId");
+      Assert.True(rating.AuthorId == 1);
       Assert.True(rating.DateCreated <= DateTime.UtcNow);
       Assert.True(rating.Item != null);
       Assert.True(rating.LastUpdated <= DateTime.UtcNow);
@@ -122,7 +102,7 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void Equals_Methods()
     {
-      this.TestEquality("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestEquality("AuthorId", (long) 1, (long) 2);
       this.TestEquality("Item", new Item { Name = "Name" }, new Item { Name = "Name_2" });
     }
 
@@ -132,7 +112,7 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void GetHashCode_Method()
     {
-      this.TestHashCode("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestHashCode("AuthorId", (long) 1, (long) 2);
       this.TestHashCode("Item", new Item { Name = "Name" }, new Item { Name = "Name_2" });
     }
 
@@ -160,10 +140,10 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Rating",
         new XElement("Id", 1),
-        new XElement("AuthorId", "authorId"),
+        new XElement("AuthorId", 2),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Item",
-          new XElement("Id", 2),
+          new XElement("Id", 3),
           new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
           new XElement("Language", "item.language"),
           new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
@@ -172,9 +152,9 @@ namespace Catharsis.Commons.Domain
         new XElement("Value", 1));
       var rating = Rating.Xml(xml);
       Assert.True(rating.Id == 1);
-      Assert.True(rating.AuthorId == "authorId");
+      Assert.True(rating.AuthorId == 2);
       Assert.True(rating.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
-      Assert.True(rating.Item.Id == 2);
+      Assert.True(rating.Item.Id == 3);
       Assert.True(rating.Item.Comments.Count == 0);
       Assert.True(rating.Item.AuthorId == null);
       Assert.True(rating.Item.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
@@ -185,7 +165,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(rating.Item.Text == null);
       Assert.True(rating.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
       Assert.True(rating.Value == 1);
-      Assert.True(new Rating("authorId", new Item("item.language", "item.name") { Id = 2, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new Rating(2, new Item("item.language", "item.name") { Id = 3, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Rating.Xml(rating.Xml()).Equals(rating));
     }
   }

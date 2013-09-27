@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
-using Catharsis.Commons.Extensions;
 using Xunit;
 
 namespace Catharsis.Commons.Domain
@@ -17,9 +15,7 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void AuthorId_Property()
     {
-      Assert.Throws<ArgumentNullException>(() => new Profile { AuthorId = null });
-      Assert.Throws<ArgumentException>(() => new Profile { AuthorId = string.Empty });
-      Assert.True(new Profile { AuthorId = "authorId" } .AuthorId == "authorId");
+      Assert.True(new Profile { AuthorId = 1 } .AuthorId == 1);
     }
 
     /// <summary>
@@ -87,8 +83,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Profile()"/>
-    ///   <seealso cref="Profile(IDictionary{string, object})"/>
-    ///   <seealso cref="Profile(string, string, string, string, string, string, string)"/>
+    ///   <seealso cref="Profile(long, string, string, string, string, string, string)"/>
     /// </summary>
     [Fact]
     public void Constructors()
@@ -103,38 +98,17 @@ namespace Catharsis.Commons.Domain
       Assert.True(profile.Url == null);
       Assert.True(profile.Username == null);
 
-      Assert.Throws<ArgumentNullException>(() => new Profile(null));
-      profile = new Profile(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Email", "email@mail.ru")
-        .AddNext("Name", "name")
-        .AddNext("Photo", "photo")
-        .AddNext("Type", "type")
-        .AddNext("Url", "url")
-        .AddNext("Username", "username"));
-      Assert.True(profile.Id == 1);
-      Assert.True(profile.AuthorId == "authorId");
-      Assert.True(profile.Email == "email@mail.ru");
-      Assert.True(profile.Name == "name");
-      Assert.True(profile.Photo == "photo");
-      Assert.True(profile.Type == "type");
-      Assert.True(profile.Url == "url");
-      Assert.True(profile.Username == "username");
-
-      Assert.Throws<ArgumentNullException>(() => new Profile(null, "name", "username", "type", "url"));
-      Assert.Throws<ArgumentNullException>(() => new Profile("authorId", null, "username", "type", "url"));
-      Assert.Throws<ArgumentNullException>(() => new Profile("authorId", "name", null, "type", "url"));
-      Assert.Throws<ArgumentNullException>(() => new Profile("authorId", "name", "username", null, "url"));
-      Assert.Throws<ArgumentNullException>(() => new Profile("authorId", "name", "username", "type", null));
-      Assert.Throws<ArgumentException>(() => new Profile(string.Empty, "name", "username", "type", "url"));
-      Assert.Throws<ArgumentException>(() => new Profile("authorId", string.Empty, "username", "type", "url"));
-      Assert.Throws<ArgumentException>(() => new Profile("authorId", "name", string.Empty, "type", "url"));
-      Assert.Throws<ArgumentException>(() => new Profile("authorId", "name", "username", string.Empty, "url"));
-      Assert.Throws<ArgumentException>(() => new Profile("authorId", "name", "username", "type", string.Empty));
-      profile = new Profile("authorId", "name", "username", "type", "url", "email@mail.ru", "photo");
+      Assert.Throws<ArgumentNullException>(() => new Profile(1, null, "username", "type", "url"));
+      Assert.Throws<ArgumentNullException>(() => new Profile(1, "name", null, "type", "url"));
+      Assert.Throws<ArgumentNullException>(() => new Profile(1, "name", "username", null, "url"));
+      Assert.Throws<ArgumentNullException>(() => new Profile(1, "name", "username", "type", null));
+      Assert.Throws<ArgumentException>(() => new Profile(1, string.Empty, "username", "type", "url"));
+      Assert.Throws<ArgumentException>(() => new Profile(1, "name", string.Empty, "type", "url"));
+      Assert.Throws<ArgumentException>(() => new Profile(1, "name", "username", string.Empty, "url"));
+      Assert.Throws<ArgumentException>(() => new Profile(1, "name", "username", "type", string.Empty));
+      profile = new Profile(1, "name", "username", "type", "url", "email@mail.ru", "photo");
       Assert.True(profile.Id == 0);
-      Assert.True(profile.AuthorId == "authorId");
+      Assert.True(profile.AuthorId == 1);
       Assert.True(profile.Email == "email@mail.ru");
       Assert.True(profile.Name == "name");
       Assert.True(profile.Photo == "photo");
@@ -162,7 +136,7 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void Equals_Methods()
     {
-      this.TestEquality("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestEquality("AuthorId", (long) 1, (long) 2);
       this.TestEquality("Type", "Type", "Type_2");
       this.TestEquality("Username", "Username", "Username_2");
     }
@@ -173,7 +147,7 @@ namespace Catharsis.Commons.Domain
     [Fact]
     public void GetHashCode_Method()
     {
-      this.TestHashCode("AuthorId", "AuthorId", "AuthorId_2");
+      this.TestHashCode("AuthorId", (long) 1, (long) 2);
       this.TestHashCode("Type", "Type", "Type_2");
       this.TestHashCode("Username", "Username", "Username_2");
     }
@@ -202,26 +176,26 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Profile",
         new XElement("Id", 1),
-        new XElement("AuthorId", "authorId"),
+        new XElement("AuthorId", 2),
         new XElement("Name", "name"),
         new XElement("Type", "type"),
         new XElement("Url", "url"),
         new XElement("Username", "username"));
       var profile = Profile.Xml(xml);
       Assert.True(profile.Id == 1);
-      Assert.True(profile.AuthorId == "authorId");
+      Assert.True(profile.AuthorId == 2);
       Assert.True(profile.Email == null);
       Assert.True(profile.Name == "name");
       Assert.True(profile.Photo == null);
       Assert.True(profile.Type == "type");
       Assert.True(profile.Url == "url");
       Assert.True(profile.Username == "username");
-      Assert.True(new Profile("authorId", "name", "username", "type", "url") { Id = 1 }.Xml().ToString() == xml.ToString());
+      Assert.True(new Profile(2, "name", "username", "type", "url") { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Profile.Xml(profile.Xml()).Equals(profile));
 
       xml = new XElement("Profile",
         new XElement("Id", 1),
-        new XElement("AuthorId", "authorId"),
+        new XElement("AuthorId", 2),
         new XElement("Email", "email"),
         new XElement("Name", "name"),
         new XElement("Photo", "photo"),
@@ -230,14 +204,14 @@ namespace Catharsis.Commons.Domain
         new XElement("Username", "username"));
       profile = Profile.Xml(xml);
       Assert.True(profile.Id == 1);
-      Assert.True(profile.AuthorId == "authorId");
+      Assert.True(profile.AuthorId == 2);
       Assert.True(profile.Email == "email");
       Assert.True(profile.Name == "name");
       Assert.True(profile.Photo == "photo");
       Assert.True(profile.Type == "type");
       Assert.True(profile.Url == "url");
       Assert.True(profile.Username == "username");
-      Assert.True(new Profile("authorId", "name", "username", "type", "url", "email", "photo") { Id = 1 }.Xml().ToString() == xml.ToString());
+      Assert.True(new Profile(2, "name", "username", "type", "url", "email", "photo") { Id = 1 }.Xml().ToString() == xml.ToString());
       Assert.True(Profile.Xml(profile.Xml()).Equals(profile));
     }
   }

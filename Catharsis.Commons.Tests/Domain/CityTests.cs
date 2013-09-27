@@ -45,7 +45,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="City()"/>
-    ///   <seealso cref="City(IDictionary{string, object})"/>
     ///   <seealso cref="City(string, Country, string)"/>
     /// </summary>
     [Fact]
@@ -56,17 +55,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(city.Country == null);
       Assert.True(city.Name == null);
       Assert.True(city.Region == null);
-
-      Assert.Throws<ArgumentNullException>(() => new City(null));
-      city = new City(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Country", new Country())
-        .AddNext("Name", "name")
-        .AddNext("Region", "region"));
-      Assert.True(city.Id == 1);
-      Assert.True(city.Country != null);
-      Assert.True(city.Name == "name");
-      Assert.True(city.Region == "region");
 
       Assert.Throws<ArgumentNullException>(() => new City(null, new Country()));
       Assert.Throws<ArgumentNullException>(() => new City("name", null));

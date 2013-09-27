@@ -36,7 +36,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Song()"/>
-    ///   <seealso cref="Song(IDictionary{string, object})"/>
     ///   <seealso cref="Song(string, string, string, Audio, SongsAlbum)"/>
     /// </summary>
     [Fact]
@@ -54,27 +53,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(song.Name == null);
       Assert.True(song.Tags.Count == 0);
       Assert.True(song.Text == null);
-
-      Assert.Throws<ArgumentNullException>(() => new Song(null));
-      song = new Song(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Album", new SongsAlbum())
-        .AddNext("Audio", new Audio())
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text"));
-      Assert.True(song.Id == 1);
-      Assert.True(song.Album != null);
-      Assert.True(song.Audio != null);
-      Assert.True(song.AuthorId == "authorId");
-      Assert.True(song.Comments.Count == 0);
-      Assert.True(song.DateCreated <= DateTime.UtcNow);
-      Assert.True(song.Language == "language");
-      Assert.True(song.LastUpdated <= DateTime.UtcNow);
-      Assert.True(song.Name == "name");
-      Assert.True(song.Tags.Count == 0);
-      Assert.True(song.Text == "text");
 
       Assert.Throws<ArgumentNullException>(() => new Song(null, "name", "text", new Audio()));
       Assert.Throws<ArgumentNullException>(() => new Song("language", null, "text", new Audio()));

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
-using Catharsis.Commons.Extensions;
 using Xunit;
 
 namespace Catharsis.Commons.Domain
@@ -44,7 +42,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Setting()"/>
-    ///   <seealso cref="Setting(IDictionary{string, object})"/>
     ///   <seealso cref="Setting(string, string, int)"/>
     /// </summary>
     [Fact]
@@ -55,17 +52,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(setting.Name == null);
       Assert.True(setting.Type == 0);
       Assert.True(setting.Value == null);
-
-      Assert.Throws<ArgumentNullException>(() => new City(null));
-      setting = new Setting(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Name", "name")
-        .AddNext("Type", 1)
-        .AddNext("Value", "value"));
-      Assert.True(setting.Id == 1);
-      Assert.True(setting.Name == "name");
-      Assert.True(setting.Type == 1);
-      Assert.True(setting.Value == "value");
 
       Assert.Throws<ArgumentNullException>(() => new Setting(null, "value"));
       Assert.Throws<ArgumentException>(() => new Setting(string.Empty, "value"));

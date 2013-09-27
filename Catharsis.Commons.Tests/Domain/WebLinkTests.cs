@@ -35,7 +35,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="WebLink()"/>
-    ///   <seealso cref="WebLink(IDictionary{string, object})"/>
     ///   <seealso cref="WebLink(string, string, string, string, WebLinksCategory)"/>
     /// </summary>
     [Fact]
@@ -51,24 +50,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(weblink.Text == null);
       Assert.True(weblink.Category == null);
       Assert.True(weblink.Url == null);
-
-      Assert.Throws<ArgumentNullException>(() => new WebLink(null));
-      weblink = new WebLink(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text")
-        .AddNext("Category", new WebLinksCategory())
-        .AddNext("Url", "url"));
-      Assert.True(weblink.Id == 1);
-      Assert.True(weblink.AuthorId == null);
-      Assert.True(weblink.DateCreated <= DateTime.UtcNow);
-      Assert.True(weblink.Language == "language");
-      Assert.True(weblink.LastUpdated <= DateTime.UtcNow);
-      Assert.True(weblink.Name == "name");
-      Assert.True(weblink.Text == "text");
-      Assert.True(weblink.Category != null);
-      Assert.True(weblink.Url == "url");
 
       Assert.Throws<ArgumentNullException>(() => new WebLink(null, "name", "text", "url"));
       Assert.Throws<ArgumentNullException>(() => new WebLink("language", null, "text", "url"));

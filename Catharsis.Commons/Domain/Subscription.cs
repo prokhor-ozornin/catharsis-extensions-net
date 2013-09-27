@@ -11,7 +11,6 @@ namespace Catharsis.Commons.Domain
   [EqualsAndHashCode("Email,Type")]
   public class Subscription : EntityBase, IComparable<Subscription>, IEquatable<Subscription>, IAuthorable, IEmailable, ITimeable, ITypeable
   {
-    private string authorId;
     private DateTime dateCreated = DateTime.UtcNow;
     private string email;
     private DateTime lastUpdated = DateTime.UtcNow;
@@ -20,18 +19,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public virtual string AuthorId
-    {
-      get { return this.authorId; }
-      set
-      {
-        Assertion.NotEmpty(value);
-
-        this.authorId = value;
-      }
-    }
+    public virtual long? AuthorId { get; set; }
     
     /// <summary>
     ///   <para></para>
@@ -108,24 +96,15 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new subscription with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on subscription after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Subscription(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new subscription.</para>
     /// </summary>
     /// <param name="authorId">Identifier of subscription's </param>
     /// <param name="email"></param>
     /// <param name="type"></param>
     /// <param name="expiredOn"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/> or <paramref name="email"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="authorId"/> or <paramref name="email"/> is <see cref="string.Empty"/> string.</exception>
-    public Subscription(string authorId, string email, int type = 0, DateTime? expiredOn = null)
+    /// <exception cref="ArgumentNullException">If <paramref name="email"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If <paramref name="email"/> is <see cref="string.Empty"/> string.</exception>
+    public Subscription(long authorId, string email, int type = 0, DateTime? expiredOn = null)
     {
       this.Active = true;
       this.AuthorId = authorId;
@@ -145,7 +124,7 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var subscription = new Subscription((string) xml.Element("AuthorId"), (string) xml.Element("Email"), (int) xml.Element("Type"), (DateTime?) xml.Element("ExpiredOn"));
+      var subscription = new Subscription((long) xml.Element("AuthorId"), (string) xml.Element("Email"), (int) xml.Element("Type"), (DateTime?) xml.Element("ExpiredOn"));
       if (xml.Element("Id") != null)
       {
         subscription.Id = (long) xml.Element("Id");

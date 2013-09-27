@@ -47,7 +47,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Country()"/>
-    ///   <seealso cref="Country(IDictionary{string, object})"/>
     ///   <seealso cref="Country(string, string, Image)"/>
     /// </summary>
     [Fact]
@@ -58,17 +57,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(country.Image == null);
       Assert.True(country.IsoCode == null);
       Assert.True(country.Name == null);
-
-      Assert.Throws<ArgumentNullException>(() => new Country(null));
-      country = new Country(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Image", new Image())
-        .AddNext("IsoCode", "isoCode")
-        .AddNext("Name", "name"));
-      Assert.True(country.Id == 1);
-      Assert.True(country.Image != null);
-      Assert.True(country.IsoCode == "isoCode");
-      Assert.True(country.Name == "name");
 
       Assert.Throws<ArgumentNullException>(() => new Country(null, "isoCode"));
       Assert.Throws<ArgumentNullException>(() => new Country("name", null));

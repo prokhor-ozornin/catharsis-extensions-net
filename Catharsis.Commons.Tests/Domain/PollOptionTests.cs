@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
-using Catharsis.Commons.Extensions;
 using Xunit;
 
 namespace Catharsis.Commons.Domain
@@ -25,7 +23,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="PollOption()"/>
-    ///   <seealso cref="PollOption(IDictionary{string, object})"/>
     ///   <seealso cref="PollOption(string)"/>
     /// </summary>
     [Fact]
@@ -34,13 +31,6 @@ namespace Catharsis.Commons.Domain
       var option = new PollOption();
       Assert.True(option.Id == 0);
       Assert.True(option.Text == null);
-
-      Assert.Throws<ArgumentNullException>(() => new PollOption((IDictionary<string, object>) null));
-      option = new PollOption(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Text", "text"));
-      Assert.True(option.Id == 1);
-      Assert.True(option.Text == "text");
 
       Assert.Throws<ArgumentNullException>(() => new PollOption((string) null));
       Assert.Throws<ArgumentException>(() => new PollOption(string.Empty));

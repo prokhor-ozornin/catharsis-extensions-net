@@ -12,7 +12,6 @@ namespace Catharsis.Commons.Domain
   [EqualsAndHashCode("AuthorId")]
   public class PollAnswer : EntityBase, IComparable<PollAnswer>, IEquatable<PollAnswer>, IAuthorable, ITimeable
   {
-    private string authorId;
     private DateTime dateCreated = DateTime.UtcNow;
     private DateTime lastUpdated = DateTime.UtcNow;
     private ICollection<PollOption> options = new HashSet<PollOption>();
@@ -20,18 +19,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public virtual string AuthorId
-    {
-      get { return this.authorId; }
-      set
-      {
-        Assertion.NotEmpty(value);
-
-        this.authorId = value;
-      }
-    }
+    public virtual long? AuthorId { get; set; }
     
     /// <summary>
     ///   <para>Date and time of answer's creation.</para>
@@ -67,21 +55,10 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new poll answer with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on poll answer after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public PollAnswer(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new poll answer.</para>
     /// </summary>
     /// <param name="authorId">Identifier of answer's author.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="authorId"/> is <see cref="string.Empty"/> string.</exception>
-    public PollAnswer(string authorId)
+    public PollAnswer(long authorId)
     {
       this.AuthorId = authorId;
     }
@@ -96,7 +73,7 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var answer = new PollAnswer((string) xml.Element("AuthorId"));
+      var answer = new PollAnswer((long) xml.Element("AuthorId"));
       if (xml.Element("Id") != null)
       {
         answer.Id = (long) xml.Element("Id");

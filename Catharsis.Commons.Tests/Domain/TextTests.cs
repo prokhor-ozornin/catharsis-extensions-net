@@ -52,8 +52,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Text()"/>
-    ///   <seealso cref="Text(IDictionary{string, object})"/>
-    ///   <seealso cref="Text(string, string, string, string, Person, TextsCategory)"/>
+    ///   <seealso cref="Text(long, string, string, string, Person, TextsCategory)"/>
     /// </summary>
     [Fact]
     public void Constructors()
@@ -69,37 +68,16 @@ namespace Catharsis.Commons.Domain
       Assert.True(text.Category == null);
       Assert.True(text.Person == null);
 
-      Assert.Throws<ArgumentNullException>(() => new Text(null));
-      text = new Text(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text")
-        .AddNext("Category", new TextsCategory())
-        .AddNext("Person", new Person()));
-      Assert.True(text.Id == 1);
-      Assert.True(text.AuthorId == "authorId");
-      Assert.True(text.DateCreated <= DateTime.UtcNow);
-      Assert.True(text.Language == "language");
-      Assert.True(text.LastUpdated <= DateTime.UtcNow);
-      Assert.True(text.Name == "name");
-      Assert.True(text.Text == "text");
-      Assert.True(text.Category != null);
-      Assert.True(text.Person != null);
-
-      Assert.Throws<ArgumentNullException>(() => new Text(null, "language", "name", "text", new Person()));
-      Assert.Throws<ArgumentNullException>(() => new Text("authorId", null, "name", "text", new Person()));
-      Assert.Throws<ArgumentNullException>(() => new Text("authorId", "language", null, "text", new Person()));
-      Assert.Throws<ArgumentNullException>(() => new Text("authorId", "language", "name", null, new Person()));
-      Assert.Throws<ArgumentNullException>(() => new Text("authorId", "language", "name", "text", null));
-      Assert.Throws<ArgumentException>(() => new Text(string.Empty, "language", "name", "text", new Person()));
-      Assert.Throws<ArgumentException>(() => new Text("authorId", string.Empty, "name", "text", new Person()));
-      Assert.Throws<ArgumentException>(() => new Text("authorId", "language", string.Empty, "text", new Person()));
-      Assert.Throws<ArgumentException>(() => new Text("authorId", "language", "name", string.Empty, new Person()));
-      text = new Text("authorId", "language", "name", "text", new Person(), new TextsCategory());
+      Assert.Throws<ArgumentNullException>(() => new Text(1, null, "name", "text", new Person()));
+      Assert.Throws<ArgumentNullException>(() => new Text(1, "language", null, "text", new Person()));
+      Assert.Throws<ArgumentNullException>(() => new Text(1, "language", "name", null, new Person()));
+      Assert.Throws<ArgumentNullException>(() => new Text(1, "language", "name", "text", null));
+      Assert.Throws<ArgumentException>(() => new Text(1, string.Empty, "name", "text", new Person()));
+      Assert.Throws<ArgumentException>(() => new Text(1, "language", string.Empty, "text", new Person()));
+      Assert.Throws<ArgumentException>(() => new Text(1, "language", "name", string.Empty, new Person()));
+      text = new Text(1, "language", "name", "text", new Person(), new TextsCategory());
       Assert.True(text.Id == 0);
-      Assert.True(text.AuthorId == "authorId");
+      Assert.True(text.AuthorId == 1);
       Assert.True(text.DateCreated <= DateTime.UtcNow);
       Assert.True(text.Language == "language");
       Assert.True(text.LastUpdated <= DateTime.UtcNow);
@@ -147,55 +125,20 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Text",
         new XElement("Id", 1),
-        new XElement("AuthorId", "authorId"),
+        new XElement("AuthorId", 2),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
-        new XElement("Person",
-          new XElement("Id", 2),
-          new XElement("NameFirst", "person.nameFirst"),
-          new XElement("NameLast", "person.nameLast")));
-      var text = Text.Xml(xml);
-      Assert.True(text.Id == 1);
-      Assert.True(text.AuthorId == "authorId");
-      Assert.True(text.Category == null);
-      Assert.True(text.Comments.Count == 0);
-      Assert.True(text.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
-      Assert.True(text.Language == "language");
-      Assert.True(text.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
-      Assert.True(text.Name == "name");
-      Assert.True(text.Person.Id == 2);
-      Assert.True(text.Person.NameFirst == "person.nameFirst");
-      Assert.True(text.Person.NameLast == "person.nameLast");
-      Assert.True(text.Tags.Count == 0);
-      Assert.True(text.Text == "text");
-      Assert.True(new Text("authorId", "language", "name", "text", new Person("person.nameFirst", "person.nameLast") { Id = 2 }) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
-      Assert.True(Text.Xml(text.Xml()).Equals(text));
-
-      xml = new XElement("Text",
-        new XElement("Id", 1),
-        new XElement("AuthorId", "authorId"),
-        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
-        new XElement("Language", "language"),
-        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
-        new XElement("Name", "name"),
-        new XElement("Text", "text"),
-        new XElement("TextsCategory",
-          new XElement("Id", 2),
-          new XElement("Language", "category.language"),
-          new XElement("Name", "category.name")),
         new XElement("Person",
           new XElement("Id", 3),
           new XElement("NameFirst", "person.nameFirst"),
           new XElement("NameLast", "person.nameLast")));
-      text = Text.Xml(xml);
+      var text = Text.Xml(xml);
       Assert.True(text.Id == 1);
-      Assert.True(text.AuthorId == "authorId");
-      Assert.True(text.Category.Id == 2);
-      Assert.True(text.Category.Language == "category.language");
-      Assert.True(text.Category.Name == "category.name");
+      Assert.True(text.AuthorId == 2);
+      Assert.True(text.Category == null);
       Assert.True(text.Comments.Count == 0);
       Assert.True(text.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(text.Language == "language");
@@ -206,7 +149,42 @@ namespace Catharsis.Commons.Domain
       Assert.True(text.Person.NameLast == "person.nameLast");
       Assert.True(text.Tags.Count == 0);
       Assert.True(text.Text == "text");
-      Assert.True(new Text("authorId", "language", "name", "text", new Person("person.nameFirst", "person.nameLast") { Id = 3 }, new TextsCategory("category.language", "category.name") { Id = 2 }) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new Text(2, "language", "name", "text", new Person("person.nameFirst", "person.nameLast") { Id = 3 }) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(Text.Xml(text.Xml()).Equals(text));
+
+      xml = new XElement("Text",
+        new XElement("Id", 1),
+        new XElement("AuthorId", 2),
+        new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
+        new XElement("Language", "language"),
+        new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
+        new XElement("Name", "name"),
+        new XElement("Text", "text"),
+        new XElement("TextsCategory",
+          new XElement("Id", 3),
+          new XElement("Language", "category.language"),
+          new XElement("Name", "category.name")),
+        new XElement("Person",
+          new XElement("Id", 4),
+          new XElement("NameFirst", "person.nameFirst"),
+          new XElement("NameLast", "person.nameLast")));
+      text = Text.Xml(xml);
+      Assert.True(text.Id == 1);
+      Assert.True(text.AuthorId == 2);
+      Assert.True(text.Category.Id == 3);
+      Assert.True(text.Category.Language == "category.language");
+      Assert.True(text.Category.Name == "category.name");
+      Assert.True(text.Comments.Count == 0);
+      Assert.True(text.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
+      Assert.True(text.Language == "language");
+      Assert.True(text.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
+      Assert.True(text.Name == "name");
+      Assert.True(text.Person.Id == 4);
+      Assert.True(text.Person.NameFirst == "person.nameFirst");
+      Assert.True(text.Person.NameLast == "person.nameLast");
+      Assert.True(text.Tags.Count == 0);
+      Assert.True(text.Text == "text");
+      Assert.True(new Text(2, "language", "name", "text", new Person("person.nameFirst", "person.nameLast") { Id = 4 }, new TextsCategory("category.language", "category.name") { Id = 3 }) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Text.Xml(text.Xml()).Equals(text));
     }
   }

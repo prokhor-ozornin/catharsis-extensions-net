@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Catharsis.Commons.Extensions;
@@ -44,8 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Article()"/>
-    ///   <seealso cref="Article(IDictionary{string, object})"/>
-    ///   <seealso cref="Article(string, string, ArticlesCategory, string, string, string, Image)"/>
+    ///   <seealso cref="Article(string, string, ArticlesCategory, string, string, long?, Image)"/>
     /// </summary>
     [Fact]
     public void Constructors()
@@ -62,34 +60,13 @@ namespace Catharsis.Commons.Domain
       Assert.True(article.Category == null);
       Assert.True(article.Image == null);
 
-      Assert.Throws<ArgumentNullException>(() => new Article(null));
-      article = new Article(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text")
-        .AddNext("Annotation", "annotation")
-        .AddNext("Category", new ArticlesCategory())
-        .AddNext("Image", new Image()));
-      Assert.True(article.Id == 1);
-      Assert.True(article.AuthorId == "authorId");
-      Assert.True(article.DateCreated <= DateTime.UtcNow);
-      Assert.True(article.Language == "language");
-      Assert.True(article.LastUpdated <= DateTime.UtcNow);
-      Assert.True(article.Name == "name");
-      Assert.True(article.Text == "text");
-      Assert.True(article.Annotation == "annotation");
-      Assert.True(article.Category != null);
-      Assert.True(article.Image != null);
-
       Assert.Throws<ArgumentNullException>(() => new Article(null, "name"));
       Assert.Throws<ArgumentNullException>(() => new Article("language", null));
       Assert.Throws<ArgumentException>(() => new Article(string.Empty, "name"));
       Assert.Throws<ArgumentException>(() => new Article("language", string.Empty));
-      article = new Article("language", "name", new ArticlesCategory(), "annotation", "text", "authorId", new Image());
+      article = new Article("language", "name", new ArticlesCategory(), "annotation", "text", 1, new Image());
       Assert.True(article.Id == 0);
-      Assert.True(article.AuthorId == "authorId");
+      Assert.True(article.AuthorId == 1);
       Assert.True(article.DateCreated <= DateTime.UtcNow);
       Assert.True(article.Language == "language");
       Assert.True(article.LastUpdated <= DateTime.UtcNow);
@@ -158,7 +135,7 @@ namespace Catharsis.Commons.Domain
 
       xml = new XElement("Article",
         new XElement("Id", 1),
-        new XElement("AuthorId", "authorId"),
+        new XElement("AuthorId", 2),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
@@ -166,13 +143,13 @@ namespace Catharsis.Commons.Domain
         new XElement("Text", "text"),
         new XElement("Annotation", "annotation"),
         new XElement("ArticlesCategory",
-          new XElement("Id", 2),
+          new XElement("Id", 3),
           new XElement("Language", "category.language"),
           new XElement("Name", "category.name")),
        new XElement("Image",
-        new XElement("Id", 3),
+        new XElement("Id", 4),
         new XElement("File",
-          new XElement("Id", 4),
+          new XElement("Id", 5),
           new XElement("ContentType", "image.file.contentType"),
           new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
           new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
@@ -185,14 +162,14 @@ namespace Catharsis.Commons.Domain
       article = Article.Xml(xml);
       Assert.True(article.Id == 1);
       Assert.True(article.Annotation == "annotation");
-      Assert.True(article.AuthorId == "authorId");
-      Assert.True(article.Category.Id == 2);
+      Assert.True(article.AuthorId == 2);
+      Assert.True(article.Category.Id == 3);
       Assert.True(article.Category.Language == "category.language");
       Assert.True(article.Category.Name == "category.name");
       Assert.True(article.Comments.Count == 0);
       Assert.True(article.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
-      Assert.True(article.Image.Id == 3);
-      Assert.True(article.Image.File.Id == 4);
+      Assert.True(article.Image.Id == 4);
+      Assert.True(article.Image.File.Id == 5);
       Assert.True(article.Image.File.ContentType == "image.file.contentType");
       Assert.True(article.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
       Assert.True(article.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
@@ -207,7 +184,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(article.Name == "name");
       Assert.True(article.Tags.Count == 0);
       Assert.True(article.Text == "text");
-      Assert.True(new Article("language", "name", new ArticlesCategory("category.language", "category.name") { Id = 2 }, "annotation", "text", "authorId", new Image(new File("image.file.contentType", "image.file.name", "image.file.originalName", Guid.Empty.ToByteArray()) { Id = 4, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2) { Id = 3 }) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new Article("language", "name", new ArticlesCategory("category.language", "category.name") { Id = 3 }, "annotation", "text", 2, new Image(new File("image.file.contentType", "image.file.name", "image.file.originalName", Guid.Empty.ToByteArray()) { Id = 5, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2) { Id = 4 }) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Article.Xml(article.Xml()).Equals(article));
     }
   }

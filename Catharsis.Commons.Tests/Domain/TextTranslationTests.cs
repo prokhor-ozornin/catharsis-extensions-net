@@ -56,7 +56,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="TextTranslation()"/>
-    ///   <seealso cref="TextTranslation(IDictionary{string, object})"/>
     ///   <seealso cref="TextTranslation(string, string, string, string)"/>
     /// </summary>
     [Fact]
@@ -69,26 +68,12 @@ namespace Catharsis.Commons.Domain
       Assert.True(translation.Text == null);
       Assert.True(translation.Translator == null);
 
-      Assert.Throws<ArgumentNullException>(() => new TextTranslation(null));
-      translation = new TextTranslation(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text")
-        .AddNext("Translator", "translator"));
-      Assert.True(translation.Id == 1);
-      Assert.True(translation.Language == "language");
-      Assert.True(translation.Name == "name");
-      Assert.True(translation.Text == "text");
-      Assert.True(translation.Translator == "translator");
-
       Assert.Throws<ArgumentNullException>(() => new TextTranslation(null, "name", "text"));
       Assert.Throws<ArgumentNullException>(() => new TextTranslation("language", null, "text"));
       Assert.Throws<ArgumentNullException>(() => new TextTranslation("language", "name", null));
       Assert.Throws<ArgumentException>(() => new TextTranslation(string.Empty, "name", "text"));
       Assert.Throws<ArgumentException>(() => new TextTranslation("language", string.Empty, "text"));
       Assert.Throws<ArgumentException>(() => new TextTranslation("language", "name", string.Empty));
-
       translation = new TextTranslation("language", "name", "text", "translator");
       Assert.True(translation.Id == 0);
       Assert.True(translation.Language == "language");

@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="category">Category of announcements to search for.</param>
     /// <returns>Filtered sequence of announcements with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="announcements"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Announcement> InAnnouncementsCategory(this IEnumerable<Announcement> announcements, AnnouncementsCategory category)
+    public static IEnumerable<Announcement> InCategory(this IEnumerable<Announcement> announcements, AnnouncementsCategory category)
     {
       Assertion.NotNull(announcements);
 
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="announcements">Source sequence of announcements for sorting.</param>
     /// <returns>Sorted sequence of announcements.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="announcements"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Announcement> OrderByAnnouncementsCategoryName(this IEnumerable<Announcement> announcements)
+    public static IEnumerable<Announcement> OrderByCategoryName(this IEnumerable<Announcement> announcements)
     {
       Assertion.NotNull(announcements);
 
@@ -43,7 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="announcements">Source sequence of announcements for sorting.</param>
     /// <returns>Sorted sequence of announcements.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="announcements"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Announcement> OrderByAnnouncementsCategoryNameDescending(this IEnumerable<Announcement> announcements)
+    public static IEnumerable<Announcement> OrderByCategoryNameDescending(this IEnumerable<Announcement> announcements)
     {
       Assertion.NotNull(announcements);
 

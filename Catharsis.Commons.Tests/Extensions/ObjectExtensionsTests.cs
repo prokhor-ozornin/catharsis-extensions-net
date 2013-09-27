@@ -24,21 +24,6 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="ObjectExtensions.And(object, object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void And_Method()
-    {
-      var trueSubject = new object();
-      object falseSubject = string.Empty;
-
-      Assert.True(trueSubject.And(trueSubject));
-      Assert.False(trueSubject.And(falseSubject));
-      Assert.False(falseSubject.And(trueSubject));
-      Assert.False(falseSubject.And(falseSubject));
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="ObjectExtensions.As{T}(object)"/> method.</para>
     /// </summary>
     [Fact]
@@ -183,12 +168,12 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="ObjectExtensions.Finalize(object, bool)"/> method.</para>
+    ///   <para>Performs testing of <see cref="ObjectExtensions.Finalize{T}(T, bool)"/> method.</para>
     /// </summary>
     [Fact]
     public void Finalize_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Finalize(null));
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Finalize<object>(null));
 
       var subject = new object();
       Assert.True(ReferenceEquals(subject.Finalize(), subject));
@@ -346,7 +331,7 @@ namespace Catharsis.Commons.Extensions
     ///   <para>Performs testing of <see cref="ObjectExtensions.InvokeMethod(object, string, object[])"/> method.</para>
     /// </summary>
     [Fact]
-    public void InvokeMethod_Method()
+    public void InvokeMethod_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.InvokeMethod(null, string.Empty));
       Assert.Throws<ArgumentNullException>(() => new object().InvokeMethod(null));
@@ -375,39 +360,12 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="ObjectExtensions.Not(object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void Not_Method()
-    {
-      var subject = new object();
-
-      Assert.True(subject.True());
-      Assert.False(subject.Not());
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="ObjectExtensions.Or(object, object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void Or_Method()
-    {
-      var trueSubject = new object();
-      object falseSubject = string.Empty;
-
-      Assert.True(trueSubject.Or(trueSubject));
-      Assert.True(trueSubject.Or(falseSubject));
-      Assert.True(falseSubject.Or(trueSubject));
-      Assert.False(falseSubject.Or(falseSubject));
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="ObjectExtensions.SetProperty(object, string, object)"/> method.</para>
+    ///   <para>Performs testing of <see cref="ObjectExtensions.SetProperty{T}(T, string, object)"/> method.</para>
     /// </summary>
     [Fact]
     public void SetProperty_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.SetProperty(null, "property", new object()));
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.SetProperty<object>(null, "property", new object()));
       Assert.Throws<ArgumentNullException>(() => new object().SetProperty(null, new object()));
       Assert.Throws<ArgumentException>(() => new object().SetProperty(string.Empty, new object()));
       
@@ -436,18 +394,29 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="ObjectExtensions.SetProperties(object, IDictionary{string, object})"/> method.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="ObjectExtensions.SetProperties{T}(T, IDictionary{string, object})"/></description></item>
+    ///     <item><description><see cref="ObjectExtensions.SetProperties{T}(T, object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void SetProperties_Method()
+    public void SetProperties_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.SetProperties(null, new Dictionary<string, object>()));
-      Assert.Throws<ArgumentNullException>(() => new object().SetProperties(null));
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.SetProperties<object>(null, new Dictionary<string, object>()));
+      Assert.Throws<ArgumentNullException>(() => new object().SetProperties((IDictionary<string, object>) null));
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.SetProperties<object>(null, (object) null));
+      Assert.Throws<ArgumentNullException>(() => new object().SetProperties((object) null));
 
       var subject = new TestObject();
       var property = Guid.NewGuid().ToString();
+      
       Assert.Throws<ArgumentException>(() => subject.SetProperties(new Dictionary<string, object>().AddNext("ReadOnlyProperty", property)));
       Assert.True(ReferenceEquals(subject.SetProperties(new Dictionary<string, object>().AddNext("PublicProperty", property).AddNext("property", new object())), subject));
+      Assert.True(subject.GetProperty("PublicProperty").Equals(property));
+
+      Assert.Throws<ArgumentException>(() => subject.SetProperties(new { ReadOnlyProperty = property }));
+      Assert.True(ReferenceEquals(subject.SetProperties(new { PublicProperty = property, property = new object() }), subject));
       Assert.True(subject.GetProperty("PublicProperty").Equals(property));
     }
 
@@ -468,14 +437,14 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="ObjectExtensions.ToString{T}(T, IEnumerable{string})"/></description></item>
+    ///     <item><description><see cref="ObjectExtensions.ToString(object, IEnumerable{string})"/></description></item>
     ///     <item><description><see cref="ObjectExtensions.ToString{T}(T, Expression{Func{T, object}}[])"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void ToString_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToString<object>(null, Enumerable.Empty<string>().ToArray()));
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToString(null, Enumerable.Empty<string>().ToArray()));
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToString(null, Enumerable.Empty<Expression<Func<object, object>>>().ToArray()));
       
       Assert.True(new object().ToString(new [] {"property"}) == "[]", new object().ToString(new [] {"property"}));

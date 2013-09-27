@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="category">Category of downloads to search for.</param>
     /// <returns>Filtered sequence of downloads with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="downloads"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Download> InDownloadsCategory(this IEnumerable<Download> downloads, DownloadsCategory category)
+    public static IEnumerable<Download> InCategory(this IEnumerable<Download> downloads, DownloadsCategory category)
     {
       Assertion.NotNull(downloads);
 
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="downloads">Source sequence of downloads for sorting.</param>
     /// <returns>Sorted sequence of downloads.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="downloads"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Download> OrderByDownloadsCategoryName(this IEnumerable<Download> downloads)
+    public static IEnumerable<Download> OrderByCategoryName(this IEnumerable<Download> downloads)
     {
       Assertion.NotNull(downloads);
 
@@ -43,7 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="downloads">Source sequence of downloads for sorting.</param>
     /// <returns>Sorted sequence of download.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="downloads"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Download> OrderByDownloadsCategoryNameDescending(this IEnumerable<Download> downloads)
+    public static IEnumerable<Download> OrderByCategoryNameDescending(this IEnumerable<Download> downloads)
     {
       Assertion.NotNull(downloads);
 

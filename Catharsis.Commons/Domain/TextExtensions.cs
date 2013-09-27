@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="category">Category of texts to search for.</param>
     /// <returns>Filtered sequence of texts with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="texts"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Text> InTextsCategory(this IEnumerable<Text> texts, TextsCategory category)
+    public static IEnumerable<Text> InCategory(this IEnumerable<Text> texts, TextsCategory category)
     {
       Assertion.NotNull(texts);
       
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="texts">Source sequence of texts for sorting.</param>
     /// <returns>Sorted sequence of texts.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="texts"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Text> OrderByTextsCategoryName(this IEnumerable<Text> texts)
+    public static IEnumerable<Text> OrderByCategoryName(this IEnumerable<Text> texts)
     {
       Assertion.NotNull(texts);
 
@@ -43,7 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="texts">Source sequence of texts for sorting.</param>
     /// <returns>Sorted sequence of texts.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="texts"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Text> OrderByTextsCategoryNameDescending(this IEnumerable<Text> texts)
+    public static IEnumerable<Text> OrderByCategoryNameDescending(this IEnumerable<Text> texts)
     {
       Assertion.NotNull(texts);
 

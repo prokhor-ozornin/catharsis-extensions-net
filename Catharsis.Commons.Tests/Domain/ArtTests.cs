@@ -64,7 +64,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Art()"/>
-    ///   <seealso cref="Art(IDictionary{string, object})"/>
     ///   <seealso cref="Art(string, string, Image, ArtsAlbum, string, Person, string, string)"/>
     /// </summary>
     [Fact]
@@ -85,33 +84,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(art.Place == null);
       Assert.True(art.Tags.Count == 0);
       Assert.True(art.Text == null);
-
-      Assert.Throws<ArgumentNullException>(() => new Art(null));
-      art = new Art(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text")
-        .AddNext("Album", new ArtsAlbum())
-        .AddNext("Image", new Image())
-        .AddNext("Material", "material")
-        .AddNext("Person", new Person())
-        .AddNext("Place", "place"));
-      Assert.True(art.Id == 1);
-      Assert.True(art.Album != null);
-      Assert.True(art.AuthorId == "authorId");
-      Assert.True(art.Comments.Count == 0);
-      Assert.True(art.DateCreated <= DateTime.UtcNow);
-      Assert.True(art.Image != null);
-      Assert.True(art.Language == "language");
-      Assert.True(art.LastUpdated <= DateTime.UtcNow);
-      Assert.True(art.Material == "material");
-      Assert.True(art.Name == "name");
-      Assert.True(art.Person != null);
-      Assert.True(art.Place == "place");
-      Assert.True(art.Tags.Count == 0);
-      Assert.True(art.Text == "text");
 
       Assert.Throws<ArgumentNullException>(() => new Art(null, "name", new Image()));
       Assert.Throws<ArgumentNullException>(() => new Art("language", null, new Image()));

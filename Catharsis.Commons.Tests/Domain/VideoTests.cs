@@ -72,7 +72,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Video()"/>
-    ///   <seealso cref="Video(IDictionary{string, object})"/>
     ///   <seealso cref="Video(File, short, long, short, short, VideosCategory)"/>
     /// </summary>
     [Fact]
@@ -86,23 +85,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(video.File == null);
       Assert.True(video.Height == 0);
       Assert.True(video.Width == 0);
-
-      Assert.Throws<ArgumentNullException>(() => new Video(null));
-      video = new Video(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Bitrate", (short) 1)
-        .AddNext("Category", new VideosCategory())
-        .AddNext("Duration", 2)
-        .AddNext("File", new File())
-        .AddNext("Height", (short) 3)
-        .AddNext("Width", (short) 4));
-      Assert.True(video.Id == 1);
-      Assert.True(video.Bitrate == 1);
-      Assert.True(video.Category != null);
-      Assert.True(video.Duration == 2);
-      Assert.True(video.File != null);
-      Assert.True(video.Height == 3);
-      Assert.True(video.Width == 4);
 
       Assert.Throws<ArgumentNullException>(() => new Video(null, 1, 2, 3, 4));
       video = new Video(new File(), 1, 2, 3, 4, new VideosCategory());

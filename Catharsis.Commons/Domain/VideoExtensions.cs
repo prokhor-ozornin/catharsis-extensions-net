@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="category">Category of videos to search for.</param>
     /// <returns>Filtered sequence of videos with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Video> InVideosCategory(this IEnumerable<Video> videos, VideosCategory category)
+    public static IEnumerable<Video> InCategory(this IEnumerable<Video> videos, VideosCategory category)
     {
       Assertion.NotNull(videos);
 
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="videos">Source sequence of videos for sorting.</param>
     /// <returns>Sorted sequence of videos.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Video> OrderByVideosCategoryName(this IEnumerable<Video> videos)
+    public static IEnumerable<Video> OrderByCategoryName(this IEnumerable<Video> videos)
     {
       Assertion.NotNull(videos);
 
@@ -43,7 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="videos">Source sequence of videos for sorting.</param>
     /// <returns>Sorted sequence of videos.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="videos"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Video> OrderByVideosCategoryNameDescending(this IEnumerable<Video> videos)
+    public static IEnumerable<Video> OrderByCategoryNameDescending(this IEnumerable<Video> videos)
     {
       Assertion.NotNull(videos);
 

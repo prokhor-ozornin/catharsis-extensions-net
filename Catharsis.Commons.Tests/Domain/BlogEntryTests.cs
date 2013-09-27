@@ -25,7 +25,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="BlogEntry()"/>
-    ///   <seealso cref="BlogEntry(IDictionary{string, object})"/>
     ///   <seealso cref="BlogEntry(string, string, string, Blog)"/>
     /// </summary>
     [Fact]
@@ -40,22 +39,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(entry.Name == null);
       Assert.True(entry.Text == null);
       Assert.True(entry.Blog == null);
-
-      Assert.Throws<ArgumentNullException>(() => new BlogEntry(null));
-      entry = new BlogEntry(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text")
-        .AddNext("Blog", new Blog()));
-      Assert.True(entry.Id == 1);
-      Assert.True(entry.AuthorId == null);
-      Assert.True(entry.DateCreated <= DateTime.UtcNow);
-      Assert.True(entry.Language == "language");
-      Assert.True(entry.LastUpdated <= DateTime.UtcNow);
-      Assert.True(entry.Name == "name");
-      Assert.True(entry.Text == "text");
-      Assert.True(entry.Blog != null);
 
       Assert.Throws<ArgumentNullException>(() => new BlogEntry(null, "name", "text", new Blog()));
       Assert.Throws<ArgumentNullException>(() => new BlogEntry("language", null, "text", new Blog()));
@@ -118,7 +101,7 @@ namespace Catharsis.Commons.Domain
         new XElement("Text", "text"),
           new XElement("Blog",
             new XElement("Id", 2),
-            new XElement("AuthorId", "blog.authorId"),
+            new XElement("AuthorId", 3),
             new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
             new XElement("Language", "blog.language"),
             new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
@@ -128,7 +111,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(entry.AuthorId == null);
       Assert.True(entry.Comments.Count == 0);
       Assert.True(entry.Blog.Id == 2);
-      Assert.True(entry.Blog.AuthorId == "blog.authorId");
+      Assert.True(entry.Blog.AuthorId == 3);
       Assert.True(entry.Blog.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
       Assert.True(entry.Blog.Language == "blog.language");
       Assert.True(entry.Blog.LastUpdated.ToRfc1123() == DateTime.MaxValue.ToRfc1123());
@@ -139,7 +122,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(entry.Name == "name");
       Assert.True(entry.Tags.Count == 0);
       Assert.True(entry.Text == "text");
-      Assert.True(new BlogEntry("language", "name", "text", new Blog("blog.language", "blog.name", "blog.authorId") { Id = 2, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue} ) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new BlogEntry("language", "name", "text", new Blog("blog.language", "blog.name", 3) { Id = 2, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue} ) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(BlogEntry.Xml(entry.Xml()).Equals(entry));
     }
   }

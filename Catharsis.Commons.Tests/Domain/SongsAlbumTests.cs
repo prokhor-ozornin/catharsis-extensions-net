@@ -34,7 +34,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="SongsAlbum()"/>
-    ///   <seealso cref="SongsAlbum(IDictionary{string, object})"/>
     ///   <seealso cref="SongsAlbum(string, string, string, Image, DateTime?)"/>
     /// </summary>
     [Fact]
@@ -52,27 +51,6 @@ namespace Catharsis.Commons.Domain
       Assert.False(album.PublishedOn.HasValue);
       Assert.True(album.Tags.Count == 0);
       Assert.True(album.Text == null);
-
-      Assert.Throws<ArgumentNullException>(() => new SongsAlbum(null));
-      album = new SongsAlbum(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Image", new Image())
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("PublishedOn", DateTime.MinValue)
-        .AddNext("Text", "text"));
-      Assert.True(album.Id == 1);
-      Assert.True(album.AuthorId == "authorId");
-      Assert.True(album.Comments.Count == 0);
-      Assert.True(album.DateCreated <= DateTime.UtcNow);
-      Assert.True(album.Image != null);
-      Assert.True(album.Language == "language");
-      Assert.True(album.LastUpdated <= DateTime.UtcNow);
-      Assert.True(album.Name == "name");
-      Assert.True(album.PublishedOn == DateTime.MinValue);
-      Assert.True(album.Tags.Count == 0);
-      Assert.True(album.Text == "text");
 
       Assert.Throws<ArgumentNullException>(() => new SongsAlbum(null, "name"));
       Assert.Throws<ArgumentNullException>(() => new SongsAlbum("language",null));

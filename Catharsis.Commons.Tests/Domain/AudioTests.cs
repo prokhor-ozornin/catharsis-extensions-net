@@ -54,7 +54,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Audio()"/>
-    ///   <seealso cref="Audio(IDictionary{string, object})"/>
     ///   <seealso cref="Audio(File, short, short, AudiosCategory)"/>
     /// </summary>
     [Fact]
@@ -67,19 +66,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(audio.Duration == 0);
       Assert.True(audio.File == null);
 
-      Assert.Throws<ArgumentNullException>(() => new Audio(null));
-      audio = new Audio(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Bitrate", (short) 1)
-        .AddNext("Category", new AudiosCategory())
-        .AddNext("Duration", (short) 2)
-        .AddNext("File", new File()));
-      Assert.True(audio.Id == 1);
-      Assert.True(audio.Bitrate == 1);
-      Assert.True(audio.Category != null);
-      Assert.True(audio.Duration == 2);
-      Assert.True(audio.File != null);
-      
       Assert.Throws<ArgumentNullException>(() => new Audio(null, 1, 2));
       audio = new Audio(new File(), 1, 2, new AudiosCategory());
       Assert.True(audio.Id == 0);

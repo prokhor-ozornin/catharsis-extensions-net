@@ -39,15 +39,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new announcement with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on announcement after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Announcement(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new announcement.</para>
     /// </summary>
     /// <param name="language">ISO language code of announcement's text content.</param>
@@ -58,12 +49,11 @@ namespace Catharsis.Commons.Domain
     /// <param name="image">Associated announcement's image, or a <c>null</c> reference.</param>
     /// <param name="currency">Currency of announcement's price, or a <c>null</c> reference.</param>
     /// <param name="price">Price of announcement's content, or a <c>null</c> reference.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="authorId"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="authorId"/> is a <c>null</c> reference.</exception>
-    public Announcement(string language, string name, string text, string authorId, AnnouncementsCategory category = null, Image image = null, string currency = null, decimal? price = null) : base(language, name, text, authorId)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    public Announcement(string language, string name, string text, long authorId, AnnouncementsCategory category = null, Image image = null, string currency = null, decimal? price = null) : base(language, name, text, authorId)
     {
       Assertion.NotEmpty(text);
-      Assertion.NotEmpty(authorId);
 
       this.Category = category;
       this.Image = image;
@@ -81,7 +71,7 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var announcement = new Announcement((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (string) xml.Element("AuthorId"), xml.Element("AnnouncementsCategory") != null ? AnnouncementsCategory.Xml(xml.Element("AnnouncementsCategory")) : null, xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null, (string) xml.Element("Currency"), (decimal?) xml.Element("Price"));
+      var announcement = new Announcement((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (long) xml.Element("AuthorId"), xml.Element("AnnouncementsCategory") != null ? AnnouncementsCategory.Xml(xml.Element("AnnouncementsCategory")) : null, xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null, (string) xml.Element("Currency"), (decimal?) xml.Element("Price"));
       if (xml.Element("Id") != null)
       {
         announcement.Id = (long) xml.Element("Id");

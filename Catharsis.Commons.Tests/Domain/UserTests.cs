@@ -65,7 +65,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="User()"/>
-    ///   <seealso cref="User(IDictionary{string, object})"/>
     ///   <seealso cref="User(string, string, string)"/>
     /// </summary>
     [Fact]
@@ -78,19 +77,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(user.LastUpdated <= DateTime.UtcNow);
       Assert.True(user.Name == null);
       Assert.True(user.Username == null);
-
-      Assert.Throws<ArgumentNullException>(() => new User(null));
-      user = new User(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Email", "email@mail.ru")
-        .AddNext("Name", "name")
-        .AddNext("Username", "username"));
-      Assert.True(user.Id == 1);
-      Assert.True(user.DateCreated <= DateTime.UtcNow);
-      Assert.True(user.Email == "email@mail.ru");
-      Assert.True(user.LastUpdated <= DateTime.UtcNow);
-      Assert.True(user.Name == "name");
-      Assert.True(user.Username == "username");
 
       Assert.Throws<ArgumentNullException>(() => new User(null, "email", "name"));
       Assert.Throws<ArgumentNullException>(() => new User("username", null, "name"));

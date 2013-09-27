@@ -11,42 +11,42 @@ namespace Catharsis.Commons.Domain
   public sealed class DownloadExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="DownloadExtensions.InDownloadsCategory(IEnumerable{Download}, DownloadsCategory)"/> method.</para>
+    ///   <para>Performs testing of <see cref="DownloadExtensions.InCategory(IEnumerable{Download}, DownloadsCategory)"/> method.</para>
     /// </summary>
     [Fact]
-    public void InDownloadsCategory_Method()
+    public void InCategory_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => DownloadExtensions.InDownloadsCategory(null, new DownloadsCategory()));
+      Assert.Throws<ArgumentNullException>(() => DownloadExtensions.InCategory(null, new DownloadsCategory()));
 
-      Assert.False(Enumerable.Empty<Download>().InDownloadsCategory(null).Any());
-      Assert.False(Enumerable.Empty<Download>().InDownloadsCategory(new DownloadsCategory()).Any());
-      Assert.True(new[] { null, new Download { Category = new DownloadsCategory { Id = 1 } }, null, new Download { Category = new DownloadsCategory { Id = 2 } } }.InDownloadsCategory(new DownloadsCategory { Id = 1 }).Count() == 1);
+      Assert.False(Enumerable.Empty<Download>().InCategory(null).Any());
+      Assert.False(Enumerable.Empty<Download>().InCategory(new DownloadsCategory()).Any());
+      Assert.True(new[] { null, new Download { Category = new DownloadsCategory { Id = 1 } }, null, new Download { Category = new DownloadsCategory { Id = 2 } } }.InCategory(new DownloadsCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="DownloadExtensions.OrderByDownloadsCategoryName(IEnumerable{Download})"/> method.</para>
+    ///   <para>Performs testing of <see cref="DownloadExtensions.OrderByCategoryName(IEnumerable{Download})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByDownloadsCategoryName_Method()
+    public void OrderByCategoryName_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => DownloadExtensions.OrderByDownloadsCategoryName(null));
-      Assert.Throws<NullReferenceException>(() => new Download[] { null }.OrderByDownloadsCategoryName().Any());
+      Assert.Throws<ArgumentNullException>(() => DownloadExtensions.OrderByCategoryName(null));
+      Assert.Throws<NullReferenceException>(() => new Download[] { null }.OrderByCategoryName().Any());
 
       var downloads = new[] { new Download { Category = new DownloadsCategory { Name = "Second" } }, new Download { Category = new DownloadsCategory { Name = "First" } } };
-      Assert.True(downloads.OrderByDownloadsCategoryName().SequenceEqual(downloads.Reverse()));
+      Assert.True(downloads.OrderByCategoryName().SequenceEqual(downloads.Reverse()));
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="DownloadExtensions.OrderByDownloadsCategoryNameDescending(IEnumerable{Download})"/> method.</para>
+    ///   <para>Performs testing of <see cref="DownloadExtensions.OrderByCategoryNameDescending(IEnumerable{Download})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByDownloadCategoryNameDescending_Method()
+    public void OrderByCategoryNameDescending_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => DownloadExtensions.OrderByDownloadsCategoryNameDescending(null));
-      Assert.Throws<NullReferenceException>(() => new Download[] { null }.OrderByDownloadsCategoryNameDescending().Any());
+      Assert.Throws<ArgumentNullException>(() => DownloadExtensions.OrderByCategoryNameDescending(null));
+      Assert.Throws<NullReferenceException>(() => new Download[] { null }.OrderByCategoryNameDescending().Any());
 
       var downloads = new[] { new Download { Category = new DownloadsCategory { Name = "First" } }, new Download { Category = new DownloadsCategory { Name = "Second" } } };
-      Assert.True(downloads.OrderByDownloadsCategoryNameDescending().SequenceEqual(downloads.Reverse()));
+      Assert.True(downloads.OrderByCategoryNameDescending().SequenceEqual(downloads.Reverse()));
     }
 
     /// <summary>

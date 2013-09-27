@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="album">Album of songs to search for.</param>
     /// <returns>Filtered sequence of songs in specified album.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="songs"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Song> InSongsAlbum(this IEnumerable<Song> songs, SongsAlbum album)
+    public static IEnumerable<Song> InAlbum(this IEnumerable<Song> songs, SongsAlbum album)
     {
       Assertion.NotNull(songs);
 
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="songs">Source sequence of songs for sorting.</param>
     /// <returns>Sorted sequence of songs.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="songs"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Song> OrderBySongsAlbumName(this IEnumerable<Song> songs)
+    public static IEnumerable<Song> OrderByAlbumName(this IEnumerable<Song> songs)
     {
       Assertion.NotNull(songs);
 
@@ -43,7 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="songs">Source sequence of songs for sorting.</param>
     /// <returns>Sorted sequence of songs.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="songs"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Song> OrderBySongsAlbumNameDescending(this IEnumerable<Song> songs)
+    public static IEnumerable<Song> OrderByAlbumNameDescending(this IEnumerable<Song> songs)
     {
       Assertion.NotNull(songs);
 

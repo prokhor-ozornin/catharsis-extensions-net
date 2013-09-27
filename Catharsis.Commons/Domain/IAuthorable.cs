@@ -8,6 +8,6 @@
     /// <summary>
     ///   <para></para>
     /// </summary>
-    string AuthorId { get; set; }
+    long? AuthorId { get; set; }
   }
 }

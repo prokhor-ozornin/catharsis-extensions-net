@@ -91,15 +91,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new user with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on user after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public User(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new user.</para>
     /// </summary>
     /// <param name="username"></param>

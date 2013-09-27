@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="category">Category of audios to search for.</param>
     /// <returns>Filtered sequence of audios with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="audios"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Audio> InAudiosCategory(this IEnumerable<Audio> audios, AudiosCategory category)
+    public static IEnumerable<Audio> InCategory(this IEnumerable<Audio> audios, AudiosCategory category)
     {
       Assertion.NotNull(audios);
 
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="audios">Source sequence of audios for sorting.</param>
     /// <returns>Sorted sequence of audios.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="audios"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Audio> OrderByAudiosCategoryName(this IEnumerable<Audio> audios)
+    public static IEnumerable<Audio> OrderByCategoryName(this IEnumerable<Audio> audios)
     {
       Assertion.NotNull(audios);
 
@@ -43,7 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="audios">Source sequence of audios for sorting.</param>
     /// <returns>Sorted sequence of audios.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="audios"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Audio> OrderByAudiosCategoryNameDescending(this IEnumerable<Audio> audios)
+    public static IEnumerable<Audio> OrderByCategoryNameDescending(this IEnumerable<Audio> audios)
     {
       Assertion.NotNull(audios);
 

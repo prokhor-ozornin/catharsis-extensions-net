@@ -11,7 +11,6 @@ namespace Catharsis.Commons.Domain
   [EqualsAndHashCode("AuthorId,Name,Text")]
   public class Comment : EntityBase, IComparable<Comment>, IEquatable<Comment>, IAuthorable, INameable, ITextable, ITimeable
   {
-    private string authorId;
     private DateTime dateCreated = DateTime.UtcNow;
     private DateTime lastUpdated = DateTime.UtcNow;
     private string name;
@@ -20,18 +19,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public virtual string AuthorId
-    {
-      get { return this.authorId; }
-      set
-      {
-        Assertion.NotEmpty(value);
-
-        this.authorId = value;
-      }
-    }
+    public virtual long? AuthorId { get; set; }
     
     /// <summary>
     ///   <para>Date and time or comment's creation.</para>
@@ -91,23 +79,14 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new comment with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on comment after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Comment(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new comment.</para>
     /// </summary>
     /// <param name="authorId">Identifier of comment's author.</param>
     /// <param name="name">Name of comment.</param>
     /// <param name="text">Comment's body text.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/>, <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="authorId"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
-    public Comment(string authorId, string name, string text)
+    /// <exception cref="ArgumentNullException">If either <paramref name="name"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
+    public Comment(long authorId, string name, string text)
     {
       this.AuthorId = authorId;
       this.Name = name;
@@ -124,7 +103,7 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var comment = new Comment((string) xml.Element("AuthorId"), (string) xml.Element("Name"), (string) xml.Element("Text"));
+      var comment = new Comment((long) xml.Element("AuthorId"), (string) xml.Element("Name"), (string) xml.Element("Text"));
       if (xml.Element("Id") != null)
       {
         comment.Id = (long) xml.Element("Id");

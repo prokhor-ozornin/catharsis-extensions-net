@@ -11,42 +11,42 @@ namespace Catharsis.Commons.Domain
   public sealed class AnnouncementExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="AnnouncementExtensions.InAnnouncementsCategory(IEnumerable{Announcement}, AnnouncementsCategory)"/> method.</para>
+    ///   <para>Performs testing of <see cref="AnnouncementExtensions.InCategory(IEnumerable{Announcement}, AnnouncementsCategory)"/> method.</para>
     /// </summary>
     [Fact]
-    public void InAnnouncementsCategory_Method()
+    public void InCategory_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => AnnouncementExtensions.InAnnouncementsCategory(null, new AnnouncementsCategory()));
+      Assert.Throws<ArgumentNullException>(() => AnnouncementExtensions.InCategory(null, new AnnouncementsCategory()));
 
-      Assert.False(Enumerable.Empty<Announcement>().InAnnouncementsCategory(null).Any());
-      Assert.False(Enumerable.Empty<Announcement>().InAnnouncementsCategory(new AnnouncementsCategory()).Any());
-      Assert.True(new[] { null, new Announcement { Category = new AnnouncementsCategory { Id = 1 } }, null, new Announcement { Category = new AnnouncementsCategory { Id = 2 } } }.InAnnouncementsCategory(new AnnouncementsCategory { Id = 1 }).Count() == 1);
+      Assert.False(Enumerable.Empty<Announcement>().InCategory(null).Any());
+      Assert.False(Enumerable.Empty<Announcement>().InCategory(new AnnouncementsCategory()).Any());
+      Assert.True(new[] { null, new Announcement { Category = new AnnouncementsCategory { Id = 1 } }, null, new Announcement { Category = new AnnouncementsCategory { Id = 2 } } }.InCategory(new AnnouncementsCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="AnnouncementExtensions.OrderByAnnouncementsCategoryName(IEnumerable{Announcement})"/> method.</para>
+    ///   <para>Performs testing of <see cref="AnnouncementExtensions.OrderByCategoryName(IEnumerable{Announcement})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByAnnouncementsCategoryName_Method()
+    public void OrderByCategoryName_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => AnnouncementExtensions.OrderByAnnouncementsCategoryName(null));
-      Assert.Throws<NullReferenceException>(() => new Announcement[] { null }.OrderByAnnouncementsCategoryName().Any());
+      Assert.Throws<ArgumentNullException>(() => AnnouncementExtensions.OrderByCategoryName(null));
+      Assert.Throws<NullReferenceException>(() => new Announcement[] { null }.OrderByCategoryName().Any());
 
       var announcements = new[] { new Announcement { Category = new AnnouncementsCategory { Name = "Second" } }, new Announcement { Category = new AnnouncementsCategory { Name = "First" } } };
-      Assert.True(announcements.OrderByAnnouncementsCategoryName().SequenceEqual(announcements.Reverse()));
+      Assert.True(announcements.OrderByCategoryName().SequenceEqual(announcements.Reverse()));
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="AnnouncementExtensions.OrderByAnnouncementsCategoryNameDescending(IEnumerable{Announcement})"/> method.</para>
+    ///   <para>Performs testing of <see cref="AnnouncementExtensions.OrderByCategoryNameDescending(IEnumerable{Announcement})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByAnnouncementsCategoryNameDescending_Method()
+    public void OrderByCategoryNameDescending_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => AnnouncementExtensions.OrderByAnnouncementsCategoryNameDescending(null));
-      Assert.Throws<NullReferenceException>(() => new Announcement[] { null }.OrderByAnnouncementsCategoryNameDescending().Any());
+      Assert.Throws<ArgumentNullException>(() => AnnouncementExtensions.OrderByCategoryNameDescending(null));
+      Assert.Throws<NullReferenceException>(() => new Announcement[] { null }.OrderByCategoryNameDescending().Any());
 
       var announcements = new[] { new Announcement { Category = new AnnouncementsCategory { Name = "First" } }, new Announcement { Category = new AnnouncementsCategory { Name = "Second" } } };
-      Assert.True(announcements.OrderByAnnouncementsCategoryNameDescending().SequenceEqual(announcements.Reverse()));
+      Assert.True(announcements.OrderByCategoryNameDescending().SequenceEqual(announcements.Reverse()));
     }
 
     /// <summary>

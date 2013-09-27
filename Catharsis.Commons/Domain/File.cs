@@ -122,14 +122,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new file with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on file after its creation.</param>
-    public File(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new file.</para>
     /// </summary>
     /// <param name="contentType"></param>

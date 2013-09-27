@@ -51,15 +51,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new text with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on text after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Text(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new text.</para>
     /// </summary>
     /// <param name="authorId">Identifier of author's text.</param>
@@ -68,11 +59,10 @@ namespace Catharsis.Commons.Domain
     /// <param name="text">Text's content.</param>
     /// <param name="category">Category of text's belongings, or a <c>null</c> reference.</param>
     /// <param name="person"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="person"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="authorId"/>, <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
-    public Text(string authorId, string language, string name, string text, Person person, TextsCategory category = null) : base(language, name, text, authorId)
+    /// <exception cref="ArgumentNullException">If either <paramref name="language"/>, <paramref name="name"/>, <paramref name="text"/> or <paramref name="person"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="language"/>, <paramref name="name"/> or <paramref name="text"/> is <see cref="string.Empty"/> string.</exception>
+    public Text(long authorId, string language, string name, string text, Person person, TextsCategory category = null) : base(language, name, text, authorId)
     {
-      Assertion.NotEmpty(authorId);
       Assertion.NotEmpty(text);
 
       this.Category = category;
@@ -89,7 +79,7 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var text = new Text((string)xml.Element("AuthorId"), (string)xml.Element("Language"), (string)xml.Element("Name"), (string)xml.Element("Text"), Person.Xml(xml.Element("Person")), xml.Element("TextsCategory") != null ? TextsCategory.Xml(xml.Element("TextsCategory")) : null);
+      var text = new Text((long)xml.Element("AuthorId"), (string)xml.Element("Language"), (string)xml.Element("Name"), (string)xml.Element("Text"), Person.Xml(xml.Element("Person")), xml.Element("TextsCategory") != null ? TextsCategory.Xml(xml.Element("TextsCategory")) : null);
       if (xml.Element("Id") != null)
       {
         text.Id = (long) xml.Element("Id");

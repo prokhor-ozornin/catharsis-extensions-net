@@ -101,7 +101,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="File()"/>
-    ///   <seealso cref="File(IDictionary{string, object})"/>
     ///   <seealso cref="File(string, string, string, byte[])"/>
     /// </summary>
     [Fact]
@@ -118,24 +117,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(file.Size == 0);
       Assert.True(file.Tags.Count == 0);
 
-      Assert.Throws<ArgumentNullException>(() => new File(null));
       var data = new byte[] { 1, 2, 3 };
-      file = new File(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("ContentType", "contentType")
-        .AddNext("Data", data)
-        .AddNext("Name", "name")
-        .AddNext("OriginalName", "originalName")
-        .AddNext("Size", 1));
-      Assert.True(file.Id == 1);
-      Assert.True(file.ContentType == "contentType");
-      Assert.True(file.Data == data);
-      Assert.True(file.DateCreated <= DateTime.UtcNow);
-      Assert.True(file.LastUpdated <= DateTime.UtcNow);
-      Assert.True(file.Name == "name");
-      Assert.True(file.OriginalName == "originalName");
-      Assert.True(file.Size == 1);
-      Assert.True(file.Tags.Count == 0);
 
       Assert.Throws<ArgumentNullException>(() => new File(null, "name", "originalName", Enumerable.Empty<byte>().ToArray()));
       Assert.Throws<ArgumentNullException>(() => new File("contentType", null, "originalName", Enumerable.Empty<byte>().ToArray()));

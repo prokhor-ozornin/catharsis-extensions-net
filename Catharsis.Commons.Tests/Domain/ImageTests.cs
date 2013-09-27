@@ -54,7 +54,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Image()"/>
-    ///   <seealso cref="Image(IDictionary{string, object})"/>
     ///   <seealso cref="Image(File, short, short, ImagesCategory)"/>
     /// </summary>
     [Fact]
@@ -66,19 +65,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(image.File == null);
       Assert.True(image.Height == 0);
       Assert.True(image.Width == 0);
-
-      Assert.Throws<ArgumentNullException>(() => new Image(null));
-      image = new Image(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Category", new ImagesCategory())
-        .AddNext("File", new File())
-        .AddNext("Height", (short) 1)
-        .AddNext("Width", (short) 2));
-      Assert.True(image.Id == 1);
-      Assert.True(image.Category != null);
-      Assert.True(image.File != null);
-      Assert.True(image.Height == 1);
-      Assert.True(image.Width == 2);
 
       Assert.Throws<ArgumentNullException>(() => new Image(null, 1, 2));
       image = new Image(new File(), 1, 2, new ImagesCategory());

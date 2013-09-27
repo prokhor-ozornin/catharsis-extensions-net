@@ -11,42 +11,42 @@ namespace Catharsis.Commons.Domain
   public sealed class ArtsExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="ArtExtensions.InArtsAlbum(IEnumerable{Art}, ArtsAlbum)"/> method.</para>
+    ///   <para>Performs testing of <see cref="ArtExtensions.InAlbum(IEnumerable{Art}, ArtsAlbum)"/> method.</para>
     /// </summary>
     [Fact]
-    public void InArtsAlbum_Method()
+    public void InAlbum_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => ArtExtensions.InArtsAlbum(null, new ArtsAlbum()));
+      Assert.Throws<ArgumentNullException>(() => ArtExtensions.InAlbum(null, new ArtsAlbum()));
 
-      Assert.False(Enumerable.Empty<Art>().InArtsAlbum(null).Any());
-      Assert.False(Enumerable.Empty<Art>().InArtsAlbum(new ArtsAlbum()).Any());
-      Assert.True(new[] { null, new Art { Album = new ArtsAlbum { Id = 1 } }, null, new Art { Album = new ArtsAlbum { Id = 2 } } }.InArtsAlbum(new ArtsAlbum { Id = 2 }).Count() == 1);
+      Assert.False(Enumerable.Empty<Art>().InAlbum(null).Any());
+      Assert.False(Enumerable.Empty<Art>().InAlbum(new ArtsAlbum()).Any());
+      Assert.True(new[] { null, new Art { Album = new ArtsAlbum { Id = 1 } }, null, new Art { Album = new ArtsAlbum { Id = 2 } } }.InAlbum(new ArtsAlbum { Id = 2 }).Count() == 1);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="ArtExtensions.OrderByArtsAlbumName(IEnumerable{Art})"/> method.</para>
+    ///   <para>Performs testing of <see cref="ArtExtensions.OrderByAlbumName(IEnumerable{Art})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByArtsAlbumName_Method()
+    public void OrderByAlbumName_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => ArtExtensions.OrderByArtsAlbumName(null));
-      Assert.Throws<NullReferenceException>(() => new Art[] { null }.OrderByArtsAlbumName().Any());
+      Assert.Throws<ArgumentNullException>(() => ArtExtensions.OrderByAlbumName(null));
+      Assert.Throws<NullReferenceException>(() => new Art[] { null }.OrderByAlbumName().Any());
 
       var arts = new[] { new Art { Album = new ArtsAlbum { Name = "Second" } }, new Art { Album = new ArtsAlbum { Name = "First" } } };
-      Assert.True(arts.OrderByArtsAlbumName().SequenceEqual(arts.Reverse()));
+      Assert.True(arts.OrderByAlbumName().SequenceEqual(arts.Reverse()));
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="ArtExtensions.OrderByArtsAlbumNameDescending(IEnumerable{Art})"/> method.</para>
+    ///   <para>Performs testing of <see cref="ArtExtensions.OrderByAlbumNameDescending(IEnumerable{Art})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByArtsAlbumNameDescending_Method()
+    public void OrderByAlbumNameDescending_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => ArtExtensions.OrderByArtsAlbumNameDescending(null));
-      Assert.Throws<NullReferenceException>(() => new Art[] { null }.OrderByArtsAlbumNameDescending().Any());
+      Assert.Throws<ArgumentNullException>(() => ArtExtensions.OrderByAlbumNameDescending(null));
+      Assert.Throws<NullReferenceException>(() => new Art[] { null }.OrderByAlbumNameDescending().Any());
 
       var arts = new[] { new Art { Album = new ArtsAlbum { Name = "First" } }, new Art { Album = new ArtsAlbum { Name = "Second" } } };
-      Assert.True(arts.OrderByArtsAlbumNameDescending().SequenceEqual(arts.Reverse()));
+      Assert.True(arts.OrderByAlbumNameDescending().SequenceEqual(arts.Reverse()));
     }
 
     /// <summary>

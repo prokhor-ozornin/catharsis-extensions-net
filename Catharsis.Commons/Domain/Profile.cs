@@ -11,7 +11,6 @@ namespace Catharsis.Commons.Domain
   [EqualsAndHashCode("AuthorId,Type,Username")]
   public class Profile : EntityBase, IComparable<Profile>, IEquatable<Profile>, IAuthorable, INameable, IUrlAddressable
   {
-    private string authorId;
     private string name;
     private string type;
     private string url;
@@ -20,18 +19,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public virtual string AuthorId
-    {
-      get { return this.authorId; }
-      set
-      {
-        Assertion.NotEmpty(value);
-        
-        this.authorId = value;
-      }
-    }
+    public virtual long? AuthorId { get; set; }
     
     /// <summary>
     ///   <para></para>
@@ -115,15 +103,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new profile with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on profile after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Profile(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new profile.</para>
     /// </summary>
     /// <param name="authorId"></param>
@@ -133,9 +112,9 @@ namespace Catharsis.Commons.Domain
     /// <param name="url"></param>
     /// <param name="email"></param>
     /// <param name="photo"></param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="authorId"/>, <paramref name="name"/>, <paramref name="username"/>, <paramref name="type"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If either <paramref name="authorId"/>, <paramref name="name"/>, <paramref name="username"/>, <paramref name="type"/> or <paramref name="url"/> is <see cref="string.Empty"/> string.</exception>
-    public Profile(string authorId, string name, string username, string type, string url, string email = null, string photo = null)
+    /// <exception cref="ArgumentNullException">If either <paramref name="name"/>, <paramref name="username"/>, <paramref name="type"/> or <paramref name="url"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentException">If either <paramref name="name"/>, <paramref name="username"/>, <paramref name="type"/> or <paramref name="url"/> is <see cref="string.Empty"/> string.</exception>
+    public Profile(long authorId, string name, string username, string type, string url, string email = null, string photo = null)
     {
       this.AuthorId = authorId;
       this.Name = name;
@@ -156,7 +135,7 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var profile = new Profile((string) xml.Element("AuthorId"), (string) xml.Element("Name"), (string) xml.Element("Username"), (string) xml.Element("Type"), (string) xml.Element("Url"), (string) xml.Element("Email"), (string) xml.Element("Photo"));
+      var profile = new Profile((long) xml.Element("AuthorId"), (string) xml.Element("Name"), (string) xml.Element("Username"), (string) xml.Element("Type"), (string) xml.Element("Url"), (string) xml.Element("Email"), (string) xml.Element("Photo"));
       if (xml.Element("Id") != null)
       {
         profile.Id = (long) xml.Element("Id");

@@ -64,7 +64,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Location()"/>
-    ///   <seealso cref="Location(IDictionary{string, object})"/>
     ///   <seealso cref="Location(City, string, decimal?, decimal?, string)"/>
     /// </summary>
     [Fact]
@@ -77,23 +76,6 @@ namespace Catharsis.Commons.Domain
       Assert.False(location.Latitude.HasValue);
       Assert.False(location.Longitude.HasValue);
       Assert.True(location.PostalCode == null);
-
-      Assert.Throws<ArgumentNullException>(() => new Location(null));
-      location = new Location(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Address", "address")
-        .AddNext("City", new City())
-        .AddNext("Country", "country")
-        .AddNext("Latitude", (decimal) 1.0)
-        .AddNext("Longitude", (decimal) 2.0)
-        .AddNext("PostalCode", "postalCode")
-        .AddNext("State", "state"));
-      Assert.True(location.Id == 1);
-      Assert.True(location.Address == "address");
-      Assert.True(location.City != null);
-      Assert.True(location.Latitude == (decimal) 1.0);
-      Assert.True(location.Longitude == (decimal) 2.0);
-      Assert.True(location.PostalCode == "postalCode");
 
       Assert.Throws<ArgumentNullException>(() => new Location(null, "address"));
       location = new Location(new City(), "address", (decimal) 1.0, (decimal) 2.0, "postalCode");

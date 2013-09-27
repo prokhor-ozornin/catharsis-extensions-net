@@ -22,7 +22,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public virtual string AuthorId { get; set; }
+    public virtual long? AuthorId { get; set; }
 
     /// <summary>
     ///   <para></para>
@@ -103,15 +103,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new item with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on item after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Item(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new item.</para>
     /// </summary>
     /// <param name="language">ISO language code of item's text content.</param>
@@ -120,7 +111,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="authorId">Identifier of item's author.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public Item(string language, string name, string text = null, string authorId = null)
+    public Item(string language, string name, string text = null, long? authorId = null)
     {
       this.Language = language;
       this.Name = name;
@@ -138,7 +129,7 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var item = new Item((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (string) xml.Element("AuthorId"));
+      var item = new Item((string) xml.Element("Language"), (string) xml.Element("Name"), (string) xml.Element("Text"), (long?) xml.Element("AuthorId"));
       if (xml.Element("Id") != null)
       {
         item.Id = (long) xml.Element("Id");

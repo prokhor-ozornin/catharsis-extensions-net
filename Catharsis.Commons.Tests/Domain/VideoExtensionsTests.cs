@@ -11,42 +11,42 @@ namespace Catharsis.Commons.Domain
   public sealed class VideoExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="VideoExtensions.InVideosCategory(IEnumerable{Video}, VideosCategory)"/> method.</para>
+    ///   <para>Performs testing of <see cref="VideoExtensions.InCategory(IEnumerable{Video}, VideosCategory)"/> method.</para>
     /// </summary>
     [Fact]
-    public void InVideosCategory_Method()
+    public void InCategory_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => VideoExtensions.InVideosCategory(null, new VideosCategory()));
+      Assert.Throws<ArgumentNullException>(() => VideoExtensions.InCategory(null, new VideosCategory()));
 
-      Assert.False(Enumerable.Empty<Video>().InVideosCategory(null).Any());
-      Assert.False(Enumerable.Empty<Video>().InVideosCategory(new VideosCategory()).Any());
-      Assert.True(new[] { null, new Video { Category = new VideosCategory { Id = 1 } }, null, new Video { Category = new VideosCategory { Id = 2 } } }.InVideosCategory(new VideosCategory { Id = 1 }).Count() == 1);
+      Assert.False(Enumerable.Empty<Video>().InCategory(null).Any());
+      Assert.False(Enumerable.Empty<Video>().InCategory(new VideosCategory()).Any());
+      Assert.True(new[] { null, new Video { Category = new VideosCategory { Id = 1 } }, null, new Video { Category = new VideosCategory { Id = 2 } } }.InCategory(new VideosCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="VideoExtensions.OrderByVideosCategoryName(IEnumerable{Video})"/> method.</para>
+    ///   <para>Performs testing of <see cref="VideoExtensions.OrderByCategoryName(IEnumerable{Video})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByVideosCategoryName_Method()
+    public void OrderByCategoryName_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => VideoExtensions.OrderByVideosCategoryName(null));
+      Assert.Throws<ArgumentNullException>(() => VideoExtensions.OrderByCategoryName(null));
 
-      Assert.Throws<NullReferenceException>(() => new Video[] { null }.OrderByVideosCategoryName().Any());
+      Assert.Throws<NullReferenceException>(() => new Video[] { null }.OrderByCategoryName().Any());
       var entities = new[] { new Video { Category = new VideosCategory { Name = "Second" } }, new Video { Category = new VideosCategory { Name = "First" } } };
-      Assert.True(entities.OrderByVideosCategoryName().SequenceEqual(entities.Reverse()));
+      Assert.True(entities.OrderByCategoryName().SequenceEqual(entities.Reverse()));
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="VideoExtensions.OrderByVideosCategoryNameDescending(IEnumerable{Video})"/> method.</para>
+    ///   <para>Performs testing of <see cref="VideoExtensions.OrderByCategoryNameDescending(IEnumerable{Video})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByVideosCategoryNameDescending_Method()
+    public void OrderByCategoryNameDescending_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => VideoExtensions.OrderByVideosCategoryNameDescending(null));
+      Assert.Throws<ArgumentNullException>(() => VideoExtensions.OrderByCategoryNameDescending(null));
 
-      Assert.Throws<NullReferenceException>(() => new Video[] { null }.OrderByVideosCategoryNameDescending().Any());
+      Assert.Throws<NullReferenceException>(() => new Video[] { null }.OrderByCategoryNameDescending().Any());
       var entities = new[] { new Video { Category = new VideosCategory { Name = "First" } }, new Video { Category = new VideosCategory { Name = "Second" } } };
-      Assert.True(entities.OrderByVideosCategoryNameDescending().SequenceEqual(entities.Reverse()));
+      Assert.True(entities.OrderByCategoryNameDescending().SequenceEqual(entities.Reverse()));
     }
     
     /// <summary>

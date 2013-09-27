@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="album">Arts album to search for.</param>
     /// <returns>Filtered sequence of arts in specified album.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="arts"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Art> InArtsAlbum(this IEnumerable<Art> arts, ArtsAlbum album)
+    public static IEnumerable<Art> InAlbum(this IEnumerable<Art> arts, ArtsAlbum album)
     {
       Assertion.NotNull(arts);
 
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="arts">Source sequence of arts for sorting.</param>
     /// <returns>Sorted sequence of arts.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="arts"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Art> OrderByArtsAlbumName(this IEnumerable<Art> arts)
+    public static IEnumerable<Art> OrderByAlbumName(this IEnumerable<Art> arts)
     {
       Assertion.NotNull(arts);
 
@@ -43,7 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="arts">Source sequence of arts for sorting.</param>
     /// <returns>Sorted sequence of arts.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="arts"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Art> OrderByArtsAlbumNameDescending(this IEnumerable<Art> arts)
+    public static IEnumerable<Art> OrderByAlbumNameDescending(this IEnumerable<Art> arts)
     {
       Assertion.NotNull(arts);
 

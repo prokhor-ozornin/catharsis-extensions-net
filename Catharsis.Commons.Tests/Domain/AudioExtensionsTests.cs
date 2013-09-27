@@ -11,42 +11,42 @@ namespace Catharsis.Commons.Domain
   public sealed class AudioExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="AudioExtensions.InAudiosCategory(IEnumerable{Audio}, AudiosCategory)"/> method.</para>
+    ///   <para>Performs testing of <see cref="AudioExtensions.InCategory(IEnumerable{Audio}, AudiosCategory)"/> method.</para>
     /// </summary>
     [Fact]
-    public void InAudiosCategory_Method()
+    public void InCategory_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => AudioExtensions.InAudiosCategory(null, new AudiosCategory()));
+      Assert.Throws<ArgumentNullException>(() => AudioExtensions.InCategory(null, new AudiosCategory()));
 
-      Assert.False(Enumerable.Empty<Audio>().InAudiosCategory(null).Any());
-      Assert.False(Enumerable.Empty<Audio>().InAudiosCategory(new AudiosCategory()).Any());
-      Assert.True(new[] { null, new Audio { Category = new AudiosCategory { Id = 1 } }, null, new Audio { Category = new AudiosCategory { Id = 2 } } }.InAudiosCategory(new AudiosCategory { Id = 1 }).Count() == 1);
+      Assert.False(Enumerable.Empty<Audio>().InCategory(null).Any());
+      Assert.False(Enumerable.Empty<Audio>().InCategory(new AudiosCategory()).Any());
+      Assert.True(new[] { null, new Audio { Category = new AudiosCategory { Id = 1 } }, null, new Audio { Category = new AudiosCategory { Id = 2 } } }.InCategory(new AudiosCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="AudioExtensions.OrderByAudiosCategoryName(IEnumerable{Audio})"/> method.</para>
+    ///   <para>Performs testing of <see cref="AudioExtensions.OrderByCategoryName(IEnumerable{Audio})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByAudiosCategoryName_Method()
+    public void OrderByCategoryName_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => AudioExtensions.OrderByAudiosCategoryName(null));
+      Assert.Throws<ArgumentNullException>(() => AudioExtensions.OrderByCategoryName(null));
 
-      Assert.Throws<NullReferenceException>(() => new Audio[] { null }.OrderByAudiosCategoryName().Any());
+      Assert.Throws<NullReferenceException>(() => new Audio[] { null }.OrderByCategoryName().Any());
       var entities = new[] { new Audio { Category = new AudiosCategory { Name = "Second" } }, new Audio { Category = new AudiosCategory { Name = "First" } } };
-      Assert.True(entities.OrderByAudiosCategoryName().SequenceEqual(entities.Reverse()));
+      Assert.True(entities.OrderByCategoryName().SequenceEqual(entities.Reverse()));
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="AudioExtensions.OrderByAudiosCategoryNameDescending(IEnumerable{Audio})"/> method.</para>
+    ///   <para>Performs testing of <see cref="AudioExtensions.OrderByCategoryNameDescending(IEnumerable{Audio})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByAudiosCategoryNameDescending_Method()
+    public void OrderByCategoryNameDescending_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => AudioExtensions.OrderByAudiosCategoryNameDescending(null));
+      Assert.Throws<ArgumentNullException>(() => AudioExtensions.OrderByCategoryNameDescending(null));
 
-      Assert.Throws<NullReferenceException>(() => new Audio[] { null }.OrderByAudiosCategoryNameDescending().Any());
+      Assert.Throws<NullReferenceException>(() => new Audio[] { null }.OrderByCategoryNameDescending().Any());
       var entities = new[] { new Audio { Category = new AudiosCategory { Name = "First" } }, new Audio { Category = new AudiosCategory { Name = "Second" } } };
-      Assert.True(entities.OrderByAudiosCategoryNameDescending().SequenceEqual(entities.Reverse()));
+      Assert.True(entities.OrderByCategoryNameDescending().SequenceEqual(entities.Reverse()));
     }
 
     /// <summary>

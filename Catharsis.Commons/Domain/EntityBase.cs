@@ -37,6 +37,18 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <param name="properties"></param>
+    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
+    protected EntityBase(object properties)
+    {
+      Assertion.NotNull(properties);
+
+      this.SetProperties(properties);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
     public override bool Equals(object other)

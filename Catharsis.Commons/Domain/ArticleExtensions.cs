@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="category">Category of articles to search for.</param>
     /// <returns>Filtered sequence of articles with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="articles"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Article> InArticlesCategory(this IEnumerable<Article> articles, ArticlesCategory category)
+    public static IEnumerable<Article> InCategory(this IEnumerable<Article> articles, ArticlesCategory category)
     {
       Assertion.NotNull(articles);
 
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="articles">Source sequence of articles for sorting.</param>
     /// <returns>Sorted sequence of articles.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="articles"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Article> OrderByArticlesCategoryName(this IEnumerable<Article> articles)
+    public static IEnumerable<Article> OrderByCategoryName(this IEnumerable<Article> articles)
     {
       Assertion.NotNull(articles);
 
@@ -43,7 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="articles">Source sequence of articles for sorting.</param>
     /// <returns>Sorted sequence of articles.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="articles"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Article> OrderByArticlesCategoryNameDescending(this IEnumerable<Article> articles)
+    public static IEnumerable<Article> OrderByCategoryNameDescending(this IEnumerable<Article> articles)
     {
       Assertion.NotNull(articles);
 

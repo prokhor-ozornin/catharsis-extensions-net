@@ -16,18 +16,6 @@ namespace Catharsis.Commons.Extensions
   public static class ObjectExtensions
   {
     /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static bool And(this object left, object right)
-    {
-      return True(left) && True(right);
-    }
-
-    /// <summary>
     ///   <para>Tries to convert given object to specified type and returns <c>null</c> reference on failure.</para>
     ///   <seealso cref="To{T}"/>
     /// </summary>
@@ -163,11 +151,12 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <typeparam name="T"></typeparam>
     /// <param name="subject"></param>
     /// <param name="finalize"></param>
     /// <remarks></remarks>
     /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
-    public static object Finalize(this object subject, bool finalize = true)
+    public static T Finalize<T>(this T subject, bool finalize = true)
     {
       Assertion.NotNull(subject);
 
@@ -349,34 +338,14 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="subject"></param>
-    /// <returns></returns>
-    public static bool Not(this object subject)
-    {
-      return False(subject);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="left"></param>
-    /// <param name="right"></param>
-    /// <returns></returns>
-    public static bool Or(this object left, object right)
-    {
-      return True(left) || True(right);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
+    /// <typeparam name="T"></typeparam>
     /// <param name="subject"></param>
     /// <param name="property"></param>
     /// <param name="value"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="property"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="property"/> is <see cref="string.Empty"/> string.</exception>
-    public static object SetProperty(this object subject, string property, object value)
+    public static T SetProperty<T>(this T subject, string property, object value)
     {
       Assertion.NotNull(subject);
       Assertion.NotEmpty(property);
@@ -392,23 +361,34 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <typeparam name="T"></typeparam>
     /// <param name="subject"></param>
     /// <param name="properties"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public static object SetProperties(this object subject, IDictionary<string, object> properties)
+    public static T SetProperties<T>(this T subject, IEnumerable<KeyValuePair<string, object>> properties)
     {
       Assertion.NotNull(subject);
       Assertion.NotNull(properties);
 
-      subject.GetType().GetAllProperties().Each(property =>
-      {
-        if (properties.ContainsKey(property.Name))
-        {
-          property.SetValue(subject, properties[property.Name], null);
-        }
-      });
+      properties.Each(property => subject.SetProperty(property.Key, property.Value));
+      return subject;
+    }
 
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="subject"></param>
+    /// <param name="properties"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="properties"/> is a <c>null</c> reference.</exception>
+    public static T SetProperties<T>(this T subject, object properties)
+    {
+      Assertion.NotNull(subject);
+      Assertion.NotNull(properties);
+
+      properties.GetType().GetProperties().Each(property => subject.SetProperty(property.Name, properties.GetProperty(property.Name)));
       return subject;
     }
 
@@ -429,12 +409,11 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     /// <param name="subject"></param>
     /// <param name="properties"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
-    public static string ToString<T>(this T subject, IEnumerable<string> properties)
+    public static string ToString(this object subject, IEnumerable<string> properties)
     {
       Assertion.NotNull(subject);
 

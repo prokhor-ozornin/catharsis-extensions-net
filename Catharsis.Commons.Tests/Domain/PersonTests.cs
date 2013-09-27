@@ -119,7 +119,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Person()"/>
-    ///   <seealso cref="Person(IDictionary{string, object})"/>
     ///   <seealso cref="Person(string, string, string, string, Image, byte?, byte?, short?, byte?, byte?, short?)"/>
     /// </summary>
     [Fact]
@@ -138,33 +137,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(person.NameFirst == null);
       Assert.True(person.NameLast == null);
       Assert.True(person.NameMiddle == null);
-
-      Assert.Throws<ArgumentNullException>(() => new Person(null));
-      person = new Person(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("BirthDay", (byte) 1)
-        .AddNext("BirthMonth", (byte) 2)
-        .AddNext("BirthYear", (short) 2000)
-        .AddNext("DeathDay", (byte) 3)
-        .AddNext("DeathMonth", (byte) 4)
-        .AddNext("DeathYear", (short) 2030)
-        .AddNext("Description", "description")
-        .AddNext("Image", new Image())
-        .AddNext("NameFirst", "nameFirst")
-        .AddNext("NameLast", "nameLast")
-        .AddNext("NameMiddle", "nameMiddle"));
-      Assert.True(person.Id == 1);
-      Assert.True(person.BirthDay == 1);
-      Assert.True(person.BirthMonth == 2);
-      Assert.True(person.BirthYear == 2000);
-      Assert.True(person.DeathDay == 3);
-      Assert.True(person.DeathMonth == 4);
-      Assert.True(person.DeathYear == 2030);
-      Assert.True(person.Description == "description");
-      Assert.True(person.Image != null);
-      Assert.True(person.NameFirst == "nameFirst");
-      Assert.True(person.NameLast == "nameLast");
-      Assert.True(person.NameMiddle == "nameMiddle");
 
       Assert.Throws<ArgumentNullException>(() => new Person(null, "nameLast"));
       Assert.Throws<ArgumentNullException>(() => new Person("nameFirst", null));

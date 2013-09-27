@@ -20,7 +20,7 @@ namespace Catharsis.Commons.Domain
     [EqualsAndHashCode("AuthorId")]
     private sealed class AuthorableEntity : EntityBase, IAuthorable
     {
-      public string AuthorId { get; set; }
+      public long? AuthorId { get; set; }
     }
 
     [EqualsAndHashCode("Comments")]
@@ -148,16 +148,15 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="DomainExtensions.WithAuthor{T}(IEnumerable{T}, string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="DomainExtensions.WithAuthor{T}(IEnumerable{T}, long)"/> method.</para>
     /// </summary>
     [Fact]
     public void WithAuthor_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => DomainExtensions.WithAuthor<IAuthorable>(null, string.Empty));
+      Assert.Throws<ArgumentNullException>(() => DomainExtensions.WithAuthor<IAuthorable>(null, 0));
 
-      Assert.False(Enumerable.Empty<IAuthorable>().WithAuthor(null).Any());
-      Assert.False(Enumerable.Empty<IAuthorable>().WithAuthor(string.Empty).Any());
-      Assert.True(new[] { null, new AuthorableEntity { AuthorId = "AuthorId" }, null, new AuthorableEntity { AuthorId = "AuthorId_2" } }.WithAuthor("AuthorId").Count() == 1);
+      Assert.False(Enumerable.Empty<IAuthorable>().WithAuthor(0).Any());
+      Assert.True(new[] { null, new AuthorableEntity { AuthorId = 1 }, null, new AuthorableEntity { AuthorId = 2 } }.WithAuthor(1).Count() == 1);
     }
 
     /// <summary>
@@ -169,7 +168,7 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByAuthor<IAuthorable>(null));
       Assert.Throws<NullReferenceException>(() => new AuthorableEntity[] { null }.OrderByAuthor().Any());
 
-      var entities = new[] { new AuthorableEntity { AuthorId = "Second" }, new AuthorableEntity { AuthorId = "First" } };
+      var entities = new[] { new AuthorableEntity { AuthorId = 2 }, new AuthorableEntity { AuthorId = 1 } };
       Assert.True(entities.OrderByAuthor().SequenceEqual(entities.Reverse()));
     }
 
@@ -182,7 +181,7 @@ namespace Catharsis.Commons.Domain
       Assert.Throws<ArgumentNullException>(() => DomainExtensions.OrderByAuthorDescending<IAuthorable>(null));
       Assert.Throws<NullReferenceException>(() => new AuthorableEntity[] { null }.OrderByAuthorDescending().Any());
 
-      var entities = new[] { new AuthorableEntity { AuthorId = "First" }, new AuthorableEntity { AuthorId = "Second" } };
+      var entities = new[] { new AuthorableEntity { AuthorId = 1 }, new AuthorableEntity { AuthorId = 2 } };
       Assert.True(entities.OrderByAuthorDescending().SequenceEqual(entities.Reverse()));
     }
 
@@ -390,7 +389,7 @@ namespace Catharsis.Commons.Domain
 
       Assert.False(Enumerable.Empty<IPersonalizable>().WithFirstName(null).Any());
       Assert.False(Enumerable.Empty<IPersonalizable>().WithFirstName(string.Empty).Any());
-      Assert.True(new[] { null, new Article { Category = new ArticlesCategory { Id = 1 } }, null, new Article { Category = new ArticlesCategory { Id = 2 } } }.InArticlesCategory(new ArticlesCategory { Id = 1 }).Count() == 1);
+      Assert.True(new[] { null, new Article { Category = new ArticlesCategory { Id = 1 } }, null, new Article { Category = new ArticlesCategory { Id = 2 } } }.InCategory(new ArticlesCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>

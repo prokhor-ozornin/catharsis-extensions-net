@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
 using Catharsis.Commons.Extensions;
 using Xunit;
@@ -23,7 +22,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Poll()"/>
-    ///   <seealso cref="Poll(IDictionary{string, object})"/>
     ///   <seealso cref="Poll(string, string, string, bool)"/>
     /// </summary>
     [Fact]
@@ -40,25 +38,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(poll.Name == null);
       Assert.True(poll.Tags.Count == 0);
       Assert.True(poll.Text == null);
-
-      Assert.Throws<ArgumentNullException>(() => new Poll(null));
-      poll = new Poll(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Language", "language")
-        .AddNext("MultiSelect", true)
-        .AddNext("Name", "name")
-        .AddNext("Text", "text"));
-      Assert.True(poll.Id == 1);
-      Assert.True(poll.AuthorId == "authorId");
-      Assert.True(poll.Comments.Count == 0);
-      Assert.True(poll.DateCreated <= DateTime.UtcNow);
-      Assert.True(poll.Language == "language");
-      Assert.True(poll.LastUpdated <= DateTime.UtcNow);
-      Assert.True(poll.MultiSelect);
-      Assert.True(poll.Name == "name");
-      Assert.True(poll.Tags.Count == 0);
-      Assert.True(poll.Text == "text");
 
       Assert.Throws<ArgumentNullException>(() => new Poll(null, "name", "text", true));
       Assert.Throws<ArgumentNullException>(() => new Poll("language", null, "text", true));

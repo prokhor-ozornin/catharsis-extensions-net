@@ -9,7 +9,7 @@ namespace Catharsis.Commons.Domain
   ///   <para></para>
   /// </summary>
   [EqualsAndHashCode("Name,Parent")]
-  public abstract class Category : EntityBase, IComparable<Category>
+  public class Category : EntityBase, IComparable<Category>
   {
     private string language;
     private string name;
@@ -59,16 +59,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Creates new category.</para>
     /// </summary>
-    protected Category()
-    {
-    }
-
-    /// <summary>
-    ///   <para>Creates new category with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on category after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    protected Category(IDictionary<string, object> properties) : base(properties)
+    public Category()
     {
     }
 
@@ -81,7 +72,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="description">Description of category.</param>
     /// <exception cref="ArgumentNullException">If either <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    protected Category(string language, string name, Category parent = null, string description = null)
+    public Category(string language, string name, Category parent = null, string description = null)
     {
       this.Language = language;
       this.Name = name;

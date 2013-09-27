@@ -47,11 +47,11 @@ namespace Catharsis.Commons.Domain
     /// <param name="authorId">Identifier of author to search for.</param>
     /// <returns>Filtered sequence of entities with specified author.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entities"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<T> WithAuthor<T>(this IEnumerable<T> entities, string authorId) where T : IAuthorable
+    public static IEnumerable<T> WithAuthor<T>(this IEnumerable<T> entities, long authorId) where T : IAuthorable
     {
       Assertion.NotNull(entities);
 
-      return entities.Where(entity => entity !=null && entity.AuthorId == authorId);
+      return entities.Where(entity => entity != null && entity.AuthorId == authorId);
     }
 
     /// <summary>

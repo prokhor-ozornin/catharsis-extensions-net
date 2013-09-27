@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Catharsis.Commons.Extensions;
@@ -53,8 +52,7 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Announcement()"/>
-    ///   <seealso cref="Announcement(IDictionary{string, object})"/>
-    ///   <seealso cref="Announcement(string, string, string, string, AnnouncementsCategory, Image, string, decimal?)"/>
+    ///   <seealso cref="Announcement(string, string, string, long, AnnouncementsCategory, Image, string, decimal?)"/>
     /// </summary>
     [Fact]
     public void Constructors()
@@ -74,42 +72,15 @@ namespace Catharsis.Commons.Domain
       Assert.True(announcement.Tags.Count == 0);
       Assert.True(announcement.Text == null);
 
-      Assert.Throws<ArgumentNullException>(() => new Announcement(null));
-      announcement = new Announcement(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text")
-        .AddNext("Category", new AnnouncementsCategory())
-        .AddNext("Currency", "currency")
-        .AddNext("Image", new Image())
-        .AddNext("Price", decimal.One));
-      Assert.True(announcement.Id == 1);
-      Assert.True(announcement.AuthorId == "authorId");
-      Assert.True(announcement.Category != null);
-      Assert.True(announcement.Comments.Count == 0);
-      Assert.True(announcement.Currency == "currency");
-      Assert.True(announcement.DateCreated <= DateTime.UtcNow);
-      Assert.True(announcement.Image != null);
-      Assert.True(announcement.Language == "language");
-      Assert.True(announcement.LastUpdated <= DateTime.UtcNow);
-      Assert.True(announcement.Name == "name");
-      Assert.True(announcement.Price == decimal.One);
-      Assert.True(announcement.Tags.Count == 0);
-      Assert.True(announcement.Text == "text");
-
-      Assert.Throws<ArgumentNullException>(() => new Announcement(null, "name", "text", "authorId", new AnnouncementsCategory()));
-      Assert.Throws<ArgumentNullException>(() => new Announcement("language", null, "text", "authorId", new AnnouncementsCategory()));
-      Assert.Throws<ArgumentNullException>(() => new Announcement("language", "name", null, "authorId", new AnnouncementsCategory()));
-      Assert.Throws<ArgumentNullException>(() => new Announcement("language", "name", "text", null, new AnnouncementsCategory()));
-      Assert.Throws<ArgumentException>(() => new Announcement(string.Empty, "name", "text", "authorId", new AnnouncementsCategory()));
-      Assert.Throws<ArgumentException>(() => new Announcement("language", string.Empty, "text", "authorId", new AnnouncementsCategory()));
-      Assert.Throws<ArgumentException>(() => new Announcement("language", "name", string.Empty, "authorId", new AnnouncementsCategory()));
-      Assert.Throws<ArgumentException>(() => new Announcement("language", "name", "text", string.Empty, new AnnouncementsCategory()));
-      announcement = new Announcement("language", "name", "text", "authorId", new AnnouncementsCategory(), new Image(), "currency", decimal.One);
+      Assert.Throws<ArgumentNullException>(() => new Announcement(null, "name", "text", 1, new AnnouncementsCategory()));
+      Assert.Throws<ArgumentNullException>(() => new Announcement("language", null, "text", 1, new AnnouncementsCategory()));
+      Assert.Throws<ArgumentNullException>(() => new Announcement("language", "name", null, 1, new AnnouncementsCategory()));
+      Assert.Throws<ArgumentException>(() => new Announcement(string.Empty, "name", "text", 1, new AnnouncementsCategory()));
+      Assert.Throws<ArgumentException>(() => new Announcement("language", string.Empty, "text", 1, new AnnouncementsCategory()));
+      Assert.Throws<ArgumentException>(() => new Announcement("language", "name", string.Empty, 1, new AnnouncementsCategory()));
+      announcement = new Announcement("language", "name", "text", 1, new AnnouncementsCategory(), new Image(), "currency", decimal.One);
       Assert.True(announcement.Id == 0);
-      Assert.True(announcement.AuthorId == "authorId");
+      Assert.True(announcement.AuthorId == 1);
       Assert.True(announcement.Category != null);
       Assert.True(announcement.Comments.Count == 0);
       Assert.True(announcement.Currency == "currency");
@@ -159,7 +130,7 @@ namespace Catharsis.Commons.Domain
 
       var xml = new XElement("Announcement",
         new XElement("Id", 1),
-        new XElement("AuthorId", "authorId"),
+        new XElement("AuthorId", 2),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
@@ -167,7 +138,7 @@ namespace Catharsis.Commons.Domain
         new XElement("Text", "text"));
       var announcement = Announcement.Xml(xml);
       Assert.True(announcement.Id == 1);
-      Assert.True(announcement.AuthorId == "authorId");
+      Assert.True(announcement.AuthorId == 2);
       Assert.True(announcement.Category == null);
       Assert.True(announcement.Comments.Count == 0);
       Assert.True(announcement.Currency == null);
@@ -179,26 +150,26 @@ namespace Catharsis.Commons.Domain
       Assert.False(announcement.Price.HasValue);
       Assert.True(announcement.Tags.Count == 0);
       Assert.True(announcement.Text == "text");
-      Assert.True(new Announcement("language", "name", "text", "authorId") { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new Announcement("language", "name", "text", 2) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Announcement.Xml(announcement.Xml()).Equals(announcement));
 
       xml = new XElement("Announcement",
         new XElement("Id", 1),
-        new XElement("AuthorId", "authorId"),
+        new XElement("AuthorId", 2),
         new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
         new XElement("Language", "language"),
         new XElement("LastUpdated", DateTime.MaxValue.ToRfc1123()),
         new XElement("Name", "name"),
         new XElement("Text", "text"),
         new XElement("AnnouncementsCategory",
-          new XElement("Id", 2),
+          new XElement("Id", 3),
           new XElement("Language", "category.language"),
           new XElement("Name", "category.name")),
         new XElement("Currency", "currency"),
         new XElement("Image",
-          new XElement("Id", 3),
+          new XElement("Id", 4),
           new XElement("File",
-            new XElement("Id", 4),
+            new XElement("Id", 5),
             new XElement("ContentType", "image.file.contentType"),
             new XElement("Data", Guid.Empty.ToByteArray().EncodeBase64()),
             new XElement("DateCreated", DateTime.MinValue.ToRfc1123()),
@@ -211,15 +182,15 @@ namespace Catharsis.Commons.Domain
         new XElement("Price", decimal.One));
       announcement = Announcement.Xml(xml);
       Assert.True(announcement.Id == 1);
-      Assert.True(announcement.AuthorId == "authorId");
-      Assert.True(announcement.Category.Id == 2);
+      Assert.True(announcement.AuthorId == 2);
+      Assert.True(announcement.Category.Id == 3);
       Assert.True(announcement.Category.Language == "category.language");
       Assert.True(announcement.Category.Name == "category.name");
       Assert.True(announcement.Comments.Count == 0);
       Assert.True(announcement.Currency == "currency");
       Assert.True(announcement.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
-      Assert.True(announcement.Image.Id == 3);
-      Assert.True(announcement.Image.File.Id == 4);
+      Assert.True(announcement.Image.Id == 4);
+      Assert.True(announcement.Image.File.Id == 5);
       Assert.True(announcement.Image.File.ContentType == "image.file.contentType");
       Assert.True(announcement.Image.File.Data.SequenceEqual(Guid.Empty.ToByteArray()));
       Assert.True(announcement.Image.File.DateCreated.ToRfc1123() == DateTime.MinValue.ToRfc1123());
@@ -235,7 +206,7 @@ namespace Catharsis.Commons.Domain
       Assert.True(announcement.Price == decimal.One);
       Assert.True(announcement.Tags.Count == 0);
       Assert.True(announcement.Text == "text");
-      Assert.True(new Announcement("language", "name", "text", "authorId", new AnnouncementsCategory("category.language", "category.name") { Id = 2 }, new Image(new File("image.file.contentType", "image.file.name", "image.file.originalName", Guid.Empty.ToByteArray()) { Id = 4, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2) { Id = 3 }, "currency", decimal.One) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
+      Assert.True(new Announcement("language", "name", "text", 2, new AnnouncementsCategory("category.language", "category.name") { Id = 3 }, new Image(new File("image.file.contentType", "image.file.name", "image.file.originalName", Guid.Empty.ToByteArray()) { Id = 5, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }, 1, 2) { Id = 4 }, "currency", decimal.One) { Id = 1, DateCreated = DateTime.MinValue, LastUpdated = DateTime.MaxValue }.Xml().ToString() == xml.ToString());
       Assert.True(Announcement.Xml(announcement.Xml()).Equals(announcement));
     }
   }

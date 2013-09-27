@@ -11,42 +11,42 @@ namespace Catharsis.Commons.Domain
   public sealed class TextExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="TextExtensions.InTextsCategory(IEnumerable{Text}, TextsCategory)"/> method.</para>
+    ///   <para>Performs testing of <see cref="TextExtensions.InCategory(IEnumerable{Text}, TextsCategory)"/> method.</para>
     /// </summary>
     [Fact]
-    public void InTextsCategory_Method()
+    public void InCategory_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => TextExtensions.InTextsCategory(null, new TextsCategory()));
+      Assert.Throws<ArgumentNullException>(() => TextExtensions.InCategory(null, new TextsCategory()));
 
-      Assert.False(Enumerable.Empty<Text>().InTextsCategory(null).Any());
-      Assert.False(Enumerable.Empty<Text>().InTextsCategory(new TextsCategory()).Any());
-      Assert.True(new[] { null, new Text { Category = new TextsCategory { Id = 1 } }, null, new Text { Category = new TextsCategory { Id = 2 } } }.InTextsCategory(new TextsCategory { Id = 1 }).Count() == 1);
+      Assert.False(Enumerable.Empty<Text>().InCategory(null).Any());
+      Assert.False(Enumerable.Empty<Text>().InCategory(new TextsCategory()).Any());
+      Assert.True(new[] { null, new Text { Category = new TextsCategory { Id = 1 } }, null, new Text { Category = new TextsCategory { Id = 2 } } }.InCategory(new TextsCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="TextExtensions.OrderByTextsCategoryName(IEnumerable{Text})"/> method.</para>
+    ///   <para>Performs testing of <see cref="TextExtensions.OrderByCategoryName(IEnumerable{Text})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByTextsCategoryName_Method()
+    public void OrderByCategoryName_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => TextExtensions.OrderByTextsCategoryName(null));
+      Assert.Throws<ArgumentNullException>(() => TextExtensions.OrderByCategoryName(null));
 
-      Assert.Throws<NullReferenceException>(() => new Text[] { null }.OrderByTextsCategoryName().Any());
+      Assert.Throws<NullReferenceException>(() => new Text[] { null }.OrderByCategoryName().Any());
       var entities = new[] { new Text { Category = new TextsCategory { Name = "Second" } }, new Text { Category = new TextsCategory { Name = "First" } } };
-      Assert.True(entities.OrderByTextsCategoryName().SequenceEqual(entities.Reverse()));
+      Assert.True(entities.OrderByCategoryName().SequenceEqual(entities.Reverse()));
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="TextExtensions.OrderByTextsCategoryNameDescending(IEnumerable{Text})"/> method.</para>
+    ///   <para>Performs testing of <see cref="TextExtensions.OrderByCategoryNameDescending(IEnumerable{Text})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderByTextsCategoryNameDescending_Method()
+    public void OrderByCategoryNameDescending_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => TextExtensions.OrderByTextsCategoryNameDescending(null));
+      Assert.Throws<ArgumentNullException>(() => TextExtensions.OrderByCategoryNameDescending(null));
 
-      Assert.Throws<NullReferenceException>(() => new Text[] { null }.OrderByTextsCategoryNameDescending().Any());
+      Assert.Throws<NullReferenceException>(() => new Text[] { null }.OrderByCategoryNameDescending().Any());
       var entities = new[] { new Text { Category = new TextsCategory { Name = "First" } }, new Text { Category = new TextsCategory { Name = "Second" } } };
-      Assert.True(entities.OrderByTextsCategoryNameDescending().SequenceEqual(entities.Reverse()));
+      Assert.True(entities.OrderByCategoryNameDescending().SequenceEqual(entities.Reverse()));
     }
 
     /// <summary>

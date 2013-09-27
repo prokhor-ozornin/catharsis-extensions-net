@@ -41,15 +41,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new song with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on song after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Song(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new song.</para>
     /// </summary>
     /// <param name="language">ISO language code of song's text content.</param>

@@ -42,7 +42,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Download()"/>
-    ///   <seealso cref="Download(IDictionary{string, object})"/>
     ///   <seealso cref="Download(string, string, string, DownloadsCategory, string)"/>
     /// </summary>
     [Fact]
@@ -61,29 +60,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(download.Tags.Count == 0);
       Assert.True(download.Text == null);
       Assert.True(download.Url == null);
-
-      Assert.Throws<ArgumentNullException>(() => new Download(null));
-      download = new Download(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("AuthorId", "authorId")
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text")
-        .AddNext("Category", new DownloadsCategory())
-        .AddNext("Downloads", 1)
-        .AddNext("Url", "url"));
-      Assert.True(download.Id == 1);
-      Assert.True(download.AuthorId == "authorId");
-      Assert.True(download.Category != null);
-      Assert.True(download.Comments.Count == 0);
-      Assert.True(download.DateCreated <= DateTime.UtcNow);
-      Assert.True(download.Downloads == 1);
-      Assert.True(download.Language == "language");
-      Assert.True(download.LastUpdated <= DateTime.UtcNow);
-      Assert.True(download.Name == "name");
-      Assert.True(download.Tags.Count == 0);
-      Assert.True(download.Text == "text");
-      Assert.True(download.Url == "url");
 
       Assert.Throws<ArgumentNullException>(() => new Download(null, "name", "url"));
       Assert.Throws<ArgumentNullException>(() => new Download("language", null, "url"));

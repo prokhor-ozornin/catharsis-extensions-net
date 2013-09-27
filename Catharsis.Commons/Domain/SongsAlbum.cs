@@ -28,15 +28,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new songs album with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on songs album after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public SongsAlbum(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new songs album.</para>
     /// </summary>
     /// <param name="language">ISO language code of album's text content.</param>

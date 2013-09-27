@@ -279,22 +279,26 @@ namespace Catharsis.Commons.Extensions
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
     ///     <item><description><see cref="TypeExtensions.NewInstance(Type, object[])"/></description></item>
-    ///     <item><description><see cref="TypeExtensions.NewInstance(Type, IDictionary{string, object})"/></description></item>
+    ///     <item><description><see cref="TypeExtensions.NewInstance(Type, IEnumerable{KeyValuePair{string, object}})"/></description></item>
+    ///     <item><description><see cref="TypeExtensions.NewInstance(Type, object)"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void NewInstance_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null, new Dictionary<string, object>()));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((IDictionary<string, object>) null));
-
+      Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null, Enumerable.Empty<KeyValuePair<string, object>>()));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((IEnumerable<KeyValuePair<string, object>>) null));
+      Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null, new object()));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((object) null));
+      
       Assert.True(typeof(TestObject).NewInstance() != null);
-      Assert.True(typeof(TestObject).NewInstance(new Dictionary<string, object>()) != null);
+      Assert.True(typeof(TestObject).NewInstance(Enumerable.Empty<KeyValuePair<string, object>>()) != null);
       Assert.Throws<MissingMethodException>(() => typeof(TestObject).NewInstance(new object(), new object()));
 
-      Assert.True(typeof(TestObject).NewInstance("property").To<TestObject>().PublicProperty.Equals("property"));
-      Assert.True(typeof(TestObject).NewInstance(new Dictionary<string, object>().AddNext("PublicProperty", "property")).To<TestObject>().PublicProperty.ToString() == "property");
+      Assert.True(typeof(TestObject).NewInstance(new object[] { "value" }).To<TestObject>().PublicProperty.Equals("value"));
+      Assert.True(typeof(TestObject).NewInstance(new Dictionary<string, object>().AddNext("PublicProperty", "value")).To<TestObject>().PublicProperty.ToString() == "value");
+      Assert.True(typeof(TestObject).NewInstance(new { PublicProperty = "value" }).To<TestObject>().PublicProperty.Equals("value"));
     }
   }
 }

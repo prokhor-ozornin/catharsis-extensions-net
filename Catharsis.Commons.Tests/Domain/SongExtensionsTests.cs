@@ -11,42 +11,42 @@ namespace Catharsis.Commons.Domain
   public sealed class SongExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="SongExtensions.InSongsAlbum(IEnumerable{Song}, SongsAlbum)"/> method.</para>
+    ///   <para>Performs testing of <see cref="SongExtensions.InAlbum(IEnumerable{Song}, SongsAlbum)"/> method.</para>
     /// </summary>
     [Fact]
-    public void InSongsAlbum_Method()
+    public void InAlbum_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => SongExtensions.InSongsAlbum(null, new SongsAlbum()));
+      Assert.Throws<ArgumentNullException>(() => SongExtensions.InAlbum(null, new SongsAlbum()));
 
-      Assert.False(Enumerable.Empty<Song>().InSongsAlbum(null).Any());
-      Assert.False(Enumerable.Empty<Song>().InSongsAlbum(new SongsAlbum()).Any());
-      Assert.True(new[] { null, new Song { Album = new SongsAlbum { Id = 1 } }, null, new Song { Album = new SongsAlbum { Id = 2 } } }.InSongsAlbum(new SongsAlbum { Id = 1 }).Count() == 1);
+      Assert.False(Enumerable.Empty<Song>().InAlbum(null).Any());
+      Assert.False(Enumerable.Empty<Song>().InAlbum(new SongsAlbum()).Any());
+      Assert.True(new[] { null, new Song { Album = new SongsAlbum { Id = 1 } }, null, new Song { Album = new SongsAlbum { Id = 2 } } }.InAlbum(new SongsAlbum { Id = 1 }).Count() == 1);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="SongExtensions.OrderBySongsAlbumName(IEnumerable{Song})"/> method.</para>
+    ///   <para>Performs testing of <see cref="SongExtensions.OrderByAlbumName(IEnumerable{Song})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderBySongsAlbumName_Method()
+    public void OrderByAlbumName_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => SongExtensions.OrderBySongsAlbumName(null));
-      Assert.Throws<NullReferenceException>(() => new Song[] { null }.OrderBySongsAlbumName().Any());
+      Assert.Throws<ArgumentNullException>(() => SongExtensions.OrderByAlbumName(null));
+      Assert.Throws<NullReferenceException>(() => new Song[] { null }.OrderByAlbumName().Any());
 
       var songs = new[] { new Song { Album = new SongsAlbum { Name = "Second" } }, new Song { Album = new SongsAlbum { Name = "First" } } };
-      Assert.True(songs.OrderBySongsAlbumName().SequenceEqual(songs.Reverse()));
+      Assert.True(songs.OrderByAlbumName().SequenceEqual(songs.Reverse()));
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="SongExtensions.OrderBySongsAlbumNameDescending(IEnumerable{Song})"/> method.</para>
+    ///   <para>Performs testing of <see cref="SongExtensions.OrderByAlbumNameDescending(IEnumerable{Song})"/> method.</para>
     /// </summary>
     [Fact]
-    public void OrderBySongsAlbumNameDescending_Method()
+    public void OrderByAlbumNameDescending_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => SongExtensions.OrderBySongsAlbumNameDescending(null));
-      Assert.Throws<NullReferenceException>(() => new Song[] { null }.OrderBySongsAlbumNameDescending().Any());
+      Assert.Throws<ArgumentNullException>(() => SongExtensions.OrderByAlbumNameDescending(null));
+      Assert.Throws<NullReferenceException>(() => new Song[] { null }.OrderByAlbumNameDescending().Any());
 
       var songs = new[] { new Song { Album = new SongsAlbum { Name = "First" } }, new Song { Album = new SongsAlbum { Name = "Second" } } };
-      Assert.True(songs.OrderBySongsAlbumNameDescending().SequenceEqual(songs.Reverse()));
+      Assert.True(songs.OrderByAlbumNameDescending().SequenceEqual(songs.Reverse()));
     }
   }
 }

@@ -25,19 +25,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(category.Parent == null);
       Assert.True(category.Description == null);
 
-      Assert.Throws<ArgumentNullException>(() => typeof(T).NewInstance((IDictionary<string, object>) null));
-      category = typeof(T).NewInstance(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Parent", new ArticlesCategory())
-        .AddNext("Description", "description")).To<T>();
-      Assert.True(category.Id == 1);
-      Assert.True(category.Language == "language");
-      Assert.True(category.Name == "name");
-      Assert.True(category.Parent != null);
-      Assert.True(category.Description == "description");
-
       Assert.Throws<TargetInvocationException>(() => typeof(T).NewInstance((string)null, "name", null, null));
       Assert.Throws<TargetInvocationException>(() => typeof(T).NewInstance("language", null, null, null));
       Assert.Throws<TargetInvocationException>(() => typeof(T).NewInstance(string.Empty, "name", null, null));

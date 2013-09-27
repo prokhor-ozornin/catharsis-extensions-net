@@ -14,7 +14,6 @@ namespace Catharsis.Commons.Domain
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="Faq()"/>
-    ///   <seealso cref="Faq(IDictionary{string, object})"/>
     ///   <seealso cref="Faq(string, string, string)"/>
     /// </summary>
     [Fact]
@@ -28,20 +27,6 @@ namespace Catharsis.Commons.Domain
       Assert.True(faq.LastUpdated <= DateTime.UtcNow);
       Assert.True(faq.Name == null);
       Assert.True(faq.Text == null);
-
-      Assert.Throws<ArgumentNullException>(() => new Faq(null));
-      faq = new Faq(new Dictionary<string, object>()
-        .AddNext("Id", 1)
-        .AddNext("Language", "language")
-        .AddNext("Name", "name")
-        .AddNext("Text", "text"));
-      Assert.True(faq.Id == 1);
-      Assert.True(faq.AuthorId == null);
-      Assert.True(faq.DateCreated <= DateTime.UtcNow);
-      Assert.True(faq.Language == "language");
-      Assert.True(faq.LastUpdated <= DateTime.UtcNow);
-      Assert.True(faq.Name == "name");
-      Assert.True(faq.Text == "text");
 
       Assert.Throws<ArgumentNullException>(() => new Faq(null, "name", "text"));
       Assert.Throws<ArgumentNullException>(() => new Faq("language", null, "text"));

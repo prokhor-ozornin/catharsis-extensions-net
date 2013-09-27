@@ -11,42 +11,42 @@ namespace Catharsis.Commons.Domain
   public sealed class WebLinkExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="WebLinkExtensions.InWebLinksCategory(IEnumerable{WebLink}, WebLinksCategory)"/> method.</para>
+    ///   <para>Performs testing of <see cref="WebLinkExtensions.InCategory"/> method.</para>
     /// </summary>
     [Fact]
     public void InWebLinksCategory_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => WebLinkExtensions.InWebLinksCategory(null, new WebLinksCategory()));
+      Assert.Throws<ArgumentNullException>(() => WebLinkExtensions.InCategory(null, new WebLinksCategory()));
 
-      Assert.False(Enumerable.Empty<WebLink>().InWebLinksCategory(null).Any());
-      Assert.False(Enumerable.Empty<WebLink>().InWebLinksCategory(new WebLinksCategory()).Any());
-      Assert.True(new[] { null, new WebLink { Category = new WebLinksCategory { Id = 1 } }, null, new WebLink { Category = new WebLinksCategory { Id = 2 } } }.InWebLinksCategory(new WebLinksCategory { Id = 1 }).Count() == 1);
+      Assert.False(Enumerable.Empty<WebLink>().InCategory(null).Any());
+      Assert.False(Enumerable.Empty<WebLink>().InCategory(new WebLinksCategory()).Any());
+      Assert.True(new[] { null, new WebLink { Category = new WebLinksCategory { Id = 1 } }, null, new WebLink { Category = new WebLinksCategory { Id = 2 } } }.InCategory(new WebLinksCategory { Id = 1 }).Count() == 1);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="WebLinkExtensions.OrderByWebLinksCategoryName(IEnumerable{WebLink})"/> method.</para>
+    ///   <para>Performs testing of <see cref="WebLinkExtensions.OrderByCategoryName"/> method.</para>
     /// </summary>
     [Fact]
     public void OrderByWebLinksCategoryName_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => WebLinkExtensions.OrderByWebLinksCategoryName(null));
+      Assert.Throws<ArgumentNullException>(() => WebLinkExtensions.OrderByCategoryName(null));
 
-      Assert.Throws<NullReferenceException>(() => new WebLink[] { null }.OrderByWebLinksCategoryName().Any());
+      Assert.Throws<NullReferenceException>(() => new WebLink[] { null }.OrderByCategoryName().Any());
       var entities = new[] { new WebLink { Category = new WebLinksCategory { Name = "Second" } }, new WebLink { Category = new WebLinksCategory { Name = "First" } } };
-      Assert.True(entities.OrderByWebLinksCategoryName().SequenceEqual(entities.Reverse()));
+      Assert.True(entities.OrderByCategoryName().SequenceEqual(entities.Reverse()));
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="WebLinkExtensions.OrderByWebLinksCategoryNameDescending(IEnumerable{WebLink})"/> method.</para>
+    ///   <para>Performs testing of <see cref="WebLinkExtensions.OrderByCategoryNameDescending"/> method.</para>
     /// </summary>
     [Fact]
     public void OrderByWebLinksCategoryNameDescending_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => WebLinkExtensions.OrderByWebLinksCategoryNameDescending(null));
+      Assert.Throws<ArgumentNullException>(() => WebLinkExtensions.OrderByCategoryNameDescending(null));
 
-      Assert.Throws<NullReferenceException>(() => new WebLink[] { null }.OrderByWebLinksCategoryNameDescending().Any());
+      Assert.Throws<NullReferenceException>(() => new WebLink[] { null }.OrderByCategoryNameDescending().Any());
       var entities = new[] { new WebLink { Category = new WebLinksCategory { Name = "First" } }, new WebLink { Category = new WebLinksCategory { Name = "Second" } } };
-      Assert.True(entities.OrderByWebLinksCategoryNameDescending().SequenceEqual(entities.Reverse()));
+      Assert.True(entities.OrderByCategoryNameDescending().SequenceEqual(entities.Reverse()));
     }
   }
 }

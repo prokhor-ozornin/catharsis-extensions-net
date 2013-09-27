@@ -36,15 +36,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new blog entry with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on entry after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public BlogEntry(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new blog entry.</para>
     /// </summary>
     /// <param name="language">ISO language code of entry's text content.</param>

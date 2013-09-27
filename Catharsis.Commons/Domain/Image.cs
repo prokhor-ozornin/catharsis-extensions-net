@@ -51,14 +51,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new image with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on image after its creation.</param>
-    public Image(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new image.</para>
     /// </summary>
     /// <param name="file"></param>

@@ -16,7 +16,7 @@ namespace Catharsis.Commons.Extensions
     const string Yandex = "http://yandex.ru";
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Bytes(Uri, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Bytes(Uri, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void Bytes_Method()
@@ -27,29 +27,23 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of following methods :</para>
-    ///   <list type="bullet">
-    ///     <item><description><see cref="UriExtensions.DownloadFile(Uri, string, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/></description></item>
-    ///     <item><description><see cref="UriExtensions.DownloadFile(Uri, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/></description></item>
-    ///   </list>
+    ///   <para>Performs testing of <see cref="UriExtensions.DownloadFile(Uri, string, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void DownloadFile_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(null, "file"));
-      Assert.Throws<ArgumentNullException>(() => Yandex.ToUri().DownloadFile((string) null));
-      Assert.Throws<ArgumentException>(() => Yandex.ToUri().DownloadFile(string.Empty));
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(null));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile("http://uri.com".ToUri(), null));
+      Assert.Throws<ArgumentException>(() => UriExtensions.DownloadFile("http://uri.com".ToUri(), string.Empty));
 
       var uri = new Uri(Yandex);
       var file = Path.GetTempFileName();
       Assert.True(ReferenceEquals(uri.DownloadFile(file), uri));
       Assert.True(new FileInfo(file).Length > 0);
-      Assert.True(new FileInfo(uri.DownloadFile()).Length > 0);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Stream(Uri, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Stream(Uri, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void Stream_Method()
@@ -61,7 +55,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.TextReader(Uri, Encoding, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.TextReader(Uri, Encoding, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void TextReader_Method()
@@ -76,7 +70,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Text(Uri, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Text(Uri, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void Text_Method()
@@ -89,8 +83,8 @@ namespace Catharsis.Commons.Extensions
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, byte[], IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/></description></item>
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, string, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Upload(Uri, byte[], object, IEnumerable{KeyValuePair{string, string}})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Upload(Uri, string, object, IEnumerable{KeyValuePair{string, string}})"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
@@ -105,7 +99,7 @@ namespace Catharsis.Commons.Extensions
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string, IEnumerable{KeyValuePair{string, string}}, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
     [Fact]
     public void UploadFile_Method()

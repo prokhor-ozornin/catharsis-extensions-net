@@ -34,15 +34,6 @@ namespace Catharsis.Commons.Domain
     }
 
     /// <summary>
-    ///   <para>Creates new article with specified properties values.</para>
-    /// </summary>
-    /// <param name="properties">Named collection of properties to set on article after its creation.</param>
-    /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public Article(IDictionary<string, object> properties) : base(properties)
-    {
-    }
-
-    /// <summary>
     ///   <para>Creates new article.</para>
     /// </summary>
     /// <param name="language">ISO language code of article's text content.</param>
@@ -54,7 +45,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="image"></param>
     /// <exception cref="ArgumentNullException">If either <paramref name="language"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If either <paramref name="language"/> or <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
-    public Article(string language, string name, ArticlesCategory category = null, string annotation = null, string text = null, string authorId = null, Image image = null) : base(language, name, text, authorId)
+    public Article(string language, string name, ArticlesCategory category = null, string annotation = null, string text = null, long? authorId = null, Image image = null) : base(language, name, text, authorId)
     {
       this.Category = category;
       this.Annotation = annotation;
@@ -71,7 +62,7 @@ namespace Catharsis.Commons.Domain
     {
       Assertion.NotNull(xml);
 
-      var article = new Article((string) xml.Element("Language"), (string) xml.Element("Name"), xml.Element("ArticlesCategory") != null ? ArticlesCategory.Xml(xml.Element("ArticlesCategory")) : null, (string) xml.Element("Annotation"), (string) xml.Element("Text"), (string) xml.Element("AuthorId"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null);
+      var article = new Article((string) xml.Element("Language"), (string) xml.Element("Name"), xml.Element("ArticlesCategory") != null ? ArticlesCategory.Xml(xml.Element("ArticlesCategory")) : null, (string) xml.Element("Annotation"), (string) xml.Element("Text"), (long?) xml.Element("AuthorId"), xml.Element("Image") != null ? Image.Xml(xml.Element("Image")) : null);
       if (xml.Element("Id") != null)
       {
         article.Id = (long) xml.Element("Id");

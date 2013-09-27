@@ -17,7 +17,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="category">Category of playcasts to search for.</param>
     /// <returns>Filtered sequence of playcasts with specified category.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="playcasts"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Playcast> InPlaycastsCategory(this IEnumerable<Playcast> playcasts, PlaycastsCategory category)
+    public static IEnumerable<Playcast> InCategory(this IEnumerable<Playcast> playcasts, PlaycastsCategory category)
     {
       Assertion.NotNull(playcasts);
 
@@ -30,7 +30,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="playcasts">Source sequence of playcasts for sorting.</param>
     /// <returns>Sorted sequence of playcasts.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="playcasts"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Playcast> OrderByPlaycastsCategoryName(this IEnumerable<Playcast> playcasts)
+    public static IEnumerable<Playcast> OrderByCategoryName(this IEnumerable<Playcast> playcasts)
     {
       Assertion.NotNull(playcasts);
 
@@ -43,7 +43,7 @@ namespace Catharsis.Commons.Domain
     /// <param name="playcasts">Source sequence of playcasts for sorting.</param>
     /// <returns>Sorted sequence of playcasts.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="playcasts"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<Playcast> OrderByPlaycastsCategoryNameDescending(this IEnumerable<Playcast> playcasts)
+    public static IEnumerable<Playcast> OrderByCategoryNameDescending(this IEnumerable<Playcast> playcasts)
     {
       Assertion.NotNull(playcasts);
 

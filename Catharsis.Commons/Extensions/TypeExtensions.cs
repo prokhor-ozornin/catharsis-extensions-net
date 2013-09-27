@@ -259,14 +259,27 @@ namespace Catharsis.Commons.Extensions
     /// <param name="properties"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="properties"/> is a <c>null</c> reference.</exception>
-    public static object NewInstance(this Type type, IDictionary<string, object> properties)
+    public static object NewInstance(this Type type, IEnumerable<KeyValuePair<string, object>> properties)
     {
       Assertion.NotNull(type);
       Assertion.NotNull(properties);
 
-      var instance = type.NewInstance();
-      instance.SetProperties(properties);
-      return instance;
+      return type.NewInstance().SetProperties(properties);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="properties"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="properties"/> is a <c>null</c> reference.</exception>
+    public static object NewInstance(this Type type, object properties)
+    {
+      Assertion.NotNull(type);
+      Assertion.NotNull(properties);
+
+      return type.NewInstance().SetProperties(properties);
     }
   }
 }
