@@ -59,406 +59,173 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Serialization, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Catharsis.Commons\ArrayExtensions.cs">
+      <Link>ArrayExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Catharsis.Commons\Assertion.cs">
       <Link>Assertion.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\BooleanExtensions.cs">
+      <Link>BooleanExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\CollectionBase.cs">
       <Link>CollectionBase.cs</Link>
     </Compile>
+    <Compile Include="..\Catharsis.Commons\ConstrainedCollection.cs">
+      <Link>ConstrainedCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\ConstrainedDictionary.cs">
+      <Link>ConstrainedDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\ConstrainedList.cs">
+      <Link>ConstrainedList.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\Convert.cs">
+      <Link>Convert.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\ConvertExtensions.cs">
+      <Link>ConvertExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\DateTimeExtensions.cs">
+      <Link>DateTimeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\DelegateExtensions.cs">
+      <Link>DelegateExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Catharsis.Commons\DictionaryBase.cs">
       <Link>DictionaryBase.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Announcement.cs">
-      <Link>Domain\Announcement.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\AnnouncementExtensions.cs">
-      <Link>Domain\AnnouncementExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\AnnouncementsCategory.cs">
-      <Link>Domain\AnnouncementsCategory.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Art.cs">
-      <Link>Domain\Art.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ArtExtensions.cs">
-      <Link>Domain\ArtExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Article.cs">
-      <Link>Domain\Article.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ArticleExtensions.cs">
-      <Link>Domain\ArticleExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ArticlesCategory.cs">
-      <Link>Domain\ArticlesCategory.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ArtsAlbum.cs">
-      <Link>Domain\ArtsAlbum.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ArtsAlbumExtensions.cs">
-      <Link>Domain\ArtsAlbumExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Audio.cs">
-      <Link>Domain\Audio.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\AudioExtensions.cs">
-      <Link>Domain\AudioExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\AudiosCategory.cs">
-      <Link>Domain\AudiosCategory.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Blog.cs">
-      <Link>Domain\Blog.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\BlogEntry.cs">
-      <Link>Domain\BlogEntry.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\BlogEntryExtensions.cs">
-      <Link>Domain\BlogEntryExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Category.cs">
-      <Link>Domain\Category.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\CategoryExtensions.cs">
-      <Link>Domain\CategoryExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\City.cs">
-      <Link>Domain\City.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\CityExtensions.cs">
-      <Link>Domain\CityExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Comment.cs">
-      <Link>Domain\Comment.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Country.cs">
-      <Link>Domain\Country.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\CountryExtensions.cs">
-      <Link>Domain\CountryExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\DomainExtensions.cs">
-      <Link>Domain\DomainExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Download.cs">
-      <Link>Domain\Download.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\DownloadExtensions.cs">
-      <Link>Domain\DownloadExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\DownloadsCategory.cs">
-      <Link>Domain\DownloadsCategory.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\EntityBase.cs">
-      <Link>Domain\EntityBase.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Faq.cs">
-      <Link>Domain\Faq.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\File.cs">
-      <Link>Domain\File.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\FileExtensions.cs">
-      <Link>Domain\FileExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IAccessable.cs">
-      <Link>Domain\IAccessable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IAuthorable.cs">
-      <Link>Domain\IAuthorable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ICommentable.cs">
-      <Link>Domain\ICommentable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IDescriptable.cs">
-      <Link>Domain\IDescriptable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IDimensionable.cs">
-      <Link>Domain\IDimensionable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IEmailable.cs">
-      <Link>Domain\IEmailable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IEntity.cs">
-      <Link>Domain\IEntity.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IEntityExtensions.cs">
-      <Link>Domain\IEntityExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IImageable.cs">
-      <Link>Domain\IImageable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IInetAddressable.cs">
-      <Link>Domain\IInetAddressable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ILocalizable.cs">
-      <Link>Domain\ILocalizable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Image.cs">
-      <Link>Domain\Image.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ImagesCategory.cs">
-      <Link>Domain\ImagesCategory.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\INameable.cs">
-      <Link>Domain\INameable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IPersonalizable.cs">
-      <Link>Domain\IPersonalizable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ISizable.cs">
-      <Link>Domain\ISizable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IStatusable.cs">
-      <Link>Domain\IStatusable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ITaggable.cs">
-      <Link>Domain\ITaggable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Item.cs">
-      <Link>Domain\Item.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ITextable.cs">
-      <Link>Domain\ITextable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ITimeable.cs">
-      <Link>Domain\ITimeable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ITypeable.cs">
-      <Link>Domain\ITypeable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\IUrlAddressable.cs">
-      <Link>Domain\IUrlAddressable.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Location.cs">
-      <Link>Domain\Location.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\LocationExtensions.cs">
-      <Link>Domain\LocationExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Person.cs">
-      <Link>Domain\Person.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Playcast.cs">
-      <Link>Domain\Playcast.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\PlaycastExtensions.cs">
-      <Link>Domain\PlaycastExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\PlaycastsCategory.cs">
-      <Link>Domain\PlaycastsCategory.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Poll.cs">
-      <Link>Domain\Poll.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\PollAnswer.cs">
-      <Link>Domain\PollAnswer.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\PollOption.cs">
-      <Link>Domain\PollOption.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Profile.cs">
-      <Link>Domain\Profile.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\ProfileExtensions.cs">
-      <Link>Domain\ProfileExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Rating.cs">
-      <Link>Domain\Rating.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\RatingExtensions.cs">
-      <Link>Domain\RatingExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Setting.cs">
-      <Link>Domain\Setting.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Song.cs">
-      <Link>Domain\Song.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\SongExtensions.cs">
-      <Link>Domain\SongExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\SongsAlbum.cs">
-      <Link>Domain\SongsAlbum.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\SongsAlbumExtensions.cs">
-      <Link>Domain\SongsAlbumExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Subscription.cs">
-      <Link>Domain\Subscription.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\SubscriptionExtensions.cs">
-      <Link>Domain\SubscriptionExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Text.cs">
-      <Link>Domain\Text.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\TextExtensions.cs">
-      <Link>Domain\TextExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\TextsCategory.cs">
-      <Link>Domain\TextsCategory.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\TextTranslation.cs">
-      <Link>Domain\TextTranslation.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\User.cs">
-      <Link>Domain\User.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\UserExtensions.cs">
-      <Link>Domain\UserExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\Video.cs">
-      <Link>Domain\Video.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\VideoExtensions.cs">
-      <Link>Domain\VideoExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\VideosCategory.cs">
-      <Link>Domain\VideosCategory.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\WebLink.cs">
-      <Link>Domain\WebLink.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\WebLinkExtensions.cs">
-      <Link>Domain\WebLinkExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Domain\WebLinksCategory.cs">
-      <Link>Domain\WebLinksCategory.cs</Link>
+    <Compile Include="..\Catharsis.Commons\EnumExtensions.cs">
+      <Link>EnumExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\EqualsAndHashCodeAttribute.cs">
       <Link>EqualsAndHashCodeAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\ArrayExtensions.cs">
-      <Link>Extensions\ArrayExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\FieldInfoExtensions.cs">
+      <Link>FieldInfoExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\BooleanExtensions.cs">
-      <Link>Extensions\BooleanExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\FileInfoExtensions.cs">
+      <Link>FileInfoExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\ConstrainedCollection.cs">
-      <Link>Extensions\ConstrainedCollection.cs</Link>
+    <Compile Include="..\Catharsis.Commons\ICollectionExtensions.cs">
+      <Link>ICollectionExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\ConstrainedDictionary.cs">
-      <Link>Extensions\ConstrainedDictionary.cs</Link>
+    <Compile Include="..\Catharsis.Commons\IDictionaryExtensions.cs">
+      <Link>IDictionaryExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\ConstrainedList.cs">
-      <Link>Extensions\ConstrainedList.cs</Link>
+    <Compile Include="..\Catharsis.Commons\IEnumerableExtensions.cs">
+      <Link>IEnumerableExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\DateTimeExtensions.cs">
-      <Link>Extensions\DateTimeExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\IListExtensions.cs">
+      <Link>IListExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\DelegateExtensions.cs">
-      <Link>Extensions\DelegateExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\ImmutableCollection.cs">
+      <Link>ImmutableCollection.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\FieldInfoExtensions.cs">
-      <Link>Extensions\FieldInfoExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\ImmutableDictionary.cs">
+      <Link>ImmutableDictionary.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\FileInfoExtensions.cs">
-      <Link>Extensions\FileInfoExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\ImmutableList.cs">
+      <Link>ImmutableList.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\ICollectionExtensions.cs">
-      <Link>Extensions\ICollectionExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\IQueryableTransformer.cs">
+      <Link>IQueryableTransformer.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\IDictionaryExtensions.cs">
-      <Link>Extensions\IDictionaryExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\ISpecification.cs">
+      <Link>ISpecification.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\IEnumerableExtensions.cs">
-      <Link>Extensions\IEnumerableExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\IListExtensions.cs">
-      <Link>Extensions\IListExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\ImmutableCollection.cs">
-      <Link>Extensions\ImmutableCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\ImmutableDictionary.cs">
-      <Link>Extensions\ImmutableDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\ImmutableList.cs">
-      <Link>Extensions\ImmutableList.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\MemberInfoExtensions.cs">
-      <Link>Extensions\MemberInfoExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\MethodInfoExtensions.cs">
-      <Link>Extensions\MethodInfoExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\NonNullableCollection.cs">
-      <Link>Extensions\NonNullableCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\NonNullableDictionary.cs">
-      <Link>Extensions\NonNullableDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\NonNullableList.cs">
-      <Link>Extensions\NonNullableList.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\NumbersExtensions.cs">
-      <Link>Extensions\NumbersExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\ObjectExtensions.cs">
-      <Link>Extensions\ObjectExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\PropertyInfoExtensions.cs">
-      <Link>Extensions\PropertyInfoExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\RandomExtensions.cs">
-      <Link>Extensions\RandomExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\SizedCollection.cs">
-      <Link>Extensions\SizedCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\SizedDictionary.cs">
-      <Link>Extensions\SizedDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\SizedList.cs">
-      <Link>Extensions\SizedList.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\StreamExtensions.cs">
-      <Link>Extensions\StreamExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\StringExtensions.cs">
-      <Link>Extensions\StringExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\SymmetricAlgorithmExtensions.cs">
-      <Link>Extensions\SymmetricAlgorithmExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\TextReaderExtensions.cs">
-      <Link>Extensions\TextReaderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\TextWriterExtensions.cs">
-      <Link>Extensions\TextWriterExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\TypeExtensions.cs">
-      <Link>Extensions\TypeExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\UniqueCollection.cs">
-      <Link>Extensions\UniqueCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\UniqueDictionary.cs">
-      <Link>Extensions\UniqueDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\UniqueList.cs">
-      <Link>Extensions\UniqueList.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\XContainerExtensions.cs">
-      <Link>Extensions\XContainerExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\XDocumentExtensions.cs">
-      <Link>Extensions\XDocumentExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\XElementExtensions.cs">
-      <Link>Extensions\XElementExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\XmlReaderExtensions.cs">
-      <Link>Extensions\XmlReaderExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\Extensions\XmlWriterExtensions.cs">
-      <Link>Extensions\XmlWriterExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\ISpecificationExtensions.cs">
+      <Link>ISpecificationExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\ListBase.cs">
       <Link>ListBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\MemberInfoExtensions.cs">
+      <Link>MemberInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\MethodInfoExtensions.cs">
+      <Link>MethodInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\NonNullableCollection.cs">
+      <Link>NonNullableCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\NonNullableDictionary.cs">
+      <Link>NonNullableDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\NonNullableList.cs">
+      <Link>NonNullableList.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\NumericExtensions.cs">
+      <Link>NumericExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\ObjectExtensions.cs">
+      <Link>ObjectExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\PropertyInfoExtensions.cs">
+      <Link>PropertyInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\QueryableTransformersFactory.cs">
+      <Link>QueryableTransformersFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\RandomExtensions.cs">
+      <Link>RandomExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\SizedCollection.cs">
+      <Link>SizedCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\SizedDictionary.cs">
+      <Link>SizedDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\SizedList.cs">
+      <Link>SizedList.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\SpecificationBase.cs">
+      <Link>SpecificationBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\StreamExtensions.cs">
+      <Link>StreamExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\StringExtensions.cs">
+      <Link>StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\SymmetricAlgorithmExtensions.cs">
+      <Link>SymmetricAlgorithmExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\TextReaderExtensions.cs">
+      <Link>TextReaderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\TextWriterExtensions.cs">
+      <Link>TextWriterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\TypeExtensions.cs">
+      <Link>TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\UniqueCollection.cs">
+      <Link>UniqueCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\UniqueDictionary.cs">
+      <Link>UniqueDictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\UniqueList.cs">
+      <Link>UniqueList.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\XContainerExtensions.cs">
+      <Link>XContainerExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\XDocumentExtensions.cs">
+      <Link>XDocumentExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\XElementExtensions.cs">
+      <Link>XElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\XmlReaderExtensions.cs">
+      <Link>XmlReaderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\XmlWriterExtensions.cs">
+      <Link>XmlWriterExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

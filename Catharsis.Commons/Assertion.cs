@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Catharsis.Commons.Extensions;
 
 namespace Catharsis.Commons
 {
@@ -11,6 +10,27 @@ namespace Catharsis.Commons
   /// </summary>
   public static class Assertion
   {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value"></param>
+    /// <param name="message"></param>
+    public static void Default<T>(this T value, string message = null) where T : struct
+    {
+      if (value.Equals(default(T)))
+      {
+        return;
+      }
+
+      if (message.Whitespace())
+      {
+        throw new ArgumentException("Argument doesn't has a default value for type {0}. Expected : {1}. Actual : {2}".FormatValue(typeof(T), default(T), value));
+      }
+
+      throw new ArgumentException(message);
+    }
+
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -67,6 +87,27 @@ namespace Catharsis.Commons
       {
         throw new ArgumentException("Specified condition is not false{0}", message.Whitespace() ? string.Empty : " : " + message);
       }
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value"></param>
+    /// <param name="message"></param>
+    public static void NotDefault<T>(T value, string message = null) where T : struct
+    {
+      if (!value.Equals(default(T)))
+      {
+        return;
+      }
+
+      if (message.Whitespace())
+      {
+        throw new ArgumentException("Argument has a default value for type {0} : {1}".FormatValue(typeof(T), value));
+      }
+
+      throw new ArgumentException(message);
     }
 
     /// <summary>

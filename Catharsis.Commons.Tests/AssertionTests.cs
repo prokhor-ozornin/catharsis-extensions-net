@@ -12,6 +12,18 @@ namespace Catharsis.Commons
   public sealed class AssertionTests
   {
     /// <summary>
+    ///   <para>Performs testing of <see cref="Assertion.Default{T}(T, string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Default_Method()
+    {
+      0.Default();
+      Assert.Throws<ArgumentException>(() => 1.Default());
+      default(DateTime).Default();
+      Assert.Throws<ArgumentException>(() => DateTime.UtcNow.Default());
+    }
+
+    /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
     ///     <item><description><see cref="Assertion.Empty(IEnumerable, string)"/></description></item>
