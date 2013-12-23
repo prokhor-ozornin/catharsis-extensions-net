@@ -9,10 +9,6 @@ This library is extensively unit-tested, greatly reducing the possibility of bug
 **NuGet package** : https://www.nuget.org/packages/Catharsis.Commons
 
 ### Structure
-This library consists of two main parts :
-
-**Part I**
-Extension methods for popular CLR runtime classes. They are located in _Catharsis.Commons.Extensions_ namespace.
 
 The list of extended structures, classes and interfaces includes:
 * _System.Array_
@@ -47,53 +43,6 @@ The list of extended structures, classes and interfaces includes:
 
 More extension methods can be added to the library on request.
 See **Examples** for more usage detail, as well as API documentation in distribution packages (work in progress).
-
-**Part II**
-Set of common domain classes, representing generic business domain entities, which can be used in many typical .NET applications. These classes are located in the _Catharsis.Commons.Domain_ namespace. The list of domain classes includes :
-* _Announcement_, _AnnouncementsCategory_
-* _Art_, _ArtsAlbum_
-* _Article_, _ArticlesCategory_
-* _Audio_, _AudiosCategory_
-* _Blog_, _BlogEntry_
-* _City_
-* _Comment_
-* _Country_
-* _Download_, _DownloadsCategory_
-* _Faq_
-* _File_
-* _Image_, _ImagesCategory_
-* _Location_
-* _Person_
-* _Playcast_, _PlaycastsCategory_
-* _Poll_, _PollAnswer_, _PollOption_
-* _Profile_
-* _Rating_
-* _Setting_
-* _Song_, _SongsAlbum_
-* _Subscription_
-* _Text_, _TextsCategory_
-* _User_
-* _Video_, _VideosCategory_
-* _WebLink_, _WebLinksCategory_
-
-As well several domain interfaces with extension methods are provided, and many of domain classes implement one or more of them. You can make your domain classes implement any of provided interface to quickly add additional functionality. The list of domain interfaces includes :
-* _IAccessable_
-* _IAuthorable_
-* _ICommentable_
-* _IDescriptable_
-* _IEmailable_
-* _IEntity_
-* _IImageable_
-* _IInetAddressable_
-* _INameable_
-* _IPersonalizable_
-* _ISizeable_
-* _IStatusable_
-* _ITaggable_
-* _ITextable_
-* _ITimeable_
-* _ITypeable_
-* _IUrlAddressable_
 
 In addition, extension methods for _Enumerable<T>_ generic interfaces for theses classes are provided for easy quering, searching and sorting.
 

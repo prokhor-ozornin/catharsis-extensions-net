@@ -1,4 +1,8 @@
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
+.hg
+.hgignore
+.hgtags
+
 [Bb]in/
 [Oo]bj/
 
