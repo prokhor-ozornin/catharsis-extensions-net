@@ -71,18 +71,6 @@
     <Compile Include="..\Catharsis.Commons\BooleanExtensions.cs">
       <Link>BooleanExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\CollectionBase.cs">
-      <Link>CollectionBase.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\ConstrainedCollection.cs">
-      <Link>ConstrainedCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\ConstrainedDictionary.cs">
-      <Link>ConstrainedDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\ConstrainedList.cs">
-      <Link>ConstrainedList.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons\Convert.cs">
       <Link>Convert.cs</Link>
     </Compile>
@@ -94,9 +82,6 @@
     </Compile>
     <Compile Include="..\Catharsis.Commons\DelegateExtensions.cs">
       <Link>DelegateExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\DictionaryBase.cs">
-      <Link>DictionaryBase.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\EnumExtensions.cs">
       <Link>EnumExtensions.cs</Link>
@@ -122,15 +107,6 @@
     <Compile Include="..\Catharsis.Commons\IListExtensions.cs">
       <Link>IListExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\ImmutableCollection.cs">
-      <Link>ImmutableCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\ImmutableDictionary.cs">
-      <Link>ImmutableDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\ImmutableList.cs">
-      <Link>ImmutableList.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons\IQueryableTransformer.cs">
       <Link>IQueryableTransformer.cs</Link>
     </Compile>
@@ -140,23 +116,11 @@
     <Compile Include="..\Catharsis.Commons\ISpecificationExtensions.cs">
       <Link>ISpecificationExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\ListBase.cs">
-      <Link>ListBase.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons\MemberInfoExtensions.cs">
       <Link>MemberInfoExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\MethodInfoExtensions.cs">
       <Link>MethodInfoExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\NonNullableCollection.cs">
-      <Link>NonNullableCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\NonNullableDictionary.cs">
-      <Link>NonNullableDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\NonNullableList.cs">
-      <Link>NonNullableList.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\NumericExtensions.cs">
       <Link>NumericExtensions.cs</Link>
@@ -172,15 +136,6 @@
     </Compile>
     <Compile Include="..\Catharsis.Commons\RandomExtensions.cs">
       <Link>RandomExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\SizedCollection.cs">
-      <Link>SizedCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\SizedDictionary.cs">
-      <Link>SizedDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\SizedList.cs">
-      <Link>SizedList.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\SpecificationBase.cs">
       <Link>SpecificationBase.cs</Link>
@@ -202,15 +157,6 @@
     </Compile>
     <Compile Include="..\Catharsis.Commons\TypeExtensions.cs">
       <Link>TypeExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\UniqueCollection.cs">
-      <Link>UniqueCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\UniqueDictionary.cs">
-      <Link>UniqueDictionary.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons\UniqueList.cs">
-      <Link>UniqueList.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons\XContainerExtensions.cs">
       <Link>XContainerExtensions.cs</Link>

@@ -112,7 +112,7 @@ namespace Catharsis.Commons
 
       Assert.Null(Convert.To.Double(null));
       Assert.Equal(double.MinValue, Convert.To.Double(double.MinValue));
-      Assert.Equal(double.Epsilon, Convert.To.Double(double.Epsilon.ToString(CultureInfo.InvariantCulture)));
+      Assert.Equal(double.Epsilon, Convert.To.Double(double.Epsilon.ToString()));
       Assert.Null(Convert.To.Double(new object()));
     }
 
@@ -211,7 +211,7 @@ namespace Catharsis.Commons
 
       Assert.Null(Convert.To.Single(null));
       Assert.Equal(Single.MinValue, Convert.To.Single(Single.MinValue));
-      Assert.Equal(Single.Epsilon, Convert.To.Single(Single.Epsilon.ToString(CultureInfo.InvariantCulture)));
+      Assert.Equal(Single.Epsilon, Convert.To.Single(Single.Epsilon.ToString()));
       Assert.Null(Convert.To.Single(new object()));
     }
 

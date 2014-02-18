@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Reflection;
 using Xunit;
 
@@ -19,7 +20,13 @@ namespace Catharsis.Commons
     [Fact]
     public void Attribute_Methods()
     {
-      throw new NotImplementedException();
+      var field = typeof(string).GetField("Empty");
+      Assert.Null(field.Attribute(typeof(DescriptionAttribute)));
+      Assert.Null(field.Attribute<DescriptionAttribute>());
+
+      field = typeof(TestObject).GetField("PublicField");
+      Assert.NotNull(field.Attribute(typeof(DescriptionAttribute)));
+      Assert.NotNull(field.Attribute<DescriptionAttribute>());
     }
 
     /// <summary>

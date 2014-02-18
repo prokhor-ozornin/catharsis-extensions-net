@@ -295,7 +295,7 @@ namespace Catharsis.Commons
       Assert.Throws<FormatException>(() => Invalid.ToDateTime());
 
       DateTime result;
-      Assert.True(date.ToString(CultureInfo.InvariantCulture).ToDateTime(out result));
+      Assert.True(date.ToString().ToDateTime(out result));
       Assert.True(result.IsSameDate(date));
       Assert.True(result.IsSameTime(date));
       Assert.False(Invalid.ToDateTime(out result));
@@ -510,11 +510,11 @@ namespace Catharsis.Commons
 
       const string Invalid = "invalid";
 
-      Assert.Equal(Single.Epsilon, Single.Epsilon.ToString(CultureInfo.InvariantCulture).ToSingle());
+      Assert.Equal(Single.Epsilon, Single.Epsilon.ToString().ToSingle());
       Assert.Throws<FormatException>(() => Invalid.ToSingle());
 
       Single result;
-      Assert.True(Single.Epsilon.ToString(CultureInfo.InvariantCulture).ToSingle(out result));
+      Assert.True(Single.Epsilon.ToString().ToSingle(out result));
       Assert.Equal(Single.Epsilon, result);
       Assert.False(Invalid.ToSingle(out result));
       Assert.Equal(default(Single), result);

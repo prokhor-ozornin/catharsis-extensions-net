@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Catharsis.Commons
 {
@@ -12,6 +13,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
+    [Description]
     private object ReadOnlyProperty
     {
       get { return null; }
@@ -20,6 +22,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
+    [Description]
     public static object PublicStaticProperty { get; set; }
     
     /// <summary>
@@ -35,6 +38,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
+    [Description]
     public object PublicProperty { get; set; }
     
     /// <summary>
@@ -50,6 +54,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
+    [Description]
     public static object PublicStaticField;
     
     /// <summary>
@@ -65,6 +70,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
+    [Description]
     public object PublicField;
     
     /// <summary>
@@ -147,6 +153,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
+    [Description]
     public void PublicMethod()
     {
     }

@@ -261,7 +261,6 @@ namespace Catharsis.Commons
       var stream = new MemoryStream(bytes);
       var text = stream.Text();
       Assert.Equal(text, stream.Rewind().TextReader().Text());
-      Assert.Equal(text, bytes.String());
       Assert.Equal(-1, stream.ReadByte());
       Assert.Equal(text, stream.Rewind().Text(true));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
