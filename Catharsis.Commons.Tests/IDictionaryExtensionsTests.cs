@@ -24,9 +24,9 @@ namespace Catharsis.Commons
 
       IDictionary<string, string> first = new Dictionary<string, string>();
       var second = first.AddNext("key", "value");
-      Assert.True(first.Count == 1);
-      Assert.True(first.Single().Key == "key");
-      Assert.True(first.Single().Value == "value");
+      Assert.Equal(1, first.Count);
+      Assert.Equal("key", first.Single().Key);
+      Assert.Equal("value", first.Single().Value);
       Assert.True(ReferenceEquals(first, second));
     }
 
@@ -44,7 +44,7 @@ namespace Catharsis.Commons
       var dictionary = new Dictionary<object, object>().AsConstrained(x => true);
       dictionary.Add("key", "value");
       dictionary.Add(new KeyValuePair<object, object>("key2", "value2"));
-      Assert.True(dictionary.Count == 2);
+      Assert.Equal(2, dictionary.Count);
     }
 
     /// <summary>
@@ -144,16 +144,16 @@ namespace Catharsis.Commons
       });
 
       var first = new Dictionary<string, string> { { "key", "value" } }.AsUnique();
-      Assert.True(first.Count == 1);
-      Assert.True(first.Single().Key == "key");
-      Assert.True(first.Single().Value == "value");
+      Assert.Equal(1, first.Count);
+      Assert.Equal("key", first.Single().Key);
+      Assert.Equal("value", first.Single().Value);
 
       var second = new Dictionary<string, string> { { "key1", "value1" } }.AsUnique();
       second.Add("key2", "value2");
       second.Remove("key1");
-      Assert.True(second.Count == 1);
-      Assert.True(second.Single().Key == "key2");
-      Assert.True(second.Single().Value == "value2");
+      Assert.Equal(1, second.Count);
+      Assert.Equal("key2", second.Single().Key);
+      Assert.Equal("value2", second.Single().Value);
     }
   }
 }

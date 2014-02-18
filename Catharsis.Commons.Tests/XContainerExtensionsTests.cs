@@ -19,7 +19,7 @@ namespace Catharsis.Commons
 
       var document = new XDocument();
       Assert.True(ReferenceEquals(document.AddContent(new XElement("root")), document));
-      Assert.True(document.Root.Name == "root");
+      Assert.Equal("root", document.Root.Name);
     }
   }
 }

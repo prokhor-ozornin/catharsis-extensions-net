@@ -13,7 +13,7 @@ namespace Catharsis.Commons
     ///   <para>Performs testing of class constructor(s).</para>
     ///   <seealso cref="ConstrainedCollection{T}(ICollection{T}, Predicate{T})"/>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void Constructors()
     {
       throw new NotImplementedException();
@@ -23,7 +23,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.Count"/> property.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void Count_Property()
     {
       throw new NotImplementedException();
@@ -33,7 +33,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.IsReadOnly"/> property.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void IsReadOnly_Property()
     {
       throw new NotImplementedException();
@@ -43,7 +43,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.IsSynchronized"/> property.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void IsSynchronized_Property()
     {
       throw new NotImplementedException();
@@ -53,7 +53,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.SyncRoot"/> property.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void SyncRoot_Property()
     {
       throw new NotImplementedException();
@@ -63,7 +63,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.Add(T)"/> method.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void Add_Method()
     {
       throw new NotImplementedException();
@@ -73,7 +73,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.Clear()"/> method.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void Clear_Method()
     {
       throw new NotImplementedException();
@@ -83,7 +83,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.Contains(T)"/> method.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void Contains_Method()
     {
       throw new NotImplementedException();
@@ -97,7 +97,7 @@ namespace Catharsis.Commons
     ///     <item><description><see cref="ConstrainedCollection{T}.CopyTo(T[], int)"/></description></item>
     ///   </list>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void CopyTo_Method()
     {
       throw new NotImplementedException();
@@ -107,7 +107,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.GetEnumerator()"/> method.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void GetEnumerator_Method()
     {
       throw new NotImplementedException();
@@ -117,7 +117,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.Remove(T)"/> method.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void Remove_Method()
     {
       throw new NotImplementedException();
@@ -127,7 +127,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="ConstrainedCollection{T}.CheckElement(T)"/> method.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void CheckElement_Method()
     {
       throw new NotImplementedException();

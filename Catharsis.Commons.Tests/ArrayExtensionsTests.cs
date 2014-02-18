@@ -19,8 +19,8 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => ArrayExtensions.Bytes(null));
 
       var text = Guid.NewGuid().ToString();
-      Assert.True(text.ToCharArray().Bytes(Encoding.UTF32).Length == text.ToCharArray().Bytes(Encoding.Unicode).Length * 2);
-      Assert.True(text.ToCharArray().Bytes(Encoding.Unicode).String(Encoding.Unicode) == text);
+      Assert.Equal(text.ToCharArray().Bytes(Encoding.Unicode).Length * 2, text.ToCharArray().Bytes(Encoding.UTF32).Length);
+      Assert.Equal(text, text.ToCharArray().Bytes(Encoding.Unicode).String(Encoding.Unicode));
     }
 
     /// <summary>
@@ -32,8 +32,8 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => ArrayExtensions.EncodeBase64(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
-      Assert.True(Enumerable.Empty<byte>().ToArray().EncodeBase64() == string.Empty);
-      Assert.True(bytes.EncodeBase64() == System.Convert.ToBase64String(bytes));
+      Assert.Equal(string.Empty, Enumerable.Empty<byte>().ToArray().EncodeBase64());
+      Assert.Equal(System.Convert.ToBase64String(bytes), bytes.EncodeBase64());
     }
 
     /// <summary>
@@ -45,8 +45,8 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => ArrayExtensions.EncodeHex(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
-      Assert.True(Enumerable.Empty<byte>().ToArray().EncodeHex() == string.Empty);
-      Assert.True(bytes.EncodeHex().Length == bytes.Length * 2);
+      Assert.Equal(string.Empty, Enumerable.Empty<byte>().ToArray().EncodeHex());
+      Assert.Equal(bytes.Length * 2, bytes.EncodeHex().Length);
       Assert.True(bytes.EncodeHex().Match("[0-9A-Z]"));
     }
 
@@ -58,8 +58,8 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ArrayExtendedExtensions.EncodeMd5(null));
 
-      Assert.True(Enumerable.Empty<byte>().ToArray().EncodeMd5().Length == 16);
-      Assert.True(Guid.NewGuid().ToByteArray().EncodeMd5().Length == 16);
+      Assert.Equal(16, Enumerable.Empty<byte>().ToArray().EncodeMd5().Length);
+      Assert.Equal(16, Guid.NewGuid().ToByteArray().EncodeMd5().Length);
       Assert.False(Guid.NewGuid().ToByteArray().EncodeMd5().SequenceEqual(Guid.NewGuid().ToByteArray().EncodeMd5()));
     }
 
@@ -71,8 +71,8 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ArrayExtendedExtensions.EncodeSha1(null));
 
-      Assert.True(Enumerable.Empty<byte>().ToArray().EncodeSha1().Length == 20);
-      Assert.True(Guid.NewGuid().ToByteArray().EncodeSha1().Length == 20);
+      Assert.Equal(20, Enumerable.Empty<byte>().ToArray().EncodeSha1().Length);
+      Assert.Equal(20, Guid.NewGuid().ToByteArray().EncodeSha1().Length);
       Assert.False(Guid.NewGuid().ToByteArray().EncodeSha1().SequenceEqual(Guid.NewGuid().ToByteArray().EncodeSha1()));
     }
 
@@ -84,8 +84,8 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ArrayExtendedExtensions.EncodeSha256(null));
 
-      Assert.True(Enumerable.Empty<byte>().ToArray().EncodeSha256().Length == 32);
-      Assert.True(Guid.NewGuid().ToByteArray().EncodeSha256().Length == 32);
+      Assert.Equal(32, Enumerable.Empty<byte>().ToArray().EncodeSha256().Length);
+      Assert.Equal(32, Guid.NewGuid().ToByteArray().EncodeSha256().Length);
       Assert.False(Guid.NewGuid().ToByteArray().EncodeSha256().SequenceEqual(Guid.NewGuid().ToByteArray().EncodeSha256()));
     }
 
@@ -97,8 +97,8 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ArrayExtendedExtensions.EncodeSha512(null));
 
-      Assert.True(Enumerable.Empty<byte>().ToArray().EncodeSha512().Length == 64);
-      Assert.True(Guid.NewGuid().ToByteArray().EncodeSha512().Length == 64);
+      Assert.Equal(64, Enumerable.Empty<byte>().ToArray().EncodeSha512().Length);
+      Assert.Equal(64, Guid.NewGuid().ToByteArray().EncodeSha512().Length);
       Assert.False(Guid.NewGuid().ToByteArray().EncodeSha512().SequenceEqual(Guid.NewGuid().ToByteArray().EncodeSha512()));
     }
 
@@ -111,7 +111,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => ArrayExtensions.Join(null, Enumerable.Empty<object>().ToArray()));
       Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<object>().ToArray().Join(null));
 
-      Assert.True(Enumerable.Empty<object>().ToArray().Join(Enumerable.Empty<object>().ToArray()).Length == 0);
+      Assert.Equal(0, Enumerable.Empty<object>().ToArray().Join(Enumerable.Empty<object>().ToArray()).Length);
       Assert.True(new [] { "first" }.Join(Enumerable.Empty<object>().ToArray()).SequenceEqual(new [] { "first" }));
       Assert.True(Enumerable.Empty<object>().ToArray().Join(new [] { "second" }).SequenceEqual(new [] { "second" }));
       Assert.True(new [] { "first", "second" }.Join(new [] { "third" }).SequenceEqual(new [] { "first", "second", "third" }));
@@ -131,9 +131,9 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => ArrayExtensions.String(null, Encoding.Default));
 
       var text = Guid.NewGuid().ToString();
-      Assert.True(text.ToCharArray().String() == text);
-      Assert.True(Encoding.Default.GetBytes(text).String() == text);
-      Assert.True(Encoding.Unicode.GetBytes(text).String(Encoding.Unicode) == text);
+      Assert.Equal(text, text.ToCharArray().String());
+      Assert.Equal(text, Encoding.Default.GetBytes(text).String());
+      Assert.Equal(text, Encoding.Unicode.GetBytes(text).String(Encoding.Unicode));
     }
   }
 }

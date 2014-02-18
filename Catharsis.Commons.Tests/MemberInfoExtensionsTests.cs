@@ -75,16 +75,16 @@ namespace Catharsis.Commons
       var type = typeof(TestObject);
 
       var eventMember = type.AnyEvent("PublicEvent");
-      Assert.True(eventMember.MemberType() == eventMember.EventHandlerType);
+      Assert.Equal(eventMember.EventHandlerType, eventMember.MemberType());
 
       var fieldMember = type.AnyField("PublicField");
-      Assert.True(fieldMember.MemberType() == fieldMember.FieldType);
+      Assert.Equal(fieldMember.FieldType, fieldMember.MemberType());
 
       var methodMember = type.AnyMethod("PublicMethod");
-      Assert.True(methodMember.MemberType() == methodMember.ReturnType);
+      Assert.Equal(methodMember.ReturnType, methodMember.MemberType());
       
       var propertyMember = type.AnyProperty("PublicProperty");
-      Assert.True(propertyMember.MemberType() == propertyMember.PropertyType);
+      Assert.Equal(propertyMember.PropertyType, propertyMember.MemberType());
     }
   }
 }

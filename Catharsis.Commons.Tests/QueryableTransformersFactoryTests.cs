@@ -15,7 +15,7 @@ namespace Catharsis.Commons
     [Fact]
     public void Transformers_Property()
     {
-      Assert.True(QueryableTransformersFactory.Transformers != null);
+      Assert.NotNull(QueryableTransformersFactory.Transformers);
       Assert.True(ReferenceEquals(QueryableTransformersFactory.Transformers, QueryableTransformersFactory.Transformers));
     }
 
@@ -28,7 +28,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => QueryableTransformersFactory.Transformers.Register<object, object>(null));
 
       QueryableTransformersFactory.Transformers.Clear();
-       Assert.True(QueryableTransformersFactory.Transformers.Get<object, string>() == null);
+      Assert.Null(QueryableTransformersFactory.Transformers.Get<object, string>());
       var transformer = new MockQueryableTransformer();
       Assert.True(ReferenceEquals(QueryableTransformersFactory.Transformers.Register(transformer), QueryableTransformersFactory.Transformers));
       Assert.True(ReferenceEquals(QueryableTransformersFactory.Transformers.Get<object, string>(), transformer));
@@ -42,7 +42,7 @@ namespace Catharsis.Commons
     public void Get_Method()
     {
       QueryableTransformersFactory.Transformers.Clear();
-      Assert.True(QueryableTransformersFactory.Transformers.Get<object, string>() == null);
+      Assert.Null(QueryableTransformersFactory.Transformers.Get<object, string>());
       var transformer = new MockQueryableTransformer();
       QueryableTransformersFactory.Transformers.Register(transformer);
       Assert.True(ReferenceEquals(QueryableTransformersFactory.Transformers.Get<object, string>(), transformer));
@@ -55,11 +55,11 @@ namespace Catharsis.Commons
     public void Clear_Method()
     {
       QueryableTransformersFactory.Transformers.Clear();
-      Assert.True(QueryableTransformersFactory.Transformers.Get<object, string>() == null);
+      Assert.Null(QueryableTransformersFactory.Transformers.Get<object, string>());
       var transformer = new MockQueryableTransformer();
       QueryableTransformersFactory.Transformers.Register(transformer);
       QueryableTransformersFactory.Transformers.Clear();
-      Assert.True(QueryableTransformersFactory.Transformers.Get<object, string>() == null);
+      Assert.Null(QueryableTransformersFactory.Transformers.Get<object, string>());
     }
 
     private sealed class MockQueryableTransformer : IQueryableTransformer<object, string>

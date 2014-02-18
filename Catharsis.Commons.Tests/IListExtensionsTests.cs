@@ -25,7 +25,7 @@ namespace Catharsis.Commons
       var list = new List<object>().AsConstrained(x => true);
       list.Add(new object());
       list.Insert(0, new object());
-      Assert.True(list.Count == 2);
+      Assert.Equal(2, list.Count);
     }
 
     /// <summary>
@@ -132,19 +132,19 @@ namespace Catharsis.Commons
       });
 
       var first = new List<string> { "test", "test" }.AsUnique();
-      Assert.True(first.Count == 1);
-      Assert.True(first.Single() == "test");
+      Assert.Equal(1, first.Count);
+      Assert.Equal("test", first.Single());
 
       var second = new List<string> { "1" }.AsUnique();
       second.Add("2");
       second.Remove("2");
-      Assert.True(second.Count == 1);
-      Assert.True(second.Single() == "1");
+      Assert.Equal(1, second.Count);
+      Assert.Equal("1", second.Single());
 
       second.Insert(0, "2");
       second.RemoveAt(0);
-      Assert.True(second.Count == 1);
-      Assert.True(second.Single() == "1");
+      Assert.Equal(1, second.Count);
+      Assert.Equal("1", second.Single());
     }
 
     /// <summary>
@@ -157,8 +157,8 @@ namespace Catharsis.Commons
 
       var first = new List<string>();
       var second = first.InsertNext(0, "test");
-      Assert.True(first.Count == 1);
-      Assert.True(first.Single() == "test");
+      Assert.Equal(1, first.Count);
+      Assert.Equal("test", first.Single());
       Assert.True(ReferenceEquals(first, second));
     }
     
@@ -172,8 +172,8 @@ namespace Catharsis.Commons
 
       var first = new List<string> {"1", "2"};
       var second = first.RemoveAtNext(0);
-      Assert.True(first.Count == 1);
-      Assert.True(first.Single() == "2");
+      Assert.Equal(1, first.Count);
+      Assert.Equal("2", first.Single());
       Assert.True(ReferenceEquals(first, second));
     }
   }

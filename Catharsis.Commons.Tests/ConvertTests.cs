@@ -13,7 +13,7 @@ namespace Catharsis.Commons
     [Fact]
     public void To_Method()
     {
-      Assert.True(Convert.To != null);
+      Assert.NotNull(Convert.To);
       Assert.True(ReferenceEquals(Convert.To, Convert.To));
     }
   }

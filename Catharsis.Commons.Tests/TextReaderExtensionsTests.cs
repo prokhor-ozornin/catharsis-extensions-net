@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Text;
+using System.Linq;
 using System.Xml;
 using Xunit;
 
@@ -21,24 +21,24 @@ namespace Catharsis.Commons
 
       new StringReader(string.Empty).With(reader =>
       {
-        Assert.True(reader.Lines().Count == 0);
-        Assert.True(reader.Read() == -1);
+        Assert.False(reader.Lines().Any());
+        Assert.Equal(-1, reader.Read());
       });
 
       new StringReader(string.Empty).With(reader =>
       {
-        Assert.True(reader.Lines(true).Count == 0);
+        Assert.False(reader.Lines(true).Any());
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
       });
 
       new StringReader("First{0}Second{0}".FormatValue(Environment.NewLine)).With(reader =>
       {
         var lines = reader.Lines();
-        Assert.True(lines.Count == 2);
-        Assert.True(lines[0] == "First");
-        Assert.True(lines[1] == "Second");
-        Assert.True(reader.Lines().Count == 0);
-        Assert.True(reader.Read() == -1);
+        Assert.Equal(2, lines.Count);
+        Assert.Equal("First", lines[0]);
+        Assert.Equal("Second", lines[1]);
+        Assert.False(reader.Lines().Any());
+        Assert.Equal(-1, reader.Read());
       });
     }
 
@@ -54,13 +54,13 @@ namespace Catharsis.Commons
       
       new StringReader(text).With(reader =>
       {
-        Assert.True(reader.Text() == text);
-        Assert.True(reader.Read() == -1);
+        Assert.Equal(text, reader.Text());
+        Assert.Equal(-1, reader.Read());
       });
 
       new StringReader(text).With(reader =>
       {
-        Assert.True(reader.Text(true) == text);
+        Assert.Equal(text, reader.Text(true));
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
       });
     }
@@ -81,7 +81,7 @@ namespace Catharsis.Commons
       });
       new StringReader(subject.Xml()).With(reader =>
       {
-        Assert.True(reader.Xml<Guid>(true) == subject);
+        Assert.Equal(subject, reader.Xml<Guid>(true));
         Assert.Throws<ObjectDisposedException>(() => reader.ReadLine());
       });
     }
@@ -99,13 +99,13 @@ namespace Catharsis.Commons
 
       new StringReader(Xml).With(reader =>
       {
-        Assert.True(reader.XDocument().ToString() == "<article>text</article>");
-        Assert.True(reader.Read() == -1);
+        Assert.Equal("<article>text</article>", reader.XDocument().ToString());
+        Assert.Equal(-1, reader.Read());
       });
 
       new StringReader(Xml).With(reader =>
       {
-        Assert.True(reader.XDocument(true).ToString() == "<article>text</article>");
+        Assert.Equal("<article>text</article>", reader.XDocument(true).ToString());
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
       });
     }
@@ -123,13 +123,13 @@ namespace Catharsis.Commons
       
       new StringReader(Xml).With(reader =>
       {
-        Assert.True(reader.XmlDocument().String() == Xml);
-        Assert.True(reader.Read() == -1);
+        Assert.Equal(Xml, reader.XmlDocument().String());
+        Assert.Equal(-1, reader.Read());
       });
 
       new StringReader(Xml).With(reader =>
       {
-        Assert.True(reader.XmlDocument(true).String() == Xml);
+        Assert.Equal(Xml, reader.XmlDocument(true).String());
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
       });
     }
@@ -145,23 +145,23 @@ namespace Catharsis.Commons
       const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
       
       var textReader = new StringReader(Xml);
-      Assert.True(textReader.XmlReader().Read(reader =>
+      Assert.Equal("text", textReader.XmlReader().Read(reader =>
       {
         Assert.False(reader.Settings.CloseInput);
         Assert.True(reader.Settings.IgnoreComments);
         Assert.True(reader.Settings.IgnoreWhitespace);
         reader.ReadStartElement("article");
         return reader.ReadString();
-      }) == "text");
-      Assert.True(textReader.Read() == -1);
+      }));
+      Assert.Equal(-1, textReader.Read());
 
       textReader = new StringReader(Xml);
-      Assert.True(textReader.XmlReader(true).Read(reader =>
+      Assert.Equal("text", textReader.XmlReader(true).Read(reader =>
       {
         //Assert.True(reader.Settings.CloseInput);
         reader.ReadStartElement("article");
         return reader.ReadString();
-      }) == "text");
+      }));
       Assert.Throws<ObjectDisposedException>(() => textReader.Read());
     }
   }

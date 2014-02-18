@@ -63,7 +63,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => UriExtensions.TextReader(null));
 
       var uri = new Uri(Yandex);
-      Assert.True(uri.TextReader().Text() != uri.TextReader(Encoding.Unicode).Text());
+      Assert.NotEqual(uri.TextReader(Encoding.Unicode).Text(), uri.TextReader().Text());
       var textReader = uri.TextReader();
       Assert.True(textReader is StreamReader);
       Assert.True(textReader.Text().Length > 0);
@@ -87,7 +87,7 @@ namespace Catharsis.Commons
     ///     <item><description><see cref="UriExtensions.Upload(Uri, string, object, IEnumerable{KeyValuePair{string, string}})"/></description></item>
     ///   </list>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void Upload_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => UriExtensions.Upload(null, Enumerable.Empty<byte>().ToArray()));
@@ -101,7 +101,7 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
     /// </summary>
-    [Fact]
+    [Fact(Skip = "To be implemented")]
     public void UploadFile_Method()
     {
       Assert.Throws<ArgumentNullException>(() => UriExtensions.UploadFile(null, "file"));

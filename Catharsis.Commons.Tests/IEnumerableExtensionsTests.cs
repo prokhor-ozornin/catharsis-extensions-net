@@ -22,10 +22,10 @@ namespace Catharsis.Commons
       var strings = new [] { "first", "second", "third" };
       var list = new List<string>();
       strings.Each(list.Add);
-      Assert.True(list.Count == 3);
-      Assert.True(list[0] == "first");
-      Assert.True(list[1] == "second");
-      Assert.True(list[2] == "third");
+      Assert.Equal(3, list.Count);
+      Assert.Equal("first", list[0]);
+      Assert.Equal("second", list[1]);
+      Assert.Equal("third", list[2]);
     }
 
     /// <summary>
@@ -37,10 +37,10 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.Join<object>(null, "separator"));
       Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<object>().Join(null));
 
-      Assert.True(Enumerable.Empty<object>().Join("separator") == string.Empty);
-      Assert.True(new[] { 1 }.Join(",") == "1");
-      Assert.True(new[] { 1, 2, 3 }.Join(string.Empty) == "123");
-      Assert.True(new [] { 1, 2, 3 }.Join(",") == "1,2,3");
+      Assert.Equal(string.Empty, Enumerable.Empty<object>().Join("separator"));
+      Assert.Equal("1", new[] { 1 }.Join(","));
+      Assert.Equal("123", new[] { 1, 2, 3 }.Join(string.Empty));
+      Assert.Equal("1,2,3", new [] { 1, 2, 3 }.Join(","));
     }
 
     /// <summary>
@@ -51,9 +51,9 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.ToListString<object>(null));
 
-      Assert.True(Enumerable.Empty<object>().ToListString() == "[]");
-      Assert.True(new[] { 1 }.ToListString() == "[1]", new[] { 1 }.ToListString());
-      Assert.True(new [] { 1, 2, 3 }.ToListString() == "[1, 2, 3]");
+      Assert.Equal("[]", Enumerable.Empty<object>().ToListString());
+      Assert.Equal("[1]", new[] { 1 }.ToListString());
+      Assert.Equal("[1, 2, 3]", new [] { 1, 2, 3 }.ToListString());
     }
 
     /// <summary>
@@ -64,12 +64,12 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.ToSet<object>(null));
 
-      Assert.True(Enumerable.Empty<object>().ToSet().Count == 0);
+      Assert.False(Enumerable.Empty<object>().ToSet().Any());
       var set = new [] { 1, 1, 2, 3, 4, 5, 5 }.ToSet();
-      Assert.True(set.Count == 5);
+      Assert.Equal(5, set.Count);
       for (var i = 1; i <= 5; i++)
       {
-        Assert.True(set.ElementAt(i - 1) == i);
+        Assert.Equal(i, set.ElementAt(i - 1));
       }
     }
   }

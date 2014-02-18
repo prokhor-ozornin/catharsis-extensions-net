@@ -45,19 +45,19 @@ namespace Catharsis.Commons
       tagsXml.AppendChild(tag2Xml);
 
       var dictionary = xml.Dictionary();
-      Assert.True(dictionary.Keys.Count == 1);
+      Assert.Equal(1, dictionary.Keys.Count);
       Assert.True(dictionary.ContainsKey("Articles"));
       var article = dictionary["Articles"].To<IDictionary<string, object>>()["Article"].To<IDictionary<string, object>>();
-      Assert.True(article.Keys.Count == 6, article.Keys.Count.ToString());
+      Assert.Equal(6, article.Keys.Count);
       Assert.False(article.ContainsKey("Comment"));
-      Assert.True(article["Id"].ToString() == "id");
-      Assert.True(article["Name"].ToString() == "name");
-      Assert.True(article["Date"].ToString().ToDateTime().ToRfc1123() == DateTime.MaxValue.ToRfc1123());
-      Assert.True(article["Description"].ToString() == "description");
-      Assert.True(article["Notes"] == null);
+      Assert.Equal("id", article["Id"].ToString());
+      Assert.Equal("name", article["Name"].ToString());
+      Assert.Equal(DateTime.MaxValue.ToRfc1123(), article["Date"].ToString().ToDateTime().ToRfc1123());
+      Assert.Equal("description", article["Description"].ToString());
+      Assert.Null(article["Notes"]);
       var tags = article["Tags"].To<IDictionary<string, object>>();
-      Assert.True(tags.Keys.Count == 1);
-      Assert.True(tags["Tag"].ToString() == "tag2");
+      Assert.Equal(1, tags.Keys.Count);
+      Assert.Equal("tag2", tags["Tag"].ToString());
     }
 
     /// <summary>
@@ -68,14 +68,14 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => XmlDocumentExtensions.String(null));
 
-      Assert.True(new XmlDocument().String() == "");
+      Assert.Equal(string.Empty, new XmlDocument().String());
       
       var document = new XmlDocument();
       var element = document.CreateElement("article");
       element.SetAttribute("id", "1");
       element.InnerText = "Text";
       document.AppendChild(element);
-      Assert.True(document.String() == "<?xml version=\"1.0\" encoding=\"utf-16\"?><article id=\"1\">Text</article>");
+      Assert.Equal("<?xml version=\"1.0\" encoding=\"utf-16\"?><article id=\"1\">Text</article>", document.String());
     }
   }
 }

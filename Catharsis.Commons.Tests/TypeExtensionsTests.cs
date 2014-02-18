@@ -41,9 +41,9 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => typeof(object).AnyEvent(string.Empty));
 
       var type = typeof(TestObject);
-      Assert.True(type.AnyEvent("PublicEvent") != null);
-      Assert.True(type.AnyEvent("ProtectedEvent") != null);
-      Assert.True(type.AnyEvent("PrivateEvent") != null);
+      Assert.NotNull(type.AnyEvent("PublicEvent"));
+      Assert.NotNull(type.AnyEvent("ProtectedEvent"));
+      Assert.NotNull(type.AnyEvent("PrivateEvent"));
     }
 
     /// <summary>
@@ -178,11 +178,11 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => typeof(object).Attribute(null));
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.Attribute<object>(null));
 
-      Assert.True(typeof(TestObject).Attribute(typeof(NonSerializedAttribute)) == null);
-      Assert.True(typeof(TestObject).Attribute<NonSerializedAttribute>() == null);
+      Assert.Null(typeof(TestObject).Attribute(typeof(NonSerializedAttribute)));
+      Assert.Null(typeof(TestObject).Attribute<NonSerializedAttribute>());
 
       Assert.True(typeof(TestObject).Attribute(typeof(SerializableAttribute)) is SerializableAttribute);
-      Assert.True(typeof(TestObject).Attribute<SerializableAttribute>() != null);
+      Assert.NotNull(typeof(TestObject).Attribute<SerializableAttribute>());
     }
 
     /// <summary>
@@ -199,8 +199,8 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => typeof(object).Attribute(null));
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.Attributes<object>(null));
 
-      Assert.True(!typeof(TestObject).Attributes(typeof(NonSerializedAttribute)).Any());
-      Assert.True(!typeof(TestObject).Attributes<NonSerializedAttribute>().Any());
+      Assert.False(typeof(TestObject).Attributes(typeof(NonSerializedAttribute)).Any());
+      Assert.False(typeof(TestObject).Attributes<NonSerializedAttribute>().Any());
 
       Assert.True(typeof(TestObject).Attributes(typeof(SerializableAttribute)).SequenceEqual(new [] { new SerializableAttribute() }));
       Assert.True(typeof(TestObject).Attributes<SerializableAttribute>().SequenceEqual(new [] { new SerializableAttribute() }));
@@ -214,8 +214,8 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.DefaultConstructor(null));
 
-      Assert.True(typeof(TestObject).DefaultConstructor() != null);
-      Assert.True(typeof(string).DefaultConstructor() == null);
+      Assert.NotNull(typeof(TestObject).DefaultConstructor());
+      Assert.Null(typeof(string).DefaultConstructor());
     }
 
     /// <summary>
@@ -249,7 +249,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.Inherits(null));
 
-      Assert.True(!typeof(object).Inherits().Any());
+      Assert.False(typeof(object).Inherits().Any());
 
       var types = typeof(string).Inherits().ToSet();
       Assert.True(types.Contains(typeof(IComparable)));
@@ -291,13 +291,13 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null, new object()));
       Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((object) null));
       
-      Assert.True(typeof(TestObject).NewInstance() != null);
-      Assert.True(typeof(TestObject).NewInstance(Enumerable.Empty<KeyValuePair<string, object>>()) != null);
+      Assert.NotNull(typeof(TestObject).NewInstance());
+      Assert.NotNull(typeof(TestObject).NewInstance(Enumerable.Empty<KeyValuePair<string, object>>()));
       Assert.Throws<MissingMethodException>(() => typeof(TestObject).NewInstance(new object(), new object()));
 
-      Assert.True(typeof(TestObject).NewInstance(new object[] { "value" }).To<TestObject>().PublicProperty.Equals("value"));
-      Assert.True(typeof(TestObject).NewInstance(new Dictionary<string, object>().AddNext("PublicProperty", "value")).To<TestObject>().PublicProperty.ToString() == "value");
-      Assert.True(typeof(TestObject).NewInstance(new { PublicProperty = "value" }).To<TestObject>().PublicProperty.Equals("value"));
+      Assert.Equal("value", typeof(TestObject).NewInstance(new object[] { "value" }).To<TestObject>().PublicProperty);
+      Assert.Equal("value", typeof(TestObject).NewInstance(new Dictionary<string, object>().AddNext("PublicProperty", "value")).To<TestObject>().PublicProperty.ToString());
+      Assert.Equal("value", typeof(TestObject).NewInstance(new { PublicProperty = "value" }).To<TestObject>().PublicProperty);
     }
   }
 }

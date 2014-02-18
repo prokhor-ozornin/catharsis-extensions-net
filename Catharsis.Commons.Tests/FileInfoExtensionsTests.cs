@@ -103,13 +103,13 @@ namespace Catharsis.Commons
         Assert.False(file.Exists);
         Assert.True(ReferenceEquals(file.Clear(), file));
         Assert.True(file.Exists);
-        Assert.True(file.Length == 0);
+        Assert.Equal(0, file.Length);
       });
       WithFile(file =>
       {
         file.Append(Guid.NewGuid().ToByteArray());
         Assert.True(file.Length > 0);
-        Assert.True(file.Clear().Length == 0);
+        Assert.Equal(0, file.Clear().Length);
       });
     }
 
@@ -121,16 +121,16 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => FileInfoExtensions.Lines(null));
 
-      WithFile(file => Assert.True(file.Clear().Lines().Count == 0));
+      WithFile(file => Assert.False(file.Clear().Lines().Any()));
 
       var text = "First{0}Second{0}Third{0}".FormatValue(Environment.NewLine);
       WithFile(file =>
       {
         var lines = file.Append(text).Lines();
-        Assert.True(lines.Count == 3);
-        Assert.True(lines[0] == "First");
-        Assert.True(lines[1] == "Second");
-        Assert.True(lines[2] == "Third");
+        Assert.Equal(3, lines.Count);
+        Assert.Equal("First", lines[0]);
+        Assert.Equal("Second", lines[1]);
+        Assert.Equal("Third", lines[2]);
       });
     }
 
@@ -146,12 +146,12 @@ namespace Catharsis.Commons
       WithFile(file =>
       {
         file.Append(text);
-        Assert.True(file.Text() == text);
+        Assert.Equal(text, file.Text());
       });
       WithFile(file =>
       {
         file.Append(text, Encoding.Unicode);
-        Assert.True(file.Text(Encoding.Unicode) == text);
+        Assert.Equal(text, file.Text(Encoding.Unicode));
       });
     }
 

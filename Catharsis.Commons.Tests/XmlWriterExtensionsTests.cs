@@ -30,7 +30,7 @@ namespace Catharsis.Commons
         writer.WriteEndDocument();
       }), xmlWriter));
       Assert.Throws<InvalidOperationException>(() => xmlWriter.WriteRaw(string.Empty));
-      Assert.True(stringWriter.ToString() == Xml);
+      Assert.Equal(Xml, stringWriter.ToString());
       Assert.Throws<ObjectDisposedException>(() => stringWriter.WriteLine());
     }
   }

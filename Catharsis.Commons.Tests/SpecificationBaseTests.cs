@@ -22,7 +22,7 @@ namespace Catharsis.Commons
       var specification = new SpecificationBase<object>(expression);
       Assert.True(ReferenceEquals(specification.Expression, expression));
 
-      Assert.True(new SpecificationBase<object>().Field("DefaultExpression").To<Expression<Func<object, bool>>>() != null);
+      Assert.NotNull(new SpecificationBase<object>().Field("DefaultExpression").To<Expression<Func<object, bool>>>());
     }
 
     /// <summary>
@@ -47,8 +47,8 @@ namespace Catharsis.Commons
       Expression<Func<object, bool>> expression = x => x == null;
 
       Assert.Throws<ArgumentNullException>(() => new SpecificationBase<object>(expression).Filter(null));
-      Assert.True(new SpecificationBase<object>(expression).Filter(new [] { new object(), null }.AsQueryable()).Count() == 1);
-      Assert.True(new SpecificationBase<object>().Filter(new[] { new object(), null }.AsQueryable()).Count() == 2);
+      Assert.Equal(1, new SpecificationBase<object>(expression).Filter(new [] { new object(), null }.AsQueryable()).Count());
+      Assert.Equal(2, new SpecificationBase<object>().Filter(new[] { new object(), null }.AsQueryable()).Count());
     }
   }
 }

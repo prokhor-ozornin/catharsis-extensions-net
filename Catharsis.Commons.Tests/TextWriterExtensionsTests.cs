@@ -21,14 +21,14 @@ namespace Catharsis.Commons
       new StringWriter().With(writer =>
       {
         Assert.True(ReferenceEquals(writer.WriteObject(null), writer));
-        Assert.True(writer.ToString() == string.Empty);
+        Assert.Equal(string.Empty, writer.ToString());
       });
 
       var subject = Guid.NewGuid();
       new StringWriter().With(writer =>
       {
         Assert.True(ReferenceEquals(writer.WriteObject(subject), writer));
-        Assert.True(writer.ToString() == subject.ToString());
+        Assert.Equal(subject.ToString(), writer.ToString());
       });
     }
 
@@ -46,11 +46,11 @@ namespace Catharsis.Commons
       textWriter.XmlWriter().Write(writer =>
       {
         Assert.False(writer.Settings.CloseOutput);
-        Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.Unicode.ToString()));
+        Assert.Equal(Encoding.Unicode.ToString(), writer.Settings.Encoding.ToString());
         Assert.False(writer.Settings.Indent);
         writer.WriteElementString("article", "text");
       });
-      Assert.True(textWriter.ToString() == Xml);
+      Assert.Equal(Xml, textWriter.ToString());
       textWriter.Write(string.Empty);
       textWriter.Close();
 
@@ -58,7 +58,7 @@ namespace Catharsis.Commons
       textWriter.XmlWriter(true).Write(writer =>
       {
         Assert.True(writer.Settings.CloseOutput);
-        Assert.True(writer.Settings.Encoding.ToString().Equals(Encoding.Unicode.ToString()));
+        Assert.Equal(Encoding.Unicode.ToString(), writer.Settings.Encoding.ToString());
         Assert.False(writer.Settings.Indent);
       });
       Assert.Throws<ObjectDisposedException>(() => textWriter.Write(string.Empty));

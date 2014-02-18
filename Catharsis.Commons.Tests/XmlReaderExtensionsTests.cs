@@ -39,7 +39,7 @@ namespace Catharsis.Commons
       {
         var deserialized = reader.Deserialize(serialized.GetType());
         Assert.False(ReferenceEquals(serialized, deserialized));
-        Assert.True(deserialized.Equals(serialized));
+        Assert.Equal(serialized, deserialized);
       });
       xmlReader.ReadToEnd();
       xmlReader.Close();
@@ -49,12 +49,12 @@ namespace Catharsis.Commons
       {
         var deserialized = reader.Deserialize(serialized.GetType(), null, true);
         Assert.False(ReferenceEquals(serialized, deserialized));
-        Assert.True(deserialized.Equals(serialized));
+        Assert.Equal(serialized, deserialized);
         Assert.False(reader.Read());
         Assert.Throws<ObjectDisposedException>(() => xmlReader.Read());
       });
 
-      Assert.True(new StringReader(xml).XmlReader(true).Deserialize<string>(null, true).Equals(serialized));
+      Assert.Equal(serialized, new StringReader(xml).XmlReader(true).Deserialize<string>(null, true));
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ namespace Catharsis.Commons
       const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
 
       var reader = new StringReader(Xml).XmlReader();
-      Assert.True(reader.Read(x => x.ReadElementString("article")) == "text");
+      Assert.Equal("text", reader.Read(x => x.ReadElementString("article")));
       Assert.False(reader.Read());
     }
   }

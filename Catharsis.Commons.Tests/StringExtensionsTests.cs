@@ -23,13 +23,13 @@ namespace Catharsis.Commons
 
       var text = Guid.NewGuid().ToString();
 
-      Assert.True(text.Bytes(Encoding.Unicode).Length * 2 == text.Bytes(Encoding.UTF32).Length);
-      Assert.True(text.Bytes(Encoding.Unicode, false).Length * 2 == text.Bytes(Encoding.UTF32, false).Length);
+      Assert.Equal(text.Bytes(Encoding.UTF32).Length, text.Bytes(Encoding.Unicode).Length * 2);
+      Assert.Equal(text.Bytes(Encoding.UTF32, false).Length, text.Bytes(Encoding.Unicode, false).Length * 2);
       
-      Assert.True(text.Bytes().String() != text);
-      Assert.True(text.Bytes(null, false).String() == text);
-      Assert.True(text.Bytes(Encoding.Unicode).String(Encoding.Unicode) != text);
-      Assert.True(text.Bytes(Encoding.Unicode, false).String(Encoding.Unicode) == text);
+      Assert.NotEqual(text, text.Bytes().String());
+      Assert.Equal(text, text.Bytes(null, false).String());
+      Assert.NotEqual(text, text.Bytes(Encoding.Unicode).String(Encoding.Unicode));
+      Assert.Equal(text, text.Bytes(Encoding.Unicode, false).String(Encoding.Unicode));
     }
 
     /// <summary>
@@ -45,16 +45,16 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Compare(null, "other", StringComparison.Ordinal));
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Compare(null, "other", CultureInfo.InvariantCulture));
 
-      Assert.True(string.Empty.Compare(string.Empty, StringComparison.InvariantCulture) == 0);
+      Assert.Equal(0, string.Empty.Compare(string.Empty, StringComparison.InvariantCulture));
       Assert.True("first".Compare("second", StringComparison.InvariantCulture) < 0);
       Assert.True("a".Compare("A", StringComparison.Ordinal) > 0);
-      Assert.True("a".Compare("A", StringComparison.OrdinalIgnoreCase) == 0);
+      Assert.Equal(0, "a".Compare("A", StringComparison.OrdinalIgnoreCase));
 
-      Assert.True(string.Empty.Compare(string.Empty) == 0);
+      Assert.Equal(0, string.Empty.Compare(string.Empty));
       Assert.True("first".Compare("second") < 0);
       Assert.True("a".Compare("A") < 0);
       Assert.True("a".Compare("A", CultureInfo.InvariantCulture, CompareOptions.Ordinal) > 0);
-      Assert.True("a".Compare("A", CultureInfo.InvariantCulture, CompareOptions.OrdinalIgnoreCase) == 0);
+      Assert.Equal(0, "a".Compare("A", CultureInfo.InvariantCulture, CompareOptions.OrdinalIgnoreCase));
     }
 
     /// <summary>
@@ -65,7 +65,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.DecodeBase64(null));
 
-      Assert.True(string.Empty.DecodeBase64().Length == 0);
+      Assert.Equal(0, string.Empty.DecodeBase64().Length);
       var bytes = Guid.NewGuid().ToByteArray();
       Assert.True(System.Convert.ToBase64String(bytes).DecodeBase64().SequenceEqual(bytes));
     }
@@ -78,8 +78,8 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.DecodeHex(null));
 
-      Assert.True(Enumerable.Empty<byte>().ToArray().EncodeHex().Length == 0);
-      Assert.True(Enumerable.Empty<byte>().ToArray().EncodeHex().DecodeHex().Length == 0);
+      Assert.Equal(0, Enumerable.Empty<byte>().ToArray().EncodeHex().Length);
+      Assert.Equal(0, Enumerable.Empty<byte>().ToArray().EncodeHex().DecodeHex().Length);
 
       var bytes = Guid.NewGuid().ToByteArray();
       Assert.True(bytes.EncodeHex().DecodeHex().SequenceEqual(bytes));
@@ -97,8 +97,8 @@ namespace Catharsis.Commons
       
       const string Encoded = "<p>5 is &lt; 10 and &gt; 1</p>";
       const string Decoded = "<p>5 is < 10 and > 1</p>";
-      Assert.True(Encoded.DecodeHtml() == Decoded);
-      Assert.True(Decoded.EncodeHtml().DecodeHtml() == Decoded);
+      Assert.Equal(Decoded, Encoded.DecodeHtml());
+      Assert.Equal(Decoded, Decoded.EncodeHtml().DecodeHtml());
     }
 
     /// <summary>
@@ -113,11 +113,11 @@ namespace Catharsis.Commons
       var text = "First{0}Second{0}Third{0}".FormatValue(Environment.NewLine);
       var list = new List<string>();
       text.EachLine(list.Add);
-      Assert.True(list.Count == 4);
-      Assert.True(list[0] == "First");
-      Assert.True(list[1] == "Second");
-      Assert.True(list[2] == "Third");
-      Assert.True(list[3] == string.Empty);
+      Assert.Equal(4, list.Count);
+      Assert.Equal("First", list[0]);
+      Assert.Equal("Second", list[1]);
+      Assert.Equal("Third", list[2]);
+      Assert.Equal(string.Empty, list[3]);
     }
 
     /// <summary>
@@ -133,8 +133,8 @@ namespace Catharsis.Commons
       const string Decoded = "<p>5 is < 10 and > 1</p>";
       const string Encoded = "<p>5 is &lt; 10 and &gt; 1</p>";
 
-      Assert.True(Encoded.DecodeHtml() == Decoded);
-      Assert.True(Decoded.EncodeHtml().DecodeHtml() == Decoded);
+      Assert.Equal(Decoded, Encoded.DecodeHtml());
+      Assert.Equal(Decoded, Decoded.EncodeHtml().DecodeHtml());
     }
 
     /// <summary>
@@ -145,9 +145,9 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.FormatValue(null));
 
-      Assert.True(string.Empty.FormatValue() == string.Empty);
+      Assert.Equal(string.Empty, string.Empty.FormatValue());
       const string Text = "{0} is lesser than {1}";
-      Assert.True(Text.FormatValue(5, 10) == string.Format(Text, 5, 10));
+      Assert.Equal(string.Format(Text, 5, 10), Text.FormatValue(5, 10));
     }
 
     /// <summary>
@@ -199,10 +199,10 @@ namespace Catharsis.Commons
       
       const string Original = "The quick brown fox jumped over the lazy dog";
       const string Replaced = "The slow hazy fox jumped over the lazy bear";
-      
-      Assert.True(Original.Replace(new Dictionary<string, string>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")) == Replaced);
-      Assert.True(Original.Replace(new [] { "quick", "dog", "nothing", "brown" }.ToList(), new [] { "slow", "bear", string.Empty, "hazy" }.ToList()) == Replaced);
-      Assert.True(Original.Replace(new[] { "quick", "dog", "nothing", "brown" }, new[] { "slow", "bear", string.Empty, "hazy" }) == Replaced);
+
+      Assert.Equal(Replaced, Original.Replace(new Dictionary<string, string>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")));
+      Assert.Equal(Replaced, Original.Replace(new[] { "quick", "dog", "nothing", "brown" }.ToList(), new[] { "slow", "bear", string.Empty, "hazy" }.ToList()));
+      Assert.Equal(Replaced, Original.Replace(new[] { "quick", "dog", "nothing", "brown" }, new[] { "slow", "bear", string.Empty, "hazy" }));
     }
 
     /// <summary>
@@ -213,11 +213,11 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.Secure(null));
       
-      string.Empty.Secure().With(value => Assert.True(value.Length == 0));
+      string.Empty.Secure().With(value => Assert.Equal(0, value.Length));
       var text = Guid.NewGuid().ToString();
       text.Secure().With(value =>
       {
-        Assert.True(value.Length == text.Length);
+        Assert.Equal(text.Length, value.Length);
         Assert.False(ReferenceEquals(value.ToString(), text));
       });
     }
@@ -265,14 +265,14 @@ namespace Catharsis.Commons
 
       const string Invalid = "invalid";
 
-      Assert.True(byte.MaxValue.ToString().ToByte() == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, byte.MaxValue.ToString(CultureInfo.InvariantCulture).ToByte());
       Assert.Throws<FormatException>(() => Invalid.ToByte());
 
       byte result;
-      Assert.True(byte.MaxValue.ToString().ToByte(out result));
-      Assert.True(result == byte.MaxValue);
+      Assert.True(byte.MaxValue.ToString(CultureInfo.InvariantCulture).ToByte(out result));
+      Assert.Equal(byte.MaxValue, result);
       Assert.False(Invalid.ToByte(out result));
-      Assert.True(result == default(byte));
+      Assert.Equal(default(byte), result);
     }
 
     /// <summary>
@@ -291,16 +291,15 @@ namespace Catharsis.Commons
       const string Invalid = "invalid";
       var date = DateTime.UtcNow;
 
-      Assert.True(date.IsSameDate(date.ToString().ToDateTime()));
-      Assert.True(date.IsSameTime(date.ToString().ToDateTime()));
+      Assert.True(date.IsSameDate(date.ToRfc1123().ToDateTime()));
       Assert.Throws<FormatException>(() => Invalid.ToDateTime());
 
       DateTime result;
-      Assert.True(date.ToString().ToDateTime(out result));
+      Assert.True(date.ToString(CultureInfo.InvariantCulture).ToDateTime(out result));
       Assert.True(result.IsSameDate(date));
       Assert.True(result.IsSameTime(date));
       Assert.False(Invalid.ToDateTime(out result));
-      Assert.True(result == default(DateTime));
+      Assert.Equal(default(DateTime), result);
     }
 
     /// <summary>
@@ -318,14 +317,14 @@ namespace Catharsis.Commons
 
       const string Invalid = "invalid";
 
-      Assert.True(decimal.MaxValue.ToString().ToDecimal() == decimal.MaxValue);
+      Assert.Equal(decimal.MaxValue, decimal.MaxValue.ToString(CultureInfo.InvariantCulture).ToDecimal());
       Assert.Throws<FormatException>(() => Invalid.ToDecimal());
 
       decimal result;
-      Assert.True(decimal.MaxValue.ToString().ToDecimal(out result));
-      Assert.True(result == decimal.MaxValue);
+      Assert.True(decimal.MaxValue.ToString(CultureInfo.InvariantCulture).ToDecimal(out result));
+      Assert.Equal(decimal.MaxValue, result);
       Assert.False(Invalid.ToDecimal(out result));
-      Assert.True(result == default(decimal));
+      Assert.Equal(default(decimal), result);
     }
 
     /// <summary>
@@ -343,14 +342,14 @@ namespace Catharsis.Commons
 
       const string Invalid = "invalid";
 
-      Assert.True(double.Epsilon.ToString().ToDouble() == double.Epsilon);
+      Assert.Equal(double.Epsilon, double.Epsilon.ToString().ToDouble());
       Assert.Throws<FormatException>(() => Invalid.ToDouble());
 
       double result;
       Assert.True(double.Epsilon.ToString().ToDouble(out result));
-      Assert.True(result == double.Epsilon);
+      Assert.Equal(double.Epsilon, result);
       Assert.False(Invalid.ToDouble(out result));
-      Assert.True(result == default(double));
+      Assert.Equal(default(double), result);
     }
 
     /// <summary>
@@ -362,7 +361,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => string.Empty.ToEnum<DateTime>());
       Assert.Throws<ArgumentException>(() => string.Empty.ToEnum<MockEnumeration>());
       Assert.Throws<ArgumentException>(() => "Invalid".ToEnum<MockEnumeration>());
-      Assert.True(MockEnumeration.First.ToString().ToEnum<MockEnumeration>() == MockEnumeration.First);
+      Assert.Equal(MockEnumeration.First, MockEnumeration.First.ToString().ToEnum<MockEnumeration>());
     }
     
     /// <summary>
@@ -380,14 +379,14 @@ namespace Catharsis.Commons
 
       const string Invalid = "invalid";
 
-      Assert.True(Guid.Empty.ToString().ToGuid() == Guid.Empty);
+      Assert.Equal(Guid.Empty, Guid.Empty.ToString().ToGuid());
       Assert.Throws<FormatException>(() => Invalid.ToGuid());
 
       Guid result;
       Assert.True(Guid.Empty.ToString().ToGuid(out result));
-      Assert.True(result == Guid.Empty);
+      Assert.Equal(Guid.Empty, result);
       Assert.False(Invalid.ToGuid(out result));
-      Assert.True(result == default(Guid));
+      Assert.Equal(default(Guid), result);
     }
     
     /// <summary>
@@ -404,14 +403,14 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => string.Empty.ToInt16());
 
       const string Invalid = "invalid";
-      Assert.True(short.MaxValue.ToString().ToInt16() == short.MaxValue);
+      Assert.Equal(short.MaxValue, short.MaxValue.ToString(CultureInfo.InvariantCulture).ToInt16());
       Assert.Throws<FormatException>(() => Invalid.ToInt16());
 
       short result;
-      Assert.True(short.MaxValue.ToString().ToInt16(out result));
-      Assert.True(result == short.MaxValue);
+      Assert.True(short.MaxValue.ToString(CultureInfo.InvariantCulture).ToInt16(out result));
+      Assert.Equal(short.MaxValue, result);
       Assert.False(Invalid.ToInt16(out result));
-      Assert.True(result == default(short));
+      Assert.Equal(default(short), result);
     }
 
     /// <summary>
@@ -428,15 +427,15 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => string.Empty.ToInt32());
 
       const string Invalid = "invalid";
-      
-      Assert.True(int.MaxValue.ToString().ToInt32() == int.MaxValue);
+
+      Assert.Equal(int.MaxValue, int.MaxValue.ToString(CultureInfo.InvariantCulture).ToInt32());
       Assert.Throws<FormatException>(() => Invalid.ToInt32());
       
       int result;
-      Assert.True(int.MaxValue.ToString().ToInt32(out result));
-      Assert.True(result == int.MaxValue);
+      Assert.True(int.MaxValue.ToString(CultureInfo.InvariantCulture).ToInt32(out result));
+      Assert.Equal(int.MaxValue, result);
       Assert.False(Invalid.ToInt32(out result));
-      Assert.True(result == default(int));
+      Assert.Equal(default(int), result);
     }
     
     /// <summary>
@@ -454,14 +453,14 @@ namespace Catharsis.Commons
 
       const string Invalid = "invalid";
 
-      Assert.True(long.MaxValue.ToString().ToInt64() == long.MaxValue);
+      Assert.Equal(long.MaxValue, long.MaxValue.ToString(CultureInfo.InvariantCulture).ToInt64());
       Assert.Throws<FormatException>(() => Invalid.ToInt64());
 
       long result;
-      Assert.True(long.MaxValue.ToString().ToInt64(out result));
-      Assert.True(result == long.MaxValue);
+      Assert.True(long.MaxValue.ToString(CultureInfo.InvariantCulture).ToInt64(out result));
+      Assert.Equal(long.MaxValue, result);
       Assert.False(Invalid.ToInt64(out result));
-      Assert.True(result == default(long));
+      Assert.Equal(default(long), result);
     }
 
     /// <summary>
@@ -474,14 +473,14 @@ namespace Catharsis.Commons
 
       const string Invalid = "invalid";
 
-      Assert.True(IPAddress.Loopback.ToString().ToIpAddress().Equals(IPAddress.Loopback));
+      Assert.Equal(IPAddress.Loopback, IPAddress.Loopback.ToString().ToIpAddress());
       Assert.Throws<FormatException>(() => Invalid.ToIpAddress());
 
       IPAddress result;
       Assert.True(IPAddress.Loopback.ToString().ToIpAddress(out result));
-      Assert.True(result.Equals(IPAddress.Loopback));
+      Assert.Equal(IPAddress.Loopback, result);
       Assert.False(Invalid.ToIpAddress(out result));
-      Assert.True(result == null);
+      Assert.Null(result);
     }
 
     /// <summary>
@@ -493,7 +492,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => StringExtensions.ToRegex(null));
 
       const string Pattern = "pattern";
-      Assert.True(Pattern.ToRegex().ToString() == Pattern);
+      Assert.Equal(Pattern, Pattern.ToRegex().ToString());
     }
 
     /// <summary>
@@ -511,14 +510,14 @@ namespace Catharsis.Commons
 
       const string Invalid = "invalid";
 
-      Assert.True(Single.Epsilon.ToString().ToSingle() == Single.Epsilon);
+      Assert.Equal(Single.Epsilon, Single.Epsilon.ToString(CultureInfo.InvariantCulture).ToSingle());
       Assert.Throws<FormatException>(() => Invalid.ToSingle());
 
       Single result;
-      Assert.True(Single.Epsilon.ToString().ToSingle(out result));
-      Assert.True(result == Single.Epsilon);
+      Assert.True(Single.Epsilon.ToString(CultureInfo.InvariantCulture).ToSingle(out result));
+      Assert.Equal(Single.Epsilon, result);
       Assert.False(Invalid.ToSingle(out result));
-      Assert.True(result == default(Single));
+      Assert.Equal(default(Single), result);
     }
 
     /// <summary>
@@ -537,7 +536,7 @@ namespace Catharsis.Commons
       const string Invalid = "invalid";
       const string Uri = "http://yandex.ru";
 
-      Assert.True(Uri.ToUri() == new Uri(Uri));
+      Assert.Equal(new Uri(Uri), Uri.ToUri());
       Assert.Throws<UriFormatException>(() => Invalid.ToUri());
 
       /*Uri result;
@@ -561,7 +560,7 @@ namespace Catharsis.Commons
       const string Original = "The :quick :brown fox jumped over the lazy :dog";
       const string Replaced = "The slow hazy fox jumped over the lazy bear";
 
-      Assert.True(Original.Tokenize(new Dictionary<string, object>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")) == Replaced);
+      Assert.Equal(Replaced, Original.Tokenize(new Dictionary<string, object>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")));
     }
 
     /// <summary>
@@ -586,7 +585,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => string.Empty.Xml<object>());
 
       var subject = Guid.Empty;
-      Assert.True(subject.Xml().Xml<Guid>() == subject);
+      Assert.Equal(subject, subject.Xml().Xml<Guid>());
     }
   }
 

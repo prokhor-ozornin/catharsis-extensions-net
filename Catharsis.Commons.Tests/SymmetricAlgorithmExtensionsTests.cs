@@ -47,7 +47,7 @@ namespace Catharsis.Commons
       new MemoryStream(encrypted).With(stream =>
       {
         Assert.True(algorithm.Decrypt(stream).SequenceEqual(bytes));
-        Assert.True(stream.ReadByte() == -1);
+        Assert.Equal(-1, stream.ReadByte());
       });
       new MemoryStream(encrypted).With(stream =>
       {
@@ -111,7 +111,7 @@ namespace Catharsis.Commons
       new MemoryStream(bytes).With(stream =>
       {
         Assert.True(algorithm.Encrypt(stream).SequenceEqual(encrypted));
-        Assert.True(stream.ReadByte() == -1);
+        Assert.Equal(-1, stream.ReadByte());
       });
       new MemoryStream(bytes).With(stream =>
       {
@@ -121,7 +121,7 @@ namespace Catharsis.Commons
       new MemoryStream(bytes).With(stream =>
       {
         Assert.True(algorithm.Encrypt(stream).SequenceEqual(encrypted));
-        Assert.True(stream.ReadByte() == -1);
+        Assert.Equal(-1, stream.ReadByte());
       });
       Aes.Create().With(encryptor =>
       {

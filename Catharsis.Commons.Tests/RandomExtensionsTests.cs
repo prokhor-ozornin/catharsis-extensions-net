@@ -19,7 +19,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => new Random().Bytes(0));
 
       const int Count = 100;
-      Assert.True(new Random().Bytes(Count).Length == Count);
+      Assert.Equal(Count, new Random().Bytes(Count).Length);
     }
   }
 }

@@ -36,10 +36,10 @@ namespace Catharsis.Commons
 
       var andDelegate = this.incrementDelegate.And(this.incrementDelegate);
       Assert.True(andDelegate is MulticastDelegate);
-      Assert.True(andDelegate.Method == this.GetType().AnyMethod("IncrementValue"));
-      Assert.True(andDelegate.Target == null);
+      Assert.Equal(this.GetType().AnyMethod("IncrementValue"), andDelegate.Method);
+      Assert.Null(andDelegate.Target);
       Assert.True(andDelegate.GetInvocationList().SequenceEqual(new [] { this.incrementDelegate, this.incrementDelegate }));
-      Assert.True(andDelegate.DynamicInvoke(0).To<int>() == 1);
+      Assert.Equal(1, andDelegate.DynamicInvoke(0).To<int>());
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => this.incrementDelegate.Not(this.decrementDelegate));
 
       Assert.True(ReferenceEquals(this.incrementDelegate.Not(null), this.incrementDelegate));
-      Assert.True(this.incrementDelegate.Not(this.incrementDelegate) == null);
+      Assert.Null(this.incrementDelegate.Not(this.incrementDelegate));
     }
 
     private static int IncrementValue(int value)

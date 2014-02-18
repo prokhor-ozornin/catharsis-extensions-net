@@ -24,9 +24,9 @@ namespace Catharsis.Commons
       ICollection<string> second = new List<string> {"second"};
 
       first.AddAll(second);
-      Assert.True(first.Count == 2);
-      Assert.True(first.ElementAt(0) == "first");
-      Assert.True(first.ElementAt(1) == "second");
+      Assert.Equal(2, first.Count);
+      Assert.Equal("first", first.ElementAt(0));
+      Assert.Equal("second", first.ElementAt(1));
     }
 
 
@@ -40,8 +40,8 @@ namespace Catharsis.Commons
 
       ICollection<string> first = new HashSet<string>();
       var second = first.AddNext("test");
-      Assert.True(first.Count == 1);
-      Assert.True(first.Single() == "test");
+      Assert.Equal(1, first.Count);
+      Assert.Equal("test", first.Single());
       Assert.True(ReferenceEquals(first, second));
     }
 
@@ -57,7 +57,7 @@ namespace Catharsis.Commons
 
       var collection = new HashSet<object>().AsConstrained(x => true);
       collection.Add(new object());
-      Assert.True(collection.Count == 1);
+      Assert.Equal(1, collection.Count);
     }
 
     /// <summary>
@@ -162,14 +162,14 @@ namespace Catharsis.Commons
 
       ICollection<string> first = new List<string> { "test", "test" }.AsUnique();
       Assert.False(first.To<ICollection>().IsSynchronized);
-      Assert.True(first.Count == 1);
-      Assert.True(first.Single() == "test");
+      Assert.Equal(1, first.Count);
+      Assert.Equal("test", first.Single());
 
       ICollection<string> second = new List<string> { "1" }.AsUnique();
       second.Add("2");
       second.Remove("1");
-      Assert.True(second.Count == 1);
-      Assert.True(second.Single() == "2");
+      Assert.Equal(1, second.Count);
+      Assert.Equal("2", second.Single());
     }
 
 
@@ -185,9 +185,9 @@ namespace Catharsis.Commons
       var first = new HashSet<string> {"1", "2", "3"};
       var second = new List<string> {"2", "4"};
       first.RemoveAll(second);
-      Assert.True(first.Count == 2);
-      Assert.True(first.ElementAt(0) == "1");
-      Assert.True(first.ElementAt(1) == "3");
+      Assert.Equal(2, first.Count);
+      Assert.Equal("1", first.ElementAt(0));
+      Assert.Equal("3", first.ElementAt(1));
     }
 
 
@@ -201,8 +201,8 @@ namespace Catharsis.Commons
 
       ICollection<string> first = new HashSet<string> {"1", "2"};
       var second = first.RemoveNext("1");
-      Assert.True(first.Count == 1);
-      Assert.True(first.Single() == "2");
+      Assert.Equal(1, first.Count);
+      Assert.Equal("2", first.Single());
       Assert.True(ReferenceEquals(first, second));
     }
   }

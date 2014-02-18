@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -67,10 +68,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Byte(null, new object()));
 
-      Assert.True(Convert.To.Byte(null) == null);
-      Assert.True(Convert.To.Byte(byte.MinValue) == byte.MinValue);
-      Assert.True(Convert.To.Byte(byte.MinValue.ToString()) == byte.MinValue);
-      Assert.True(Convert.To.Byte(new object()) == null);
+      Assert.Null(Convert.To.Byte(null));
+      Assert.Equal(byte.MinValue, Convert.To.Byte(byte.MinValue));
+      Assert.Equal(byte.MinValue, Convert.To.Byte(byte.MinValue.ToString(CultureInfo.InvariantCulture)));
+      Assert.Null(Convert.To.Byte(new object()));
     }
 
     /// <summary>
@@ -81,10 +82,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.DateTime(null, new object()));
       
-      Assert.True(Convert.To.DateTime(null) == null);
-      Assert.True(Convert.To.DateTime(DateTime.MinValue) == DateTime.MinValue);
-      Assert.True(Convert.To.DateTime(DateTime.MinValue.ToString()) == DateTime.MinValue);
-      Assert.True(Convert.To.DateTime(new object()) == null);
+      Assert.Null(Convert.To.DateTime(null));
+      Assert.Equal(DateTime.MinValue, Convert.To.DateTime(DateTime.MinValue));
+      Assert.Equal(DateTime.MinValue, Convert.To.DateTime(DateTime.MinValue.ToString(CultureInfo.InvariantCulture)));
+      Assert.Null(Convert.To.DateTime(new object()));
     }
 
     /// <summary>
@@ -95,10 +96,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Decimal(null, new object()));
 
-      Assert.True(Convert.To.Decimal(null) == null);
-      Assert.True(Convert.To.Decimal(decimal.MinValue) == decimal.MinValue);
-      Assert.True(Convert.To.Decimal(decimal.MinValue.ToString()) == decimal.MinValue);
-      Assert.True(Convert.To.Decimal(new object()) == null);
+      Assert.Null(Convert.To.Decimal(null));
+      Assert.Equal(decimal.MinValue, Convert.To.Decimal(decimal.MinValue));
+      Assert.Equal(decimal.MinValue, Convert.To.Decimal(decimal.MinValue.ToString(CultureInfo.InvariantCulture)));
+      Assert.Null(Convert.To.Decimal(new object()));
     }
 
     /// <summary>
@@ -109,10 +110,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Double(null, new object()));
 
-      Assert.True(Convert.To.Double(null) == null);
-      Assert.True(Convert.To.Double(double.MinValue) == double.MinValue);
-      Assert.True(Convert.To.Double(double.Epsilon.ToString()) == double.Epsilon);
-      Assert.True(Convert.To.Double(new object()) == null);
+      Assert.Null(Convert.To.Double(null));
+      Assert.Equal(double.MinValue, Convert.To.Double(double.MinValue));
+      Assert.Equal(double.Epsilon, Convert.To.Double(double.Epsilon.ToString(CultureInfo.InvariantCulture)));
+      Assert.Null(Convert.To.Double(new object()));
     }
 
     /// <summary>
@@ -123,10 +124,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Guid(null, new object()));
 
-      Assert.True(Convert.To.Guid(null) == null);
-      Assert.True(Convert.To.Guid(Guid.Empty) == Guid.Empty);
-      Assert.True(Convert.To.Guid(Guid.Empty.ToString()) == Guid.Empty);
-      Assert.True(Convert.To.Guid(new object()) == null);
+      Assert.Null(Convert.To.Guid(null));
+      Assert.Equal(Guid.Empty, Convert.To.Guid(Guid.Empty));
+      Assert.Equal(Guid.Empty, Convert.To.Guid(Guid.Empty.ToString()));
+      Assert.Null(Convert.To.Guid(new object()));
     }
 
     /// <summary>
@@ -137,10 +138,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Int16(null, new object()));
 
-      Assert.True(Convert.To.Int16(null) == null);
-      Assert.True(Convert.To.Int16(short.MinValue) == short.MinValue);
-      Assert.True(Convert.To.Int16(short.MinValue.ToString()) == short.MinValue);
-      Assert.True(Convert.To.Int16(new object()) == null);
+      Assert.Null(Convert.To.Int16(null));
+      Assert.Equal(short.MinValue, Convert.To.Int16(short.MinValue));
+      Assert.Equal(short.MinValue, Convert.To.Int16(short.MinValue.ToString(CultureInfo.InvariantCulture)));
+      Assert.Null(Convert.To.Int16(new object()));
     }
 
     /// <summary>
@@ -151,10 +152,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Int32(null, new object()));
 
-      Assert.True(Convert.To.Int32(null) == null);
-      Assert.True(Convert.To.Int32(int.MinValue) == int.MinValue);
-      Assert.True(Convert.To.Int32(int.MinValue.ToString()) == int.MinValue);
-      Assert.True(Convert.To.Int32(new object()) == null);
+      Assert.Null(Convert.To.Int32(null));
+      Assert.Equal(int.MinValue, Convert.To.Int32(int.MinValue));
+      Assert.Equal(int.MinValue, Convert.To.Int32(int.MinValue.ToString(CultureInfo.InvariantCulture)));
+      Assert.Null(Convert.To.Int32(new object()));
     }
 
     /// <summary>
@@ -165,10 +166,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Int64(null, new object()));
 
-      Assert.True(Convert.To.Int64(null) == null);
-      Assert.True(Convert.To.Int64(long.MinValue) == long.MinValue);
-      Assert.True(Convert.To.Int64(long.MinValue.ToString()) == long.MinValue);
-      Assert.True(Convert.To.Int64(new object()) == null);
+      Assert.Null(Convert.To.Int64(null));
+      Assert.Equal(long.MinValue, Convert.To.Int64(long.MinValue));
+      Assert.Equal(long.MinValue, Convert.To.Int64(long.MinValue.ToString(CultureInfo.InvariantCulture)));
+      Assert.Null(Convert.To.Int64(new object()));
     }
 
     /// <summary>
@@ -179,10 +180,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.IPAddress(null, new object()));
 
-      Assert.True(Convert.To.IPAddress(null) == null);
+      Assert.Null(Convert.To.IPAddress(null));
       Assert.True(ReferenceEquals(Convert.To.IPAddress(IPAddress.Loopback), IPAddress.Loopback));
-      Assert.True(Convert.To.IPAddress(IPAddress.Loopback.ToString()).Equals(IPAddress.Loopback));
-      Assert.True(Convert.To.IPAddress(new object()) == null);
+      Assert.Equal(IPAddress.Loopback, Convert.To.IPAddress(IPAddress.Loopback.ToString()));
+      Assert.Null(Convert.To.IPAddress(new object()));
     }
 
     /// <summary>
@@ -193,11 +194,11 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Regex(null, new object()));
 
-      Assert.True(Convert.To.Regex(null) == null);
+      Assert.Null(Convert.To.Regex(null));
       var regex = new Regex(".");
       Assert.True(ReferenceEquals(Convert.To.Regex(regex), regex));
-      Assert.True(Convert.To.Regex(".").ToString() == new Regex(".").ToString());
-      Assert.True(Convert.To.Regex(Guid.Empty).ToString() == new Regex(Guid.Empty.ToString()).ToString());
+      Assert.Equal(new Regex(".").ToString(), Convert.To.Regex(".").ToString());
+      Assert.Equal(new Regex(Guid.Empty.ToString()).ToString(), Convert.To.Regex(Guid.Empty).ToString());
     }
 
     /// <summary>
@@ -208,10 +209,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Single(null, new object()));
 
-      Assert.True(Convert.To.Single(null) == null);
-      Assert.True(Convert.To.Single(Single.MinValue) == Single.MinValue);
-      Assert.True(Convert.To.Single(Single.Epsilon.ToString()) == Single.Epsilon);
-      Assert.True(Convert.To.Single(new object()) == null);
+      Assert.Null(Convert.To.Single(null));
+      Assert.Equal(Single.MinValue, Convert.To.Single(Single.MinValue));
+      Assert.Equal(Single.Epsilon, Convert.To.Single(Single.Epsilon.ToString(CultureInfo.InvariantCulture)));
+      Assert.Null(Convert.To.Single(new object()));
     }
 
     /// <summary>
@@ -222,11 +223,11 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.String(null, new object()));
 
-      Assert.True(Convert.To.String(null) == null);
+      Assert.Null(Convert.To.String(null));
 
       const string value = "value";
       Assert.True(ReferenceEquals(Convert.To.String(value), value));
-      Assert.True(Convert.To.String(Guid.Empty) == Guid.Empty.ToString());
+      Assert.Equal(Guid.Empty.ToString(), Convert.To.String(Guid.Empty));
     }
 
     /// <summary>
@@ -237,10 +238,10 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ConvertExtensions.Uri(null, new object()));
 
-      Assert.True(Convert.To.Uri(null) == null);
+      Assert.Null(Convert.To.Uri(null));
       var uri = new Uri("http://url.com");
       Assert.True(ReferenceEquals(Convert.To.Uri(uri), uri));
-      Assert.True(Convert.To.Uri("http://url.com") == uri);
+      Assert.Equal(uri, Convert.To.Uri("http://url.com"));
     }
   }
 }

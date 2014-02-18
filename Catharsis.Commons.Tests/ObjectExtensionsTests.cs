@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -29,17 +30,17 @@ namespace Catharsis.Commons
     public void As_Method()
     {
       object subject = null;
-      Assert.True(subject.As<object>() == null);
+      Assert.Null(subject.As<object>());
 
-      Assert.True(subject.As<string>() == null);
+      Assert.Null(subject.As<string>());
 
       subject = new object();
       Assert.True(ReferenceEquals(subject.As<object>(), subject));
 
       var date = DateTime.UtcNow;
-      Assert.True(date.As<string>() == default(string));
+      Assert.Equal(default(string), date.As<string>());
 
-      Assert.True(date.As<DateTime>() == date);
+      Assert.Equal(date, date.As<DateTime>());
     }
 
     /// <summary>
@@ -86,12 +87,12 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Dump(null));
 
-      Assert.True(new object().Dump() == "[]");
+      Assert.Equal("[]", new object().Dump());
 
       var subject = new DumpTestObject();
-      Assert.True(subject.Dump() == "[Property:\"\"]");
+      Assert.Equal(@"[Property:""""]", subject.Dump());
       subject.Property = Guid.Empty;
-      Assert.True(subject.Dump() == "[Property:\"{0}\"]".FormatValue(Guid.Empty));
+      Assert.Equal("[Property:\"{0}\"]".FormatValue(Guid.Empty), subject.Dump());
     }
 
     /// <summary>
@@ -176,10 +177,10 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => new object().Field(null));
       Assert.Throws<ArgumentException>(() => new object().Field(string.Empty));
 
-      Assert.True(new object().Field("field") == null);
+      Assert.Null(new object().Field("field"));
 
       var subject = new TestObject { PublicField = "value" };
-      Assert.True(subject.Field("PublicField").To<string>() == "value");
+      Assert.Equal("value", subject.Field("PublicField").To<string>());
     }
 
     /// <summary>
@@ -205,46 +206,46 @@ namespace Catharsis.Commons
     [Fact]
     public void GetHashCode_Methods()
     {
-      Assert.True(ObjectExtensions.GetHashCode<object>(null, (string[]) null) == 0);
-      Assert.True(ObjectExtensions.GetHashCode<object>(null, Enumerable.Empty<string>().ToArray()) == 0);
-      Assert.True(ObjectExtensions.GetHashCode(null, (Expression<Func<object, object>>[]) null) == 0);
-      Assert.True(ObjectExtensions.GetHashCode(null, Enumerable.Empty<Expression<Func<object, object>>>().ToArray()) == 0);
+      Assert.Equal(0, ObjectExtensions.GetHashCode<object>(null, (string[]) null));
+      Assert.Equal(0, ObjectExtensions.GetHashCode<object>(null, Enumerable.Empty<string>().ToArray()));
+      Assert.Equal(0, ObjectExtensions.GetHashCode(null, (Expression<Func<object, object>>[]) null));
+      Assert.Equal(0, ObjectExtensions.GetHashCode(null, Enumerable.Empty<Expression<Func<object, object>>>().ToArray()));
 
-      Assert.True(new object().GetHashCode((string[])null) != 0);
-      Assert.True(new object().GetHashCode((Expression<Func<object, object>>[]) null) != 0);
+      Assert.NotEqual(0, new object().GetHashCode((string[])null));
+      Assert.NotEqual(0, new object().GetHashCode((Expression<Func<object, object>>[]) null));
 
-      Assert.True(new object().GetHashCode((string[])null) != new object().GetHashCode((string[])null));
-      Assert.True(new object().GetHashCode((Expression<Func<object, object>>[]) null) != new object().GetHashCode((Expression<Func<object, object>>[]) null));
+      Assert.NotEqual(new object().GetHashCode((string[])null), new object().GetHashCode((string[])null));
+      Assert.NotEqual(new object().GetHashCode((Expression<Func<object, object>>[]) null), new object().GetHashCode((Expression<Func<object, object>>[]) null));
 
       var subject = new object();
-      Assert.True(subject.GetHashCode((string[])null) == subject.GetHashCode((string[])null));
-      Assert.True(subject.GetHashCode((Expression<Func<object, object>>[]) null) == subject.GetHashCode((Expression<Func<object, object>>[]) null));
-      Assert.True(subject.GetHashCode((string[])null) == subject.GetHashCode());
-      Assert.True(subject.GetHashCode((Expression<Func<object, object>>[])null) == subject.GetHashCode());
-      Assert.True(string.Empty.GetHashCode((string[]) null) != new object().GetHashCode((string[]) null));
-      Assert.True(string.Empty.GetHashCode((string[]) null) == string.Empty.GetHashCode((string[]) null));
+      Assert.Equal(subject.GetHashCode((string[])null), subject.GetHashCode((string[])null));
+      Assert.Equal(subject.GetHashCode((Expression<Func<object, object>>[]) null), subject.GetHashCode((Expression<Func<object, object>>[]) null));
+      Assert.Equal(subject.GetHashCode(), subject.GetHashCode((string[])null));
+      Assert.Equal(subject.GetHashCode(), subject.GetHashCode((Expression<Func<object, object>>[])null));
+      Assert.NotEqual(new object().GetHashCode((string[]) null), string.Empty.GetHashCode((string[]) null));
+      Assert.Equal( string.Empty.GetHashCode((string[]) null), string.Empty.GetHashCode((string[]) null));
 
-      Assert.True(Guid.NewGuid().ToString().GetHashCode(new[] { "Length" }) == Guid.NewGuid().ToString().GetHashCode(new[] { "Length" }));
-      Assert.True(Guid.NewGuid().ToString().GetHashCode(new[] { "Length" }) == Guid.NewGuid().ToString().GetHashCode(x => x.Length));
-      Assert.True(Guid.NewGuid().ToString().GetHashCode(x => x.Length) == Guid.NewGuid().ToString().GetHashCode(x => x.Length));
+      Assert.Equal(Guid.NewGuid().ToString().GetHashCode(new[] { "Length" }), Guid.NewGuid().ToString().GetHashCode(new[] { "Length" }));
+      Assert.Equal(Guid.NewGuid().ToString().GetHashCode(x => x.Length), Guid.NewGuid().ToString().GetHashCode(new[] { "Length" }));
+      Assert.Equal(Guid.NewGuid().ToString().GetHashCode(x => x.Length), Guid.NewGuid().ToString().GetHashCode(x => x.Length));
 
       var testObject = new TestObject();
-      Assert.True(testObject.GetHashCode((string[])null) == testObject.GetHashCode((string[])null));
-      Assert.True(testObject.GetHashCode(new[] { "PublicProperty" }) == testObject.GetHashCode(new[] { "PublicProperty" }));
-      Assert.True(testObject.GetHashCode(x => x.PublicProperty) == testObject.GetHashCode(new[] { "PublicProperty" }));
-      Assert.True(testObject.GetHashCode(x => x.PublicProperty) == testObject.GetHashCode(x => x.PublicProperty));
-      Assert.True(testObject.GetHashCode(new[] { "PublicProperty" }) == testObject.GetHashCode(new[] { "ProtectedProperty" }));
-      Assert.True(testObject.GetHashCode(x => x.PublicProperty) == testObject.GetHashCode(new[] { "ProtectedProperty" }));
-      Assert.True(testObject.GetHashCode(new[] { "invalid" }) == testObject.GetHashCode(new[] { "invalid" }));
-      Assert.True(testObject.GetHashCode(new[] { "invalid_1" }) == testObject.GetHashCode(new[] { "invalid_2" }));
+      Assert.Equal(testObject.GetHashCode((string[])null), testObject.GetHashCode((string[])null));
+      Assert.Equal(testObject.GetHashCode(new[] { "PublicProperty" }), testObject.GetHashCode(new[] { "PublicProperty" }));
+      Assert.Equal(testObject.GetHashCode(new[] { "PublicProperty" }), testObject.GetHashCode(x => x.PublicProperty));
+      Assert.Equal(testObject.GetHashCode(x => x.PublicProperty), testObject.GetHashCode(x => x.PublicProperty));
+      Assert.Equal(testObject.GetHashCode(new[] { "ProtectedProperty" }), testObject.GetHashCode(new[] { "PublicProperty" }));
+      Assert.Equal(testObject.GetHashCode(new[] { "ProtectedProperty" }), testObject.GetHashCode(x => x.PublicProperty));
+      Assert.Equal(testObject.GetHashCode(new[] { "invalid" }), testObject.GetHashCode(new[] { "invalid" }));
+      Assert.Equal(testObject.GetHashCode(new[] { "invalid_2" }), testObject.GetHashCode(new[] { "invalid_1" }));
       testObject.PublicProperty = "property";
-      Assert.True(new TestObject { PublicProperty = "property" }.GetHashCode((string[])null) == new TestObject { PublicProperty = "property" }.GetHashCode((string[]) null));
-      Assert.True(new TestObject { PublicProperty = "first" }.GetHashCode((string[])null) != new TestObject { PublicProperty = "second" }.GetHashCode((string[])null));
-      Assert.True(testObject.GetHashCode(new[] { "PublicProperty" }) == testObject.GetHashCode(new[] { "PublicProperty" }));
-      Assert.True(testObject.GetHashCode(x => x.PublicProperty) == testObject.GetHashCode(new[] { "PublicProperty" }));
-      Assert.True(testObject.GetHashCode(x => x.PublicProperty) == testObject.GetHashCode(x => x.PublicProperty));
-      Assert.True(testObject.GetHashCode(new[] { "PublicProperty" }) != testObject.GetHashCode(new[] { "ProtectedProperty" }));
-      Assert.True(testObject.GetHashCode(x => x.PublicProperty) != testObject.GetHashCode(new[] { "ProtectedProperty" }));
+      Assert.Equal(new TestObject { PublicProperty = "property" }.GetHashCode((string[]) null), new TestObject { PublicProperty = "property" }.GetHashCode((string[])null));
+      Assert.NotEqual(new TestObject { PublicProperty = "second" }.GetHashCode((string[])null), new TestObject { PublicProperty = "first" }.GetHashCode((string[])null));
+      Assert.Equal(testObject.GetHashCode(new[] { "PublicProperty" }), testObject.GetHashCode(new[] { "PublicProperty" }));
+      Assert.Equal(testObject.GetHashCode(new[] { "PublicProperty" }), testObject.GetHashCode(x => x.PublicProperty));
+      Assert.Equal(testObject.GetHashCode(x => x.PublicProperty), testObject.GetHashCode(x => x.PublicProperty));
+      Assert.NotEqual(testObject.GetHashCode(new[] { "ProtectedProperty" }), testObject.GetHashCode(new[] { "PublicProperty" }));
+      Assert.NotEqual(testObject.GetHashCode(new[] { "ProtectedProperty" }), testObject.GetHashCode(x => x.PublicProperty));
     }
 
     /// <summary>
@@ -322,7 +323,7 @@ namespace Catharsis.Commons
       Assert.Throws<TargetParameterCountException>(() => new object().InvokeMethod("ToString", new object()));
       Assert.Throws<AmbiguousMatchException>(() => string.Empty.InvokeMethod("ToString").To<string>() == string.Empty);
 
-      Assert.True(new object().InvokeMethod("method") == null);
+      Assert.Null(new object().InvokeMethod("method"));
       Assert.True((bool) string.Empty.InvokeMethod("Contains", string.Empty));
       //Assert.False(new object().InvokeMethod("ReferenceEquals", new object()).To<bool>());
     }
@@ -371,8 +372,8 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => new object().Member<object, object>(null));
 
       var text = Guid.NewGuid().ToString();
-      Assert.True(text.Member(x => x.Length) == text.Length);
-      Assert.True(text.Member(x => x.ToString()) == text);
+      Assert.Equal(text.Length, text.Member(x => x.Length));
+      Assert.Equal(text, text.Member(x => x.ToString(CultureInfo.InvariantCulture)));
       Assert.True(DateTime.UtcNow.Member(x => x.Ticks <= DateTime.UtcNow.Ticks));
     }
 
@@ -386,10 +387,10 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => new object().Property(null));
       Assert.Throws<ArgumentException>(() => new object().Property(string.Empty));
 
-      Assert.True(new object().Property("property") == null);
+      Assert.Null(new object().Property("property"));
 
       var subject = new TestObject { PublicProperty = "value" };
-      Assert.True(subject.Property("PublicProperty").To<string>() == "value");
+      Assert.Equal("value", subject.Property("PublicProperty").To<string>());
     }
 
     /// <summary>
@@ -408,22 +409,22 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => subject.SetProperty("ReadOnlyProperty", property));
       
       subject.SetProperty("PublicStaticProperty", property);
-      Assert.True(subject.Property("PublicStaticProperty").Equals(property));
+      Assert.Equal(property, subject.Property("PublicStaticProperty"));
       
       subject.SetProperty("ProtectedStaticProperty", property);
-      Assert.True(subject.Property("ProtectedStaticProperty").Equals(property));
+      Assert.Equal(property, subject.Property("ProtectedStaticProperty"));
 
       subject.SetProperty("PrivateStaticProperty", property);
-      Assert.True(subject.Property("PrivateStaticProperty").Equals(property));
+      Assert.Equal(property, subject.Property("PrivateStaticProperty"));
 
       subject.SetProperty("PublicProperty", property);
-      Assert.True(subject.Property("PublicProperty").Equals(property));
+      Assert.Equal(property, subject.Property("PublicProperty"));
 
       subject.SetProperty("ProtectedProperty", property);
-      Assert.True(subject.Property("ProtectedProperty").Equals(property));
+      Assert.Equal(property, subject.Property("ProtectedProperty"));
 
       subject.SetProperty("PrivateProperty", property);
-      Assert.True(subject.Property("PrivateProperty").Equals(property));
+      Assert.Equal(property, subject.Property("PrivateProperty"));
     }
 
     /// <summary>
@@ -446,11 +447,11 @@ namespace Catharsis.Commons
       
       Assert.Throws<ArgumentException>(() => subject.SetProperties(new Dictionary<string, object>().AddNext("ReadOnlyProperty", property)));
       Assert.True(ReferenceEquals(subject.SetProperties(new Dictionary<string, object>().AddNext("PublicProperty", property).AddNext("property", new object())), subject));
-      Assert.True(subject.Property("PublicProperty").Equals(property));
+      Assert.Equal(property, subject.Property("PublicProperty"));
 
       Assert.Throws<ArgumentException>(() => subject.SetProperties(new { ReadOnlyProperty = property }));
       Assert.True(ReferenceEquals(subject.SetProperties(new { PublicProperty = property, property = new object() }), subject));
-      Assert.True(subject.Property("PublicProperty").Equals(property));
+      Assert.Equal(property, subject.Property("PublicProperty"));
     }
 
     /// <summary>
@@ -460,8 +461,8 @@ namespace Catharsis.Commons
     public void To_Method()
     {
       object subject = null;
-      Assert.True(subject.To<object>() == null);
-      Assert.True(subject.To<string>() == null);
+      Assert.Null(subject.To<object>());
+      Assert.Null(subject.To<string>());
       
       subject = new object();
       Assert.True(ReferenceEquals(subject.To<object>(), subject));
@@ -480,18 +481,18 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToString(null, Enumerable.Empty<string>().ToArray()));
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToString(null, Enumerable.Empty<Expression<Func<object, object>>>().ToArray()));
       
-      Assert.True(new object().ToString(new [] {"property"}) == "[]", new object().ToString(new [] {"property"}));
-      Assert.True(new object().ToString((string[]) null) == "[]");
-      Assert.True(new object().ToString(Enumerable.Empty<string>().ToArray()) == "[]");
-      Assert.True(new object().ToString((Expression<Func<object, object>>[]) null) == "[]");
-      Assert.True(new object().ToString(Enumerable.Empty<Expression<Func<object, object>>>().ToArray()) == "[]");
+      Assert.Equal("[]", new object().ToString(new [] {"property"}));
+      Assert.Equal("[]", new object().ToString((string[]) null));
+      Assert.Equal("[]", new object().ToString(Enumerable.Empty<string>().ToArray()));
+      Assert.Equal("[]", new object().ToString((Expression<Func<object, object>>[]) null));
+      Assert.Equal("[]", new object().ToString(Enumerable.Empty<Expression<Func<object, object>>>().ToArray()));
 
       var date = DateTime.UtcNow;
-      Assert.True(date.ToString(new [] {"Ticks"}) == "[Ticks:\"{0}\"]".FormatValue(date.Ticks), date.ToString(new [] {"Ticks"}));
-      Assert.True(date.ToString(x => x.Ticks) == "[Ticks:\"{0}\"]".FormatValue(date.Ticks), date.ToString(x => x.Ticks));
-      Assert.True(date.ToString(new [] {"Day", "Month", "Year"}) == "[Day:\"{0}\", Month:\"{1}\", Year:\"{2}\"]".FormatValue(date.Day, date.Month, date.Year));
-      Assert.True(date.ToString(x => x.Day, x => x.Month, x => x.Year) == "[Day:\"{0}\", Month:\"{1}\", Year:\"{2}\"]".FormatValue(date.Day, date.Month, date.Year));
-      Assert.True(date.ToString(new [] {"Today"}) == "[Today:\"{0}\"]".FormatValue(DateTime.Today));
+      Assert.Equal("[Ticks:\"{0}\"]".FormatValue(date.Ticks), date.ToString(new [] {"Ticks"}));
+      Assert.Equal("[Ticks:\"{0}\"]".FormatValue(date.Ticks), date.ToString(x => x.Ticks));
+      Assert.Equal("[Day:\"{0}\", Month:\"{1}\", Year:\"{2}\"]".FormatValue(date.Day, date.Month, date.Year), date.ToString(new [] {"Day", "Month", "Year"}));
+      Assert.Equal("[Day:\"{0}\", Month:\"{1}\", Year:\"{2}\"]".FormatValue(date.Day, date.Month, date.Year), date.ToString(x => x.Day, x => x.Month, x => x.Year));
+      Assert.Equal("[Today:\"{0}\"]".FormatValue(DateTime.Today), date.ToString(new [] {"Today"}));
     }
 
     /// <summary>
@@ -538,10 +539,10 @@ namespace Catharsis.Commons
       }).Read());
 
       var list = new List<string>().With(x => x.Add(text));
-      Assert.True(list.Count == 1);
-      Assert.True(list[0] == text);
+      Assert.Equal(1, list.Count);
+      Assert.Equal(text, list[0]);
 
-      Assert.True(new object().With(x => text) == text);
+      Assert.Equal(text, new object().With(x => text));
     }
 
     /// <summary>
@@ -571,23 +572,23 @@ namespace Catharsis.Commons
       stringWriter.XmlWriter().Write(writer =>
       {
         new XmlSerializer(subject.GetType()).Serialize(writer, subject);
-        Assert.True(stringWriter.ToString() == xml);
+        Assert.Equal(xml, stringWriter.ToString());
       });
-      Assert.True(subject.Xml((Type[]) null) == xml);
-      Assert.True(subject.Xml(Enumerable.Empty<Type>().ToArray()) == xml);
-      Assert.True(subject.Xml((Type[]) null) == xml);
+      Assert.Equal(xml, subject.Xml((Type[]) null));
+      Assert.Equal(xml, subject.Xml(Enumerable.Empty<Type>().ToArray()));
+      Assert.Equal(xml, subject.Xml((Type[]) null));
 
       new MemoryStream().With(stream =>
       {
         Assert.True(ReferenceEquals(subject.Xml(stream, Encoding.Unicode), subject));
-        Assert.True(stream.Rewind().Text() == xml);
+        Assert.Equal(xml, stream.Rewind().Text());
         Assert.True(stream.CanWrite);
       });
 
       new StringWriter().With(writer =>
       {
         Assert.True(ReferenceEquals(subject.Xml(writer), subject));
-        Assert.True(writer.ToString() == xml);
+        Assert.Equal(xml, writer.ToString());
         writer.WriteLine();
       });
 
@@ -595,7 +596,7 @@ namespace Catharsis.Commons
       stringWriter.XmlWriter().Write(writer =>
       {
         Assert.True(ReferenceEquals(subject.Xml(writer), subject));
-        Assert.True(stringWriter.ToString() == xml);
+        Assert.Equal(xml, stringWriter.ToString());
         stringWriter.WriteLine();
       });
     }

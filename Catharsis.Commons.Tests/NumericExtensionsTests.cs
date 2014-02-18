@@ -27,19 +27,19 @@ namespace Catharsis.Commons
 
       long sum = 0;
       byte.MaxValue.DownTo(1, () => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
 
       sum = 0;
       ((short) byte.MaxValue).DownTo(1, () => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
 
       sum = 0;
       ((int) byte.MaxValue).DownTo(1, () => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
 
       sum = 0;
       ((long) byte.MaxValue).DownTo(1, () => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
     }
 
     /// <summary>
@@ -61,35 +61,35 @@ namespace Catharsis.Commons
 
       long sum = 0;
       byte.MinValue.Times(() => sum += 1);
-      Assert.True(sum == 0);
+      Assert.Equal(0, sum);
 
       sum = 0;
       byte.MaxValue.Times(() => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
 
       sum = 0;
       short.MinValue.Times(() => sum += 1);
-      Assert.True(sum == 0);
+      Assert.Equal(0, sum);
 
       sum = 0;
       ((short) byte.MaxValue).Times(() => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
 
       sum = 0;
       int.MinValue.Times(() => sum += 1);
-      Assert.True(sum == 0);
+      Assert.Equal(0, sum);
 
       sum = 0;
       ((int) byte.MaxValue).Times(() => sum += 1);
-      Assert.True(sum == byte.MaxValue, int.MaxValue.ToString());
+      Assert.Equal(byte.MaxValue, sum);
 
       sum = 0;
       long.MinValue.Times(() => sum += 1);
-      Assert.True(sum == 0);
+      Assert.Equal(0, sum);
 
       sum = 0;
       ((long) byte.MaxValue).Times(() => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
     }
 
     /// <summary>
@@ -98,9 +98,10 @@ namespace Catharsis.Commons
     [Fact]
     public void ToInt64Bits_Method()
     {
+      Assert.Equal(0, 0.0.ToInt64Bits());
+
       var value = new Random().NextDouble();
-      Assert.True(0.0.ToInt64Bits() == 0);
-      Assert.True(value.ToInt64Bits() == BitConverter.DoubleToInt64Bits(value));
+      Assert.Equal(BitConverter.DoubleToInt64Bits(value), value.ToInt64Bits());
     }
 
     /// <summary>
@@ -122,19 +123,19 @@ namespace Catharsis.Commons
 
       long sum = 0;
       ((byte) 1).UpTo(byte.MaxValue, () => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
 
       sum = 0;
       ((short) 1).UpTo(byte.MaxValue, () => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
 
       sum = 0;
       ((int) 1).UpTo(byte.MaxValue, () => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
 
       sum = 0;
       ((long) 1).UpTo(byte.MaxValue, () => sum += 1);
-      Assert.True(sum == byte.MaxValue);
+      Assert.Equal(byte.MaxValue, sum);
     }
   }
 }

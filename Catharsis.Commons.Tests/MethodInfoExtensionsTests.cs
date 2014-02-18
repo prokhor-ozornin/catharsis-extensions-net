@@ -42,11 +42,11 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => method.Delegate(typeof(object)));
       var methodDelegate = method.Delegate(typeof(AsString));
       Assert.True(ReferenceEquals(methodDelegate.Method, method));
-      Assert.True(methodDelegate.Target == null);
+      Assert.Null(methodDelegate.Target);
       Assert.Throws<TargetParameterCountException>(() => methodDelegate.DynamicInvoke());
       Assert.Throws<TargetParameterCountException>(() => methodDelegate.DynamicInvoke(new object(), new object()));
-      Assert.True(methodDelegate.DynamicInvoke("test").To<string>() == "test");
-      Assert.True(method.Delegate<AsString>().Equals(method.Delegate(typeof(AsString))));
+      Assert.Equal("test", methodDelegate.DynamicInvoke("test").To<string>());
+      Assert.Equal(method.Delegate(typeof(AsString)), method.Delegate<AsString>());
     }
   }
 }

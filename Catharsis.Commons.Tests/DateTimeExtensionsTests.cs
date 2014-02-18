@@ -19,14 +19,14 @@ namespace Catharsis.Commons
       var endOfDay = now.EndOfDay();
 
       Assert.True(endOfDay >= now);
-      Assert.True(endOfDay.Kind == now.Kind);
-      Assert.True(endOfDay.Year == now.Year);
-      Assert.True(endOfDay.Month == now.Month);
-      Assert.True(endOfDay.Day == now.Day);
-      Assert.True(endOfDay.Hour == 23);
-      Assert.True(endOfDay.Minute == 59);
-      Assert.True(endOfDay.Second == 59);
-      Assert.True(endOfDay.Millisecond == 0);
+      Assert.Equal(now.Kind, endOfDay.Kind);
+      Assert.Equal(now.Year, endOfDay.Year);
+      Assert.Equal(now.Month, endOfDay.Month);
+      Assert.Equal(now.Day, endOfDay.Day);
+      Assert.Equal(23, endOfDay.Hour);
+      Assert.Equal(59, endOfDay.Minute);
+      Assert.Equal(59, endOfDay.Second);
+      Assert.Equal(0, endOfDay.Millisecond);
     }
 
     /// <summary>
@@ -39,14 +39,14 @@ namespace Catharsis.Commons
       var endOfMonth = now.EndOfMonth();
 
       Assert.True(endOfMonth >= now);
-      Assert.True(endOfMonth.Kind == now.Kind);
-      Assert.True(endOfMonth.Year == now.Year);
-      Assert.True(endOfMonth.Month == now.Month);
-      Assert.True(endOfMonth.Day == DateTime.DaysInMonth(now.Year, now.Month));
-      Assert.True(endOfMonth.Hour == 23);
-      Assert.True(endOfMonth.Minute == 59);
-      Assert.True(endOfMonth.Second == 59);
-      Assert.True(endOfMonth.Millisecond == 0);
+      Assert.Equal(now.Kind, endOfMonth.Kind);
+      Assert.Equal(now.Year, endOfMonth.Year);
+      Assert.Equal(now.Month, endOfMonth.Month);
+      Assert.Equal(DateTime.DaysInMonth(now.Year, now.Month), endOfMonth.Day);
+      Assert.Equal(23, endOfMonth.Hour);
+      Assert.Equal(59, endOfMonth.Minute);
+      Assert.Equal(59, endOfMonth.Second);
+      Assert.Equal(0, endOfMonth.Millisecond);
     }
 
     /// <summary>
@@ -59,14 +59,14 @@ namespace Catharsis.Commons
       var endOfYear = now.EndOfYear();
 
       Assert.True(endOfYear >= now);
-      Assert.True(endOfYear.Kind == now.Kind);
-      Assert.True(endOfYear.Year == now.Year);
-      Assert.True(endOfYear.Month == 12);
-      Assert.True(endOfYear.Day == 31);
-      Assert.True(endOfYear.Hour == 23);
-      Assert.True(endOfYear.Minute == 59);
-      Assert.True(endOfYear.Second == 59);
-      Assert.True(endOfYear.Millisecond == 0);
+      Assert.Equal(now.Kind, endOfYear.Kind);
+      Assert.Equal(now.Year, endOfYear.Year);
+      Assert.Equal(12, endOfYear.Month);
+      Assert.Equal(31, endOfYear.Day);
+      Assert.Equal(23, endOfYear.Hour);
+      Assert.Equal(59, endOfYear.Minute);
+      Assert.Equal(59, endOfYear.Second);
+      Assert.Equal(0, endOfYear.Millisecond);
     }
 
     /// <summary>
@@ -104,7 +104,7 @@ namespace Catharsis.Commons
     public void NextDay_Method()
     {
       var now = DateTime.UtcNow;
-      Assert.True(now.NextDay() == now.AddDays(1));
+      Assert.Equal(now.AddDays(1), now.NextDay());
     }
 
     /// <summary>
@@ -114,7 +114,7 @@ namespace Catharsis.Commons
     public void NextMonth_Method()
     {
       var now = DateTime.UtcNow;
-      Assert.True(now.NextMonth() == now.AddMonths(1));
+      Assert.Equal(now.AddMonths(1), now.NextMonth());
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ namespace Catharsis.Commons
     public void NextYear_Method()
     {
       var now = DateTime.UtcNow;
-      Assert.True(now.NextYear() == now.AddYears(1));
+      Assert.Equal(now.AddYears(1), now.NextYear());
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ namespace Catharsis.Commons
     public void PreviousDay_Method()
     {
       var now = DateTime.UtcNow;
-      Assert.True(now.PreviousDay() == now.AddDays(-1));
+      Assert.Equal(now.AddDays(-1), now.PreviousDay());
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ namespace Catharsis.Commons
     public void PreviousMonth_Method()
     {
       var now = DateTime.UtcNow;
-      Assert.True(now.PreviousMonth() == now.AddMonths(-1));
+      Assert.Equal(now.AddMonths(-1), now.PreviousMonth());
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ namespace Catharsis.Commons
     public void PreviousYear_Method()
     {
       var now = DateTime.UtcNow;
-      Assert.True(now.PreviousYear() == now.AddYears(-1));
+      Assert.Equal(now.AddYears(-1), now.PreviousYear());
     }
 
     /// <summary>
@@ -167,14 +167,14 @@ namespace Catharsis.Commons
       var startOfDay = now.StartOfDay();
 
       Assert.True(startOfDay <= now);
-      Assert.True(startOfDay.Kind == now.Kind);
-      Assert.True(startOfDay.Year == now.Year);
-      Assert.True(startOfDay.Month == now.Month);
-      Assert.True(startOfDay.Day == now.Day);
-      Assert.True(startOfDay.Hour == 0);
-      Assert.True(startOfDay.Minute == 0);
-      Assert.True(startOfDay.Second == 0);
-      Assert.True(startOfDay.Millisecond == 0);
+      Assert.Equal(now.Kind, startOfDay.Kind);
+      Assert.Equal(now.Year, startOfDay.Year);
+      Assert.Equal(now.Month, startOfDay.Month);
+      Assert.Equal(now.Day, startOfDay.Day);
+      Assert.Equal(0, startOfDay.Hour);
+      Assert.Equal(0, startOfDay.Minute);
+      Assert.Equal(0, startOfDay.Second);
+      Assert.Equal(0, startOfDay.Millisecond);
     }
 
     /// <summary>
@@ -187,14 +187,14 @@ namespace Catharsis.Commons
       var startOfMonth = now.StartOfMonth();
 
       Assert.True(startOfMonth <= now);
-      Assert.True(startOfMonth.Kind == now.Kind);
-      Assert.True(startOfMonth.Year == now.Year);
-      Assert.True(startOfMonth.Month == now.Month);
-      Assert.True(startOfMonth.Day == 1);
-      Assert.True(startOfMonth.Hour == 0);
-      Assert.True(startOfMonth.Minute == 0);
-      Assert.True(startOfMonth.Second == 0);
-      Assert.True(startOfMonth.Millisecond == 0);
+      Assert.Equal(now.Kind, startOfMonth.Kind);
+      Assert.Equal(now.Year, startOfMonth.Year);
+      Assert.Equal(now.Month, startOfMonth.Month);
+      Assert.Equal(1, startOfMonth.Day);
+      Assert.Equal(0, startOfMonth.Hour);
+      Assert.Equal(0, startOfMonth.Minute);
+      Assert.Equal(0, startOfMonth.Second);
+      Assert.Equal(0, startOfMonth.Millisecond);
     }
 
     /// <summary>
@@ -207,14 +207,14 @@ namespace Catharsis.Commons
       var startOfYear = now.StartOfYear();
 
       Assert.True(startOfYear <= now);
-      Assert.True(startOfYear.Kind == now.Kind);
-      Assert.True(startOfYear.Year == now.Year);
-      Assert.True(startOfYear.Month == 1);
-      Assert.True(startOfYear.Day == 1);
-      Assert.True(startOfYear.Hour == 0);
-      Assert.True(startOfYear.Minute == 0);
-      Assert.True(startOfYear.Second == 0);
-      Assert.True(startOfYear.Millisecond == 0);
+      Assert.Equal(now.Kind, startOfYear.Kind);
+      Assert.Equal(now.Year, startOfYear.Year);
+      Assert.Equal(1, startOfYear.Month);
+      Assert.Equal(1, startOfYear.Day);
+      Assert.Equal(0, startOfYear.Hour);
+      Assert.Equal(0, startOfYear.Minute);
+      Assert.Equal(0, startOfYear.Second);
+      Assert.Equal(0, startOfYear.Millisecond);
     }
 
     /// <summary>
