@@ -78,7 +78,7 @@ namespace Catharsis.Commons
       var subjectProperties = properties.Select(property => self.GetType().AnyProperty(property)).Where(property => property != null);
       if (!subjectProperties.Any())
       {
-        return self.Equals(other);
+        return Equals(self, other);
       }
 
       return subjectProperties.All(property =>
@@ -103,7 +103,7 @@ namespace Catharsis.Commons
           return false;
         }
 
-        return first.Equals(second);
+        return Equals(first, second);
       });
     }
 
@@ -138,7 +138,7 @@ namespace Catharsis.Commons
         return metaProperties.Length == 0 ? self.Equals(other) : self.Equality(other, metaProperties);
       }
 
-      return properties.Select(property => property.Compile()).All(property => property(self).Equals(property(other)));
+      return properties.Select(property => property.Compile()).All(property => Equals(property(self), property(other)));
     }
 
     /// <summary>
