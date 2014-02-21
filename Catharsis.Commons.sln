@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsis.Commons.3.5.CP", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsis.Commons.3.5", "Catharsis.Commons.3.5\Catharsis.Commons.3.5.csproj", "{638961CD-42BC-43F3-9C7A-1D082D3C879D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsis.Commons.Silverlight.5", "Catharsis.Commons.Silverlight.5.0\Catharsis.Commons.Silverlight.5.csproj", "{849CC862-BB18-49CB-A0F4-32517D9E636F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,16 @@ Global
 		{638961CD-42BC-43F3-9C7A-1D082D3C879D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{638961CD-42BC-43F3-9C7A-1D082D3C879D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{638961CD-42BC-43F3-9C7A-1D082D3C879D}.Release|x86.ActiveCfg = Release|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{849CC862-BB18-49CB-A0F4-32517D9E636F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

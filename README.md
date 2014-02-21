@@ -4,7 +4,7 @@ This library is extensively unit-tested, greatly reducing the possibility of bug
 
 **Purpose** : Provide extension methods for common .NET types and common domain classes to simplify and speedup typical .NET business applications development process.
 
-**Target** : .NET Framework 4.0/Silverlight 4-5
+**Target** : .NET Framework 3.5/3.5 Client Profile/4.0/Silverlight 5
 
 **NuGet package** : https://www.nuget.org/packages/Catharsis.Commons
 

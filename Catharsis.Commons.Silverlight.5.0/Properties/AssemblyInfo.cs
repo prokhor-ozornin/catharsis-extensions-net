@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Catharsis.Commons.Silverlight")]
+[assembly: AssemblyTitle("Catharsis.Commons")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Prokhor Ozornin <prokhor.ozornin@yandex.ru>")]
-[assembly: AssemblyProduct("Catharsis.Commons.Silverlight")]
+[assembly: AssemblyProduct("Catharsis.Commons")]
 [assembly: AssemblyCopyright("Copyright ©  2013 - 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.6.1")]
-[assembly: AssemblyFileVersion("1.6.1")]
+[assembly: AssemblyVersion("1.7")]
+[assembly: AssemblyFileVersion("1.7")]
 
 [assembly: CLSCompliant(true)]
