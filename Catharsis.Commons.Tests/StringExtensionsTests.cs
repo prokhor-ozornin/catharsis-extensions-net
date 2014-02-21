@@ -158,7 +158,7 @@ namespace Catharsis.Commons
     {
       Assert.True(StringExtensions.IsEmpty(null));
       Assert.True(string.Empty.IsEmpty());
-      Assert.True(" ".IsEmpty());
+      Assert.False(" ".IsEmpty());
       Assert.False(" value".IsEmpty());
       Assert.False("value".IsEmpty());
     }

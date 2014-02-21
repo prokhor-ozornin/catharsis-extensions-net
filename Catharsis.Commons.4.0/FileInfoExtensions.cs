@@ -66,7 +66,17 @@ namespace Catharsis.Commons
       Assertion.NotNull(file);
       Assertion.NotNull(stream);
 
-      file.OpenWrite().With(stream.CopyTo);
+      file.OpenWrite().With(destination =>
+      {
+        const int bufferSize = 4096;
+        var buffer = new byte[bufferSize];
+        int count;
+        while ((count = stream.Read(buffer, 0, bufferSize)) > 0)
+        {
+          destination.Write(buffer, 0, count);
+        }
+      });
+
       file.Refresh();
 
       return file;

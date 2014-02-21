@@ -244,7 +244,7 @@ namespace Catharsis.Commons
       }
 
       Guid result;
-      if (System.Guid.TryParse(subject.ToString(), out result))
+      if (subject.ToString().ToGuid(out result))
       {
         return result;
       }

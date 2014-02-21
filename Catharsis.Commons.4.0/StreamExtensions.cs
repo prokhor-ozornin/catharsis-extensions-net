@@ -55,7 +55,13 @@ namespace Catharsis.Commons
       var destination = new MemoryStream();
       try
       {
-        stream.CopyTo(destination);
+        const int bufferSize = 4096;
+        var buffer = new byte[bufferSize];
+        int count;
+        while ((count = stream.Read(buffer, 0, bufferSize)) > 0)
+        {
+          destination.Write(buffer, 0, count);
+        }
       }
       finally
       {
@@ -177,7 +183,13 @@ namespace Catharsis.Commons
 
       if (to.CanWrite && from.CanRead)
       {
-        from.CopyTo(to);
+        const int bufferSize = 4096;
+        var buffer = new byte[bufferSize];
+        int count;
+        while ((count = from.Read(buffer, 0, bufferSize)) > 0)
+        {
+          to.Write(buffer, 0, count);
+        }
       }
 
       return to;

@@ -65,21 +65,5 @@ namespace Catharsis.Commons
 
       return string.Format("[{0}]", enumerable.Join(", "));
     }
-    
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="enumerable"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is a <c>null</c> reference.</exception>
-    public static ISet<T> ToSet<T>(this IEnumerable<T> enumerable)
-    {
-      Assertion.NotNull(enumerable);
-
-      var set = new HashSet<T>();
-      set.AddAll(enumerable);
-      return set;
-    }
   }
 }

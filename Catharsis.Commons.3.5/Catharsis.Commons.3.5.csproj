@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{92D78850-FF0D-4FCB-B243-EAC076E8CA6B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Catharsis.Commons</RootNamespace>
+    <AssemblyName>Catharsis.Commons</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Catharsis.Commons.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Catharsis.Commons.4.0\ArrayExtendedExtensions.cs">
+      <Link>ArrayExtendedExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ArrayExtensions.cs">
+      <Link>ArrayExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\Assertion.cs">
+      <Link>Assertion.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\BooleanExtensions.cs">
+      <Link>BooleanExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\Convert.cs">
+      <Link>Convert.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ConvertExtensions.cs">
+      <Link>ConvertExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\DateTimeExtensions.cs">
+      <Link>DateTimeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\DelegateExtensions.cs">
+      <Link>DelegateExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\EnumExtensions.cs">
+      <Link>EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\EqualsAndHashCodeAttribute.cs">
+      <Link>EqualsAndHashCodeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\FieldInfoExtensions.cs">
+      <Link>FieldInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\FileInfoExtensions.cs">
+      <Link>FileInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ICollectionExtensions.cs">
+      <Link>ICollectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\IDictionaryExtensions.cs">
+      <Link>IDictionaryExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\IEnumerableExtensions.cs">
+      <Link>IEnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\IListExtensions.cs">
+      <Link>IListExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\IQueryableTransformer.cs">
+      <Link>IQueryableTransformer.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ISpecification.cs">
+      <Link>ISpecification.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ISpecificationExtensions.cs">
+      <Link>ISpecificationExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\MemberInfoExtensions.cs">
+      <Link>MemberInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\MethodInfoExtensions.cs">
+      <Link>MethodInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\NumericExtensions.cs">
+      <Link>NumericExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ObjectExtendedExtensions.cs">
+      <Link>ObjectExtendedExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ObjectExtensions.cs">
+      <Link>ObjectExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\PropertyInfoExtensions.cs">
+      <Link>PropertyInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\QueryableTransformersFactory.cs">
+      <Link>QueryableTransformersFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\RandomExtensions.cs">
+      <Link>RandomExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\SpecificationBase.cs">
+      <Link>SpecificationBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StreamExtendedExtensions.cs">
+      <Link>StreamExtendedExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StreamExtensions.cs">
+      <Link>StreamExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StringExtensions.cs">
+      <Link>StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\SymmetricAlgorithmExtensions.cs">
+      <Link>SymmetricAlgorithmExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\TextReaderExtendedExtensions.cs">
+      <Link>TextReaderExtendedExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\TextReaderExtensions.cs">
+      <Link>TextReaderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\TextWriterExtensions.cs">
+      <Link>TextWriterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\TypeExtensions.cs">
+      <Link>TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\UriExtensions.cs">
+      <Link>UriExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\XContainerExtensions.cs">
+      <Link>XContainerExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\XDocumentExtensions.cs">
+      <Link>XDocumentExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\XElementExtensions.cs">
+      <Link>XElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\XmlDocumentExtensions.cs">
+      <Link>XmlDocumentExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\XmlReaderExtendedExtensions.cs">
+      <Link>XmlReaderExtendedExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\XmlReaderExtensions.cs">
+      <Link>XmlReaderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\XmlWriterExtensions.cs">
+      <Link>XmlWriterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

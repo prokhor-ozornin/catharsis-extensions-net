@@ -133,7 +133,7 @@ namespace Catharsis.Commons
     /// <returns></returns>
     public static bool IsEmpty(this string value)
     {
-      return string.IsNullOrWhiteSpace(value);
+      return string.IsNullOrEmpty(value);
     }
 
     /// <summary>
@@ -382,7 +382,16 @@ namespace Catharsis.Commons
     /// <returns></returns>
     public static bool ToGuid(this string value, out Guid result)
     {
-      return Guid.TryParse(value, out result);
+      try
+      {
+        result = new Guid(value);
+        return true;
+      }
+      catch
+      {
+        result = default(Guid);
+        return false;
+      }
     }
 
     /// <summary>

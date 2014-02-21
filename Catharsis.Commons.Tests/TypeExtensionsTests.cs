@@ -251,7 +251,7 @@ namespace Catharsis.Commons
 
       Assert.False(typeof(object).Inherits().Any());
 
-      var types = typeof(string).Inherits().ToSet();
+      var types = typeof(string).Inherits().ToArray();
       Assert.True(types.Contains(typeof(IComparable)));
       Assert.True(types.Contains(typeof(ICloneable)));
       Assert.True(types.Contains(typeof(IConvertible)));

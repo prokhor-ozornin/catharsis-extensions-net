@@ -147,9 +147,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Catharsis.Commons\Catharsis.Commons.csproj">
+    <ProjectReference Include="..\Catharsis.Commons.4.0\Catharsis.Commons.4.0.csproj">
       <Project>{E643EA81-71C3-4611-8350-6F42AB37D27B}</Project>
-      <Name>Catharsis.Commons</Name>
+      <Name>Catharsis.Commons.4.0</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

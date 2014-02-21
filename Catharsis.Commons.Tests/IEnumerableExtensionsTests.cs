@@ -57,12 +57,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToSet{T}(IEnumerable{T})"/> method.</para>
+    ///   <para>Performs testing of <see cref="IEnumerableExtendedExtensions.ToSet{T}(IEnumerable{T})"/> method.</para>
     /// </summary>
     [Fact]
     public void ToSet_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.ToSet<object>(null));
+      Assert.Throws<ArgumentNullException>(() => IEnumerableExtendedExtensions.ToSet<object>(null));
 
       Assert.False(Enumerable.Empty<object>().ToSet().Any());
       var set = new [] { 1, 1, 2, 3, 4, 5, 5 }.ToSet();

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Catharsis.Commons.Tests" Label="Catharsis.Commons.Tests" Category="Project" />
+    <Node Id="xunit 1.9.2" Label="xunit 1.9.2" Category="Package" />
+  </Nodes>
+  <Links>
+    <Link Source="Catharsis.Commons.Tests" Target="xunit 1.9.2" Category="Installed Package" />
+  </Links>
+  <Categories>
+    <Category Id="Project" />
+    <Category Id="Package" />
+  </Categories>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Project" ValueLabel="True">
+      <Condition Expression="HasCategory('Project')" />
+      <Setter Property="Background" Value="Blue" />
+    </Style>
+  </Styles>
+</DirectedGraph>
