@@ -589,21 +589,5 @@ namespace Catharsis.Commons
     {
       return string.IsNullOrEmpty(value) || value.Trim().Length == 0;
     }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="xml"></param>
-    /// <param name="types"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="xml"/> is <see cref="string.Empty"/> string.</exception>
-    public static T Xml<T>(this string xml, params Type[] types)
-    {
-      Assertion.NotEmpty(xml);
-
-      return new StringReader(xml).Xml<T>(true, types);
-    }
   }
 }

@@ -99,11 +99,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayExtendedExtensions.cs" />
+    <Compile Include="ArrayCryptographyExtensions.cs" />
     <Compile Include="ArrayExtensions.cs" />
     <Compile Include="Assertion.cs" />
     <Compile Include="BooleanExtensions.cs" />
@@ -117,28 +118,34 @@
     <Compile Include="FileInfoExtensions.cs" />
     <Compile Include="ICollectionExtensions.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
-    <Compile Include="IEnumerableExtendedExtensions.cs" />
+    <Compile Include="IEnumerableCollectionsExtensions.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="IListExtensions.cs" />
     <Compile Include="IQueryableTransformer.cs" />
     <Compile Include="ISpecification.cs" />
     <Compile Include="ISpecificationExtensions.cs" />
+    <Compile Include="MemberInfoAttributesExtensions.cs" />
     <Compile Include="MemberInfoExtensions.cs" />
     <Compile Include="MethodInfoExtensions.cs" />
     <Compile Include="NumericExtensions.cs" />
-    <Compile Include="ObjectExtendedExtensions.cs" />
+    <Compile Include="ObjectBinaryExtensions.cs" />
     <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="ObjectXmlExtensions.cs" />
     <Compile Include="PropertyInfoExtensions.cs" />
     <Compile Include="QueryableTransformersFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="SpecificationBase.cs" />
+    <Compile Include="StreamCompressionExtensions.cs" />
     <Compile Include="StreamExtendedExtensions.cs" />
     <Compile Include="StreamExtensions.cs" />
-    <Compile Include="StringExtendedExtensions.cs" />
+    <Compile Include="StreamXmlExtensions.cs" />
+    <Compile Include="StringCryptographyExtensions.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="StringHtmlExtensions.cs" />
+    <Compile Include="StringXmlExtensions.cs" />
     <Compile Include="SymmetricAlgorithmExtensions.cs" />
-    <Compile Include="TextReaderExtendedExtensions.cs" />
+    <Compile Include="TextReaderXmlExtensions.cs" />
     <Compile Include="TextReaderExtensions.cs" />
     <Compile Include="TextWriterExtensions.cs" />
     <Compile Include="TypeExtensions.cs" />
@@ -147,7 +154,7 @@
     <Compile Include="XDocumentExtensions.cs" />
     <Compile Include="XElementExtensions.cs" />
     <Compile Include="XmlDocumentExtensions.cs" />
-    <Compile Include="XmlReaderExtendedExtensions.cs" />
+    <Compile Include="XmlReaderSerializationExtensions.cs" />
     <Compile Include="XmlReaderExtensions.cs" />
     <Compile Include="XmlWriterExtensions.cs" />
   </ItemGroup>

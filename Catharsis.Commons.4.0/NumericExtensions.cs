@@ -142,16 +142,6 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public static long ToInt64Bits(this double value)
-    {
-      return BitConverter.DoubleToInt64Bits(value);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="action"></param>

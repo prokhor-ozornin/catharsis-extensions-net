@@ -17,14 +17,14 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="XmlReaderExtendedExtensions.Deserialize(XmlReader, Type, IEnumerable{Type}, bool)"/></description></item>
-    ///     <item><description><see cref="XmlReaderExtendedExtensions.Deserialize{T}(XmlReader, IEnumerable{Type}, bool)"/></description></item>
+    ///     <item><description><see cref="XmlReaderSerializationExtensions.Deserialize(XmlReader, Type, IEnumerable{Type}, bool)"/></description></item>
+    ///     <item><description><see cref="XmlReaderSerializationExtensions.Deserialize{T}(XmlReader, IEnumerable{Type}, bool)"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void Deserialize_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => XmlReaderExtendedExtensions.Deserialize<object>(null));
+      Assert.Throws<ArgumentNullException>(() => XmlReaderSerializationExtensions.Deserialize<object>(null));
       Assert.Throws<InvalidOperationException>(() => new StringReader(string.Empty).XmlReader(true).Deserialize<object>(null, true));
 
       var serialized = Guid.NewGuid().ToString();

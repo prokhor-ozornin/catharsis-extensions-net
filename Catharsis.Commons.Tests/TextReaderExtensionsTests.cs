@@ -66,12 +66,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="TextReaderExtensions.Xml{T}(TextReader, bool, Type[])"/> method.</para>
+    ///   <para>Performs testing of <see cref="TextReaderXmlExtensions.Xml{T}(TextReader, bool, Type[])"/> method.</para>
     /// </summary>
     [Fact]
     public void Xml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => TextReaderExtensions.Xml<object>(null));
+      Assert.Throws<ArgumentNullException>(() => TextReaderXmlExtensions.Xml<object>(null));
 
       var subject = Guid.Empty;
       new StringReader(subject.Xml()).With(reader =>
@@ -111,12 +111,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="TextReaderExtendedExtensions.XmlDocument(TextReader, bool)"/> method.</para>
+    ///   <para>Performs testing of <see cref="TextReaderXmlExtensions.XmlDocument(TextReader, bool)"/> method.</para>
     /// </summary>
     [Fact]
     public void XmlDocument_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => TextReaderExtendedExtensions.XmlDocument(null));
+      Assert.Throws<ArgumentNullException>(() => TextReaderXmlExtensions.XmlDocument(null));
       Assert.Throws<XmlException>(() => TextReader.Null.XmlDocument());
 
       const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";

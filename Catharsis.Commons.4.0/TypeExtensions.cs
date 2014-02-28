@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 namespace Catharsis.Commons
@@ -92,64 +91,6 @@ namespace Catharsis.Commons
     ///   <para></para>
     /// </summary>
     /// <param name="type"></param>
-    /// <param name="attributeType"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
-    public static object Attribute(this Type type, Type attributeType)
-    {
-      Assertion.NotNull(type);
-      Assertion.NotNull(attributeType);
-
-      return type.Attributes(attributeType).FirstOrDefault();
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
-    public static T Attribute<T>(this Type type)
-    {
-      Assertion.NotNull(type);
-
-      return type.Attributes<T>().FirstOrDefault();
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="attributeType"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<object> Attributes(this Type type, Type attributeType)
-    {
-      Assertion.NotNull(type);
-      Assertion.NotNull(attributeType);
-
-      return type.GetCustomAttributes(attributeType, true);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<T> Attributes<T>(this Type type)
-    {
-      Assertion.NotNull(type);
-
-      return type.Attributes(typeof(T)).Cast<T>();
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="type"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
     public static ConstructorInfo DefaultConstructor(this Type type)
@@ -194,7 +135,7 @@ namespace Catharsis.Commons
     {
       Assertion.NotNull(type);
 
-      var types = new HashSet<Type>();
+      var types = new List<Type>();
 
       var currentType = type;
       while (currentType.BaseType != null)

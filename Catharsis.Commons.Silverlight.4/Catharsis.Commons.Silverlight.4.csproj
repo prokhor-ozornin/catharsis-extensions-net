@@ -5,14 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{849CC862-BB18-49CB-A0F4-32517D9E636F}</ProjectGuid>
+    <ProjectGuid>{BEDFF7FF-3486-4875-B143-2AF04EF49C8D}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Catharsis.Commons</RootNamespace>
     <AssemblyName>Catharsis.Commons</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
@@ -44,22 +44,15 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>Bin\Release\Catharsis.Commons.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>../Catharsis.snk</AssemblyOriginatorKeyFile>
+    <DocumentationFile>Bin\Release\Catharsis.Commons.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml.Serialization, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Catharsis.Commons.4.0\ArrayExtensions.cs">
@@ -83,9 +76,6 @@
     <Compile Include="..\Catharsis.Commons.4.0\DelegateExtensions.cs">
       <Link>DelegateExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\EnumExtensions.cs">
-      <Link>EnumExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\EqualsAndHashCodeAttribute.cs">
       <Link>EqualsAndHashCodeAttribute.cs</Link>
     </Compile>
@@ -101,8 +91,8 @@
     <Compile Include="..\Catharsis.Commons.4.0\IDictionaryExtensions.cs">
       <Link>IDictionaryExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\IEnumerableExtendedExtensions.cs">
-      <Link>IEnumerableExtendedExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons.4.0\IEnumerableCollectionsExtensions.cs">
+      <Link>IEnumerableCollectionsExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\IEnumerableExtensions.cs">
       <Link>IEnumerableExtensions.cs</Link>
@@ -170,9 +160,6 @@
     <Compile Include="..\Catharsis.Commons.4.0\XElementExtensions.cs">
       <Link>XElementExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\XmlReaderExtendedExtensions.cs">
-      <Link>XmlReaderExtendedExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\XmlReaderExtensions.cs">
       <Link>XmlReaderExtensions.cs</Link>
     </Compile>
@@ -181,7 +168,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

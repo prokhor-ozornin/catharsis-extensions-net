@@ -6,7 +6,7 @@ namespace Catharsis.Commons
   /// <summary>
   ///   <para>Set of extension methods for <see cref="Array"/> or <see cref="byte"/>.</para>
   /// </summary>
-  public static class ArrayExtendedExtensions
+  public static class ArrayCryptographyExtensions
   {
     /// <summary>
     ///   <para>Computes hash for the given sequence of bytes, using MD5 algorithm.</para>

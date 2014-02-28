@@ -93,18 +93,18 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="StreamExtendedExtensions.Deflate(Stream, CompressionMode)"/></description></item>
-    ///     <item><description><see cref="StreamExtendedExtensions.Deflate{STREAM}(STREAM, byte[])"/></description></item>
-    ///     <item><description><see cref="StreamExtendedExtensions.Deflate(Stream)"/></description></item>
+    ///     <item><description><see cref="StreamCompressionExtensions.Deflate(Stream, CompressionMode)"/></description></item>
+    ///     <item><description><see cref="StreamCompressionExtensions.Deflate{STREAM}(STREAM, byte[])"/></description></item>
+    ///     <item><description><see cref="StreamCompressionExtensions.Deflate(Stream)"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void Deflate_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.Deflate(null, CompressionMode.Compress));
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.Deflate<Stream>(null, Enumerable.Empty<byte>().ToArray()));
+      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.Deflate(null, CompressionMode.Compress));
+      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.Deflate<Stream>(null, Enumerable.Empty<byte>().ToArray()));
       Assert.Throws<ArgumentNullException>(() => Stream.Null.Deflate(null));
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.Deflate(null));
+      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.Deflate(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
 
@@ -153,18 +153,18 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="StreamExtendedExtensions.GZip(Stream, CompressionMode)"/></description></item>
-    ///     <item><description><see cref="StreamExtendedExtensions.GZip{STREAM}(STREAM, byte[])"/></description></item>
-    ///     <item><description><see cref="StreamExtendedExtensions.GZip(Stream)"/></description></item>
+    ///     <item><description><see cref="StreamCompressionExtensions.GZip(Stream, CompressionMode)"/></description></item>
+    ///     <item><description><see cref="StreamCompressionExtensions.GZip{STREAM}(STREAM, byte[])"/></description></item>
+    ///     <item><description><see cref="StreamCompressionExtensions.GZip(Stream)"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void GZip_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.GZip(null, CompressionMode.Compress));
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.GZip<Stream>(null, Enumerable.Empty<byte>().ToArray()));
+      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.GZip(null, CompressionMode.Compress));
+      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.GZip<Stream>(null, Enumerable.Empty<byte>().ToArray()));
       Assert.Throws<ArgumentNullException>(() => Stream.Null.GZip(null));
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.GZip(null));
+      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.GZip(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
       
@@ -371,12 +371,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamExtensions.Xml{T}(Stream, bool, Type[])"/> method.</para>
+    ///   <para>Performs testing of <see cref="StreamXmlExtensions.Xml{T}(Stream, bool, Type[])"/> method.</para>
     /// </summary>
     [Fact]
     public void Xml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Xml<object>(null));
+      Assert.Throws<ArgumentNullException>(() => StreamXmlExtensions.Xml<object>(null));
 
       var subject = Guid.Empty;
       new MemoryStream().With(stream =>
@@ -421,12 +421,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamExtendedExtensions.XmlDocument(Stream, bool)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StreamXmlExtensions.XmlDocument(Stream, bool)"/> method.</para>
     /// </summary>
     [Fact]
     public void XmlDocument_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.XmlDocument(null));
+      Assert.Throws<ArgumentNullException>(() => StreamXmlExtensions.XmlDocument(null));
       Assert.Throws<XmlException>(() => Stream.Null.XmlDocument());
 
       const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";

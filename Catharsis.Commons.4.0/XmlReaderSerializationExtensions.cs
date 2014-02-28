@@ -10,7 +10,7 @@ namespace Catharsis.Commons
   ///   <para>Set of extension methods for class <see cref="XmlReader"/>.</para>
   ///   <seealso cref="XmlReader"/>
   /// </summary>
-  public static class XmlReaderExtendedExtensions
+  public static class XmlReaderSerializationExtensions
   {
     /// <summary>
     ///   <para></para>

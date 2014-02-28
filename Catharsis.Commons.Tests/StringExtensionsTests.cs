@@ -86,12 +86,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtendedExtensions.DecodeHtml(string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StringHtmlExtensions.DecodeHtml(string)"/> method.</para>
     /// </summary>
     [Fact]
     public void DecodeHtml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.DecodeHtml(null));
+      Assert.Throws<ArgumentNullException>(() => StringHtmlExtensions.DecodeHtml(null));
 
       Assert.True(ReferenceEquals(string.Empty.DecodeHtml(), string.Empty));
       
@@ -121,12 +121,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtendedExtensions.EncodeHtml(string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StringHtmlExtensions.EncodeHtml(string)"/> method.</para>
     /// </summary>
     [Fact]
     public void EncodeHtml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.EncodeHtml(null));
+      Assert.Throws<ArgumentNullException>(() => StringHtmlExtensions.EncodeHtml(null));
 
       Assert.True(ReferenceEquals(string.Empty.EncodeHtml(), string.Empty));
 
@@ -206,12 +206,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtendedExtensions.Secure(string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StringCryptographyExtensions.Secure(string)"/> method.</para>
     /// </summary>
     [Fact]
     public void Secure_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.Secure(null));
+      Assert.Throws<ArgumentNullException>(() => StringCryptographyExtensions.Secure(null));
       
       string.Empty.Secure().With(value => Assert.Equal(0, value.Length));
       var text = Guid.NewGuid().ToString();
@@ -576,12 +576,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtensions.Xml{T}(string, Type[])"/> method.</para>
+    ///   <para>Performs testing of <see cref="StringXmlExtensions.Xml{T}(string, Type[])"/> method.</para>
     /// </summary>
     [Fact]
     public void Xml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Xml<object>(null));
+      Assert.Throws<ArgumentNullException>(() => StringXmlExtensions.Xml<object>(null));
       Assert.Throws<ArgumentException>(() => string.Empty.Xml<object>());
 
       var subject = Guid.Empty;

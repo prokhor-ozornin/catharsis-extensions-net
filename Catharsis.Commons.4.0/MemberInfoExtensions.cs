@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Catharsis.Commons
@@ -9,6 +11,64 @@ namespace Catharsis.Commons
   /// </summary>
   public static class MemberInfoExtensions
   {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="member"></param>
+    /// <param name="attributeType"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="member"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
+    public static object Attribute(this MemberInfo member, Type attributeType)
+    {
+      Assertion.NotNull(member);
+      Assertion.NotNull(attributeType);
+
+      return member.Attributes(attributeType).FirstOrDefault();
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="member"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    public static T Attribute<T>(this MemberInfo member)
+    {
+      Assertion.NotNull(member);
+
+      return member.Attributes<T>().FirstOrDefault();
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="member"></param>
+    /// <param name="attributeType"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="member"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
+    public static IEnumerable<object> Attributes(this MemberInfo member, Type attributeType)
+    {
+      Assertion.NotNull(member);
+      Assertion.NotNull(attributeType);
+
+      return member.GetCustomAttributes(attributeType, true);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="member"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    public static IEnumerable<T> Attributes<T>(this MemberInfo member)
+    {
+      Assertion.NotNull(member);
+
+      return member.Attributes(typeof(T)).Cast<T>();
+    }
+
     /// <summary>
     ///   <para></para>
     /// </summary>

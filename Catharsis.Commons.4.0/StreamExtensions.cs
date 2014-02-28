@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 
 namespace Catharsis.Commons
 {
@@ -215,33 +214,6 @@ namespace Catharsis.Commons
       }
 
       return stream;
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="stream"></param>
-    /// <param name="close"></param>
-    /// <param name="types"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static T Xml<T>(this Stream stream, bool close = false, params Type[] types)
-    {
-      Assertion.NotNull(stream);
-
-      var serializer = types != null ? new XmlSerializer(typeof(T), types) : new XmlSerializer(typeof(T));
-      try
-      {
-        return serializer.Deserialize(stream).To<T>();
-      }
-      finally
-      {
-        if (close)
-        {
-          stream.Close();
-        }
-      }
     }
 
     /// <summary>

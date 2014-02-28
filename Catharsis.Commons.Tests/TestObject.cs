@@ -14,6 +14,7 @@ namespace Catharsis.Commons
     ///   <para></para>
     /// </summary>
     [Description]
+    [DisplayName]
     private object ReadOnlyProperty
     {
       get { return null; }
@@ -22,7 +23,8 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
-    [Description]
+    [Description("PublicStaticProperty Description")]
+    [DisplayName("PublicStaticProperty")]
     public static object PublicStaticProperty { get; set; }
     
     /// <summary>
@@ -38,12 +40,13 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
-    [Description]
+    [Description("PublicProperty")]
     public object PublicProperty { get; set; }
     
     /// <summary>
     ///   <para></para>
     /// </summary>
+    [DisplayName("ProtectedProperty")]
     protected object ProtectedProperty { get; set; }
     
     /// <summary>

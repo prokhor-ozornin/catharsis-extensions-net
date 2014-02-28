@@ -165,48 +165,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of following methods :</para>
-    ///   <list type="bullet">
-    ///     <item><description><see cref="TypeExtensions.Attribute(Type, Type)"/></description></item>
-    ///     <item><description><see cref="TypeExtensions.Attribute{T}(Type)"/></description></item>
-    ///   </list>
-    /// </summary>
-    [Fact]
-    public void Attribute_Methods()
-    {
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.Attribute(null, typeof(object)));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).Attribute(null));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.Attribute<object>(null));
-
-      Assert.Null(typeof(TestObject).Attribute(typeof(NonSerializedAttribute)));
-      Assert.Null(typeof(TestObject).Attribute<NonSerializedAttribute>());
-
-      Assert.True(typeof(TestObject).Attribute(typeof(SerializableAttribute)) is SerializableAttribute);
-      Assert.NotNull(typeof(TestObject).Attribute<SerializableAttribute>());
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of following methods :</para>
-    ///   <list type="bullet">
-    ///     <item><description><see cref="TypeExtensions.Attributes(Type, Type)"/></description></item>
-    ///     <item><description><see cref="TypeExtensions.Attributes{T}(Type)"/></description></item>
-    ///   </list>
-    /// </summary>
-    [Fact]
-    public void Attributes_Methods()
-    {
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.Attribute(null, typeof(object)));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).Attribute(null));
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.Attributes<object>(null));
-
-      Assert.False(typeof(TestObject).Attributes(typeof(NonSerializedAttribute)).Any());
-      Assert.False(typeof(TestObject).Attributes<NonSerializedAttribute>().Any());
-
-      Assert.True(typeof(TestObject).Attributes(typeof(SerializableAttribute)).SequenceEqual(new [] { new SerializableAttribute() }));
-      Assert.True(typeof(TestObject).Attributes<SerializableAttribute>().SequenceEqual(new [] { new SerializableAttribute() }));
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="TypeExtensions.DefaultConstructor(Type)"/> method.</para>
     /// </summary>
     [Fact]

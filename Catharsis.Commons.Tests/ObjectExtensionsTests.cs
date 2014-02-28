@@ -46,15 +46,15 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="ObjectExtendedExtensions.Binary(object)"/></description></item>
-    ///     <item><description><see cref="ObjectExtendedExtensions.Binary(object, Stream, bool)"/></description></item>
+    ///     <item><description><see cref="ObjectBinaryExtensions.Binary(object)"/></description></item>
+    ///     <item><description><see cref="ObjectBinaryExtensions.Binary(object, Stream, bool)"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void Binary_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Binary(null));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtendedExtensions.Binary(null, Stream.Null));
+      Assert.Throws<ArgumentNullException>(() => ObjectBinaryExtensions.Binary(null));
+      Assert.Throws<ArgumentNullException>(() => ObjectBinaryExtensions.Binary(null, Stream.Null));
       Assert.Throws<ArgumentNullException>(() => new object().Binary(null));
 
       var subject = new object();
@@ -548,21 +548,21 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="ObjectExtensions.Xml{T}(T, Type[])"/></description></item>
-    ///     <item><description><see cref="ObjectExtensions.Xml{T}(T, Stream, Encoding, Type[])"/></description></item>
-    ///     <item><description><see cref="ObjectExtensions.Xml{T}(T, TextWriter, Type[])"/></description></item>
-    ///     <item><description><see cref="ObjectExtensions.Xml{T}(T, XmlWriter, Type[])"/></description></item>
+    ///     <item><description><see cref="ObjectXmlExtensions.Xml{T}(T, Type[])"/></description></item>
+    ///     <item><description><see cref="ObjectXmlExtensions.Xml{T}(T, Stream, Encoding, Type[])"/></description></item>
+    ///     <item><description><see cref="ObjectXmlExtensions.Xml{T}(T, TextWriter, Type[])"/></description></item>
+    ///     <item><description><see cref="ObjectXmlExtensions.Xml{T}(T, XmlWriter, Type[])"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void Xml_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Xml<object>(null));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Xml<object>(null, Stream.Null));
+      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.Xml<object>(null));
+      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.Xml<object>(null, Stream.Null));
       Assert.Throws<ArgumentNullException>(() => new object().Xml((Stream)null));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Xml<object>(null, TextWriter.Null));
+      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.Xml<object>(null, TextWriter.Null));
       Assert.Throws<ArgumentNullException>(() => new object().Xml((TextWriter)null));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Xml<object>(null, XmlWriter.Create(Stream.Null)));
+      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.Xml<object>(null, XmlWriter.Create(Stream.Null)));
       Assert.Throws<ArgumentNullException>(() => new object().Xml((XmlWriter)null));
 
       var subject = Guid.NewGuid().ToString();

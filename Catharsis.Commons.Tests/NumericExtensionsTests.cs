@@ -93,18 +93,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="NumericExtensions.ToInt64Bits(double)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void ToInt64Bits_Method()
-    {
-      Assert.Equal(0, 0.0.ToInt64Bits());
-
-      var value = new Random().NextDouble();
-      Assert.Equal(BitConverter.DoubleToInt64Bits(value), value.ToInt64Bits());
-    }
-
-    /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
     ///     <item><description><see cref="NumericExtensions.UpTo(byte, byte, Action)"/></description></item>

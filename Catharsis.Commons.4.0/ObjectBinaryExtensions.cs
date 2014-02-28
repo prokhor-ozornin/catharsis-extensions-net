@@ -8,7 +8,7 @@ namespace Catharsis.Commons
   ///   <para>Set of extensions methods for class <see cref="object"/>.</para>
   ///   <seealso cref="object"/>
   /// </summary>
-  public static class ObjectExtendedExtensions
+  public static class ObjectBinaryExtensions
   {
     /// <summary>
     ///   <para></para>
