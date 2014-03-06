@@ -8,8 +8,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="Uri"/>.</para>
-  ///   <seealso cref="Uri"/>
   /// </summary>
+  /// <seealso cref="Uri"/>
   public static class UriExtensions
   {
     /// <summary>

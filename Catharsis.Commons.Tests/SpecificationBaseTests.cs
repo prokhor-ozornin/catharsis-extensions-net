@@ -12,8 +12,8 @@ namespace Catharsis.Commons
   {
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
-    ///   <seealso cref="SpecificationBase{T}(Expression{Func{T, bool}})"/>
     /// </summary>
+    /// <seealso cref="SpecificationBase{T}(Expression{Func{T, bool}})"/>
     [Fact]
     public void Constructors()
     {

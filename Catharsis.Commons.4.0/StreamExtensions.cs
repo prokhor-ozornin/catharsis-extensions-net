@@ -8,8 +8,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="Stream"/>.</para>
-  ///   <seealso cref="Stream"/>
   /// </summary>
+  /// <seealso cref="Stream"/>
   public static class StreamExtensions
   {
     /// <summary>
@@ -85,21 +85,6 @@ namespace Catharsis.Commons
       Assertion.NotNull(stream);
 
       stream.Seek(0, SeekOrigin.Begin);
-      return stream;
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="stream"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static T Shutdown<T>(this T stream) where T : Stream
-    {
-      Assertion.NotNull(stream);
-
-      stream.Close();
       return stream;
     }
 
@@ -210,7 +195,9 @@ namespace Catharsis.Commons
 
       if (stream.CanWrite && text.Length > 0)
       {
-        stream.TextWriter(encoding).WriteObject(text).Flush();
+        var writer = stream.TextWriter(encoding);
+        writer.Write(text);
+        writer.Flush();
       }
 
       return stream;

@@ -12,6 +12,17 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <param name="enumeration"></param>
+    /// <returns></returns>
+    public static string Description(this Enum enumeration)
+    {
+      var attribute = enumeration.GetType().GetField(enumeration.ToString()).Attribute<DescriptionAttribute>();
+      return attribute != null ? attribute.Description : null;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static IEnumerable<string> Descriptions<T>() where T : struct
@@ -29,17 +40,6 @@ namespace Catharsis.Commons
       });
 
       return descriptions;
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="enumeration"></param>
-    /// <returns></returns>
-    public static string Description(this Enum enumeration)
-    {
-      var attribute = enumeration.GetType().GetField(enumeration.ToString()).Attribute<DescriptionAttribute>();
-      return attribute != null ? attribute.Description : null;
     }
   }
 }

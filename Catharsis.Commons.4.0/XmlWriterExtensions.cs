@@ -5,8 +5,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="XmlWriter"/>.</para>
-  ///   <seealso cref="XmlWriter"/>
   /// </summary>
+  /// <seealso cref="XmlWriter"/>
   public static class XmlWriterExtensions
   {
     /// <summary>

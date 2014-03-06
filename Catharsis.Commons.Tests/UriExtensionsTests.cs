@@ -33,8 +33,8 @@ namespace Catharsis.Commons
     public void DownloadFile_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(null, "file"));
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile("http://uri.com".ToUri(), null));
-      Assert.Throws<ArgumentException>(() => UriExtensions.DownloadFile("http://uri.com".ToUri(), string.Empty));
+      Assert.Throws<ArgumentNullException>(() => "http://uri.com".ToUri().DownloadFile(null));
+      Assert.Throws<ArgumentException>(() => "http://uri.com".ToUri().DownloadFile(string.Empty));
 
       var uri = new Uri(Yandex);
       var file = Path.GetTempFileName();

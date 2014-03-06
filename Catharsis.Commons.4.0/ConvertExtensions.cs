@@ -9,8 +9,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="Convert"/>.</para>
-  ///   <seealso cref="Convert"/>
   /// </summary>
+  /// <seealso cref="Convert"/>
   public static class ConvertExtensions
   {
     /// <summary>

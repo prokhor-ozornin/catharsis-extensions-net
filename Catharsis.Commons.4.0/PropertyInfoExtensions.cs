@@ -5,8 +5,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extensions methods for class <see cref="PropertyInfo"/>.</para>
-  ///   <seealso cref="PropertyInfo"/>
   /// </summary>
+  /// <seealso cref="PropertyInfo"/>
   public static class PropertyInfoExtensions
   {
     /// <summary>

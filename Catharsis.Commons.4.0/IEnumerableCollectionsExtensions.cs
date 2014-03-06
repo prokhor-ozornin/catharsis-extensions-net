@@ -5,8 +5,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for interface <see cref="IEnumerable{T}"/>.</para>
-  ///   <seealso cref="IEnumerable{T}"/>
   /// </summary>
+  /// <seealso cref="IEnumerable{T}"/>
   public static class IEnumerableCollectionsExtensions
   {
     /// <summary>
@@ -21,7 +21,7 @@ namespace Catharsis.Commons
       Assertion.NotNull(enumerable);
 
       var set = new HashSet<T>();
-      set.AddAll(enumerable);
+      set.Add(enumerable);
       return set;
     }
   }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -11,10 +10,23 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="string"/>.</para>
-  ///   <seealso cref="string"/>
   /// </summary>
+  /// <seealso cref="string"/>
   public static class StringExtensions
   {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    public static byte[] Base64(this string value)
+    {
+      Assertion.NotNull(value);
+
+      return System.Convert.FromBase64String(value);
+    }
+
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -39,7 +51,7 @@ namespace Catharsis.Commons
     /// <param name="comparison"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static int Compare(this string self, string other, StringComparison comparison)
+    public static int CompareTo(this string self, string other, StringComparison comparison)
     {
       Assertion.NotNull(self);
 
@@ -51,51 +63,15 @@ namespace Catharsis.Commons
     /// </summary>
     /// <param name="self"></param>
     /// <param name="other"></param>
-    /// <param name="culture"></param>
     /// <param name="options"></param>
+    /// <param name="culture"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static int Compare(this string self, string other, CultureInfo culture = null, CompareOptions options = CompareOptions.None)
+    public static int CompareTo(this string self, string other, CompareOptions options, CultureInfo culture = null)
     {
       Assertion.NotNull(self);
 
       return string.Compare(self, other, culture ?? CultureInfo.InvariantCulture, options);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public static byte[] DecodeBase64(this string value)
-    {
-      Assertion.NotNull(value);
-
-      return System.Convert.FromBase64String(value);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public static byte[] DecodeHex(this string value)
-    {
-      Assertion.NotNull(value);
-
-      if (value.Length == 0)
-      {
-        return Enumerable.Empty<byte>().ToArray();
-      }
-
-      var result = new byte[value.Length/2];
-      for (var i = 0; i < value.Length; i += 2)
-      {
-        result[i/2] = byte.Parse(value.Substring(i, 2), NumberStyles.HexNumber);
-      }
-      return result;
     }
 
     /// <summary>
@@ -119,11 +95,34 @@ namespace Catharsis.Commons
     /// <param name="args"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public static string FormatValue(this string value, params object[] args)
+    public static string FormatSelf(this string value, params object[] args)
     {
       Assertion.NotNull(value);
 
       return string.Format(value, args);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    public static byte[] Hex(this string value)
+    {
+      Assertion.NotNull(value);
+
+      if (value.Length == 0)
+      {
+        return Enumerable.Empty<byte>().ToArray();
+      }
+
+      var result = new byte[value.Length / 2];
+      for (var i = 0; i < value.Length; i += 2)
+      {
+        result[i / 2] = byte.Parse(value.Substring(i, 2), NumberStyles.HexNumber);
+      }
+      return result;
     }
 
     /// <summary>
@@ -143,7 +142,7 @@ namespace Catharsis.Commons
     /// <param name="pattern"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="value"/> or <paramref name="pattern"/> is a <c>null</c> reference.</exception>
-    public static bool Match(this string value, string pattern)
+    public static bool Matches(this string value, string pattern)
     {
       Assertion.NotNull(value);
       Assertion.NotNull(pattern);
@@ -217,12 +216,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the specified string representation of a logical value to its <see cref="Boolean"/> equivalent.</para>
-    ///   <seealso cref="bool.Parse(string)"/>
     /// </summary>
     /// <param name="boolean">A string containing the value to convert.</param>
     /// <returns><c>true</c> if value is equivalent to <see cref="Boolean.TrueString"/>; otherwise, <c>false</c>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="boolean"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="boolean"/> is <see cref="string.Empty"/> string.</exception>
+    /// <seealso cref="bool.Parse(string)"/>
     public static bool ToBoolean(this string boolean)
     {
       Assertion.NotEmpty(boolean);
@@ -243,12 +242,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the string representation of a number to its <see cref="byte"/> equivalent.</para>
-    ///   <seealso cref="byte.Parse(string)"/>
     /// </summary>
     /// <param name="value">A string containing a number to convert. The string is interpreted using the <see cref="NumberStyles.Integer"/> style.</param>
     /// <returns>The <see cref="byte"/> value equivalent to the number contained in <paramref name="value"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is empty string.</exception>
+    /// <seealso cref="byte.Parse(string)"/>
     public static byte ToByte(this string value)
     {
       Assertion.NotEmpty(value);
@@ -294,12 +293,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the string representation of a number to its <see cref="Decimal"/> equivalent.</para>
-    ///   <seealso cref="decimal.Parse(string)"/>
     /// </summary>
     /// <param name="value">The string representation of the number to convert.</param>
     /// <returns>The <see cref="Decimal"/> number equivalent to the number contained in <paramref name="value"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is empty string.</exception>
+    /// <seealso cref="decimal.Parse(string)"/>
     public static decimal ToDecimal(this string value)
     {
       Assertion.NotEmpty(value);
@@ -320,12 +319,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the string representation of a number to its double-precision floating-point number equivalent.</para>
-    ///   <seealso cref="double.Parse(string)"/>
     /// </summary>
     /// <param name="value">A string containing a number to convert.</param>
     /// <returns>A double-precision floating-point number equivalent to the numeric value or symbol specified in <paramref name="value"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is empty string.</exception>
+    /// <seealso cref="double.Parse(string)"/>
     public static double ToDouble(this string value)
     {
       Assertion.NotEmpty(value);
@@ -361,12 +360,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the specified string representation of a GUID (Globally Unique Identifier) to its <see cref="Guid"/> equivalent.</para>
-    ///   <seealso cref="Guid(string)"/>
     /// </summary>
     /// <param name="value">A string containing the GUID value to convert in one of the supported formats.</param>
     /// <returns>The <see cref="Guid"/> value equivalent to the number contained in <paramref name="value"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is empty string.</exception>
+    /// <seealso cref="Guid(string)"/>
     public static Guid ToGuid(this string value)
     {
       Assertion.NotEmpty(value);
@@ -396,12 +395,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the string representation of a number to its 16-bit signed integer equivalent.</para>
-    ///   <seealso cref="short.Parse(string)"/>
     /// </summary>
     /// <param name="value">A string containing a number to convert.</param>
     /// <returns>A 16-bit signed integer equivalent to the number contained in <paramref name="value"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is empty string.</exception>
+    /// <seealso cref="short.Parse(string)"/>
     public static short ToInt16(this string value)
     {
       Assertion.NotEmpty(value);
@@ -422,12 +421,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the string representation of a number to its 32-bit signed integer equivalent.</para>
-    ///   <seealso cref="int.Parse(string)"/>
     /// </summary>
     /// <param name="value">A string containing a number to convert.</param>
     /// <returns>A 32-bit signed integer equivalent to the number contained in <paramref name="value"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is empty string.</exception>
+    /// <seealso cref="int.Parse(string)"/>
     public static int ToInt32(this string value)
     {
       Assertion.NotEmpty(value);
@@ -448,12 +447,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the string representation of a number to its 64-bit signed integer equivalent.</para>
-    ///   <seealso cref="long.Parse(string)"/>
     /// </summary>
     /// <param name="value">A string containing a number to convert.</param>
     /// <returns>A 64-bit signed integer equivalent to the number contained in <paramref name="value"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is empty string.</exception>
+    /// <seealso cref="long.Parse(string)"/>
     public static long ToInt64(this string value)
     {
       Assertion.NotEmpty(value);
@@ -512,12 +511,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the string representation of a number to its single-precision floating-point number equivalent.</para>
-    ///   <seealso cref="Single.Parse(string)"/>
     /// </summary>
     /// <param name="value">A string representing a number to convert.</param>
     /// <returns> single-precision floating-point number equivalent to the numeric value or symbol specified in <paramref name="value"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is empty string.</exception>
+    /// <seealso cref="Single.Parse(string)"/>
     public static Single ToSingle(this string value)
     {
       Assertion.NotEmpty(value);
@@ -538,12 +537,12 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Converts the specified string representation of a URI to its <see cref="Uri"/> equivalent.</para>
-    ///   <seealso cref="Uri(string)"/>
     /// </summary>
     /// <param name="value">A string containing a URI address.</param>
     /// <returns>The <see cref="Uri"/> instance created from the given string address.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
+    /// <seealso cref="Uri(string)"/>
     public static Uri ToUri(this string value)
     {
       Assertion.NotEmpty(value);
@@ -577,7 +576,7 @@ namespace Catharsis.Commons
       Assertion.NotNull(tokens);
       Assertion.NotEmpty(marker);
 
-      return value.Replace(tokens.Keys.Select(token => "{0}{1}".FormatValue(marker, token)).ToArray(), tokens.Values.Select(token => token.ToString()).ToArray());
+      return value.Replace(tokens.Keys.Select(token => "{0}{1}".FormatSelf(marker, token)).ToArray(), tokens.Values.Select(token => token.ToString()).ToArray());
     }
 
     /// <summary>

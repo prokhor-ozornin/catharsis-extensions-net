@@ -9,8 +9,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="XmlDocument"/>.</para>
-  ///   <seealso cref="XmlDocument"/>
   /// </summary>
+  /// <seealso cref="XmlDocument"/>
   public static class XmlDocumentExtensions
   {
     /// <summary>

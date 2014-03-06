@@ -151,26 +151,26 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="MemberInfoExtensions.MemberType(MemberInfo)"/> method.</para>
+    ///   <para>Performs testing of <see cref="MemberInfoExtensions.Type(MemberInfo)"/> method.</para>
     /// </summary>
     [Fact]
-    public void MemberType_Method()
+    public void Type_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => MemberInfoExtensions.MemberType(null));
+      Assert.Throws<ArgumentNullException>(() => MemberInfoExtensions.Type(null));
 
       var type = typeof(TestObject);
 
       var eventMember = type.AnyEvent("PublicEvent");
-      Assert.Equal(eventMember.EventHandlerType, eventMember.MemberType());
+      Assert.Equal(eventMember.EventHandlerType, eventMember.Type());
 
       var fieldMember = type.AnyField("PublicField");
-      Assert.Equal(fieldMember.FieldType, fieldMember.MemberType());
+      Assert.Equal(fieldMember.FieldType, fieldMember.Type());
 
       var methodMember = type.AnyMethod("PublicMethod");
-      Assert.Equal(methodMember.ReturnType, methodMember.MemberType());
+      Assert.Equal(methodMember.ReturnType, methodMember.Type());
       
       var propertyMember = type.AnyProperty("PublicProperty");
-      Assert.Equal(propertyMember.PropertyType, propertyMember.MemberType());
+      Assert.Equal(propertyMember.PropertyType, propertyMember.Type());
     }
   }
 }

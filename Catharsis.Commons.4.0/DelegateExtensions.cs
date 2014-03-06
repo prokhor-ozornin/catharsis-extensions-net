@@ -4,8 +4,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="Delegate"/>.</para>
-  ///   <seealso cref="Delegate"/>
   /// </summary>
+  /// <seealso cref="Delegate"/>
   public static class DelegateExtensions
   {
     /// <summary>

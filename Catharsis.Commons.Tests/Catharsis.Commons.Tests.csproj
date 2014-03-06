@@ -105,7 +105,6 @@
   <ItemGroup>
     <Compile Include="ArrayExtensionsTests.cs" />
     <Compile Include="AssertionTests.cs" />
-    <Compile Include="BooleanExtensionsTests.cs" />
     <Compile Include="ConvertExtensionsTests.cs" />
     <Compile Include="ConvertTests.cs" />
     <Compile Include="DateTimeExtensionsTests.cs" />
@@ -115,9 +114,7 @@
     <Compile Include="FieldInfoExtensionsTests.cs" />
     <Compile Include="FileInfoExtensionsTests.cs" />
     <Compile Include="ICollectionExtensionsTests.cs" />
-    <Compile Include="IDictionaryExtensionsTests.cs" />
     <Compile Include="IEnumerableExtensionsTests.cs" />
-    <Compile Include="IListExtensionsTests.cs" />
     <Compile Include="ISpecificationExtensionsTests.cs" />
     <Compile Include="MemberInfoExtensionsTests.cs" />
     <Compile Include="MethodInfoExtensionsTests.cs" />
@@ -136,7 +133,6 @@
     <Compile Include="TextWriterExtensionsTests.cs" />
     <Compile Include="TypeExtensionsTests.cs" />
     <Compile Include="UriExtensionsTests.cs" />
-    <Compile Include="XContainerExtensionsTests.cs" />
     <Compile Include="XDocumentExtensionsTests.cs" />
     <Compile Include="XElementExtensionsTests.cs" />
     <Compile Include="XmlDocumentExtensionsTests.cs" />

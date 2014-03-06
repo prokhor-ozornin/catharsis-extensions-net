@@ -24,82 +24,30 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="ArrayExtensions.EncodeBase64(byte[])"/> method.</para>
+    ///   <para>Performs testing of <see cref="ArrayExtensions.Base64(byte[])"/> method.</para>
     /// </summary>
     [Fact]
-    public void EncodeBase64_Method()
+    public void Base64_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => ArrayExtensions.EncodeBase64(null));
+      Assert.Throws<ArgumentNullException>(() => ArrayExtensions.Base64(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
-      Assert.Equal(string.Empty, Enumerable.Empty<byte>().ToArray().EncodeBase64());
-      Assert.Equal(System.Convert.ToBase64String(bytes), bytes.EncodeBase64());
+      Assert.Equal(string.Empty, Enumerable.Empty<byte>().ToArray().Base64());
+      Assert.Equal(System.Convert.ToBase64String(bytes), bytes.Base64());
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="ArrayExtensions.EncodeHex(byte[])"/> method.</para>
+    ///   <para>Performs testing of <see cref="ArrayExtensions.Hex(byte[])"/> method.</para>
     /// </summary>
     [Fact]
-    public void EncodeHex_Method()
+    public void Hex_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => ArrayExtensions.EncodeHex(null));
+      Assert.Throws<ArgumentNullException>(() => ArrayExtensions.Hex(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
-      Assert.Equal(string.Empty, Enumerable.Empty<byte>().ToArray().EncodeHex());
-      Assert.Equal(bytes.Length * 2, bytes.EncodeHex().Length);
-      Assert.True(bytes.EncodeHex().Match("[0-9A-Z]"));
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="ArrayCryptographyExtensions.EncodeMd5(byte[])"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void EncodeMD5_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ArrayCryptographyExtensions.EncodeMd5(null));
-
-      Assert.Equal(16, Enumerable.Empty<byte>().ToArray().EncodeMd5().Length);
-      Assert.Equal(16, Guid.NewGuid().ToByteArray().EncodeMd5().Length);
-      Assert.False(Guid.NewGuid().ToByteArray().EncodeMd5().SequenceEqual(Guid.NewGuid().ToByteArray().EncodeMd5()));
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="ArrayCryptographyExtensions.EncodeSha1(byte[])"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void EncodeSHA1_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ArrayCryptographyExtensions.EncodeSha1(null));
-
-      Assert.Equal(20, Enumerable.Empty<byte>().ToArray().EncodeSha1().Length);
-      Assert.Equal(20, Guid.NewGuid().ToByteArray().EncodeSha1().Length);
-      Assert.False(Guid.NewGuid().ToByteArray().EncodeSha1().SequenceEqual(Guid.NewGuid().ToByteArray().EncodeSha1()));
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="ArrayCryptographyExtensions.EncodeSha256(byte[])"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void EncodeSha256_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ArrayCryptographyExtensions.EncodeSha256(null));
-
-      Assert.Equal(32, Enumerable.Empty<byte>().ToArray().EncodeSha256().Length);
-      Assert.Equal(32, Guid.NewGuid().ToByteArray().EncodeSha256().Length);
-      Assert.False(Guid.NewGuid().ToByteArray().EncodeSha256().SequenceEqual(Guid.NewGuid().ToByteArray().EncodeSha256()));
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="ArrayCryptographyExtensions.EncodeSha512(byte[])"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void EncodeSHA512_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ArrayCryptographyExtensions.EncodeSha512(null));
-
-      Assert.Equal(64, Enumerable.Empty<byte>().ToArray().EncodeSha512().Length);
-      Assert.Equal(64, Guid.NewGuid().ToByteArray().EncodeSha512().Length);
-      Assert.False(Guid.NewGuid().ToByteArray().EncodeSha512().SequenceEqual(Guid.NewGuid().ToByteArray().EncodeSha512()));
+      Assert.Equal(string.Empty, Enumerable.Empty<byte>().ToArray().Hex());
+      Assert.Equal(bytes.Length * 2, bytes.Hex().Length);
+      Assert.True(bytes.Hex().Matches("[0-9A-Z]"));
     }
 
     /// <summary>
@@ -115,6 +63,58 @@ namespace Catharsis.Commons
       Assert.True(new [] { "first" }.Join(Enumerable.Empty<object>().ToArray()).SequenceEqual(new [] { "first" }));
       Assert.True(Enumerable.Empty<object>().ToArray().Join(new [] { "second" }).SequenceEqual(new [] { "second" }));
       Assert.True(new [] { "first", "second" }.Join(new [] { "third" }).SequenceEqual(new [] { "first", "second", "third" }));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="ArrayCryptographyExtensions.MD5(byte[])"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void MD5_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => ArrayCryptographyExtensions.MD5(null));
+
+      Assert.Equal(16, Enumerable.Empty<byte>().ToArray().MD5().Length);
+      Assert.Equal(16, Guid.NewGuid().ToByteArray().MD5().Length);
+      Assert.False(Guid.NewGuid().ToByteArray().MD5().SequenceEqual(Guid.NewGuid().ToByteArray().MD5()));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="ArrayCryptographyExtensions.SHA1(byte[])"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void SHA1_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => ArrayCryptographyExtensions.SHA1(null));
+
+      Assert.Equal(20, Enumerable.Empty<byte>().ToArray().SHA1().Length);
+      Assert.Equal(20, Guid.NewGuid().ToByteArray().SHA1().Length);
+      Assert.False(Guid.NewGuid().ToByteArray().SHA1().SequenceEqual(Guid.NewGuid().ToByteArray().SHA1()));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="ArrayCryptographyExtensions.SHA256(byte[])"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void SHA256_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => ArrayCryptographyExtensions.SHA256(null));
+
+      Assert.Equal(32, Enumerable.Empty<byte>().ToArray().SHA256().Length);
+      Assert.Equal(32, Guid.NewGuid().ToByteArray().SHA256().Length);
+      Assert.False(Guid.NewGuid().ToByteArray().SHA256().SequenceEqual(Guid.NewGuid().ToByteArray().SHA256()));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="ArrayCryptographyExtensions.SHA512(byte[])"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void SHA512_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => ArrayCryptographyExtensions.SHA512(null));
+
+      Assert.Equal(64, Enumerable.Empty<byte>().ToArray().SHA512().Length);
+      Assert.Equal(64, Guid.NewGuid().ToByteArray().SHA512().Length);
+      Assert.False(Guid.NewGuid().ToByteArray().SHA512().SequenceEqual(Guid.NewGuid().ToByteArray().SHA512()));
     }
 
     /// <summary>

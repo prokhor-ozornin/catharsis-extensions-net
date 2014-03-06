@@ -14,7 +14,7 @@ namespace Catharsis.Commons
     /// <param name="bytes">Source sequence for hash computation.</param>
     /// <returns>Hashed value </returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static byte[] EncodeMd5(this byte[] bytes)
+    public static byte[] MD5(this byte[] bytes)
     {
       Assertion.NotNull(bytes);
 
@@ -30,7 +30,7 @@ namespace Catharsis.Commons
     /// <param name="bytes"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static byte[] EncodeSha1(this byte[] bytes)
+    public static byte[] SHA1(this byte[] bytes)
     {
       Assertion.NotNull(bytes);
 
@@ -46,7 +46,7 @@ namespace Catharsis.Commons
     /// <param name="bytes"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static byte[] EncodeSha256(this byte[] bytes)
+    public static byte[] SHA256(this byte[] bytes)
     {
       Assertion.NotNull(bytes);
 
@@ -62,7 +62,7 @@ namespace Catharsis.Commons
     /// <param name="bytes"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static byte[] EncodeSha512(this byte[] bytes)
+    public static byte[] SHA512(this byte[] bytes)
     {
       Assertion.NotNull(bytes);
 

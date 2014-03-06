@@ -7,8 +7,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="MemberInfo"/>.</para>
-  ///   <seealso cref="MemberInfo"/>
   /// </summary>
+  /// <seealso cref="MemberInfo"/>
   public static class MemberInfoExtensions
   {
     /// <summary>
@@ -140,22 +140,26 @@ namespace Catharsis.Commons
     /// <param name="member">Instance of extended <see cref="MemberInfo"/> class that represents either a field (<see cref="FieldInfo"/> instance) or property (<see cref="PropertyInfo"/> instance).</param>
     /// <returns>Type of the field/property, represented by specified <paramref name="member"/> instance.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
-    public static Type MemberType(this MemberInfo member)
+    public static Type Type(this MemberInfo member)
     {
       Assertion.NotNull(member);
 
       switch (member.MemberType)
       {
         case MemberTypes.Event:
-        return member.To<EventInfo>().EventHandlerType;
+          return member.To<EventInfo>().EventHandlerType;
+  
         case MemberTypes.Field:
-        return member.To<FieldInfo>().FieldType;
+          return member.To<FieldInfo>().FieldType;
+        
         case MemberTypes.Method:
-        return member.To<MethodInfo>().ReturnType;
+          return member.To<MethodInfo>().ReturnType;
+        
         case MemberTypes.Property:
-        return member.To<PropertyInfo>().PropertyType;
+          return member.To<PropertyInfo>().PropertyType;
+        
         default:
-        return member.DeclaringType;
+          return member.DeclaringType;
       }
     }
   }

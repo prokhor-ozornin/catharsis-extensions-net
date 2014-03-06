@@ -11,6 +11,17 @@ namespace Catharsis.Commons
   public sealed class EnumExtensionsTests
   {
     /// <summary>
+    ///   <para>Performs testing of <see cref="EnumExtensions.Description(Enum)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Description()
+    {
+      Assert.Equal("FirstOption", MockEnumeration.First.Description());
+      Assert.Null(MockEnumeration.Second.Description());
+      Assert.Equal("ThirdOption", MockEnumeration.Third.Description());
+    }
+
+    /// <summary>
     ///   <para>Performs testing of <see cref="EnumExtensions.Descriptions{ENUM}()"/> method.</para>
     /// </summary>
     [Fact]
@@ -22,17 +33,6 @@ namespace Catharsis.Commons
       Assert.Equal("FirstOption", descriptions[0]);
       Assert.Equal("Second", descriptions[1]);
       Assert.Equal("ThirdOption", descriptions[2]);
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="EnumExtensions.Description(Enum)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void Description()
-    {
-      Assert.Equal("FirstOption", MockEnumeration.First.Description());
-      Assert.Null(MockEnumeration.Second.Description());
-      Assert.Equal("ThirdOption", MockEnumeration.Third.Description());
     }
 
     [Description("Enumeration")]

@@ -8,8 +8,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extensions methods for class <see cref="object"/>.</para>
-  ///   <seealso cref="object"/>
   /// </summary>
+  /// <seealso cref="object"/>
   public static class ObjectXmlExtensions
   {
     /// <summary>

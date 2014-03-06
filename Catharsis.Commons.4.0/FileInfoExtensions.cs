@@ -7,8 +7,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="FileInfo"/>.</para>
-  ///   <seealso cref="FileInfo"/>
   /// </summary>
+  /// <seealso cref="FileInfo"/>
   public static class FileInfoExtensions
   {
     /// <summary>
@@ -47,7 +47,7 @@ namespace Catharsis.Commons
 
       if (text.Length > 0)
       {
-        file.OpenWrite().TextWriter(encoding).WriteObject(text).Close();
+        file.OpenWrite().TextWriter(encoding).With(writer => writer.Write(text));
         file.Refresh();
       }
 

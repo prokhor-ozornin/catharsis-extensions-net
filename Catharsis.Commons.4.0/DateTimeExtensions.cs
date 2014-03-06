@@ -5,17 +5,17 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for structure <see cref="DateTime"/>.</para>
-  ///   <seealso cref="DateTime"/>
   /// </summary>
+  /// <seealso cref="DateTime"/>
   public static class DateTimeExtensions
   {
     /// <summary>
     ///   <para>For a given date/time instance returns a new date/time, representing the end of day.</para>
-    ///   <seealso cref="StartOfDay(DateTime)"/>
     /// </summary>
-      /// <param name="dateTime">Original date/time object instance.</param>
-      /// <returns>New date/time object instance that represents the end of day of the specified <paramref name="dateTime"/>.</returns>
+    /// <param name="dateTime">Original date/time object instance.</param>
+    /// <returns>New date/time object instance that represents the end of day of the specified <paramref name="dateTime"/>.</returns>
     /// <remarks>Date component (year, month, day) remains the same, while time component (hour/minute/second) is changed to represent the end of the day(hour : 23, minute : 59, second : 59).</remarks>
+    /// <seealso cref="StartOfDay(DateTime)"/>
     public static DateTime EndOfDay(this DateTime dateTime)
     {
       return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 23, 59, 59, dateTime.Kind);
@@ -124,12 +124,24 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Formats given date/time instance according to RFC 1123 specification and returns formatted date as a string.</para>
+    /// </summary>
+    /// <param name="dateTime">Date/time object instance.</param>
+    /// <returns>Formatted date/time value as a string.</returns>
+    /// <remarks>Returned formatted date/time string represents date in UTC timezone, formatted for invariant culture.</remarks>
+    /// <seealso cref="DateTimeFormatInfo"/>
+    public static string RFC1123(this DateTime dateTime)
+    {
+      return dateTime.ToString("r");
+    }
+
+    /// <summary>
     ///   <para>For a given date/time instance returns a new date/time, representing the start of day.</para>
-    ///   <seealso cref="EndOfDay(DateTime)"/>
     /// </summary>
     /// <param name="dateTime">Original date/time object instance.</param>
     /// <returns>New date/time object instance that represent the start of day of the specified <paramref name="dateTime"/>.</returns>
     /// <remarks>Date component (year, month, day) remains the same, while time component (hour/minute/second) is changed to represent the beginning of the day (hour : 0, minute : 0, second : 0).</remarks>
+    /// <seealso cref="EndOfDay(DateTime)"/>
     public static DateTime StartOfDay(this DateTime dateTime)
     {
       return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, 0, 0, 0, dateTime.Kind);
@@ -153,18 +165,6 @@ namespace Catharsis.Commons
     public static DateTime StartOfYear(this DateTime dateTime)
     {
       return new DateTime(dateTime.Year, 1, 1, 0, 0, 0, dateTime.Kind);
-    }
-
-    /// <summary>
-    ///   <para>Formats given date/time instance according to RFC 1123 specification and returns formatted date as a string.</para>
-    ///   <seealso cref="DateTimeFormatInfo"/>
-    /// </summary>
-    /// <param name="dateTime">Date/time object instance.</param>
-    /// <returns>Formatted date/time value as a string.</returns>
-    /// <remarks>Returned formatted date/time string represents date in UTC timezone, formatted for invariant culture.</remarks>
-    public static string ToRfc1123(this DateTime dateTime)
-    {
-      return dateTime.ToString("r");
     }
   }
 }

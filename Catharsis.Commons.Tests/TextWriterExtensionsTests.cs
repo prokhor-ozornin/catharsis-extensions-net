@@ -11,28 +11,6 @@ namespace Catharsis.Commons
   public sealed class TextWriterExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="TextWriterExtensions.WriteObject{WRITER}(WRITER, object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void WriteObject_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => TextWriterExtensions.WriteObject<TextWriter>(null, new object()));
-
-      new StringWriter().With(writer =>
-      {
-        Assert.True(ReferenceEquals(writer.WriteObject(null), writer));
-        Assert.Equal(string.Empty, writer.ToString());
-      });
-
-      var subject = Guid.NewGuid();
-      new StringWriter().With(writer =>
-      {
-        Assert.True(ReferenceEquals(writer.WriteObject(subject), writer));
-        Assert.Equal(subject.ToString(), writer.ToString());
-      });
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="TextWriterExtensions.XmlWriter"/> method.</para>
     /// </summary>
     [Fact]

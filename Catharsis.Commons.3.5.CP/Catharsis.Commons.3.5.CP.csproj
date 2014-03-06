@@ -48,9 +48,6 @@
     <Compile Include="..\Catharsis.Commons.4.0\Assertion.cs">
       <Link>Assertion.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\BooleanExtensions.cs">
-      <Link>BooleanExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\Convert.cs">
       <Link>Convert.cs</Link>
     </Compile>
@@ -78,14 +75,8 @@
     <Compile Include="..\Catharsis.Commons.4.0\ICollectionExtensions.cs">
       <Link>ICollectionExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\IDictionaryExtensions.cs">
-      <Link>IDictionaryExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\IEnumerableExtensions.cs">
       <Link>IEnumerableExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\IListExtensions.cs">
-      <Link>IListExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\IQueryableTransformer.cs">
       <Link>IQueryableTransformer.cs</Link>
@@ -164,9 +155,6 @@
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\UriExtensions.cs">
       <Link>UriExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\XContainerExtensions.cs">
-      <Link>XContainerExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\XDocumentExtensions.cs">
       <Link>XDocumentExtensions.cs</Link>

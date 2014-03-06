@@ -11,6 +11,19 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
+    public static string Base64(this byte[] bytes)
+    {
+      Assertion.NotNull(bytes);
+
+      return System.Convert.ToBase64String(bytes);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="chars"></param>
     /// <param name="encoding"></param>
     /// <returns></returns>
@@ -28,20 +41,7 @@ namespace Catharsis.Commons
     /// <param name="bytes"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static string EncodeBase64(this byte[] bytes)
-    {
-      Assertion.NotNull(bytes);
-
-      return System.Convert.ToBase64String(bytes);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
-    public static string EncodeHex(this byte[] bytes)
+    public static string Hex(this byte[] bytes)
     {
       Assertion.NotNull(bytes);
 

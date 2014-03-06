@@ -6,8 +6,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="Stream"/>.</para>
-  ///   <seealso cref="Stream"/>
   /// </summary>
+  /// <seealso cref="Stream"/>
   public static class StreamCompressionExtensions
   {
     /// <summary>

@@ -158,6 +158,16 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.RFC1123(DateTime)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void RFC1123_Method()
+    {
+      var time = DateTime.Today;
+      Assert.True(DateTime.ParseExact(time.RFC1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Equals(time), "Parsed = " + DateTime.ParseExact(time.RFC1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Ticks + ", Exact = " + time.Ticks);
+    }
+
+    /// <summary>
     ///   <para>Performs testing of <see cref="DateTimeExtensions.StartOfDay(DateTime)"/> method.</para>
     /// </summary>
     [Fact]
@@ -215,16 +225,6 @@ namespace Catharsis.Commons
       Assert.Equal(0, startOfYear.Minute);
       Assert.Equal(0, startOfYear.Second);
       Assert.Equal(0, startOfYear.Millisecond);
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="DateTimeExtensions.ToRfc1123(DateTime)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void ToRfc1123_Method()
-    {
-      var time = DateTime.Today;
-      Assert.True(DateTime.ParseExact(time.ToRfc1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Equals(time), "Parsed = " + DateTime.ParseExact(time.ToRfc1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Ticks + ", Exact = " + time.Ticks);
     }
   }
 }

@@ -7,8 +7,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="XmlReader"/>.</para>
-  ///   <seealso cref="XmlReader"/>
   /// </summary>
+  /// <seealso cref="XmlReader"/>
   public static class XmlReaderExtensions
   {
     /// <summary>

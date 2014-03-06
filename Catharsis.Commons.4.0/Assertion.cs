@@ -25,7 +25,7 @@ namespace Catharsis.Commons
 
       if (message.Whitespace())
       {
-        throw new ArgumentException("Argument doesn't has a default value for type {0}. Expected : {1}. Actual : {2}".FormatValue(typeof(T), default(T), value));
+        throw new ArgumentException("Argument doesn't has a default value for type {0}. Expected : {1}. Actual : {2}".FormatSelf(typeof(T), default(T), value));
       }
 
       throw new ArgumentException(message);
@@ -60,7 +60,6 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Makes an assertion about equality of two objects of the same type, based on their <see cref="object.Equals(object)"/> method. Throws an exception if assertion failed.</para>
-    ///   <seealso cref="Equal"/>
     /// </summary>
     /// <param name="expected">First object to be compared.</param>
     /// <param name="actual">Second object to be compared.</param>
@@ -76,11 +75,11 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Makes an assertion that specified condition if <c>false</c>. Throws an exception if assertion failed.</para>
-    ///   <seealso cref="True(bool, string)"/>
     /// </summary>
     /// <param name="condition">Condition to be evaluated.</param>
     /// <param name="message"></param>
     /// <exception cref="ArgumentException">If <paramref name="condition"/> if <c>true</c>.</exception>
+    /// <seealso cref="True(bool, string)"/>
     public static void False(bool condition, string message = null)
     {
       if (condition)
@@ -104,7 +103,7 @@ namespace Catharsis.Commons
 
       if (message.Whitespace())
       {
-        throw new ArgumentException("Argument has a default value for type {0} : {1}".FormatValue(typeof(T), value));
+        throw new ArgumentException("Argument has a default value for type {0} : {1}".FormatSelf(typeof(T), value));
       }
 
       throw new ArgumentException(message);
@@ -208,11 +207,11 @@ namespace Catharsis.Commons
 
     /// <summary>
     ///   <para>Makes an assertion that specified condition is <c>true</c>. Throws an exception if assertion failed.</para>
-    ///   <seealso cref="False(bool, string)"/>
     /// </summary>
     /// <param name="condition">Condition to be evaluated.</param>
     /// <param name="message"></param>
     /// <exception cref="ArgumentException">If <paramref name="condition"/> is <c>false</c>.</exception>
+    /// <seealso cref="False(bool, string)"/>
     public static void True(bool condition, string message = null)
     {
       if (!condition)

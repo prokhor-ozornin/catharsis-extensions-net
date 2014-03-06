@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Net;
 using System.Security;
 
 namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="string"/>.</para>
-  ///   <seealso cref="string"/>
   /// </summary>
+  /// <seealso cref="string"/>
   public static class StringCryptographyExtensions
   {
     /// <summary>

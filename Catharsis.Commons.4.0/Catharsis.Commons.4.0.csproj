@@ -107,7 +107,6 @@
     <Compile Include="ArrayCryptographyExtensions.cs" />
     <Compile Include="ArrayExtensions.cs" />
     <Compile Include="Assertion.cs" />
-    <Compile Include="BooleanExtensions.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="ConvertExtensions.cs" />
     <Compile Include="DateTimeExtensions.cs" />
@@ -117,10 +116,8 @@
     <Compile Include="FieldInfoExtensions.cs" />
     <Compile Include="FileInfoExtensions.cs" />
     <Compile Include="ICollectionExtensions.cs" />
-    <Compile Include="IDictionaryExtensions.cs" />
     <Compile Include="IEnumerableCollectionsExtensions.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
-    <Compile Include="IListExtensions.cs" />
     <Compile Include="IQueryableTransformer.cs" />
     <Compile Include="ISpecification.cs" />
     <Compile Include="ISpecificationExtensions.cs" />
@@ -150,7 +147,6 @@
     <Compile Include="TextWriterExtensions.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="UriExtensions.cs" />
-    <Compile Include="XContainerExtensions.cs" />
     <Compile Include="XDocumentExtensions.cs" />
     <Compile Include="XElementExtensions.cs" />
     <Compile Include="XmlDocumentExtensions.cs" />

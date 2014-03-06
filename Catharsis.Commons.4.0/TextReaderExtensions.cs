@@ -8,8 +8,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="TextReader"/>.</para>
-  ///   <seealso cref="TextReader"/>
   /// </summary>
+  /// <seealso cref="TextReader"/>
   public static class TextReaderExtensions
   {
     /// <summary>

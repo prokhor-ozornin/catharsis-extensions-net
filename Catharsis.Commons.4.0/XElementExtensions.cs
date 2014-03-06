@@ -7,8 +7,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="XElement"/>.</para>
-  ///   <seealso cref="XElement"/>
   /// </summary>
+  /// <seealso cref="XElement"/>
   public static class XElementExtensions
   {
     /// <summary>

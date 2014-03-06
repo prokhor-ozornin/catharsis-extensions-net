@@ -31,7 +31,7 @@ namespace Catharsis.Commons
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
       });
 
-      new StringReader("First{0}Second{0}".FormatValue(Environment.NewLine)).With(reader =>
+      new StringReader("First{0}Second{0}".FormatSelf(Environment.NewLine)).With(reader =>
       {
         var lines = reader.Lines();
         Assert.Equal(2, lines.Count);

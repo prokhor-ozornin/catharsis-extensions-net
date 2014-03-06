@@ -11,8 +11,8 @@ namespace Catharsis.Commons
   {
     /// <summary>
     ///   <para>Performs testing of class constructor(s).</para>
-    ///   <seealso cref="EqualsAndHashCodeAttribute(string)"/>
     /// </summary>
+    /// <seealso cref="EqualsAndHashCodeAttribute(string)"/>
     [Fact]
     public void Constructors()
     {

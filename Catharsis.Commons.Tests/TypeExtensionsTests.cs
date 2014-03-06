@@ -13,24 +13,6 @@ namespace Catharsis.Commons
   public sealed class TypeExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="TypeExtensions.AllProperties(Type)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void AllProperties_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => TypeExtensions.AllProperties(null));
-
-      var type = typeof(TestObject);
-      var properties = type.AllProperties();
-      Assert.True(properties.Contains(type.GetProperty("PublicProperty")));
-      Assert.True(properties.Contains(type.GetProperty("ProtectedProperty", BindingFlags.NonPublic | BindingFlags.Instance)));
-      Assert.True(properties.Contains(type.GetProperty("PrivateProperty", BindingFlags.NonPublic | BindingFlags.Instance)));
-      Assert.True(properties.Contains(type.GetProperty("PublicStaticProperty", BindingFlags.Public | BindingFlags.Static)));
-      Assert.True(properties.Contains(type.GetProperty("ProtectedStaticProperty", BindingFlags.NonPublic | BindingFlags.Static)));
-      Assert.True(properties.Contains(type.GetProperty("PrivateStaticProperty", BindingFlags.NonPublic | BindingFlags.Static)));
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="TypeExtensions.AnyEvent(Type, string)"/> method.</para>
     /// </summary>
     [Fact]
@@ -177,6 +159,69 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Performs testing of <see cref="TypeExtensions.HasField(Type, string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void HasField_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasField(null, "name"));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).HasField(null));
+      Assert.Throws<ArgumentException>(() => typeof(object).HasField(string.Empty));
+
+      Assert.False(typeof(object).HasField("field"));
+
+      var subject = typeof(TestObject);
+      Assert.True(subject.HasField("PublicStaticField"));
+      Assert.True(subject.HasField("ProtectedStaticField"));
+      Assert.True(subject.HasField("PrivateStaticField"));
+      Assert.True(subject.HasField("PublicField"));
+      Assert.True(subject.HasField("ProtectedField"));
+      Assert.True(subject.HasField("PrivateField"));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="TypeExtensions.HasMethod(Type, string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void HasMethod_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasMethod(null, "name"));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).HasMethod(null));
+      Assert.Throws<ArgumentException>(() => typeof(object).HasMethod(string.Empty));
+
+      Assert.False(typeof(object).HasMethod("method"));
+
+      var subject = typeof(TestObject);
+      Assert.True(subject.HasMethod("PublicStaticMethod"));
+      Assert.True(subject.HasMethod("ProtectedStaticMethod"));
+      Assert.True(subject.HasMethod("PrivateStaticMethod"));
+      Assert.True(subject.HasMethod("PublicMethod"));
+      Assert.True(subject.HasMethod("ProtectedMethod"));
+      Assert.True(subject.HasMethod("PrivateMethod"));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="TypeExtensions.HasProperty(Type, string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void HasProperty_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => TypeExtensions.HasProperty(null, "name"));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).HasProperty(null));
+      Assert.Throws<ArgumentException>(() => typeof(object).HasProperty(string.Empty));
+
+      Assert.False(typeof(object).HasProperty("property"));
+
+      var subject = typeof(TestObject);
+      Assert.True(subject.HasProperty("PublicStaticProperty"));
+      Assert.True(subject.HasProperty("ProtectedStaticProperty"));
+      Assert.True(subject.HasProperty("PrivateStaticProperty"));
+      Assert.True(subject.HasProperty("PublicProperty"));
+      Assert.True(subject.HasProperty("ProtectedProperty"));
+      Assert.True(subject.HasProperty("PrivateProperty"));
+    }
+
+    /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
     ///     <item><description><see cref="TypeExtensions.Implements(Type, Type)"/></description></item>
@@ -254,8 +299,26 @@ namespace Catharsis.Commons
       Assert.Throws<MissingMethodException>(() => typeof(TestObject).NewInstance(new object(), new object()));
 
       Assert.Equal("value", typeof(TestObject).NewInstance(new object[] { "value" }).To<TestObject>().PublicProperty);
-      Assert.Equal("value", typeof(TestObject).NewInstance(new Dictionary<string, object>().AddNext("PublicProperty", "value")).To<TestObject>().PublicProperty.ToString());
+      Assert.Equal("value", typeof(TestObject).NewInstance(new Dictionary<string, object> { { "PublicProperty", "value" } }).To<TestObject>().PublicProperty.ToString());
       Assert.Equal("value", typeof(TestObject).NewInstance(new { PublicProperty = "value" }).To<TestObject>().PublicProperty);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="TypeExtensions.Properties(Type)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Properties_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => TypeExtensions.Properties(null));
+
+      var type = typeof(TestObject);
+      var properties = type.Properties();
+      Assert.True(properties.Contains(type.GetProperty("PublicProperty")));
+      Assert.True(properties.Contains(type.GetProperty("ProtectedProperty", BindingFlags.NonPublic | BindingFlags.Instance)));
+      Assert.True(properties.Contains(type.GetProperty("PrivateProperty", BindingFlags.NonPublic | BindingFlags.Instance)));
+      Assert.True(properties.Contains(type.GetProperty("PublicStaticProperty", BindingFlags.Public | BindingFlags.Static)));
+      Assert.True(properties.Contains(type.GetProperty("ProtectedStaticProperty", BindingFlags.NonPublic | BindingFlags.Static)));
+      Assert.True(properties.Contains(type.GetProperty("PrivateStaticProperty", BindingFlags.NonPublic | BindingFlags.Static)));
     }
   }
 }

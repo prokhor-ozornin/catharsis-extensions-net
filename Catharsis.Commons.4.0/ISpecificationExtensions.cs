@@ -4,8 +4,8 @@ namespace Catharsis.Commons
 {
   /// <summary>
   ///   <para>Set of extension methods for interface <see cref="ISpecification{T}"/>.</para>
-  ///   <seealso cref="ISpecification{T}"/>
   /// </summary>
+  /// <seealso cref="ISpecification{T}"/>
   public static class ISpecificationExtensions
   {
     /// <summary>

@@ -232,23 +232,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamExtensions.Shutdown{STREAM}(STREAM)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void Shutdown_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Shutdown<Stream>(null));
-
-      Assert.True(ReferenceEquals(Stream.Null.Shutdown(), Stream.Null));
-
-      var stream = new MemoryStream();
-      Assert.True(stream.CanRead);
-      Assert.True(stream.CanWrite);
-      stream.Shutdown();
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="StreamExtensions.Text"/> method.</para>
     /// </summary>
     [Fact]
@@ -304,12 +287,12 @@ namespace Catharsis.Commons
       var text = Guid.NewGuid().ToString();
       
       var stream = new MemoryStream();
-      stream.TextWriter().WriteObject(text).Close();
+      stream.TextWriter().With(writer => writer.Write(text));
       Assert.True(stream.ToArray().SequenceEqual(text.Bytes()));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
 
       stream = new MemoryStream();
-      stream.TextWriter(Encoding.Unicode).WriteObject(text).Close();
+      stream.TextWriter(Encoding.Unicode).With(writer => writer.Write(text));
       Assert.True(stream.ToArray().SequenceEqual(text.Bytes(Encoding.Unicode)));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
     }

@@ -14,6 +14,19 @@ namespace Catharsis.Commons
   public sealed class StringExtensionsTests
   {
     /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.Base64(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Base64_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.Base64(null));
+
+      Assert.Equal(0, string.Empty.Base64().Length);
+      var bytes = Guid.NewGuid().ToByteArray();
+      Assert.True(System.Convert.ToBase64String(bytes).Base64().SequenceEqual(bytes));
+    }
+
+    /// <summary>
     ///   <para>Performs testing of <se cref="StringExtensions.Bytes(String, Encoding, bool)"/> method.</para>
     /// </summary>
     [Fact]
@@ -35,70 +48,26 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="StringExtensions.Compare(string, string, StringComparison)"/></description></item>
-    ///     <item><description><see cref="StringExtensions.Compare(string, string, CultureInfo, CompareOptions)"/></description></item>
+    ///     <item><description><see cref="StringExtensions.CompareTo(string, string, StringComparison)"/></description></item>
+    ///     <item><description><see cref="StringExtensions.CompareTo(string, string, CompareOptions, CultureInfo)"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
-    public void Compare_Methods()
+    public void CompareTo_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Compare(null, "other", StringComparison.Ordinal));
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Compare(null, "other", CultureInfo.InvariantCulture));
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.CompareTo(null, "other", StringComparison.Ordinal));
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.CompareTo(null, "other", CompareOptions.None, CultureInfo.InvariantCulture));
 
-      Assert.Equal(0, string.Empty.Compare(string.Empty, StringComparison.InvariantCulture));
-      Assert.True("first".Compare("second", StringComparison.InvariantCulture) < 0);
-      Assert.True("a".Compare("A", StringComparison.Ordinal) > 0);
-      Assert.Equal(0, "a".Compare("A", StringComparison.OrdinalIgnoreCase));
+      Assert.Equal(0, string.Empty.CompareTo(string.Empty, StringComparison.InvariantCulture));
+      Assert.True("first".CompareTo("second", StringComparison.InvariantCulture) < 0);
+      Assert.True("a".CompareTo("A", StringComparison.Ordinal) > 0);
+      Assert.Equal(0, "a".CompareTo("A", StringComparison.OrdinalIgnoreCase));
 
-      Assert.Equal(0, string.Empty.Compare(string.Empty));
-      Assert.True("first".Compare("second") < 0);
-      Assert.True("a".Compare("A") < 0);
-      Assert.True("a".Compare("A", CultureInfo.InvariantCulture, CompareOptions.Ordinal) > 0);
-      Assert.Equal(0, "a".Compare("A", CultureInfo.InvariantCulture, CompareOptions.OrdinalIgnoreCase));
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtensions.DecodeBase64(string)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void DecodeBase64_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.DecodeBase64(null));
-
-      Assert.Equal(0, string.Empty.DecodeBase64().Length);
-      var bytes = Guid.NewGuid().ToByteArray();
-      Assert.True(System.Convert.ToBase64String(bytes).DecodeBase64().SequenceEqual(bytes));
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtensions.DecodeHex(string)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void DecodeHex_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.DecodeHex(null));
-
-      Assert.Equal(0, Enumerable.Empty<byte>().ToArray().EncodeHex().Length);
-      Assert.Equal(0, Enumerable.Empty<byte>().ToArray().EncodeHex().DecodeHex().Length);
-
-      var bytes = Guid.NewGuid().ToByteArray();
-      Assert.True(bytes.EncodeHex().DecodeHex().SequenceEqual(bytes));
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="StringHtmlExtensions.DecodeHtml(string)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void DecodeHtml_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StringHtmlExtensions.DecodeHtml(null));
-
-      Assert.True(ReferenceEquals(string.Empty.DecodeHtml(), string.Empty));
-      
-      const string Encoded = "<p>5 is &lt; 10 and &gt; 1</p>";
-      const string Decoded = "<p>5 is < 10 and > 1</p>";
-      Assert.Equal(Decoded, Encoded.DecodeHtml());
-      Assert.Equal(Decoded, Decoded.EncodeHtml().DecodeHtml());
+      Assert.Equal(0, string.Empty.CompareTo(string.Empty, CompareOptions.None));
+      Assert.True("first".CompareTo("second", CompareOptions.None) < 0);
+      Assert.True("a".CompareTo("A", CompareOptions.None) < 0);
+      Assert.True("a".CompareTo("A", CompareOptions.Ordinal) > 0);
+      Assert.Equal(0, "a".CompareTo("A", CompareOptions.OrdinalIgnoreCase));
     }
 
     /// <summary>
@@ -110,7 +79,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => StringExtensions.EachLine(null, s => { }));
       Assert.Throws<ArgumentNullException>(() => string.Empty.EachLine(null));
 
-      var text = "First{0}Second{0}Third{0}".FormatValue(Environment.NewLine);
+      var text = "First{0}Second{0}Third{0}".FormatSelf(Environment.NewLine);
       var list = new List<string>();
       text.EachLine(list.Add);
       Assert.Equal(4, list.Count);
@@ -121,33 +90,64 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringHtmlExtensions.EncodeHtml(string)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StringExtensions.FormatSelf(string, object[])"/> method.</para>
     /// </summary>
     [Fact]
-    public void EncodeHtml_Method()
+    public void FormatSelf_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StringHtmlExtensions.EncodeHtml(null));
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.FormatSelf(null));
 
-      Assert.True(ReferenceEquals(string.Empty.EncodeHtml(), string.Empty));
+      Assert.Equal(string.Empty, string.Empty.FormatSelf());
+      const string Text = "{0} is lesser than {1}";
+      Assert.Equal(string.Format(Text, 5, 10), Text.FormatSelf(5, 10));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.Hex(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Hex_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.Hex(null));
+
+      Assert.Equal(0, Enumerable.Empty<byte>().ToArray().Hex().Length);
+      Assert.Equal(0, Enumerable.Empty<byte>().ToArray().Hex().Hex().Length);
+
+      var bytes = Guid.NewGuid().ToByteArray();
+      Assert.True(bytes.Hex().Hex().SequenceEqual(bytes));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringHtmlExtensions.HtmlDecode(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void HtmlDecode_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringHtmlExtensions.HtmlDecode(null));
+
+      Assert.True(ReferenceEquals(string.Empty.HtmlDecode(), string.Empty));
+
+      const string Encoded = "<p>5 is &lt; 10 and &gt; 1</p>";
+      const string Decoded = "<p>5 is < 10 and > 1</p>";
+      Assert.Equal(Decoded, Encoded.HtmlDecode());
+      Assert.Equal(Decoded, Decoded.HtmlEncode().HtmlDecode());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringHtmlExtensions.HtmlEncode(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void HtmlEncode_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringHtmlExtensions.HtmlEncode(null));
+
+      Assert.True(ReferenceEquals(string.Empty.HtmlEncode(), string.Empty));
 
       const string Decoded = "<p>5 is < 10 and > 1</p>";
       const string Encoded = "<p>5 is &lt; 10 and &gt; 1</p>";
 
-      Assert.Equal(Decoded, Encoded.DecodeHtml());
-      Assert.Equal(Decoded, Decoded.EncodeHtml().DecodeHtml());
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtensions.FormatValue(string, object[])"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void FormatValue_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.FormatValue(null));
-
-      Assert.Equal(string.Empty, string.Empty.FormatValue());
-      const string Text = "{0} is lesser than {1}";
-      Assert.Equal(string.Format(Text, 5, 10), Text.FormatValue(5, 10));
+      Assert.Equal(Decoded, Encoded.HtmlDecode());
+      Assert.Equal(Decoded, Decoded.HtmlEncode().HtmlDecode());
     }
 
     /// <summary>
@@ -164,17 +164,17 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <se cref="StringExtensions.Match(string, string)"/> method.</para>
+    ///   <para>Performs testing of <se cref="StringExtensions.Matches(string, string)"/> method.</para>
     /// </summary>
     [Fact]
-    public void Match_Method()
+    public void Matches_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.Match(null, string.Empty));
-      Assert.Throws<ArgumentNullException>(() => string.Empty.Match(null));
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.Matches(null, string.Empty));
+      Assert.Throws<ArgumentNullException>(() => string.Empty.Matches(null));
 
-      Assert.False(string.Empty.Match("anything"));
-      Assert.True("ab4Zg95kf".Match("[a-zA-z0-9]"));
-      Assert.False("~#$%".Match("[a-zA-z0-9]"));
+      Assert.False(string.Empty.Matches("anything"));
+      Assert.True("ab4Zg95kf".Matches("[a-zA-z0-9]"));
+      Assert.False("~#$%".Matches("[a-zA-z0-9]"));
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ namespace Catharsis.Commons
       const string Original = "The quick brown fox jumped over the lazy dog";
       const string Replaced = "The slow hazy fox jumped over the lazy bear";
 
-      Assert.Equal(Replaced, Original.Replace(new Dictionary<string, string>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")));
+      Assert.Equal(Replaced, Original.Replace(new Dictionary<string, string> { { "quick", "slow" }, { "dog", "bear" }, { "nothing", string.Empty }, { "brown", "hazy" } }));
       Assert.Equal(Replaced, Original.Replace(new[] { "quick", "dog", "nothing", "brown" }.ToList(), new[] { "slow", "bear", string.Empty, "hazy" }.ToList()));
       Assert.Equal(Replaced, Original.Replace(new[] { "quick", "dog", "nothing", "brown" }, new[] { "slow", "bear", string.Empty, "hazy" }));
     }
@@ -291,7 +291,6 @@ namespace Catharsis.Commons
       const string Invalid = "invalid";
       var date = DateTime.UtcNow;
 
-      Assert.True(date.IsSameDate(date.ToRfc1123().ToDateTime()));
       Assert.Throws<FormatException>(() => Invalid.ToDateTime());
 
       DateTime result;
@@ -538,12 +537,6 @@ namespace Catharsis.Commons
 
       Assert.Equal(new Uri(Uri), Uri.ToUri());
       Assert.Throws<UriFormatException>(() => Invalid.ToUri());
-
-      /*Uri result;
-      Assert.True(uri.ToUri(out result));
-      Assert.True(result.Equals(new Uri(uri)));
-      Assert.True(invalid.ToUri(out result));
-      Assert.True(result == default(Uri));*/
     }
 
     /// <summary>
@@ -560,7 +553,7 @@ namespace Catharsis.Commons
       const string Original = "The :quick :brown fox jumped over the lazy :dog";
       const string Replaced = "The slow hazy fox jumped over the lazy bear";
 
-      Assert.Equal(Replaced, Original.Tokenize(new Dictionary<string, object>().AddNext("quick", "slow").AddNext("dog", "bear").AddNext("nothing", string.Empty).AddNext("brown", "hazy")));
+      Assert.Equal(Replaced, Original.Tokenize(new Dictionary<string, object> { { "quick", "slow" }, { "dog", "bear" }, { "nothing", string.Empty }, { "brown", "hazy" } }));
     }
 
     /// <summary>

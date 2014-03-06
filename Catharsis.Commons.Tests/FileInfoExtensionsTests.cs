@@ -123,7 +123,7 @@ namespace Catharsis.Commons
 
       WithFile(file => Assert.False(file.Clear().Lines().Any()));
 
-      var text = "First{0}Second{0}Third{0}".FormatValue(Environment.NewLine);
+      var text = "First{0}Second{0}Third{0}".FormatSelf(Environment.NewLine);
       WithFile(file =>
       {
         var lines = file.Append(text).Lines();

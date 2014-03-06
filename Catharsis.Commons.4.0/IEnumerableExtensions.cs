@@ -6,11 +6,9 @@ using System.Text;
 namespace Catharsis.Commons
 {
   /// <summary>
-  ///   <para>
-  ///     Set of extensions methods for interface <see cref="IEnumerable" />.
-  ///   </para>
-  ///   <seealso cref="IEnumerable" />
+  ///   <para>Set of extensions methods for interface <see cref="IEnumerable" />.</para>
   /// </summary>
+  /// <seealso cref="IEnumerable"/>
   public static class IEnumerableExtensions
   {
     /// <summary>
