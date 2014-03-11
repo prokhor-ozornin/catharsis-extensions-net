@@ -91,6 +91,9 @@
     <Compile Include="..\Catharsis.Commons.4.0\IEnumerableExtensions.cs">
       <Link>IEnumerableExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\IQueryableExtensions.cs">
+      <Link>IQueryableExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\IQueryableTransformer.cs">
       <Link>IQueryableTransformer.cs</Link>
     </Compile>

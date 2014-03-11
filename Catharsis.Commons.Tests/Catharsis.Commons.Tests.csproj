@@ -115,6 +115,7 @@
     <Compile Include="FileInfoExtensionsTests.cs" />
     <Compile Include="ICollectionExtensionsTests.cs" />
     <Compile Include="IEnumerableExtensionsTests.cs" />
+    <Compile Include="IQueryableExtensionsTests.cs" />
     <Compile Include="ISpecificationExtensionsTests.cs" />
     <Compile Include="MemberInfoExtensionsTests.cs" />
     <Compile Include="MethodInfoExtensionsTests.cs" />

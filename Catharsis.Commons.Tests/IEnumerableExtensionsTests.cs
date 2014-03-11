@@ -21,7 +21,7 @@ namespace Catharsis.Commons
 
       var strings = new [] { "first", "second", "third" };
       var list = new List<string>();
-      strings.Each(list.Add);
+      Assert.True(ReferenceEquals(strings.Each(list.Add), strings));
       Assert.Equal(3, list.Count);
       Assert.Equal("first", list[0]);
       Assert.Equal("second", list[1]);
@@ -54,6 +54,21 @@ namespace Catharsis.Commons
       Assert.Equal("[]", Enumerable.Empty<object>().ToListString());
       Assert.Equal("[1]", new[] { 1 }.ToListString());
       Assert.Equal("[1, 2, 3]", new [] { 1, 2, 3 }.ToListString());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="IEnumerableExtensions.Random{T}(IEnumerable{T})"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Random_Method()
+    {
+      Assert.Null(Enumerable.Empty<object>().Random());
+
+      var element = new object();
+      Assert.True(ReferenceEquals(new[] { element }.Random(), element));
+
+      var elements = new [] { "first", "second" };
+      Assert.True(elements.Contains(elements.Random()));
     }
 
     /// <summary>

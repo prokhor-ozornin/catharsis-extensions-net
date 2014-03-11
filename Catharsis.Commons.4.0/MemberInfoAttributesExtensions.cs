@@ -12,11 +12,12 @@ namespace Catharsis.Commons
   public static class MemberInfoAttributesExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a value of either <see cref="DescriptionAttribute"/>, <see cref="DisplayAttribute"/> or <see cref="DisplayNameAttribute"/> (whatever is present and found first) for a given class member.</para>
     /// </summary>
-    /// <param name="member"></param>
-    /// <returns></returns>
+    /// <param name="member">Member of the class or <see cref="Type"/> itself.</param>
+    /// <returns>Description for a given class <paramref name="member"/>. If <paramref name="member"/> has a <see cref="DescriptionAttribute"/>, its value is returned. If it has a <see cref="DisplayAttribute"/>, its description property is returned. If it has a <see cref="DisplayNameAttribute"/>, its display name property is returned. If there is neither of these attributes on a <paramref name="member"/>, a <c>null</c> is returned.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="DescriptionAttribute"/>
     public static string Description(this MemberInfo member)
     {
       Assertion.NotNull(member);

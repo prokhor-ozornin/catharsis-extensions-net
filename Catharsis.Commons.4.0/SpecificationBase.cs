@@ -5,25 +5,26 @@ using System.Linq.Expressions;
 namespace Catharsis.Commons
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Basic implementation of <see cref="ISpecification{T}"/> interface.</para>
   /// </summary>
-  /// <typeparam name="T"></typeparam>
+  /// <typeparam name="T">Type of specification's elements.</typeparam>
   public class SpecificationBase<T> : ISpecification<T>
   {
     private static readonly Expression<Func<T, bool>> DefaultExpression = x => true;
     private Expression<Func<T, bool>> expression = DefaultExpression;
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates new instance of specification.</para>
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">Lambda expression predicate rule. If not specified, default predicate expression is used, that always evaluates to <c>true</c>.</param>
     public SpecificationBase(Expression<Func<T, bool>> expression = null)
     {
       this.Expression = expression;
     }
 
     /// <summary>
-    ///   <para>Implementation of <see cref="ISpecification{T}.Expression"/> </para>
+    ///   <para>Lamba expression that represents a business rule in a predicate form.</para>
+    ///   <para>Object of type <typeparam name="T"/>, for which that predicate evaluates to <c>true</c>, is considered to conform with current specification.</para>
     /// </summary>
     public Expression<Func<T, bool>> Expression
     {
@@ -32,8 +33,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Implementation of <see cref="ISpecification{T}.Filter(IQueryable{T})"/> method.</para>
+    ///   <para>Performs a filtering operation by taking <see cref="IQueryable{T}"/> object and returning a new object of the same type, often with a less number of elements.</para>
+    ///   <para>Concrete filtering logic, applied to target <see cref="IQueryable{T}"/> source depends upon the implementation.</para>
     /// </summary>
+    /// <param name="queryable"><see cref="IQueryable{T}"/> source to be filtered.</param>
+    /// <returns>Altered/filtered version of <paramref name="queryable"/> source.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="queryable"/> is a <c>null</c> reference.</exception>
     public IQueryable<T> Filter(IQueryable<T> queryable)
     {
       Assertion.NotNull(queryable);
@@ -41,12 +46,6 @@ namespace Catharsis.Commons
       return this.FilterQuery(queryable.Where(this.Expression));
     }
 
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="queryable"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="queryable"/> is a <c>null</c> reference.</exception>
     protected virtual IQueryable<T> FilterQuery(IQueryable<T> queryable)
     {
       Assertion.NotNull(queryable);

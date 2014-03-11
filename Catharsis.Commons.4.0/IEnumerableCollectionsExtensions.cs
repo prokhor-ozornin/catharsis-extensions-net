@@ -10,11 +10,11 @@ namespace Catharsis.Commons
   public static class IEnumerableCollectionsExtensions
   {
     /// <summary>
-    /// <para></para>
+    ///   <para>Converts sequence of elements into a set collection type.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="enumerable"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of elements in a sequence.</typeparam>
+    /// <param name="enumerable">Source sequence of elements.</param>
+    /// <returns>Set collection which contains elements from <paramref name="enumerable"/> sequence without dublicates. Order of elements in a set is not guaranteed to be the same as returned by <paramref name="enumerable"/>'s enumerator.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is a <c>null</c> reference.</exception>
     public static ISet<T> ToSet<T>(this IEnumerable<T> enumerable)
     {

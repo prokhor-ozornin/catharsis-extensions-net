@@ -12,12 +12,14 @@ namespace Catharsis.Commons
   public static class FileInfoExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Appends array of bytes to the end of specified file.</para>
     /// </summary>
-    /// <param name="file"></param>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
+    /// <param name="file">File to append data to.</param>
+    /// <param name="bytes">Sequence of bytes to be added to the end of file.</param>
+    /// <returns>Back reference to the current file.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Append(FileInfo, string, Encoding)"/>
+    /// <seealso cref="Append(FileInfo, Stream)"/>
     public static FileInfo Append(this FileInfo file, byte[] bytes)
     {
       Assertion.NotNull(file);
@@ -33,13 +35,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Appends text content to the end of specified file.</para>
     /// </summary>
-    /// <param name="file"></param>
-    /// <param name="text"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
+    /// <param name="file">File to append text to.</param>
+    /// <param name="text">Text data to be added to the end of file.</param>
+    /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
+    /// <returns>Back reference to the current file.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Append(FileInfo, byte[])"/>
+    /// <seealso cref="Append(FileInfo, Stream)"/>
     public static FileInfo Append(this FileInfo file, string text, Encoding encoding = null)
     {
       Assertion.NotNull(file);
@@ -55,12 +59,14 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Appends content of a stream to the end of specified file.</para>
     /// </summary>
-    /// <param name="file"></param>
-    /// <param name="stream"></param>
-    /// <returns></returns>
+    /// <param name="file">File to append stream data to.</param>
+    /// <param name="stream">Stream to use as a source of data.</param>
+    /// <returns>Back reference to the current file.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Append(FileInfo, byte[])"/>
+    /// <seealso cref="Append(FileInfo, string, Encoding)"/>
     public static FileInfo Append(this FileInfo file, Stream stream)
     {
       Assertion.NotNull(file);
@@ -83,10 +89,10 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///  <para></para>
+    ///  <para>Reads entire contents of file and returns it as a byte array.</para>
     /// </summary>
-    /// <param name="file"></param>
-    /// <returns></returns>
+    /// <param name="file">File to read data from.</param>
+    /// <returns>Byte content of specified <paramref name="file"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
     public static byte[] Bytes(this FileInfo file)
     {
@@ -96,10 +102,10 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Erases all content from a file, making it a zero-length one.</para>
     /// </summary>
-    /// <param name="file"></param>
-    /// <returns></returns>
+    /// <param name="file">File to truncate.</param>
+    /// <returns>Back reference to the current file.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
     public static FileInfo Clear(this FileInfo file)
     {
@@ -112,11 +118,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Reads text content of a file and returns it as a list of strings, using default system-dependent string separator.</para>
     /// </summary>
-    /// <param name="file"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
+    /// <param name="file">File to read text from.</param>
+    /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
+    /// <returns>List of strings which have been read from a <paramref name="file"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
     public static IList<string> Lines(this FileInfo file, Encoding encoding = null)
     {
@@ -126,11 +132,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Reads text content of a file and returns it as a string.</para>
     /// </summary>
-    /// <param name="file"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
+    /// <param name="file">File to read text from.</param>
+    /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
+    /// <returns>Text contents of a <paramref name="file"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
     public static string Text(this FileInfo file, Encoding encoding = null)
     {

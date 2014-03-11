@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -16,11 +17,11 @@ namespace Catharsis.Commons
   public static class ObjectExtensions
   {
     /// <summary>
-    ///   <para>Tries to convert given object to specified type and returns <c>null</c> reference on failure.</para>
+    ///   <para>Tries to convert given object to specified type and returns a <c>null</c> reference on failure.</para>
     /// </summary>
     /// <typeparam name="T">Type to convert object to.</typeparam>
     /// <param name="subject">Object to convert.</param>
-    /// <returns>Object, converted to the specified type, or <c>null</c> reference, if the conversion cannot be performed.</returns>
+    /// <returns>Object, converted to the specified type, or a <c>null</c> reference if the conversion cannot be performed.</returns>
     /// <remarks>If specified object instance is a <c>null</c> reference, a <c>null</c> reference will be returned as a result.</remarks>
     /// <seealso cref="To{T}"/>
     public static T As<T>(this object subject)
@@ -29,11 +30,13 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns state (names and values of all public properties) for the given object.</para>
     /// </summary>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="subject">Target object whose public properties names and values are to be returned.</param>
+    /// <returns>State of <paramref name="subject"/> as a string.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
+    /// <remarks>Property name is separated from property value by a colon, each name-value pairs are separated by comma characters.</remarks>
+    /// <seealso cref="object.ToString()"/>
     public static string Dump(this object subject)
     {
       Assertion.NotNull(subject);
@@ -42,13 +45,25 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines whether specified objects are considered equal by comparing values of the given set of properties on each of them.</para>
+    ///   <para>The following algorithm is used in equality determination:
+    ///     <list type="bullet">
+    ///       <item><description>If both <paramref name="self"/> and <paramref name="other"/> are <c>null</c> references, method returns <c>true</c>.</description></item>
+    ///       <item><description>If one of compared objects is <c>null</c> and another is not, method returns <c>false</c>.</description></item>
+    ///       <item><description>If both objects references are equal (they represent the same object instance), method returns <c>true</c>.</description></item>
+    ///       <item><description>If <paramref name="properties"/> set is either a <c>null</c> reference or contains zero elements, <see cref="EqualsAndHashCodeAttribute"/> attribute is used for equality comparison.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type does not contain any properties in <paramref name="properties"/> set, <see cref="object.Equals(object, object)"/> method is used for equality comparison.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties in <paramref name="properties"/> set, their values are used for equality comparison according to <see cref="object.Equals(object)"/> method of both <paramref name="self"/> and <paramref name="other"/> instances.</description></item>
+    ///     </list>
+    ///   </para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="self"></param>
-    /// <param name="other"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of objects to compare.</typeparam>
+    /// <param name="self">Current object to compare with the second.</param>
+    /// <param name="other">Second object to compare with the current one.</param>
+    /// <param name="properties">Set of properties whose values are used in equality comparison.</param>
+    /// <returns><c>true</c> if <paramref name="self"/> and <paramref name="other"/> are considered equal, <c>false</c> otherwise.</returns>
+    /// <seealso cref="object.Equals(object)"/>
+    /// <seealso cref="Equality{T}(T, T, Expression{Func{T, object}}[])"/>
     public static bool Equality<T>(this T self, T other, params string[] properties)
     {
       if (self == null && other == null)
@@ -105,13 +120,25 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines whether specified objects are considered equal by comparing values of the given set of properties, represented as expression trees, on each of them.</para>
+    ///   <para>The following algorithm is used in equality determination:
+    ///     <list type="bullet">
+    ///       <item><description>If both <paramref name="self"/> and <paramref name="other"/> are <c>null</c> references, method returns <c>true</c>.</description></item>
+    ///       <item><description>If one of compared objects is <c>null</c> and another is not, method returns <c>false</c>.</description></item>
+    ///       <item><description>If both objects references are equal (they represent the same object instance), method returns <c>true</c>.</description></item>
+    ///       <item><description>If <paramref name="properties"/> set is either a <c>null</c> reference or contains zero elements, <see cref="EqualsAndHashCodeAttribute"/> attribute is used for equality comparison.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type does not contain any properties in <paramref name="properties"/> set, <see cref="object.Equals(object, object)"/> method is used for equality comparison.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties in <paramref name="properties"/> set, their values are used for equality comparison according to <see cref="object.Equals(object)"/> method of both <paramref name="self"/> and <paramref name="other"/> instances.</description></item>
+    ///     </list>
+    ///   </para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="self"></param>
-    /// <param name="other"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of objects to compare.</typeparam>
+    /// <param name="self">Current object to compare with the second.</param>
+    /// <param name="other">Second object to compare with the current one.</param>
+    /// <param name="properties">Set of properties in a form of expression trees, whose values are used in equality comparison.</param>
+    /// <returns><c>true</c> if <paramref name="self"/> and <paramref name="other"/> are considered equal, <c>false</c> otherwise.</returns>
+    /// <seealso cref="object.Equals(object)"/>
+    /// <seealso cref="Equality{T}(T, T, string[])"/>
     public static bool Equality<T>(this T self, T other, params Expression<Func<T, object>>[] properties)
     {
       if (self == null && other == null)
@@ -139,11 +166,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns the value of object's field with a specified name.</para>
     /// </summary>
-    /// <param name="subject"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="subject">Object whose field's value is to be returned.</param>
+    /// <param name="name">Name of field of <paramref name="subject"/>'s type.</param>
+    /// <returns>Value of <paramref name="subject"/>'s field with a given <paramref name="name"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public static object Field(this object subject, string name)
@@ -156,12 +183,21 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a hash value of a given object, using specified set of properties in its calculation.</para>
+    ///   <para>The following algorithm is used in hash code calculation:
+    ///     <list type="bullet">
+    ///       <item><description>If <paramref name="subject"/> is a <c>null</c> reference, methods returns 0.</description></item>
+    ///       <item><description>If <paramref name="properties"/> set is either a <c>null</c> reference or contains zero elements, <see cref="EqualsAndHashCodeAttribute"/> attribute is used for hash code calculation.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties in <paramref name="properties"/> set, their values are used for hash code calculation according to <see cref="object.GetHashCode()"/> method. The sum of <paramref name="subject"/>'s properties hash codes is returned in that case.</description></item>
+    ///     </list>
+    ///   </para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object.</typeparam>
+    /// <param name="subject">Target object, whose hash code is to be returned.</param>
+    /// <param name="properties">Collection of properties names, whose values are to be used in hash code's calculation.</param>
+    /// <returns>Hash code for <paramref name="subject"/>.</returns>
+    /// <seealso cref="object.GetHashCode()"/>
+    /// <seealso cref="GetHashCode{T}(T, Expression{Func{T, object}}[])"/>
     public static int GetHashCode<T>(this T subject, IEnumerable<string> properties)
     {
       if (subject == null)
@@ -181,12 +217,21 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a hash value of a given object, using specified set of properties, represented as experssion trees, in its calculation.</para>
+    ///   <para>The following algorithm is used in hash code calculation:
+    ///     <list type="bullet">
+    ///       <item><description>If <paramref name="subject"/> is a <c>null</c> reference, methods returns 0.</description></item>
+    ///       <item><description>If <paramref name="properties"/> set is either a <c>null</c> reference or contains zero elements, <see cref="EqualsAndHashCodeAttribute"/> attribute is used for hash code calculation.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties in <paramref name="properties"/> set, their values are used for hash code calculation according to <see cref="object.GetHashCode()"/> method. The sum of <paramref name="subject"/>'s properties hash codes is returned in that case.</description></item>
+    ///     </list>
+    ///   </para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object.</typeparam>
+    /// <param name="subject">Target object, whose hash code is to be returned.</param>
+    /// <param name="properties">Collection of properties in a form of expression trees, whose values are to be used in hash code's calculation.</param>
+    /// <returns>Hash code for <paramref name="subject"/>.</returns>
+    /// <seealso cref="object.GetHashCode()"/>
+    /// <seealso cref="GetHashCode{T}(T, IEnumerable{string})"/>
     public static int GetHashCode<T>(this T subject, params Expression<Func<T, object>>[] properties)
     {
       if (subject == null)
@@ -206,11 +251,11 @@ namespace Catharsis.Commons
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines if the object is compatible with the given type, as specified by the <c>is</c> operator.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object.</typeparam>
+    /// <param name="subject">Object whose type compatibility with <typeparamref name="T"/> is to be determined.</param>
+    /// <returns><c>true</c> if <paramref name="subject"/> is type-compatible with <typeparamref name="T"/>, <c>false</c> if not.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
     public static bool Is<T>(this object subject)
     {
@@ -220,20 +265,45 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines whether the object can be considered as a non-strict <c>false</c> boolean value.</para>
+    ///   <para>The following algorithm is used to determine whether an object can be considered non-strictly as a <c>false</c> value:
+    ///     <list type="bullet">
+    ///       <item><description>It represents a <c>null</c> reference.</description></item>
+    ///       <item><description>It represents a <c>false</c> value of <c>bool</c> type.</description></item>
+    ///       <item><description>It represents a non-positive value of numeric type.</description></item>
+    ///       <item><description>It represents an <see cref="string.Empty"/> string.</description></item>
+    ///       <item><description>It represents an empty <see cref="IEnumerable"/> collection.</description></item>
+    ///       <item><description>It represents a zero-length <see cref="FileInfo"/> object.</description></item>
+    ///       <item><description>It represents a regular expression <see cref="Match"/> object without matches.</description></item>
+    ///     </list>
+    ///   </para>
     /// </summary>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="subject">Target object for non-strict boolean evaluation.</param>
+    /// <returns><c>true</c> if <paramref name="subject"/> can be considered as a non-strict <c>false</c> other, <c>false</c> otherwise.</returns>
+    /// <seealso cref="IsTrue(object)"/>
     public static bool IsFalse(this object subject)
     {
       return !IsTrue(subject);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines whether the object can be considered as a non-strict <c>true</c> boolean value.</para>
+    ///   <para>The following algorithm is used to determine whether an object can be considered non-strictly as a <c>true</c> value:
+    ///     <list type="bullet">
+    ///       <item><description>It represents a <c>true</c> value of <c>bool</c> type.</description></item>
+    ///       <item><description>It represents a positive value of numeric type.</description></item>
+    ///       <item><description>It represents a non-empty string.</description></item>
+    ///       <item><description>It represents a non-empty <see cref="IEnumerable"/> collection.</description></item>
+    ///       <item><description>It represents a <see cref="FileInfo"/> object which does not represent an empty file.</description></item>
+    ///       <item><description>It represents a <see cref="Stream"/> object which is not empty.</description></item>
+    ///       <item><description>It represents a regular expression <see cref="Match"/> object with at least one match.</description></item>
+    ///       <item><description>It represents any other type of object which is not a <c>null</c> reference.</description></item>
+    ///     </list>
+    ///   </para>
     /// </summary>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="subject">Target object for non-strict boolean evaluation.</param>
+    /// <returns><c>true</c> if <paramref name="subject"/> can be considered as a non-strict <c>true</c> other, <c>false</c> otherwise.</returns>
+    /// <seealso cref="IsFalse(object)"/>
     public static bool IsTrue(this object subject)
     {
       if (subject == null)
@@ -291,6 +361,16 @@ namespace Catharsis.Commons
         return subject.To<IEnumerable>().Cast<object>().Any();
       }
 
+      if (subject is FileInfo)
+      {
+        return subject.To<FileInfo>().Length > 0;
+      }
+
+      if (subject is Stream)
+      {
+        return subject.To<Stream>().Length > 0;
+      }
+
       if (subject is Match)
       {
         return subject.To<Match>().Success;
@@ -300,11 +380,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines whether specified object represents a primitive numeric value type.</para>
     /// </summary>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="subject">Object to be evaluated.</param>
+    /// <returns><c>true</c> if <paramref name="subject"/> represents any numeric <see cref="ValueType"/> (<c>byte</c>, <c>decimal</c>, <c>double</c>, <c>integer</c>, <c>single</c>), <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Type.GetTypeCode(Type)"/>
     public static bool IsNumeric(this object subject)
     {
       Assertion.NotNull(subject);
@@ -329,13 +410,13 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns the value of a member on a target object, using expression tree to specify type's member.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="MEMBER"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="expression"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of target object.</typeparam>
+    /// <typeparam name="MEMBER">Type of <paramref name="subject"/>'s member.</typeparam>
+    /// <param name="subject">Target object, whose member's value is to be returned.</param>
+    /// <param name="expression">Lambda expression that represents a member of <typeparamref name="T"/> type, whose value for <paramref name="subject"/> instance is to be returned. Generally it should represents either a public property/field or no-arguments method.</param>
+    /// <returns>Value of member of <typeparamref name="T"/> type on a <paramref name="subject"/> instance.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="expression"/> is a <c>null</c> reference.</exception>
     public static MEMBER Member<T, MEMBER>(this T subject, Expression<Func<T, MEMBER>> expression)
     {
@@ -346,14 +427,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Calls/invokes instance method on a target object, passing specified parameters.</para>
     /// </summary>
-    /// <param name="subject"></param>
-    /// <param name="name"></param>
-    /// <param name="parameters"></param>
-    /// <returns></returns>
+    /// <param name="subject">The object on which to invoke the method.</param>
+    /// <param name="name">Name of the method to be invoked.</param>
+    /// <param name="parameters">Optional set of parameters to be passed to invoked method, if it requires some.</param>
+    /// <returns>An object containing the return value of the invoked method.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    /// <seealso cref="MethodInfo.Invoke(object, object[])"/>
     public static object Method(this object subject, string name, params object[] parameters)
     {
       Assertion.NotNull(subject);
@@ -363,15 +445,17 @@ namespace Catharsis.Commons
       return subjectMethod != null ? subjectMethod.Invoke(subject, parameters) : null;
     }
 
-
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns the value of given property for specified target object.</para>
     /// </summary>
-    /// <param name="subject"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="subject">Target object, whose property's value is to be returned.</param>
+    /// <param name="name">Name of property to inspect.</param>
+    /// <returns>Value of property <paramref name="name"/> for <paramref name="subject"/> instance, or a <c>null</c> reference in case this property does not exists for <paramref name="subject"/>'s type.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    /// <seealso cref="Property{T}(T, string, object)"/>
+    /// <seealso cref="Properties{T}(T, IEnumerable{KeyValuePair{string, object}})"/>
+    /// <seealso cref="Properties{T}(T, object)"/>
     public static object Property(this object subject, string name)
     {
       Assertion.NotNull(subject);
@@ -382,15 +466,18 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sets the value of given property on specified target object.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="property"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of target object.</typeparam>
+    /// <param name="subject">Target object whose property is to be changed.</param>
+    /// <param name="property">Name of property to change.</param>
+    /// <param name="value">New value of object's property.</param>
+    /// <returns>Back reference to the current target object.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="property"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="property"/> is <see cref="string.Empty"/> string.</exception>
+    /// <seealso cref="Property(object, string)"/>
+    /// <seealso cref="Properties{T}(T, IEnumerable{KeyValuePair{string, object}})"/>
+    /// <seealso cref="Properties{T}(T, object)"/>
     public static T Property<T>(this T subject, string property, object value)
     {
       Assertion.NotNull(subject);
@@ -405,13 +492,16 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sets values of several properties on specified target object.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of target object.</typeparam>
+    /// <param name="subject">Target object whose properties are to be changed.</param>
+    /// <param name="properties">Set of properties (as a collection of name - value pairs) to be set on <paramref name="subject"/>.</param>
+    /// <returns>Back reference to the current target object.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="properties"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Property(object, string)"/>
+    /// <seealso cref="Property{T}(T, string, object)"/>
+    /// <seealso cref="Properties{T}(T, object)"/>
     public static T Properties<T>(this T subject, IEnumerable<KeyValuePair<string, object>> properties)
     {
       Assertion.NotNull(subject);
@@ -422,13 +512,16 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sets values of several properties on specified target object.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of target object.</typeparam>
+    /// <param name="subject">Target object whose properties are to be changed.</param>
+    /// <param name="properties">Object whose public properties are to be used for setting matched ones on target object.</param>
+    /// <returns>Back reference to the current target object.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="properties"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Property(object, string)"/>
+    /// <seealso cref="Property{T}(T, string, object)"/>
+    /// <seealso cref="Properties{T}(T, IEnumerable{KeyValuePair{string, object}})"/>
     public static T Properties<T>(this T subject, object properties)
     {
       Assertion.NotNull(subject);
@@ -453,12 +546,14 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a generic string representation of object, using values of specified properties.</para>
     /// </summary>
-    /// <param name="subject"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <param name="subject">Object to be converted to string representation.</param>
+    /// <param name="properties">Set of properties, whose values are used for string representation of <paramref name="subject"/>.</param>
+    /// <returns>String representation of <paramref name="subject"/>. Property name is separated from value by colon character, name-value pairs are separated by comma and immediately following space characters, and all content is placed in square brackets afterwards.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="object.ToString()"/>
+    /// <seealso cref="ToString{T}(T, Expression{Func{T, object}}[])"/>
     public static string ToString(this object subject, IEnumerable<string> properties)
     {
       Assertion.NotNull(subject);
@@ -477,13 +572,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a generic string representation of object, using values of specified properties in a form of lambda expressions.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of target object.</typeparam>
+    /// <param name="subject">Object to be converted to string representation.</param>
+    /// <param name="properties">Set of properties, whose values are used for string representation of <paramref name="subject"/>. Each property is represented as a lambda expression.</param>
+    /// <returns>String representation of <paramref name="subject"/>. Property name is separated from value by colon character, name-value pairs are separated by comma and immediately following space characters, and all content is placed in square brackets afterwards.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="subject"/>If <paramref name="subject"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="object.ToString()"/>
+    /// <seealso cref="ToString(object, IEnumerable{string})"/>
     public static string ToString<T>(this T subject, params Expression<Func<T, object>>[] properties)
     {
       Assertion.NotNull(subject);
@@ -502,13 +599,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Calls specified delegate action in a context of target object. If target object implements <see cref="IDisposable"/> interface, invokes delegate method inside a <c>using</c> code block.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="action"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of target object.</typeparam>
+    /// <param name="subject">Target object, in context of which <paramref name="action"/> method is to be called.</param>
+    /// <param name="action">Delegate that represents a method to be called.</param>
+    /// <returns>Back reference to the current target object.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="action"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="With{SUBJECT, OUTPUT}(SUBJECT, Func{SUBJECT, OUTPUT})"/>
+    /// <remarks>If <paramref name="subject"/> does not implement <see cref="IDisposable"/> interface, this method simply calls <paramref name="action"/>'s method.</remarks>
     public static T With<T>(this T subject, Action<T> action)
     {
       Assertion.NotNull(subject);
@@ -530,14 +629,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Calls specified delegate action in a context of target object and returns the result of the call. If target object implements <see cref="IDisposable"/> interface, invokes delegate method inside a <c>using</c> code block.</para>
     /// </summary>
-    /// <typeparam name="SUBJECT"></typeparam>
-    /// <typeparam name="OUTPUT"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="action"></param>
-    /// <returns></returns>
+    /// <typeparam name="SUBJECT">Type of target object.</typeparam>
+    /// <typeparam name="OUTPUT">Type of output result for the <paramref name="action"/> delegate.</typeparam>
+    /// <param name="subject">Target object, in context of which <paramref name="action"/> method is to be called.</param>
+    /// <param name="action">Delegate that represents a method to be called.</param>
+    /// <returns>Value, returned by calling of <paramref name="action"/> delegate's method in a context of <paramref name="subject"/> object.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="action"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="With{T}(T, Action{T})"/>
     public static OUTPUT With<SUBJECT, OUTPUT>(this SUBJECT subject, Func<SUBJECT, OUTPUT> action)
     {
       Assertion.NotNull(subject);

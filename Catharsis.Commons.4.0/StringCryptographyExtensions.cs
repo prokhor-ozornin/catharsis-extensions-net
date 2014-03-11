@@ -10,11 +10,12 @@ namespace Catharsis.Commons
   public static class StringCryptographyExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Creates a secure version of string (text that should be kept confidential) from a normal one.</para>
     /// </summary>
-    /// <param name="unsecure"></param>
-    /// <returns></returns>
+    /// <param name="unsecure">Normal string to convert to secure version.</param>
+    /// <returns>Secure version of <paramref name="unsecure"/> string.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="unsecure"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="SecureString"/>
     public static SecureString Secure(this string unsecure)
     {
       Assertion.NotNull(unsecure);

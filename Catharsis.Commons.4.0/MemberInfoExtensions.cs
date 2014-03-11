@@ -18,6 +18,7 @@ namespace Catharsis.Commons
     /// <param name="attributeType"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="member"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberInfo.GetCustomAttributes(System.Type, bool)"/>
     public static object Attribute(this MemberInfo member, Type attributeType)
     {
       Assertion.NotNull(member);
@@ -33,6 +34,7 @@ namespace Catharsis.Commons
     /// <param name="member"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberInfo.GetCustomAttributes(System.Type, bool)"/>
     public static T Attribute<T>(this MemberInfo member)
     {
       Assertion.NotNull(member);
@@ -47,6 +49,7 @@ namespace Catharsis.Commons
     /// <param name="attributeType"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="member"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberInfo.GetCustomAttributes(System.Type, bool)"/>
     public static IEnumerable<object> Attributes(this MemberInfo member, Type attributeType)
     {
       Assertion.NotNull(member);
@@ -62,6 +65,7 @@ namespace Catharsis.Commons
     /// <param name="member"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberInfo.GetCustomAttributes(System.Type, bool)"/>
     public static IEnumerable<T> Attributes<T>(this MemberInfo member)
     {
       Assertion.NotNull(member);
@@ -75,6 +79,7 @@ namespace Catharsis.Commons
     /// <param name="member"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberTypes.Constructor"/>
     public static bool IsConstructor(this MemberInfo member)
     {
       Assertion.NotNull(member);
@@ -88,6 +93,7 @@ namespace Catharsis.Commons
     /// <param name="member"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberTypes.Event"/>
     public static bool IsEvent(this MemberInfo member)
     {
       Assertion.NotNull(member);
@@ -101,6 +107,7 @@ namespace Catharsis.Commons
     /// <param name="member">Instance of extended <see cref="MemberInfo"/> class to be evaluated.</param>
     /// <returns><c>True</c> if specified <paramref name="member"/> represents a field, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberTypes.Field"/>
     public static bool IsField(this MemberInfo member)
     {
       Assertion.NotNull(member);
@@ -114,6 +121,7 @@ namespace Catharsis.Commons
     /// <param name="member">Instance of extended <see cref="MemberInfo"/> class to be evaluated.</param>
     /// <returns><c>True</c> if specified <paramref name="member"/> represents a method, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberTypes.Method"/>
     public static bool IsMethod(this MemberInfo member)
     {
       Assertion.NotNull(member);
@@ -127,6 +135,7 @@ namespace Catharsis.Commons
     /// <param name="member">Instance of extended <see cref="MemberInfo"/> class to be evaluated.</param>
     /// <returns><c>True</c> if specified <paramref name="member"/> represents a property, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberTypes.Property"/>
     public static bool IsProperty(this MemberInfo member)
     {
       Assertion.NotNull(member);
@@ -140,6 +149,7 @@ namespace Catharsis.Commons
     /// <param name="member">Instance of extended <see cref="MemberInfo"/> class that represents either a field (<see cref="FieldInfo"/> instance) or property (<see cref="PropertyInfo"/> instance).</param>
     /// <returns>Type of the field/property, represented by specified <paramref name="member"/> instance.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="MemberInfo.DeclaringType"/>
     public static Type Type(this MemberInfo member)
     {
       Assertion.NotNull(member);

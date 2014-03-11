@@ -13,14 +13,16 @@ namespace Catharsis.Commons
   public static class XmlReaderSerializationExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Deserializes XML data from <see cref="XmlReader"/> into object of specified type.</para>
     /// </summary>
-    /// <param name="reader"></param>
-    /// <param name="type"></param>
-    /// <param name="types"></param>
-    /// <param name="close"></param>
-    /// <returns></returns>
+    /// <param name="reader"><see cref="XmlReader"/> used for retrieving XML data for deserialization.</param>
+    /// <param name="type">Type of object which is to be the result of deserialization process.</param>
+    /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
+    /// <param name="close">Whether to automatically close <paramref name="reader"/> after deserialization process or leave it intact.</param>
+    /// <returns>Deserialized XML contents from a <paramref name="reader"/> as the object (or objects graph with a root element) of <paramref name="type"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="reader"/> or <paramref name="type"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlSerializer"/>
+    /// <seealso cref="Deserialize{T}(XmlReader, IEnumerable{Type}, bool)"/>
     public static object Deserialize(this XmlReader reader, Type type, IEnumerable<Type> types = null, bool close = false)
     {
       Assertion.NotNull(reader);
@@ -42,14 +44,16 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Deserializes XML data from <see cref="XmlReader"/> into object of specified type.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="reader"></param>
-    /// <param name="types"></param>
-    /// <param name="close"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object which is to be the result of deserialization process.</typeparam>
+    /// <param name="reader"><see cref="XmlReader"/> used for retrieving XML data for deserialization.</param>
+    /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
+    /// <param name="close">Whether to automatically close <paramref name="reader"/> after deserialization process or leave it intact.</param>
+    /// <returns>Deserialized XML contents from a <paramref name="reader"/> as the object (or objects graph with a root element) of <paramref name="type"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlSerializer"/>
+    /// <seealso cref="Deserialize(XmlReader, Type, IEnumerable{Type}, bool)"/>
     public static T Deserialize<T>(this XmlReader reader, IEnumerable<Type> types = null, bool close = false)
     {
       Assertion.NotNull(reader);

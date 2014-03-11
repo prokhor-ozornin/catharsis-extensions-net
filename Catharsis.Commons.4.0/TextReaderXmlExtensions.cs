@@ -12,13 +12,13 @@ namespace Catharsis.Commons
   public static class TextReaderXmlExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Deserializes XML contents from <see cref="TextReader"/> into object of specified type.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="reader"></param>
-    /// <param name="close"></param>
-    /// <param name="types"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object which is to be the result of deserialization process.</typeparam>
+    /// <param name="reader"><see cref="TextReader"/> which is used as a source for XML data.</param>
+    /// <param name="close">Whether to automatically close <paramref name="reader"/> after deserialization process or leave it intact.</param>
+    /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
+    /// <returns>Deserialized XML contents of source <paramref name="reader"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is a <c>null</c> reference.</exception>
     public static T Xml<T>(this TextReader reader, bool close = false, params Type[] types)
     {
@@ -39,12 +39,13 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Deserializes XML contents of <see cref="TextReader"/> into <see cref="XmlDocument"/> object.</para>
     /// </summary>
-    /// <param name="reader"></param>
-    /// <param name="close"></param>
-    /// <returns></returns>
+    /// <param name="reader"><see cref="TextReader"/> which is used as a source for XML data.</param>
+    /// <param name="close">Whether to automatically close <paramref name="reader"/> after deserialization process or leave it intact.</param>
+    /// <returns>Deserialized XML contents of source <paramref name="reader"/> as instance of <see cref="XmlDocument"/> class.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlDocument"/>
     public static XmlDocument XmlDocument(this TextReader reader, bool close = false)
     {
       Assertion.NotNull(reader);

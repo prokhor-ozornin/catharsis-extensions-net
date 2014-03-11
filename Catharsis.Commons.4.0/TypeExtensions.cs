@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 
 namespace Catharsis.Commons
@@ -11,13 +12,15 @@ namespace Catharsis.Commons
   public static class TypeExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Searches for a named event, declared within a specified <see cref="Type"/>.</para>
+    ///   <para>Returns <see cref="EventInfo"/> object, representing either instance or static event with either private or public access level.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose event is to be located.</param>
+    /// <param name="name">Unique name of event.</param>
+    /// <returns><see cref="EventInfo"/> object representing the event of <paramref name="type"/>. If event cannot be found, returns <c>null</c>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    /// <seealso cref="Type.GetEvent(string, BindingFlags)"/>
     public static EventInfo AnyEvent(this Type type, string name)
     {
       Assertion.NotNull(type);
@@ -27,13 +30,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Searches for a named field, declared within a specified <see cref="Type"/>.</para>
+    ///   <para>Returns <see cref="FieldInfo"/> object, representing either instance or static field with either private or public access level.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose field is to be located.</param>
+    /// <param name="name">Unique name of field.</param>
+    /// <returns><see cref="FieldInfo"/> object representing the field of <paramref name="type"/>. If field cannot be found, returns <c>null</c>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    /// <seealso cref="Type.GetField(string, BindingFlags)"/>
     public static FieldInfo AnyField(this Type type, string name)
     {
       Assertion.NotNull(type);
@@ -43,13 +48,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Searches for a named method, declared within a specified <see cref="Type"/>.</para>
+    ///   <para>Returns <see cref="MethodInfo"/> object, representing either instance or static method with either private or public access level.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose method is to be located.</param>
+    /// <param name="name">Unique name of method.</param>
+    /// <returns><see cref="MethodInfo"/> object representing the method of <paramref name="type"/>. If method cannot be found, returns <c>null</c>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    /// <seealso cref="Type.GetMethod(string, BindingFlags)"/>
     public static MethodInfo AnyMethod(this Type type, string name)
     {
       Assertion.NotNull(type);
@@ -59,13 +66,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Searches for a named property, declared within a specified <see cref="Type"/>.</para>
+    ///   <para>Returns <see cref="PropertyInfo"/> object, representing either instance or static property with either private or public access level.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose property is to be located.</param>
+    /// <param name="name">Unique name of property.</param>
+    /// <returns><see cref="PropertyInfo"/> object representing the property of <paramref name="type"/>. If property cannot be found, returns <c>null</c>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
+    /// <seealso cref="Type.GetProperty(string, BindingFlags)"/>
     public static PropertyInfo AnyProperty(this Type type, string name)
     {
       Assertion.NotNull(type);
@@ -75,11 +84,13 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Searches for a default no-arguments constructor, declared within a specified <see cref="Type"/>.</para>
+    ///   <para>Returns <see cref="ConstructorInfo"/> object, representing no-arguments constructor.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose constructor is to be located.</param>
+    /// <returns><see cref="ConstructorInfo"/> object representing no-arguments constructor of <paramref name="type"/>. If constructor cannot be found, returns <c>null</c>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Type.GetConstructor(BindingFlags, Binder, Type[], ParameterModifier[])"/>
     public static ConstructorInfo DefaultConstructor(this Type type)
     {
       Assertion.NotNull(type);
@@ -88,11 +99,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines whether there is a named field, declared within a specified <see cref="Type"/>.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose field is to be located.</param>
+    /// <param name="name">Unique name of field.</param>
+    /// <returns><c>true</c> if either instance or static field with either private or public access level is declared for <paramref name="type"/>, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public static bool HasField(this Type type, string name)
@@ -104,11 +115,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines whether there is a named method, declared within a specified <see cref="Type"/>.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose method is to be located.</param>
+    /// <param name="name">Unique name of method.</param>
+    /// <returns><c>true</c> if either instance or static method with either private or public access level is declared for <paramref name="type"/>, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public static bool HasMethod(this Type type, string name)
@@ -120,11 +131,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines whether there is a named property, declared within a specified <see cref="Type"/>.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose property is to be located.</param>
+    /// <param name="name">Unique name of property.</param>
+    /// <returns><c>true</c> if either instance or static property with either private or public access level is declared for <paramref name="type"/>, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="name"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="name"/> is <see cref="string.Empty"/> string.</exception>
     public static bool HasProperty(this Type type, string name)
@@ -136,13 +147,14 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Determines whether instances of <paramref name="type"/> parameter implement interface, specified by <paramref name="interfaceType"/> parameter.</para>
+    ///   <para>Determines whether a <see cref="Type"/> implements specified interface.</para>
     /// </summary>
     /// <param name="type">The type to evaluate.</param>
-    /// <param name="interfaceType">Interface type.</param>
-    /// <returns><c>true</c> if <paramref name="type"/> implements interface specified by type <paramref name="interfaceType"/>, <c>false</c> otherwise.</returns>
+    /// <param name="interfaceType">Interface that must be implemented by <paramref name="type"/>.</param>
+    /// <returns><c>true</c> if <paramref name="type"/> implements interface of type <paramref name="interfaceType"/>, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="interfaceType"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="interfaceType"/> does not represent interface.</exception>
+    /// <seealso cref="Type.GetInterface(string, bool)"/>
     /// <seealso cref="Implements{INTERFACE}(Type)"/>
     public static bool Implements(this Type type, Type interfaceType)
     {
@@ -158,13 +170,14 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Determines whether instances of <paramref name="type"/> parameter implement interface, specified by <typeparamref name="T"/>.</para>
+    ///   <para>Determines whether a <see cref="Type"/> implements specified interface.</para>
     /// </summary>
-    /// <typeparam name="T">Interface type.</typeparam>
+    /// <typeparam name="T">Interface that must be implemented by <paramref name="type"/>.</typeparam>
     /// <param name="type">The type to evaluate.</param>
-    /// <returns><c>true</c> if <paramref name="type"/> implements interface <typeparamref name="T"/>, <c>false</c> otherwise.</returns>
+    /// <returns><c>true</c> if <paramref name="type"/> implements interface of type <typeparamref name="T"/>, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <typeparamref name="T"/> type does not represent interface.</exception>
+    /// <seealso cref="Type.GetInterface(string, bool)"/>
     /// <seealso cref="Implements(Type, Type)"/>
     public static bool Implements<T>(this Type type)
     {
@@ -215,12 +228,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Dynamically creates new instance of specified <see cref="Type"/>, passing a set of parameters for its constructor.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="args"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose instance is to be created.</param>
+    /// <param name="args">Optional set of parameters for a constructor of <paramref name="type"/>. Types and number of parameters determine a particular constructor of <paramref name="type"/> to be invoked.</param>
+    /// <returns>Newly created instance of <paramref name="type"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Activator.CreateInstance(Type, BindingFlags, Binder, object[], CultureInfo)"/>
+    /// <seealso cref="NewInstance(Type, IEnumerable{KeyValuePair{string, object}})"/>
+    /// <seealso cref="NewInstance(Type, object)"/>
     public static object NewInstance(this Type type, params object[] args)
     {
       Assertion.NotNull(type);
@@ -229,12 +245,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Dynamically creates new instance of specified <see cref="Type"/> by calling its no-arguments constructor, and sets specified properties on a newly created instance.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose instance is to be created.</param>
+    /// <param name="properties">Collection of properties as a name-value pairs to be set on instance of <paramref name="type"/> after it has been created.</param>
+    /// <returns>Newly created instance of <paramref name="type"/> with set <paramref name="properties"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="properties"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Activator.CreateInstance(Type, BindingFlags, Binder, object[], CultureInfo)"/>
+    /// <seealso cref="NewInstance(Type, object[])"/>
+    /// <seealso cref="NewInstance(Type, object)"/>
     public static object NewInstance(this Type type, IEnumerable<KeyValuePair<string, object>> properties)
     {
       Assertion.NotNull(type);
@@ -244,12 +263,15 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Dynamically creates new instance of specified <see cref="Type"/> by calling its no-arguments constructor, and sets specified properties on a newly created instance.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <param name="properties"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose instance is to be created.</param>
+    /// <param name="properties">Object instance whose public properties values are to be set on a newly created instance of <paramref name="type"/>.</param>
+    /// <returns>Newly created instance of <paramref name="type"/> with set <paramref name="properties"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="properties"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Activator.CreateInstance(Type, BindingFlags, Binder, object[], CultureInfo)"/>
+    /// <seealso cref="NewInstance(Type, object[])"/>
+    /// <seealso cref="NewInstance(Type, IEnumerable{KeyValuePair{string, object}})"/>
     public static object NewInstance(this Type type, object properties)
     {
       Assertion.NotNull(type);
@@ -259,11 +281,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns an array of either instance or static properties with either private or public access level for specified <see cref="Type"/>.</para>
     /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
+    /// <param name="type">Type whose properties are to be returned.</param>
+    /// <returns>Set of instance/static properties, declared within a <paramref name="type"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Type.GetProperties(BindingFlags)"/>
     public static PropertyInfo[] Properties(this Type type)
     {
       Assertion.NotNull(type);

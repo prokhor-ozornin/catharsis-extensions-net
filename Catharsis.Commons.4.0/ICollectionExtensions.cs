@@ -18,7 +18,6 @@ namespace Catharsis.Commons
     /// <returns>Reference to the supplied collection <paramref name="self"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="other"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="ICollection{T}.Add(T)"/>
-    /// <seealso cref="RemoveAll{T}(ICollection{T}, IEnumerable{T})"/>
     public static ICollection<T> Add<T>(this ICollection<T> self, IEnumerable<T> other)
     {
       Assertion.NotNull(self);

@@ -11,16 +11,18 @@ namespace Catharsis.Commons
   public static class XDocumentExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Translates specified <see cref="XDocument"/> into a dictionary.</para>
+    ///   <para>Attributes in XML document are translated to string keys and values, nodes become dictionaries with string keys themselves.</para>
     /// </summary>
-    /// <param name="document"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is a <c>null</c> reference.</exception>
-    public static IDictionary<string, object> Dictionary(this XDocument document)
+    /// <param name="xml"><see cref="XDocument"/>, whose structure is to be converted to <see cref="IDictionary{string, object}"/> instance.</param>
+    /// <returns>Dictionary that follows the structure of <see cref="XDocument"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XElementExtensions.Dictionary(XElement)"/>
+    public static IDictionary<string, object> Dictionary(this XDocument xml)
     {
-      Assertion.NotNull(document);
+      Assertion.NotNull(xml);
 
-      return document.Root.Dictionary();
+      return xml.Root.Dictionary();
     }
   }
 }

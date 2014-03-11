@@ -9,11 +9,12 @@ namespace Catharsis.Commons
   public static class ArrayCryptographyExtensions
   {
     /// <summary>
-    ///   <para>Computes hash for the given sequence of bytes, using MD5 algorithm.</para>
+    ///   <para>Computes hash digest for the given array of bytes, using <c>MD5</c> algorithm.</para>
     /// </summary>
-    /// <param name="bytes">Source sequence for hash computation.</param>
-    /// <returns>Hashed value </returns>
+    /// <param name="bytes">Source bytes sequence.</param>
+    /// <returns>Hash digest value.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="HashAlgorithm"/>
     public static byte[] MD5(this byte[] bytes)
     {
       Assertion.NotNull(bytes);
@@ -25,11 +26,14 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Computes hash digest for the given array of bytes, using <c>SHA1</c> algorithm.</para>
     /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
+    /// <param name="bytes">Source bytes sequence.</param>
+    /// <returns>Hash digest value.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="HashAlgorithm"/>
+    /// <seealso cref="SHA256(byte[])"/>
+    /// <seealso cref="SHA512(byte[])"/>
     public static byte[] SHA1(this byte[] bytes)
     {
       Assertion.NotNull(bytes);
@@ -41,11 +45,14 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Computes hash digest for the given array of bytes, using <c>SHA256</c> algorithm.</para>
     /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
+    /// <param name="bytes">Source bytes sequence.</param>
+    /// <returns>Hash digest value.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="HashAlgorithm"/>
+    /// <seealso cref="SHA1(byte[])"/>
+    /// <seealso cref="SHA512(byte[])"/>
     public static byte[] SHA256(this byte[] bytes)
     {
       Assertion.NotNull(bytes);
@@ -57,11 +64,14 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Computes hash digest for the given array of bytes, using <c>SHA512</c> algorithm.</para>
     /// </summary>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
+    /// <param name="bytes">Source bytes sequence.</param>
+    /// <returns>Hash digest value.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="HashAlgorithm"/>
+    /// <seealso cref="SHA1(byte[])"/>
+    /// <seealso cref="SHA256(byte[])"/>
     public static byte[] SHA512(this byte[] bytes)
     {
       Assertion.NotNull(bytes);

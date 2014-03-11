@@ -14,11 +14,23 @@ namespace Catharsis.Commons
   public static class ConvertExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="bool"/> value, using non-strict approach.</para>
+    ///   <para>The following algorithm is used to determine how to perform such conversion:
+    ///     <list type="bullet">
+    ///       <item><description>If <paramref name="subject"/> is a <c>null</c> reference, the result is <c>false</c>.</description></item>
+    ///       <item><description>If <paramref name="subject"/> is a <see cref="bool"/> value, it's returned as it is.</description></item>
+    ///       <item><description>If <paramref name="subject"/> is a positive numeric value, the result is <c>true</c>, if it's negative or zero - the result is <c>false</c>.</description></item>
+    ///       <item><description>If <paramref name="subject"/> is a <see cref="string"/>, <c>true</c> is returned if it contains at least one character, <c>false</c> otherwise.</description></item>
+    ///       <item><description>If <paramref name="subject"/> implements <see cref="IEnumerable"/>, <c>true</c> is returned if it contains at least one element, <c>false</c> otherwise.</description></item>
+    ///       <item><description>If <paramref name="subject"/> is a <see cref="FileInfo"/> value, <c>true</c> is returned if associated file is not empty, <c>false</c> otherwise.</description></item>
+    ///       <item><description>If <paramref name="subject"/> is a <see cref="Stream"/> value, <c>true</c> is returned if it's not empty, <c>false</c> otherwise.</description></item>
+    ///       <item><description>If <paramref name="subject"/> is a <see cref="Match"/> value, <c>true</c> is returned if it's successful, <c>false</c> otherwise.</description></item>
+    ///     </list>
+    ///   </para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="bool"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static bool Boolean(this Convert convert, object subject)
     {
@@ -74,11 +86,6 @@ namespace Catharsis.Commons
           return ((ulong) subject) > 0;
       }
 
-      if (subject is string)
-      {
-        return subject.To<string>().Length > 0;
-      }
-
       if (subject is IEnumerable)
       {
         return subject.To<IEnumerable>().Cast<object>().Any();
@@ -103,11 +110,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="byte"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="byte"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static byte? Byte(this Convert convert, object subject)
     {
@@ -133,11 +140,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="DateTime"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="DateTime"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static DateTime? DateTime(this Convert convert, object subject)
     {
@@ -163,11 +170,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="decimal"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="decimal"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static decimal? Decimal(this Convert convert, object subject)
     {
@@ -193,11 +200,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="double"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="double"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static double? Double(this Convert convert, object subject)
     {
@@ -223,11 +230,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="Guid"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="Guid"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static Guid? Guid(this Convert convert, object subject)
     {
@@ -253,11 +260,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="short"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="short"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static short? Int16(this Convert convert, object subject)
     {
@@ -283,11 +290,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="int"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="int"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static int? Int32(this Convert convert, object subject)
     {
@@ -313,11 +320,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="long"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="long"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static long? Int64(this Convert convert, object subject)
     {
@@ -343,11 +350,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="IPAddress"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="IPAddress"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static IPAddress IPAddress(this Convert convert, object subject)
     {
@@ -373,11 +380,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="Regex"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="Regex"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException"></exception>
     public static Regex Regex(this Convert convert, object subject)
     {
@@ -397,11 +404,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="Single"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="Single"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static Single? Single(this Convert convert, object subject)
     {
@@ -427,11 +434,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="string"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="string"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static string String(this Convert convert, object subject)
     {
@@ -441,11 +448,11 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Converts target object to the <see cref="Uri"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
     /// </summary>
-    /// <param name="convert"></param>
-    /// <param name="subject"></param>
-    /// <returns></returns>
+    /// <param name="convert">Extended converter instance.</param>
+    /// <param name="subject">Target object for conversion.</param>
+    /// <returns><paramref name="subject"/> instance that was converted to <see cref="Uri"/>, or a <c>null</c> reference.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="convert"/> is a <c>null</c> reference.</exception>
     public static Uri Uri(this Convert convert, object subject)
     {

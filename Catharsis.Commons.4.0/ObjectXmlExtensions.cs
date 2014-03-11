@@ -13,13 +13,17 @@ namespace Catharsis.Commons
   public static class ObjectXmlExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Serializes given object or graph into XML string.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="types"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object to be serialized.</typeparam>
+    /// <param name="subject">Object (or objects graph with a root element) to be serialized.</param>
+    /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for serialization purposes.</param>
+    /// <returns>Serialized XML contents of <paramref name="subject"/> instance.</returns>
     /// <exception cref="ArgumentNullException"></exception>
+    /// <seealso cref="XmlSerializer"/>
+    /// <seealso cref="Xml{T}(T, Stream, Encoding, Type[])"/>
+    /// <seealso cref="Xml{T}(T, TextWriter, Type[])"/>
+    /// <seealso cref="Xml{T}(T, XmlWriter, Type[])"/>
     public static string Xml<T>(this T subject, params Type[] types)
     {
       Assertion.NotNull(subject);
@@ -32,15 +36,19 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Serializes given object or graph and writes XML content into specified <see cref="Stream"/>.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="destination"></param>
-    /// <param name="encoding"></param>
-    /// <param name="types"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object to be serialized.</typeparam>
+    /// <param name="subject">Object (or objects graph with a root element) to be serialized.</param>
+    /// <param name="destination">Destination stream to which serialized XML data is to be written.</param>
+    /// <param name="encoding">Encoding to be used for transformation between bytes and characters when writing to a <paramref name="destination"/> stream. If not specified, default encoding will be used.</param>
+    /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for serialization purposes.</param>
+    /// <returns>Back reference to the currently serialized object.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="types"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlSerializer"/>
+    /// <seealso cref="Xml{T}(T, Type[])"/>
+    /// <seealso cref="Xml{T}(T, TextWriter, Type[])"/>
+    /// <seealso cref="Xml{T}(T, XmlWriter, Type[])"/>
     public static T Xml<T>(this T subject, Stream destination, Encoding encoding = null, params Type[] types)
     {
       Assertion.NotNull(subject);
@@ -51,14 +59,18 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Serializes given object or graph and writes XML content using specified <see cref="TextWriter"/>.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="writer"></param>
-    /// <param name="types"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object to be serialized.</typeparam>
+    /// <param name="subject">Object (or objects graph with a root element) to be serialized.</param>
+    /// <param name="writer"><see cref="TextWriter"/> to be used for writing XML content into its underlying destination.</param>
+    /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for serialization purposes.</param>
+    /// <returns>Back reference to the currently serialized object.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="writer"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlSerializer"/>
+    /// <seealso cref="Xml{T}(T, Type[])"/>
+    /// <seealso cref="Xml{T}(T, Stream, Encoding, Type[])"/>
+    /// <seealso cref="Xml{T}(T, XmlWriter, Type[])"/>
     public static T Xml<T>(this T subject, TextWriter writer, params Type[] types)
     {
       Assertion.NotNull(subject);
@@ -70,14 +82,18 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Serializes given object or graph and writes XML content using specified <see cref="XmlWriter"/>.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="subject"></param>
-    /// <param name="writer"></param>
-    /// <param name="types"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object to be serialized.</typeparam>
+    /// <param name="subject">Object (or objects graph with a root element) to be serialized.</param>
+    /// <param name="writer"><see cref="XmlWriter"/> to be used for writing XML content into its underlying destination.</param>
+    /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for serialization purposes.</param>
+    /// <returns>Back reference to the currently serialized object.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="writer"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlSerializer"/>
+    /// <seealso cref="Xml{T}(T, Type[])"/>
+    /// <seealso cref="Xml{T}(T, Stream, Encoding, Type[])"/>
+    /// <seealso cref="Xml{T}(T, TextWriter, Type[])"/>
     public static T Xml<T>(this T subject, XmlWriter writer, params Type[] types)
     {
       Assertion.NotNull(subject);

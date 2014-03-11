@@ -12,14 +12,15 @@ namespace Catharsis.Commons
   public static class StreamXmlExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Deserializes XML contents of stream into object of specified type.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="stream"></param>
-    /// <param name="close"></param>
-    /// <param name="types"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Type of object which is to be the result of deserialization process.</typeparam>
+    /// <param name="stream">Stream of XML data for deserialization.</param>
+    /// <param name="close">Whether to automatically close <paramref name="stream"/> after deserialization process or leave it intact.</param>
+    /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
+    /// <returns>Deserialized XML contents of source <paramref name="stream"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlSerializer"/>
     public static T Xml<T>(this Stream stream, bool close = false, params Type[] types)
     {
       Assertion.NotNull(stream);
@@ -39,12 +40,13 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Deserializes XML contents of stream into <see cref="XmlDocument"/> object.</para>
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="close"></param>
-    /// <returns></returns>
+    /// <param name="stream">Stream of XML data for deserialization.</param>
+    /// <param name="close">Whether to automatically close <paramref name="stream"/> after deserialization process or leave it intact.</param>
+    /// <returns>Deserialized XML contents of source <paramref name="stream"/> as instance of <see cref="XmlDocument"/> class.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlDocument"/>
     public static XmlDocument XmlDocument(this Stream stream, bool close = false)
     {
       Assertion.NotNull(stream);

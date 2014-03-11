@@ -19,6 +19,8 @@ namespace Catharsis.Commons
     /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="BinaryReader"/>
+    /// <seealso cref="BinaryWriter(Stream, Encoding)"/>
     public static BinaryReader BinaryReader(this Stream stream, Encoding encoding = null)
     {
       Assertion.NotNull(stream);
@@ -33,6 +35,8 @@ namespace Catharsis.Commons
     /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="BinaryWriter"/>
+    /// <seealso cref="BinaryReader(Stream, Encoding)"/>
     public static BinaryWriter BinaryWriter(this Stream stream, Encoding encoding = null)
     {
       Assertion.NotNull(stream);
@@ -110,6 +114,8 @@ namespace Catharsis.Commons
     /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="TextReader"/>
+    /// <seealso cref="TextWriter(Stream, Encoding)"/>
     public static TextReader TextReader(this Stream stream, Encoding encoding = null)
     {
       Assertion.NotNull(stream);
@@ -124,6 +130,8 @@ namespace Catharsis.Commons
     /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="TextWriter"/>
+    /// <seealso cref="TextReader(Stream, Encoding)"/>
     public static TextWriter TextWriter(this Stream stream, Encoding encoding = null)
     {
       Assertion.NotNull(stream);
@@ -139,6 +147,8 @@ namespace Catharsis.Commons
     /// <param name="bytes"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Write{T}(T, Stream)"/>
+    /// <seealso cref="Write{T}(T, string, Encoding)"/>
     public static T Write<T>(this T stream, byte[] bytes) where T : Stream
     {
       Assertion.NotNull(stream);
@@ -160,6 +170,8 @@ namespace Catharsis.Commons
     /// <param name="from"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="to"/> or <paramref name="from"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Write{T}(T, byte[])"/>
+    /// <seealso cref="Write{T}(T, string, Encoding)"/>
     public static T Write<T>(this T to, Stream from) where T : Stream
     {
       Assertion.NotNull(to);
@@ -188,6 +200,8 @@ namespace Catharsis.Commons
     /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Write{T}(T, byte[])"/>
+    /// <seealso cref="Write{T}(T, Stream)"/>
     public static T Write<T>(this T stream, string text, Encoding encoding = null) where T : Stream
     {
       Assertion.NotNull(stream);
@@ -210,6 +224,7 @@ namespace Catharsis.Commons
     /// <param name="close"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XDocument"/>
     public static XDocument XDocument(this Stream stream, bool close = false)
     {
       Assertion.NotNull(stream);
@@ -224,6 +239,8 @@ namespace Catharsis.Commons
     /// <param name="close"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlReader"/>
+    /// <seealso cref="XmlWriter(Stream, bool, Encoding)"/>
     public static XmlReader XmlReader(this Stream stream, bool close = false)
     {
       Assertion.NotNull(stream);
@@ -239,6 +256,8 @@ namespace Catharsis.Commons
     /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XmlWriter"/>
+    /// <seealso cref="XmlReader(Stream, bool)"/>
     public static XmlWriter XmlWriter(this Stream stream, bool close = false, Encoding encoding = null)
     {
       Assertion.NotNull(stream);

@@ -10,10 +10,10 @@ namespace Catharsis.Commons
   public static class FieldInfoExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Determines whether specified class field has a <c>protected</c> access level.</para>
     /// </summary>
-    /// <param name="field"></param>
-    /// <returns></returns>
+    /// <param name="field">Class field to inspect.</param>
+    /// <returns><c>true</c> if <paramref name="field"/> is having a <c>protected</c> access level, <c>false</c> otherwise (public/private).</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="field"/> is a <c>null</c> reference.</exception>
     public static bool IsProtected(this FieldInfo field)
     {

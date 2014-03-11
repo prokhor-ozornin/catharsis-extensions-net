@@ -14,33 +14,34 @@ namespace Catharsis.Commons
   public static class XmlDocumentExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Translates specified <see cref="XmlDocument"/> into a dictionary.</para>
+    ///   <para>Attributes in XML document are translated to string keys and values, nodes become dictionaries with string keys themselves.</para>
     /// </summary>
-    /// <param name="document"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is a <c>null</c> reference.</exception>
-    public static IDictionary<string, object> Dictionary(this XmlDocument document)
+    /// <param name="xml"><see cref="XmlDocument"/>, whose structure is to be converted to <see cref="IDictionary{string, object}"/> instance.</param>
+    /// <returns>Dictionary that follows the structure of <see cref="XmlDocument"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
+    public static IDictionary<string, object> Dictionary(this XmlDocument xml)
     {
-      Assertion.NotNull(document);
+      Assertion.NotNull(xml);
 
       var result = new Dictionary<string, object>();
-      DictionaryXml(document.DocumentElement, result);
+      DictionaryXml(xml.DocumentElement, result);
       return result;
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Represents given <see cref="XmlDocument"/> instance as a string of XML data in <see cref="Encoding.UTF8"/> encoding.</para>
     /// </summary>
-    /// <param name="document"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is a <c>null</c> reference.</exception>
-    public static string String(this XmlDocument document)
+    /// <param name="xml"><see cref="XmlDocument"/> to be converted to a string.</param>
+    /// <returns>XML content, representing XML <paramref name="xml"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
+    public static string String(this XmlDocument xml)
     {
-      Assertion.NotNull(document);
+      Assertion.NotNull(xml);
 
       return new StringWriter().With(writer =>
       {
-        writer.XmlWriter(true, Encoding.UTF8).Write(document.Save).Close();
+        writer.XmlWriter(true, Encoding.UTF8).Write(xml.Save).Close();
         return writer;
       }).ToString();
     }
