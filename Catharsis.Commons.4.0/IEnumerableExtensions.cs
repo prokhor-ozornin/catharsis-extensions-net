@@ -56,6 +56,32 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Performs "pagination" of a sequence, returning a fragment ("page") of its contents.</para>
+    /// </summary>
+    /// <typeparam name="T">Type of elements in a sequence.</typeparam>
+    /// <param name="enumerable">Source sequence from which a fragment is to be taken.</param>
+    /// <param name="page">Number of fragment/slice that is to be taken. Numbering starts from 1.</param>
+    /// <param name="pageSize">Size of fragment ("page"), number of entities to be taken. Must be a positive number.</param>
+    /// <returns>Source that represent a fragment of the original <paramref name="enumerable"/> sequence and consists of no more than <paramref name="pageSize"/> elements.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is a <c>null</c> reference.</exception>
+    public static IEnumerable<T> Paginate<T>(this IEnumerable<T> enumerable, int page = 1, int pageSize = 10)
+    {
+      Assertion.NotNull(enumerable);
+
+      if (page <= 0)
+      {
+        page = 1;
+      }
+
+      if (pageSize <= 0)
+      {
+        pageSize = 10;
+      }
+
+      return enumerable.Skip((page - 1) * pageSize).Take(pageSize);
+    }
+
+    /// <summary>
     ///   <para>Picks up random element from a specified sequence and returns it.</para>
     /// </summary>
     /// <typeparam name="T">Type of elements in a sequence.</typeparam>

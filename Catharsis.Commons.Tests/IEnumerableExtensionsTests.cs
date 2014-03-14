@@ -44,16 +44,24 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToListString{T}(IEnumerable{T})"/> method.</para>
+    ///   <para>Performs testing of <see cref="IEnumerableExtensions.Paginate{T}(IEnumerable{T}, int, int)"/></para>
     /// </summary>
     [Fact]
-    public void ToListString_Method()
+    public void Paginate_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.ToListString<object>(null));
+      Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.Paginate<object>(null));
 
-      Assert.Equal("[]", Enumerable.Empty<object>().ToListString());
-      Assert.Equal("[1]", new[] { 1 }.ToListString());
-      Assert.Equal("[1, 2, 3]", new [] { 1, 2, 3 }.ToListString());
+      Assert.False(Enumerable.Empty<object>().Paginate().Any());
+
+      var sequence = new[] { "first", "second", "third" };
+      Assert.Equal("first", sequence.Paginate(-1, 1).Single());
+      Assert.Equal("first", sequence.Paginate(0, 1).Single());
+      Assert.Equal("first", sequence.Paginate(1, 1).Single());
+      Assert.True(sequence.Paginate(1, 2).SequenceEqual(new[] { "first", "second" }));
+      Assert.True(sequence.Paginate(1, -1).SequenceEqual(sequence));
+      Assert.True(sequence.Paginate(1, 0).SequenceEqual(sequence));
+      Assert.Equal("second", sequence.Paginate(2, 1).Single());
+      Assert.Equal("third", sequence.Paginate(2, 2).Single());
     }
 
     /// <summary>
@@ -67,8 +75,21 @@ namespace Catharsis.Commons
       var element = new object();
       Assert.True(ReferenceEquals(new[] { element }.Random(), element));
 
-      var elements = new [] { "first", "second" };
+      var elements = new[] { "first", "second" };
       Assert.True(elements.Contains(elements.Random()));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToListString{T}(IEnumerable{T})"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void ToListString_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => IEnumerableExtensions.ToListString<object>(null));
+
+      Assert.Equal("[]", Enumerable.Empty<object>().ToListString());
+      Assert.Equal("[1]", new[] { 1 }.ToListString());
+      Assert.Equal("[1, 2, 3]", new [] { 1, 2, 3 }.ToListString());
     }
 
     /// <summary>
