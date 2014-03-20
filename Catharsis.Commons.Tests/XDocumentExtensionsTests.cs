@@ -39,7 +39,7 @@ namespace Catharsis.Commons
       Assert.False(article.ContainsKey("Comment"));
       Assert.Equal("id", article["Id"].ToString());
       Assert.Equal("name", article["Name"].ToString());
-      Assert.Equal(DateTime.MaxValue.RFC1123(), article["Date"].ToString().ToDateTime().RFC1123());
+      Assert.Equal(DateTime.MaxValue.RFC(), article["Date"].ToString().ToDateTime().RFC());
       Assert.Equal("description", article["Description"].ToString());
       Assert.Null(article["Notes"]);
       var tags = article["Tags"].To<IDictionary<string, object>>();

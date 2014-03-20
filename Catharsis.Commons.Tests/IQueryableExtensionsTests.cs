@@ -37,6 +37,8 @@ namespace Catharsis.Commons
     [Fact]
     public void Random_Method()
     {
+      Assert.Throws<ArgumentNullException>(() => IQueryableExtensions.Random<object>(null));
+
       Assert.Null(Enumerable.Empty<object>().AsQueryable().Random());
 
       var element = new object();

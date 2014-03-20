@@ -70,6 +70,16 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.ISO(DateTime)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void ISO_Method()
+    {
+      var time = DateTime.Today;
+      Assert.True(DateTime.ParseExact(time.ISO(), "o", CultureInfo.InvariantCulture).Equals(time));
+    }
+
+    /// <summary>
     ///   <para>Performs testing of <see cref="DateTimeExtensions.IsSameDate(DateTime, DateTime)"/> method.</para>
     /// </summary>
     [Fact]
@@ -158,13 +168,13 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="DateTimeExtensions.RFC1123(DateTime)"/> method.</para>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.RFC(DateTime)"/> method.</para>
     /// </summary>
     [Fact]
-    public void RFC1123_Method()
+    public void RFC_Method()
     {
       var time = DateTime.Today;
-      Assert.True(DateTime.ParseExact(time.RFC1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Equals(time), "Parsed = " + DateTime.ParseExact(time.RFC1123(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Ticks + ", Exact = " + time.Ticks);
+      Assert.True(DateTime.ParseExact(time.RFC(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Equals(time));
     }
 
     /// <summary>

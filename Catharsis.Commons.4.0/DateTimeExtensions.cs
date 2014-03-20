@@ -44,6 +44,17 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Formats given date/time instance according to ISO 8601 specification and returns formatted date as a string.</para>
+    /// </summary>
+    /// <param name="dateTime">Date/time object instance.</param>
+    /// <returns>Formatted date/time value as a string.</returns>
+    /// <seealso cref="DateTimeFormatInfo"/>
+    public static string ISO(this DateTime dateTime)
+    {
+      return dateTime.ToString("o");
+    }
+
+    /// <summary>
     ///   <para>Determines whether two <see cref="DateTime"/> object instances represent the same date (have same year/month/day values).</para>
     /// </summary>
     /// <param name="self">Curent date to compare with the second.</param>
@@ -144,9 +155,8 @@ namespace Catharsis.Commons
     /// </summary>
     /// <param name="dateTime">Date/time object instance.</param>
     /// <returns>Formatted date/time value as a string.</returns>
-    /// <remarks>Returned formatted date/time string represents date in UTC timezone, formatted for invariant culture.</remarks>
     /// <seealso cref="DateTimeFormatInfo"/>
-    public static string RFC1123(this DateTime dateTime)
+    public static string RFC(this DateTime dateTime)
     {
       return dateTime.ToString("r");
     }
