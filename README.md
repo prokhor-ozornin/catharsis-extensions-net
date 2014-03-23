@@ -8,6 +8,8 @@ This library is extensively unit-tested, greatly reducing the possibility of bug
 
 **NuGet package** : https://www.nuget.org/packages/Catharsis.Commons
 
+[![Image](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=APHM8MU9N76V8 "Donate")
+
 ### Structure
 
 The list of extended structures, classes and interfaces includes:
