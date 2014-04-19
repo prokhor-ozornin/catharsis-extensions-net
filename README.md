@@ -8,21 +8,32 @@ This library is extensively unit-tested, greatly reducing the possibility of bug
 
 **NuGet package** : https://www.nuget.org/packages/Catharsis.Commons
 
+***
+
+**Support**
+
+This project needs your support for further developments ! Please consider donating.
+
+- _Yandex.Money_ : 41001577953208
+
+- _WebMoney (WMR)_ : R399275865890
+
 [![Image](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=APHM8MU9N76V8 "Donate")
+
+***
 
 ### Structure
 
 The list of extended structures, classes and interfaces includes:
 * _System.Array_
-* _System.Boolean_
 * _System.DateTime_
 * _System.Delegate_
+* _System.Enum_
 * _System.Reflection.FieldInfo_
 * _System.IO.FileInfo_
 * _System.Collections.Generic.ICollection<T>_
-* _System.Collections.Generic.IDictionary<TKey, TValue>_
 * _System.Collections.Generic.IEnumerable<T>_
-* _System.Collections.Generic.IList<T>_
+* _System.Linq.IQueryable<T>_
 * _System.Reflection.MemberInfo_
 * _System.Reflection.MethodInfo_
 * Numeric Types ( _System.Byte_, _System.Int16_, _System.Int32_, _System.Long_, System.Decimal, _System.Single_, _System.Double_, etc.)
@@ -36,7 +47,6 @@ The list of extended structures, classes and interfaces includes:
 * _System.IO.TextWriter_
 * _System.Type_
 * _System.Uri_
-* _System.Xml.Linq.XContainer_
 * _System.Xml.Linq.XDocument_
 * _System.Xml.Linq.XElement_
 * _System.Xml.XmlDocument_
