@@ -265,6 +265,19 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Performs testing of <see cref="TypeExtensions.IsAnonymous(Type)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void IsAnonymous_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => TypeExtensions.IsAnonymous(null));
+
+      Assert.False(typeof(object).IsAnonymous());
+      Assert.True(new { }.GetType().IsAnonymous());
+      Assert.True(new { property = "value" }.GetType().IsAnonymous());
+    }
+
+    /// <summary>
     ///   <para>Performs testing of <see cref="TypeExtensions.IsAssignableTo{T}(Type)"/> method.</para>
     /// </summary>
     [Fact]

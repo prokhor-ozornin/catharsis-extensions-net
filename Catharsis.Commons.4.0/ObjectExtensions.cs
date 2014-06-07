@@ -532,6 +532,19 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Creates and returns a dictionary from the values of public properties of target object.</para>
+    /// </summary>
+    /// <param name="subject">Target object whose properties values are returned.</param>
+    /// <returns>Dictionary of name - value pairs for public properties of <paramref name="subject"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
+    public static IDictionary<string, object> PropertiesMap(this object subject)
+    {
+      Assertion.NotNull(subject);
+
+      return subject.GetType().GetProperties().ToDictionary(property => property.Name, property => property.GetValue(subject, null));
+    }
+
+    /// <summary>
     ///   <para>Tries to convert given object to specified type and throws exception on failure.</para>
     /// </summary>
     /// <typeparam name="T">Type to convert object to.</typeparam>

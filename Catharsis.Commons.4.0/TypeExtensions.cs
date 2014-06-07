@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Catharsis.Commons
 {
@@ -210,6 +212,24 @@ namespace Catharsis.Commons
       types.Add(type.GetInterfaces());
 
       return types;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether target <see cref="Type"/> is anonymous one.</para>
+    /// </summary>
+    /// <param name="type">Subject type.</param>
+    /// <returns><c>true</c> if <paramref name="type"/> represents an anonymous <see cref="Type"/>, <c>false</c> otherwise.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="type"/> is a <c>null</c> reference.</exception>
+    public static bool IsAnonymous(this Type type)
+    {
+      Assertion.NotNull(type);
+
+      return type.IsClass
+             && type.Attribute<CompilerGeneratedAttribute>() != null
+             && type.Name.ToLower().Contains("anonymous")
+             && type.IsSealed
+             && type.BaseType == typeof(object)
+             && type.Properties().All(property => property.IsPublic());
     }
 
     /// <summary>

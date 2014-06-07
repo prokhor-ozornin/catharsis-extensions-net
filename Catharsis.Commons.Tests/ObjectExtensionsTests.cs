@@ -400,6 +400,20 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Performs testing of <see cref="ObjectExtensions.PropertiesMap(object)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void PropertiesMap_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.PropertiesMap(null));
+
+      Assert.False(new { }.PropertiesMap().Any());
+      var map = new { name = "value" }.PropertiesMap();
+      Assert.Equal(1, map.Count);
+      Assert.Equal("value", map["name"]);
+    }
+
+    /// <summary>
     ///   <para>Performs testing of <see cref="ObjectExtensions.To{T}(object)"/> method.</para>
     /// </summary>
     [Fact]
