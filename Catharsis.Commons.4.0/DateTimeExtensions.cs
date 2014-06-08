@@ -51,7 +51,7 @@ namespace Catharsis.Commons
     /// <seealso cref="DateTimeFormatInfo"/>
     public static string ISO8601(this DateTime dateTime)
     {
-      return dateTime.ToUniversalTime().ToString("o");
+      return dateTime.ToString("o");
     }
 
     /// <summary>
@@ -156,7 +156,7 @@ namespace Catharsis.Commons
     /// <param name="dateTime">Date/time object instance.</param>
     /// <returns>Formatted date/time value as a string.</returns>
     /// <seealso cref="DateTimeFormatInfo"/>
-    public static string RFC(this DateTime dateTime)
+    public static string RFC1121(this DateTime dateTime)
     {
       return dateTime.ToString("r");
     }
@@ -193,22 +193,6 @@ namespace Catharsis.Commons
     public static DateTime StartOfYear(this DateTime dateTime)
     {
       return new DateTime(dateTime.Year, 1, 1, 0, 0, 0, dateTime.Kind);
-    }
-
-    /// <summary>
-    ///   <para>Formats given date/time instance according to XSD date/time formatand returns formatted date as a string.</para>
-    /// </summary>
-    /// <param name="dateTime">Date/time object instance.</param>
-    /// <returns>Formatted date/time value as a string.</returns>
-    /// <seealso cref="DateTimeFormatInfo"/>
-    public static string Xsd(this DateTime dateTime)
-    {
-      var value = dateTime.ISO8601();
-      if (value[value.Length - 2] == '0')
-      {
-        value = value.Remove(value.Length - 2, 1);
-      }
-      return value;
     }
   }
 }

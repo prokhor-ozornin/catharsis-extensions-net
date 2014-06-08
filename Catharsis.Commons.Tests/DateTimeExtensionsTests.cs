@@ -168,13 +168,13 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="DateTimeExtensions.RFC(DateTime)"/> method.</para>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.RFC1121(DateTime)"/> method.</para>
     /// </summary>
     [Fact]
     public void RFC_Method()
     {
       var time = DateTime.Today;
-      Assert.True(DateTime.ParseExact(time.RFC(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Equals(time));
+      Assert.True(DateTime.ParseExact(time.RFC1121(), new DateTimeFormatInfo().RFC1123Pattern, CultureInfo.InvariantCulture).Equals(time));
     }
 
     /// <summary>
@@ -235,18 +235,6 @@ namespace Catharsis.Commons
       Assert.Equal(0, startOfYear.Minute);
       Assert.Equal(0, startOfYear.Second);
       Assert.Equal(0, startOfYear.Millisecond);
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="DateTimeExtensions.Xsd(DateTime)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void Xsd_Method()
-    {
-      const string date = "2014-06-08T13:54:21.837622Z";
-
-      Assert.Equal(date, DateTime.Parse(date).Xsd());
-      Assert.Equal(date, DateTime.Parse("2014-06-08T13:54:21.8376220Z").Xsd());
     }
   }
 }

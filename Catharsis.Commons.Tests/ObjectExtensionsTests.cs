@@ -44,6 +44,35 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Performs testing of <see cref="ObjectXmlExtensions.AsXml(object)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void AsXml_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.AsXml(null));
+
+      var subject = new object();
+      Assert.Equal("", subject.AsXml());
+
+      subject = "subject";
+      Assert.Equal("subject", subject.AsXml());
+
+      subject = 1.5;
+      Assert.Equal("1.5", subject.AsXml());
+
+      subject = true;
+      Assert.Equal("true", subject.AsXml());
+
+      subject = DateTime.MaxValue;
+      Assert.Equal(DateTime.MaxValue.ISO8601(), subject.AsXml());
+
+      subject = Guid.Empty;
+      Assert.Equal(Guid.Empty.ToString(), subject.AsXml());
+
+      Assert.Throws<InvalidOperationException>(() => new { Name = "Value" }.AsXml());
+    }
+
+    /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
     ///     <item><description><see cref="ObjectBinaryExtensions.Binary(object)"/></description></item>

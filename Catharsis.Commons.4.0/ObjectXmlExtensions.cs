@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace Catharsis.Commons
@@ -12,6 +13,19 @@ namespace Catharsis.Commons
   /// <seealso cref="object"/>
   public static class ObjectXmlExtensions
   {
+    /// <summary>
+    ///   <para>Converts object to XML representation, returning XML content of the root element of the resulting XML document.</para>
+    /// </summary>
+    /// <param name="subject">Object to be converted to XML string.</param>
+    /// <returns>XML result string.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
+    public static string AsXml(this object subject)
+    {
+      Assertion.NotNull(subject);
+
+      return XDocument.Parse(subject.Xml()).Root.Value;
+    }
+
     /// <summary>
     ///   <para>Serializes given object or graph into XML string.</para>
     /// </summary>
