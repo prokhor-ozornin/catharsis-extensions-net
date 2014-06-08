@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -609,6 +610,20 @@ namespace Catharsis.Commons
         sb.Remove(sb.Length - Separator.Length, Separator.Length);
       }
       return "[{0}]".FormatSelf(sb.ToString());
+    }
+
+    /// <summary>
+    ///   <para>Returns a string representation of object, formatted according to <see cref="CultureInfo.InvariantCulture"/>.</para>
+    /// </summary>
+    /// <param name="subject">Object to be converted to string representation.</param>
+    /// <returns>String representation of <seealso cref="subject"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="subject"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="object.ToString()"/>
+    public static string ToStringInvariant(this object subject)
+    {
+      Assertion.NotNull(subject);
+
+      return string.Format(CultureInfo.InvariantCulture, "{0}", subject);
     }
 
     /// <summary>

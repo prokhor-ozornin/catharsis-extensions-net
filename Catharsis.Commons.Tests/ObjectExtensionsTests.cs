@@ -435,7 +435,7 @@ namespace Catharsis.Commons
     ///   </list>
     /// </summary>
     [Fact]
-    public void ToString_Method()
+    public void ToString_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToString(null, Enumerable.Empty<string>().ToArray()));
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToString(null, Enumerable.Empty<Expression<Func<object, object>>>().ToArray()));
@@ -452,6 +452,29 @@ namespace Catharsis.Commons
       Assert.Equal("[Day:\"{0}\", Month:\"{1}\", Year:\"{2}\"]".FormatSelf(date.Day, date.Month, date.Year), date.ToString(new [] {"Day", "Month", "Year"}));
       Assert.Equal("[Day:\"{0}\", Month:\"{1}\", Year:\"{2}\"]".FormatSelf(date.Day, date.Month, date.Year), date.ToString(x => x.Day, x => x.Month, x => x.Year));
       Assert.Equal("[Today:\"{0}\"]".FormatSelf(DateTime.Today), date.ToString(new [] {"Today"}));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="ObjectExtensions.ToStringInvariant(object)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void ToStringInvariant()
+    {
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToStringInvariant(null));
+
+      var subject = new object();
+      Assert.Equal(subject.ToString(), subject.ToStringInvariant());
+
+      subject = "subject";
+      Assert.Equal(subject.ToString(), subject.ToStringInvariant());
+
+      subject = DateTime.UtcNow;
+      Assert.Equal(string.Format(CultureInfo.InvariantCulture, "{0}", subject), subject.ToStringInvariant());
+      Assert.NotEqual(string.Format(CultureInfo.GetCultureInfo("ru"), "{0}", subject), subject.ToStringInvariant());
+
+      subject = 1.5;
+      Assert.Equal(string.Format(CultureInfo.InvariantCulture, "{0}", subject), subject.ToStringInvariant());
+      Assert.NotEqual(string.Format(CultureInfo.GetCultureInfo("ru"), "{0}", subject), subject.ToStringInvariant());
     }
 
     /// <summary>
