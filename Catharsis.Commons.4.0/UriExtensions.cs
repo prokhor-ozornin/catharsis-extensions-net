@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -16,13 +15,13 @@ namespace Catharsis.Commons
     ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
     /// </summary>
     /// <param name="uri">The URI from which to download data.</param>
-    /// <param name="parameters">Optional set of URL query parameters, represented as public properties of the object.</param>
-    /// <param name="headers">Optional set of additional headers (key-value pairs) to send alongside with request.</param>
+    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns>Response of web server in a binary format.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
     /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
     /// <seealso cref="WebClient"/>
-    public static byte[] Bytes(this Uri uri, object parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
+    public static byte[] Bytes(this Uri uri, object parameters = null, object headers = null)
     {
       Assertion.NotNull(uri);
 
@@ -30,12 +29,18 @@ namespace Catharsis.Commons
       {
         if (parameters != null)
         {
-          parameters.GetType().GetProperties().Each(property => web.QueryString.Add(property.Name, parameters.Property(property.Name).ToString()));
+          foreach (var parameter in parameters.PropertiesMap())
+          {
+            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
+          }
         }
 
         if (headers != null)
         {
-          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+          foreach (var header in headers.PropertiesMap())
+          {
+            web.Headers.Add(header.Key, header.Value.ToString());
+          }
         }
 
         return web.DownloadData(uri);
@@ -47,14 +52,14 @@ namespace Catharsis.Commons
     /// </summary>
     /// <param name="uri">The URI from which to download data.</param>
     /// <param name="file">The name of the local file that is to receive the data.</param>
-    /// <param name="parameters">Optional set of URL query parameters, represented as public properties of the object.</param>
-    /// <param name="headers">Optional set of additional headers (key-value pairs) to send alongside with request.</param>
+    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns>Back reference to the current <see cref="Uri"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="file"/> is <see cref="string.Empty"/> string.</exception>
     /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
     /// <seealso cref="WebClient"/>
-    public static Uri DownloadFile(this Uri uri, string file, object parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
+    public static Uri DownloadFile(this Uri uri, string file, object parameters = null, object headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotEmpty(file);
@@ -63,12 +68,18 @@ namespace Catharsis.Commons
       {
         if (parameters != null)
         {
-          parameters.GetType().GetProperties().Each(property => web.QueryString.Add(property.Name, parameters.Property(property.Name).ToString()));
+          foreach (var parameter in parameters.PropertiesMap())
+          {
+            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
+          }
         }
 
         if (headers != null)
         {
-          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+          foreach (var header in headers.PropertiesMap())
+          {
+            web.Headers.Add(header.Key, header.Value.ToString());
+          }
         }
 
         web.DownloadFile(uri, file);
@@ -81,13 +92,13 @@ namespace Catharsis.Commons
     ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
     /// </summary>
     /// <param name="uri">The URI from which to download the data.</param>
-    /// <param name="parameters">Optional set of URL query parameters, represented as public properties of the object.</param>
-    /// <param name="headers">Optional set of additional headers (key-value pairs) to send alongside with request.</param>
+    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns><see cref="Stream"/> to read web server's response data from HTTP connection.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
     /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
     /// <seealso cref="WebClient"/>
-    public static Stream Stream(this Uri uri, object parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
+    public static Stream Stream(this Uri uri, object parameters = null, object headers = null)
     {
       Assertion.NotNull(uri);
 
@@ -95,12 +106,18 @@ namespace Catharsis.Commons
 
       if (parameters != null)
       {
-        parameters.GetType().GetProperties().Each(property => web.QueryString.Add(property.Name, parameters.Property(property.Name).ToString()));
+        foreach (var parameter in parameters.PropertiesMap())
+        {
+          web.QueryString.Add(parameter.Key, parameter.Value.ToString());
+        }
       }
 
       if (headers != null)
       {
-        headers.Each(header => web.Headers.Add(header.Key, header.Value));
+        foreach (var header in headers.PropertiesMap())
+        {
+          web.Headers.Add(header.Key, header.Value.ToString());
+        }
       }
       
       return web.OpenRead(uri);
@@ -111,12 +128,12 @@ namespace Catharsis.Commons
     /// </summary>
     /// <param name="uri">The URI from which to download the data.</param>
     /// <param name="encoding">Encoding to be used by <see cref="TextReader"/> for conversion between response binary and text data. If not specified, default <see cref="Encoding.UTF8"/> encoding will be used.</param>
-    /// <param name="parameters">Optional set of URL query parameters, represented as public properties of the object.</param>
-    /// <param name="headers">Optional set of additional headers (key-value pairs) to send alongside with request.</param>
+    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns><see cref="TextReader"/> to read web server's response data from HTTP connection.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="WebClient"/>
-    public static TextReader TextReader(this Uri uri, Encoding encoding = null, object parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
+    public static TextReader TextReader(this Uri uri, Encoding encoding = null, object parameters = null, object headers = null)
     {
       Assertion.NotNull(uri);
 
@@ -127,12 +144,12 @@ namespace Catharsis.Commons
     ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
     /// </summary>
     /// <param name="uri">The URI from which to download the data.</param>
-    /// <param name="parameters">Optional set of URL query parameters, represented as public properties of the object.</param>
-    /// <param name="headers">Optional set of additional headers (key-value pairs) to send alongside with request.</param>
+    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns>Web server's response in a text format.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="WebClient"/>
-    public static string Text(this Uri uri, object parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
+    public static string Text(this Uri uri, object parameters = null, object headers = null)
     {
       Assertion.NotNull(uri);
 
@@ -140,12 +157,18 @@ namespace Catharsis.Commons
       {
         if (parameters != null)
         {
-          parameters.GetType().GetProperties().Each(property => web.QueryString.Add(property.Name, parameters.Property(property.Name).ToString()));
+          foreach (var parameter in parameters.PropertiesMap())
+          {
+            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
+          }
         }
 
         if (headers != null)
         {
-          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+          foreach (var header in headers.PropertiesMap())
+          {
+            web.Headers.Add(header.Key, header.Value.ToString());
+          }
         }
 
         return web.DownloadString(uri);
@@ -157,14 +180,14 @@ namespace Catharsis.Commons
     /// </summary>
     /// <param name="uri">The URI of the resource to receive the data.</param>
     /// <param name="data">Binary data to send to the resource.</param>
-    /// <param name="parameters">Optional set of URL query parameters, represented as public properties of the object.</param>
-    /// <param name="headers">Optional set of additional HTTP headers (key-value pairs) to send alongside with HTTP request.</param>
+    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns>Back reference to the current <see cref="Uri"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
     /// <remarks>This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.</remarks>
     /// <seealso cref="WebClient"/>
-    /// <seealso cref="Upload(Uri, string, object, IEnumerable{KeyValuePair{string, string}})"/>
-    public static Uri Upload(this Uri uri, byte[] data, object parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
+    /// <seealso cref="Upload(Uri, string, object, object)"/>
+    public static Uri Upload(this Uri uri, byte[] data, object parameters = null, object headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotNull(data);
@@ -173,12 +196,18 @@ namespace Catharsis.Commons
       {
         if (parameters != null)
         {
-          parameters.GetType().GetProperties().Each(property => web.QueryString.Add(property.Name, parameters.Property(property.Name).ToString()));
+          foreach (var parameter in parameters.PropertiesMap())
+          {
+            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
+          }
         }
 
         if (headers != null)
         {
-          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+          foreach (var header in headers.PropertiesMap())
+          {
+            web.Headers.Add(header.Key, header.Value.ToString());
+          }
         }
 
         web.UploadData(uri, data);
@@ -192,13 +221,13 @@ namespace Catharsis.Commons
     /// </summary>
     /// <param name="uri">The URI of the resource to receive the string. For HTTP resources, this URI must identify a resource that can accept a request sent with the POST method.</param>
     /// <param name="data">The string to be uploaded.</param>
-    /// <param name="parameters">Optional set of URL query parameters, represented as public properties of the object.</param>
-    /// <param name="headers">Optional set of additional HTTP headers (key-value pairs) to send alongside with HTTP request.</param>
+    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns>Web server's response in a text format.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="WebClient"/>
-    /// <seealso cref="Upload(Uri, byte[], object , IEnumerable{KeyValuePair{string, string}})"/>
-    public static Uri Upload(this Uri uri, string data, object parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
+    /// <seealso cref="Upload(Uri, byte[], object, object)"/>
+    public static Uri Upload(this Uri uri, string data, object parameters = null, object headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotNull(data);
@@ -207,12 +236,18 @@ namespace Catharsis.Commons
       {
         if (parameters != null)
         {
-          parameters.GetType().GetProperties().Each(property => web.QueryString.Add(property.Name, parameters.Property(property.Name).ToString()));
+          foreach (var parameter in parameters.PropertiesMap())
+          {
+            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
+          }
         }
 
         if (headers != null)
         {
-          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+          foreach (var header in headers.PropertiesMap())
+          {
+            web.Headers.Add(header.Key, header.Value.ToString());
+          }
         }
 
         web.UploadString(uri, data);
@@ -226,14 +261,14 @@ namespace Catharsis.Commons
     /// </summary>
     /// <param name="uri">The URI of the resource to receive the file.</param>
     /// <param name="file">The file to send to the resource.</param>
-    /// <param name="parameters">Optional set of URL query parameters, represented as public properties of the object.</param>
-    /// <param name="headers">Optional set of additional HTTP headers (key-value pairs) to send alongside with HTTP request.</param>
+    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns>Array of bytes, containing the body of the response from the resource.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="file"/> is <see cref="string.Empty"/> string.</exception>
     /// <remarks>This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.</remarks>
     /// <seealso cref="WebClient"/>
-    public static Uri UploadFile(this Uri uri, string file, object parameters = null, IEnumerable<KeyValuePair<string, string>> headers = null)
+    public static Uri UploadFile(this Uri uri, string file, object parameters = null, object headers = null)
     {
       Assertion.NotNull(uri);
       Assertion.NotNull(file);
@@ -242,12 +277,18 @@ namespace Catharsis.Commons
       {
         if (parameters != null)
         {
-          parameters.GetType().GetProperties().Each(property => web.QueryString.Add(property.Name, parameters.Property(property.Name).ToString()));
+          foreach (var parameter in parameters.PropertiesMap())
+          {
+            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
+          }
         }
 
         if (headers != null)
         {
-          headers.Each(header => web.Headers.Add(header.Key, header.Value));
+          foreach (var header in headers.PropertiesMap())
+          {
+            web.Headers.Add(header.Key, header.Value.ToString());
+          }
         }
 
         web.UploadFile(uri, file);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -16,7 +15,7 @@ namespace Catharsis.Commons
     const string Yandex = "http://yandex.ru";
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Bytes(Uri, object, IEnumerable{KeyValuePair{string,string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Bytes(Uri, object, object)"/> method.</para>
     /// </summary>
     [Fact]
     public void Bytes_Method()
@@ -27,7 +26,7 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.DownloadFile(Uri, string, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.DownloadFile(Uri, string, object, object)"/> method.</para>
     /// </summary>
     [Fact]
     public void DownloadFile_Methods()
@@ -43,7 +42,7 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Stream(Uri, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Stream(Uri, object, object)"/> method.</para>
     /// </summary>
     [Fact]
     public void Stream_Method()
@@ -55,7 +54,7 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.TextReader(Uri, Encoding, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.TextReader(Uri, Encoding, object, object)"/> method.</para>
     /// </summary>
     [Fact]
     public void TextReader_Method()
@@ -70,7 +69,7 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Text(Uri, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.Text(Uri, object, object)"/> method.</para>
     /// </summary>
     [Fact]
     public void Text_Method()
@@ -83,8 +82,8 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, byte[], object, IEnumerable{KeyValuePair{string, string}})"/></description></item>
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, string, object, IEnumerable{KeyValuePair{string, string}})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Upload(Uri, byte[], object, object)"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Upload(Uri, string, object, object)"/></description></item>
     ///   </list>
     /// </summary>
     [Fact(Skip = "To be implemented")]
@@ -99,7 +98,7 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string, object, IEnumerable{KeyValuePair{string, string}})"/> method.</para>
+    ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string, object, object)"/> method.</para>
     /// </summary>
     [Fact(Skip = "To be implemented")]
     public void UploadFile_Method()
