@@ -112,6 +112,21 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Replaces each format item in a string with the text equivalent of a corresponding object's value, using <see cref="CultureInfo.InvariantCulture"/> to perform string conversion of objects.</para>
+    /// </summary>
+    /// <param name="value">A composite format string.</param>
+    /// <param name="args">An object array that contains zero or more objects to format.</param>
+    /// <returns>A copy of <paramref name="value"/> in which the format items have been replaced by the string representation of the corresponding objects in <paramref name="args"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="string.Format(string, object[])"/>
+    public static string FormatInvariant(this string value, params object[] args)
+    {
+      Assertion.NotNull(value);
+
+      return string.Format(CultureInfo.InvariantCulture, value, args);
+    }
+
+    /// <summary>
     ///   <para>Converts HEX-encoded string into array of bytes.</para>
     /// </summary>
     /// <param name="value">HEX-encoded string to be converted to byte array.</param>

@@ -98,8 +98,24 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => StringExtensions.FormatSelf(null));
 
       Assert.Equal(string.Empty, string.Empty.FormatSelf());
+
       const string Text = "{0} is lesser than {1}";
-      Assert.Equal(string.Format(Text, 5, 10), Text.FormatSelf(5, 10));
+      Assert.Equal(string.Format(CultureInfo.CurrentCulture, Text, 15.5, true), Text.FormatSelf(15.5, true));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.FormatInvariant(string, object[])"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void FormatInvariant_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.FormatInvariant(null));
+
+      Assert.Equal(string.Empty, string.Empty.FormatInvariant());
+
+      const string Text = "{0} and {1}";
+      Assert.Equal(string.Format(CultureInfo.InvariantCulture, Text, 15.5, true), Text.FormatInvariant(15.5, true));
+      Assert.NotEqual(string.Format(CultureInfo.GetCultureInfo("ru"), Text, 15.5, true), Text.FormatInvariant(15.5, true));
     }
 
     /// <summary>
