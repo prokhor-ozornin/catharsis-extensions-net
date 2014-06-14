@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Xml;
 using System.Xml.Serialization;
 
 namespace Catharsis.Commons
@@ -36,33 +35,6 @@ namespace Catharsis.Commons
           reader.Close();
         }
       }
-    }
-
-    /// <summary>
-    ///   <para>Deserializes XML contents of <see cref="TextReader"/> into <see cref="XmlDocument"/> object.</para>
-    /// </summary>
-    /// <param name="reader"><see cref="TextReader"/> which is used as a source for XML data.</param>
-    /// <param name="close">Whether to automatically close <paramref name="reader"/> after deserialization process or leave it intact.</param>
-    /// <returns>Deserialized XML contents of source <paramref name="reader"/> as instance of <see cref="XmlDocument"/> class.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="XmlDocument"/>
-    public static XmlDocument XmlDocument(this TextReader reader, bool close = false)
-    {
-      Assertion.NotNull(reader);
-
-      var document = new XmlDocument();
-      try
-      {
-        document.Load(reader);
-      }
-      finally
-      {
-        if (close)
-        {
-          reader.Close();
-        }
-      }
-      return document;
     }
   }
 }

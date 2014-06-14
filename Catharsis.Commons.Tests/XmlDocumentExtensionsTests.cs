@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using Xunit;
 
@@ -76,6 +77,30 @@ namespace Catharsis.Commons
       element.InnerText = "Text";
       document.AppendChild(element);
       Assert.Equal("<?xml version=\"1.0\" encoding=\"utf-16\"?><article id=\"1\">Text</article>", document.String());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="XmlDocumentExtensions.XmlDocument(TextReader, bool)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void XmlDocument_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => XmlDocumentExtensions.XmlDocument(null));
+      Assert.Throws<XmlException>(() => TextReader.Null.XmlDocument());
+
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+
+      new StringReader(Xml).With(reader =>
+      {
+        Assert.Equal(Xml, reader.XmlDocument().String());
+        Assert.Equal(-1, reader.Read());
+      });
+
+      new StringReader(Xml).With(reader =>
+      {
+        Assert.Equal(Xml, reader.XmlDocument(true).String());
+        Assert.Throws<ObjectDisposedException>(() => reader.Read());
+      });
     }
   }
 }

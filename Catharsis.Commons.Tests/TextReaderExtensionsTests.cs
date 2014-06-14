@@ -111,30 +111,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="TextReaderXmlExtensions.XmlDocument(TextReader, bool)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void XmlDocument_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => TextReaderXmlExtensions.XmlDocument(null));
-      Assert.Throws<XmlException>(() => TextReader.Null.XmlDocument());
-
-      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-      
-      new StringReader(Xml).With(reader =>
-      {
-        Assert.Equal(Xml, reader.XmlDocument().String());
-        Assert.Equal(-1, reader.Read());
-      });
-
-      new StringReader(Xml).With(reader =>
-      {
-        Assert.Equal(Xml, reader.XmlDocument(true).String());
-        Assert.Throws<ObjectDisposedException>(() => reader.Read());
-      });
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="TextReaderExtensions.XmlReader(TextReader, bool)"/> method.</para>
     /// </summary>
     [Fact]

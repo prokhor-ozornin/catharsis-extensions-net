@@ -9,8 +9,8 @@
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Catharsis.Commons.WP._7._1</RootNamespace>
-    <AssemblyName>Catharsis.Commons.WP.7.1</AssemblyName>
+    <RootNamespace>Catharsis.Commons</RootNamespace>
+    <AssemblyName>Catharsis.Commons</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
@@ -39,7 +39,7 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>Bin\Release\Catharsis.Commons.WP.7.1.XML</DocumentationFile>
+    <DocumentationFile>Bin\Release\Catharsis.Commons.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="system" />
@@ -128,11 +128,17 @@
     <Compile Include="..\Catharsis.Commons.4.0\StringExtensions.cs">
       <Link>StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StringXmlExtensions.cs">
+      <Link>StringXmlExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\SymmetricAlgorithmExtensions.cs">
       <Link>SymmetricAlgorithmExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\TextReaderExtensions.cs">
       <Link>TextReaderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\TextReaderXmlExtensions.cs">
+      <Link>TextReaderXmlExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\TextWriterExtensions.cs">
       <Link>TextWriterExtensions.cs</Link>

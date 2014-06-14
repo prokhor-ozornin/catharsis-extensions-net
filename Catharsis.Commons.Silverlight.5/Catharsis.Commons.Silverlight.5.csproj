@@ -146,11 +146,17 @@
     <Compile Include="..\Catharsis.Commons.4.0\StringExtensions.cs">
       <Link>StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StringXmlExtensions.cs">
+      <Link>StringXmlExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\SymmetricAlgorithmExtensions.cs">
       <Link>SymmetricAlgorithmExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\TextReaderExtensions.cs">
       <Link>TextReaderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\TextReaderXmlExtensions.cs">
+      <Link>TextReaderXmlExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\TextWriterExtensions.cs">
       <Link>TextWriterExtensions.cs</Link>
