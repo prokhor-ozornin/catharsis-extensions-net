@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsis.Commons.Silverlig
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsis.Commons.Silverlight.3", "Catharsis.Commons.Silverlight.3\Catharsis.Commons.Silverlight.3.csproj", "{D4D44DD6-E90B-455A-BD99-29BD62BDE255}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsis.Commons.WP.7.1", "Catharsis.Commons.WP.7.1\Catharsis.Commons.WP.7.1.csproj", "{65EEA753-C157-4D3C-93F8-CFC3DA094C16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,16 @@ Global
 		{D4D44DD6-E90B-455A-BD99-29BD62BDE255}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D4D44DD6-E90B-455A-BD99-29BD62BDE255}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D4D44DD6-E90B-455A-BD99-29BD62BDE255}.Release|x86.ActiveCfg = Release|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{65EEA753-C157-4D3C-93F8-CFC3DA094C16}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
