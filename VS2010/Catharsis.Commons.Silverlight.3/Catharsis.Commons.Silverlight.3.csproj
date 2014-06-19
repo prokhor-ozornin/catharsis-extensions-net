@@ -133,6 +133,9 @@
     <Compile Include="..\Catharsis.Commons.4.0\StringExtensions.cs">
       <Link>StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StringHttpExtensions.cs">
+      <Link>StringHttpExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\StringXmlExtensions.cs">
       <Link>StringXmlExtensions.cs</Link>
     </Compile>

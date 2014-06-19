@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
-using System.Text;
 
 namespace Catharsis.Commons
 {
@@ -15,286 +16,296 @@ namespace Catharsis.Commons
     ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
     /// </summary>
     /// <param name="uri">The URI from which to download data.</param>
-    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
+    /// <returns>Response of web server in a binary format.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
+    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
+    /// <seealso cref="Bytes(Uri, IDictionary{string, object})"/>
+    /// <seealso cref="Bytes(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Bytes(Uri, object)"/>
+    public static byte[] Bytes(this Uri uri)
+    {
+      Assertion.NotNull(uri);
+
+      return uri.Bytes((object) null);
+    }
+
+    /// <summary>
+    ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
+    /// </summary>
+    /// <param name="uri">The URI from which to download data.</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
+    /// <returns>Response of web server in a binary format.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
+    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
+    /// <seealso cref="Bytes(Uri)"/>
+    /// <seealso cref="Bytes(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Bytes(Uri, object)"/>
+    public static byte[] Bytes(this Uri uri, IDictionary<string, object> headers = null)
+    {
+      Assertion.NotNull(uri);
+
+      return uri.Stream(headers).Bytes(true);
+    }
+
+    /// <summary>
+    ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
+    /// </summary>
+    /// <param name="uri">The URI from which to download data.</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
+    /// <returns>Response of web server in a binary format.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
+    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
+    /// <seealso cref="Bytes(Uri)"/>
+    /// <seealso cref="Bytes(Uri, IDictionary{string, object})"/>
+    /// <seealso cref="Bytes(Uri, object)"/>
+    public static byte[] Bytes(this Uri uri, IDictionary<string, string> headers = null)
+    {
+      Assertion.NotNull(uri);
+
+      return uri.Stream(headers).Bytes(true);
+    }
+
+    /// <summary>
+    ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
+    /// </summary>
+    /// <param name="uri">The URI from which to download data.</param>
     /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns>Response of web server in a binary format.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
     /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="WebClient"/>
-    public static byte[] Bytes(this Uri uri, object parameters = null, object headers = null)
+    /// <seealso cref="Bytes(Uri)"/>
+    /// <seealso cref="Bytes(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Bytes(Uri, IDictionary{string, object})"/>
+    public static byte[] Bytes(this Uri uri, object headers = null)
     {
       Assertion.NotNull(uri);
 
-      return new WebClient().With(web =>
-      {
-        if (parameters != null)
-        {
-          foreach (var parameter in parameters.PropertiesMap())
-          {
-            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
-          }
-        }
-
-        if (headers != null)
-        {
-          foreach (var header in headers.PropertiesMap())
-          {
-            web.Headers.Add(header.Key, header.Value.ToString());
-          }
-        }
-
-        return web.DownloadData(uri);
-      });
-    }
-
-    /// <summary>
-    ///   <para>Downloads the resource with the specified <see cref="Uri"/> to a local file.</para>
-    /// </summary>
-    /// <param name="uri">The URI from which to download data.</param>
-    /// <param name="file">The name of the local file that is to receive the data.</param>
-    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
-    /// <returns>Back reference to the current <see cref="Uri"/>.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="file"/> is <see cref="string.Empty"/> string.</exception>
-    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="WebClient"/>
-    public static Uri DownloadFile(this Uri uri, string file, object parameters = null, object headers = null)
-    {
-      Assertion.NotNull(uri);
-      Assertion.NotEmpty(file);
-
-      new WebClient().With(web =>
-      {
-        if (parameters != null)
-        {
-          foreach (var parameter in parameters.PropertiesMap())
-          {
-            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
-          }
-        }
-
-        if (headers != null)
-        {
-          foreach (var header in headers.PropertiesMap())
-          {
-            web.Headers.Add(header.Key, header.Value.ToString());
-          }
-        }
-
-        web.DownloadFile(uri, file);
-      });
-
-      return uri;
+      return uri.Bytes(headers != null ? headers.PropertiesMap() : null);
     }
 
     /// <summary>
     ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
     /// </summary>
     /// <param name="uri">The URI from which to download the data.</param>
-    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
-    /// <returns><see cref="Stream"/> to read web server's response data from HTTP connection.</returns>
+    /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
     /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="WebClient"/>
-    public static Stream Stream(this Uri uri, object parameters = null, object headers = null)
+    /// <seealso cref="Stream(Uri, IDictionary{string, object})"/>
+    /// <seealso cref="Stream(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Stream(Uri, object)"/>
+    public static Stream Stream(this Uri uri)
     {
       Assertion.NotNull(uri);
 
-      var web = new WebClient();
-
-      if (parameters != null)
-      {
-        foreach (var parameter in parameters.PropertiesMap())
-        {
-          web.QueryString.Add(parameter.Key, parameter.Value.ToString());
-        }
-      }
-
-      if (headers != null)
-      {
-        foreach (var header in headers.PropertiesMap())
-        {
-          web.Headers.Add(header.Key, header.Value.ToString());
-        }
-      }
-      
-      return web.OpenRead(uri);
+      return uri.Stream((object) null);
     }
 
     /// <summary>
-    ///   <para>Returns a <see cref="TextReader"/> to read data from a stream, opened for a resource with the specified <see cref="Uri"/>.</para>
+    ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
     /// </summary>
     /// <param name="uri">The URI from which to download the data.</param>
-    /// <param name="encoding">Encoding to be used by <see cref="TextReader"/> for conversion between response binary and text data. If not specified, default <see cref="Encoding.UTF8"/> encoding will be used.</param>
-    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
-    /// <returns><see cref="TextReader"/> to read web server's response data from HTTP connection.</returns>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
+    /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="WebClient"/>
-    public static TextReader TextReader(this Uri uri, Encoding encoding = null, object parameters = null, object headers = null)
+    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
+    /// <seealso cref="Stream(Uri)"/>
+    /// <seealso cref="Stream(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Stream(Uri, object)"/>
+    public static Stream Stream(this Uri uri, IDictionary<string, object> headers = null)
     {
       Assertion.NotNull(uri);
 
-      return uri.Stream(parameters, headers).TextReader(encoding);
+      if (uri.Scheme == Uri.UriSchemeFile)
+      {
+        return new FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read);
+      }
+
+      var request = WebRequest.Create(uri);
+
+      if (headers != null)
+      {
+        foreach (var header in headers)
+        {
+          request.Headers[header.Key] = header.Value.ToStringInvariant();
+        }
+      }
+
+      return request.GetResponse().GetResponseStream();
+    }
+
+    /// <summary>
+    ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
+    /// </summary>
+    /// <param name="uri">The URI from which to download the data.</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
+    /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
+    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
+    /// <seealso cref="Stream(Uri)"/>
+    /// <seealso cref="Stream(Uri, IDictionary{string, object})"/>
+    /// <seealso cref="Stream(Uri, object)"/>
+    public static Stream Stream(this Uri uri, IDictionary<string, string> headers = null)
+    {
+      Assertion.NotNull(uri);
+
+      if (uri.Scheme == Uri.UriSchemeFile)
+      {
+        return new FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read);
+      }
+
+      var request = WebRequest.Create(uri);
+
+      if (headers != null)
+      {
+        foreach (var header in headers)
+        {
+          request.Headers[header.Key] = header.Value;
+        }
+      }
+
+      return request.GetResponse().GetResponseStream();
+    }
+
+    /// <summary>
+    ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
+    /// </summary>
+    /// <param name="uri">The URI from which to download the data.</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
+    /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
+    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
+    /// <seealso cref="Stream(Uri)"/>
+    /// <seealso cref="Stream(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Stream(Uri, IDictionary{string, object})"/>
+    public static Stream Stream(this Uri uri, object headers = null)
+    {
+      Assertion.NotNull(uri);
+
+      return uri.Stream(headers != null ? headers.PropertiesMap() : null);
     }
 
     /// <summary>
     ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
     /// </summary>
     /// <param name="uri">The URI from which to download the data.</param>
-    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
     /// <returns>Web server's response in a text format.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="WebClient"/>
-    public static string Text(this Uri uri, object parameters = null, object headers = null)
+    /// <seealso cref="Text(Uri, IDictionary{string, object})"/>
+    /// <seealso cref="Text(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Text(Uri, object)"/>
+    public static string Text(this Uri uri)
     {
       Assertion.NotNull(uri);
 
-      return new WebClient().With(web =>
-      {
-        if (parameters != null)
-        {
-          foreach (var parameter in parameters.PropertiesMap())
-          {
-            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
-          }
-        }
-
-        if (headers != null)
-        {
-          foreach (var header in headers.PropertiesMap())
-          {
-            web.Headers.Add(header.Key, header.Value.ToString());
-          }
-        }
-
-        return web.DownloadString(uri);
-      });
+      return uri.Text((object) null);
     }
 
     /// <summary>
-    ///   <para>Uploads binary data to a resource identifier by a <see cref="Uri"/>.</para>
+    ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
     /// </summary>
-    /// <param name="uri">The URI of the resource to receive the data.</param>
-    /// <param name="data">Binary data to send to the resource.</param>
-    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
-    /// <returns>Back reference to the current <see cref="Uri"/>.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
-    /// <remarks>This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.</remarks>
-    /// <seealso cref="WebClient"/>
-    /// <seealso cref="Upload(Uri, string, object, object)"/>
-    public static Uri Upload(this Uri uri, byte[] data, object parameters = null, object headers = null)
-    {
-      Assertion.NotNull(uri);
-      Assertion.NotNull(data);
-
-      new WebClient().With(web =>
-      {
-        if (parameters != null)
-        {
-          foreach (var parameter in parameters.PropertiesMap())
-          {
-            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
-          }
-        }
-
-        if (headers != null)
-        {
-          foreach (var header in headers.PropertiesMap())
-          {
-            web.Headers.Add(header.Key, header.Value.ToString());
-          }
-        }
-
-        web.UploadData(uri, data);
-      });
-
-      return uri;
-    }
-
-    /// <summary>
-    ///   <para>Uploads the specified string to the specified resource.</para>
-    /// </summary>
-    /// <param name="uri">The URI of the resource to receive the string. For HTTP resources, this URI must identify a resource that can accept a request sent with the POST method.</param>
-    /// <param name="data">The string to be uploaded.</param>
-    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
+    /// <param name="uri">The URI from which to download the data.</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
     /// <returns>Web server's response in a text format.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="data"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="WebClient"/>
-    /// <seealso cref="Upload(Uri, byte[], object, object)"/>
-    public static Uri Upload(this Uri uri, string data, object parameters = null, object headers = null)
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Text(Uri)"/>
+    /// <seealso cref="Text(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Text(Uri, object)"/>
+    public static string Text(this Uri uri, IDictionary<string, object> headers = null)
     {
       Assertion.NotNull(uri);
-      Assertion.NotNull(data);
 
-      new WebClient().With(web =>
-      {
-        if (parameters != null)
-        {
-          foreach (var parameter in parameters.PropertiesMap())
-          {
-            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
-          }
-        }
-
-        if (headers != null)
-        {
-          foreach (var header in headers.PropertiesMap())
-          {
-            web.Headers.Add(header.Key, header.Value.ToString());
-          }
-        }
-
-        web.UploadString(uri, data);
-      });
-    
-      return uri;
+      return uri.Stream(headers).Text(true);
     }
 
     /// <summary>
-    ///   <para>Uploads a local file to a resource with the specified <see cref="Uri"/>.</para>
+    ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
     /// </summary>
-    /// <param name="uri">The URI of the resource to receive the file.</param>
-    /// <param name="file">The file to send to the resource.</param>
-    /// <param name="parameters">Optional set of URL query parameters (names and values of object's public properties).</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
-    /// <returns>Array of bytes, containing the body of the response from the resource.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="file"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="file"/> is <see cref="string.Empty"/> string.</exception>
-    /// <remarks>This method uses the STOR command to upload an FTP resource. For an HTTP resource, the POST method is used.</remarks>
-    /// <seealso cref="WebClient"/>
-    public static Uri UploadFile(this Uri uri, string file, object parameters = null, object headers = null)
+    /// <param name="uri">The URI from which to download the data.</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
+    /// <returns>Web server's response in a text format.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Text(Uri)"/>
+    /// <seealso cref="Text(Uri, object)"/>
+    /// <seealso cref="Text(Uri, IDictionary{string, object}"/>
+    public static string Text(this Uri uri, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(uri);
-      Assertion.NotNull(file);
 
-      new WebClient().With(web =>
-      {
-        if (parameters != null)
-        {
-          foreach (var parameter in parameters.PropertiesMap())
-          {
-            web.QueryString.Add(parameter.Key, parameter.Value.ToString());
-          }
-        }
+      return uri.Stream(headers).Text(true);
+    }
 
-        if (headers != null)
-        {
-          foreach (var header in headers.PropertiesMap())
-          {
-            web.Headers.Add(header.Key, header.Value.ToString());
-          }
-        }
+    /// <summary>
+    ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
+    /// </summary>
+    /// <param name="uri">The URI from which to download the data.</param>
+    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
+    /// <returns>Web server's response in a text format.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Text(Uri)"/>
+    /// <seealso cref="Text(Uri, object)"/>
+    /// <seealso cref="Text(Uri, IDictionary{string, object})"/>
+    public static string Text(this Uri uri, object headers = null)
+    {
+      Assertion.NotNull(uri);
 
-        web.UploadFile(uri, file);
-      });
+      return uri.Text(headers != null ? headers.PropertiesMap() : null);
+    }
 
-      return uri;
+    /// <summary>
+    ///   <para>Modifies target URL address by adding by adding given list of name/value pairs to its Query component.</para>
+    ///   <para>Names and values of query string parameters are URL-encoded.</para>
+    /// </summary>
+    /// <param name="uri">URI address to be modified.</param>
+    /// <param name="parameters">Map of name/value parameters for query string.</param>
+    /// <returns>Updated URI address.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="parameters"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Query(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Query(Uri, object)"/>
+    public static Uri Query(this Uri uri, IDictionary<string, object> parameters)
+    {
+      Assertion.NotNull(uri);
+      Assertion.NotNull(parameters);
+
+      var builder = new UriBuilder(uri);
+      var query = parameters.Select(parameter => "{0}={1}".FormatSelf(parameter.Key.UrlEncode(), parameter.Value.ToStringInvariant().UrlEncode())).Join("&");
+      builder.Query = builder.Query.Length > 1 ? builder.Query.Substring(1) + (query.IsEmpty() ? string.Empty : "&" + query) : query;
+      return builder.Uri;
+    }
+
+    /// <summary>
+    ///   <para>Modifies target URL address by adding by adding given list of name/value pairs to its Query component.</para>
+    ///   <para>Names and values of query string parameters are URL-encoded.</para>
+    /// </summary>
+    /// <param name="uri">URI address to be modified.</param>
+    /// <param name="parameters">Map of name/value parameters for query string.</param>
+    /// <returns>Updated URI address.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="parameters"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Query(Uri, object)"/>
+    /// <seealso cref="Query(Uri, IDictionary{string, object})"/>
+    public static Uri Query(this Uri uri, IDictionary<string, string> parameters)
+    {
+      var builder = new UriBuilder(uri);
+      var query = parameters.Select(parameter => "{0}={1}".FormatSelf(parameter.Key.UrlEncode(), parameter.Value.UrlEncode())).Join("&");
+      builder.Query = builder.Query.Length > 1 ? builder.Query.Substring(1) + (query.IsEmpty() ? string.Empty : "&" + query) : query;
+      return builder.Uri;
+    }
+
+    /// <summary>
+    ///   <para>Modifies target URL address by adding by adding given list of name/value pairs to its Query component.</para>
+    ///   <para>Names and values of query string parameters are URL-encoded.</para>
+    /// </summary>
+    /// <param name="uri">URI address to be modified.</param>
+    /// <param name="parameters">Map of name/value parameters for query string (public properties of object).</param>
+    /// <returns>Updated URI address.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="parameters"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Query(Uri, IDictionary{string, string})"/>
+    /// <seealso cref="Query(Uri, IDictionary{string, object})"/>
+    public static Uri Query(this Uri uri, object parameters)
+    {
+      Assertion.NotNull(uri);
+      Assertion.NotNull(parameters);
+
+      return uri.Query(parameters.PropertiesMap());
     }
   }
 }

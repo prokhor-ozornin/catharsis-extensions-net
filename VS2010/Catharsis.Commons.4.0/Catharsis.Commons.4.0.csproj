@@ -100,6 +100,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Net" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -116,7 +117,7 @@
     <Compile Include="FieldInfoExtensions.cs" />
     <Compile Include="FileInfoExtensions.cs" />
     <Compile Include="ICollectionExtensions.cs" />
-    <Compile Include="IEnumerableCollectionsExtensions.cs" />
+    <Compile Include="IEnumerableSetExtensions.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="IQueryableExtensions.cs" />
     <Compile Include="IQueryableTransformer.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="StringCryptographyExtensions.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="StringHtmlExtensions.cs" />
+    <Compile Include="StringHttpExtensions.cs" />
     <Compile Include="StringXmlExtensions.cs" />
     <Compile Include="SymmetricAlgorithmExtensions.cs" />
     <Compile Include="TextReaderXmlExtensions.cs" />

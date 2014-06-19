@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
+using System.Reflection;
 using Xunit;
 
 namespace Catharsis.Commons
@@ -15,99 +14,139 @@ namespace Catharsis.Commons
     const string Yandex = "http://yandex.ru";
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Bytes(Uri, object, object)"/> method.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="UriExtensions.Bytes(Uri)"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Bytes(Uri, IDictionary{string, object})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Bytes(Uri, IDictionary{string, string})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Bytes(Uri, object)"/></description></item>
+    ///   </list>
     /// </summary>
     [Fact]
-    public void Bytes_Method()
+    public void Bytes_Methods()
     {
       Assert.Throws<ArgumentNullException>(() => UriExtensions.Bytes(null));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Bytes(null, new Dictionary<string, object>()));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Bytes(null, new Dictionary<string, string>()));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Bytes(null, new object()));
 
+      var file = Assembly.GetExecutingAssembly().Location;
+      Assert.Equal(new FileInfo(file).Length, new Uri(file).Bytes().Length);
+      
       Assert.True(new Uri(Yandex).Bytes().Length > 0);
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.DownloadFile(Uri, string, object, object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void DownloadFile_Methods()
-    {
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.DownloadFile(null, "file"));
-      Assert.Throws<ArgumentNullException>(() => "http://uri.com".ToUri().DownloadFile(null));
-      Assert.Throws<ArgumentException>(() => "http://uri.com".ToUri().DownloadFile(string.Empty));
-
-      var uri = new Uri(Yandex);
-      var file = Path.GetTempFileName();
-      Assert.True(ReferenceEquals(uri.DownloadFile(file), uri));
-      Assert.True(new FileInfo(file).Length > 0);
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Stream(Uri, object, object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void Stream_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.Stream(null));
-
-      var stream = new Uri(Yandex).Stream();
-      Assert.True(stream.Bytes().Length > 0);
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.TextReader(Uri, Encoding, object, object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void TextReader_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.TextReader(null));
-
-      var uri = new Uri(Yandex);
-      Assert.NotEqual(uri.TextReader(Encoding.Unicode).Text(), uri.TextReader().Text());
-      var textReader = uri.TextReader();
-      Assert.True(textReader is StreamReader);
-      Assert.True(textReader.Text().Length > 0);
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.Text(Uri, object, object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void Text_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.Text(null));
-
-      Assert.True(new Uri(Yandex).Text().Length > 0);
     }
 
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, byte[], object, object)"/></description></item>
-    ///     <item><description><see cref="UriExtensions.Upload(Uri, string, object, object)"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Stream(Uri)"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Stream(Uri, IDictionary{string, object})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Stream(Uri, IDictionary{string, string})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Stream(Uri, object)"/></description></item>
     ///   </list>
     /// </summary>
-    [Fact(Skip = "To be implemented")]
-    public void Upload_Methods()
+    [Fact]
+    public void Stream_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.Upload(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => Yandex.ToUri().Upload((byte[]) null));
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.Upload(null, string.Empty));
-      Assert.Throws<ArgumentNullException>(() => Yandex.ToUri().Upload((string)null));
-      
-      throw new NotImplementedException();
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Stream(null));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Stream(null, new Dictionary<string, object>()));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Stream(null, new Dictionary<string, string>()));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Stream(null, new object()));
+
+      var file = Assembly.GetExecutingAssembly().Location;
+      var stream = new Uri(file).Stream();
+      using (stream)
+      {
+        Assert.True(stream is FileStream);
+        Assert.Equal(new FileInfo(file).Length, stream.Length);
+        Assert.True(stream.CanRead);
+        Assert.False(stream.CanWrite);
+        Assert.True(stream.CanSeek);
+        Assert.False(stream.CanTimeout);
+      }
+      Assert.False(stream.CanRead);
+
+      stream = new Uri(Yandex).Stream();
+      using (stream)
+      {
+        Assert.True(stream.CanRead);
+        Assert.False(stream.CanWrite);
+        Assert.False(stream.CanSeek);
+        Assert.True(stream.CanTimeout);
+      }
+      Assert.False(stream.CanRead);
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="UriExtensions.UploadFile(Uri, string, object, object)"/> method.</para>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="UriExtensions.Text(Uri)"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Text(Uri, IDictionary{string, object})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Text(Uri, IDictionary{string, string})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Text(Uri, object)"/></description></item>
+    ///   </list>
     /// </summary>
-    [Fact(Skip = "To be implemented")]
-    public void UploadFile_Method()
+    [Fact]
+    public void Text_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => UriExtensions.UploadFile(null, "file"));
-      Assert.Throws<ArgumentNullException>(() => Yandex.ToUri().UploadFile(null));
-      Assert.Throws<WebException>(() => Yandex.ToUri().UploadFile(string.Empty));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Text(null));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Text(null, new Dictionary<string, object>()));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Text(null, new Dictionary<string, string>()));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Text(null, new object()));
 
-      throw new NotImplementedException();
+      var file = Assembly.GetExecutingAssembly().Location;
+      var text = new Uri(file).Text();
+      Assert.True(text.Length > 0);
+
+      text = new Uri(Yandex).Text();
+      Assert.True(text.Length > 0);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="UriExtensions.Query(Uri, IDictionary{string, object})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Query(Uri, IDictionary{string, string})"/></description></item>
+    ///     <item><description><see cref="UriExtensions.Query(Uri, object)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Query_Methods()
+    {
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Query(null, new Dictionary<string, object>()));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Query(null, new Dictionary<string, string>()));
+      Assert.Throws<ArgumentNullException>(() => UriExtensions.Query(null, new object()));
+
+      var uri = new Uri("http://yandex.ru");
+      Assert.Equal(0, uri.Query.Length);
+
+      Assert.False(ReferenceEquals(uri, uri.Query(new Dictionary<string, object>())));
+      Assert.Equal(uri, uri.Query(new Dictionary<string, object>()));
+
+      Assert.False(ReferenceEquals(uri, uri.Query(new Dictionary<string, string>())));
+      Assert.Equal(uri, uri.Query(new Dictionary<string, string>()));
+
+      Assert.False(ReferenceEquals(uri, uri.Query(new { })));
+      Assert.Equal(uri, uri.Query(new { }));
+
+      Assert.Equal("http://yandex.ru/?first=1", uri.Query(new Dictionary<string, object> { { "first", 1 } }).ToString());
+      Assert.Equal("?first=1&second%23=second%3F", uri.Query(new Dictionary<string, object> { { "first", 1 }, { "second#", "second?" } }).Query);
+
+      Assert.Equal("http://yandex.ru/?first=1", uri.Query(new Dictionary<string, string> { { "first", "1" } }).ToString());
+      Assert.Equal("?first=1&second%23=second%3F", uri.Query(new Dictionary<string, string> { { "first", "1" }, { "second#", "second?" } }).Query);
+
+      Assert.Equal("http://yandex.ru/?first=1", uri.Query(new { first = 1 }).ToString());
+      Assert.Equal("?first=1&second=second%3F", uri.Query(new Dictionary<string, string> { { "first", "1" }, { "second", "second?" } }).Query);
+
+
+      uri = new Uri("http://yandex.ru?first=1");
+      Assert.Equal(8, uri.Query.Length);
+
+      Assert.Equal("http://yandex.ru/?first=1", uri.Query(new Dictionary<string, object>()).ToString());
+      Assert.Equal("?first=1&second%23=second%3F", uri.Query(new Dictionary<string, object> { { "second#", "second?" } }).Query);
+
+      Assert.Equal("http://yandex.ru/?first=1", uri.Query(new Dictionary<string, string>()).ToString());
+      Assert.Equal("?first=1&second%23=second%3F", uri.Query(new Dictionary<string, string> { { "second#", "second?" } }).Query);
     }
   }
 }

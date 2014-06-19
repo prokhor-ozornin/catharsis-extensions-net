@@ -21,7 +21,7 @@ namespace Catharsis.Commons
     {
       Assertion.NotNull(value);
 
-      return value.Length > 0 ? WebUtility.HtmlDecode(value) : value;
+      return WebUtility.HtmlDecode(value);
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ namespace Catharsis.Commons
     {
       Assertion.NotNull(value);
 
-      return value.Length > 0 ? WebUtility.HtmlEncode(value) : value;
+      return WebUtility.HtmlEncode(value);
     }
   }
 }

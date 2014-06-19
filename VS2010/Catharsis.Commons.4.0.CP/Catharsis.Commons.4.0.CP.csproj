@@ -76,11 +76,11 @@
     <Compile Include="..\Catharsis.Commons.4.0\ICollectionExtensions.cs">
       <Link>ICollectionExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\IEnumerableCollectionsExtensions.cs">
-      <Link>IEnumerableCollectionsExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\IEnumerableExtensions.cs">
       <Link>IEnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\IEnumerableSetExtensions.cs">
+      <Link>IEnumerableSetExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\IQueryableExtensions.cs">
       <Link>IQueryableExtensions.cs</Link>
@@ -147,6 +147,9 @@
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\StringHtmlExtensions.cs">
       <Link>StringHtmlExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StringHttpExtensions.cs">
+      <Link>StringHttpExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\StringXmlExtensions.cs">
       <Link>StringXmlExtensions.cs</Link>

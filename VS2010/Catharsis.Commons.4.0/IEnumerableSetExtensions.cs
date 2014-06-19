@@ -7,7 +7,7 @@ namespace Catharsis.Commons
   ///   <para>Set of extension methods for interface <see cref="IEnumerable{T}"/>.</para>
   /// </summary>
   /// <seealso cref="IEnumerable{T}"/>
-  public static class IEnumerableCollectionsExtensions
+  public static class IEnumerableSetExtensions
   {
     /// <summary>
     ///   <para>Converts sequence of elements into a set collection type.</para>
