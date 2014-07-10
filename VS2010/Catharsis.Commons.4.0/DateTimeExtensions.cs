@@ -75,7 +75,7 @@ namespace Catharsis.Commons
     /// <seealso cref="IsSameDate(DateTime, DateTime)"/>
     public static bool IsSameTime(this DateTime self, DateTime other)
     {
-        return self.Second == other.Second && self.Minute == other.Minute && self.Hour == other.Hour;
+      return self.Second == other.Second && self.Minute == other.Minute && self.Hour == other.Hour;
     }
 
     /// <summary>
@@ -193,6 +193,83 @@ namespace Catharsis.Commons
     public static DateTime StartOfYear(this DateTime dateTime)
     {
       return new DateTime(dateTime.Year, 1, 1, 0, 0, 0, dateTime.Kind);
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified <see cref="DateTime"/> object represents a Friday day of week.</para>
+    /// </summary>
+    /// <param name="date">Date instance.</param>
+    /// <returns><c>true</c> of <paramref name="date"/>'s day of week is Friday, false if not.</returns>
+    /// <seealso cref="DateTime.DayOfWeek"/>
+    public static bool Friday(this DateTime date)
+    {
+      return date.DayOfWeek == DayOfWeek.Friday;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified <see cref="DateTime"/> object represents a Monday day of week.</para>
+    /// </summary>
+    /// <param name="date">Date instance.</param>
+    /// <returns><c>true</c> of <paramref name="date"/>'s day of week is Monday, false if not.</returns>
+    /// <seealso cref="DateTime.DayOfWeek"/>
+    public static bool Monday(this DateTime date)
+    {
+      return date.DayOfWeek == DayOfWeek.Monday;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified <see cref="DateTime"/> object represents a Saturday day of week.</para>
+    /// </summary>
+    /// <param name="date">Date instance.</param>
+    /// <returns><c>true</c> of <paramref name="date"/>'s day of week is Saturday, false if not.</returns>
+    /// <seealso cref="DateTime.DayOfWeek"/>
+    public static bool Saturday(this DateTime date)
+    {
+      return date.DayOfWeek == DayOfWeek.Saturday;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified <see cref="DateTime"/> object represents a Sunday day of week.</para>
+    /// </summary>
+    /// <param name="date">Date instance.</param>
+    /// <returns><c>true</c> of <paramref name="date"/>'s day of week is Sunday, false if not.</returns>
+    /// <seealso cref="DateTime.DayOfWeek"/>
+    public static bool Sunday(this DateTime date)
+    {
+      return date.DayOfWeek == DayOfWeek.Sunday;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified <see cref="DateTime"/> object represents a Thursday day of week.</para>
+    /// </summary>
+    /// <param name="date">Date instance.</param>
+    /// <returns><c>true</c> of <paramref name="date"/>'s day of week is Thursday, false if not.</returns>
+    /// <seealso cref="DateTime.DayOfWeek"/>
+    public static bool Thursday(this DateTime date)
+    {
+      return date.DayOfWeek == DayOfWeek.Thursday;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified <see cref="DateTime"/> object represents a Tuesday day of week.</para>
+    /// </summary>
+    /// <param name="date">Date instance.</param>
+    /// <returns><c>true</c> of <paramref name="date"/>'s day of week is Tuesday, false if not.</returns>
+    /// <seealso cref="DateTime.DayOfWeek"/>
+    public static bool Tuesday(this DateTime date)
+    {
+      return date.DayOfWeek == DayOfWeek.Tuesday;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified <see cref="DateTime"/> object represents a Wednesday day of week.</para>
+    /// </summary>
+    /// <param name="date">Date instance.</param>
+    /// <returns><c>true</c> of <paramref name="date"/>'s day of week is Wednesday, false if not.</returns>
+    /// <seealso cref="DateTime.DayOfWeek"/>
+    public static bool Wednesday(this DateTime date)
+    {
+      return date.DayOfWeek == DayOfWeek.Wednesday;
     }
   }
 }

@@ -242,5 +242,262 @@ namespace Catharsis.Commons
         action();
       }
     }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of days.</para>
+    /// </summary>
+    /// <param name="count">Number of days.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Days(this byte count)
+    {
+      return new TimeSpan(count, 0, 0, 0);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of days.</para>
+    /// </summary>
+    /// <param name="count">Number of days.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Days(this short count)
+    {
+      return new TimeSpan(count, 0, 0, 0);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of days.</para>
+    /// </summary>
+    /// <param name="count">Number of days.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Days(this int count)
+    {
+      return new TimeSpan(count, 0, 0, 0);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of hours.</para>
+    /// </summary>
+    /// <param name="count">Number of hours.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Hours(this byte count)
+    {
+      return new TimeSpan(count, 0, 0);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of hours.</para>
+    /// </summary>
+    /// <param name="count">Number of hours.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Hours(this short count)
+    {
+      return new TimeSpan(count, 0, 0);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of hours.</para>
+    /// </summary>
+    /// <param name="count">Number of hours.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Hours(this int count)
+    {
+      return new TimeSpan(count, 0, 0);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of minutes.</para>
+    /// </summary>
+    /// <param name="count">Number of minutes.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Minutes(this byte count)
+    {
+      return new TimeSpan(0, count, 0);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of minutes.</para>
+    /// </summary>
+    /// <param name="count">Number of minutes.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Minutes(this short count)
+    {
+      return new TimeSpan(0, count, 0);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of minutes.</para>
+    /// </summary>
+    /// <param name="count">Number of minutes.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Minutes(this int count)
+    {
+      return new TimeSpan(0, count, 0);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of seconds.</para>
+    /// </summary>
+    /// <param name="count">Number of seconds.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Seconds(this byte count)
+    {
+      return new TimeSpan(0, 0, count);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of seconds.</para>
+    /// </summary>
+    /// <param name="count">Number of seconds.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Seconds(this short count)
+    {
+      return new TimeSpan(0, 0, count);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of seconds.</para>
+    /// </summary>
+    /// <param name="count">Number of seconds.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Seconds(this int count)
+    {
+      return new TimeSpan(0, 0, count);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of milliseconds.</para>
+    /// </summary>
+    /// <param name="count">Number of milliseconds.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Milliseconds(this byte count)
+    {
+      return new TimeSpan(0, 0, 0, 0, count);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of milliseconds.</para>
+    /// </summary>
+    /// <param name="count">Number of milliseconds.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Milliseconds(this short count)
+    {
+      return new TimeSpan(0, 0, 0, 0, count);
+    }
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of milliseconds.</para>
+    /// </summary>
+    /// <param name="count">Number of milliseconds.</param>
+    /// <returns>Time span instance.</returns>
+    public static TimeSpan Milliseconds(this int count)
+    {
+      return new TimeSpan(0, 0, 0, 0, count);
+    }
+
+    /// <summary>
+    ///   <para>Returns the smallest integer greater than or equal to the specified number.</para>
+    /// </summary>
+    /// <param name="value">A double-precision floating-point number.</param>
+    /// <returns>The smallest integral value that is greater than or equal to <paramref name="value"/>.</returns>
+    /// <seealso cref="Math.Ceiling(double)"/>
+    public static double Ceil(this double value)
+    {
+      return Math.Ceiling(value);
+    }
+
+    /// <summary>
+    ///   <para>Returns the largest integer less than or equal to the specified number.</para>
+    /// </summary>
+    /// <param name="value">A double-precision floating-point number.</param>
+    /// <returns>The largest integer less than or equal to <paramref name="value"/>.</returns>
+    /// <seealso cref="Math.Floor(double)"/>
+    public static double Floor(this double value)
+    {
+      return Math.Floor(value);
+    }
+
+    /// <summary>
+    ///   <para>Returns a specified number raised to the specified power.</para>
+    /// </summary>
+    /// <param name="value">A double-precision floating-point number to be raised to a power.</param>
+    /// <param name="power">A double-precision floating-point number that specifies a power.</param>
+    /// <returns>The number <paramref name="value"/> raised to the power <paramref name="power"/>.</returns>
+    /// <seealso cref="Math.Pow(double, double)"/>
+    public static double Power(this double value, double power)
+    {
+      return Math.Pow(value, power);
+    }
+
+    /// <summary>
+    ///   <para>Rounds a double-precision floating-point value to the nearest integral value.</para>
+    /// </summary>
+    /// <param name="value">A double-precision floating-point number to be rounded.</param>
+    /// <returns>The integer nearest <paramref name="value"/>.</returns>
+    /// <seealso cref="Math.Round(double)"/>
+    public static double Round(this double value)
+    {
+      return Math.Round(value);
+    }
+
+    /// <summary>
+    ///   <para>Rounds a decimal value to the nearest integral value.</para>
+    /// </summary>
+    /// <param name="value">A decimal number to be rounded.</param>
+    /// <returns>The integer nearest <paramref name="value"/>.</returns>
+    /// <seealso cref="Math.Round(decimal)"/>
+    public static decimal Round(this decimal value)
+    {
+      return Math.Round(value);
+    }
+
+    /// <summary>
+    ///   <para>Returns the square root of a specified number.</para>
+    /// </summary>
+    /// <param name="value">Source number.</param>
+    /// <returns>Square root of <paramref name="value"/>.</returns>
+    /// <seealso cref="Math.Sqrt(double)"/>
+    public static double Sqrt(this double value)
+    {
+      return Math.Sqrt(value);
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified numeric value is an even number.</para>
+    /// </summary>
+    /// <param name="value">Numeric value.</param>
+    /// <returns><c>true</c> if <paramref name="value"/> is even number, <c>false</c> if not.</returns>
+    public static bool Even(this byte value)
+    {
+      return value % 2 == 0;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified numeric value is an even number.</para>
+    /// </summary>
+    /// <param name="value">Numeric value.</param>
+    /// <returns><c>true</c> if <paramref name="value"/> is even number, <c>false</c> if not.</returns>
+    public static bool Even(this short value)
+    {
+      return value % 2 == 0;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified numeric value is an even number.</para>
+    /// </summary>
+    /// <param name="value">Numeric value.</param>
+    /// <returns><c>true</c> if <paramref name="value"/> is even number, <c>false</c> if not.</returns>
+    public static bool Even(this int value)
+    {
+      return value % 2 == 0;
+    }
+
+    /// <summary>
+    ///   <para>Determines whether specified numeric value is an even number.</para>
+    /// </summary>
+    /// <param name="value">Numeric value.</param>
+    /// <returns><c>true</c> if <paramref name="value"/> is even number, <c>false</c> if not.</returns>
+    public static bool Even(this long value)
+    {
+      return value % 2 == 0;
+    }
   }
 }

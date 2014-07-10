@@ -50,11 +50,11 @@ namespace Catharsis.Commons
     {
       Assertion.NotNull(subject);
 
-      return new MemoryStream().With(stream =>
+      using (var stream = new MemoryStream())
       {
         subject.Binary(stream);
-        return stream;
-      }).ToArray();
+        return stream.ToArray();
+      }
     }
   }
 }

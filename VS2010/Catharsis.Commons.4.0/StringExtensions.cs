@@ -81,22 +81,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Calls specified delegate method for each line that occurs within a given string.</para>
-    ///   <para><see cref="Environment.NewLine"/> characters are used to determine end of lines within a <paramref name="value"/> string.</para>
-    /// </summary>
-    /// <param name="value">Source string for evaluation.</param>
-    /// <param name="action">Delegate that represents a method to be called.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="value"/> or <paramref name="action"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="string.Split(string[], StringSplitOptions)"/>
-    public static void EachLine(this string value, Action<string> action)
-    {
-      Assertion.NotNull(value);
-      Assertion.NotNull(action);
-
-      value.Split(new [] { Environment.NewLine }, StringSplitOptions.None).Each(action);
-    }
-
-    /// <summary>
     ///   <para>Replaces each format item in a string with the text equivalent of a corresponding object's value.</para>
     /// </summary>
     /// <param name="value">A composite format string.</param>
@@ -656,6 +640,57 @@ namespace Catharsis.Commons
     public static bool Whitespace(this string value)
     {
       return string.IsNullOrEmpty(value) || value.Trim().Length == 0;
+    }
+
+    /// <summary>
+    ///   <para>Splits given string on a newline (<see cref="Environment.NewLine"/>) character into array of strings.</para>
+    ///   <para>If source string is <see cref="string.Empty"/>, empty array is returned.</para>
+    /// </summary>
+    /// <param name="value">Source string to be splitted.</param>
+    /// <returns>Target array of strings, which are part of <paramref name="value"/> string.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    public static string[] Lines(this string value)
+    {
+      Assertion.NotNull(value);
+
+      return value.IsEmpty() ? Enumerable.Empty<string>().ToArray() : value.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+    }
+
+    /// <summary>
+    ///   <para>Prepends specified string to the target one, concatenating both of them.</para>
+    /// </summary>
+    /// <param name="self">Source string.</param>
+    /// <param name="other">String to prepend.</param>
+    /// <returns>Concatenated result of <paramref name="other"/> and <paramref name="self"/> string.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static string Prepend(this string self, string other)
+    {
+      Assertion.NotNull(self);
+
+      return other + self;
+    }
+
+    /// <summary>
+    ///   <para>Alters case of all characters inside a string, using provided culture.</para>
+    ///   <para>Upper-case characters are converted to lower-case and vice versa.</para>
+    /// </summary>
+    /// <param name="value">Source string to be converted.</param>
+    /// <param name="culture">Culture to use for case conversion, or a <c>null</c> reference to use <see cref="CultureInfo.InvariantCulture"/>.</param>
+    /// <returns>Result string with swapped case of characters from <paramref name="value"/> string.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    public static string SwapCase(this string value, CultureInfo culture = null)
+    {
+      Assertion.NotNull(value);
+
+      culture = culture ?? CultureInfo.InvariantCulture;
+
+      var sb = new StringBuilder(value.Length);
+      foreach (var character in value)
+      {
+        sb.Append(char.IsUpper(character) ? char.ToLower(character, culture) : char.ToUpper(character, culture));
+      }
+
+      return sb.ToString();
     }
   }
 }

@@ -19,19 +19,19 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => TextReaderExtensions.Lines(null));
 
-      new StringReader(string.Empty).With(reader =>
+      using (var reader = new StringReader(string.Empty))
       {
         Assert.False(reader.Lines().Any());
         Assert.Equal(-1, reader.Read());
-      });
+      }
 
-      new StringReader(string.Empty).With(reader =>
+      using (var reader = new StringReader(string.Empty))
       {
         Assert.False(reader.Lines(true).Any());
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
-      });
+      }
 
-      new StringReader("First{0}Second{0}".FormatSelf(Environment.NewLine)).With(reader =>
+      using (var reader = new StringReader("First{0}Second{0}".FormatSelf(Environment.NewLine)))
       {
         var lines = reader.Lines();
         Assert.Equal(2, lines.Count);
@@ -39,7 +39,7 @@ namespace Catharsis.Commons
         Assert.Equal("Second", lines[1]);
         Assert.False(reader.Lines().Any());
         Assert.Equal(-1, reader.Read());
-      });
+      }
     }
 
     /// <summary>
@@ -52,38 +52,38 @@ namespace Catharsis.Commons
 
       var text = Guid.NewGuid().ToString();
       
-      new StringReader(text).With(reader =>
+      using (var reader = new StringReader(text))
       {
         Assert.Equal(text, reader.Text());
         Assert.Equal(-1, reader.Read());
-      });
+      }
 
-      new StringReader(text).With(reader =>
+      using (var reader = new StringReader(text))
       {
         Assert.Equal(text, reader.Text(true));
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
-      });
+      }
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="TextReaderXmlExtensions.Xml{T}(TextReader, bool, Type[])"/> method.</para>
+    ///   <para>Performs testing of <see cref="TextReaderXmlExtensions.AsXml{T}(TextReader, bool, Type[])"/> method.</para>
     /// </summary>
     [Fact]
-    public void Xml_Method()
+    public void AsXml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => TextReaderXmlExtensions.Xml<object>(null));
+      Assert.Throws<ArgumentNullException>(() => TextReaderXmlExtensions.AsXml<object>(null));
 
       var subject = Guid.Empty;
-      new StringReader(subject.Xml()).With(reader =>
+      using (var reader = new StringReader(subject.ToXml()))
       {
-        Assert.True(reader.Xml<Guid>() == subject);
+        Assert.True(reader.AsXml<Guid>() == subject);
         reader.ReadLine();
-      });
-      new StringReader(subject.Xml()).With(reader =>
+      }
+      using (var reader = new StringReader(subject.ToXml()))
       {
-        Assert.Equal(subject, reader.Xml<Guid>(true));
+        Assert.Equal(subject, reader.AsXml<Guid>(true));
         Assert.Throws<ObjectDisposedException>(() => reader.ReadLine());
-      });
+      }
     }
 
     /// <summary>
@@ -97,17 +97,17 @@ namespace Catharsis.Commons
 
       const string Xml = "<?xml version=\"1.0\"?><article>text</article>";
 
-      new StringReader(Xml).With(reader =>
+      using (var reader = new StringReader(Xml))
       {
         Assert.Equal("<article>text</article>", reader.XDocument().ToString());
         Assert.Equal(-1, reader.Read());
-      });
+      }
 
-      new StringReader(Xml).With(reader =>
+      using (var reader = new StringReader(Xml))
       {
         Assert.Equal("<article>text</article>", reader.XDocument(true).ToString());
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
-      });
+      }
     }
 
     /// <summary>

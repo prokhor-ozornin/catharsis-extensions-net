@@ -21,7 +21,7 @@ namespace Catharsis.Commons
     /// <returns>Deserialized XML contents of source <paramref name="stream"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="XmlSerializer"/>
-    public static T Xml<T>(this Stream stream, bool close = false, params Type[] types)
+    public static T AsXml<T>(this Stream stream, bool close = false, params Type[] types)
     {
       Assertion.NotNull(stream);
 
@@ -47,7 +47,7 @@ namespace Catharsis.Commons
     /// <returns>Deserialized XML contents of source <paramref name="stream"/> as instance of <see cref="XmlDocument"/> class.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="XmlDocument"/>
-    public static XmlDocument XmlDocument(this Stream stream, bool close = false)
+    public static XmlDocument AsXmlDocument(this Stream stream, bool close = false)
     {
       Assertion.NotNull(stream);
 

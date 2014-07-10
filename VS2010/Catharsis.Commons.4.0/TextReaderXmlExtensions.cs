@@ -19,7 +19,7 @@ namespace Catharsis.Commons
     /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
     /// <returns>Deserialized XML contents of source <paramref name="reader"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is a <c>null</c> reference.</exception>
-    public static T Xml<T>(this TextReader reader, bool close = false, params Type[] types)
+    public static T AsXml<T>(this TextReader reader, bool close = false, params Type[] types)
     {
       Assertion.NotNull(reader);
 

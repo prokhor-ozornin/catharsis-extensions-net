@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -51,7 +52,10 @@ namespace Catharsis.Commons
 
       if (text.Length > 0)
       {
-        file.OpenWrite().TextWriter(encoding).With(writer => writer.Write(text));
+        using (var writer = file.OpenWrite().TextWriter(encoding))
+        {
+          writer.Write(text);
+        }
         file.Refresh();
       }
 
@@ -72,7 +76,7 @@ namespace Catharsis.Commons
       Assertion.NotNull(file);
       Assertion.NotNull(stream);
 
-      file.OpenWrite().With(destination =>
+      using (var destination = file.OpenWrite())
       {
         const int bufferSize = 4096;
         var buffer = new byte[bufferSize];
@@ -81,7 +85,7 @@ namespace Catharsis.Commons
         {
           destination.Write(buffer, 0, count);
         }
-      });
+      }
 
       file.Refresh();
 
@@ -128,7 +132,10 @@ namespace Catharsis.Commons
     {
       Assertion.NotNull(file);
 
-      return file.OpenRead().TextReader(encoding).With(reader => reader.Lines());
+      using (var reader = file.OpenRead().TextReader(encoding))
+      {
+        return reader.Lines();
+      }
     }
 
     /// <summary>
@@ -142,7 +149,10 @@ namespace Catharsis.Commons
     {
       Assertion.NotNull(file);
 
-      return file.OpenRead().TextReader(encoding).With(reader => reader.Text());
+      using (var reader = file.OpenRead().TextReader(encoding))
+      {
+        return reader.Text();
+      }
     }
   }
 }

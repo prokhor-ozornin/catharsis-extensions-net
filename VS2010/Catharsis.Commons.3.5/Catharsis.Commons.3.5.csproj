@@ -136,6 +136,9 @@
     <Compile Include="..\Catharsis.Commons.4.0\StringCryptographyExtensions.cs">
       <Link>StringCryptographyExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StringExtendedExtensions.cs">
+      <Link>StringExtendedExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\StringExtensions.cs">
       <Link>StringExtensions.cs</Link>
     </Compile>
@@ -156,6 +159,9 @@
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\TextWriterExtensions.cs">
       <Link>TextWriterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\TimeSpanExtensions.cs">
+      <Link>TimeSpanExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Catharsis.Commons.4.0\TypeExtensions.cs">
       <Link>TypeExtensions.cs</Link>

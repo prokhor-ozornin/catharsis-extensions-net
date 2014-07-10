@@ -133,6 +133,7 @@
     <Compile Include="TestObject.cs" />
     <Compile Include="TextReaderExtensionsTests.cs" />
     <Compile Include="TextWriterExtensionsTests.cs" />
+    <Compile Include="TimeSpanExtensionsTests.cs" />
     <Compile Include="TypeExtensionsTests.cs" />
     <Compile Include="UriExtensionsTests.cs" />
     <Compile Include="XDocumentExtensionsTests.cs" />

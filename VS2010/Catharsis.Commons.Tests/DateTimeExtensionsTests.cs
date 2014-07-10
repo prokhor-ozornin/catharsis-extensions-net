@@ -236,5 +236,75 @@ namespace Catharsis.Commons
       Assert.Equal(0, startOfYear.Second);
       Assert.Equal(0, startOfYear.Millisecond);
     }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.Friday(DateTime)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Friday_Method()
+    {
+      Assert.True(new DateTime(2014, 1, 3).Friday());
+      Assert.False(new DateTime(2014, 1, 4).Friday());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.Monday(DateTime)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Monday_Method()
+    {
+      Assert.True(new DateTime(2013, 12, 30).Monday());
+      Assert.False(new DateTime(2013, 12, 31).Monday());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.Saturday(DateTime)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Saturday_Method()
+    {
+      Assert.True(new DateTime(2014, 1, 4).Saturday());
+      Assert.False(new DateTime(2014, 1, 5).Saturday());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.Sunday(DateTime)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Sunday_Method()
+    {
+      Assert.True(new DateTime(2014, 1, 5).Sunday());
+      Assert.False(new DateTime(2014, 1, 6).Sunday());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.Thursday(DateTime)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Thursday_Method()
+    {
+      Assert.True(new DateTime(2014, 1, 2).Thursday());
+      Assert.False(new DateTime(2014, 1, 3).Thursday());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.Tuesday(DateTime)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Tuesday_Method()
+    {
+      Assert.True(new DateTime(2013, 12, 31).Tuesday());
+      Assert.False(new DateTime(2014, 1, 1).Tuesday());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.Wednesday(DateTime)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Wednesday_Method()
+    {
+      Assert.True(new DateTime(2014, 1, 1).Wednesday());
+      Assert.False(new DateTime(2014, 1, 2).Wednesday());
+    }
   }
 }

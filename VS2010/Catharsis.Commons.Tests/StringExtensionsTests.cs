@@ -71,25 +71,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtensions.EachLine(string, Action{string})"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void EachLine_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StringExtensions.EachLine(null, s => { }));
-      Assert.Throws<ArgumentNullException>(() => string.Empty.EachLine(null));
-
-      var text = "First{0}Second{0}Third{0}".FormatSelf(Environment.NewLine);
-      var list = new List<string>();
-      text.EachLine(list.Add);
-      Assert.Equal(4, list.Count);
-      Assert.Equal("First", list[0]);
-      Assert.Equal("Second", list[1]);
-      Assert.Equal("Third", list[2]);
-      Assert.Equal(string.Empty, list[3]);
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="StringExtensions.FormatSelf(string, object[])"/> method.</para>
     /// </summary>
     [Fact]
@@ -228,14 +209,17 @@ namespace Catharsis.Commons
     public void Secure_Method()
     {
       Assert.Throws<ArgumentNullException>(() => StringCryptographyExtensions.Secure(null));
-      
-      string.Empty.Secure().With(value => Assert.Equal(0, value.Length));
+
+      using (var value = string.Empty.Secure())
+      {
+        Assert.Equal(0, value.Length);
+      }
       var text = Guid.NewGuid().ToString();
-      text.Secure().With(value =>
+      using (var value = text.Secure())
       {
         Assert.Equal(text.Length, value.Length);
         Assert.False(ReferenceEquals(value.ToString(), text));
-      });
+      }
     }
 
     /// <summary>
@@ -585,16 +569,75 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringXmlExtensions.Xml{T}(string, Type[])"/> method.</para>
+    ///   <para>Performs testing of <see cref="StringXmlExtensions.AsXml{T}(string, Type[])"/> method.</para>
     /// </summary>
     [Fact]
-    public void Xml_Method()
+    public void AsXml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StringXmlExtensions.Xml<object>(null));
-      Assert.Throws<ArgumentException>(() => string.Empty.Xml<object>());
+      Assert.Throws<ArgumentNullException>(() => StringXmlExtensions.AsXml<object>(null));
+      Assert.Throws<ArgumentException>(() => string.Empty.AsXml<object>());
 
       var subject = Guid.Empty;
-      Assert.Equal(subject, subject.Xml().Xml<Guid>());
+      Assert.Equal(subject, subject.ToXml().AsXml<Guid>());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtendedExtensions.Capitalize(string, CultureInfo)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Capitalize_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.Capitalize(null));
+
+      Assert.Equal(string.Empty, string.Empty.Capitalize());
+      Assert.Equal("Capitalized String", "capitalized stRing".Capitalize());
+      Assert.Equal("Capitalized String", "capitalized stRing".Capitalize(CultureInfo.CurrentCulture));
+      Assert.Equal("CAPITALIZED STRING", "CAPITALIZED STRING".Capitalize());
+      Assert.Equal("Заглавная Строка", "заглавная стРока".Capitalize());
+      Assert.Equal("Заглавная Строка", "заглавная стРока".Capitalize(CultureInfo.CurrentCulture));
+      Assert.Equal("ЗАГЛАВНАЯ СТРОКА", "ЗАГЛАВНАЯ СТРОКА".Capitalize());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.Lines(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Lines_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.Lines(null));
+
+      Assert.False(string.Empty.Lines().Any());
+      Assert.True("value".Lines().SequenceEqual(new[] { "value" }));
+      Assert.True("first{0}second".FormatSelf(Environment.NewLine).Lines().SequenceEqual(new[] { "first", "second" }));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.Prepend(string, string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Prepend_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.Prepend(null, "other"));
+
+      Assert.Equal(string.Empty, string.Empty.Prepend(null));
+      Assert.Equal(string.Empty, string.Empty.Prepend(string.Empty));
+      Assert.Equal("value", "value".Prepend(string.Empty));
+      Assert.Equal("first,second", "second".Prepend("first,"));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.SwapCase(string, CultureInfo)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void SwapCase_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.SwapCase(null));
+
+      Assert.Equal(string.Empty, string.Empty.SwapCase());
+      Assert.Equal("vAlUe", "VaLuE".SwapCase());
+      Assert.Equal("vAlUe", "VaLuE".SwapCase(CultureInfo.CurrentCulture));
+      Assert.Equal("зНаЧеНиЕ", "ЗнАчЕнИе".SwapCase());
+      Assert.Equal("зНаЧеНиЕ", "ЗнАчЕнИе".SwapCase(CultureInfo.CurrentCulture));
     }
   }
 

@@ -31,41 +31,41 @@ namespace Catharsis.Commons
 
       var encrypted = algorithm.Encrypt(bytes);
       Assert.True(algorithm.Decrypt(encrypted).SequenceEqual(bytes));
-      Aes.Create().With(decryptor =>
+      using (var decryptor = Aes.Create())
       {
         decryptor.Key = algorithm.Key;
         decryptor.IV = algorithm.IV;
         Assert.True(decryptor.Decrypt(encrypted).SequenceEqual(bytes));
-      });
-      Aes.Create().With(decryptor =>
+      }
+      using (var decryptor = Aes.Create())
       {
         decryptor.Key = algorithm.Key;
         decryptor.GenerateIV();
         Assert.False(decryptor.Decrypt(encrypted).SequenceEqual(bytes));
-      });
+      }
 
-      new MemoryStream(encrypted).With(stream =>
+      using (var stream = new MemoryStream(encrypted))
       {
         Assert.True(algorithm.Decrypt(stream).SequenceEqual(bytes));
         Assert.Equal(-1, stream.ReadByte());
-      });
-      new MemoryStream(encrypted).With(stream =>
+      }
+      using (var stream = new MemoryStream(encrypted))
       {
         Assert.True(algorithm.Decrypt(stream, true).SequenceEqual(bytes));
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      });
-      Aes.Create().With(decryptor =>
+      }
+      using (var decryptor = Aes.Create())
       {
         decryptor.Key = algorithm.Key;
         decryptor.IV = algorithm.IV;
         Assert.True(decryptor.Decrypt(new MemoryStream(encrypted), true).SequenceEqual(bytes));
-      });
-      Aes.Create().With(decryptor =>
+      }
+      using (var decryptor = Aes.Create())
       {
         decryptor.Key = algorithm.Key;
         decryptor.GenerateIV();
         Assert.False(decryptor.Decrypt(new MemoryStream(encrypted), true).SequenceEqual(bytes));
-      });
+      }
       
       algorithm.Clear();
     }
@@ -90,50 +90,56 @@ namespace Catharsis.Commons
 
       var encrypted = algorithm.Encrypt(bytes);
       Assert.False(encrypted.SequenceEqual(bytes));
-      Aes.Create().With(encryptor => 
+      using (var encryptor = Aes.Create())
       {
         encryptor.Key = algorithm.Key;
         encryptor.IV = algorithm.IV;
         Assert.True(encryptor.Encrypt(bytes).SequenceEqual(encrypted));
-      });
-      Aes.Create().With(encryptor =>
+      }
+      using (var encryptor = Aes.Create())
       {
         encryptor.Key = algorithm.Key;
         Assert.False(encryptor.Encrypt(bytes).SequenceEqual(encrypted));
-      });
-      Aes.Create().With(encryptor =>
+      }
+      using (var encryptor = Aes.Create())
       {
         encryptor.IV = algorithm.IV;
         Assert.False(encryptor.Encrypt(bytes).SequenceEqual(encrypted));
-      });
-      Aes.Create().With(encryptor => Assert.False(encryptor.Encrypt(bytes).SequenceEqual(encrypted)));
+      }
+      using (var encryptor = Aes.Create())
+      {
+        Assert.False(encryptor.Encrypt(bytes).SequenceEqual(encrypted));
+      }
 
-      new MemoryStream(bytes).With(stream =>
+      using (var stream = new MemoryStream(bytes))
       {
         Assert.True(algorithm.Encrypt(stream).SequenceEqual(encrypted));
         Assert.Equal(-1, stream.ReadByte());
-      });
-      new MemoryStream(bytes).With(stream =>
+      }
+      using (var stream = new MemoryStream(bytes))
       {
         Assert.True(algorithm.Encrypt(stream, true).SequenceEqual(encrypted));
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      });
-      new MemoryStream(bytes).With(stream =>
+      }
+      using (var stream = new MemoryStream(bytes))
       {
         Assert.True(algorithm.Encrypt(stream).SequenceEqual(encrypted));
         Assert.Equal(-1, stream.ReadByte());
-      });
-      Aes.Create().With(encryptor =>
+      }
+      using (var encryptor = Aes.Create())
       {
         encryptor.Key = algorithm.Key;
         Assert.False(encryptor.Encrypt(new MemoryStream(bytes), true).SequenceEqual(encrypted));
-      });
-      Aes.Create().With(encryptor =>
+      }
+      using (var encryptor = Aes.Create())
       {
         encryptor.IV = algorithm.IV;
         Assert.False(encryptor.Encrypt(new MemoryStream(bytes), true).SequenceEqual(encrypted));
-      });
-      Aes.Create().With(encryptor => Assert.False(encryptor.Encrypt(new MemoryStream(bytes), true).SequenceEqual(encrypted)));
+      }
+      using (var encryptor = Aes.Create())
+      {
+        Assert.False(encryptor.Encrypt(new MemoryStream(bytes), true).SequenceEqual(encrypted));
+      }
 
       algorithm.Clear();
     }

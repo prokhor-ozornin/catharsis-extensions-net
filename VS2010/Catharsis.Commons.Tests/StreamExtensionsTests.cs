@@ -23,11 +23,11 @@ namespace Catharsis.Commons
 
       var bytes = Guid.NewGuid().ToByteArray();
       var stream = new MemoryStream(bytes);
-      stream.BinaryReader().With(reader =>
+      using (var reader = stream.BinaryReader())
       {
         Assert.True(ReferenceEquals(reader.BaseStream, stream));
         Assert.True(reader.ReadBytes(bytes.Length).SequenceEqual(bytes));
-      });
+      }
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
     }
 
@@ -41,11 +41,11 @@ namespace Catharsis.Commons
 
       var bytes = Guid.NewGuid().ToByteArray();
       var stream = new MemoryStream();
-      stream.BinaryWriter().With(writer =>
+      using (var writer = stream.BinaryWriter())
       {
         Assert.True(ReferenceEquals(writer.BaseStream, stream));
         writer.Write(bytes);
-      });
+      }
       Assert.True(stream.ToArray().SequenceEqual(bytes));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
     }
@@ -62,7 +62,10 @@ namespace Catharsis.Commons
 
       var bytes = Guid.NewGuid().ToByteArray();
       var stream = new MemoryStream(bytes);
-      stream.Buffered().With(buffered => buffered.Write(bytes));
+      using (var buffered = stream.Buffered())
+      {
+        buffered.Write(bytes);
+      }
       Assert.True(stream.ToArray().SequenceEqual(bytes));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
     }
@@ -110,42 +113,42 @@ namespace Catharsis.Commons
 
       var stream = new MemoryStream();
       var compressed = new byte[] { };
-      stream.Deflate(CompressionMode.Compress).With(deflate =>
+      using (var deflate = stream.Deflate(CompressionMode.Compress))
       {
         Assert.True(ReferenceEquals(deflate.BaseStream, stream));
         Assert.Throws<InvalidOperationException>(() => deflate.ReadByte());
         deflate.Write(bytes);
-      });
+      }
       compressed = stream.ToArray();
       Assert.False(compressed.SequenceEqual(bytes));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
 
       stream = new MemoryStream(compressed);
       var decompressed = new byte[] { };
-      stream.Deflate(CompressionMode.Decompress).With(deflate =>
+      using (var deflate = stream.Deflate(CompressionMode.Decompress))
       {
         Assert.True(ReferenceEquals(deflate.BaseStream, stream));
         decompressed = deflate.Bytes();
-      });
+      }
       Assert.True(decompressed.SequenceEqual(bytes));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
 
-      new MemoryStream().With(x =>
+      using (var s = new MemoryStream())
       {
-        Assert.True(ReferenceEquals(x.Deflate(bytes), x));
-        Assert.True(x.ToArray().SequenceEqual(compressed));
-        Assert.Equal(0, x.Bytes().Length);
-        Assert.True(x.CanRead);
-        Assert.True(x.CanWrite);
-      });
+        Assert.True(ReferenceEquals(s.Deflate(bytes), s));
+        Assert.True(s.ToArray().SequenceEqual(compressed));
+        Assert.Equal(0, s.Bytes().Length);
+        Assert.True(s.CanRead);
+        Assert.True(s.CanWrite);
+      }
 
-      new MemoryStream(compressed).With(x =>
+      using (var s = new MemoryStream(compressed))
       {
-        Assert.True(x.Deflate().SequenceEqual(bytes));
-        Assert.Equal(0, x.Bytes().Length);
-        Assert.True(x.CanRead);
-        Assert.True(x.CanWrite);
-      });
+        Assert.True(s.Deflate().SequenceEqual(bytes));
+        Assert.Equal(0, s.Bytes().Length);
+        Assert.True(s.CanRead);
+        Assert.True(s.CanWrite);
+      }
 
       Assert.True(new MemoryStream().Deflate(bytes).Rewind().Deflate().SequenceEqual(bytes));
     }
@@ -170,42 +173,42 @@ namespace Catharsis.Commons
       
       var stream = new MemoryStream();
       var compressed = new byte[] {};
-      stream.GZip(CompressionMode.Compress).With(gzip =>
+      using (var gzip = stream.GZip(CompressionMode.Compress))
       {
         Assert.True(ReferenceEquals(gzip.BaseStream, stream));
         Assert.Throws<InvalidOperationException>(() => gzip.ReadByte());
         gzip.Write(bytes);
-      });
+      }
       compressed = stream.ToArray();
       Assert.False(compressed.SequenceEqual(bytes));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
 
       stream = new MemoryStream(compressed);
       var decompressed = new byte[] {};
-      stream.GZip(CompressionMode.Decompress).With(gzip =>
+      using (var gzip = stream.GZip(CompressionMode.Decompress))
       {
         Assert.True(ReferenceEquals(gzip.BaseStream, stream));
         decompressed = gzip.Bytes();
-      });
+      }
       Assert.True(decompressed.SequenceEqual(bytes));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
 
-      new MemoryStream().With(x =>
+      using (var s = new MemoryStream())
       {
-        Assert.True(ReferenceEquals(x.GZip(bytes), x));
-        Assert.True(x.ToArray().SequenceEqual(compressed));
-        Assert.Equal(0, x.Bytes().Length);
-        Assert.True(x.CanRead);
-        Assert.True(x.CanWrite);
-      });
+        Assert.True(ReferenceEquals(s.GZip(bytes), s));
+        Assert.True(s.ToArray().SequenceEqual(compressed));
+        Assert.Equal(0, s.Bytes().Length);
+        Assert.True(s.CanRead);
+        Assert.True(s.CanWrite);
+      }
 
-      new MemoryStream(compressed).With(x =>
+      using (var s = new MemoryStream(compressed))
       {
-        Assert.True(x.GZip().SequenceEqual(bytes));
-        Assert.Equal(0, x.Bytes().Length);
-        Assert.True(x.CanRead);
-        Assert.True(x.CanWrite);
-      });
+        Assert.True(s.GZip().SequenceEqual(bytes));
+        Assert.Equal(0, s.Bytes().Length);
+        Assert.True(s.CanRead);
+        Assert.True(s.CanWrite);
+      }
 
       Assert.True(new MemoryStream().GZip(bytes).Rewind().GZip().SequenceEqual(bytes));
     }
@@ -287,12 +290,18 @@ namespace Catharsis.Commons
       var text = Guid.NewGuid().ToString();
       
       var stream = new MemoryStream();
-      stream.TextWriter().With(writer => writer.Write(text));
+      using (var writer = stream.TextWriter())
+      {
+        writer.Write(text);
+      }
       Assert.True(stream.ToArray().SequenceEqual(text.Bytes()));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
 
       stream = new MemoryStream();
-      stream.TextWriter(Encoding.Unicode).With(writer => writer.Write(text));
+      using (var writer = stream.TextWriter(Encoding.Unicode))
+      {
+        writer.Write(text);
+      }
       Assert.True(stream.ToArray().SequenceEqual(text.Bytes(Encoding.Unicode)));
       Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
     }
@@ -334,100 +343,106 @@ namespace Catharsis.Commons
       from.Close();
       to.Close();
 
-      new MemoryStream().With(x =>
+      using (var s = new MemoryStream())
       {
-        Assert.True(ReferenceEquals(x.Write(string.Empty), x));
-        Assert.Equal(string.Empty, x.Text());
-      });
+        Assert.True(ReferenceEquals(s.Write(string.Empty), s));
+        Assert.Equal(string.Empty, s.Text());
+      }
 
-      new MemoryStream().With(x =>
+      using (var s = new MemoryStream())
       {
-        Assert.True(ReferenceEquals(x.Write(text), x));
-        Assert.Equal(text, x.Rewind().Text());
-      });
+        Assert.True(ReferenceEquals(s.Write(text), s));
+        Assert.Equal(text, s.Rewind().Text());
+      }
 
-      new MemoryStream().With(x =>
+      using (var s = new MemoryStream())
       {
-        Assert.True(ReferenceEquals(x.Write(text, Encoding.Unicode), x));
-        Assert.Equal(text, x.Rewind().Text(encoding: Encoding.Unicode));
-      });
+        Assert.True(ReferenceEquals(s.Write(text, Encoding.Unicode), s));
+        Assert.Equal(text, s.Rewind().Text(encoding: Encoding.Unicode));
+      }
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamXmlExtensions.Xml{T}(Stream, bool, Type[])"/> method.</para>
+    ///   <para>Performs testing of <see cref="StreamXmlExtensions.AsXml{T}(Stream, bool, Type[])"/> method.</para>
     /// </summary>
     [Fact]
-    public void Xml_Method()
+    public void AsXml_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamXmlExtensions.Xml<object>(null));
+      Assert.Throws<ArgumentNullException>(() => StreamXmlExtensions.AsXml<object>(null));
 
       var subject = Guid.Empty;
-      new MemoryStream().With(stream =>
+      using (var stream = new MemoryStream())
       {
-        subject.Xml(stream, Encoding.Unicode);
-        Assert.Equal(subject, stream.Rewind().Xml<Guid>());
+        subject.ToXml(stream, Encoding.Unicode);
+        Assert.Equal(subject, stream.Rewind().AsXml<Guid>());
         Assert.True(stream.CanWrite);
-      });
-      new MemoryStream().With(stream =>
+      }
+      using (var stream = new MemoryStream())
       {
-        subject.Xml(stream, Encoding.Unicode);
-        Assert.Equal(subject, stream.Rewind().Xml<Guid>(true));
+        subject.ToXml(stream, Encoding.Unicode);
+        Assert.Equal(subject, stream.Rewind().AsXml<Guid>(true));
         Assert.False(stream.CanWrite);
-      });
+      }
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamExtensions.XDocument(Stream, bool)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StreamExtensions.AsXDocument(Stream, bool)"/> method.</para>
     /// </summary>
     [Fact]
-    public void XDocument_Method()
+    public void AsXDocument_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.XDocument(null));
-      Assert.Throws<XmlException>(() => Stream.Null.XDocument());
+      Assert.Throws<ArgumentNullException>(() => StreamExtensions.AsXDocument(null));
+      Assert.Throws<XmlException>(() => Stream.Null.AsXDocument());
 
       const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
 
-      new MemoryStream(Xml.Bytes(Encoding.UTF32)).With(x => Assert.Throws<XmlException>(() => x.XDocument()));
-      
-      new MemoryStream(Xml.Bytes(Encoding.Unicode)).With(stream =>
+      using (var stream = new MemoryStream(Xml.Bytes(Encoding.UTF32)))
       {
-        Assert.Equal("<article>text</article>", stream.XDocument().ToString());
+        Assert.Throws<XmlException>(() => stream.AsXDocument());
+      }
+      
+      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
+      {
+        Assert.Equal("<article>text</article>", stream.AsXDocument().ToString());
         Assert.Equal(0, stream.Bytes().Length);
         Assert.Equal(-1, stream.ReadByte());
-      });
+      }
 
-      new MemoryStream(Xml.Bytes(Encoding.Unicode)).With(stream =>
+      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
       {
-        Assert.Equal("<article>text</article>", stream.XDocument(true).ToString());
+        Assert.Equal("<article>text</article>", stream.AsXDocument(true).ToString());
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      });
+      }
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamXmlExtensions.XmlDocument(Stream, bool)"/> method.</para>
+    ///   <para>Performs testing of <see cref="StreamXmlExtensions.AsXmlDocument(Stream, bool)"/> method.</para>
     /// </summary>
     [Fact]
-    public void XmlDocument_Method()
+    public void AsXmlDocument_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamXmlExtensions.XmlDocument(null));
-      Assert.Throws<XmlException>(() => Stream.Null.XmlDocument());
+      Assert.Throws<ArgumentNullException>(() => StreamXmlExtensions.AsXmlDocument(null));
+      Assert.Throws<XmlException>(() => Stream.Null.AsXmlDocument());
 
       const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-      
-      new MemoryStream(Xml.Bytes(Encoding.UTF32)).With(x => Assert.Throws<XmlException>(() => x.XmlDocument()));
-      
-      new MemoryStream(Xml.Bytes(Encoding.Unicode)).With(stream =>
+
+      using (var stream = new MemoryStream(Xml.Bytes(Encoding.UTF32)))
       {
-        Assert.Equal(Xml, stream.XmlDocument().String());
+        Assert.Throws<XmlException>(() => stream.AsXmlDocument());
+      }
+      
+      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
+      {
+        Assert.Equal(Xml, stream.AsXmlDocument().String());
         Assert.Equal(0, stream.Bytes().Length);
         Assert.Equal(-1, stream.ReadByte());
-      });
+      }
 
-      new MemoryStream(Xml.Bytes(Encoding.Unicode)).With(stream =>
+      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
       {
-        Assert.Equal(Xml, stream.XmlDocument(true).String());
+        Assert.Equal(Xml, stream.AsXmlDocument (true).String());
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      });
+      }
     }
 
     /// <summary>
@@ -440,7 +455,7 @@ namespace Catharsis.Commons
 
       const string Xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
 
-      new MemoryStream(Xml.Bytes()).With(stream =>
+      using (var stream = new MemoryStream(Xml.Bytes()))
       {
         var reader = stream.XmlReader();
         Assert.False(reader.Settings.CloseInput);
@@ -452,14 +467,14 @@ namespace Catharsis.Commons
         reader.Close();
         Assert.Equal(0, stream.Bytes().Length);
         Assert.Equal(-1, stream.ReadByte());
-      });
+      }
 
-      new MemoryStream(Xml.Bytes()).With(stream =>
+      using (var stream = new MemoryStream(Xml.Bytes()))
       {
         stream.XmlReader(true).Close();
         //Assert.True(reader.Settings.CloseInput);
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      });
+      }
     }
 
     /// <summary>
@@ -471,47 +486,47 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => StreamExtensions.XmlWriter(null));
       
       var xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
-      new MemoryStream().With(stream =>
+      using (var stream = new MemoryStream())
       {
-        stream.XmlWriter().Write(writer =>
+        using (var writer = stream.XmlWriter())
         {
           Assert.False(writer.Settings.CloseOutput);
           Assert.Equal(Encoding.UTF8.ToString(), writer.Settings.Encoding.ToString());
           Assert.False(writer.Settings.Indent);
           writer.WriteElementString("article", "text");
-        });
+        }
         Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.UTF8)));
         Assert.Equal(0, stream.Bytes().Length);
         Assert.Equal(-1, stream.ReadByte());
 
-        stream.Rewind().XmlWriter(true).Write(writer =>
+        using (var writer = stream.Rewind().XmlWriter(true))
         {
           Assert.True(writer.Settings.CloseOutput);
           Assert.Equal(Encoding.UTF8.ToString(), writer.Settings.Encoding.ToString());
-        });
+        }
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      });
+      }
 
       xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-      new MemoryStream().With(stream =>
+      using (var stream = new MemoryStream())
       {
-        stream.XmlWriter(encoding: Encoding.Unicode).Write(writer =>
+        using (var writer = stream.XmlWriter(encoding: Encoding.Unicode))
         {
           Assert.False(writer.Settings.CloseOutput);
           Assert.Equal(Encoding.Unicode.ToString(), writer.Settings.Encoding.ToString());
           writer.WriteElementString("article", "text");
-        });
+        }
         Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.Unicode)));
         Assert.Equal(0, stream.Bytes().Length);
         Assert.Equal(-1, stream.ReadByte());
 
-        stream.XmlWriter(true, Encoding.Unicode).Write(writer =>
+        using (var writer = stream.XmlWriter(true, Encoding.Unicode))
         {
           Assert.True(writer.Settings.CloseOutput);
           Assert.Equal(Encoding.Unicode.ToString(), writer.Settings.Encoding.ToString());
-        });
+        }
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      });
+      }
     }
   }
 }

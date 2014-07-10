@@ -53,20 +53,20 @@ namespace Catharsis.Commons
       {
         Assert.True(ReferenceEquals(file.Append(text), file));
         Assert.True(file.Exists);
-        Assert.True(file.Text() == text);
+        Assert.Equal(text, file.Text());
       });
       WithFile(file =>
       {
         Assert.True(ReferenceEquals(file.Append(text, Encoding.Unicode), file));
         Assert.True(file.Exists);
-        Assert.True(file.Text(Encoding.Unicode) == text);
+        Assert.Equal(text, file.Text(Encoding.Unicode));
       });
 
       WithFile(file =>
       {
         Assert.True(ReferenceEquals(file.Append(Stream.Null), file));
         Assert.True(file.Exists);
-        Assert.True(file.Length == 0);
+        Assert.Equal(0, file.Length);
       });
       WithFile(file => new MemoryStream(bytes).With(stream =>
       {

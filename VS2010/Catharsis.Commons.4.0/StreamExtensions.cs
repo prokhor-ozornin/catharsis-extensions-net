@@ -225,7 +225,7 @@ namespace Catharsis.Commons
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="XDocument"/>
-    public static XDocument XDocument(this Stream stream, bool close = false)
+    public static XDocument AsXDocument(this Stream stream, bool close = false)
     {
       Assertion.NotNull(stream);
 

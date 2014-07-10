@@ -20,11 +20,11 @@ namespace Catharsis.Commons
     /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
     /// <exception cref="ArgumentException">If <paramref name="xml"/> is <see cref="string.Empty"/> string.</exception>
     /// <seealso cref="XmlSerializer"/>
-    public static T Xml<T>(this string xml, params Type[] types)
+    public static T AsXml<T>(this string xml, params Type[] types)
     {
       Assertion.NotEmpty(xml);
 
-      return new StringReader(xml).Xml<T>(true, types);
+      return new StringReader(xml).AsXml<T>(true, types);
     }
   }
 }

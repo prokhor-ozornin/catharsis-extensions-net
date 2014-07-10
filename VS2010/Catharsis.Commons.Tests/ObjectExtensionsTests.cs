@@ -44,35 +44,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="ObjectXmlExtensions.AsXml(object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void AsXml_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.AsXml(null));
-
-      var subject = new object();
-      Assert.Equal("", subject.AsXml());
-
-      subject = "subject";
-      Assert.Equal("subject", subject.AsXml());
-
-      subject = 1.5;
-      Assert.Equal("1.5", subject.AsXml());
-
-      subject = true;
-      Assert.Equal("true", subject.AsXml());
-
-      subject = DateTime.MaxValue;
-      Assert.Equal(DateTime.MaxValue.ISO8601(), subject.AsXml());
-
-      subject = Guid.Empty;
-      Assert.Equal(Guid.Empty.ToString(), subject.AsXml());
-
-      Assert.Throws<InvalidOperationException>(() => new { Name = "Value" }.AsXml());
-    }
-
-    /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
     ///     <item><description><see cref="ObjectBinaryExtensions.Binary(object)"/></description></item>
@@ -94,18 +65,18 @@ namespace Catharsis.Commons
       Assert.True(subject.Binary().SequenceEqual(subject.Binary()));
       Assert.True(Guid.Empty.ToString().Binary().SequenceEqual(Guid.Empty.ToString().Binary()));
 
-      new MemoryStream().With(stream =>
+      using (var stream = new MemoryStream())
       {
         Assert.True(ReferenceEquals(subject.Binary(stream), subject));
         Assert.True(stream.ToArray().SequenceEqual(serialized));
         Assert.True(stream.CanWrite);
-      });
-      new MemoryStream().With(stream =>
+      }
+      using (var stream = new MemoryStream())
       {
         Assert.True(ReferenceEquals(subject.Binary(stream, true), subject));
         Assert.True(stream.ToArray().SequenceEqual(serialized));
         Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      });
+      };
     }
 
     /// <summary>
@@ -535,57 +506,57 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="ObjectXmlExtensions.Xml{T}(T, Type[])"/></description></item>
-    ///     <item><description><see cref="ObjectXmlExtensions.Xml{T}(T, Stream, Encoding, Type[])"/></description></item>
-    ///     <item><description><see cref="ObjectXmlExtensions.Xml{T}(T, TextWriter, Type[])"/></description></item>
-    ///     <item><description><see cref="ObjectXmlExtensions.Xml{T}(T, XmlWriter, Type[])"/></description></item>
+    ///     <item><description><see cref="ObjectXmlExtensions.ToXml{T}(T, Type[])"/></description></item>
+    ///     <item><description><see cref="ObjectXmlExtensions.ToXml{T}(T, Stream, Encoding, Type[])"/></description></item>
+    ///     <item><description><see cref="ObjectXmlExtensions.ToXml{T}(T, TextWriter, Type[])"/></description></item>
+    ///     <item><description><see cref="ObjectXmlExtensions.ToXml{T}(T, XmlWriter, Type[])"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
-    public void Xml_Methods()
+    public void ToXml_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.Xml<object>(null));
-      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.Xml<object>(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => new object().Xml((Stream)null));
-      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.Xml<object>(null, TextWriter.Null));
-      Assert.Throws<ArgumentNullException>(() => new object().Xml((TextWriter)null));
-      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.Xml<object>(null, XmlWriter.Create(Stream.Null)));
-      Assert.Throws<ArgumentNullException>(() => new object().Xml((XmlWriter)null));
+      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.ToXml<object>(null));
+      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.ToXml<object>(null, Stream.Null));
+      Assert.Throws<ArgumentNullException>(() => new object().ToXml((Stream) null));
+      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.ToXml<object>(null, TextWriter.Null));
+      Assert.Throws<ArgumentNullException>(() => new object().ToXml((TextWriter) null));
+      Assert.Throws<ArgumentNullException>(() => ObjectXmlExtensions.ToXml<object>(null, XmlWriter.Create(Stream.Null)));
+      Assert.Throws<ArgumentNullException>(() => new object().ToXml((XmlWriter) null));
 
       var subject = Guid.NewGuid().ToString();
-      
-      var xml = subject.Xml();
+
+      var xml = subject.ToXml();
       var stringWriter = new StringWriter();
       stringWriter.XmlWriter().Write(writer =>
       {
         new XmlSerializer(subject.GetType()).Serialize(writer, subject);
         Assert.Equal(xml, stringWriter.ToString());
       });
-      Assert.Equal(xml, subject.Xml((Type[]) null));
-      Assert.Equal(xml, subject.Xml(Enumerable.Empty<Type>().ToArray()));
-      Assert.Equal(xml, subject.Xml((Type[]) null));
+      Assert.Equal(xml, subject.ToXml((Type[]) null));
+      Assert.Equal(xml, subject.ToXml(Enumerable.Empty<Type>().ToArray()));
+      Assert.Equal(xml, subject.ToXml((Type[]) null));
 
-      new MemoryStream().With(stream =>
+      using (var stream = new MemoryStream())
       {
-        Assert.True(ReferenceEquals(subject.Xml(stream, Encoding.Unicode), subject));
+        Assert.True(ReferenceEquals(subject.ToXml(stream, Encoding.Unicode), subject));
         Assert.Equal(xml, stream.Rewind().Text());
         Assert.True(stream.CanWrite);
-      });
+      }
 
-      new StringWriter().With(writer =>
+      using (var writer = new StringWriter())
       {
-        Assert.True(ReferenceEquals(subject.Xml(writer), subject));
+        Assert.True(ReferenceEquals(subject.ToXml(writer), subject));
         Assert.Equal(xml, writer.ToString());
         writer.WriteLine();
-      });
+      }
 
       stringWriter = new StringWriter();
-      stringWriter.XmlWriter().Write(writer =>
+      using (var writer = stringWriter.XmlWriter())
       {
-        Assert.True(ReferenceEquals(subject.Xml(writer), subject));
+        Assert.True(ReferenceEquals(subject.ToXml(writer), subject));
         Assert.Equal(xml, stringWriter.ToString());
         stringWriter.WriteLine();
-      });
+      }
     }
   }
 }

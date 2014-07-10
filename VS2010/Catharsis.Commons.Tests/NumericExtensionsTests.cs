@@ -125,5 +125,208 @@ namespace Catharsis.Commons
       ((long) 1).UpTo(byte.MaxValue, () => sum += 1);
       Assert.Equal(byte.MaxValue, sum);
     }
+
+    /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="NumericExtensions.Days(byte)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Days(short)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Days(int)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Days_Methods()
+    {
+      Assert.Equal(1, ((byte) 1).Days().TotalDays);
+      Assert.Equal(1, ((short) 1).Days().TotalDays);
+      Assert.Equal(1, 1.Days().TotalDays);
+      Assert.Equal(0, ((byte) 0).Days().TotalMilliseconds);
+      Assert.Equal(-1, ((short) -1).Days().TotalDays);
+      Assert.Equal(-1, -1.Days().TotalDays);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="NumericExtensions.Hours(byte)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Hours(short)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Hours(int)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Hours_Methods()
+    {
+      Assert.Equal(1, ((byte) 1).Hours().TotalHours);
+      Assert.Equal(1, ((short) 1).Hours().TotalHours);
+      Assert.Equal(1, 1.Hours().TotalHours);
+      Assert.Equal(0, ((byte) 0).Hours().TotalMilliseconds);
+      Assert.Equal(-1, ((short) -1).Hours().TotalHours);
+      Assert.Equal(-1, -1.Hours().TotalHours);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="NumericExtensions.Minutes(byte)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Minutes(short)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Minutes(int)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Minutes_Methods()
+    {
+      Assert.Equal(1, ((byte) 1).Minutes().TotalMinutes);
+      Assert.Equal(1, ((short) 1).Minutes().TotalMinutes);
+      Assert.Equal(1, 1.Minutes().TotalMinutes);
+      Assert.Equal(0, ((byte) 0).Minutes().TotalMilliseconds);
+      Assert.Equal(-1, ((short) -1).Minutes().TotalMinutes);
+      Assert.Equal(-1, -1.Minutes().TotalMinutes);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="NumericExtensions.Seconds(byte)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Seconds(short)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Seconds(int)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Seconds_Methods()
+    {
+      Assert.Equal(1, ((byte) 1).Seconds().TotalSeconds);
+      Assert.Equal(1, ((short) 1).Seconds().TotalSeconds);
+      Assert.Equal(1, 1.Seconds().TotalSeconds);
+      Assert.Equal(0, ((byte) 0).Seconds().TotalMilliseconds);
+      Assert.Equal(-1, ((short) -1).Seconds().TotalSeconds);
+      Assert.Equal(-1, -1.Seconds().TotalSeconds);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="NumericExtensions.Milliseconds(byte)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Milliseconds(short)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Milliseconds(int)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Milliseconds_Methods()
+    {
+      Assert.Equal(1, ((byte) 1).Milliseconds().TotalMilliseconds);
+      Assert.Equal(1, ((short) 1).Milliseconds().TotalMilliseconds);
+      Assert.Equal(1, 1.Milliseconds().TotalMilliseconds);
+      Assert.Equal(0, ((byte) 0).Milliseconds().TotalMilliseconds);
+      Assert.Equal(-1, ((short) -1).Milliseconds().TotalMilliseconds);
+      Assert.Equal(-1, -1.Milliseconds().TotalMilliseconds);
+    }
+    
+    /// <summary>
+    ///   <para>Performs testing of <see cref="NumericExtensions.Ceil(double)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Ceil_Method()
+    {
+      Assert.Equal(-2, -1.4.Ceil());
+      Assert.Equal(-2, -1.5.Ceil());
+      Assert.Equal(-2, -1.6.Ceil());
+      Assert.Equal(0, 0.0.Ceil());
+      Assert.Equal(2, 1.4.Ceil());
+      Assert.Equal(2, 1.5.Ceil());
+      Assert.Equal(2, 1.6.Ceil());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="NumericExtensions.Floor(double)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Floor_Method()
+    {
+      Assert.Equal(-1, -1.4.Floor());
+      Assert.Equal(-1, -1.5.Floor());
+      Assert.Equal(-1, -1.6.Floor());
+      Assert.Equal(0, 0.0.Floor());
+      Assert.Equal(1, 1.4.Floor());
+      Assert.Equal(1, 1.5.Floor());
+      Assert.Equal(1, 1.6.Floor());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="NumericExtensions.Power(double, double)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Power_Method()
+    {
+      Assert.Equal(0, 0.0.Power(1));
+      Assert.Equal(1, 1.0.Power(0));
+      Assert.Equal(4, 2.0.Power(2));
+      Assert.Equal(Math.Pow(5, 3), 5.0.Power(3));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="NumericExtensions.Round(double)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Round(decimal)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Round_Methods()
+    {
+      Assert.Equal(-1, -1.4.Round());
+      Assert.Equal(-2, -1.5.Round());
+      Assert.Equal(-2, -1.6.Round());
+      Assert.Equal(0, 0.0.Round());
+      Assert.Equal(1, 1.4.Round());
+      Assert.Equal(2, 1.5.Round());
+      Assert.Equal(2, 1.6.Round());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="NumericExtensions.Sqrt(double)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Sqrt_Method()
+    {
+      Assert.Equal(-1, -1.0.Sqrt());
+      Assert.Equal(0, 0.0.Sqrt());
+      Assert.Equal(2, 4.0.Sqrt());
+      Assert.Equal(Math.Sqrt(5), 5.0.Sqrt());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="NumericExtensions.Even(byte)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Even(short)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Even(int)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Even(long)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Even_Methods()
+    {
+      Assert.True(((byte) 0).Even());
+      Assert.False(((byte) 1).Even());
+      Assert.True(((byte) 2).Even());
+
+      Assert.True(((short) -2).Even());
+      Assert.False(((short) -1).Even());
+      Assert.True(((short) 0).Even());
+      Assert.False(((short) 1).Even());
+      Assert.True(((short) 2).Even());
+
+      Assert.True((-2).Even());
+      Assert.False((-1).Even());
+      Assert.True(0.Even());
+      Assert.False(1.Even());
+      Assert.True(2.Even());
+
+      Assert.True(((long) -2).Even());
+      Assert.False(((long) -1).Even());
+      Assert.True(((long) 0).Even());
+      Assert.False(((long) 1).Even());
+      Assert.True(((long) 2).Even());
+    }
   }
 }

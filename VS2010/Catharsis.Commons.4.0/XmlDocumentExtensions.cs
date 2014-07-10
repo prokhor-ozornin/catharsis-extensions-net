@@ -39,11 +39,11 @@ namespace Catharsis.Commons
     {
       Assertion.NotNull(xml);
 
-      return new StringWriter().With(writer =>
+      using (var writer = new StringWriter())
       {
         writer.XmlWriter(true, Encoding.UTF8).Write(xml.Save).Close();
-        return writer;
-      }).ToString();
+        return writer.ToString();
+      }
     }
 
     /// <summary>

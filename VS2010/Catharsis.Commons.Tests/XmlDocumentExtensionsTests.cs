@@ -90,17 +90,17 @@ namespace Catharsis.Commons
 
       const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
 
-      new StringReader(Xml).With(reader =>
+      using (var reader = new StringReader(Xml))
       {
         Assert.Equal(Xml, reader.XmlDocument().String());
         Assert.Equal(-1, reader.Read());
-      });
+      }
 
-      new StringReader(Xml).With(reader =>
+      using (var reader = new StringReader(Xml))
       {
         Assert.Equal(Xml, reader.XmlDocument(true).String());
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
-      });
+      }
     }
   }
 }

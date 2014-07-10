@@ -35,24 +35,24 @@ namespace Catharsis.Commons
       });
       
       var xmlReader = new StringReader(xml);
-      new StringReader(xml).XmlReader(true).With(reader =>
+      using (var reader = new StringReader(xml).XmlReader(true))
       {
         var deserialized = reader.Deserialize(serialized.GetType());
         Assert.False(ReferenceEquals(serialized, deserialized));
         Assert.Equal(serialized, deserialized);
-      });
+      }
       xmlReader.ReadToEnd();
       xmlReader.Close();
 
       xmlReader = new StringReader(xml);
-      xmlReader.XmlReader(true).With(reader =>
+      using (var reader = xmlReader.XmlReader(true))
       {
         var deserialized = reader.Deserialize(serialized.GetType(), null, true);
         Assert.False(ReferenceEquals(serialized, deserialized));
         Assert.Equal(serialized, deserialized);
         Assert.False(reader.Read());
         Assert.Throws<ObjectDisposedException>(() => xmlReader.Read());
-      });
+      }
 
       Assert.Equal(serialized, new StringReader(xml).XmlReader(true).Deserialize<string>(null, true));
     }
@@ -79,11 +79,11 @@ namespace Catharsis.Commons
       var xmlDictionary = xml.Dictionary();
       
       IDictionary<string, object> dictionary;
-      new StringReader(xml.ToString()).XmlReader(true).With(reader =>
+      using (var reader = new StringReader(xml.ToString()).XmlReader(true))
       {
         dictionary = reader.Dictionary();
         Assert.True(dictionary.Keys.SequenceEqual(xmlDictionary.Keys));
-      });
+      }
 
       var xmlReader = new StringReader(xml.ToString()).XmlReader(true);
       dictionary = xmlReader.Dictionary(true);

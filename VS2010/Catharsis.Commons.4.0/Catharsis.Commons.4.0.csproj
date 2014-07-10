@@ -140,6 +140,7 @@
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="StreamXmlExtensions.cs" />
     <Compile Include="StringCryptographyExtensions.cs" />
+    <Compile Include="StringExtendedExtensions.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="StringHtmlExtensions.cs" />
     <Compile Include="StringHttpExtensions.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="TextReaderXmlExtensions.cs" />
     <Compile Include="TextReaderExtensions.cs" />
     <Compile Include="TextWriterExtensions.cs" />
+    <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="UriExtensions.cs" />
     <Compile Include="XDocumentExtensions.cs" />
