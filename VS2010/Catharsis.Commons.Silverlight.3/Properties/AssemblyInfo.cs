@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Prokhor Ozornin <prokhor.ozornin@yandex.ru>")]
 [assembly: AssemblyProduct("Catharsis.Commons")]
-[assembly: AssemblyCopyright("Copyright ©  2013 - 2014")]
+[assembly: AssemblyCopyright("Copyright © 2013 - 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("2.7")]
-[assembly: AssemblyFileVersion("2.7")]
+[assembly: AssemblyVersion("2.7.5")]
+[assembly: AssemblyFileVersion("2.7.5")]
 
 [assembly: CLSCompliant(true)]

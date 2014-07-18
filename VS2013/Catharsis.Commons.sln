@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsis.Commons.4.5", "Catharsis.Commons.4.5\Catharsis.Commons.4.5.csproj", "{BB6FF4D7-1D43-448B-BFB7-E05AB215368D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catharsis.Commons.4.5.1", "Catharsis.Commons.4.5.1\Catharsis.Commons.4.5.1.csproj", "{DA827900-2623-4801-BE3A-21157A9B4A9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BB6FF4D7-1D43-448B-BFB7-E05AB215368D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB6FF4D7-1D43-448B-BFB7-E05AB215368D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB6FF4D7-1D43-448B-BFB7-E05AB215368D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA827900-2623-4801-BE3A-21157A9B4A9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA827900-2623-4801-BE3A-21157A9B4A9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA827900-2623-4801-BE3A-21157A9B4A9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA827900-2623-4801-BE3A-21157A9B4A9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

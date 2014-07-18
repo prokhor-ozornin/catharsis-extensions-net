@@ -480,27 +480,27 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="ObjectExtensions.With{T}(T, Action{T})"/></description></item>
-    ///     <item><description><see cref="ObjectExtensions.With{T, RESULT}(T, Func{T, RESULT})"/></description></item>
+    ///     <item><description><see cref="ObjectExtensions.Do{T}(T, Action{T})"/></description></item>
+    ///     <item><description><see cref="ObjectExtensions.Do{SUBJECT,OUTPUT}(SUBJECT, Func{SUBJECT, OUTPUT})"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
-    public void With_Methods()
+    public void Do_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.With<object>(null, subject => {}));
-      Assert.Throws<ArgumentNullException>(() => new object().With(null));
+      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Do<object>(null, subject => {}));
+      Assert.Throws<ArgumentNullException>(() => new object().Do(null));
       
       var text = Guid.NewGuid().ToString();
-      Assert.Throws<ObjectDisposedException>(() => new StringReader(text).With(disposable =>
+      Assert.Throws<ObjectDisposedException>(() => new StringReader(text).Do(disposable =>
       {
-        disposable.With(x => Assert.True(x.ReadToEnd() == text));
+        disposable.Do(x => Assert.True(x.ReadToEnd() == text));
       }).Read());
 
-      var list = new List<string>().With(x => x.Add(text));
+      var list = new List<string>().Do(x => x.Add(text));
       Assert.Equal(1, list.Count);
       Assert.Equal(text, list[0]);
 
-      Assert.Equal(text, new object().With(x => text));
+      Assert.Equal(text, new object().Do(x => text));
     }
 
     /// <summary>

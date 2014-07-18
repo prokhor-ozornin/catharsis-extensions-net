@@ -28,7 +28,7 @@ namespace Catharsis.Commons
       Assert.Throws<InvalidOperationException>(() => new StringReader(string.Empty).XmlReader(true).Deserialize<object>(null, true));
 
       var serialized = Guid.NewGuid().ToString();
-      var xml = new StringWriter().With(writer =>
+      var xml = new StringWriter().Do(writer =>
       {
         new XmlSerializer(serialized.GetType()).Serialize(writer, serialized);
         return writer.ToString();

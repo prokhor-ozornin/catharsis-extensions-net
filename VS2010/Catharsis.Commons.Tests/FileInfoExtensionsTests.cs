@@ -68,7 +68,7 @@ namespace Catharsis.Commons
         Assert.True(file.Exists);
         Assert.Equal(0, file.Length);
       });
-      WithFile(file => new MemoryStream(bytes).With(stream =>
+      WithFile(file => new MemoryStream(bytes).Do(stream =>
       {
         Assert.True(ReferenceEquals(file.Append(stream), file));
         Assert.True(file.Bytes().SequenceEqual(bytes));

@@ -31,6 +31,56 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
+    ///   <para>Calls specified delegate action in a context of target object. If target object implements <see cref="IDisposable"/> interface, invokes delegate method inside a <c>using</c> code block.</para>
+    /// </summary>
+    /// <typeparam name="T">Type of target object.</typeparam>
+    /// <param name="subject">Target object, in context of which <paramref name="action"/> method is to be called.</param>
+    /// <param name="action">Delegate that represents a method to be called.</param>
+    /// <returns>Back reference to the current target object.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="action"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Do{SUBJECT,OUTPUT}"/>
+    /// <remarks>If <paramref name="subject"/> does not implement <see cref="IDisposable"/> interface, this method simply calls <paramref name="action"/>'s method.</remarks>
+    public static T Do<T>(this T subject, Action<T> action)
+    {
+      Assertion.NotNull(subject);
+      Assertion.NotNull(action);
+
+      if (subject is IDisposable)
+      {
+        using (subject as IDisposable)
+        {
+          action(subject);
+        }
+      }
+      else
+      {
+        action(subject);
+      }
+
+      return subject;
+    }
+
+    /// <summary>
+    ///   <para>Calls specified delegate action in a context of target object and returns the result of the call. If target object implements <see cref="IDisposable"/> interface, invokes delegate method inside a <c>using</c> code block.</para>
+    /// </summary>
+    /// <typeparam name="SUBJECT">Type of target object.</typeparam>
+    /// <typeparam name="OUTPUT">Type of output result for the <paramref name="action"/> delegate.</typeparam>
+    /// <param name="subject">Target object, in context of which <paramref name="action"/> method is to be called.</param>
+    /// <param name="action">Delegate that represents a method to be called.</param>
+    /// <returns>Value, returned by calling of <paramref name="action"/> delegate's method in a context of <paramref name="subject"/> object.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="action"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Do{T}"/>
+    public static OUTPUT Do<SUBJECT, OUTPUT>(this SUBJECT subject, Func<SUBJECT, OUTPUT> action)
+    {
+      Assertion.NotNull(subject);
+      Assertion.NotNull(action);
+
+      var result = default(OUTPUT);
+      subject.Do<SUBJECT>(x => result = action(x));
+      return result;
+    }
+
+    /// <summary>
     ///   <para>Returns state (names and values of all public properties) for the given object.</para>
     /// </summary>
     /// <param name="subject">Target object whose public properties names and values are to be returned.</param>
@@ -46,26 +96,26 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Determines whether specified objects are considered equal by comparing values of the given set of properties on each of them.</para>
+    ///   <para>Determines whether specified objects are considered equal by comparing values of the given set of properties/fields on each of them.</para>
     ///   <para>The following algorithm is used in equality determination:
     ///     <list type="bullet">
     ///       <item><description>If both <paramref name="self"/> and <paramref name="other"/> are <c>null</c> references, method returns <c>true</c>.</description></item>
     ///       <item><description>If one of compared objects is <c>null</c> and another is not, method returns <c>false</c>.</description></item>
     ///       <item><description>If both objects references are equal (they represent the same object instance), method returns <c>true</c>.</description></item>
-    ///       <item><description>If <paramref name="properties"/> set is either a <c>null</c> reference or contains zero elements, <see cref="EqualsAndHashCodeAttribute"/> attribute is used for equality comparison.</description></item>
-    ///       <item><description>If <typeparamref name="T"/> type does not contain any properties in <paramref name="properties"/> set, <see cref="object.Equals(object, object)"/> method is used for equality comparison.</description></item>
-    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties in <paramref name="properties"/> set, their values are used for equality comparison according to <see cref="object.Equals(object)"/> method of both <paramref name="self"/> and <paramref name="other"/> instances.</description></item>
+    ///       <item><description>If <paramref name="propertiesOrFields"/> set is either a <c>null</c> reference or contains zero elements, <see cref="EqualsAndHashCodeAttribute"/> attribute is used for equality comparison.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type does not contain any properties/fields in <paramref name="propertiesOrFields"/> set, <see cref="object.Equals(object, object)"/> method is used for equality comparison.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties/fields in <paramref name="propertiesOrFields"/> set, their values are used for equality comparison according to <see cref="object.Equals(object)"/> method of both <paramref name="self"/> and <paramref name="other"/> instances.</description></item>
     ///     </list>
     ///   </para>
     /// </summary>
     /// <typeparam name="T">Type of objects to compare.</typeparam>
     /// <param name="self">Current object to compare with the second.</param>
     /// <param name="other">Second object to compare with the current one.</param>
-    /// <param name="properties">Set of properties whose values are used in equality comparison.</param>
+    /// <param name="propertiesOrFields">Set of properties/fields whose values are used in equality comparison.</param>
     /// <returns><c>true</c> if <paramref name="self"/> and <paramref name="other"/> are considered equal, <c>false</c> otherwise.</returns>
     /// <seealso cref="object.Equals(object)"/>
     /// <seealso cref="Equality{T}(T, T, Expression{Func{T, object}}[])"/>
-    public static bool Equality<T>(this T self, T other, params string[] properties)
+    public static bool Equality<T>(this T self, T other, params string[] propertiesOrFields)
     {
       if (self == null && other == null)
       {
@@ -82,42 +132,50 @@ namespace Catharsis.Commons
         return true;
       }
 
-      if (properties == null || !properties.Any())
+      if (propertiesOrFields == null || !propertiesOrFields.Any())
       {
-        var metaProperties = self.GetType().Attributes<EqualsAndHashCodeAttribute>().SelectMany(attribute => attribute.Properties).ToArray();
-        return metaProperties.Length == 0 ? self.Equals(other) : self.Equality(other, metaProperties);
+        var metaPropertiesOrFields = self.GetType().Attributes<EqualsAndHashCodeAttribute>().SelectMany(attribute => attribute.Properties).ToArray();
+        return metaPropertiesOrFields.Length == 0 ? self.Equals(other) : self.Equality(other, metaPropertiesOrFields);
       }
 
-      var subjectProperties = properties.Select(property => self.GetType().AnyProperty(property)).Where(property => property != null);
-      if (!subjectProperties.Any())
+      var type = self.GetType();
+      var typeProperties = propertiesOrFields.Select(property => type.AnyProperty(property)).Where(property => property != null);
+      var typeFields = propertiesOrFields.Select(field => type.AnyField(field)).Where(field => field != null);
+
+      if (!typeProperties.Any() && !typeFields.Any())
       {
         return Equals(self, other);
       }
 
-      return subjectProperties.All(property =>
-      {
-        var first = property.GetValue(self, null);
-        object second = null;
-        try
+      return
+        typeProperties.All(property =>
         {
-          second = property.GetValue(other, null);
-        }
-        catch (TargetException)
-        {
-        }
-        
-        if (first == null && second == null)
-        {
-          return true;
-        }
+          var first = property.GetValue(self, null);
+          object second = null;
+          try
+          {
+            second = property.GetValue(other, null);
+          }
+          catch (TargetException)
+          {
+          }
 
-        if (first == null || second == null)
+          return Equals(first, second);
+        })
+        && typeFields.All(field =>
         {
-          return false;
-        }
+          var first = field.GetValue(self);
+          object second = null;
+          try
+          {
+            second = field.GetValue(other);
+          }
+          catch (TargetException)
+          {
+          }
 
-        return Equals(first, second);
-      });
+          return Equals(first, second);
+        });
     }
 
     /// <summary>
@@ -624,56 +682,6 @@ namespace Catharsis.Commons
       Assertion.NotNull(subject);
 
       return string.Format(CultureInfo.InvariantCulture, "{0}", subject);
-    }
-
-    /// <summary>
-    ///   <para>Calls specified delegate action in a context of target object. If target object implements <see cref="IDisposable"/> interface, invokes delegate method inside a <c>using</c> code block.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of target object.</typeparam>
-    /// <param name="subject">Target object, in context of which <paramref name="action"/> method is to be called.</param>
-    /// <param name="action">Delegate that represents a method to be called.</param>
-    /// <returns>Back reference to the current target object.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="action"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="With{SUBJECT, OUTPUT}(SUBJECT, Func{SUBJECT, OUTPUT})"/>
-    /// <remarks>If <paramref name="subject"/> does not implement <see cref="IDisposable"/> interface, this method simply calls <paramref name="action"/>'s method.</remarks>
-    public static T With<T>(this T subject, Action<T> action)
-    {
-      Assertion.NotNull(subject);
-      Assertion.NotNull(action);
-
-      if (subject is IDisposable)
-      {
-        using (subject as IDisposable)
-        {
-          action(subject);
-        }
-      }
-      else
-      {
-        action(subject);
-      }
-
-      return subject;
-    }
-
-    /// <summary>
-    ///   <para>Calls specified delegate action in a context of target object and returns the result of the call. If target object implements <see cref="IDisposable"/> interface, invokes delegate method inside a <c>using</c> code block.</para>
-    /// </summary>
-    /// <typeparam name="SUBJECT">Type of target object.</typeparam>
-    /// <typeparam name="OUTPUT">Type of output result for the <paramref name="action"/> delegate.</typeparam>
-    /// <param name="subject">Target object, in context of which <paramref name="action"/> method is to be called.</param>
-    /// <param name="action">Delegate that represents a method to be called.</param>
-    /// <returns>Value, returned by calling of <paramref name="action"/> delegate's method in a context of <paramref name="subject"/> object.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="subject"/> or <paramref name="action"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="With{T}(T, Action{T})"/>
-    public static OUTPUT With<SUBJECT, OUTPUT>(this SUBJECT subject, Func<SUBJECT, OUTPUT> action)
-    {
-      Assertion.NotNull(subject);
-      Assertion.NotNull(action);
-
-      var result = default(OUTPUT);
-      subject.With<SUBJECT>(x => result = action(x));
-      return result;
     }
   }
 }

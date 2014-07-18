@@ -40,37 +40,37 @@ namespace Catharsis.Commons
 
       var type = typeof(TestObject);
 
-      type.AnyField("PublicStaticField").With(field =>
+      type.AnyField("PublicStaticField").Do(field =>
       {
         Assert.True(field.IsPublic);
         Assert.True(field.IsStatic);
       });
 
-      type.AnyField("ProtectedStaticField").With(field =>
+      type.AnyField("ProtectedStaticField").Do(field =>
       {
         Assert.False(field.IsPrivate);
         Assert.True(field.IsStatic);
       });
 
-      type.AnyField("PrivateStaticField").With(field =>
+      type.AnyField("PrivateStaticField").Do(field =>
       {
         Assert.True(field.IsPrivate);
         Assert.True(field.IsStatic);
       });
 
-      type.AnyField("PublicField").With(field =>
+      type.AnyField("PublicField").Do(field =>
       {
         Assert.True(field.IsPublic);
         Assert.False(field.IsStatic);
       });
 
-      type.AnyField("ProtectedField").With(field =>
+      type.AnyField("ProtectedField").Do(field =>
       {
         Assert.False(field.IsPrivate);
         Assert.False(field.IsStatic);
       });
 
-      type.AnyField("PrivateField").With(field =>
+      type.AnyField("PrivateField").Do(field =>
       {
         Assert.True(field.IsPrivate);
         Assert.False(field.IsStatic);
@@ -89,37 +89,37 @@ namespace Catharsis.Commons
 
       var type = typeof(TestObject);
 
-      type.AnyMethod("PublicStaticMethod").With(method =>
+      type.AnyMethod("PublicStaticMethod").Do(method =>
       {
         Assert.True(method.IsPublic);
         Assert.True(method.IsStatic);
       });
 
-      type.AnyMethod("ProtectedStaticMethod").With(method =>
+      type.AnyMethod("ProtectedStaticMethod").Do(method =>
       {
         Assert.False(method.IsPrivate);
         Assert.True(method.IsStatic);
       });
 
-      type.AnyMethod("PrivateStaticMethod").With(method =>
+      type.AnyMethod("PrivateStaticMethod").Do(method =>
       {
         Assert.True(method.IsPrivate);
         Assert.True(method.IsStatic);
       });
 
-      type.AnyMethod("PublicMethod").With(method =>
+      type.AnyMethod("PublicMethod").Do(method =>
       {
         Assert.True(method.IsPublic);
         Assert.False(method.IsStatic);
       });
 
-      type.AnyMethod("ProtectedMethod").With(method =>
+      type.AnyMethod("ProtectedMethod").Do(method =>
       {
         Assert.False(method.IsPrivate);
         Assert.False(method.IsStatic);
       });
 
-      type.AnyMethod("PrivateMethod").With(method =>
+      type.AnyMethod("PrivateMethod").Do(method =>
       {
         Assert.True(method.IsPrivate);
         Assert.False(method.IsStatic);
@@ -138,12 +138,12 @@ namespace Catharsis.Commons
 
       var type = typeof(TestObject);
 
-      type.AnyProperty("PublicStaticProperty").With(property => Assert.True(property.IsPublic()));
-      type.AnyProperty("ProtectedStaticProperty").With(property => Assert.False(property.IsPublic()));
-      type.AnyProperty("PrivateStaticProperty").With(property => Assert.False(property.IsPublic()));
-      type.AnyProperty("PublicProperty").With(property => Assert.True(property.IsPublic()));
-      type.AnyProperty("ProtectedProperty").With(property => Assert.False(property.IsPublic()));
-      type.AnyProperty("PrivateProperty").With(property => Assert.False(property.IsPublic()));
+      type.AnyProperty("PublicStaticProperty").Do(property => Assert.True(property.IsPublic()));
+      type.AnyProperty("ProtectedStaticProperty").Do(property => Assert.False(property.IsPublic()));
+      type.AnyProperty("PrivateStaticProperty").Do(property => Assert.False(property.IsPublic()));
+      type.AnyProperty("PublicProperty").Do(property => Assert.True(property.IsPublic()));
+      type.AnyProperty("ProtectedProperty").Do(property => Assert.False(property.IsPublic()));
+      type.AnyProperty("PrivateProperty").Do(property => Assert.False(property.IsPublic()));
     }
 
     /// <summary>
