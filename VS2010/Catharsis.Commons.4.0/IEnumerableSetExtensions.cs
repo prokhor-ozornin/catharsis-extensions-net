@@ -13,15 +13,15 @@ namespace Catharsis.Commons
     ///   <para>Converts sequence of elements into a set collection type.</para>
     /// </summary>
     /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-    /// <param name="enumerable">Source sequence of elements.</param>
-    /// <returns>Set collection which contains elements from <paramref name="enumerable"/> sequence without dublicates. Order of elements in a set is not guaranteed to be the same as returned by <paramref name="enumerable"/>'s enumerator.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is a <c>null</c> reference.</exception>
-    public static ISet<T> ToSet<T>(this IEnumerable<T> enumerable)
+    /// <param name="self">Source sequence of elements.</param>
+    /// <returns>Set collection which contains elements from <paramref name="self"/> sequence without dublicates. Order of elements in a set is not guaranteed to be the same as returned by <paramref name="self"/>'s enumerator.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static ISet<T> ToSet<T>(this IEnumerable<T> self)
     {
-      Assertion.NotNull(enumerable);
+      Assertion.NotNull(self);
 
       var set = new HashSet<T>();
-      set.Add(enumerable);
+      set.Add(self);
       return set;
     }
   }

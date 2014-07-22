@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Reflection;
 using Xunit;
 
@@ -147,6 +149,19 @@ namespace Catharsis.Commons
 
       Assert.Equal("http://yandex.ru/?first=1", uri.Query(new Dictionary<string, string>()).ToString());
       Assert.Equal("?first=1&second%23=second%3F", uri.Query(new Dictionary<string, string> { { "second#", "second?" } }).Query);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="UriExtensions.Host(Uri)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Host_Method()
+    {
+      var host = new Uri("http://yandex.ru").Host();
+      Assert.True(host.AddressList.Any());
+      host.AddressList.SequenceEqual(Dns.GetHostEntry("yandex.ru").AddressList);
+      Assert.False(host.Aliases.Any());
+      Assert.Equal("yandex.ru", host.HostName);
     }
   }
 }

@@ -328,5 +328,39 @@ namespace Catharsis.Commons
       Assert.False(((long) 1).Even());
       Assert.True(((long) 2).Even());
     }
+
+    /// <summary>
+    ///   <para>Performs testing of following methods :</para>
+    ///   <list type="bullet">
+    ///     <item><description><see cref="NumericExtensions.Abs(short)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Abs(int)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Abs(long)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Abs(float)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Abs(double)"/></description></item>
+    ///     <item><description><see cref="NumericExtensions.Abs(decimal)"/></description></item>
+    ///   </list>
+    /// </summary>
+    [Fact]
+    public void Abs_Methods()
+    {
+      Assert.Equal(1, ((short) -1).Abs());
+      Assert.Equal(0, ((short) 0).Abs());
+      Assert.Equal(1, ((short) 1).Abs());
+      Assert.Equal(1, ((int) -1).Abs());
+      Assert.Equal(0, ((int) 0).Abs());
+      Assert.Equal(1, ((int) 1).Abs());
+      Assert.Equal(1, ((long) -1).Abs());
+      Assert.Equal(0, ((long) 0).Abs());
+      Assert.Equal(1, ((long) 1).Abs());
+      Assert.Equal(1.0, ((float) -1.0).Abs());
+      Assert.Equal(0, ((float) 0.0).Abs());
+      Assert.Equal(1.0, ((float) 1.0).Abs());
+      Assert.Equal(1.1, ((double) -1.1).Abs());
+      Assert.Equal(0, ((double) 0.0).Abs());
+      Assert.Equal(1.1, ((double) 1.1).Abs());
+      Assert.Equal((decimal) 1.1, ((decimal) -1.1).Abs());
+      Assert.Equal((decimal) 0, ((decimal) 0.0).Abs());
+      Assert.Equal((decimal) 1.1, ((decimal) 1.1).Abs());
+    }
   }
 }

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using Xunit;
 
 namespace Catharsis.Commons
@@ -161,7 +162,21 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <se cref="StringExtensions.Matches(string, string)"/> method.</para>
+    ///   <para>Performs testing of <se cref="StringExtensions.IsMatch(string, string, RegexOptions?)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void IsMatch_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.IsMatch(null, string.Empty));
+      Assert.Throws<ArgumentNullException>(() => string.Empty.IsMatch(null));
+
+      Assert.False(string.Empty.IsMatch("anything"));
+      Assert.True("ab4Zg95kf".IsMatch("[a-zA-z0-9]"));
+      Assert.False("~#$%".IsMatch("[a-zA-z0-9]"));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.Matches(string, string, RegexOptions?)"/> method.</para>
     /// </summary>
     [Fact]
     public void Matches_Method()
@@ -169,16 +184,19 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Matches(null, string.Empty));
       Assert.Throws<ArgumentNullException>(() => string.Empty.Matches(null));
 
-      Assert.False(string.Empty.Matches("anything"));
-      Assert.True("ab4Zg95kf".Matches("[a-zA-z0-9]"));
-      Assert.False("~#$%".Matches("[a-zA-z0-9]"));
+      Assert.Equal(0, string.Empty.Matches("anything").Count);
+      var matches = "ab#1".Matches("[a-zA-z0-9]");
+      Assert.Equal(3, matches.Count);
+      Assert.Equal("a", matches[0].Value);
+      Assert.Equal("b", matches[1].Value);
+      Assert.Equal("1", matches[2].Value);
     }
 
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="StringExtensions.Replace(string, IEnumerable{KeyValuePair{string, string}})"/></description></item>
-    ///     <item><description><see cref="StringExtensions.Replace(string, IList{string}, IList{string})"/></description></item>
+    ///     <item><description><see cref="StringExtensions.Replace(string, IDictionary{string, string})"/></description></item>
+    ///     <item><description><see cref="StringExtensions.Replace(string, IEnumerable{string}, IEnumerable{string})"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
@@ -220,6 +238,114 @@ namespace Catharsis.Commons
         Assert.Equal(text.Length, value.Length);
         Assert.False(ReferenceEquals(value.ToString(), text));
       }
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.IsBoolean(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void IsBoolean_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.IsBoolean(null));
+
+      Assert.False(string.Empty.IsBoolean());
+      Assert.True("TRUE".IsBoolean());
+      Assert.True("True".IsBoolean());
+      Assert.True("true".IsBoolean());
+      Assert.False(string.Empty.IsBoolean());
+      Assert.False("value".IsBoolean());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.IsDateTime(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void IsDateTime_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.IsDateTime(null));
+
+      Assert.False(string.Empty.IsDateTime());
+      Assert.True(DateTime.MinValue.ToString().IsDateTime());
+      Assert.True(DateTime.MaxValue.ToString().IsDateTime());
+      Assert.False("value".IsDateTime());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.IsDouble(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void IsDouble_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.IsDouble(null));
+
+      Assert.False(string.Empty.IsDouble());
+      Assert.True("-1".IsDouble());
+      Assert.True("0,0".IsDouble());
+      Assert.True("1".IsDouble());
+      Assert.True("+1".IsDouble());
+      Assert.False("value".IsDouble());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.IsGuid(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void IsGuid_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.IsGuid(null));
+      
+      Assert.False(string.Empty.IsGuid());
+      Assert.True(Guid.NewGuid().ToString().IsGuid());
+      Assert.True("{C126A89D-5C9D-461F-839A-25E4D265424C}".IsGuid());
+      Assert.True("C126A89D-5C9D-461F-839A-25E4D265424C".IsGuid());
+      Assert.False("value".IsGuid());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.IsInteger(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void IsInteger_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.IsInteger(null));
+
+      Assert.False(string.Empty.IsInteger());
+      Assert.True(long.MinValue.ToString(CultureInfo.InvariantCulture).IsInteger());
+      Assert.True("-1".IsInteger());
+      Assert.True("0".IsInteger());
+      Assert.True("1".IsInteger());
+      Assert.True("+1".IsInteger());
+      Assert.True(long.MaxValue.ToString(CultureInfo.InvariantCulture).IsInteger());
+      Assert.False("value".IsInteger());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.IsIpAddress(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void IsIpAddress_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.IsIpAddress(null));
+
+      Assert.False(string.Empty.IsIpAddress());
+      Assert.True("127.0.0.1".IsIpAddress());
+      Assert.False("127,0,0,1".IsIpAddress());
+      Assert.False("localhost".IsIpAddress());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.IsUri(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void IsUri_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.IsUri(null));
+
+      Assert.True(string.Empty.IsUri());
+      Assert.True("http://localhost:8080?param=value".IsUri());
+      Assert.True("scheme://127.0.0.1".IsUri());
+      Assert.True("path".IsUri());
+      Assert.False("http://".IsUri());
     }
 
     /// <summary>
@@ -638,6 +764,36 @@ namespace Catharsis.Commons
       Assert.Equal("vAlUe", "VaLuE".SwapCase(CultureInfo.CurrentCulture));
       Assert.Equal("çÍà×åÍèÅ", "ÇíÀ÷ÅíÈå".SwapCase());
       Assert.Equal("çÍà×åÍèÅ", "ÇíÀ÷ÅíÈå".SwapCase(CultureInfo.CurrentCulture));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.Drop(string, int)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Drop_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.Drop(null, 0));
+      Assert.Throws<ArgumentOutOfRangeException>(() => string.Empty.Drop(1));
+      
+      Assert.Equal(string.Empty, string.Empty.Drop(0));
+      Assert.Equal("value", "value".Drop(0));
+      Assert.Equal("alue", "value".Drop(1));
+      Assert.Equal(string.Empty, "value".Drop(5));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.Multiply(string, int)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void Multiply_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.Multiply(null, 0));
+
+      Assert.Equal(string.Empty, string.Empty.Multiply(1));
+      Assert.Equal(string.Empty, "1".Multiply(-1));
+      Assert.Equal(string.Empty, "1".Multiply(0));
+      Assert.Equal("1", "1".Multiply(1));
+      Assert.Equal("11", "1".Multiply(2));
     }
   }
 

@@ -13,13 +13,13 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Returns a value of <see cref="DescriptionAttribute"/> for a given enumeration element.</para>
     /// </summary>
-    /// <param name="enumeration">Enumeration option/element with a <see cref="DescriptionAttribute"/> on it.</param>
-    /// <returns>Description for a given <paramref name="enumeration"/>, which is a value of <see cref="DescriptionAttribute"/>. If there is no attribute on that enumeration member, a <c>null</c> is returned.</returns>
+    /// <param name="self">Enumeration option/element with a <see cref="DescriptionAttribute"/> on it.</param>
+    /// <returns>Description for a given <paramref name="self"/>, which is a value of <see cref="DescriptionAttribute"/>. If there is no attribute on that enumeration member, a <c>null</c> is returned.</returns>
     /// <seealso cref="DescriptionAttribute"/>
     /// <seealso cref="Descriptions{T}()"/>
-    public static string Description(this Enum enumeration)
+    public static string Description(this Enum self)
     {
-      var attribute = enumeration.GetType().GetField(enumeration.ToString()).Attribute<DescriptionAttribute>();
+      var attribute = self.GetType().GetField(self.ToString()).Attribute<DescriptionAttribute>();
       return attribute != null ? attribute.Description : null;
     }
 

@@ -15,16 +15,16 @@ namespace Catharsis.Commons
     ///   <para>Translates specified <see cref="XElement"/> into a dictionary.</para>
     ///   <para>Attributes in XML document are translated to string keys and values, nodes become dictionaries with string keys themselves.</para>
     /// </summary>
-    /// <param name="xml"><see cref="XElement"/>, whose structure is to be converted to <see cref="IDictionary{string, object}"/> instance.</param>
+    /// <param name="self"><see cref="XElement"/>, whose structure is to be converted to <see cref="IDictionary{string, object}"/> instance.</param>
     /// <returns>Dictionary that follows the structure of <see cref="XElement"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="XDocumentExtensions.Dictionary(XDocument)"/>
-    public static IDictionary<string, object> Dictionary(this XElement xml)
+    public static IDictionary<string, object> Dictionary(this XElement self)
     {
-      Assertion.NotNull(xml);
+      Assertion.NotNull(self);
 
       var result = new Dictionary<string, object>();
-      DictionaryXml(xml, result);
+      DictionaryXml(self, result);
       return result;
     }
 

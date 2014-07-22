@@ -15,26 +15,26 @@ namespace Catharsis.Commons
     ///   <para>Deserializes XML contents of stream into object of specified type.</para>
     /// </summary>
     /// <typeparam name="T">Type of object which is to be the result of deserialization process.</typeparam>
-    /// <param name="stream">Stream of XML data for deserialization.</param>
-    /// <param name="close">Whether to automatically close <paramref name="stream"/> after deserialization process or leave it intact.</param>
+    /// <param name="self">Stream of XML data for deserialization.</param>
+    /// <param name="close">Whether to automatically close <paramref name="self"/> after deserialization process or leave it intact.</param>
     /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
-    /// <returns>Deserialized XML contents of source <paramref name="stream"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <returns>Deserialized XML contents of source <paramref name="self"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="XmlSerializer"/>
-    public static T AsXml<T>(this Stream stream, bool close = false, params Type[] types)
+    public static T AsXml<T>(this Stream self, bool close = false, params Type[] types)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
       var serializer = types != null ? new XmlSerializer(typeof(T), types) : new XmlSerializer(typeof(T));
       try
       {
-        return serializer.Deserialize(stream).To<T>();
+        return serializer.Deserialize(self).To<T>();
       }
       finally
       {
         if (close)
         {
-          stream.Close();
+          self.Close();
         }
       }
     }
@@ -42,25 +42,25 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Deserializes XML contents of stream into <see cref="XmlDocument"/> object.</para>
     /// </summary>
-    /// <param name="stream">Stream of XML data for deserialization.</param>
-    /// <param name="close">Whether to automatically close <paramref name="stream"/> after deserialization process or leave it intact.</param>
-    /// <returns>Deserialized XML contents of source <paramref name="stream"/> as instance of <see cref="XmlDocument"/> class.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <param name="self">Stream of XML data for deserialization.</param>
+    /// <param name="close">Whether to automatically close <paramref name="self"/> after deserialization process or leave it intact.</param>
+    /// <returns>Deserialized XML contents of source <paramref name="self"/> as instance of <see cref="XmlDocument"/> class.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="XmlDocument"/>
-    public static XmlDocument AsXmlDocument(this Stream stream, bool close = false)
+    public static XmlDocument AsXmlDocument(this Stream self, bool close = false)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
       var document = new XmlDocument();
       try
       {
-        document.Load(stream);
+        document.Load(self);
       }
       finally
       {
         if (close)
         {
-          stream.Close();
+          self.Close();
         }
       }
       return document;

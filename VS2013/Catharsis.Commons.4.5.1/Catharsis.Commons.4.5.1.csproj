@@ -44,8 +44,14 @@
     <Compile Include="..\..\VS2010\Catharsis.Commons.4.0\ArrayExtensions.cs">
       <Link>ArrayExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\..\VS2010\Catharsis.Commons.4.0\AssemblyExtensions.cs">
+      <Link>AssemblyExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\..\VS2010\Catharsis.Commons.4.0\Assertion.cs">
       <Link>Assertion.cs</Link>
+    </Compile>
+    <Compile Include="..\..\VS2010\Catharsis.Commons.4.0\BooleanExtensions.cs">
+      <Link>BooleanExtensions.cs</Link>
     </Compile>
     <Compile Include="..\..\VS2010\Catharsis.Commons.4.0\Convert.cs">
       <Link>Convert.cs</Link>

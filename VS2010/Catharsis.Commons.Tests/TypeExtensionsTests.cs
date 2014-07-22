@@ -303,7 +303,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null));
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null, Enumerable.Empty<KeyValuePair<string, object>>()));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((IEnumerable<KeyValuePair<string, object>>) null));
+      Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((IDictionary<string, object>) null));
       Assert.Throws<ArgumentNullException>(() => TypeExtensions.NewInstance(null, new object()));
       Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((object) null));
       

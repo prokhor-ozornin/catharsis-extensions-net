@@ -12,21 +12,21 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Determines whether specified class property has a <c>public</c> access level.</para>
     /// </summary>
-    /// <param name="property">Class property to inspect.</param>
-    /// <returns><c>true</c> if <paramref name="property"/> is having a <c>public</c> access level, <c>false</c> otherwise (protected/private).</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="property"/> is a <c>null</c> reference.</exception>
-    public static bool IsPublic(this PropertyInfo property)
+    /// <param name="self">Class property to inspect.</param>
+    /// <returns><c>true</c> if <paramref name="self"/> is having a <c>public</c> access level, <c>false</c> otherwise (protected/private).</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static bool IsPublic(this PropertyInfo self)
     {
-      Assertion.NotNull(property);
+      Assertion.NotNull(self);
 
-      if (property.CanRead)
+      if (self.CanRead)
       {
-        return property.GetGetMethod() != null;
+        return self.GetGetMethod() != null;
       }
 
-      if (property.CanWrite)
+      if (self.CanWrite)
       {
-        return property.GetSetMethod() != null;
+        return self.GetSetMethod() != null;
       }
 
       return false;

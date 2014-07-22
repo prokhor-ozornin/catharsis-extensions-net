@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -15,68 +14,68 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Appends array of bytes to the end of specified file.</para>
     /// </summary>
-    /// <param name="file">File to append data to.</param>
+    /// <param name="self">File to append data to.</param>
     /// <param name="bytes">Sequence of bytes to be added to the end of file.</param>
     /// <returns>Back reference to the current file.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="Append(FileInfo, string, Encoding)"/>
     /// <seealso cref="Append(FileInfo, Stream)"/>
-    public static FileInfo Append(this FileInfo file, byte[] bytes)
+    public static FileInfo Append(this FileInfo self, byte[] bytes)
     {
-      Assertion.NotNull(file);
+      Assertion.NotNull(self);
       Assertion.NotNull(bytes);
 
       if (bytes.Length > 0)
       {
-        file.OpenWrite().Write(bytes).Close();
-        file.Refresh();
+        self.OpenWrite().Write(bytes).Close();
+        self.Refresh();
       }
 
-      return file;
+      return self;
     }
 
     /// <summary>
     ///   <para>Appends text content to the end of specified file.</para>
     /// </summary>
-    /// <param name="file">File to append text to.</param>
+    /// <param name="self">File to append text to.</param>
     /// <param name="text">Text data to be added to the end of file.</param>
     /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
     /// <returns>Back reference to the current file.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="Append(FileInfo, byte[])"/>
     /// <seealso cref="Append(FileInfo, Stream)"/>
-    public static FileInfo Append(this FileInfo file, string text, Encoding encoding = null)
+    public static FileInfo Append(this FileInfo self, string text, Encoding encoding = null)
     {
-      Assertion.NotNull(file);
+      Assertion.NotNull(self);
       Assertion.NotNull(text);
 
       if (text.Length > 0)
       {
-        using (var writer = file.OpenWrite().TextWriter(encoding))
+        using (var writer = self.OpenWrite().TextWriter(encoding))
         {
           writer.Write(text);
         }
-        file.Refresh();
+        self.Refresh();
       }
 
-      return file;
+      return self;
     }
 
     /// <summary>
     ///   <para>Appends content of a stream to the end of specified file.</para>
     /// </summary>
-    /// <param name="file">File to append stream data to.</param>
+    /// <param name="self">File to append stream data to.</param>
     /// <param name="stream">Stream to use as a source of data.</param>
     /// <returns>Back reference to the current file.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="stream"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="Append(FileInfo, byte[])"/>
     /// <seealso cref="Append(FileInfo, string, Encoding)"/>
-    public static FileInfo Append(this FileInfo file, Stream stream)
+    public static FileInfo Append(this FileInfo self, Stream stream)
     {
-      Assertion.NotNull(file);
+      Assertion.NotNull(self);
       Assertion.NotNull(stream);
 
-      using (var destination = file.OpenWrite())
+      using (var destination = self.OpenWrite())
       {
         const int bufferSize = 4096;
         var buffer = new byte[bufferSize];
@@ -87,52 +86,52 @@ namespace Catharsis.Commons
         }
       }
 
-      file.Refresh();
+      self.Refresh();
 
-      return file;
+      return self;
     }
 
     /// <summary>
     ///  <para>Reads entire contents of file and returns it as a byte array.</para>
     /// </summary>
-    /// <param name="file">File to read data from.</param>
-    /// <returns>Byte content of specified <paramref name="file"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
-    public static byte[] Bytes(this FileInfo file)
+    /// <param name="self">File to read data from.</param>
+    /// <returns>Byte content of specified <paramref name="self"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static byte[] Bytes(this FileInfo self)
     {
-      Assertion.NotNull(file);
+      Assertion.NotNull(self);
 
-      return file.OpenRead().Bytes(true);
+      return self.OpenRead().Bytes(true);
     }
 
     /// <summary>
     ///   <para>Erases all content from a file, making it a zero-length one.</para>
     /// </summary>
-    /// <param name="file">File to truncate.</param>
+    /// <param name="self">File to truncate.</param>
     /// <returns>Back reference to the current file.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
-    public static FileInfo Clear(this FileInfo file)
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static FileInfo Clear(this FileInfo self)
     {
-      Assertion.NotNull(file);
+      Assertion.NotNull(self);
 
-      File.Create(file.FullName).Close();
-      file.Refresh();
+      File.Create(self.FullName).Close();
+      self.Refresh();
 
-      return file;
+      return self;
     }
 
     /// <summary>
     ///   <para>Reads text content of a file and returns it as a list of strings, using default system-dependent string separator.</para>
     /// </summary>
-    /// <param name="file">File to read text from.</param>
+    /// <param name="self">File to read text from.</param>
     /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
-    /// <returns>List of strings which have been read from a <paramref name="file"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
-    public static IList<string> Lines(this FileInfo file, Encoding encoding = null)
+    /// <returns>List of strings which have been read from a <paramref name="self"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static IList<string> Lines(this FileInfo self, Encoding encoding = null)
     {
-      Assertion.NotNull(file);
+      Assertion.NotNull(self);
 
-      using (var reader = file.OpenRead().TextReader(encoding))
+      using (var reader = self.OpenRead().TextReader(encoding))
       {
         return reader.Lines();
       }
@@ -141,15 +140,15 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Reads text content of a file and returns it as a string.</para>
     /// </summary>
-    /// <param name="file">File to read text from.</param>
+    /// <param name="self">File to read text from.</param>
     /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
-    /// <returns>Text contents of a <paramref name="file"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="file"/> is a <c>null</c> reference.</exception>
-    public static string Text(this FileInfo file, Encoding encoding = null)
+    /// <returns>Text contents of a <paramref name="self"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static string Text(this FileInfo self, Encoding encoding = null)
     {
-      Assertion.NotNull(file);
+      Assertion.NotNull(self);
 
-      using (var reader = file.OpenRead().TextReader(encoding))
+      using (var reader = self.OpenRead().TextReader(encoding))
       {
         return reader.Text();
       }

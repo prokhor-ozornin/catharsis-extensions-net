@@ -47,7 +47,7 @@ namespace Catharsis.Commons
       var bytes = Guid.NewGuid().ToByteArray();
       Assert.Equal(string.Empty, Enumerable.Empty<byte>().ToArray().Hex());
       Assert.Equal(bytes.Length * 2, bytes.Hex().Length);
-      Assert.True(bytes.Hex().Matches("[0-9A-Z]"));
+      Assert.True(bytes.Hex().IsMatch("[0-9A-Z]"));
     }
 
     /// <summary>

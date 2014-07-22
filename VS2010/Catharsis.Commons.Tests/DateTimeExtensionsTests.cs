@@ -306,5 +306,35 @@ namespace Catharsis.Commons
       Assert.True(new DateTime(2014, 1, 1).Wednesday());
       Assert.False(new DateTime(2014, 1, 2).Wednesday());
     }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.UpTo(DateTime, DateTime, Action)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void UpTo_Method()
+    {
+      var counter = 0;
+      new DateTime(1999, 1, 1).UpTo(new DateTime(1998, 12, 31), () => counter++);
+      Assert.Equal(0, counter);
+      new DateTime(1999, 1, 1).UpTo(new DateTime(1999, 1, 1), () => counter++);
+      Assert.Equal(0, counter);
+      new DateTime(1999, 1, 1).UpTo(new DateTime(1999, 1, 3), () => counter++);
+      Assert.Equal(2, counter);
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="DateTimeExtensions.DownTo(DateTime, DateTime, Action)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void DownTo_Method()
+    {
+      var counter = 0;
+      new DateTime(1999, 1, 1).DownTo(new DateTime(1999, 1, 2), () => counter++);
+      Assert.Equal(0, counter);
+      new DateTime(1999, 1, 1).DownTo(new DateTime(1999, 1, 1), () => counter++);
+      Assert.Equal(0, counter);
+      new DateTime(1999, 1, 1).DownTo(new DateTime(1998, 12, 30), () => counter++);
+      Assert.Equal(2, counter);
+    }
   }
 }

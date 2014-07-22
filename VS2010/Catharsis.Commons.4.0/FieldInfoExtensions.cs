@@ -12,14 +12,14 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Determines whether specified class field has a <c>protected</c> access level.</para>
     /// </summary>
-    /// <param name="field">Class field to inspect.</param>
-    /// <returns><c>true</c> if <paramref name="field"/> is having a <c>protected</c> access level, <c>false</c> otherwise (public/private).</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="field"/> is a <c>null</c> reference.</exception>
-    public static bool IsProtected(this FieldInfo field)
+    /// <param name="self">Class field to inspect.</param>
+    /// <returns><c>true</c> if <paramref name="self"/> is having a <c>protected</c> access level, <c>false</c> otherwise (public/private).</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static bool IsProtected(this FieldInfo self)
     {
-      Assertion.NotNull(field);
+      Assertion.NotNull(self);
 
-      return !field.IsPublic && !field.IsPrivate;
+      return !self.IsPublic && !self.IsPrivate;
     }
   }
 }

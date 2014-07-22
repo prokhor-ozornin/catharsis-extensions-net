@@ -11,27 +11,27 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Decodes URL-encoded string.</para>
     /// </summary>
-    /// <param name="value">String to decode.</param>
+    /// <param name="self">String to decode.</param>
     /// <returns>Decoded string.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
-    public static string UrlDecode(this string value)
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static string UrlDecode(this string self)
     {
-      Assertion.NotNull(value);
+      Assertion.NotNull(self);
 
-      return Uri.UnescapeDataString(value);
+      return Uri.UnescapeDataString(self);
     }
 
     /// <summary>
     ///   <para>URL-encodes string.</para>
     /// </summary>
-    /// <param name="value">String to encode.</param>
+    /// <param name="self">String to encode.</param>
     /// <returns>Encoded string.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is <see cref="string.Empty"/> string.</exception>
-    public static string UrlEncode(this string value)
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is <see cref="string.Empty"/> string.</exception>
+    public static string UrlEncode(this string self)
     {
-      Assertion.NotNull(value);
+      Assertion.NotNull(self);
 
-      return Uri.EscapeDataString(value);
+      return Uri.EscapeDataString(self);
     }
   }
 }

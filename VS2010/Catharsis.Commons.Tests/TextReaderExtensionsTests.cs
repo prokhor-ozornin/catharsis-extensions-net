@@ -34,9 +34,10 @@ namespace Catharsis.Commons
       using (var reader = new StringReader("First{0}Second{0}".FormatSelf(Environment.NewLine)))
       {
         var lines = reader.Lines();
-        Assert.Equal(2, lines.Count);
+        Assert.Equal(3, lines.Count());
         Assert.Equal("First", lines[0]);
         Assert.Equal("Second", lines[1]);
+        Assert.Equal(string.Empty, lines[2]);
         Assert.False(reader.Lines().Any());
         Assert.Equal(-1, reader.Read());
       }

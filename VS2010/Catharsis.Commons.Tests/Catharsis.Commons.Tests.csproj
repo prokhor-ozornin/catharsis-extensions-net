@@ -104,7 +104,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayExtensionsTests.cs" />
+    <Compile Include="AssemblyExtensionsTests.cs" />
     <Compile Include="AssertionTests.cs" />
+    <Compile Include="BooleanExtensionsTests.cs" />
     <Compile Include="ConvertExtensionsTests.cs" />
     <Compile Include="ConvertTests.cs" />
     <Compile Include="DateTimeExtensionsTests.cs" />
@@ -150,6 +152,9 @@
       <Project>{E643EA81-71C3-4611-8350-6F42AB37D27B}</Project>
       <Name>Catharsis.Commons.4.0</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

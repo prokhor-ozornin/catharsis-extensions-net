@@ -17,31 +17,31 @@ namespace Catharsis.Commons
     ///   <para>Translates specified <see cref="XmlDocument"/> into a dictionary.</para>
     ///   <para>Attributes in XML document are translated to string keys and values, nodes become dictionaries with string keys themselves.</para>
     /// </summary>
-    /// <param name="xml"><see cref="XmlDocument"/>, whose structure is to be converted to <see cref="IDictionary{string, object}"/> instance.</param>
+    /// <param name="self"><see cref="XmlDocument"/>, whose structure is to be converted to <see cref="IDictionary{string, object}"/> instance.</param>
     /// <returns>Dictionary that follows the structure of <see cref="XmlDocument"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
-    public static IDictionary<string, object> Dictionary(this XmlDocument xml)
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static IDictionary<string, object> Dictionary(this XmlDocument self)
     {
-      Assertion.NotNull(xml);
+      Assertion.NotNull(self);
 
       var result = new Dictionary<string, object>();
-      DictionaryXml(xml.DocumentElement, result);
+      DictionaryXml(self.DocumentElement, result);
       return result;
     }
 
     /// <summary>
     ///   <para>Represents given <see cref="XmlDocument"/> instance as a string of XML data in <see cref="Encoding.UTF8"/> encoding.</para>
     /// </summary>
-    /// <param name="xml"><see cref="XmlDocument"/> to be converted to a string.</param>
-    /// <returns>XML content, representing XML <paramref name="xml"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="xml"/> is a <c>null</c> reference.</exception>
-    public static string String(this XmlDocument xml)
+    /// <param name="self"><see cref="XmlDocument"/> to be converted to a string.</param>
+    /// <returns>XML content, representing XML <paramref name="self"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static string String(this XmlDocument self)
     {
-      Assertion.NotNull(xml);
+      Assertion.NotNull(self);
 
       using (var writer = new StringWriter())
       {
-        writer.XmlWriter(true, Encoding.UTF8).Write(xml.Save).Close();
+        writer.XmlWriter(true, Encoding.UTF8).Write(self.Save).Close();
         return writer.ToString();
       }
     }
@@ -49,25 +49,25 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Deserializes XML contents of <see cref="TextReader"/> into <see cref="XmlDocument"/> object.</para>
     /// </summary>
-    /// <param name="reader"><see cref="TextReader"/> which is used as a source for XML data.</param>
-    /// <param name="close">Whether to automatically close <paramref name="reader"/> after deserialization process or leave it intact.</param>
-    /// <returns>Deserialized XML contents of source <paramref name="reader"/> as instance of <see cref="XmlDocument"/> class.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is a <c>null</c> reference.</exception>
+    /// <param name="self"><see cref="TextReader"/> which is used as a source for XML data.</param>
+    /// <param name="close">Whether to automatically close <paramref name="self"/> after deserialization process or leave it intact.</param>
+    /// <returns>Deserialized XML contents of source <paramref name="self"/> as instance of <see cref="XmlDocument"/> class.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="XmlDocument"/>
-    public static XmlDocument XmlDocument(this TextReader reader, bool close = false)
+    public static XmlDocument XmlDocument(this TextReader self, bool close = false)
     {
-      Assertion.NotNull(reader);
+      Assertion.NotNull(self);
 
       var document = new XmlDocument();
       try
       {
-        document.Load(reader);
+        document.Load(self);
       }
       finally
       {
         if (close)
         {
-          reader.Close();
+          self.Close();
         }
       }
       return document;

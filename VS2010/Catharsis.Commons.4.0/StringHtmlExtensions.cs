@@ -12,31 +12,31 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Converts a string that has been HTML-encoded for HTTP transmission into a decoded string.</para>
     /// </summary>
-    /// <param name="value">HTML-encoded version of string.</param>
-    /// <returns>HTML-decoded version of <paramref name="value"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <param name="self">HTML-encoded version of string.</param>
+    /// <returns>HTML-decoded version of <paramref name="self"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="WebUtility.HtmlDecode(string)"/>
     /// <seealso cref="HtmlEncode(string)"/>
-    public static string HtmlDecode(this string value)
+    public static string HtmlDecode(this string self)
     {
-      Assertion.NotNull(value);
+      Assertion.NotNull(self);
 
-      return WebUtility.HtmlDecode(value);
+      return WebUtility.HtmlDecode(self);
     }
 
     /// <summary>
     ///   <para>Converts a string to an HTML-encoded string.</para>
     /// </summary>
-    /// <param name="value">String to convert to HTML-encoded version.</param>
-    /// <returns>HTML-encoded version of <paramref name="value"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="value"/> is a <c>null</c> reference.</exception>
+    /// <param name="self">String to convert to HTML-encoded version.</param>
+    /// <returns>HTML-encoded version of <paramref name="self"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="WebUtility.HtmlEncode(string)"/>
     /// <seealso cref="HtmlDecode(string)"/>
-    public static string HtmlEncode(this string value)
+    public static string HtmlEncode(this string self)
     {
-      Assertion.NotNull(value);
+      Assertion.NotNull(self);
 
-      return WebUtility.HtmlEncode(value);
+      return WebUtility.HtmlEncode(self);
     }
   }
 }

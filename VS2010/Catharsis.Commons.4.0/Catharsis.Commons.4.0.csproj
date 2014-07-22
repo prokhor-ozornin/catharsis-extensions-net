@@ -107,7 +107,9 @@
   <ItemGroup>
     <Compile Include="ArrayCryptographyExtensions.cs" />
     <Compile Include="ArrayExtensions.cs" />
+    <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="Assertion.cs" />
+    <Compile Include="BooleanExtensions.cs" />
     <Compile Include="Convert.cs" />
     <Compile Include="ConvertExtensions.cs" />
     <Compile Include="DateTimeExtensions.cs" />

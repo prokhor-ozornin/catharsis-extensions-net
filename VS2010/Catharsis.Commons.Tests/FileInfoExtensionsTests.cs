@@ -127,10 +127,11 @@ namespace Catharsis.Commons
       WithFile(file =>
       {
         var lines = file.Append(text).Lines();
-        Assert.Equal(3, lines.Count);
+        Assert.Equal(4, lines.Count);
         Assert.Equal("First", lines[0]);
         Assert.Equal("Second", lines[1]);
         Assert.Equal("Third", lines[2]);
+        Assert.Equal(string.Empty, lines[3]);
       });
     }
 

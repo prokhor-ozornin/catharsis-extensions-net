@@ -13,47 +13,62 @@ namespace Catharsis.Commons
   public static class StreamExtensions
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Deserializes XML data from source <see cref="Stream"/> as <see cref="XDocument"/> object.</para>
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="BinaryReader"/>
-    /// <seealso cref="BinaryWriter(Stream, Encoding)"/>
-    public static BinaryReader BinaryReader(this Stream stream, Encoding encoding = null)
+    /// <param name="self">Source stream with XML data.</param>
+    /// <param name="close">Whether to automatically close source stream after successfull deserialization.</param>
+    /// <returns><see cref="XDocument"/> document, constructed from data in <paramref name="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="XDocument"/>
+    public static XDocument AsXDocument(this Stream self, bool close = false)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
-      return encoding != null ? new BinaryReader(stream, encoding) : new BinaryReader(stream);
+      return System.Xml.XmlReader.Create(self, new XmlReaderSettings { CloseInput = close }).Read(XDocument.Load);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a <see cref="BinaryReader"/> for reading data from specified <see cref="Stream"/>.</para>
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <param name="self">Source stream to read from.</param>
+    /// <param name="encoding">Text encoding to use by <see cref="BinaryReader"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+    /// <returns>Binary reader instance that wraps <see cref="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="BinaryReader"/>
+    /// <seealso cref="BinaryWriter(Stream, Encoding)"/>
+    public static BinaryReader BinaryReader(this Stream self, Encoding encoding = null)
+    {
+      Assertion.NotNull(self);
+
+      return encoding != null ? new BinaryReader(self, encoding) : new BinaryReader(self);
+    }
+
+    /// <summary>
+    ///   <para>Returns a <see cref="BinaryWriter"/> for writing data to specified <see cref="Stream"/>.</para>
+    /// </summary>
+    /// <param name="self">Target stream to write to.</param>
+    /// <param name="encoding">Text encoding to use by <see cref="BinaryWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+    /// <returns>Binary writer instance that wraps <see cref="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="BinaryWriter"/>
     /// <seealso cref="BinaryReader(Stream, Encoding)"/>
-    public static BinaryWriter BinaryWriter(this Stream stream, Encoding encoding = null)
+    public static BinaryWriter BinaryWriter(this Stream self, Encoding encoding = null)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
-      return encoding != null ? new BinaryWriter(stream, encoding) : new BinaryWriter(stream);
+      return encoding != null ? new BinaryWriter(self, encoding) : new BinaryWriter(self);
     }
 
     /// <summary>
     ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte"/> array. The input is closed before this method returns.</para>
     /// </summary>
-    /// <param name="stream"></param>
+    /// <param name="self"></param>
     /// <param name="close"></param>
-    /// <returns>The <see cref="byte"/> array from that <paramref name="stream"/></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static byte[] Bytes(this Stream stream, bool close = false)
+    /// <returns>The <see cref="byte"/> array from that <paramref name="self"/></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static byte[] Bytes(this Stream self, bool close = false)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
       var destination = new MemoryStream();
       try
@@ -61,7 +76,7 @@ namespace Catharsis.Commons
         const int bufferSize = 4096;
         var buffer = new byte[bufferSize];
         int count;
-        while ((count = stream.Read(buffer, 0, bufferSize)) > 0)
+        while ((count = self.Read(buffer, 0, bufferSize)) > 0)
         {
           destination.Write(buffer, 0, count);
         }
@@ -71,203 +86,189 @@ namespace Catharsis.Commons
         destination.Close();
         if (close)
         {
-          stream.Close();
+          self.Close();
         }
       }
       return destination.ToArray();
     }
     
     /// <summary>
-    ///   <para></para>
+    ///   <para>Sets the position within source <see cref="Stream"/> to the beginning of a stream, if this stream supports seeking operations.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="stream"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static T Rewind<T>(this T stream) where T : Stream
+    /// <typeparam name="T">Type of source stream.</typeparam>
+    /// <param name="self">Source stream.</param>
+    /// <returns>Back reference to <paramref name="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="Stream.Seek(long, SeekOrigin)"/>
+    public static T Rewind<T>(this T self) where T : Stream
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
-      stream.Seek(0, SeekOrigin.Begin);
-      return stream;
+      self.Seek(0, SeekOrigin.Begin);
+      return self;
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns all available text data from a source stream.</para>
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="close"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    public static string Text(this Stream stream, bool close = false, Encoding encoding = null)
+    /// <param name="self">Source stream to read from.</param>
+    /// <param name="close">Whether to automatically close source stream when all available data has been successfully read from it.</param>
+    /// <param name="encoding">Encoding to be used for bytes-to-text conversion. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+    /// <returns>Text data from a <see cref="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static string Text(this Stream self, bool close = false, Encoding encoding = null)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
-      return stream.CanRead ? stream.TextReader(encoding).Text(close) : string.Empty;
+      return self.CanRead ? self.TextReader(encoding).Text(close) : string.Empty;
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a <see cref="TextReader"/> for reading text data from specified <see cref="Stream"/>.</para>
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <param name="self">Source stream to read from.</param>
+    /// <param name="encoding">Text encoding to use by <see cref="TextReader"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+    /// <returns>Text reader instance that wraps <see cref="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="TextReader"/>
     /// <seealso cref="TextWriter(Stream, Encoding)"/>
-    public static TextReader TextReader(this Stream stream, Encoding encoding = null)
+    public static TextReader TextReader(this Stream self, Encoding encoding = null)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
-      return encoding != null ? new StreamReader(stream, encoding) : new StreamReader(stream, Encoding.UTF8);
+      return encoding != null ? new StreamReader(self, encoding) : new StreamReader(self, Encoding.UTF8);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a <see cref="TextWriter"/> for writing text data to specified <see cref="Stream"/>.</para>
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <param name="self">Target stream to write to.</param>
+    /// <param name="encoding">Text encoding to use by <see cref="TextWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+    /// <returns>Text writer instance that wraps <see cref="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="TextWriter"/>
     /// <seealso cref="TextReader(Stream, Encoding)"/>
-    public static TextWriter TextWriter(this Stream stream, Encoding encoding = null)
+    public static TextWriter TextWriter(this Stream self, Encoding encoding = null)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
-      return encoding != null ? new StreamWriter(stream, encoding) : new StreamWriter(stream, Encoding.UTF8);
+      return encoding != null ? new StreamWriter(self, encoding) : new StreamWriter(self, Encoding.UTF8);
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Writes binary data to target stream.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="stream"></param>
-    /// <param name="bytes"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
+    /// <typeparam name="T">Type of target stream.</typeparam>
+    /// <param name="self">Target stream to write to.</param>
+    /// <param name="bytes">Binary data to write to a stream.</param>
+    /// <returns>Back reference to <see cref="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="bytes"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="Write{T}(T, Stream)"/>
     /// <seealso cref="Write{T}(T, string, Encoding)"/>
-    public static T Write<T>(this T stream, byte[] bytes) where T : Stream
+    public static T Write<T>(this T self, byte[] bytes) where T : Stream
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
       Assertion.NotNull(bytes);
 
-      if (stream.CanWrite && bytes.Length > 0)
+      if (self.CanWrite && bytes.Length > 0)
       {
-        stream.Write(bytes, 0, bytes.Length);
+        self.Write(bytes, 0, bytes.Length);
       }
 
-      return stream;
+      return self;
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>"Pipes" two streams by writing all available data from one to another.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="to"></param>
-    /// <param name="from"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="to"/> or <paramref name="from"/> is a <c>null</c> reference.</exception>
+    /// <typeparam name="T">Type of target stream.</typeparam>
+    /// <param name="self">Target stream to write data to.</param>
+    /// <param name="from">Source stream to read data from.</param>
+    /// <returns>Back reference to target stream.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="from"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="Write{T}(T, byte[])"/>
     /// <seealso cref="Write{T}(T, string, Encoding)"/>
-    public static T Write<T>(this T to, Stream from) where T : Stream
+    public static T Write<T>(this T self, Stream from) where T : Stream
     {
-      Assertion.NotNull(to);
+      Assertion.NotNull(self);
       Assertion.NotNull(from);
 
-      if (to.CanWrite && from.CanRead)
+      if (self.CanWrite && from.CanRead)
       {
         const int bufferSize = 4096;
         var buffer = new byte[bufferSize];
         int count;
         while ((count = from.Read(buffer, 0, bufferSize)) > 0)
         {
-          to.Write(buffer, 0, count);
+          self.Write(buffer, 0, count);
         }
       }
 
-      return to;
+      return self;
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Writes text data to target <see cref="Stream"/>, using specified <see cref="Encoding"/>.</para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="stream"></param>
-    /// <param name="text"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
+    /// <typeparam name="T">Type of target stream.</typeparam>
+    /// <param name="self">Target stream to write to.</param>
+    /// <param name="text">Text to write to a stream.</param>
+    /// <param name="encoding">Encoding to be used for text-to-bytes conversion. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+    /// <returns>Back reference to <see cref="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="text"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="Write{T}(T, byte[])"/>
     /// <seealso cref="Write{T}(T, Stream)"/>
-    public static T Write<T>(this T stream, string text, Encoding encoding = null) where T : Stream
+    public static T Write<T>(this T self, string text, Encoding encoding = null) where T : Stream
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
       Assertion.NotNull(text);
 
-      if (stream.CanWrite && text.Length > 0)
+      if (self.CanWrite && text.Length > 0)
       {
-        var writer = stream.TextWriter(encoding);
+        var writer = self.TextWriter(encoding);
         writer.Write(text);
         writer.Flush();
       }
 
-      return stream;
+      return self;
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a <see cref="XmlReader"/> for reading XML data from specified <see cref="Stream"/>.</para>
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="close"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="XDocument"/>
-    public static XDocument AsXDocument(this Stream stream, bool close = false)
-    {
-      Assertion.NotNull(stream);
-
-      return System.Xml.XmlReader.Create(stream, new XmlReaderSettings { CloseInput = close }).Read(System.Xml.Linq.XDocument.Load);
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="close"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <param name="self">Source stream to read from.</param>
+    /// <param name="close">Whether resulting <see cref="System.Xml.XmlReader"/> should close underlying stream when its <see cref="System.Xml.XmlReader.Close()"/> method will be called.</param>
+    /// <returns>XML reader instance that wraps <see cref="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="XmlReader"/>
     /// <seealso cref="XmlWriter(Stream, bool, Encoding)"/>
-    public static XmlReader XmlReader(this Stream stream, bool close = false)
+    public static XmlReader XmlReader(this Stream self, bool close = false)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
-      return System.Xml.XmlReader.Create(stream, new XmlReaderSettings { CloseInput = close, IgnoreComments = true, IgnoreWhitespace = true });
+      return System.Xml.XmlReader.Create(self, new XmlReaderSettings { CloseInput = close, IgnoreComments = true, IgnoreWhitespace = true });
     }
 
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns a <see cref="XmlWriter"/> for writing XML data to specified <see cref="Stream"/>.</para>
     /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="close"></param>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is a <c>null</c> reference.</exception>
+    /// <param name="self">Target stream to write to.</param>
+    /// <param name="close">Whether resulting <see cref="System.Xml.XmlWriter"/> should close underlying stream when its <see cref="System.Xml.XmlWriter.Close()"/> method will be called.</param>
+    /// <param name="encoding">Text encoding to use by <see cref="XmlWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+    /// <returns>XML writer instance that wraps <see cref="self"/> stream.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="XmlWriter"/>
     /// <seealso cref="XmlReader(Stream, bool)"/>
-    public static XmlWriter XmlWriter(this Stream stream, bool close = false, Encoding encoding = null)
+    public static XmlWriter XmlWriter(this Stream self, bool close = false, Encoding encoding = null)
     {
-      Assertion.NotNull(stream);
+      Assertion.NotNull(self);
 
       var settings = new XmlWriterSettings { CloseOutput = close };
       if (encoding != null)
       {
         settings.Encoding = encoding;
       }
-      return System.Xml.XmlWriter.Create(stream, settings);
+      return System.Xml.XmlWriter.Create(self, settings);
     }
   }
 }
