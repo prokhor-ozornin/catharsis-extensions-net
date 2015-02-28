@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0F176C50-781E-4CF8-A380-FFA7F8042B83}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Catharsis.Commons</RootNamespace>
+    <AssemblyName>Catharsis.Commons</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Catharsis.Commons.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Catharsis.Commons.4.0\ArrayExtensions.cs">
+      <Link>ArrayExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\Assertion.cs">
+      <Link>Assertion.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\BooleanExtensions.cs">
+      <Link>BooleanExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\Convert.cs">
+      <Link>Convert.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\DateTimeExtensions.cs">
+      <Link>DateTimeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\DelegateExtensions.cs">
+      <Link>DelegateExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\EqualsAndHashCodeAttribute.cs">
+      <Link>EqualsAndHashCodeAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\FieldInfoExtensions.cs">
+      <Link>FieldInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ICollectionExtensions.cs">
+      <Link>ICollectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\IEnumerableExtensions.cs">
+      <Link>IEnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\IEnumerableSetExtensions.cs">
+      <Link>IEnumerableSetExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\IQueryableExtensions.cs">
+      <Link>IQueryableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ISpecification.cs">
+      <Link>ISpecification.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\ISpecificationExtensions.cs">
+      <Link>ISpecificationExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\MethodInfoExtensions.cs">
+      <Link>MethodInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\NumericExtensions.cs">
+      <Link>NumericExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\PropertyInfoExtensions.cs">
+      <Link>PropertyInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\RandomExtensions.cs">
+      <Link>RandomExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\SpecificationBase.cs">
+      <Link>SpecificationBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StringExtensions.cs">
+      <Link>StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\StringHttpExtensions.cs">
+      <Link>StringHttpExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\TextWriterExtensions.cs">
+      <Link>TextWriterExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\TimeSpanExtensions.cs">
+      <Link>TimeSpanExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\XDocumentExtensions.cs">
+      <Link>XDocumentExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons.4.0\XElementExtensions.cs">
+      <Link>XElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
