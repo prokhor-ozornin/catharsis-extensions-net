@@ -2,7 +2,6 @@
 using System.Collections;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
 
 namespace Catharsis.Commons
@@ -22,7 +21,6 @@ namespace Catharsis.Commons
     ///       <item><description>If <paramref name="subject"/> is a positive numeric value, the result is <c>true</c>, if it's negative or zero - the result is <c>false</c>.</description></item>
     ///       <item><description>If <paramref name="subject"/> is a <see cref="string"/>, <c>true</c> is returned if it contains at least one character, <c>false</c> otherwise.</description></item>
     ///       <item><description>If <paramref name="subject"/> implements <see cref="IEnumerable"/>, <c>true</c> is returned if it contains at least one element, <c>false</c> otherwise.</description></item>
-    ///       <item><description>If <paramref name="subject"/> is a <see cref="FileInfo"/> value, <c>true</c> is returned if associated file is not empty, <c>false</c> otherwise.</description></item>
     ///       <item><description>If <paramref name="subject"/> is a <see cref="Stream"/> value, <c>true</c> is returned if it's not empty, <c>false</c> otherwise.</description></item>
     ///       <item><description>If <paramref name="subject"/> is a <see cref="Match"/> value, <c>true</c> is returned if it's successful, <c>false</c> otherwise.</description></item>
     ///     </list>
@@ -89,11 +87,6 @@ namespace Catharsis.Commons
       if (subject is IEnumerable)
       {
         return subject.To<IEnumerable>().Cast<object>().Any();
-      }
-
-      if (subject is FileInfo)
-      {
-        return subject.To<FileInfo>().Length > 0;
       }
 
       if (subject is Stream)
@@ -342,36 +335,6 @@ namespace Catharsis.Commons
 
       long result;
       if (long.TryParse(subject.ToString(), out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="IPAddress"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="IPAddress"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static IPAddress IPAddress(this Convert self, object subject)
-    {
-      Assertion.NotNull(self);
-
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is IPAddress)
-      {
-        return subject as IPAddress;
-      }
-
-      IPAddress result;
-      if (System.Net.IPAddress.TryParse(subject.ToString(), out result))
       {
         return result;
       }

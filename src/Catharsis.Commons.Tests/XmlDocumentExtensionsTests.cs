@@ -1,23 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml;
 using Xunit;
 
 namespace Catharsis.Commons
 {
   /// <summary>
-  ///   <para>Tests set for class <see cref="XmlDocumentExtensions"/>.</para>
+  ///   <para>Tests set for class <see cref="XmlDocumentXmlExtensions"/>.</para>
   /// </summary>
   public sealed class XmlDocumentExtensionsTests
   {
     /// <summary>
-    ///   <para>Performs testing of <see cref="XmlDocumentExtensions.Dictionary(XmlDocument)"/> method.</para>
+    ///   <para>Performs testing of <see cref="XmlDocumentXmlExtensions.AsXmlDocument(Stream, bool)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void AsXmlDocument_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => XmlDocumentXmlExtensions.AsXmlDocument(null));
+      Assert.Throws<XmlException>(() => Stream.Null.AsXmlDocument());
+
+      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+
+      using (var stream = new MemoryStream(Xml.Bytes(Encoding.UTF32)))
+      {
+        Assert.Throws<XmlException>(() => stream.AsXmlDocument());
+      }
+      
+      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
+      {
+        Assert.Equal(Xml, stream.AsXmlDocument().String());
+        Assert.Equal(0, stream.Bytes().Length);
+        Assert.Equal(-1, stream.ReadByte());
+      }
+
+      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
+      {
+        Assert.Equal(Xml, stream.AsXmlDocument (true).String());
+        Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
+      }
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="XmlDocumentXmlExtensions.Dictionary(XmlDocument)"/> method.</para>
     /// </summary>
     [Fact]
     public void Dictionary_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => XmlDocumentExtensions.Dictionary(null));
+      Assert.Throws<ArgumentNullException>(() => XmlDocumentXmlExtensions.Dictionary(null));
 
       var xml = new XmlDocument();
       var articlesXml = xml.CreateElement("Articles");
@@ -62,12 +93,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="XmlDocumentExtensions.String(XmlDocument)"/> method.</para>
+    ///   <para>Performs testing of <see cref="XmlDocumentXmlExtensions.String(XmlDocument)"/> method.</para>
     /// </summary>
     [Fact]
     public void String_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => XmlDocumentExtensions.String(null));
+      Assert.Throws<ArgumentNullException>(() => XmlDocumentXmlExtensions.String(null));
 
       Assert.Equal(string.Empty, new XmlDocument().String());
       
@@ -80,12 +111,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="XmlDocumentExtensions.XmlDocument(TextReader, bool)"/> method.</para>
+    ///   <para>Performs testing of <see cref="XmlDocumentXmlExtensions.XmlDocument(TextReader, bool)"/> method.</para>
     /// </summary>
     [Fact]
     public void XmlDocument_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => XmlDocumentExtensions.XmlDocument(null));
+      Assert.Throws<ArgumentNullException>(() => XmlDocumentXmlExtensions.XmlDocument(null));
       Assert.Throws<XmlException>(() => TextReader.Null.XmlDocument());
 
       const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";

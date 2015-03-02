@@ -24,7 +24,7 @@ namespace Catharsis.Commons
     {
       Assertion.NotNull(self);
 
-      return System.Xml.XmlReader.Create(self, new XmlReaderSettings { CloseInput = close }).Read(XDocument.Load);
+      return XDocument.Load(System.Xml.XmlReader.Create(self, new XmlReaderSettings { CloseInput = close }));
     }
 
     /// <summary>
@@ -83,10 +83,10 @@ namespace Catharsis.Commons
       }
       finally
       {
-        destination.Close();
+        destination.Dispose();
         if (close)
         {
-          self.Close();
+          self.Dispose();
         }
       }
       return destination.ToArray();

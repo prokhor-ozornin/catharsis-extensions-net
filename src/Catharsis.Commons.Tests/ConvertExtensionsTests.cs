@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Xunit;
@@ -52,7 +51,6 @@ namespace Catharsis.Commons
       Assert.True(Convert.To.Boolean("string"));
       Assert.False(Convert.To.Boolean(new object[] {}));
       Assert.True(Convert.To.Boolean(new [] { new object() }));
-      Assert.False(Convert.To.Boolean(new FileInfo(Path.GetTempFileName())));
       Assert.True(Convert.To.Boolean(new FileInfo(Assembly.GetExecutingAssembly().Location)));
       Assert.False(Convert.To.Boolean(Stream.Null));
       Assert.False(Convert.To.Boolean(Match.Empty));
@@ -170,20 +168,6 @@ namespace Catharsis.Commons
       Assert.Equal(long.MinValue, Convert.To.Int64(long.MinValue));
       Assert.Equal(long.MinValue, Convert.To.Int64(long.MinValue.ToString(CultureInfo.InvariantCulture)));
       Assert.Null(Convert.To.Int64(new object()));
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="ConvertExtensions.IPAddress(Convert, object)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void IPAddress_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ConvertExtensions.IPAddress(null, new object()));
-
-      Assert.Null(Convert.To.IPAddress(null));
-      Assert.True(ReferenceEquals(Convert.To.IPAddress(IPAddress.Loopback), IPAddress.Loopback));
-      Assert.Equal(IPAddress.Loopback, Convert.To.IPAddress(IPAddress.Loopback.ToString()));
-      Assert.Null(Convert.To.IPAddress(new object()));
     }
 
     /// <summary>

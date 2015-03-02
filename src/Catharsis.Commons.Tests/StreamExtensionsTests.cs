@@ -51,12 +51,12 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamExtendedExtensions.Buffered(Stream, int?)"/> method.</para>
+    ///   <para>Performs testing of <see cref="BufferedStreamExtensions.Buffered(Stream, int?)"/> method.</para>
     /// </summary>
     [Fact]
     public void Buffered_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtendedExtensions.Buffered(null));
+      Assert.Throws<ArgumentNullException>(() => BufferedStreamExtensions.Buffered(null));
       Assert.Throws<ArgumentOutOfRangeException>(() => Stream.Null.Buffered(-1));
       Assert.Throws<ArgumentOutOfRangeException>(() => Stream.Null.Buffered(0));
 
@@ -96,18 +96,18 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="StreamCompressionExtensions.Deflate(Stream, CompressionMode)"/></description></item>
-    ///     <item><description><see cref="StreamCompressionExtensions.Deflate{STREAM}(STREAM, byte[])"/></description></item>
-    ///     <item><description><see cref="StreamCompressionExtensions.Deflate(Stream)"/></description></item>
+    ///     <item><description><see cref="CompressionExtensions.Deflate(Stream, CompressionMode)"/></description></item>
+    ///     <item><description><see cref="CompressionExtensions.Deflate{STREAM}(STREAM, byte[])"/></description></item>
+    ///     <item><description><see cref="CompressionExtensions.Deflate(Stream)"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void Deflate_Methods()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.Deflate(null, CompressionMode.Compress));
-      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.Deflate<Stream>(null, Enumerable.Empty<byte>().ToArray()));
+      Assert.Throws<ArgumentNullException>(() => CompressionExtensions.Deflate(null, CompressionMode.Compress));
+      Assert.Throws<ArgumentNullException>(() => CompressionExtensions.Deflate<Stream>(null, Enumerable.Empty<byte>().ToArray()));
       Assert.Throws<ArgumentNullException>(() => Stream.Null.Deflate(null));
-      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.Deflate(null));
+      Assert.Throws<ArgumentNullException>(() => CompressionExtensions.Deflate(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
 
@@ -156,18 +156,18 @@ namespace Catharsis.Commons
     /// <summary>
     ///   <para>Performs testing of following methods :</para>
     ///   <list type="bullet">
-    ///     <item><description><see cref="StreamCompressionExtensions.GZip(Stream, CompressionMode)"/></description></item>
-    ///     <item><description><see cref="StreamCompressionExtensions.GZip{STREAM}(STREAM, byte[])"/></description></item>
-    ///     <item><description><see cref="StreamCompressionExtensions.GZip(Stream)"/></description></item>
+    ///     <item><description><see cref="CompressionExtensions.GZip(Stream, CompressionMode)"/></description></item>
+    ///     <item><description><see cref="CompressionExtensions.GZip{STREAM}(STREAM, byte[])"/></description></item>
+    ///     <item><description><see cref="CompressionExtensions.GZip(Stream)"/></description></item>
     ///   </list>
     /// </summary>
     [Fact]
     public void GZip_Method()
     {
-      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.GZip(null, CompressionMode.Compress));
-      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.GZip<Stream>(null, Enumerable.Empty<byte>().ToArray()));
+      Assert.Throws<ArgumentNullException>(() => CompressionExtensions.GZip(null, CompressionMode.Compress));
+      Assert.Throws<ArgumentNullException>(() => CompressionExtensions.GZip<Stream>(null, Enumerable.Empty<byte>().ToArray()));
       Assert.Throws<ArgumentNullException>(() => Stream.Null.GZip(null));
-      Assert.Throws<ArgumentNullException>(() => StreamCompressionExtensions.GZip(null));
+      Assert.Throws<ArgumentNullException>(() => CompressionExtensions.GZip(null));
 
       var bytes = Guid.NewGuid().ToByteArray();
       
@@ -363,29 +363,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StreamXmlExtensions.AsXml{T}(Stream, bool, Type[])"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void AsXml_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StreamXmlExtensions.AsXml<object>(null));
-
-      var subject = Guid.Empty;
-      using (var stream = new MemoryStream())
-      {
-        subject.ToXml(stream, Encoding.Unicode);
-        Assert.Equal(subject, stream.Rewind().AsXml<Guid>());
-        Assert.True(stream.CanWrite);
-      }
-      using (var stream = new MemoryStream())
-      {
-        subject.ToXml(stream, Encoding.Unicode);
-        Assert.Equal(subject, stream.Rewind().AsXml<Guid>(true));
-        Assert.False(stream.CanWrite);
-      }
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="StreamExtensions.AsXDocument(Stream, bool)"/> method.</para>
     /// </summary>
     [Fact]
@@ -411,37 +388,7 @@ namespace Catharsis.Commons
       using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
       {
         Assert.Equal("<article>text</article>", stream.AsXDocument(true).ToString());
-        Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      }
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="StreamXmlExtensions.AsXmlDocument(Stream, bool)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void AsXmlDocument_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StreamXmlExtensions.AsXmlDocument(null));
-      Assert.Throws<XmlException>(() => Stream.Null.AsXmlDocument());
-
-      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-
-      using (var stream = new MemoryStream(Xml.Bytes(Encoding.UTF32)))
-      {
-        Assert.Throws<XmlException>(() => stream.AsXmlDocument());
-      }
-      
-      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
-      {
-        Assert.Equal(Xml, stream.AsXmlDocument().String());
-        Assert.Equal(0, stream.Bytes().Length);
         Assert.Equal(-1, stream.ReadByte());
-      }
-
-      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
-      {
-        Assert.Equal(Xml, stream.AsXmlDocument (true).String());
-        Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
       }
     }
 

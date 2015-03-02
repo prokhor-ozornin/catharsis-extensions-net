@@ -220,26 +220,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringCryptographyExtensions.Secure(string)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void Secure_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StringCryptographyExtensions.Secure(null));
-
-      using (var value = string.Empty.Secure())
-      {
-        Assert.Equal(0, value.Length);
-      }
-      var text = Guid.NewGuid().ToString();
-      using (var value = text.Secure())
-      {
-        Assert.Equal(text.Length, value.Length);
-        Assert.False(ReferenceEquals(value.ToString(), text));
-      }
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="StringExtensions.IsBoolean(string)"/> method.</para>
     /// </summary>
     [Fact]
@@ -660,36 +640,6 @@ namespace Catharsis.Commons
     }
 
     /// <summary>
-    ///   <para>Performs testing of <see cref="StringXmlExtensions.AsXml{T}(string, Type[])"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void AsXml_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StringXmlExtensions.AsXml<object>(null));
-      Assert.Throws<ArgumentException>(() => string.Empty.AsXml<object>());
-
-      var subject = Guid.Empty;
-      Assert.Equal(subject, subject.ToXml().AsXml<Guid>());
-    }
-
-    /// <summary>
-    ///   <para>Performs testing of <see cref="StringExtendedExtensions.Capitalize(string, CultureInfo)"/> method.</para>
-    /// </summary>
-    [Fact]
-    public void Capitalize_Method()
-    {
-      Assert.Throws<ArgumentNullException>(() => StringExtendedExtensions.Capitalize(null));
-
-      Assert.Equal(string.Empty, string.Empty.Capitalize());
-      Assert.Equal("Capitalized String", "capitalized stRing".Capitalize());
-      Assert.Equal("Capitalized String", "capitalized stRing".Capitalize(CultureInfo.CurrentCulture));
-      Assert.Equal("CAPITALIZED STRING", "CAPITALIZED STRING".Capitalize());
-      Assert.Equal("Заглавная Строка", "заглавная стРока".Capitalize());
-      Assert.Equal("Заглавная Строка", "заглавная стРока".Capitalize(CultureInfo.CurrentCulture));
-      Assert.Equal("ЗАГЛАВНАЯ СТРОКА", "ЗАГЛАВНАЯ СТРОКА".Capitalize());
-    }
-
-    /// <summary>
     ///   <para>Performs testing of <see cref="StringExtensions.Lines(string)"/> method.</para>
     /// </summary>
     [Fact]
@@ -759,6 +709,30 @@ namespace Catharsis.Commons
       Assert.Equal(string.Empty, "1".Multiply(0));
       Assert.Equal("1", "1".Multiply(1));
       Assert.Equal("11", "1".Multiply(2));
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.UrlDecode(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void UrlDecode_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.UrlDecode(null));
+
+      Assert.Equal(string.Empty, string.Empty.UrlDecode());
+      Assert.Equal("#value?", "%23value%3F".UrlDecode());
+    }
+
+    /// <summary>
+    ///   <para>Performs testing of <see cref="StringExtensions.UrlEncode(string)"/> method.</para>
+    /// </summary>
+    [Fact]
+    public void UrlEncode_Method()
+    {
+      Assert.Throws<ArgumentNullException>(() => StringExtensions.UrlEncode(null));
+
+      Assert.Equal(string.Empty, string.Empty.UrlEncode());
+      Assert.Equal("%23value%3F", "#value?".UrlEncode());
     }
   }
 

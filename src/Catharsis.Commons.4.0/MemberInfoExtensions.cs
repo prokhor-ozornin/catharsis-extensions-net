@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Reflection;
 
 namespace Catharsis.Commons
@@ -11,70 +9,6 @@ namespace Catharsis.Commons
   /// <seealso cref="MemberInfo"/>
   public static class MemberInfoExtensions
   {
-    /// <summary>
-    ///   <para>Returns a custom <see cref="Attribute"/>, identified by specified <see cref="Type"/>, that is applied to current <see cref="Type"/>'s member.</para>
-    ///   <para>Returns a <c>null</c> reference if attribute cannot be found.</para>
-    /// </summary>
-    /// <param name="self">Member of <see cref="Type"/>, whose attribute is to be returned.</param>
-    /// <param name="attributeType">Type of custom attribute.</param>
-    /// <returns>Instance of attribute, whose type equals to <paramref name="attributeType"/>.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="MemberInfo.GetCustomAttributes(System.Type, bool)"/>
-    public static object Attribute(this MemberInfo self, Type attributeType)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(attributeType);
-
-      return self.Attributes(attributeType).FirstOrDefault();
-    }
-
-    /// <summary>
-    ///   <para>Returns a custom <see cref="Attribute"/>, identified by specified <see cref="Type"/>, that is applied to current <see cref="Type"/>'s member.</para>
-    ///   <para>Returns a <c>null</c> reference if attribute cannot be found.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of custom attribute.</typeparam>
-    /// <param name="self">Member of <see cref="Type"/>, whose attribute is to be returned.</param>
-    /// <returns>Instance of attribute, whose type equals to <typeparamref name="T"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="MemberInfo.GetCustomAttributes(System.Type, bool)"/>
-    public static T Attribute<T>(this MemberInfo self)
-    {
-      Assertion.NotNull(self);
-
-      return self.Attributes<T>().FirstOrDefault();
-    }
-
-    /// <summary>
-    ///   <para>Returns a collection of all custom attributes, identified by specified <see cref="Type"/>, which are applied to current <see cref="Type"/>'s member.</para>
-    /// </summary>
-    /// <param name="self">Member of <see cref="Type"/>, whose attributes are to be returned.</param>
-    /// <param name="attributeType">Type of custom attributes.</param>
-    /// <returns>Collection of custom attributes, whose type equals to <paramref name="attributeType"/>.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="attributeType"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="MemberInfo.GetCustomAttributes(System.Type, bool)"/>
-    public static IEnumerable<object> Attributes(this MemberInfo self, Type attributeType)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(attributeType);
-
-      return self.GetCustomAttributes(attributeType, true);
-    }
-
-    /// <summary>
-    ///   <para>Returns a collection of all custom attributes, identified by specified <see cref="Type"/>, which are applied to current <see cref="Type"/>'s member.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of custom attributes.</typeparam>
-    /// <param name="self">Member of <see cref="Type"/>, whose attributes are to be returned.</param>
-    /// <returns>Collection of custom attributes, whose type equals to <typeparamref name="T"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="MemberInfo.GetCustomAttributes(System.Type, bool)"/>
-    public static IEnumerable<T> Attributes<T>(this MemberInfo self)
-    {
-      Assertion.NotNull(self);
-
-      return self.Attributes(typeof(T)).Cast<T>();
-    }
-
     /// <summary>
     ///   <para>Determines whether a targer <see cref="Type"/>'s member represents constructor of a class (a <see cref="ConstructorInfo"/> instance).</para>
     /// </summary>
@@ -116,7 +50,7 @@ namespace Catharsis.Commons
 
       return self.MemberType == MemberTypes.Field;
     }
-    
+
     /// <summary>
     ///   <para>Determines whether a target <see cref="Type"/>'s member represents a method (a <see cref="MethodInfo"/> instance).</para>
     /// </summary>
@@ -159,19 +93,19 @@ namespace Catharsis.Commons
       switch (self.MemberType)
       {
         case MemberTypes.Event:
-          return self.To<EventInfo>().EventHandlerType;
-  
+        return self.To<EventInfo>().EventHandlerType;
+
         case MemberTypes.Field:
-          return self.To<FieldInfo>().FieldType;
-        
+        return self.To<FieldInfo>().FieldType;
+
         case MemberTypes.Method:
-          return self.To<MethodInfo>().ReturnType;
-        
+        return self.To<MethodInfo>().ReturnType;
+
         case MemberTypes.Property:
-          return self.To<PropertyInfo>().PropertyType;
-        
+        return self.To<PropertyInfo>().PropertyType;
+
         default:
-          return self.DeclaringType;
+        return self.DeclaringType;
       }
     }
   }

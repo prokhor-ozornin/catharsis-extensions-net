@@ -129,7 +129,7 @@ namespace Catharsis.Commons
     /// <param name="self">HEX-encoded string to be converted to byte array.</param>
     /// <returns>Decoded data from HEX-encoded <paramref name="self"/> string.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="ArrayExtensions.Hex(byte[])"/>
+    /// <seealso cref="ArraysExtensions.Hex(byte[])"/>
     public static byte[] Hex(this string self)
     {
       Assertion.NotNull(self);
@@ -753,6 +753,32 @@ namespace Catharsis.Commons
     public static bool ToUri(this string self, out Uri result)
     {
       return Uri.TryCreate(self, UriKind.RelativeOrAbsolute, out result);
+    }
+
+    /// <summary>
+    ///   <para>Decodes URL-encoded string.</para>
+    /// </summary>
+    /// <param name="self">String to decode.</param>
+    /// <returns>Decoded string.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    public static string UrlDecode(this string self)
+    {
+      Assertion.NotNull(self);
+
+      return Uri.UnescapeDataString(self);
+    }
+
+    /// <summary>
+    ///   <para>URL-encodes string.</para>
+    /// </summary>
+    /// <param name="self">String to encode.</param>
+    /// <returns>Encoded string.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is <see cref="string.Empty"/> string.</exception>
+    public static string UrlEncode(this string self)
+    {
+      Assertion.NotNull(self);
+
+      return Uri.EscapeDataString(self);
     }
 
     /// <summary>

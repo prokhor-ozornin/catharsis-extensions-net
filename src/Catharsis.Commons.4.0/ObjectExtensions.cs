@@ -156,7 +156,7 @@ namespace Catharsis.Commons
           {
             second = property.GetValue(other, null);
           }
-          catch (TargetException)
+          catch
           {
           }
 
@@ -170,7 +170,7 @@ namespace Catharsis.Commons
           {
             second = field.GetValue(other);
           }
-          catch (TargetException)
+          catch
           {
           }
 
@@ -353,7 +353,6 @@ namespace Catharsis.Commons
     ///       <item><description>It represents a positive value of numeric type.</description></item>
     ///       <item><description>It represents a non-empty string.</description></item>
     ///       <item><description>It represents a non-empty <see cref="IEnumerable"/> collection.</description></item>
-    ///       <item><description>It represents a <see cref="FileInfo"/> object which does not represent an empty file.</description></item>
     ///       <item><description>It represents a <see cref="Stream"/> object which is not empty.</description></item>
     ///       <item><description>It represents a regular expression <see cref="Match"/> object with at least one match.</description></item>
     ///       <item><description>It represents any other type of object which is not a <c>null</c> reference.</description></item>
@@ -418,11 +417,6 @@ namespace Catharsis.Commons
       if (self is IEnumerable)
       {
         return self.To<IEnumerable>().Cast<object>().Any();
-      }
-
-      if (self is FileInfo)
-      {
-        return self.To<FileInfo>().Length > 0;
       }
 
       if (self is Stream)
