@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET_35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -27,7 +27,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET_35</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Catharsis.Commons.XML</DocumentationFile>
@@ -40,100 +40,61 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Catharsis.Commons.4.0\ArraysExtensions.cs">
-      <Link>ArraysExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\Assertion.cs">
+    <Compile Include="..\Catharsis.Commons\Assertion.cs">
       <Link>Assertion.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\BinaryFormatterExtensions.cs">
-      <Link>BinaryFormatterExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\BooleanExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\BooleanExtensions.cs">
       <Link>BooleanExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\BufferedStreamExtensions.cs">
-      <Link>BufferedStreamExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\CollectionsExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\CollectionsExtensions.cs">
       <Link>CollectionsExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\CompressionExtensions.cs">
-      <Link>CompressionExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\Convert.cs">
+    <Compile Include="..\Catharsis.Commons\Convert.cs">
       <Link>Convert.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\ConvertExtensions.cs">
-      <Link>ConvertExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\DateExtensions.cs">
+      <Link>DateExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\CryptographyExtensions.cs">
-      <Link>CryptographyExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\DateTimeExtensions.cs">
-      <Link>DateTimeExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\DelegateExtensions.cs">
-      <Link>DelegateExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\EqualsAndHashCodeAttribute.cs">
+    <Compile Include="..\Catharsis.Commons\EqualsAndHashCodeAttribute.cs">
       <Link>EqualsAndHashCodeAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\FileSystemExtensions.cs">
-      <Link>FileSystemExtensions.cs</Link>
+    <Compile Include="..\Catharsis.Commons\FileExtensions.cs">
+      <Link>FileExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\IQueryableTransformer.cs">
-      <Link>IQueryableTransformer.cs</Link>
+    <Compile Include="..\Catharsis.Commons\MathExtensions.cs">
+      <Link>MathExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\ISpecification.cs">
-      <Link>ISpecification.cs</Link>
+    <Compile Include="..\Catharsis.Commons\NetworkExtensions.cs">
+      <Link>NetworkExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\ISpecificationExtensions.cs">
-      <Link>ISpecificationExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\MemberInfoExtensions.cs">
-      <Link>MemberInfoExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\NetExtensions.cs">
-      <Link>NetExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\NumericExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\NumericExtensions.cs">
       <Link>NumericExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\ObjectExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\ObjectExtensions.cs">
       <Link>ObjectExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\QueryableExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\PrimitiveTypesExtensions.cs">
+      <Link>PrimitiveTypesExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Catharsis.Commons\QueryableExtensions.cs">
       <Link>QueryableExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\QueryableTransformersFactory.cs">
-      <Link>QueryableTransformersFactory.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\RandomExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\RandomExtensions.cs">
       <Link>RandomExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\ReflectionExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\ReflectionExtensions.cs">
       <Link>ReflectionExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\SpecificationBase.cs">
-      <Link>SpecificationBase.cs</Link>
+    <Compile Include="..\Catharsis.Commons\SecurityExtensions.cs">
+      <Link>SecurityExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\StreamExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\StreamExtensions.cs">
       <Link>StreamExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\StringExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\StringExtensions.cs">
       <Link>StringExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\TextStreamExtensions.cs">
-      <Link>TextStreamExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\UriExtensions.cs">
-      <Link>UriExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\XmlDocumentXmlExtensions.cs">
-      <Link>XmlDocumentXmlExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Catharsis.Commons.4.0\XmlExtensions.cs">
+    <Compile Include="..\Catharsis.Commons\XmlExtensions.cs">
       <Link>XmlExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

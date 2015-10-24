@@ -1,10 +1,14 @@
 var class_catharsis_1_1_commons_1_1_date_time_extensions =
 [
+    [ "BeforeNow", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#aeccc8e3c67615029d25b4f7f80e198a7", null ],
+    [ "BeforeNowUtc", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#a624ffd38331f707043b8c414d8d1e06f", null ],
     [ "DownTo", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#a1b4e8cb0cd3a466c4f05669579b42103", null ],
     [ "EndOfDay", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#a49c80b14c2cc253a2e08c91935ab214e", null ],
     [ "EndOfMonth", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#afa1d838ce79e0cc8e3d51eba3f6a3ce3", null ],
     [ "EndOfYear", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#a34d586fa30aa3f8513037663bbbd5c09", null ],
     [ "Friday", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#aaa64569b7d4bf72dc13246ba1bc4df2d", null ],
+    [ "FromNow", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#a7165e45391c2cdc357a375c8ebd5cd77", null ],
+    [ "FromNowUtc", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#a48733fafc8d5c75d433585933878f9ad", null ],
     [ "ISO8601", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#ab61ff6c5c7d2e30deb7570a29e4ea537", null ],
     [ "IsSameDate", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#aa535942f8dc8054e5785729d671372bd", null ],
     [ "IsSameTime", "class_catharsis_1_1_commons_1_1_date_time_extensions.html#a247228b3ae45617f45af08a5814e8e32", null ],

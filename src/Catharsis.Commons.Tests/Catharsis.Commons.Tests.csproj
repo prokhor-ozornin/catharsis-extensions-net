@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Catharsis.Commons</RootNamespace>
     <AssemblyName>Catharsis.Commons.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET_WUPL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
@@ -51,6 +51,7 @@
     <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
     <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -88,6 +89,7 @@
     <CodeContractsExtraRewriteOptions />
     <CodeContractsCacheAnalysisResults>False</CodeContractsCacheAnalysisResults>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -104,47 +106,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArraysExtensionsTests.cs" />
-    <Compile Include="AssertionTests.cs" />
-    <Compile Include="BooleanExtensionsTests.cs" />
-    <Compile Include="ConvertExtensionsTests.cs" />
+    <Compile Include="AssertionTest.cs" />
     <Compile Include="ConvertTests.cs" />
-    <Compile Include="CryptographyExtensionsTests.cs" />
-    <Compile Include="DateTimeExtensionsTests.cs" />
-    <Compile Include="DelegateExtensionsTests.cs" />
-    <Compile Include="EqualsAndHashCodeAttributeTests.cs" />
-    <Compile Include="FileSystemExtensionsTests.cs" />
-    <Compile Include="CollectionsExtensionsTests.cs" />
-    <Compile Include="NetExtensionsTests.cs" />
-    <Compile Include="QueryableExtensionsTests.cs" />
-    <Compile Include="ISpecificationExtensionsTests.cs" />
-    <Compile Include="NumericExtensionsTests.cs" />
-    <Compile Include="ObjectExtensionsTests.cs" />
+    <Compile Include="MathExtensionsTest.cs" />
+    <Compile Include="PrimitiveTypesExtensionsTest.cs" />
+    <Compile Include="SecurityExtensionsTest.cs" />
+    <Compile Include="DateExtensionsTest.cs" />
+    <Compile Include="EqualsAndHashCodeAttributeTest.cs" />
+    <Compile Include="FileExtensionsTest.cs" />
+    <Compile Include="CollectionsExtensionsTest.cs" />
+    <Compile Include="NetworkExtensionsTest.cs" />
+    <Compile Include="QueryableExtensionsTest.cs" />
+    <Compile Include="ObjectExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryableTransformersFactoryTests.cs" />
-    <Compile Include="RandomExtensionsTests.cs" />
-    <Compile Include="ReflectionExtensionsTests.cs" />
-    <Compile Include="SpecificationBaseTests.cs" />
-    <Compile Include="StreamExtensionsTests.cs" />
-    <Compile Include="StringExtensionsTests.cs" />
+    <Compile Include="ReflectionExtensionsTest.cs" />
+    <Compile Include="StreamExtensionsTest.cs" />
+    <Compile Include="StringExtensionsTest.cs" />
     <Compile Include="TestObject.cs" />
-    <Compile Include="TextStreamExtensionsTests.cs" />
-    <Compile Include="TypeExtensionsTests.cs" />
-    <Compile Include="UriExtensionsTests.cs" />
-    <Compile Include="XmlDocumentExtensionsTests.cs" />
-    <Compile Include="XmlExtensionsTests.cs" />
+    <Compile Include="XmlExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Catharsis.Commons.4.0\Catharsis.Commons.4.0.csproj">
-      <Project>{E643EA81-71C3-4611-8350-6F42AB37D27B}</Project>
-      <Name>Catharsis.Commons.4.0</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Resource.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resource.txt" />
+    <ProjectReference Include="..\Catharsis.Commons.4.5\Catharsis.Commons.4.5.csproj">
+      <Project>{bb6ff4d7-1d43-448b-bfb7-e05ab215368d}</Project>
+      <Name>Catharsis.Commons.4.5</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

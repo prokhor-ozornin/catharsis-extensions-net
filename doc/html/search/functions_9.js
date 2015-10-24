@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['join_3c_20t_20_3e',['Join&lt; T &gt;',['../class_catharsis_1_1_commons_1_1_array_extensions.html#ae12c8480639f206be450a56974812cab',1,'Catharsis.Commons.ArrayExtensions.Join&lt; T &gt;()'],['../class_catharsis_1_1_commons_1_1_i_enumerable_extensions.html#a8a1443dc037b37296070e44cb0acc6b9',1,'Catharsis.Commons.IEnumerableExtensions.Join&lt; T &gt;()']]]
+  ['join_3c_20t_20_3e',['Join&lt; T &gt;',['../class_catharsis_1_1_commons_1_1_collections_extensions.html#a38b77c3890415845057199bbd3abe7bc',1,'Catharsis.Commons.CollectionsExtensions.Join&lt; T &gt;(this IEnumerable&lt; T &gt; self, string separator)'],['../class_catharsis_1_1_commons_1_1_collections_extensions.html#ab21599d4752ef1307052a7cb5083375e',1,'Catharsis.Commons.CollectionsExtensions.Join&lt; T &gt;(this T[] self, T[] other)']]]
 ];

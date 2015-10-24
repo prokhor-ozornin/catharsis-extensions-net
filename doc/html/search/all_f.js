@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['query',['Query',['../class_catharsis_1_1_commons_1_1_uri_extensions.html#aadef6351bf5f6f9aa17199e2e95bbf7c',1,'Catharsis.Commons.UriExtensions.Query(this Uri self, IDictionary&lt; string, object &gt; parameters)'],['../class_catharsis_1_1_commons_1_1_uri_extensions.html#a4da577449557df43d51737c42e4ee2c6',1,'Catharsis.Commons.UriExtensions.Query(this Uri self, IDictionary&lt; string, string &gt; parameters)'],['../class_catharsis_1_1_commons_1_1_uri_extensions.html#a9254ff76367e79fa95a6fe1b668a9503',1,'Catharsis.Commons.UriExtensions.Query(this Uri self, object parameters)']]],
-  ['queryabletransformersfactory',['QueryableTransformersFactory',['../class_catharsis_1_1_commons_1_1_queryable_transformers_factory.html',1,'Catharsis::Commons']]]
+  ['query',['Query',['../class_catharsis_1_1_commons_1_1_network_extensions.html#a53eba0034da17f3399fdb94cb01a6ec0',1,'Catharsis.Commons.NetworkExtensions.Query(this Uri self, IDictionary&lt; string, object &gt; parameters)'],['../class_catharsis_1_1_commons_1_1_network_extensions.html#a1a1b009bf4ccd12f2605eecdcae0d479',1,'Catharsis.Commons.NetworkExtensions.Query(this Uri self, IDictionary&lt; string, string &gt; parameters)'],['../class_catharsis_1_1_commons_1_1_network_extensions.html#ad5e9f2f140da979a57b002d3bfa4666a',1,'Catharsis.Commons.NetworkExtensions.Query(this Uri self, object parameters)']]],
+  ['queryableextensions',['QueryableExtensions',['../class_catharsis_1_1_commons_1_1_queryable_extensions.html',1,'Catharsis::Commons']]]
 ];

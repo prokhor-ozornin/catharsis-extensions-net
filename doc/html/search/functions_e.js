@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['paginate_3c_20t_20_3e',['Paginate&lt; T &gt;',['../class_catharsis_1_1_commons_1_1_i_enumerable_extensions.html#acc52a78c069e46f31c94323a4b4e0ddf',1,'Catharsis.Commons.IEnumerableExtensions.Paginate&lt; T &gt;()'],['../class_catharsis_1_1_commons_1_1_i_queryable_extensions.html#ad735f7e77186b38db260f39772282677',1,'Catharsis.Commons.IQueryableExtensions.Paginate&lt; T &gt;()']]],
-  ['power',['Power',['../class_catharsis_1_1_commons_1_1_numeric_extensions.html#addcb70c3508adf38565fde4c79eeba06',1,'Catharsis::Commons::NumericExtensions']]],
+  ['paginate_3c_20t_20_3e',['Paginate&lt; T &gt;',['../class_catharsis_1_1_commons_1_1_collections_extensions.html#ac0e5cdf576b8427cc175e1ec850aaf1d',1,'Catharsis.Commons.CollectionsExtensions.Paginate&lt; T &gt;()'],['../class_catharsis_1_1_commons_1_1_queryable_extensions.html#a4c551bc7e2856204ca3d8292bf10e9fb',1,'Catharsis.Commons.QueryableExtensions.Paginate&lt; T &gt;()']]],
+  ['power',['Power',['../class_catharsis_1_1_commons_1_1_math_extensions.html#a440824d6ce06a6fa87c66c03a63a3e8b',1,'Catharsis::Commons::MathExtensions']]],
   ['prepend',['Prepend',['../class_catharsis_1_1_commons_1_1_string_extensions.html#a7d754a9457ae8b65789d66ddc3544591',1,'Catharsis::Commons::StringExtensions']]],
-  ['previousday',['PreviousDay',['../class_catharsis_1_1_commons_1_1_date_time_extensions.html#ab6fc1408b26e228faaaeb7e27818ee19',1,'Catharsis::Commons::DateTimeExtensions']]],
-  ['previousmonth',['PreviousMonth',['../class_catharsis_1_1_commons_1_1_date_time_extensions.html#a1b87238df256890fdf28bed90dc6fc64',1,'Catharsis::Commons::DateTimeExtensions']]],
-  ['previousyear',['PreviousYear',['../class_catharsis_1_1_commons_1_1_date_time_extensions.html#af930a259627613325970cceb142435a8',1,'Catharsis::Commons::DateTimeExtensions']]],
-  ['properties',['Properties',['../class_catharsis_1_1_commons_1_1_type_extensions.html#a9e63d732d4e644dc19b670eb99b2dcb6',1,'Catharsis::Commons::TypeExtensions']]],
+  ['previousday',['PreviousDay',['../class_catharsis_1_1_commons_1_1_date_extensions.html#a7a2b2c4b0cdf263e9a2352d1c9ebe259',1,'Catharsis::Commons::DateExtensions']]],
+  ['previousmonth',['PreviousMonth',['../class_catharsis_1_1_commons_1_1_date_extensions.html#ac0e60b450ca3879f522366794a1ae311',1,'Catharsis::Commons::DateExtensions']]],
+  ['previousyear',['PreviousYear',['../class_catharsis_1_1_commons_1_1_date_extensions.html#a1aeae294fda1536e67f0df068f3a254e',1,'Catharsis::Commons::DateExtensions']]],
+  ['properties',['Properties',['../class_catharsis_1_1_commons_1_1_reflection_extensions.html#a41171085dae82c9d8b2bcda162d21ff9',1,'Catharsis::Commons::ReflectionExtensions']]],
   ['properties_3c_20t_20_3e',['Properties&lt; T &gt;',['../class_catharsis_1_1_commons_1_1_object_extensions.html#a5baf407f2090ba451dc1bda0f1e561e5',1,'Catharsis.Commons.ObjectExtensions.Properties&lt; T &gt;(this T self, IDictionary&lt; string, object &gt; properties)'],['../class_catharsis_1_1_commons_1_1_object_extensions.html#a0737c4ea29a488b6c0a9e629110876ed',1,'Catharsis.Commons.ObjectExtensions.Properties&lt; T &gt;(this T self, object properties)']]],
   ['propertiesmap',['PropertiesMap',['../class_catharsis_1_1_commons_1_1_object_extensions.html#af4a4ff84e1d58d21bbc2caa2517bc4bf',1,'Catharsis::Commons::ObjectExtensions']]],
   ['property',['Property',['../class_catharsis_1_1_commons_1_1_object_extensions.html#a68d696db7de7dd18f57d94c0a6bb7aaa',1,'Catharsis::Commons::ObjectExtensions']]],

@@ -1,11 +1,8 @@
 var searchData=
 [
-  ['hasfield',['HasField',['../class_catharsis_1_1_commons_1_1_type_extensions.html#ae3571c861306c2f9de109962af11b1b6',1,'Catharsis::Commons::TypeExtensions']]],
-  ['hasmethod',['HasMethod',['../class_catharsis_1_1_commons_1_1_type_extensions.html#a39be08849acc7b5f7abe224063048b0f',1,'Catharsis::Commons::TypeExtensions']]],
-  ['hasproperty',['HasProperty',['../class_catharsis_1_1_commons_1_1_type_extensions.html#a9d5b2839f58dd0cc30bcd70265cfebbc',1,'Catharsis::Commons::TypeExtensions']]],
-  ['hex',['Hex',['../class_catharsis_1_1_commons_1_1_array_extensions.html#a457bc32b422fb9806142f9f87c7cd329',1,'Catharsis.Commons.ArrayExtensions.Hex()'],['../class_catharsis_1_1_commons_1_1_string_extensions.html#aa24d97f2f1d52608c50ed57b8b789459',1,'Catharsis.Commons.StringExtensions.Hex()']]],
-  ['host',['Host',['../class_catharsis_1_1_commons_1_1_uri_extensions.html#a505c51862ba1cf550990790d2b71974b',1,'Catharsis::Commons::UriExtensions']]],
-  ['hours',['Hours',['../class_catharsis_1_1_commons_1_1_numeric_extensions.html#a0b8f83ce1b38f5ec28970de076aeed97',1,'Catharsis.Commons.NumericExtensions.Hours(this byte self)'],['../class_catharsis_1_1_commons_1_1_numeric_extensions.html#a692b91aabf1a5570ea6b119f541fa672',1,'Catharsis.Commons.NumericExtensions.Hours(this short self)'],['../class_catharsis_1_1_commons_1_1_numeric_extensions.html#a65e38c9498751a528e8e9b85f9452219',1,'Catharsis.Commons.NumericExtensions.Hours(this int self)']]],
-  ['htmldecode',['HtmlDecode',['../class_catharsis_1_1_commons_1_1_string_html_extensions.html#af5ef2ecd78841c68eb75c9761873b01d',1,'Catharsis::Commons::StringHtmlExtensions']]],
-  ['htmlencode',['HtmlEncode',['../class_catharsis_1_1_commons_1_1_string_html_extensions.html#aabf6ae9cdd5c96db705710f737929fef',1,'Catharsis::Commons::StringHtmlExtensions']]]
+  ['hasfield',['HasField',['../class_catharsis_1_1_commons_1_1_reflection_extensions.html#a96a7a09172161e5c08fadbe3effb4bc7',1,'Catharsis::Commons::ReflectionExtensions']]],
+  ['hasmethod',['HasMethod',['../class_catharsis_1_1_commons_1_1_reflection_extensions.html#aa5da2a072d937f667d66a46e77b7d2d8',1,'Catharsis::Commons::ReflectionExtensions']]],
+  ['hasproperty',['HasProperty',['../class_catharsis_1_1_commons_1_1_reflection_extensions.html#addc01aa7eeb9488f5a85fdba7ac08f4f',1,'Catharsis::Commons::ReflectionExtensions']]],
+  ['hex',['Hex',['../class_catharsis_1_1_commons_1_1_collections_extensions.html#ad4b31bcc9a97bfde099022b3c790c06b',1,'Catharsis.Commons.CollectionsExtensions.Hex()'],['../class_catharsis_1_1_commons_1_1_string_extensions.html#aa24d97f2f1d52608c50ed57b8b789459',1,'Catharsis.Commons.StringExtensions.Hex()']]],
+  ['hours',['Hours',['../class_catharsis_1_1_commons_1_1_date_extensions.html#a04da4ba7c9f1c5135665fa71dee53e85',1,'Catharsis.Commons.DateExtensions.Hours(this byte self)'],['../class_catharsis_1_1_commons_1_1_date_extensions.html#a5acd35504718e1f8276e09fbe9972cbd',1,'Catharsis.Commons.DateExtensions.Hours(this short self)'],['../class_catharsis_1_1_commons_1_1_date_extensions.html#af889a0cb7bc1ff726af72063c1925b00',1,'Catharsis.Commons.DateExtensions.Hours(this int self)']]]
 ];
