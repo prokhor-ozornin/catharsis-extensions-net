@@ -153,9 +153,6 @@
     <Compile Include="..\Catharsis.Commons\ReflectionExtensions.cs">
       <Link>ReflectionExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Catharsis.Commons\ReflectionTypeInfoExtensions.cs">
-      <Link>ReflectionTypeInfoExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Catharsis.Commons\SecurityExtensions.cs">
       <Link>SecurityExtensions.cs</Link>
     </Compile>

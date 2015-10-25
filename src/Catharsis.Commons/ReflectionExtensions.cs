@@ -386,75 +386,6 @@ namespace Catharsis.Commons
 
 #if NET_35
     /// <summary>
-    ///   <para>Determines whether a <see cref="Type"/> implements specified interface.</para>
-    /// </summary>
-    /// <param name="self">The type to evaluate.</param>
-    /// <param name="interfaceType">Interface that must be implemented by <paramref name="self"/>.</param>
-    /// <returns><c>true</c> if <paramref name="self"/> implements interface of type <paramref name="interfaceType"/>, <c>false</c> otherwise.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="interfaceType"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <paramref name="interfaceType"/> does not represent interface.</exception>
-    /// <seealso cref="Type.GetInterface(string, bool)"/>
-    /// <seealso cref="Implements{INTERFACE}(Type)"/>
-    public static bool Implements(this Type self, Type interfaceType)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(interfaceType);
-
-      if (!interfaceType.IsInterface)
-      {
-        throw new ArgumentException($"Type {interfaceType} does not represent interface");
-      }
-
-      return self.GetInterfaces().Contains(interfaceType);
-    }
-
-    /// <summary>
-    ///   <para>Determines whether a <see cref="Type"/> implements specified interface.</para>
-    /// </summary>
-    /// <typeparam name="T">Interface that must be implemented by <paramref name="self"/>.</typeparam>
-    /// <param name="self">The type to evaluate.</param>
-    /// <returns><c>true</c> if <paramref name="self"/> implements interface of type <typeparamref name="T"/>, <c>false</c> otherwise.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <exception cref="ArgumentException">If <typeparamref name="T"/> type does not represent interface.</exception>
-    /// <seealso cref="Type.GetInterface(string, bool)"/>
-    /// <seealso cref="Implements(Type, Type)"/>
-    public static bool Implements<T>(this Type self)
-    {
-      Assertion.NotNull(self);
-
-      return self.Implements(typeof(T));
-    }
-#endif
-
-#if NET_40
-    /// <summary>
-    ///   <para>Returns a value of either <see cref="DescriptionAttribute"/>, <see cref="DisplayAttribute"/> or <see cref="DisplayNameAttribute"/> (whatever is present and found first) for a given class member.</para>
-    /// </summary>
-    /// <param name="self">Member of the class or <see cref="Type"/> itself.</param>
-    /// <returns>Description for a given class <paramref name="self"/>. If <paramref name="self"/> has a <see cref="DescriptionAttribute"/>, its value is returned. If it has a <see cref="DisplayAttribute"/>, its description property is returned. If it has a <see cref="DisplayNameAttribute"/>, its display name property is returned. If there is neither of these attributes on a <paramref name="self"/>, a <c>null</c> is returned.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="DescriptionAttribute"/>
-    public static string Description(this MemberInfo self)
-    {
-      Assertion.NotNull(self);
-
-      var descriptionAttribute = self.Attribute<DescriptionAttribute>();
-      if (descriptionAttribute != null)
-      {
-        return descriptionAttribute.Description;
-      }
-
-      var displayAttribute = self.Attribute<DisplayAttribute>();
-      if (displayAttribute != null)
-      {
-        return displayAttribute.Description;
-      }
-
-      var displayNameAttribute = self.Attribute<DisplayNameAttribute>();
-      return displayNameAttribute?.DisplayName;
-    }
-
-    /// <summary>
     ///   <para>Creates a delegate of the specified type to represent a specified static method.</para>
     /// </summary>
     /// <param name="self">The <see cref="MethodInfo"/> describing the static or instance method the delegate is to represent.</param>
@@ -521,32 +452,6 @@ namespace Catharsis.Commons
       });
 
       return descriptions;
-    }
-
-    /// <summary>
-    ///   <para>Returns enumerator to iterate over the set of specified <see cref="Type"/>'s base types and implemented interfaces.</para>
-    /// </summary>
-    /// <param name="self">Type, whose ancestors (base types up the inheritance hierarchy) and implemented interfaces are returned.</param>
-    /// <returns>Enumerator to iterate through <paramref name="self"/>'s base types and interfaces, which it implements.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <remarks>The order of the base types and interfaces returned is undetermined.</remarks>
-    /// <seealso cref="Type.BaseType"/>
-    /// <seealso cref="Type.GetInterfaces()"/>
-    public static IEnumerable<Type> Inherits(this Type self)
-    {
-      Assertion.NotNull(self);
-
-      var types = new List<Type>();
-
-      var currentType = self;
-      while (currentType.BaseType != null)
-      {
-        types.Add(currentType);
-        currentType = currentType.BaseType;
-      }
-      types.Add(self.GetInterfaces());
-
-      return types;
     }
 
     /// <summary>
@@ -665,6 +570,35 @@ namespace Catharsis.Commons
         default:
           return self.DeclaringType;
       }
+    }
+#endif
+
+#if NET_40
+    /// <summary>
+    ///   <para>Returns a value of either <see cref="DescriptionAttribute"/>, <see cref="DisplayAttribute"/> or <see cref="DisplayNameAttribute"/> (whatever is present and found first) for a given class member.</para>
+    /// </summary>
+    /// <param name="self">Member of the class or <see cref="Type"/> itself.</param>
+    /// <returns>Description for a given class <paramref name="self"/>. If <paramref name="self"/> has a <see cref="DescriptionAttribute"/>, its value is returned. If it has a <see cref="DisplayAttribute"/>, its description property is returned. If it has a <see cref="DisplayNameAttribute"/>, its display name property is returned. If there is neither of these attributes on a <paramref name="self"/>, a <c>null</c> is returned.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
+    /// <seealso cref="DescriptionAttribute"/>
+    public static string Description(this MemberInfo self)
+    {
+      Assertion.NotNull(self);
+
+      var descriptionAttribute = self.Attribute<DescriptionAttribute>();
+      if (descriptionAttribute != null)
+      {
+        return descriptionAttribute.Description;
+      }
+
+      var displayAttribute = self.Attribute<DisplayAttribute>();
+      if (displayAttribute != null)
+      {
+        return displayAttribute.Description;
+      }
+
+      var displayNameAttribute = self.Attribute<DisplayNameAttribute>();
+      return displayNameAttribute?.DisplayName;
     }
 #endif
   }

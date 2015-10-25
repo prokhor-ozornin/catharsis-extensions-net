@@ -406,39 +406,6 @@ namespace Catharsis.Commons
     }
 
     [Fact]
-    public void implements()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Implements(null, typeof(ICloneable)));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).Implements(null));
-      Assert.Throws<ArgumentException>(() => typeof(object).Implements(typeof(object)));
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Implements<ICloneable>(null));
-      Assert.Throws<ArgumentException>(() => typeof(object).Implements<object>());
-
-      Assert.False(typeof(TestObject).Implements(typeof(ICloneable)));
-      Assert.False(typeof(TestObject).Implements<ICloneable>());
-
-      Assert.True(typeof(TestObject).Implements(typeof(IDisposable)));
-      Assert.True(typeof(TestObject).Implements<IDisposable>());
-    }
-
-    [Fact]
-    public void inherits()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Inherits(null));
-
-      Assert.False(typeof(object).Inherits().Any());
-
-      var types = typeof(string).Inherits().ToArray();
-      Assert.True(types.Contains(typeof(IComparable)));
-      Assert.True(types.Contains(typeof(ICloneable)));
-      Assert.True(types.Contains(typeof(IConvertible)));
-      Assert.True(types.Contains(typeof(IComparable<string>)));
-      Assert.True(types.Contains(typeof(IEnumerable<char>)));
-      Assert.True(types.Contains(typeof(IEnumerable)));
-      Assert.True(types.Contains(typeof(IEquatable<string>)));
-    }
-
-    [Fact]
     public void is_anonymous()
     {
       Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsAnonymous(null));
