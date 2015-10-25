@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Catharsis.Commons
 {
-  public sealed class ConvertTests
+  public sealed class ConvertTest
   {
     [Fact]
     public void to()

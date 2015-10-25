@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Catharsis.Commons
 {
-  public sealed class ReflectionExtensionsTests
+  public sealed class ReflectionExtensionsTest
   {
     private delegate int Increment(int value);
     private delegate int Decrement(int value);
@@ -18,7 +18,7 @@ namespace Catharsis.Commons
 
     private delegate string AsString(object subject);
 
-    public ReflectionExtensionsTests()
+    public ReflectionExtensionsTest()
     {
       this.incrementDelegate = Delegate.CreateDelegate(typeof(Increment), this.GetType().AnyMethod("IncrementValue"));
       this.decrementDelegate = Delegate.CreateDelegate(typeof(Decrement), this.GetType().AnyMethod("DecrementValue"));
