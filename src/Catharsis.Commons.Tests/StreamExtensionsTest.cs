@@ -472,13 +472,13 @@ namespace Catharsis.Commons
 
       using (var reader = new StringReader(string.Empty))
       {
-        Assert.False(reader.Lines().Any());
+        Assert.Empty(reader.Lines());
         Assert.Equal(-1, reader.Read());
       }
 
       using (var reader = new StringReader(string.Empty))
       {
-        Assert.False(reader.Lines(true).Any());
+        Assert.Empty(reader.Lines(true));
         Assert.Throws<ObjectDisposedException>(() => reader.Read());
       }
 
@@ -489,7 +489,7 @@ namespace Catharsis.Commons
         Assert.Equal("First", lines[0]);
         Assert.Equal("Second", lines[1]);
         Assert.Equal(string.Empty, lines[2]);
-        Assert.False(reader.Lines().Any());
+        Assert.Empty(reader.Lines());
         Assert.Equal(-1, reader.Read());
       }
     }

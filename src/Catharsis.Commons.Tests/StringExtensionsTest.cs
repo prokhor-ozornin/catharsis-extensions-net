@@ -445,7 +445,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Lines(null));
 
-      Assert.False(string.Empty.Lines().Any());
+      Assert.Empty(string.Empty.Lines());
       Assert.True("value".Lines().SequenceEqual(new[] { "value" }));
       Assert.True($"first{Environment.NewLine}second".Lines().SequenceEqual(new[] { "first", "second" }));
     }

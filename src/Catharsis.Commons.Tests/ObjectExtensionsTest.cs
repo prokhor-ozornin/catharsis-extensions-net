@@ -277,7 +277,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => ObjectExtensions.PropertiesMap(null));
 
-      Assert.False(new { }.PropertiesMap().Any());
+      Assert.Empty(new { }.PropertiesMap());
       var map = new { name = "value" }.PropertiesMap();
       Assert.Equal(1, map.Count);
       Assert.Equal("value", map["name"]);

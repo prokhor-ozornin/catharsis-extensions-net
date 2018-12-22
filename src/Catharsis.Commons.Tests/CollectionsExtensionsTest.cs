@@ -97,7 +97,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Paginate<object>(null));
 
-      Assert.False(Enumerable.Empty<object>().Paginate().Any());
+      Assert.Empty(Enumerable.Empty<object>().Paginate());
 
       var sequence = new[] { "first", "second", "third" };
       Assert.Equal("first", sequence.Paginate(-1, 1).Single());
@@ -153,7 +153,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.ToSet<object>(null));
 
-      Assert.False(Enumerable.Empty<object>().ToSet().Any());
+      Assert.Empty(Enumerable.Empty<object>().ToSet());
       var set = new [] { 1, 1, 2, 3, 4, 5, 5 }.ToSet();
       Assert.Equal(5, set.Count);
       for (var i = 1; i <= 5; i++)

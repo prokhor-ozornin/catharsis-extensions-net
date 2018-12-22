@@ -101,7 +101,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => FileSystemExtensions.Lines(null));
 
-      WithFile(file => Assert.False(file.Clear().Lines().Any()));
+      WithFile(file => Assert.Empty(file.Clear().Lines()));
 
       var text = $"First{Environment.NewLine}Second{Environment.NewLine}Third{Environment.NewLine}";
       WithFile(file =>

@@ -128,9 +128,9 @@ namespace Catharsis.Commons
     public void host()
     {
       var host = new Uri("http://yandex.ru").Host();
-      Assert.True(host.AddressList.Any());
+      Assert.NotEmpty(host.AddressList);
       host.AddressList.SequenceEqual(Dns.GetHostEntry("yandex.ru").AddressList);
-      Assert.False(host.Aliases.Any());
+      Assert.Empty(host.Aliases);
       Assert.Equal("yandex.ru", host.HostName);
     }
   }

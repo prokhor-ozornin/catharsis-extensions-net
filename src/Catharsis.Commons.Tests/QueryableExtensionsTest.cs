@@ -11,7 +11,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => QueryableExtensions.Paginate<object>(null));
 
-      Assert.False(Enumerable.Empty<object>().AsQueryable().Paginate().Any());
+      Assert.Empty(Enumerable.Empty<object>().AsQueryable().Paginate());
 
       var sequence = new[] { "first", "second", "third" }.AsQueryable();
       Assert.Equal("first", sequence.Paginate(-1, 1).Single());
