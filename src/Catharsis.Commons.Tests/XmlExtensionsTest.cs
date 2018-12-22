@@ -28,7 +28,7 @@ namespace Catharsis.Commons
       using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
       {
         Assert.Equal("<article>text</article>", stream.AsXDocument().ToString());
-        Assert.Equal(0, stream.Bytes().Length);
+        Assert.Empty(stream.Bytes());
         Assert.Equal(-1, stream.ReadByte());
       }
 
@@ -55,7 +55,7 @@ namespace Catharsis.Commons
       using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
       {
         Assert.Equal(Xml, stream.AsXmlDocument().String());
-        Assert.Equal(0, stream.Bytes().Length);
+        Assert.Empty(stream.Bytes());
         Assert.Equal(-1, stream.ReadByte());
       }
 

@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Catharsis.Commons</RootNamespace>
+    <AssemblyName>Catharsis.Commons</AssemblyName>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>4.0</Version>
+    <Authors>Prokhor Ozornin &lt;prokhor.ozornin@yandex.ru&gt;</Authors>
+    <Company />
+    <Copyright>Copyright © 2013 - 2019</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\Prokhor\Documents\GitHub\Catharsis.NET.Commons\src\Catharsis.Commons.Standard\Catharsis.Commons.xml</DocumentationFile>
+    <DefineConstants>TRACE;NET_40</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;NET_40</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Catharsis.Commons\Assertion.cs" Link="Assertion.cs" />
+    <Compile Include="..\Catharsis.Commons\BooleanExtensions.cs" Link="BooleanExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\CollectionsExtensions.cs" Link="CollectionsExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\Convert.cs" Link="Convert.cs" />
+    <Compile Include="..\Catharsis.Commons\DateExtensions.cs" Link="DateExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\EqualsAndHashCodeAttribute.cs" Link="EqualsAndHashCodeAttribute.cs" />
+    <Compile Include="..\Catharsis.Commons\FileExtensions.cs" Link="FileExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\MathExtensions.cs" Link="MathExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\NetworkExtensions.cs" Link="NetworkExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\NumericExtensions.cs" Link="NumericExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\ObjectExtensions.cs" Link="ObjectExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\PrimitiveTypesExtensions.cs" Link="PrimitiveTypesExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\QueryableExtensions.cs" Link="QueryableExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\RandomExtensions.cs" Link="RandomExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\ReflectionExtensions.cs" Link="ReflectionExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\SecurityExtensions.cs" Link="SecurityExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\StreamExtensions.cs" Link="StreamExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\StringExtensions.cs" Link="StringExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\XmlExtensions.cs" Link="XmlExtensions.cs" />
+  </ItemGroup>
+
+</Project>

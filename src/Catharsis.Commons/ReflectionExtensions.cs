@@ -7,10 +7,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-#if NET_40
-using System.ComponentModel.DataAnnotations;
-#endif
-
 namespace Catharsis.Commons
 {
   /// <summary>
@@ -384,7 +380,7 @@ namespace Catharsis.Commons
       return self.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
     }
 
-#if NET_35
+#if NET_40
     /// <summary>
     ///   <para>Creates a delegate of the specified type to represent a specified static method.</para>
     /// </summary>
@@ -570,35 +566,6 @@ namespace Catharsis.Commons
         default:
           return self.DeclaringType;
       }
-    }
-#endif
-
-#if NET_40
-    /// <summary>
-    ///   <para>Returns a value of either <see cref="DescriptionAttribute"/>, <see cref="DisplayAttribute"/> or <see cref="DisplayNameAttribute"/> (whatever is present and found first) for a given class member.</para>
-    /// </summary>
-    /// <param name="self">Member of the class or <see cref="Type"/> itself.</param>
-    /// <returns>Description for a given class <paramref name="self"/>. If <paramref name="self"/> has a <see cref="DescriptionAttribute"/>, its value is returned. If it has a <see cref="DisplayAttribute"/>, its description property is returned. If it has a <see cref="DisplayNameAttribute"/>, its display name property is returned. If there is neither of these attributes on a <paramref name="self"/>, a <c>null</c> is returned.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="DescriptionAttribute"/>
-    public static string Description(this MemberInfo self)
-    {
-      Assertion.NotNull(self);
-
-      var descriptionAttribute = self.Attribute<DescriptionAttribute>();
-      if (descriptionAttribute != null)
-      {
-        return descriptionAttribute.Description;
-      }
-
-      var displayAttribute = self.Attribute<DisplayAttribute>();
-      if (displayAttribute != null)
-      {
-        return displayAttribute.Description;
-      }
-
-      var displayNameAttribute = self.Attribute<DisplayNameAttribute>();
-      return displayNameAttribute?.DisplayName;
     }
 #endif
   }

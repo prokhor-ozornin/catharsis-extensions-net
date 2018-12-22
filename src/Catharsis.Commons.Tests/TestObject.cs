@@ -4,8 +4,7 @@ using System.ComponentModel;
 namespace Catharsis.Commons
 {
   [Serializable]
-  [EqualsAndHashCode("PublicProperty")]
-  public class TestObject : IDisposable
+  public class TestObject : IDisposable, IEquatable<TestObject>
   {
     [Description]
     [DisplayName]
@@ -93,6 +92,21 @@ namespace Catharsis.Commons
     public void Dispose()
     {
       throw new NotImplementedException();
+    }
+
+    public virtual bool Equals(TestObject other)
+    {
+      return this.Equality(other, it => it.PublicProperty, it => it.PublicProperty);
+    }
+
+    public override bool Equals(object other)
+    {
+      return this.Equals(other as TestObject);
+    }
+
+    public override int GetHashCode()
+    {
+      return this.GetHashCode(it => it.PublicProperty, it => it.PublicProperty);
     }
   }
 }

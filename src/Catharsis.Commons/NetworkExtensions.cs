@@ -68,7 +68,7 @@ namespace Catharsis.Commons
       return self.Query(parameters.PropertiesMap());
     }
 
-#if NET_35
+#if NET_40
     /// <summary>
     ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
     /// </summary>
@@ -321,7 +321,7 @@ namespace Catharsis.Commons
     /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
     /// <seealso cref="Text(Uri)"/>
     /// <seealso cref="Text(Uri, object)"/>
-    /// <seealso cref="Text(Uri, IDictionary{string, object}"/>
+    /// <seealso cref="Text(Uri, IDictionary{string, object})"/>
     public static string Text(this Uri self, IDictionary<string, string> headers = null)
     {
       Assertion.NotNull(self);

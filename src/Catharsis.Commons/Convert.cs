@@ -361,7 +361,7 @@ namespace Catharsis.Commons
       return new Uri(subject.ToString());
     }
 
-#if NET_35
+#if NET_40
     /// <summary>
     ///   <para>Converts target object to the <see cref="bool"/> value, using non-strict approach.</para>
     ///   <para>The following algorithm is used to determine how to perform such conversion:

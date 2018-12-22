@@ -347,7 +347,7 @@ namespace Catharsis.Commons
       }).Read());
 
       var list = new List<string>().Do(it => it.Add(text));
-      Assert.Equal(1, list.Count);
+      Assert.Single(list);
       Assert.Equal(text, list[0]);
 
       Assert.Equal(text, new object().Do(it => text));

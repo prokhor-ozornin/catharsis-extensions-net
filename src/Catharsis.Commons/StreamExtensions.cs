@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-#if NET_35
+#if NET_40
 using System.IO.Compression;
 using System.Runtime.Serialization.Formatters.Binary;
 #endif
@@ -337,7 +337,7 @@ namespace Catharsis.Commons
       return System.Xml.XmlWriter.Create(self, settings);
     }
 
-#if NET_35
+#if NET_40
     /// <summary>
     ///   <para>Serializes an object, or graph of connected objects, to the given stream.</para>
     /// </summary>

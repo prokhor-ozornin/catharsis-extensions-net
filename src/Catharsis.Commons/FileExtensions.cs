@@ -11,7 +11,7 @@ namespace Catharsis.Commons
   /// <seealso cref="FileInfo"/>
   public static class FileSystemExtensions
   {
-#if NET_35
+#if NET_40
     /// <summary>
     ///   <para>Appends array of bytes to the end of specified file.</para>
     /// </summary>

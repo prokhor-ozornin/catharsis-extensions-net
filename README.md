@@ -4,7 +4,7 @@ This library is extensively unit-tested, greatly reducing the possibility of bug
 
 **Purpose** : Provide extension methods for common .NET types and common domain classes to simplify and speedup typical .NET business applications development process.
 
-**Target** : .NET Framework 3.5/3.5 Client Profile/4.0/Silverlight 5
+**Target** : .NET Framework 4.5.2/4.6.2/4.7.2, .NET Core 2.2, .NET Standard 2.0
 
 **NuGet package** : https://www.nuget.org/packages/Catharsis.Commons
 
@@ -15,8 +15,6 @@ This library is extensively unit-tested, greatly reducing the possibility of bug
 This project needs your support for further developments ! Please consider donating.
 
 - _Yandex.Money_ : 41001577953208
-
-- _WebMoney (WMR)_ : R399275865890
 
 [![Image](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=APHM8MU9N76V8 "Donate")
 
@@ -57,6 +55,7 @@ The list of extended structures, classes and interfaces includes:
 * _System.Xml.XmlWriter_
 
 More extension methods can be added to the library on request.
+
 See **Examples** for more usage detail, as well as API documentation in distribution packages (work in progress).
 
 In addition, extension methods for _Enumerable<T>_ generic interfaces for theses classes are provided for easy quering, searching and sorting.
@@ -532,10 +531,6 @@ System.Collections.Generic.IEnumerable<T>)`
 `int CompareTo(this string, string, System.Globalization.CompareOptions, [System.Globalization.CultureInfo])`
 
 `string Drop(this string, int)`
-
-`string FormatInvariant(this string, params object[])`
-
-`string FormatSelf(this string, params object[])`
 
 `byte[] Hex(this string)`
 

@@ -72,8 +72,7 @@ namespace Catharsis.Commons
     [Fact]
     public void join_arrays()
     {
-
-      Assert.Equal(0, Enumerable.Empty<object>().ToArray().Join(Enumerable.Empty<object>().ToArray()).Length);
+      Assert.Empty(Enumerable.Empty<object>().ToArray().Join(Enumerable.Empty<object>().ToArray()));
       Assert.True(new[] { "first" }.Join(Enumerable.Empty<object>().ToArray()).SequenceEqual(new[] { "first" }));
       Assert.True(Enumerable.Empty<object>().ToArray().Join(new[] { "second" }).SequenceEqual(new[] { "second" }));
       Assert.True(new[] { "first", "second" }.Join(new[] { "third" }).SequenceEqual(new[] { "first", "second", "third" }));
@@ -122,7 +121,7 @@ namespace Catharsis.Commons
       Assert.True(ReferenceEquals(new[] { element }.Random(), element));
 
       var elements = new[] { "first", "second" };
-      Assert.True(elements.Contains(elements.Random()));
+      Assert.Contains(elements.Random(), elements);
     }
 
     [Fact]

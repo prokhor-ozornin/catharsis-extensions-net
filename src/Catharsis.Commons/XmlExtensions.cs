@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-#if NET_35
+#if NET_40
 using System.Xml.Linq;
 #endif
 
@@ -241,7 +241,7 @@ namespace Catharsis.Commons
       return self;
     }
 
-#if NET_35
+#if NET_40
     /// <summary>
     ///   <para>Deserializes XML contents of stream into <see cref="XmlDocument"/> object.</para>
     /// </summary>

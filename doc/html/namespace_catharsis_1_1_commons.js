@@ -16,7 +16,6 @@ var namespace_catharsis_1_1_commons =
     [ "QueryableExtensions", "class_catharsis_1_1_commons_1_1_queryable_extensions.html", "class_catharsis_1_1_commons_1_1_queryable_extensions" ],
     [ "RandomExtensions", "class_catharsis_1_1_commons_1_1_random_extensions.html", null ],
     [ "ReflectionExtensions", "class_catharsis_1_1_commons_1_1_reflection_extensions.html", "class_catharsis_1_1_commons_1_1_reflection_extensions" ],
-    [ "ReflectionTypeInfoExtensions", "class_catharsis_1_1_commons_1_1_reflection_type_info_extensions.html", "class_catharsis_1_1_commons_1_1_reflection_type_info_extensions" ],
     [ "SecurityExtensions", "class_catharsis_1_1_commons_1_1_security_extensions.html", null ],
     [ "StreamExtensions", "class_catharsis_1_1_commons_1_1_stream_extensions.html", "class_catharsis_1_1_commons_1_1_stream_extensions" ],
     [ "StringExtensions", "class_catharsis_1_1_commons_1_1_string_extensions.html", "class_catharsis_1_1_commons_1_1_string_extensions" ],

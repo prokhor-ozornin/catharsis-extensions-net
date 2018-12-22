@@ -18,7 +18,6 @@ var hierarchy =
     [ "Catharsis.Commons.QueryableExtensions", "class_catharsis_1_1_commons_1_1_queryable_extensions.html", null ],
     [ "Catharsis.Commons.RandomExtensions", "class_catharsis_1_1_commons_1_1_random_extensions.html", null ],
     [ "Catharsis.Commons.ReflectionExtensions", "class_catharsis_1_1_commons_1_1_reflection_extensions.html", null ],
-    [ "Catharsis.Commons.ReflectionTypeInfoExtensions", "class_catharsis_1_1_commons_1_1_reflection_type_info_extensions.html", null ],
     [ "Catharsis.Commons.SecurityExtensions", "class_catharsis_1_1_commons_1_1_security_extensions.html", null ],
     [ "Catharsis.Commons.StreamExtensions", "class_catharsis_1_1_commons_1_1_stream_extensions.html", null ],
     [ "Catharsis.Commons.StringExtensions", "class_catharsis_1_1_commons_1_1_string_extensions.html", null ],

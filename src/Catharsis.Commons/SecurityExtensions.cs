@@ -2,7 +2,7 @@
 using System.IO;
 using System.Security;
 
-#if NET_35
+#if NET_40
 using System.Security.Cryptography;
 #endif
 
@@ -13,7 +13,7 @@ namespace Catharsis.Commons
   /// </summary>
   public static class SecurityExtensions
   {
-#if NET_35
+#if NET_40
     /// <summary>
     ///   <para>Decrypts encrypted binary data, using specified symmetric algorithm.</para>
     /// </summary>

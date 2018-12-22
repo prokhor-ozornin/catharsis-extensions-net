@@ -138,18 +138,6 @@ namespace Catharsis.Commons
     }
 
     [Fact]
-    public void description()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Description((MemberInfo) null));
-      
-      Assert.Null(typeof(TestObject).Description());
-      Assert.True(typeof(TestObject).AnyProperty("ReadOnlyProperty").Description().IsEmpty());
-      Assert.Equal("PublicProperty", typeof(TestObject).AnyProperty("PublicProperty").Description());
-      Assert.Equal("ProtectedProperty", typeof(TestObject).AnyProperty("ProtectedProperty").Description());
-      Assert.Equal("PublicStaticProperty Description", typeof(TestObject).AnyProperty("PublicStaticProperty").Description());
-    }
-
-    [Fact]
     public void is_constructor()
     {
       Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsConstructor(null));
@@ -450,12 +438,12 @@ namespace Catharsis.Commons
 
       var type = typeof(TestObject);
       var properties = type.Properties();
-      Assert.True(properties.Contains(type.GetProperty("PublicProperty")));
-      Assert.True(properties.Contains(type.GetProperty("ProtectedProperty", BindingFlags.NonPublic | BindingFlags.Instance)));
-      Assert.True(properties.Contains(type.GetProperty("PrivateProperty", BindingFlags.NonPublic | BindingFlags.Instance)));
-      Assert.True(properties.Contains(type.GetProperty("PublicStaticProperty", BindingFlags.Public | BindingFlags.Static)));
-      Assert.True(properties.Contains(type.GetProperty("ProtectedStaticProperty", BindingFlags.NonPublic | BindingFlags.Static)));
-      Assert.True(properties.Contains(type.GetProperty("PrivateStaticProperty", BindingFlags.NonPublic | BindingFlags.Static)));
+      Assert.Contains(type.GetProperty("PublicProperty"), properties);
+      Assert.Contains(type.GetProperty("ProtectedProperty", BindingFlags.NonPublic | BindingFlags.Instance), properties);
+      Assert.Contains(type.GetProperty("PrivateProperty", BindingFlags.NonPublic | BindingFlags.Instance), properties);
+      Assert.Contains(type.GetProperty("PublicStaticProperty", BindingFlags.Public | BindingFlags.Static), properties);
+      Assert.Contains(type.GetProperty("ProtectedStaticProperty", BindingFlags.NonPublic | BindingFlags.Static), properties);
+      Assert.Contains(type.GetProperty("PrivateStaticProperty", BindingFlags.NonPublic | BindingFlags.Static), properties);
     }
 
     [Description("Enumeration")]

@@ -62,7 +62,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => StreamExtensions.Bytes(null));
 
-      Assert.Equal(0, Stream.Null.Bytes().Length);
+      Assert.Empty(Stream.Null.Bytes());
 
       var bytes = Guid.NewGuid().ToByteArray();
 
@@ -113,7 +113,7 @@ namespace Catharsis.Commons
       {
         Assert.True(ReferenceEquals(s.Deflate(bytes), s));
         Assert.True(s.ToArray().SequenceEqual(compressed));
-        Assert.Equal(0, s.Bytes().Length);
+        Assert.Empty(s.Bytes());
         Assert.True(s.CanRead);
         Assert.True(s.CanWrite);
       }
@@ -121,7 +121,7 @@ namespace Catharsis.Commons
       using (var s = new MemoryStream(compressed))
       {
         Assert.True(s.Deflate().SequenceEqual(bytes));
-        Assert.Equal(0, s.Bytes().Length);
+        Assert.Empty(s.Bytes());
         Assert.True(s.CanRead);
         Assert.True(s.CanWrite);
       }
@@ -165,7 +165,7 @@ namespace Catharsis.Commons
       {
         Assert.True(ReferenceEquals(s.GZip(bytes), s));
         Assert.True(s.ToArray().SequenceEqual(compressed));
-        Assert.Equal(0, s.Bytes().Length);
+        Assert.Empty(s.Bytes());
         Assert.True(s.CanRead);
         Assert.True(s.CanWrite);
       }
@@ -173,7 +173,7 @@ namespace Catharsis.Commons
       using (var s = new MemoryStream(compressed))
       {
         Assert.True(s.GZip().SequenceEqual(bytes));
-        Assert.Equal(0, s.Bytes().Length);
+        Assert.Empty(s.Bytes());
         Assert.True(s.CanRead);
         Assert.True(s.CanWrite);
       }
@@ -304,9 +304,9 @@ namespace Catharsis.Commons
       var to = new MemoryStream();
       Assert.True(ReferenceEquals(to.Write(from), to));
       Assert.True(to.ToArray().SequenceEqual(bytes));
-      Assert.Equal(0, from.Bytes().Length);
+      Assert.Empty(from.Bytes());
       Assert.True(from.CanRead);
-      Assert.Equal(0, to.Bytes().Length);
+      Assert.Empty(to.Bytes());
       Assert.True(to.CanWrite);
       from.Close();
       to.Close();
@@ -347,7 +347,7 @@ namespace Catharsis.Commons
         Assert.Equal("text", reader.ReadString());
         reader.ReadEndElement();
         reader.Close();
-        Assert.Equal(0, stream.Bytes().Length);
+        Assert.Empty(stream.Bytes());
         Assert.Equal(-1, stream.ReadByte());
       }
 
@@ -403,7 +403,7 @@ namespace Catharsis.Commons
           writer.WriteElementString("article", "text");
         }
         Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.UTF8)));
-        Assert.Equal(0, stream.Bytes().Length);
+        Assert.Empty(stream.Bytes());
         Assert.Equal(-1, stream.ReadByte());
 
         using (var writer = stream.Rewind().XmlWriter(true))
@@ -424,7 +424,7 @@ namespace Catharsis.Commons
           writer.WriteElementString("article", "text");
         }
         Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.Unicode)));
-        Assert.Equal(0, stream.Bytes().Length);
+        Assert.Empty(stream.Bytes());
         Assert.Equal(-1, stream.ReadByte());
 
         using (var writer = stream.XmlWriter(true, Encoding.Unicode))

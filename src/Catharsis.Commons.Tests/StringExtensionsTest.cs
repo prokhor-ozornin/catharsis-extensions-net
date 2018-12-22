@@ -14,7 +14,7 @@ namespace Catharsis.Commons
     {
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Base64(null));
 
-      Assert.Equal(0, string.Empty.Base64().Length);
+      Assert.Empty(string.Empty.Base64());
       var bytes = Guid.NewGuid().ToByteArray();
       Assert.True(System.Convert.ToBase64String(bytes).Base64().SequenceEqual(bytes));
     }
@@ -52,7 +52,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Hex(null));
 
       Assert.Equal(0, Enumerable.Empty<byte>().ToArray().Hex().Length);
-      Assert.Equal(0, Enumerable.Empty<byte>().ToArray().Hex().Hex().Length);
+      Assert.Empty(Enumerable.Empty<byte>().ToArray().Hex().Hex());
 
       var bytes = Guid.NewGuid().ToByteArray();
       Assert.True(bytes.Hex().Hex().SequenceEqual(bytes));
@@ -112,7 +112,7 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentNullException>(() => StringExtensions.Matches(null, string.Empty));
       Assert.Throws<ArgumentNullException>(() => string.Empty.Matches(null));
 
-      Assert.Equal(0, string.Empty.Matches("anything").Count);
+      Assert.Empty(string.Empty.Matches("anything"));
       var matches = "ab#1".Matches("[a-zA-z0-9]");
       Assert.Equal(3, matches.Count);
       Assert.Equal("a", matches[0].Value);
