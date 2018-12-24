@@ -229,9 +229,13 @@ namespace Catharsis.Commons
       Assert.Throws<ArgumentException>(() => new object().Property(string.Empty, new object()));
 
       subject = new TestObject();
-      var property = Guid.NewGuid().ToString();
+
       Assert.True(ReferenceEquals(subject.Property("PublicProperty", null), subject));
-      Assert.Throws<ArgumentException>(() => subject.Property("ReadOnlyProperty", property));
+
+      var property = Guid.NewGuid().ToString();
+
+      subject.Property("ReadOnlyProperty", property);
+      Assert.Null(subject.Property("ReadOnlyProperty"));
 
       subject.Property("PublicStaticProperty", property);
       Assert.Equal(property, subject.Property("PublicStaticProperty"));
@@ -263,11 +267,9 @@ namespace Catharsis.Commons
       var subject = new TestObject();
       var property = Guid.NewGuid().ToString();
 
-      Assert.Throws<ArgumentException>(() => subject.Properties(new Dictionary<string, object>{ { "ReadOnlyProperty", property } }));
       Assert.True(ReferenceEquals(subject.Properties(new Dictionary<string, object> { { "PublicProperty", property }, { "property", new object() } }), subject));
       Assert.Equal(property, subject.Property("PublicProperty"));
 
-      Assert.Throws<ArgumentException>(() => subject.Properties(new { ReadOnlyProperty = property }));
       Assert.True(ReferenceEquals(subject.Properties(new { PublicProperty = property, property = new object() }), subject));
       Assert.Equal(property, subject.Property("PublicProperty"));
     }

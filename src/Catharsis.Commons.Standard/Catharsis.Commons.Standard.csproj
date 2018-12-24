@@ -5,7 +5,7 @@
     <RootNamespace>Catharsis.Commons</RootNamespace>
     <AssemblyName>Catharsis.Commons</AssemblyName>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>4.0</Version>
+    <Version>4.0.1</Version>
     <Authors>Prokhor Ozornin &lt;prokhor.ozornin@yandex.ru&gt;</Authors>
     <Company />
     <Copyright>Copyright © 2013 - 2019</Copyright>

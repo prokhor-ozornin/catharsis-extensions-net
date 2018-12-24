@@ -230,7 +230,8 @@ namespace Catharsis.Commons
       Assertion.NotNull(self);
       Assertion.NotEmpty(name);
 
-      return self.GetType().AnyProperty(name)?.GetValue(self, null);
+      var propertyInfo = self.GetType().AnyProperty(name);
+      return propertyInfo != null && propertyInfo.CanRead ? propertyInfo.GetValue(self, null) : null;
     }
 
     /// <summary>
@@ -251,7 +252,13 @@ namespace Catharsis.Commons
       Assertion.NotNull(self);
       Assertion.NotEmpty(property);
 
-      self.GetType().AnyProperty(property)?.SetValue(self, value, null);
+      var propertyInfo = self.GetType().AnyProperty(property);
+
+      if (propertyInfo != null && propertyInfo.CanWrite)
+      {
+        propertyInfo.SetValue(self, value, null);
+      }
+
       return self;
     }
 
