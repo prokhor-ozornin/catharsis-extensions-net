@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-
-namespace Catharsis.Commons
+﻿namespace Catharsis.Commons
 {
+  using System;
+  using System.Collections.Generic;
+  using System.ComponentModel;
+  using System.Globalization;
+  using System.Linq;
+  using System.Reflection;
+  using System.Runtime.CompilerServices;
+  using System.Text;
+
   /// <summary>
   ///   <para>Set of reflection-related extensions methods.</para>
   /// </summary>

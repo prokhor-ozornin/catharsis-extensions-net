@@ -1,13 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Security;
-
-#if NET_40
-using System.Security.Cryptography;
-#endif
-
-namespace Catharsis.Commons
+﻿namespace Catharsis.Commons
 {
+  using System;
+  using System.IO;
+  using System.Security;
+
+  #if NET_40
+  using System.Security.Cryptography;
+  #endif
+
   /// <summary>
   ///   <para>Set of cryptography and security-related extensions methods.</para>
   /// </summary>

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace Catharsis.Commons
+﻿namespace Catharsis.Commons
 {
+  using System;
+  using System.Collections.Generic;
+  using System.IO;
+  using System.Text;
+
   /// <summary>
   ///   <para>Set of file and filesystem-related extensions methods.</para>
   /// </summary>

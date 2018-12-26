@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Catharsis.Commons
+﻿namespace Catharsis.Commons
 {
+  using System;
+
   /// <summary>
   ///   <para>Set of math-related extensions methods.</para>
   /// </summary>

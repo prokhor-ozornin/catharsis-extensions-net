@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-
-namespace Catharsis.Commons
+﻿namespace Catharsis.Commons
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
+  using System.Linq.Expressions;
+
   /// <summary>
   ///   <para>This attribute is used to specify the list of properties of the target class or structure to be used in equality comparison and hash codes calculation.</para>
   ///   <para>If present, it's used automatically by the following extension methods:</para>

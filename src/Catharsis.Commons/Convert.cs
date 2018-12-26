@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-
-namespace Catharsis.Commons
+﻿namespace Catharsis.Commons
 {
+  using System;
+  using System.Collections;
+  using System.IO;
+  using System.Linq;
+  using System.Text.RegularExpressions;
+
   /// <summary>
   ///   <para>Represents a converter between different source and destination <see cref="Type"/>s.</para>
   /// </summary>

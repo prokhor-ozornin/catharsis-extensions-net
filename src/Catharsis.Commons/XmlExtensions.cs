@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-
-#if NET_40
-using System.Xml.Linq;
-#endif
-
-namespace Catharsis.Commons
+﻿namespace Catharsis.Commons
 {
+  using System;
+  using System.Collections.Generic;
+  using System.IO;
+  using System.Linq;
+  using System.Text;
+  using System.Xml;
+  using System.Xml.Serialization;
+
+  #if NET_40
+  using System.Xml.Linq;
+  #endif
+
   /// <summary>
   ///   <para>Set of XML-related extensions methods.</para>
   /// </summary>

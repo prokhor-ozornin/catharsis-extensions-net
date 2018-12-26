@@ -1,10 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Catharsis.Commons
 {
+  using System;
+  using System.Collections;
+  using System.Collections.Generic;
+  using System.Linq;
+
   /// <summary>
   ///   <para>Collection of methods to perform assertions on objects.</para>
   /// </summary>

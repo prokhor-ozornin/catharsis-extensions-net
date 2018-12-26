@@ -1,15 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Xml;
-
-#if NET_40
-using System.IO.Compression;
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
-
-namespace Catharsis.Commons
+﻿namespace Catharsis.Commons
 {
+  using System;
+  using System.IO;
+  using System.Text;
+  using System.Xml;
+
+  #if NET_40
+  using System.IO.Compression;
+  using System.Runtime.Serialization.Formatters.Binary;
+  #endif
+
   /// <summary>
   ///   <para>Set of extension methods for class <see cref="Stream"/>.</para>
   /// </summary>

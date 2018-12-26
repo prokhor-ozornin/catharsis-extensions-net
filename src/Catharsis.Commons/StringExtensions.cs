@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-
 namespace Catharsis.Commons
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Globalization;
+  using System.Linq;
+  using System.Net;
+  using System.Text;
+  using System.Text.RegularExpressions;
+
   /// <summary>
   ///   <para>Set of extension methods for <see cref="string"/> type.</para>
   /// </summary>

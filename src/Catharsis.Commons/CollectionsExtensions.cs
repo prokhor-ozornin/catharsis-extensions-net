@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Catharsis.Commons
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
+  using System.Text;
+
   /// <summary>
   ///   <para>Set of collections and sequences-related extensions methods.</para>
   /// </summary>

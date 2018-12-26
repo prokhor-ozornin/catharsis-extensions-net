@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-
-namespace Catharsis.Commons
+﻿namespace Catharsis.Commons
 {
+  using System;
+  using System.Linq;
+
   /// <summary>
   ///   <para>Set of extension methods for <see cref="IQueryable{T}"/> type.</para>
   /// </summary>

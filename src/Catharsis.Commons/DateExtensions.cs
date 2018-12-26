@@ -1,8 +1,8 @@
-using System;
-using System.Globalization;
-
 namespace Catharsis.Commons
 {
+  using System;
+  using System.Globalization;
+
   /// <summary>
   ///   <para>Set of date/time related extensions methods.</para>
   /// </summary>

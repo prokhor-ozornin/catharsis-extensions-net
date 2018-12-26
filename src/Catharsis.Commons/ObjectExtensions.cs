@@ -1,17 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-
-#if WINDOWS_UWP
-using System.Runtime.CompilerServices;
-#endif
-
 namespace Catharsis.Commons
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Globalization;
+  using System.Linq;
+  using System.Linq.Expressions;
+  using System.Reflection;
+  using System.Text;
+
+  #if WINDOWS_UWP
+  using System.Runtime.CompilerServices;
+  #endif
+
   /// <summary>
   ///   <para>Set of extensions methods for basic <see cref="object"/> type.</para>
   /// </summary>
