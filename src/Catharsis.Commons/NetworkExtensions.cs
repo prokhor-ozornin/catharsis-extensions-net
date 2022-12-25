@@ -1,350 +1,680 @@
-﻿namespace Catharsis.Commons
+﻿using System.Collections;
+using System.Net;
+using System.Net.Mail;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Runtime.CompilerServices;
+
+namespace Catharsis.Commons;
+
+/// <summary>
+///   <para>Extension methods for networking I/O types.</para>
+/// </summary>
+/// <seealso cref="IPAddress"/>
+/// <seealso cref="IPHostEntry"/>
+/// <seealso cref="PhysicalAddress"/>
+/// <seealso cref="HttpClient"/>
+/// <seealso cref="SmtpClient"/>
+/// <seealso cref="TcpClient"/>
+/// <seealso cref="UdpClient"/>
+/// <seealso cref="Socket"/>
+/// <seealso cref="Cookie"/>
+public static class NetworkExtensions
 {
-  using System;
-  using System.Collections.Generic;
-  using System.IO;
-  using System.Linq;
-  using System.Net;
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  public static async Task<bool> IsAvailable(this IPAddress address, TimeSpan? timeout = null)
+  {
+    using var ping = new Ping();
+
+    var reply = await (timeout != null ? ping.SendPingAsync(address, (int) timeout.Value.TotalMilliseconds) : ping.SendPingAsync(address));
+
+    return reply.Status == IPStatus.Success;
+  }
 
   /// <summary>
-  ///   <para>Set of network-related extensions methods.</para>
+  ///   <para></para>
   /// </summary>
-  public static class NetworkExtensions
+  /// <param name="host"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  public static async Task<bool> IsAvailable(this IPHostEntry host, TimeSpan? timeout = null)
   {
-    /// <summary>
-    ///   <para>Modifies target URL address by adding by adding given list of name/value pairs to its Query component.</para>
-    ///   <para>Names and values of query string parameters are URL-encoded.</para>
-    /// </summary>
-    /// <param name="self">URI address to be modified.</param>
-    /// <param name="parameters">Map of name/value parameters for query string.</param>
-    /// <returns>Updated URI address.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="parameters"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="Query(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Query(Uri, object)"/>
-    public static Uri Query(this Uri self, IDictionary<string, object> parameters)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(parameters);
+    var address = host.HostName.IsEmpty() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
 
-      var builder = new UriBuilder(self);
-      var query = parameters.Select(parameter => $"{parameter.Key.UrlEncode()}={parameter.Value.ToStringInvariant().UrlEncode()}").Join("&");
-      builder.Query = builder.Query.Length > 1 ? builder.Query.Substring(1) + (query.IsEmpty() ? string.Empty : "&" + query) : query;
-      return builder.Uri;
+    if (address == null)
+    {
+      return false;
     }
 
-    /// <summary>
-    ///   <para>Modifies target URL address by adding by adding given list of name/value pairs to its Query component.</para>
-    ///   <para>Names and values of query string parameters are URL-encoded.</para>
-    /// </summary>
-    /// <param name="self">URI address to be modified.</param>
-    /// <param name="parameters">Map of name/value parameters for query string.</param>
-    /// <returns>Updated URI address.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="parameters"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="Query(Uri, object)"/>
-    /// <seealso cref="Query(Uri, IDictionary{string, object})"/>
-    public static Uri Query(this Uri self, IDictionary<string, string> parameters)
+    using var ping = new Ping();
+
+    var reply = await (timeout != null ? ping.SendPingAsync(address, (int) timeout.Value.TotalMilliseconds) : ping.SendPingAsync(address));
+
+    return reply.Status == IPStatus.Success;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="host"></param>
+  /// <returns></returns>
+  public static bool IsEmpty(this IPHostEntry host) => host.HostName.IsEmpty() && (host.AddressList == null || host.AddressList.IsEmpty());
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <returns></returns>
+  public static bool IsEmpty(this TcpClient tcp) => tcp.ToEnumerable().IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <returns></returns>
+  public static bool IsEmpty(this UdpClient udp) => udp.ToEnumerable().IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="cookie"></param>
+  /// <returns></returns>
+  public static bool IsEmpty(this Cookie cookie) => cookie.Name.IsEmpty() || cookie.Value.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static IPAddress Min(this IPAddress left, IPAddress right) => left.Address <= right.Address ? left : right;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static IPAddress Max(this IPAddress left, IPAddress right) => left.Address >= right.Address ? left : right;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static HttpClient Headers(this HttpClient http, params (string Name, object? Value)[] headers)
+  {
+    headers.ForEach(header => http.DefaultRequestHeaders.Add(header.Name, header.Value?.ToStringInvariant()));
+    return http;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static HttpClient Headers(this HttpClient http, IDictionary<string, object?> headers)
+  {
+    headers.ForEach(header => http.DefaultRequestHeaders.Add(header.Key, header.Value?.ToStringInvariant()));
+    return http;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  public static HttpClient Timeout(this HttpClient http, TimeSpan? timeout)
+  {
+    if (timeout != null)
     {
-      var builder = new UriBuilder(self);
-      var query = parameters.Select(parameter => $"{parameter.Key.UrlEncode()}={parameter.Value.UrlEncode()}").Join("&");
-      builder.Query = builder.Query.Length > 1 ? builder.Query.Substring(1) + (query.IsEmpty() ? string.Empty : "&" + query) : query;
-      return builder.Uri;
+      http.Timeout = timeout.Value;
     }
 
-    /// <summary>
-    ///   <para>Modifies target URL address by adding by adding given list of name/value pairs to its Query component.</para>
-    ///   <para>Names and values of query string parameters are URL-encoded.</para>
-    /// </summary>
-    /// <param name="self">URI address to be modified.</param>
-    /// <param name="parameters">Map of name/value parameters for query string (public properties of object).</param>
-    /// <returns>Updated URI address.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="parameters"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="Query(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Query(Uri, IDictionary{string, object})"/>
-    public static Uri Query(this Uri self, object parameters)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(parameters);
+    return http;
+  }
 
-      return self.Query(parameters.PropertiesMap());
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  public static TcpClient Timeout(this TcpClient tcp, TimeSpan? timeout)
+  {
+    if (timeout != null)
+    {
+      tcp.ReceiveTimeout = (int) timeout.Value.TotalMilliseconds;
+      tcp.SendTimeout = (int) timeout.Value.TotalMilliseconds;
     }
 
-#if NET_40
-    /// <summary>
-    ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download data.</param>
-    /// <returns>Response of web server in a binary format.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="Bytes(Uri, IDictionary{string, object})"/>
-    /// <seealso cref="Bytes(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Bytes(Uri, object)"/>
-    public static byte[] Bytes(this Uri self)
-    {
-      Assertion.NotNull(self);
+    return tcp;
+  }
 
-      return self.Bytes((object)null);
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  public static UdpClient Timeout(this UdpClient udp, TimeSpan? timeout)
+  {
+    udp.Client.Timeout(timeout);
+    return udp;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="smtp"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  public static SmtpClient Timeout(this SmtpClient smtp, TimeSpan? timeout)
+  {
+    if (timeout != null)
+    {
+      smtp.Timeout = (int) timeout.Value.TotalMilliseconds;
     }
 
-    /// <summary>
-    ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download data.</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
-    /// <returns>Response of web server in a binary format.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="Bytes(Uri)"/>
-    /// <seealso cref="Bytes(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Bytes(Uri, object)"/>
-    public static byte[] Bytes(this Uri self, IDictionary<string, object> headers = null)
-    {
-      Assertion.NotNull(self);
+    return smtp;
+  }
 
-      return self.Stream(headers).Bytes(true);
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="socket"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  public static Socket Timeout(this Socket socket, TimeSpan? timeout)
+  {
+    if (timeout != null)
+    {
+      socket.ReceiveTimeout = (int) timeout.Value.TotalMilliseconds;
+      socket.SendTimeout = (int) timeout.Value.TotalMilliseconds;
     }
 
-    /// <summary>
-    ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download data.</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
-    /// <returns>Response of web server in a binary format.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="Bytes(Uri)"/>
-    /// <seealso cref="Bytes(Uri, IDictionary{string, object})"/>
-    /// <seealso cref="Bytes(Uri, object)"/>
-    public static byte[] Bytes(this Uri self, IDictionary<string, string> headers = null)
+    return socket;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<HttpContent> RequestHead(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  {
+    var response = await http.SendAsync(new HttpRequestMessage(HttpMethod.Head, uri), cancellation);
+    response.EnsureSuccessStatusCode();
+    return response.Content;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<HttpContent> RequestGet(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  {
+    var response = await http.GetAsync(uri, cancellation);
+    response.EnsureSuccessStatusCode();
+    return response.Content;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="content"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<HttpContent> RequestPost(this HttpClient http, Uri uri, HttpContent? content = null, CancellationToken cancellation = default)
+  {
+    var response = await http.PostAsync(uri, content, cancellation);
+    response.EnsureSuccessStatusCode();
+    return response.Content;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="content"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<HttpContent> RequestPut(this HttpClient http, Uri uri, HttpContent? content = null, CancellationToken cancellation = default)
+  {
+    var response = await http.PutAsync(uri, content, cancellation);
+    response.EnsureSuccessStatusCode();
+    return response.Content;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="content"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<HttpContent> RequestPatch(this HttpClient http, Uri uri, HttpContent? content = null, CancellationToken cancellation = default)
+  {
+    var response = await http.PatchAsync(uri, content, cancellation);
+    response.EnsureSuccessStatusCode();
+    return response.Content;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<HttpContent> RequestDelete(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  {
+    var response = await http.DeleteAsync(uri, cancellation);
+    response.EnsureSuccessStatusCode();
+    return response.Content;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
+  /// <returns></returns>
+  public static byte[] Bytes(this IPAddress address) => address.GetAddressBytes();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
+  /// <returns></returns>
+  public static byte[] Bytes(this PhysicalAddress address) => address.GetAddressBytes();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async IAsyncEnumerable<byte> Bytes(this HttpClient http, Uri uri, [EnumeratorCancellation] CancellationToken cancellation = default)
+  {
+    #if NET6_0
+    var bytes = http.GetByteArrayAsync(uri, cancellation);
+    #else
+      var bytes = http.GetByteArrayAsync(uri);
+    #endif
+
+    foreach (var value in await bytes)
     {
-      Assertion.NotNull(self);
-
-      return self.Stream(headers).Bytes(true);
+      yield return value;
     }
+  }
 
-    /// <summary>
-    ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download data.</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
-    /// <returns>Response of web server in a binary format.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="Bytes(Uri)"/>
-    /// <seealso cref="Bytes(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Bytes(Uri, IDictionary{string, object})"/>
-    public static byte[] Bytes(this Uri self, object headers = null)
-    {
-      Assertion.NotNull(self);
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="bytes"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<HttpClient> Bytes(this HttpClient http, Uri uri, IEnumerable<byte> bytes, CancellationToken cancellation = default)
+  {
+    await http.PostAsync(uri, new ByteArrayContent(bytes.AsArray()), cancellation);
 
-      return self.Bytes(headers?.PropertiesMap());
-    }
+    return http;
+  }
 
-    /// <summary>
-    ///   <para>Resolves a host name or IP address part of target URL to <see cref="IPHostEntry"/> instance.</para>
-    /// </summary>
-    /// <param name="self">URL address to use.</param>
-    /// <returns><see cref="IPHostEntry"/> instance, containing information about host of source <see cref="Uri"/> address.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static IPHostEntry Host(this Uri self)
-    {
-      Assertion.NotNull(self);
-
-      return Dns.GetHostEntry(self.DnsSafeHost);
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="IPAddress"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="IPAddress"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static IPAddress IPAddress(this Convert self, object subject)
-    {
-      Assertion.NotNull(self);
-
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is IPAddress)
-      {
-        return subject as IPAddress;
-      }
-
-      IPAddress result;
-      return System.Net.IPAddress.TryParse(subject.ToString(), out result) ? result : null;
-    }
-
-    /// <summary>
-    ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download the data.</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
-    /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="Stream(Uri)"/>
-    /// <seealso cref="Stream(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Stream(Uri, object)"/>
-    public static Stream Stream(this Uri self, IDictionary<string, object> headers = null)
-    {
-      Assertion.NotNull(self);
-
-      if (self.Scheme == Uri.UriSchemeFile)
-      {
-        return new FileStream(self.LocalPath, FileMode.Open, FileAccess.Read);
-      }
-
-      var request = WebRequest.Create(self);
-
-      if (headers != null)
-      {
-        foreach (var header in headers)
-        {
-          request.Headers[header.Key] = header.Value.ToStringInvariant();
-        }
-      }
-
-      return request.GetResponse().GetResponseStream();;
-    }
-
-    /// <summary>
-    ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download the data.</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
-    /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="Stream(Uri)"/>
-    /// <seealso cref="Stream(Uri, IDictionary{string, object})"/>
-    /// <seealso cref="Stream(Uri, object)"/>
-    public static Stream Stream(this Uri self, IDictionary<string, string> headers = null)
-    {
-      Assertion.NotNull(self);
-
-      if (self.Scheme == Uri.UriSchemeFile)
-      {
-        return new FileStream(self.LocalPath, FileMode.Open, FileAccess.Read);
-      }
-
-      var request = WebRequest.Create(self);
-
-      if (headers != null)
-      {
-        foreach (var header in headers)
-        {
-          request.Headers[header.Key] = header.Value;
-        }
-      }
-
-      return request.GetResponse().GetResponseStream();
-    }
-
-    /// <summary>
-    ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download the data.</param>
-    /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="Stream(Uri, IDictionary{string, object})"/>
-    /// <seealso cref="Stream(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Stream(Uri, object)"/>
-    public static Stream Stream(this Uri self)
-    {
-      Assertion.NotNull(self);
-
-      return self.Stream((object)null);
-    }
-
-    /// <summary>
-    ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download the data.</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
-    /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <remarks>This method uses the RETR command to download an FTP resource. For an HTTP resource, the GET method is used.</remarks>
-    /// <seealso cref="Stream(Uri)"/>
-    /// <seealso cref="Stream(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Stream(Uri, IDictionary{string, object})"/>
-    public static Stream Stream(this Uri self, object headers = null)
-    {
-      Assertion.NotNull(self);
-
-      return self.Stream(headers?.PropertiesMap());
-    }
-
-    /// <summary>
-    ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download the data.</param>
-    /// <returns>Web server's response in a text format.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="Text(Uri, IDictionary{string, object})"/>
-    /// <seealso cref="Text(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Text(Uri, object)"/>
-    public static string Text(this Uri self)
-    {
-      Assertion.NotNull(self);
-
-      return self.Text((object)null);
-    }
-
-    /// <summary>
-    ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download the data.</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
-    /// <returns>Web server's response in a text format.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="Text(Uri)"/>
-    /// <seealso cref="Text(Uri, IDictionary{string, string})"/>
-    /// <seealso cref="Text(Uri, object)"/>
-    public static string Text(this Uri self, IDictionary<string, object> headers = null)
-    {
-      Assertion.NotNull(self);
-
-      return self.Stream(headers).Text(true);
-    }
-
-    /// <summary>
-    ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download the data.</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
-    /// <returns>Web server's response in a text format.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="Text(Uri)"/>
-    /// <seealso cref="Text(Uri, object)"/>
-    /// <seealso cref="Text(Uri, IDictionary{string, object})"/>
-    public static string Text(this Uri self, IDictionary<string, string> headers = null)
-    {
-      Assertion.NotNull(self);
-
-      return self.Stream(headers).Text(true);
-    }
-
-    /// <summary>
-    ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
-    /// </summary>
-    /// <param name="self">The URI from which to download the data.</param>
-    /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
-    /// <returns>Web server's response in a text format.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="Text(Uri)"/>
-    /// <seealso cref="Text(Uri, object)"/>
-    /// <seealso cref="Text(Uri, IDictionary{string, object})"/>
-    public static string Text(this Uri self, object headers = null)
-    {
-      Assertion.NotNull(self);
-
-      return self.Text(headers?.PropertiesMap());
-    }
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="content"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async IAsyncEnumerable<byte> Bytes(this HttpContent content, [EnumeratorCancellation] CancellationToken cancellation = default)
+  {
+#if NET6_0
+    var bytes = await content.ReadAsByteArrayAsync(cancellation);
+#else
+    var bytes = await content.ReadAsByteArrayAsync();
 #endif
+    foreach (var value in bytes)
+    {
+      yield return value;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async IAsyncEnumerable<byte> Bytes(this TcpClient tcp, [EnumeratorCancellation] CancellationToken cancellation = default)
+  {
+    await foreach (var item in tcp.GetStream().Bytes(cancellation))
+    {
+      yield return item;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="bytes"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<TcpClient> Bytes(this TcpClient tcp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
+  {
+    await tcp.GetStream().Bytes(bytes, cancellation);
+
+    return tcp;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async IAsyncEnumerable<byte> Bytes(this UdpClient udp, [EnumeratorCancellation] CancellationToken cancellation = default)
+  {
+#if NET6_0
+    var result = await udp.ReceiveAsync(cancellation);
+#else
+    var result = await udp.ReceiveAsync();
+#endif
+
+    foreach (var item in result.Buffer)
+    {
+      yield return item;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <param name="bytes"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<UdpClient> Bytes(this UdpClient udp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
+  {
+#if NET6_0
+    await udp.SendAsync(bytes.ToReadOnlyMemory(), cancellation);
+#else
+    await udp.SendAsync(bytes.AsArray(), bytes.Count());
+#endif
+    return udp;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<string> Text(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  {
+#if NET6_0
+    return await http.GetStringAsync(uri, cancellation);
+#else
+      return await http.GetStringAsync(uri);
+#endif
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="text"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<HttpClient> Text(this HttpClient http, Uri uri, string text, CancellationToken cancellation = default)
+  {
+    await http.RequestPost(uri, new StringContent(text), cancellation);
+    return http;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="content"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<string> Text(this HttpContent content, CancellationToken cancellation = default)
+  {
+#if NET6_0
+    return await content.ReadAsStringAsync(cancellation);
+#else
+    return await content.ReadAsStringAsync();
+#endif
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="text"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<TcpClient> Text(this TcpClient tcp, string text, CancellationToken cancellation = default)
+  {
+    await tcp.GetStream().Text(text, cancellation);
+
+    return tcp;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="action"></param>
+  /// <returns></returns>
+  public static TcpClient UseTemporarily(this TcpClient tcp, Action<TcpClient> action)
+  {
+    tcp.Client.UseTemporarily(_ => action(tcp));
+    return tcp;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <param name="action"></param>
+  /// <returns></returns>
+  public static UdpClient UseTemporarily(this UdpClient udp, Action<UdpClient> action)
+  {
+    udp.Client.UseTemporarily(_ => action(udp));
+    return udp;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="socket"></param>
+  /// <param name="action"></param>
+  /// <returns></returns>
+  public static Socket UseTemporarily(this Socket socket, Action<Socket> action) => socket.UseFinally(action, socket => socket.Disconnect(true));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="host"></param>
+  /// <returns></returns>
+  public static IEnumerable<IPAddress> ToEnumerable(this IPHostEntry host) => host.AddressList ?? Enumerable.Empty<IPAddress>();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> ToEnumerable(this TcpClient tcp) => tcp.GetStream().ToEnumerable();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte[]> ToEnumerable(this TcpClient tcp, int count) => tcp.GetStream().ToEnumerable(count);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <param name="endpoint"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte[]> ToEnumerable(this UdpClient udp, IPEndPoint? endpoint = null) => new UdpClientEnumerable(udp, endpoint);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <returns></returns>
+  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this TcpClient tcp) => tcp.GetStream().ToAsyncEnumerable();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this TcpClient tcp, int count) => tcp.GetStream().ToAsyncEnumerable(count);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <returns></returns>
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this UdpClient udp) => new UdpClientAsyncEnumerable(udp);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<Stream> ToStream(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  {
+    #if NET6_0
+      return await http.GetStreamAsync(uri, cancellation);
+    #else
+      return await http.GetStreamAsync(uri);
+    #endif
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
+  /// <returns></returns>
+  public static IPHostEntry ToHost(this IPAddress address) => new() { AddressList = new[] { address }, Aliases = Array.Empty<string>() };
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="content"></param>
+  /// <returns></returns>
+  public static async Task<Stream> ToStream(this HttpContent content) => await content.ReadAsStreamAsync();
+
+  private sealed class UdpClientEnumerable : IEnumerable<byte[]>
+  {
+    private readonly UdpClient client;
+    private IPEndPoint? endpoint;
+
+    public UdpClientEnumerable(UdpClient client,IPEndPoint? endpoint)
+    {
+      this.client = client;
+      this.endpoint = endpoint;
+    }
+
+    public IEnumerator<byte[]> GetEnumerator() => new UdpClientEnumerator(this);
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    private sealed class UdpClientEnumerator : IEnumerator<byte[]>
+    {
+      private UdpClientEnumerable Parent { get; }
+
+      public UdpClientEnumerator(UdpClientEnumerable parent)
+      {
+        Parent = parent;
+        Current = Array.Empty<byte>();
+      }
+
+      public byte[] Current { get; private set; }
+
+      public bool MoveNext()
+      {
+        Current = Parent.client.Receive(ref Parent.endpoint);
+
+        return Current.Length > 0;
+      }
+
+      public void Reset() { throw new InvalidOperationException(); }
+
+      public void Dispose() {}
+
+      object IEnumerator.Current => Current;
+    }
+  }
+
+  private sealed class UdpClientAsyncEnumerable : IAsyncEnumerable<byte[]>
+  {
+    private readonly UdpClient client;
+
+    public UdpClientAsyncEnumerable(UdpClient client) => this.client = client;
+
+    public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new UdpClientAsyncEnumerator(this, cancellation);
+
+    private sealed class UdpClientAsyncEnumerator : IAsyncEnumerator<byte[]>
+    {
+      private readonly UdpClientAsyncEnumerable parent;
+      private readonly CancellationToken cancellation;
+
+      public UdpClientAsyncEnumerator(UdpClientAsyncEnumerable parent, CancellationToken cancellation)
+      {
+        this.parent = parent;
+        this.cancellation = cancellation;
+
+        Current = Array.Empty<byte>();
+      }
+
+      public ValueTask DisposeAsync() => default;
+
+      public byte[] Current { get; private set; }
+
+      public async ValueTask<bool> MoveNextAsync()
+      {
+#if NET6_0
+        var result = parent.client.ReceiveAsync(cancellation);
+#else
+        var result = parent.client.ReceiveAsync();
+#endif
+        Current = (await result).Buffer;
+        return Current.Length > 0;
+      }
+    }
   }
 }

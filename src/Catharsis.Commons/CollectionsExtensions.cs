@@ -1,265 +1,323 @@
-namespace Catharsis.Commons
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using static System.Math;
+
+namespace Catharsis.Commons;
+
+/// <summary>
+///   <para>Extension methods for collections of various types.</para>
+/// </summary>
+/// <seealso cref="ICollection{T}"/>
+/// <seealso cref="IList{T}"/>
+/// <seealso cref="IDictionary{TKey, TValue}"/>
+/// <seealso cref="NameValueCollection"/>
+public static class CollectionsExtensions
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
-  using System.Text;
+  /// <summary>
+  ///   <para>Sequentially adds all elements, returned by the enumerator, to the specified collection.</para>
+  /// </summary>
+  /// <typeparam name="T">Type of collection's elements.</typeparam>
+  /// <param name="to">Collection to which elements are added.</param>
+  /// <param name="from">Elements enumerator that provide elements for addition to the collection <paramref name="to"/>.</param>
+  /// <returns>Reference to the supplied collection <paramref name="to"/>.</returns>
+  public static ICollection<T> AddAll<T>(this ICollection<T> to, IEnumerable<T> from)
+  {
+    from.ForEach(to.Add);
+    return to;
+  }
 
   /// <summary>
-  ///   <para>Set of collections and sequences-related extensions methods.</para>
+  ///   <para></para>
   /// </summary>
-  public static class CollectionsExtensions
+  /// <param name="to"></param>
+  /// <param name="from"></param>
+  /// <returns></returns>
+  public static NameValueCollection AddAll(this NameValueCollection to, IEnumerable<(string? Name, object? Value)> from)
   {
-    /// <summary>
-    ///   <para>Sequentially adds all elements, returned by the enumerator, to the specified collection.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of collection's elements.</typeparam>
-    /// <param name="self">Collection to which elements are added.</param>
-    /// <param name="other">Elements enumerator that provide elements for addition to the collection <paramref name="self"/>.</param>
-    /// <returns>Reference to the supplied collection <paramref name="self"/>.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="other"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="ICollection{T}.Add(T)"/>
-    public static ICollection<T> Add<T>(this ICollection<T> self, IEnumerable<T> other)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(other);
+    from.ForEach(tuple => to.Add(tuple.Name, tuple.Value?.ToStringInvariant()));
+    return to;
+  }
 
-      foreach (var item in other)
+  /// <summary>
+  ///   <para>Sequentially removes all elements, returned by the enumerator, from the specified collection, if it has it.</para>
+  /// </summary>
+  /// <typeparam name="T">Type of collection's elements.</typeparam>
+  /// <param name="to">Collection from which elements are removed.</param>
+  /// <param name="from">Elements enumerator that provider elements for removal from the collection <see cref="to"/>.</param>
+  /// <seealso cref="ICollection{T}.Remove(T)"/>
+  public static ICollection<T> RemoveAll<T>(this ICollection<T> to, IEnumerable<T> from)
+  {
+    from.ForEach(item => to.Remove(item));
+    return to;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="collection"></param>
+  /// <returns></returns>
+  public static ICollection<T> Empty<T>(this ICollection<T> collection)
+  {
+    collection.Clear();
+    return collection;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="collection"></param>
+  /// <returns></returns>
+  public static NameValueCollection Empty(this NameValueCollection collection)
+  {
+    collection.Clear();
+    return collection;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="collection"></param>
+  /// <param name="action"></param>
+  /// <returns></returns>
+  public static ICollection<T> UseTemporarily<T>(this ICollection<T> collection, Action<ICollection<T>> action) => collection.UseFinally(action, collection => collection.Clear());
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="collection"></param>
+  /// <param name="action"></param>
+  /// <returns></returns>
+  public static NameValueCollection UseTemporarily(this NameValueCollection collection, Action<NameValueCollection> action) => collection.UseFinally(action, collection => collection.Clear());
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <returns></returns>
+  public static IList<T> Randomize<T>(this IList<T> list)
+  {
+    if (list.Count <= 0)
+    {
+      return list;
+    }
+
+    var random = new Random();
+
+    var n = list.Count;
+
+    while (n > 1)
+    {
+      n--;
+      var k = random.Next(n + 1);
+      (list[k], list[n]) = (list[n], list[k]);
+    }
+
+    return list;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="filler"></param>
+  /// <param name="offset"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  public static IList<T> Fill<T>(this IList<T> list, Func<int, T> filler, int? offset = null, int? count = null)
+  {
+    if (offset is < 0 || count is <= 0)
+    {
+      return list;
+    }
+
+    var from = offset ?? 0;
+    var to = Min(list.Count, count != null ? from + count.Value : list.Count - from); 
+
+    for (var index = from; index < to; index++)
+    {
+      list[index] = filler(index);
+    }
+
+    return list;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="filler"></param>
+  /// <param name="offset"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  public static IList<T> Fill<T>(this IList<T> list, Func<T> filler, int? offset = null, int? count = null) => list.Fill(_ => filler(), offset, count);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="list"></param>
+  /// <param name="first"></param>
+  /// <param name="second"></param>
+  /// <returns></returns>
+  public static IList<T> Swap<T>(this IList<T> list, int first, int second)
+  {
+    (list[first], list[second]) = (list[second], list[first]);
+
+    return list;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="from"></param>
+  /// <param name="to"></param>
+  /// <param name="condition"></param>
+  /// <returns></returns>
+  /// <seealso cref="Discard{T}(IList{T}, Range, Predicate{T}?)"/>
+  /// <seealso cref="Discard{T}(IList{T}, int)"/>
+  /// <seealso cref="DiscardLast{T}(IList{T}, int)"/>
+  public static IList<T> Discard<T>(this IList<T> list, int from, int to, Predicate<T>? condition = null)
+  {
+    for (var i = Max(0, from); i < Min(list.Count, to); i++)
+    {
+      if (condition == null || condition(list[i]))
       {
-        self.Add(item);
-      }
-
-      return self;
+        list.RemoveAt(i);
+      } 
     }
 
-    /// <summary>
-    ///   <para>Returns BASE64-encoded representation of a bytes sequence.</para>
-    /// </summary>
-    /// <param name="self">Bytes to convert to BASE64 encoding.</param>
-    /// <returns>BASE64 string representation of <paramref name="self"/> array.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="System.Convert.ToBase64String(byte[])"/>
-    public static string Base64(this byte[] self)
+    return list;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="range"></param>
+  /// <param name="condition"></param>
+  /// <returns></returns>
+  /// <seealso cref="Discard{T}(IList{T}, int, int, Predicate{T}?)"/>
+  /// <seealso cref="Discard{T}(IList{T}, int)"/>
+  /// <seealso cref="DiscardLast{T}(IList{T}, int)"/>
+  public static IList<T> Discard<T>(this IList<T> list, Range range, Predicate<T>? condition = null) => list.Discard(range.Start.Value, range.End.Value, condition);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  /// <seealso cref="Discard{T}(IList{T}, int, int, Predicate{T}?)"/>
+  /// <seealso cref="Discard{T}(IList{T}, Range, Predicate{T}?)"/>
+  /// <seealso cref="DiscardLast{T}(IList{T}, int)"/>
+  public static IList<T> Discard<T>(this IList<T> list, int count) => list.Discard(..count);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  /// <seealso cref="Discard{T}(IList{T}, int, int, Predicate{T}?)"/>
+  /// <seealso cref="Discard{T}(IList{T}, Range, Predicate{T}?)"/>
+  /// <seealso cref="Discard{T}(IList{T}, int)"/>
+  public static IList<T> DiscardLast<T>(this IList<T> list, int count) => list.Discard((list.Count - count)..count);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <returns></returns>
+  /// <seealso cref="ReadOnly{TKey, TValue}(IDictionary{TKey, TValue})"/>
+  public static IList<T> ReadOnly<T>(this IList<T> list) => new ReadOnlyCollection<T>(list);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <returns></returns>
+  /// <seealso cref="ReadOnly{T}(IList{T})"/>
+  public static IDictionary<TKey, TValue> ReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) where TKey : notnull => new ReadOnlyDictionary<TKey, TValue>(dictionary);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  public static IDictionary<TKey, TValue> Sorted<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey>? comparer = null) where TKey : notnull => new SortedDictionary<TKey, TValue>(dictionary, comparer);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  public static IDictionary<TKey, TValue?> ToSortedList<TKey, TValue>(this IDictionary<TKey, TValue?> dictionary, IComparer<TKey>? comparer = null) where TKey : notnull => new SortedList<TKey, TValue?>(dictionary, comparer);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  public static IEnumerable<(TKey Key, TValue? Value)> ToTuple<TKey, TValue>(this IDictionary<TKey, TValue?> dictionary, IComparer<TKey>? comparer = null) where TKey: notnull => comparer != null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="collection"></param>
+  /// <returns></returns>
+  public static IDictionary<string, string?> ToDictionary(this NameValueCollection collection)
+  {
+    var result = new Dictionary<string, string?>();
+
+    for (var i = 0; i < collection.Count; i++)
     {
-      Assertion.NotNull(self);
+      var key = collection.GetKey(i);
 
-      return System.Convert.ToBase64String(self);
-    }
-
-    /// <summary>
-    ///   <para>Converts array of characters into array of bytes, using specified encoding.</para>
-    /// </summary>
-    /// <param name="self">Source array of characters.</param>
-    /// <param name="encoding">Encoding to be used for transforming between <see cref="char"/> at its <see cref="byte"/> equivalent. If not specified, uses <see cref="Encoding.UTF8"/> encoding.</param>
-    /// <returns>Array of bytes which represents <paramref name="self"/> array in <paramref name="encoding"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="Encoding.GetBytes(char[])"/>
-    public static byte[] Bytes(this char[] self, Encoding encoding = null)
-    {
-      Assertion.NotNull(self);
-
-      return (encoding ?? Encoding.UTF8).GetBytes(self);
-    }
-
-    /// <summary>
-    ///   <para>Iterates through a sequence, calling a delegate for each element in it.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-    /// <param name="self">Source sequence for iteration.</param>
-    /// <param name="action">Delegate to be called for each element in a sequence.</param>
-    /// <returns>Back reference to the current sequence.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="action"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<T> Each<T>(this IEnumerable<T> self, Action<T> action)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(action);
-
-      foreach (var value in self)
+      if (key != null)
       {
-        action(value);
+        result.Add(key, collection.Get(i));
       }
-
-      return self;
     }
+    
+    return result;
+  }
 
-    /// <summary>
-    ///   <para>Converts array of bytes into HEX-encoded string.</para>
-    /// </summary>
-    /// <param name="self">Bytes to convert to HEX string.</param>
-    /// <returns>HEX string representation of <paramref name="self"/> array.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="BitConverter.ToString(byte[])"/>
-    /// <seealso cref="StringExtensions.Hex(string)"/>
-    public static string Hex(this byte[] self)
+  /// <summary>
+  /// 
+  /// </summary>
+  /// <param name="collection"></param>
+  /// <returns></returns>
+  public static IEnumerable<(string Name, string? Value)> ToTuple(this NameValueCollection collection)
+  {
+    for (var i = 0; i < collection.Count; i++)
     {
-      Assertion.NotNull(self);
+      var key = collection.GetKey(i);
 
-      return BitConverter.ToString(self).Replace("-", "");
-    }
-
-    /// <summary>
-    ///   <para>Concatenates all elements in a sequence into a string, using specified separator.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-    /// <param name="self">Source sequence of elements.</param>
-    /// <param name="separator">String to use as a separator between concatenated elements from <paramref name="self"/>.</param>
-    /// <returns>String which is formed from string representation of each element in a <paramref name="self"/> with a <paramref name="separator"/> between them.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="separator"/> is a <c>null</c> reference.</exception>
-    public static string Join<T>(this IEnumerable<T> self, string separator)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(separator);
-
-      var sb = new StringBuilder();
-      self.Each(element => sb.Append($"{element}{separator}"));
-      if (sb.Length > 0)
+      if (key != null)
       {
-        sb.Remove(sb.Length - separator.Length, separator.Length);
+        yield return (key, collection.Get(i));
       }
-      return sb.ToString();
     }
-
-    /// <summary>
-    ///   <para>Concatenates contents of two arrays, producing a new one.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of array elements.</typeparam>
-    /// <param name="self">First (left-side) array.</param>
-    /// <param name="other">Second (right-side) array.</param>
-    /// <returns>Results array which contains all elements from <paramref name="self"/> array, immediately followed by all elements from <paramref name="second"/> array.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="other"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="Array.Copy(Array, Array, int)"/>
-    public static T[] Join<T>(this T[] self, T[] other)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(other);
-
-      var result = new T[self.Length + other.Length];
-      Array.Copy(self, result, self.Length);
-      Array.Copy(other, 0, result, self.Length, other.Length);
-      return result;
-    }
-
-    /// <summary>
-    ///   <para>Performs "pagination" of a sequence, returning a fragment ("page") of its contents.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-    /// <param name="self">Source sequence from which a fragment is to be taken.</param>
-    /// <param name="page">Number of fragment/slice that is to be taken. Numbering starts from 1.</param>
-    /// <param name="pageSize">Size of fragment ("page"), number of entities to be taken. Must be a positive number.</param>
-    /// <returns>Source that represent a fragment of the original <paramref name="self"/> sequence and consists of no more than <paramref name="pageSize"/> elements.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static IEnumerable<T> Paginate<T>(this IEnumerable<T> self, int page = 1, int pageSize = 10)
-    {
-      Assertion.NotNull(self);
-
-      if (page <= 0)
-      {
-        page = 1;
-      }
-
-      if (pageSize <= 0)
-      {
-        pageSize = 10;
-      }
-
-      return self.Skip((page - 1) * pageSize).Take(pageSize);
-    }
-
-    /// <summary>
-    ///   <para>Picks up random element from a specified sequence and returns it.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-    /// <param name="self">Source sequence of elements.</param>
-    /// <returns>Random member of <paramref name="self"/> sequence.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference. If <paramref name="self"/> contains no elements, returns <c>null</c>.</exception>
-    public static T Random<T>(this IEnumerable<T> self)
-    {
-      Assertion.NotNull(self);
-
-      var max = self.Count();
-      return (T) (max > 0 ? self.ElementAt(new Random().Next(max)) : (object) null);
-    }
-
-    /// <summary>
-    ///   <para>Sequentially removes all elements, returned by the enumerator, from the specified collection, if it has it.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of collection's elements.</typeparam>
-    /// <param name="self">Collection from which elements are removed.</param>
-    /// <param name="other">Elements enumerator that provider elements for removal from the collection <see cref="self"/>.</param>
-    /// <exception cref="ArgumentNullException">If either <paramref name="self"/> or <paramref name="other"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="ICollection{T}.Remove(T)"/>
-    /// <seealso cref="Add{T}(ICollection{T}, IEnumerable{T})"/>
-    public static ICollection<T> Remove<T>(this ICollection<T> self, IEnumerable<T> other)
-    {
-      Assertion.NotNull(self);
-      Assertion.NotNull(other);
-
-      foreach (var item in other)
-      {
-        self.Remove(item);
-      }
-
-      return self;
-    }
-
-    /// <summary>
-    ///   <para>Returns string representation of specified array of characters.</para>
-    /// </summary>
-    /// <param name="self">Source array of characters.</param>
-    /// <returns>String which is formed from contents of <paramref name="self"/> array.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="String(byte[], Encoding)"/>
-    public static string String(this char[] self)
-    {
-      Assertion.NotNull(self);
-
-      return new string(self);
-    }
-
-    /// <summary>
-    ///   <para>Converts array of bytes into a string, using specified encoding.</para>
-    /// </summary>
-    /// <param name="self">Source array of bytes.</param>
-    /// <param name="encoding">Encoding to be used for transforming between <see cref="byte"/> at its <see cref="char"/> equivalent. If not specified, uses <see cref="Encoding.UTF8"/> encoding.</param>
-    /// <returns>Array of characters as a string which represents <paramref name="self"/> array in <paramref name="encoding"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    /// <seealso cref="String(char[])"/>
-    /// <seealso cref="Encoding.GetString(byte[], int, int)"/>
-    public static string String(this byte[] self, Encoding encoding = null)
-    {
-      Assertion.NotNull(self);
-
-      return (encoding ?? Encoding.UTF8).GetString(self, 0, self.Length);
-    }
-
-    /// <summary>
-    ///   <para>Concatenates all elements in a sequence into a string, using comma as a separator and placing the result inside a square brackets.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-    /// <param name="self">Source sequence of elements.</param>
-    /// <returns>String which is formed from string representation of each element in a <paramref name="self"/> with a comma-character separator between them, all inside square brackets.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self" /> is a <c>null</c> reference.</exception>
-    public static string ToListString<T>(this IEnumerable<T> self)
-    {
-      Assertion.NotNull(self);
-
-      return $"[{self.Join(", ")}]";
-    }
-
-#if NET_40
-    /// <summary>
-    ///   <para>Converts sequence of elements into a set collection type.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-    /// <param name="self">Source sequence of elements.</param>
-    /// <returns>Set collection which contains elements from <paramref name="self"/> sequence without dublicates. Order of elements in a set is not guaranteed to be the same as returned by <paramref name="self"/>'s enumerator.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static ISet<T> ToSet<T>(this IEnumerable<T> self)
-    {
-      Assertion.NotNull(self);
-
-      return new SortedSet<T>(self);
-    }
-#endif
   }
 }

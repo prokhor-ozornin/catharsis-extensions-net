@@ -1,177 +1,326 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.Specialized;
+using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
-namespace Catharsis.Commons
+namespace Catharsis.Commons.Tests;
+
+/// <summary>
+///   <para>Tests set for class <see cref="CollectionsExtensions"/>.</para>
+/// </summary>
+public sealed class CollectionsExtensionsTest : UnitTest
 {
-  public sealed class CollectionsExtensionsTest
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.AddAll{T}(ICollection{T}, IEnumerable{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ICollection_AddAll_Method()
   {
-    [Fact]
-    public void add()
+    //AssertionExtensions.Should(() => CollectionsExtensions.AddAll(null!, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>();
+    //AssertionExtensions.Should(() => Array.Empty<object>().AddAll(null!)).ThrowExactly<ArgumentNullException>();
+
+    var collection = new List<object?>();
+
+    collection.AddAll(Enumerable.Empty<object?>()).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+
+    var elements = new object?[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
+
+    collection.AddAll(elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
+    collection.AddAll(elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements.Concat(elements));
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.AddAll(NameValueCollection, IEnumerable{(string Name, object? Value)})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void NameValueCollection_AddAll_Method()
+  {
+    //AssertionExtensions.Should(() => CollectionsExtensions.AddAll(null!, Enumerable.Empty<(string Name, object? Value)>())).ThrowExactly<ArgumentNullException>();
+    //AssertionExtensions.Should(() => Array.Empty<object>().AddAll(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.RemoveAll{T}(ICollection{T}, IEnumerable{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ICollection_RemoveAll_Method()
+  {
+    //AssertionExtensions.Should(() => CollectionsExtensions.RemoveAll(null!, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>();
+    //AssertionExtensions.Should(() => Array.Empty<object>().RemoveAll(null!)).ThrowExactly<ArgumentNullException>();
+
+    var collection = new List<object?>();
+    collection.RemoveAll(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(collection);
+
+    var elements = new object?[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
+
+    collection = new List<object?>(elements);
+    collection.RemoveAll(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
+
+    collection = new List<object?>(elements);
+    collection.RemoveAll(elements).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.Empty{T}(ICollection{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ICollection_Empty_Method()
+  {
+    void Validate<T>(ICollection<T> collection)
     {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Add(null, Enumerable.Empty<object>()));
-      Assert.Throws<ArgumentNullException>(() => new object[0].Add(null));
-
-      ICollection<string> first = new HashSet<string> {"first"};
-      ICollection<string> second = new List<string> {"second"};
-
-      first.Add(second);
-      Assert.Equal(2, first.Count);
-      Assert.Equal("first", first.ElementAt(0));
-      Assert.Equal("second", first.ElementAt(1));
+      collection.Empty().Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
     }
 
-    [Fact]
-    public void base64()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Base64(null));
+      //AssertionExtensions.Should(() => CollectionsExtensions.Empty<object>(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
 
-      var bytes = Guid.NewGuid().ToByteArray();
-      Assert.Equal(string.Empty, Enumerable.Empty<byte>().ToArray().Base64());
-      Assert.Equal(System.Convert.ToBase64String(bytes), bytes.Base64());
+      Validate(Array.Empty<object>().ToList());
+      Validate(RandomObjects.ToList());
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.Empty(NameValueCollection)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void NameValueCollection_Empty_Method()
+  {
+    void Validate(NameValueCollection collection)
+    {
+      collection.Empty().Should().NotBeNull().And.BeSameAs(collection);
+      collection.Count.Should().Be(0);
     }
 
-    [Fact]
-    public void bytes()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Bytes(null));
+      //AssertionExtensions.Should(() => CollectionsExtensions.Empty<object>(null!)).ThrowExactly<ArgumentNullException>();
 
-      var text = Guid.NewGuid().ToString();
-      Assert.Equal(text.ToCharArray().Bytes(Encoding.Unicode).Length * 2, text.ToCharArray().Bytes(Encoding.UTF32).Length);
-      Assert.Equal(text, text.ToCharArray().Bytes(Encoding.Unicode).String(Encoding.Unicode));
+      Validate(new NameValueCollection());
+      Validate(new NameValueCollection().AddAll(RandomObjects.Select(element => (element.GetType().FullName, (object?) element))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.UseTemporarily{T}(ICollection{T}, Action{ICollection{T}}"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ICollection_UseTemporarily_Method()
+  {
+    //AssertionExtensions.Should(() => ((ICollection<object>) null!).UseTemporarily(_ => {})).ThrowExactly<ArgumentNullException>();
+    //AssertionExtensions.Should(() => Array.Empty<object>().UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => Array.Empty<object>().UseTemporarily(_ => { })).ThrowExactly<NotSupportedException>();
+
+    var collection = new List<object>();
+    AssertionExtensions.Should(() => collection.ReadOnly().UseTemporarily(_ => { })).ThrowExactly<NotSupportedException>();
+    collection.UseTemporarily(collection => collection.Add(new object())).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.UseTemporarily(NameValueCollection, Action{NameValueCollection})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void NameValueCollection_UseTemporarily_Method()
+  {
+    //AssertionExtensions.Should(() => ((NameValueCollection) null!).UseTemporarily(_ => { })).ThrowExactly<ArgumentNullException>();
+    //AssertionExtensions.Should(() => new NameValueCollection().UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
+
+    var collection = new NameValueCollection();
+    collection.UseTemporarily(collection => collection.Add("key", "value")).Should().NotBeNull().And.BeSameAs(collection);
+    collection.Count.Should().Be(0);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.Randomize{T}(IList{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IList_Randomize_Method()
+  {
+    //AssertionExtensions.Should(() => CollectionsExtensions.Randomize<object>(null!)).ThrowExactly<ArgumentNullException>();
+
+    var collection = new List<object?>();
+    collection.Randomize().Should().BeSameAs(collection).And.BeEmpty();
+
+    collection = new List<object?> { string.Empty };
+    collection.Randomize().Should().BeSameAs(collection).And.Equal(string.Empty);
+
+    var sequence = new object?[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
+    collection = new List<object?>(sequence);
+    collection.Randomize().Should().BeSameAs(collection).And.Contain(sequence);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="CollectionsExtensions.Fill{T}(IList{T}, Func{int, T})"/></description></item>
+  ///     <item><description><see cref="CollectionsExtensions.Fill{T}(IList{T}, Func{T})"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void IList_Fill_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => CollectionsExtensions.Fill(null!, _ => new object())).ThrowExactly<ArgumentNullException>();
     }
 
-    [Fact]
-    public void each()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Each<object>(null, it => {}));
-      Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<object>().Each(null));
-
-      var strings = new [] { "first", "second", "third" };
-      var list = new List<string>();
-      Assert.True(ReferenceEquals(strings.Each(list.Add), strings));
-      Assert.Equal(3, list.Count);
-      Assert.Equal("first", list[0]);
-      Assert.Equal("second", list[1]);
-      Assert.Equal("third", list[2]);
+      AssertionExtensions.Should(() => CollectionsExtensions.Fill(null!, () => new object())).ThrowExactly<ArgumentNullException>();
     }
 
-    [Fact]
-    public void hex()
-    {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Hex(null));
+    throw new NotImplementedException();
+  }
 
-      var bytes = Guid.NewGuid().ToByteArray();
-      Assert.Equal(string.Empty, Enumerable.Empty<byte>().ToArray().Hex());
-      Assert.Equal(bytes.Length * 2, bytes.Hex().Length);
-      Assert.True(bytes.Hex().IsMatch("[0-9A-Z]"));
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.Swap{T}(IList{T}, int, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IList_Swap_Method()
+  {
+    AssertionExtensions.Should(() => CollectionsExtensions.Swap<object>(null!, 1, 2)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="CollectionsExtensions.Discard{T}(IList{T}, int, int, Predicate{T}?)"/></description></item>
+  ///     <item><description><see cref="CollectionsExtensions.Discard{T}(IList{T}, Range, Predicate{T}?)"/></description></item>
+  ///     <item><description><see cref="CollectionsExtensions.Discard{T}(IList{T}, int)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void IList_Discard_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => CollectionsExtensions.Discard<object>(null!, 1, 2)).ThrowExactly<ArgumentNullException>();
     }
 
-    [Fact]
-    public void join_arrays()
+    using (new AssertionScope())
     {
-      Assert.Empty(Enumerable.Empty<object>().ToArray().Join(Enumerable.Empty<object>().ToArray()));
-      Assert.True(new[] { "first" }.Join(Enumerable.Empty<object>().ToArray()).SequenceEqual(new[] { "first" }));
-      Assert.True(Enumerable.Empty<object>().ToArray().Join(new[] { "second" }).SequenceEqual(new[] { "second" }));
-      Assert.True(new[] { "first", "second" }.Join(new[] { "third" }).SequenceEqual(new[] { "first", "second", "third" }));
+      AssertionExtensions.Should(() => CollectionsExtensions.Discard<object>(null!, 1..2)).ThrowExactly<ArgumentNullException>();
     }
 
-    [Fact]
-    public void join_enumerable()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Join(null, Enumerable.Empty<object>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<object>().ToArray().Join(null));
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Join<object>(null, "separator"));
-      Assert.Throws<ArgumentNullException>(() => Enumerable.Empty<object>().Join(null));
-
-      Assert.Equal(string.Empty, Enumerable.Empty<object>().Join("separator"));
-      Assert.Equal("1", new[] { 1 }.Join(","));
-      Assert.Equal("123", new[] { 1, 2, 3 }.Join(string.Empty));
-      Assert.Equal("1,2,3", new [] { 1, 2, 3 }.Join(","));
+      AssertionExtensions.Should(() => CollectionsExtensions.Discard<object>(null!, 0)).ThrowExactly<ArgumentNullException>();
     }
 
-    [Fact]
-    public void paginate()
-    {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Paginate<object>(null));
+    throw new NotImplementedException();
+  }
 
-      Assert.Empty(Enumerable.Empty<object>().Paginate());
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.DiscardLast{T}(IList{T}, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IList_DiscardLast_Method()
+  {
+    AssertionExtensions.Should(() => CollectionsExtensions.DiscardLast<object>(null!, 0)).ThrowExactly<ArgumentNullException>();
 
-      var sequence = new[] { "first", "second", "third" };
-      Assert.Equal("first", sequence.Paginate(-1, 1).Single());
-      Assert.Equal("first", sequence.Paginate(0, 1).Single());
-      Assert.Equal("first", sequence.Paginate(1, 1).Single());
-      Assert.True(sequence.Paginate(1, 2).SequenceEqual(new[] { "first", "second" }));
-      Assert.True(sequence.Paginate(1, -1).SequenceEqual(sequence));
-      Assert.True(sequence.Paginate(1, 0).SequenceEqual(sequence));
-      Assert.Equal("second", sequence.Paginate(2, 1).Single());
-      Assert.Equal("third", sequence.Paginate(2, 2).Single());
-    }
+    throw new NotImplementedException();
+  }
 
-    [Fact]
-    public void random()
-    {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Random<object>(null));
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.ReadOnly{T}(IList{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IList_ReadOnly_Method()
+  {
+    AssertionExtensions.Should(() => CollectionsExtensions.ReadOnly<object>(null!)).ThrowExactly<ArgumentNullException>();
 
-      Assert.Null(Enumerable.Empty<object>().Random());
+    var list = new List<object?> { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
+    var readOnly = list.ReadOnly();
 
-      var element = new object();
-      Assert.True(ReferenceEquals(new[] { element }.Random(), element));
+    readOnly.Should().NotBeNull().And.NotBeSameAs(list).And.Equal(list);
+    readOnly.IsReadOnly.Should().BeTrue();
+    readOnly.GetType().Should().Implement<IReadOnlyList<object?>>();
 
-      var elements = new[] { "first", "second" };
-      Assert.Contains(elements.Random(), elements);
-    }
+    AssertionExtensions.Should(readOnly.Clear).ThrowExactly<NotSupportedException>();
+    AssertionExtensions.Should(() => readOnly.Add(new object())).ThrowExactly<NotSupportedException>();
+    AssertionExtensions.Should(() => readOnly.Insert(0, new object())).ThrowExactly<NotSupportedException>();
+    AssertionExtensions.Should(() => readOnly.Remove(new object())).ThrowExactly<NotSupportedException>();
+    AssertionExtensions.Should(() => readOnly.RemoveAt(0)).ThrowExactly<NotSupportedException>();
+  }
 
-    [Fact]
-    public void remove()
-    {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.Remove(null, Enumerable.Empty<object>()));
-      Assert.Throws<ArgumentNullException>(() => new object[0].Remove(null));
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.ReadOnly{TKey, TValue}(IDictionary{TKey, TValue})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IDictionary_ReadOnly_Method()
+  {
+    AssertionExtensions.Should(() => CollectionsExtensions.ReadOnly<int, object>(null!)).ThrowExactly<ArgumentNullException>();
 
-      var first = new HashSet<string> {"1", "2", "3"};
-      var second = new List<string> {"2", "4"};
-      first.Remove(second);
-      Assert.Equal(2, first.Count);
-      Assert.Equal("1", first.ElementAt(0));
-      Assert.Equal("3", first.ElementAt(1));
-    }
+    var dictionary = new Dictionary<int, object?> { {1 , 1 }, { 2, string.Empty }, { 3, "2" }, { 4, Guid.NewGuid() }, { 5, null }, { 6, 10.5} };
+    var readOnly = dictionary.ReadOnly();
 
-    [Fact]
-    public void to_list_string()
-    {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.ToListString<object>(null));
+    readOnly.Should().NotBeNull().And.NotBeSameAs(dictionary).And.Equal(dictionary);
+    readOnly.IsReadOnly.Should().BeTrue();
+    readOnly.Values.IsReadOnly.Should().BeTrue();
+    readOnly.GetType().Should().Implement<IReadOnlyDictionary<int, object?>>();
 
-      Assert.Equal("[]", Enumerable.Empty<object>().ToListString());
-      Assert.Equal("[1]", new[] { 1 }.ToListString());
-      Assert.Equal("[1, 2, 3]", new [] { 1, 2, 3 }.ToListString());
-    }
+    AssertionExtensions.Should(readOnly.Clear).ThrowExactly<NotSupportedException>();
+    AssertionExtensions.Should(() => readOnly.Add(0, null)).ThrowExactly<NotSupportedException>();
+    AssertionExtensions.Should(() => readOnly.Remove(0)).ThrowExactly<NotSupportedException>();
+  }
 
-    [Fact]
-    public void to_set()
-    {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.ToSet<object>(null));
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.Sorted{TKey, TValue}(IDictionary{TKey, TValue}, IComparer{TKey}?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IDictionary_Sorted_Method()
+  {
+    AssertionExtensions.Should(() => CollectionsExtensions.Sorted<int, object>(null!)).ThrowExactly<ArgumentNullException>();
 
-      Assert.Empty(Enumerable.Empty<object>().ToSet());
-      var set = new [] { 1, 1, 2, 3, 4, 5, 5 }.ToSet();
-      Assert.Equal(5, set.Count);
-      for (var i = 1; i <= 5; i++)
-      {
-        Assert.Equal(i, set.ElementAt(i - 1));
-      }
-    }
+    throw new NotImplementedException();
+  }
 
-    [Fact]
-    public void to_string()
-    {
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.String(null));
-      Assert.Throws<ArgumentNullException>(() => CollectionsExtensions.String(null, Encoding.Default));
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.ToSortedList{TKey, TValue}(IDictionary{TKey, TValue?}, IComparer{TKey}?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IDictionary_ToSortedList_Method()
+  {
+    AssertionExtensions.Should(() => CollectionsExtensions.ToSortedList<int, object>(null!)).ThrowExactly<ArgumentNullException>();
 
-      var text = Guid.NewGuid().ToString();
-      Assert.Equal(text, text.ToCharArray().String());
-      Assert.Equal(text, Encoding.Default.GetBytes(text).String());
-      Assert.Equal(text, Encoding.Unicode.GetBytes(text).String(Encoding.Unicode));
-    }
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.ToTuple{TKey, TValue}(IDictionary{TKey, TValue?}, IComparer{TKey}?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IDictionary_ToTuple_Method()
+  {
+    AssertionExtensions.Should(() => ((Dictionary<object, object?>) null!).ToTuple()).ThrowExactly<ArgumentNullException>();
+    
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.ToDictionary(NameValueCollection)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void NameValueCollection_ToDictionary_Method()
+  {
+    AssertionExtensions.Should(() => CollectionsExtensions.ToDictionary(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.ToTuple(NameValueCollection)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void NameValueCollection_ToTuple_Method()
+  {
+    AssertionExtensions.Should(() => CollectionsExtensions.ToTuple(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
   }
 }

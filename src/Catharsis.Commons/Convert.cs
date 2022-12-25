@@ -1,456 +1,690 @@
-﻿namespace Catharsis.Commons
+﻿using System.Collections;
+using System.Diagnostics;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Security;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Linq;
+using static System.Math;
+
+namespace Catharsis.Commons;
+
+/// <summary>
+///   <para>Converter between various source and destination types of objects.</para>
+/// </summary>
+public sealed class Convert
 {
-  using System;
-  using System.Collections;
-  using System.IO;
-  using System.Linq;
-  using System.Text.RegularExpressions;
-
   /// <summary>
-  ///   <para>Represents a converter between different source and destination <see cref="Type"/>s.</para>
+  ///   <para>Current converter instance.</para>
   /// </summary>
-  public sealed class Convert
-  {
-    private static readonly Convert converter = new Convert();
+  public static Convert To { get; } = new();
+}
 
-    /// <summary>
-    ///   <para>Current converter instance.</para>
-    /// </summary>
-    public static Convert To
+
+/// <summary>
+///   <para>Extension methods for types converter.</para>
+/// </summary>
+/// <seealso cref="Convert"/>
+public static class ConvertExtensions
+{
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="string"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="encoding"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="string"/>, or a <c>null</c> reference.</returns>
+  public static string? String(this Convert convert, object? instance, Encoding? encoding = null)
+  {
+    if (convert == null)
     {
-      get { return converter; }
+      throw new ArgumentNullException();
     }
+
+    return instance switch
+    {
+      null => null,
+      string text => text,
+      BinaryReader reader => reader.Text(),
+      SecureString secure => secure.Text(),
+      FileInfo file => file.Text(encoding).Await(),
+      HttpContent http => http.Text().Await(),
+      Process process => process.Text().Await(),
+      Stream stream => stream.Text(encoding).Await(),
+      TextReader reader => reader.Text().Await(),
+      Uri uri => uri.Text(encoding).Await(),
+      XmlDocument xml => xml.Text(),
+      XDocument xml => xml.Text().Await(),
+      XmlReader xml => xml.Text().Await(),
+      _ => instance.ToStringInvariant()
+    };
   }
 
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static byte[]? Binary(this Convert convert, object? instance, Encoding? encoding = null)
+  {
+    return instance switch
+    {
+      null => null,
+      IEnumerable<byte> bytes => bytes.AsArray(),
+      string text => text.Bytes(encoding),
+      SecureString secure => secure.Text().Bytes(encoding),
+      Guid guid => guid.ToByteArray(),
+      FileInfo file => file.Bytes().ToArray().Await(),
+      IPAddress address => address.Bytes(),
+      PhysicalAddress address => address.Bytes(),
+      HttpContent http => http.Bytes().ToArray().Await(),
+      Process process => process.Bytes().ToArray().Await(),
+      Stream stream => stream.Bytes().ToArray().Await(),
+      Uri uri => uri.Bytes().ToArray().Await(),
+      XmlDocument xml => xml.Bytes(),
+      XDocument xml => xml.Bytes().Await(),
+      _ => instance.AsBinary()
+    };
+  }
 
   /// <summary>
-  ///   <para>Set of extension methods for class <see cref="Convert"/>.</para>
+  ///   <para></para>
   /// </summary>
-  /// <seealso cref="Convert"/>
-  public static class ConvertExtensions
+  /// <typeparam name="T"></typeparam>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static T[]? Array<T>(this Convert convert, object? instance)
   {
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="byte"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="byte"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static byte? Byte(this Convert self, object subject)
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      T[] array => array,
+      IEnumerable<T> sequence => sequence.AsArray(),
+      IAsyncEnumerable<T> sequence => sequence.ToArray().Await(),
+      _ => new[] { (T) instance }
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is byte)
-      {
-        return subject as byte?;
-      }
-
-      byte result;
-      if (byte.TryParse(subject.ToString(), out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="DateTime"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="DateTime"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static DateTime? DateTime(this Convert self, object subject)
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static sbyte? Sbyte(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (sbyte) value,
+      byte value => (sbyte) value,
+      short value => (sbyte) value,
+      ushort value => (sbyte) value,
+      int value => (sbyte) value,
+      uint value => (sbyte) value,
+      long value => (sbyte) value,
+      ulong value => (sbyte) value,
+      float value => (sbyte) Round(value),
+      double value => (sbyte) Round(value),
+      decimal value => (sbyte) Round(value),
+      _ => instance.ToStringFormatted(format).ToSbyte(out var result, format) ? result : null
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is DateTime)
-      {
-        return subject as DateTime?;
-      }
-
-      DateTime result;
-      if (System.DateTime.TryParse(subject.ToString(), out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="decimal"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="decimal"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static decimal? Decimal(this Convert self, object subject)
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="byte"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="format"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="byte"/>, or a <c>null</c> reference.</returns>
+  public static byte? Byte(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (byte) value,
+      byte value => (byte) value,
+      short value => (byte) value,
+      ushort value => (byte) value,
+      int value => (byte) value,
+      uint value => (byte) value,
+      long value => (byte) value,
+      ulong value => (byte) value,
+      float value => (byte) Round(value),
+      double value => (byte) Round(value),
+      decimal value => (byte) Round(value),
+      _ => instance.ToStringFormatted(format).ToByte(out var result, format) ? result : null
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is decimal)
-      {
-        return subject as decimal?;
-      }
-
-      decimal result;
-      if (decimal.TryParse(subject.ToString(), out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="double"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="double"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static double? Double(this Convert self, object subject)
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="short"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="format"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="short"/>, or a <c>null</c> reference.</returns>
+  public static short? Short(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (short) value,
+      byte value => (short) value,
+      short value => (short) value,
+      ushort value => (short) value,
+      int value => (short) value,
+      uint value => (short) value,
+      long value => (short) value,
+      ulong value => (short) value,
+      float value => (short) Round(value),
+      double value => (short) Round(value),
+      decimal value => (short) Round(value),
+      _ => instance.ToStringFormatted(format).ToShort(out var result, format) ? result : null
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is double)
-      {
-        return subject as double?;
-      }
-
-      double result;
-      if (double.TryParse(subject.ToString(), out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="Guid"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="Guid"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static Guid? Guid(this Convert self, object subject)
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static ushort? Ushort(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (ushort) value,
+      byte value => (ushort) value,
+      short value => (ushort) value,
+      ushort value => (ushort) value,
+      int value => (ushort) value,
+      uint value => (ushort) value,
+      long value => (ushort) value,
+      ulong value => (ushort) value,
+      float value => (ushort) Round(value),
+      double value => (ushort) Round(value),
+      decimal value => (ushort) Round(value),
+      _ => instance.ToStringFormatted(format).ToUshort(out var result, format) ? result : null
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is Guid)
-      {
-        return subject as Guid?;
-      }
-
-      Guid result;
-      if (subject.ToString().ToGuid(out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="short"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="short"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static short? Int16(this Convert self, object subject)
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="int"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="format"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="int"/>, or a <c>null</c> reference.</returns>
+  public static int? Int(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (int) value,
+      byte value => (int) value,
+      short value => (int) value,
+      ushort value => (int) value,
+      int value => (int) value,
+      uint value => (int) value,
+      long value => (int) value,
+      ulong value => (int) value,
+      float value => (int) Round(value),
+      double value => (int) Round(value),
+      decimal value => (int) Round(value),
+      _ => instance.ToStringFormatted(format).ToInt(out var result, format) ? result : null
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is short)
-      {
-        return subject as short?;
-      }
-
-      short result;
-      if (short.TryParse(subject.ToString(), out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="int"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="int"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static int? Int32(this Convert self, object subject)
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static uint? Uint(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (uint) value,
+      byte value => (uint) value,
+      short value => (uint) value,
+      ushort value => (uint) value,
+      int value => (uint) value,
+      uint value => (uint) value,
+      long value => (uint) value,
+      ulong value => (uint) value,
+      float value => (uint) Round(value),
+      double value => (uint) Round(value),
+      decimal value => (uint) Round(value),
+      _ => instance.ToStringFormatted(format).ToUint(out var result, format) ? result : null
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is int)
-      {
-        return subject as int?;
-      }
-
-      int result;
-      if (int.TryParse(subject.ToString(), out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="long"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="long"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static long? Int64(this Convert self, object subject)
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="long"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="format"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="long"/>, or a <c>null</c> reference.</returns>
+  public static long? Long(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (long) value,
+      byte value => (long) value,
+      short value => (long) value,
+      ushort value => (long) value,
+      int value => (long) value,
+      uint value => (long) value,
+      long value => (long) value,
+      ulong value => (long) value,
+      float value => (long) Round(value),
+      double value => (long) Round(value),
+      decimal value => (long) Round(value),
+      _ => instance.ToStringFormatted(format).ToLong(out var result, format) ? result : null
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is long)
-      {
-        return subject as long?;
-      }
-
-      long result;
-      if (long.TryParse(subject.ToString(), out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="Regex"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="Regex"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static Regex Regex(this Convert self, object subject)
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static ulong? Ulong(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (ulong) value,
+      byte value => (ulong) value,
+      short value => (ulong) value,
+      ushort value => (ulong) value,
+      int value => (ulong) value,
+      uint value => (ulong) value,
+      long value => (ulong) value,
+      ulong value => (ulong) value,
+      float value => (ulong) Round(value),
+      double value => (ulong) Round(value),
+      decimal value => (ulong) Round(value),
+      _ => instance.ToStringFormatted(format).ToUlong(out var result, format) ? result : null
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is Regex)
-      {
-        return subject as Regex;
-      }
-
-      return new Regex(subject.ToString());
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="Single"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="Single"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static Single? Single(this Convert self, object subject)
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="Float"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="format"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="Float"/>, or a <c>null</c> reference.</returns>
+  public static float? Float(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (float) value,
+      byte value => (float) value,
+      short value => (float) value,
+      ushort value => (float) value,
+      int value => (float) value,
+      uint value => (float) value,
+      long value => (float) value,
+      ulong value => (float) value,
+      float value => (float) value,
+      double value => (float) value,
+      decimal value => (float) value,
+      _ => instance.ToStringFormatted(format).ToFloat(out var result, format) ? result : null
+    };
+  }
 
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is Single)
-      {
-        return subject as Single?;
-      }
-
-      Single result;
-      if (System.Single.TryParse(subject.ToString(), out result))
-      {
-        return result;
-      }
-
-      return null;
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="string"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="string"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static string String(this Convert self, object subject)
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="double"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="format"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="double"/>, or a <c>null</c> reference.</returns>
+  public static double? Double(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      sbyte value => (double) value,
+      byte value => (double) value,
+      short value => (double) value,
+      ushort value => (double) value,
+      int value => (double) value,
+      uint value => (double) value,
+      long value => (double) value,
+      ulong value => (double) value,
+      float value => (double) value,
+      double value => (double) value,
+      decimal value => (double) value,
+      _ => instance.ToStringFormatted(format).ToDouble(out var result, format) ? result : null
+    };
+  }
 
-      return subject?.ToString();
-    }
-
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="Uri"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="Uri"/>, or a <c>null</c> reference.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static Uri Uri(this Convert self, object subject)
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="decimal"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="format"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="decimal"/>, or a <c>null</c> reference.</returns>
+  public static decimal? Decimal(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
-
-      if (subject == null)
-      {
-        return null;
-      }
-
-      if (subject is Uri)
-      {
-        return subject as Uri;
-      }
-
-      return new Uri(subject.ToString());
-    }
-
-#if NET_40
-    /// <summary>
-    ///   <para>Converts target object to the <see cref="bool"/> value, using non-strict approach.</para>
-    ///   <para>The following algorithm is used to determine how to perform such conversion:
-    ///     <list type="bullet">
-    ///       <item><description>If <paramref name="subject"/> is a <c>null</c> reference, the result is <c>false</c>.</description></item>
-    ///       <item><description>If <paramref name="subject"/> is a <see cref="bool"/> value, it's returned as it is.</description></item>
-    ///       <item><description>If <paramref name="subject"/> is a positive numeric value, the result is <c>true</c>, if it's negative or zero - the result is <c>false</c>.</description></item>
-    ///       <item><description>If <paramref name="subject"/> is a <see cref="string"/>, <c>true</c> is returned if it contains at least one character, <c>false</c> otherwise.</description></item>
-    ///       <item><description>If <paramref name="subject"/> implements <see cref="IEnumerable"/>, <c>true</c> is returned if it contains at least one element, <c>false</c> otherwise.</description></item>
-    ///       <item><description>If <paramref name="subject"/> is a <see cref="Stream"/> value, <c>true</c> is returned if it's not empty, <c>false</c> otherwise.</description></item>
-    ///       <item><description>If <paramref name="subject"/> is a <see cref="Match"/> value, <c>true</c> is returned if it's successful, <c>false</c> otherwise.</description></item>
-    ///     </list>
-    ///   </para>
-    /// </summary>
-    /// <param name="self">Extended converter instance.</param>
-    /// <param name="subject">Target object for conversion.</param>
-    /// <returns><paramref name="subject"/> instance that was converted to <see cref="bool"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="self"/> is a <c>null</c> reference.</exception>
-    public static bool Boolean(this Convert self, object subject)
+      null => null,
+      sbyte value => (decimal) value,
+      byte value => (decimal) value,
+      short value => (decimal) value,
+      ushort value => (decimal) value,
+      int value => (decimal) value,
+      uint value => (decimal) value,
+      long value => (decimal) value,
+      ulong value => (decimal) value,
+      float value => (decimal) value,
+      double value => (decimal) value,
+      decimal value => (decimal) value,
+      _ => instance.ToStringFormatted(format).ToDecimal(out var result, format) ? result : null
+    };
+  }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static T? Enum<T>(this Convert convert, object? instance) where T : struct
+  {
+    return instance switch
     {
-      Assertion.NotNull(self);
+      null => null,
+      _ => (T?) (instance is T ? instance : instance.ToStringInvariant().ToEnum<T>(out var result) ? result : null)
+    };
+  }
 
-      if (subject == null)
-      {
-        return false;
-      }
-
-      switch (Type.GetTypeCode(subject.GetType()))
-      {
-        case TypeCode.Boolean:
-          return ((bool)subject);
-
-        case TypeCode.Byte:
-          return ((byte)subject) > 0;
-
-        case TypeCode.Char:
-          return ((char)subject) != char.MinValue;
-
-        case TypeCode.Decimal:
-          return ((decimal)subject) > 0;
-
-        case TypeCode.Double:
-          return ((double)subject) > 0;
-
-        case TypeCode.Int16:
-          return ((short)subject) > 0;
-
-        case TypeCode.Int32:
-          return ((int)subject) > 0;
-
-        case TypeCode.Int64:
-          return ((long)subject) > 0;
-
-        case TypeCode.SByte:
-          return ((sbyte)subject) > 0;
-
-        case TypeCode.Single:
-          return ((Single)subject) > 0;
-
-        case TypeCode.String:
-          return ((string)subject).Length > 0;
-
-        case TypeCode.UInt16:
-          return ((ushort)subject) > 0;
-
-        case TypeCode.UInt32:
-          return ((uint)subject) > 0;
-
-        case TypeCode.UInt64:
-          return ((ulong)subject) > 0;
-      }
-
-      if (subject is IEnumerable)
-      {
-        return subject.To<IEnumerable>().Cast<object>().Any();
-      }
-
-      if (subject is Stream)
-      {
-        return subject.To<Stream>().Length > 0;
-      }
-
-      if (subject is Match)
-      {
-        return subject.To<Match>().Success;
-      }
-
-      return true;
-    }
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="DateTime"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="format"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="DateTime"/>, or a <c>null</c> reference.</returns>
+  public static DateTime? DateTime(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
+    {
+      null => null,
+      DateTime dateTime => dateTime,
+      DateTimeOffset dateTimeOffset => dateTimeOffset.ToDateTime(),
+#if NET6_0
+      DateOnly dateOnly => dateOnly.ToDateTime(),
+      TimeOnly timeOnly => timeOnly.ToDateTime(),
 #endif
+      _ => instance.ToStringFormatted(format).ToDateTime(out var result, format) ? result : null
+    };
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static DateTimeOffset? DateTimeOffset(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
+    {
+      null => null,
+      DateTime dateTime => dateTime.ToDateTimeOffset(),
+      DateTimeOffset dateTimeOffset => dateTimeOffset,
+#if NET6_0
+      DateOnly dateOnly => dateOnly.ToDateTimeOffset(),
+      TimeOnly timeOnly => timeOnly.ToDateTimeOffset(),
+#endif
+      _ => instance.ToStringFormatted(format).ToDateTimeOffset(out var result, format) ? result : null
+    };
+  }
+
+#if NET6_0
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static DateOnly? DateOnly(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
+    {
+      null => null,
+      DateTime dateTime => dateTime.ToDateOnly(),
+      DateTimeOffset dateTimeOffset => dateTimeOffset.ToDateOnly(),
+      DateOnly dateOnly => dateOnly,
+      _ => instance.ToStringFormatted(format).ToDateOnly(out var result, format) ? result : null
+    };
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static TimeOnly? TimeOnly(this Convert convert, object? instance, IFormatProvider? format = null)
+  {
+    return instance switch
+    {
+      null => null,
+      DateTime dateTime => dateTime.ToTimeOnly(),
+      DateTimeOffset dateTimeOffset => dateTimeOffset.ToTimeOnly(),
+      TimeOnly timeOnly => timeOnly,
+      _ => instance.ToStringFormatted(format).ToTimeOnly(out var result, format) ? result : null
+    };
+  }
+#endif
+
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="Guid"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="Guid"/>, or a <c>null</c> reference.</returns>
+  public static Guid? Guid(this Convert convert, object? instance)
+  {
+    return instance switch
+    {
+      null => null,
+      Guid guid => guid,
+      byte[] bytes => bytes.Length == 16 ? new Guid(bytes) : null,
+      _ => instance.ToStringInvariant().ToGuid(out var result) ? result : null
+    };
+  }
+
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="Regex"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <param name="options"></param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="Regex"/>, or a <c>null</c> reference.</returns>
+  public static Regex? Regex(this Convert convert, object? instance, RegexOptions? options = null)
+  {
+    return instance switch
+    {
+      null => null,
+      Regex regex => regex,
+      _ => instance.ToStringInvariant().ToRegex(options)
+    };
+  }
+
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="Uri"/> value. Returns <c>null</c> if object is a <c>null</c> reference or conversion is not possible.</para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="Uri"/>, or a <c>null</c> reference.</returns>
+  public static Uri? Uri(this Convert convert, object? instance)
+  {
+    return instance switch
+    {
+      null => null,
+      Uri uri => uri,
+      _ => instance.ToStringInvariant().ToUri(out var result) ? result : null
+    };
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static StringBuilder? StringBuilder(this Convert convert, object? instance)
+  {
+    return instance switch
+    {
+      null => null,
+      StringBuilder builder => builder,
+      _ => instance.ToStringInvariant().ToStringBuilder()
+    };
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static IPAddress? IpAddress(this Convert convert, object? instance)
+  {
+    return instance switch
+    {
+      null => null,
+      IPAddress ipAddress => ipAddress,
+      long address => new IPAddress(address),
+      uint address => new IPAddress(address),
+      _ => instance.ToStringInvariant().ToIpAddress(out var result) ? result : null
+    };
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static DirectoryInfo? Directory(this Convert convert, object? instance)
+  {
+    return instance switch
+    {
+      null => null,
+      DirectoryInfo directory => directory,
+      _ => instance.ToStringInvariant().ToDirectory(out var result) ? result : null
+    };
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static FileInfo? File(this Convert convert, object? instance)
+  {
+    return instance switch
+    {
+      null => null,
+      FileInfo file => file,
+      _ => instance.ToStringInvariant().ToFile(out var result) ? result : null
+    };
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="convert"></param>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static Type? Type(this Convert convert, object? instance)
+  {
+    return instance switch
+    {
+      null => null,
+      Type type => type,
+      _ => instance.ToStringInvariant().ToType(out var result) ? result : null
+    };
+  }
+
+  /// <summary>
+  ///   <para>Converts target object to the <see cref="bool"/> value, using non-strict approach.</para>
+  ///   <para>The following algorithm is used to determine how to perform such conversion:
+  ///     <list type="bullet">
+  ///       <item><description>If <paramref name="instance"/> is a <c>null</c> reference, the result is <c>false</c>.</description></item>
+  ///       <item><description>If <paramref name="instance"/> is a <see cref="bool"/> value, it's returned as it is.</description></item>
+  ///       <item><description>If <paramref name="instance"/> is a positive numeric value, the result is <c>true</c>, if it's negative or zero - the result is <c>false</c>.</description></item>
+  ///       <item><description>If <paramref name="instance"/> is a <see cref="string"/>, <c>true</c> is returned if it contains at least one character, <c>false</c> otherwise.</description></item>
+  ///       <item><description>If <paramref name="instance"/> implements <see cref="IEnumerable"/>, <c>true</c> is returned if it contains at least one element, <c>false</c> otherwise.</description></item>
+  ///       <item><description>If <paramref name="instance"/> is a <see cref="Stream"/> value, <c>true</c> is returned if it's not empty, <c>false</c> otherwise.</description></item>
+  ///       <item><description>If <paramref name="instance"/> is a <see cref="Match"/> value, <c>true</c> is returned if it's successful, <c>false</c> otherwise.</description></item>
+  ///     </list>
+  ///   </para>
+  /// </summary>
+  /// <param name="convert">Extended converter instance.</param>
+  /// <param name="instance">Target object for conversion.</param>
+  /// <returns><paramref name="instance"/> instance that was converted to <see cref="bool"/>.</returns>
+  public static bool Boolean(this Convert convert, object? instance)
+  {
+    return instance switch
+    {
+      null => false,
+      bool value => value,
+      char value => value != char.MinValue,
+      sbyte value => value > 0,
+      byte value => value > 0,
+      short value => value > 0,
+      ushort value => value > 0,
+      int value => value > 0,
+      uint value => value > 0,
+      long value => value > 0,
+      ulong value => value > 0,
+      float value => value > 0,
+      double value => value > 0,
+      decimal value => value > 0,
+      string value => value.Trim().Length > 0,
+      IEnumerable value => value.Cast<object>().Any(),
+      FileInfo value => value.Exists,
+      DirectoryInfo value => value.Exists,
+      Stream value => value is {CanSeek: true, Length: > 0},
+      BinaryReader value => value.PeekChar() >= 0,
+      TextReader value => value.Peek() >= 0,
+      Match value => value.Success,
+      StringBuilder value => value.Length > 0,
+      SecureString value => value.Length > 0,
+      _ => true
+    };
   }
 }

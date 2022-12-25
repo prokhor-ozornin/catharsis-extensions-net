@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# IDE0200: Remove unnecessary lambda expression
+dotnet_diagnostic.IDE0200.severity = warning

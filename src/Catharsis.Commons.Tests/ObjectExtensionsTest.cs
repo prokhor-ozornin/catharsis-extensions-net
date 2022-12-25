@@ -1,405 +1,558 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml;
-using System.Xml.Serialization;
+using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
-namespace Catharsis.Commons
+namespace Catharsis.Commons.Tests;
+
+/// <summary>
+///   <para>Tests set for class <see cref="ObjectExtensions"/>.</para>
+/// </summary>
+public sealed class ObjectExtensionsTest : UnitTest
 {
-  public sealed class ObjectExtensionsTest
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.As{T}(object)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_As_Method()
   {
-    private sealed class DumpTestObject
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.To{T}(object)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_To_Method()
+  {
+    /*
+    AssertionExtensions.Should(() => ObjectExtensions.To<object>(null!)).ThrowExactly<ArgumentNullException>();
+
+    object? subject = null;
+    subject.To<object>().Should().BeNull();
+    subject.To<string>().Should().BeNull();
+
+    subject = new object();
+    subject.To<object>().Should().BeSameAs(subject);
+    */
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Is{T}(object)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_Is_Method()
+  {
+    /*
+    AssertionExtensions.Should(() => ObjectExtensions.Is<object>(null!)).ThrowExactly<ArgumentNullException>();
+
+    new object().Is<object>().Should().BeTrue();
+    new object().Is<string>().Should().BeFalse();
+    string.Empty.Is<IEnumerable<char>>().Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.IsNull(object?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_IsNull_Method()
+  {
+    ((object?) null).IsNull().Should().BeTrue();
+    ((int?) null).IsNull().Should().BeTrue();
+
+    new object().IsNull().Should().BeFalse();
+    string.Empty.IsNull().Should().BeFalse();
+    Array.Empty<object>().IsNull().Should().BeFalse();
+    Enumerable.Empty<object>().IsNull().Should().BeFalse();
+    Guid.Empty.IsNull().Should().BeFalse();
+
+    new WeakReference(null).IsNull().Should().BeTrue();
+    new WeakReference(new object()).IsNull().Should().BeFalse();
+    new WeakReference(string.Empty).IsNull().Should().BeFalse();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.IsEmpty{T}(T?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Nullable_IsEmpty_Method()
+  {
+    ((sbyte?) sbyte.MinValue).IsEmpty().Should().BeFalse();
+    ((sbyte?) sbyte.MaxValue).IsEmpty().Should().BeFalse();
+    ((sbyte?) null).IsEmpty().Should().BeTrue();
+
+    ((byte?) byte.MinValue).IsEmpty().Should().BeFalse();
+    ((byte?) byte.MaxValue).IsEmpty().Should().BeFalse();
+    ((byte?) null).IsEmpty().Should().BeTrue();
+
+    ((short?) short.MinValue).IsEmpty().Should().BeFalse();
+    ((short?) short.MaxValue).IsEmpty().Should().BeFalse();
+    ((short?) null).IsEmpty().Should().BeTrue();
+
+    ((ushort?) ushort.MinValue).IsEmpty().Should().BeFalse();
+    ((ushort?) ushort.MaxValue).IsEmpty().Should().BeFalse();
+    ((ushort?) null).IsEmpty().Should().BeTrue();
+
+    ((int?) int.MinValue).IsEmpty().Should().BeFalse();
+    ((int?) int.MaxValue).IsEmpty().Should().BeFalse();
+    ((int?) null).IsEmpty().Should().BeTrue();
+
+    ((uint?) uint.MinValue).IsEmpty().Should().BeFalse();
+    ((uint?) uint.MaxValue).IsEmpty().Should().BeFalse();
+    ((uint?) null).IsEmpty().Should().BeTrue();
+
+    ((long?) long.MinValue).IsEmpty().Should().BeFalse();
+    ((long?) long.MaxValue).IsEmpty().Should().BeFalse();
+    ((long?) null).IsEmpty().Should().BeTrue();
+
+    ((ulong?) ulong.MinValue).IsEmpty().Should().BeFalse();
+    ((ulong?) ulong.MaxValue).IsEmpty().Should().BeFalse();
+    ((ulong?) null).IsEmpty().Should().BeTrue();
+
+    ((char?) null).IsEmpty().Should().BeTrue();
+    ((char?) char.MinValue).IsEmpty().Should().BeFalse();
+
+    ((Guid?) Guid.Empty).IsEmpty().Should().BeFalse();
+    ((Guid?) null).IsEmpty().Should().BeTrue();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.IsEmpty{T}(Lazy{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Lazy_IsEmpty_Method()
+  {
+    new Lazy<object>().IsEmpty().Should().BeTrue();
+    
+    new Lazy<object>(new object()).IsEmpty().Should().BeFalse();
+    var lazy = new Lazy<object?>(() => new object());
+    lazy.IsEmpty().Should().BeTrue();
+    _ = lazy.Value;
+    lazy.IsEmpty().Should().BeFalse();
+
+    new Lazy<object?>((object?) null).IsEmpty().Should().BeTrue();
+    lazy = new Lazy<object?>(() => null);
+    lazy.IsEmpty().Should().BeTrue();
+    _ = lazy.Value;
+    lazy.IsEmpty().Should().BeTrue();
+
+    new Lazy<object>(string.Empty).IsEmpty().Should().BeTrue();
+    lazy = new Lazy<object?>(() => string.Empty);
+    lazy.IsEmpty().Should().BeTrue();
+    _ = lazy.Value;
+    lazy.IsEmpty().Should().BeTrue();
+
+    new Lazy<object>(" \t\r\n ").IsEmpty().Should().BeTrue();
+    lazy = new Lazy<object?>(() => " \t\r\n ");
+    lazy.IsEmpty().Should().BeTrue();
+    _ = lazy.Value;
+    lazy.IsEmpty().Should().BeTrue();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ObjectExtensions.UseFinally{TSubject, TResult}(TSubject, Func{TSubject, TResult?}, Action{TSubject}?, bool)"/></description></item>
+  ///     <item><description><see cref="ObjectExtensions.UseFinally{T}(T, Action{T}, Action{T}?, bool)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Object_UseFinally_Methods()
+  {
+    using (new AssertionScope())
     {
-      public object Property { get; set; }
+      AssertionExtensions.Should(() => ObjectExtensions.UseFinally<object, bool>(null!, _ => true)).ThrowExactly<ArgumentNullException>();
+
+      var text = RandomString;
+      AssertionExtensions.Should(() => text.ToStringReader().UseFinally(reader => { reader.UseFinally(reader => reader.ReadToEnd().Should().Be(text)); }).Read()).ThrowExactly<ObjectDisposedException>();
+
+      var list = new List<string>().UseFinally(list => list.Add(text));
+      list.Should().ContainSingle().Which.Should().Be(text);
+
+      new object().UseFinally(_ => text).Should().Be(text);
     }
 
-    [Fact]
-    public void as_type()
+    using (new AssertionScope())
     {
-      object subject = null;
-      Assert.Null(subject.As<object>());
+      AssertionExtensions.Should(() => new object().UseFinally(null!)).ThrowExactly<ArgumentNullException>();
 
-      Assert.Null(subject.As<string>());
-
-      subject = new object();
-      Assert.True(ReferenceEquals(subject.As<object>(), subject));
-
-      var date = DateTime.UtcNow;
-      Assert.Equal(default(string), date.As<string>());
-
-      Assert.Equal(date, date.As<DateTime>());
     }
 
-    [Fact]
-    public void binary()
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ObjectExtensions.Use{TSubject, TResult}(TSubject, Func{TSubject, TResult?})"/></description></item>
+  ///     <item><description><see cref="ObjectExtensions.Use{T}(T, Action{T}, Predicate{T}?)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Object_Use_Methods()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.While{T}(T, Predicate{T}, Action{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_While_Method()
+  {
+    AssertionExtensions.Should(() => ObjectExtensions.While<object>(null!, _ => true, _ => {})).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ObjectExtensions.While<object>(null!, _ => true, _ => { })).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Equality{T}(T?, T?, string[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_Equality_Array_Method()
+  {
+    /*var subject = new object();
+    subject.Equality(subject, (string[]) null!).Should().BeTrue();
+    subject.Equality(subject, (Expression<Func<object, object>>[]) null!).Should().BeTrue();
+    Guid.Empty.ToString().Equality(Guid.Empty.ToString(), (string[]) null!).Should().BeTrue();
+    Guid.Empty.ToString().Equality(Guid.Empty.ToString(), (Expression<Func<object, object>>[]) null!).Should().BeTrue();
+    Guid.NewGuid().ToString().Equality(Guid.NewGuid().ToString(), "Length").Should().BeTrue();
+    Guid.NewGuid().ToString().Equality(Guid.NewGuid().ToString(), text => text.Length).Should().BeTrue();
+    "first".Equality("second", "Length").Should().BeFalse();
+    "first".Equality("second", text => text.Length).Should().BeFalse();
+    "text".Equality("text", "property").Should().BeTrue();
+    "first".Equality("second", "property").Should().BeFalse();
+
+    var testSubject = new TestObject();
+    testSubject.Equality(testSubject, (string[]) null!).Should().BeTrue();
+    testSubject.Equality(testSubject, (Expression<Func<TestObject, object>>[]) null!).Should().BeTrue();
+    new TestObject().Equality(new TestObject(), (string[]) null!).Should().BeTrue();
+    new TestObject().Equality(new TestObject(), (Expression<Func<TestObject, object>>[]) null!).Should().BeTrue();
+    new TestObject {PublicProperty = "property"}.Equality(new TestObject {PublicProperty = "property"}, (string[]) null!).Should().BeTrue();
+    new TestObject {PublicProperty = "property"}.Equality(new TestObject {PublicProperty = "property"}, (Expression<Func<TestObject, object>>[]) null!).Should().BeTrue();
+    new TestObject {PublicProperty = "property"}.Equality(new TestObject(), (string[]) null!).Should().BeFalse();
+    new TestObject {PublicProperty = "property"}.Equality(new TestObject(), (Expression<Func<TestObject, object>>[]) null!).Should().BeFalse();
+    new TestObject {PublicProperty = "first"}.Equality(new TestObject {PublicProperty = "second"}, (string[]) null!).Should().BeFalse();
+    new TestObject {PublicProperty = "first"}.Equality(new TestObject {PublicProperty = "second"}, (Expression<Func<TestObject, object>>[]) null!).Should().BeFalse();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Equality{T}(T?, T?, Expression{Func{T, object?}}[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_Equality_Expression_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.HashCode{T}(T?, string[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_HashCode_Array_Method()
+  {
+    /*new object().GetHashCode((string[]) null!).Should().NotBe(0);
+    new object().GetHashCode((Expression<Func<object, object>>[]) null!).Should().NotBe(0);
+
+    new object().GetHashCode((string[]) null!).Should().NotBe(new object().GetHashCode((string[]) null!));
+    new object().GetHashCode((Expression<Func<object, object>>[]) null!).Should().NotBe(new object().GetHashCode((Expression<Func<object, object>>[]) null!));
+
+    var subject = new object();
+    subject.GetHashCode((string[]) null!).Should().Be(subject.GetHashCode((string[]) null!));
+    subject.GetHashCode((Expression<Func<object, object>>[]) null!).Should().Be(subject.GetHashCode((Expression<Func<object, object>>[]) null!));
+    subject.GetHashCode((string[]) null!).Should().Be(subject.GetHashCode());
+    subject.GetHashCode((Expression<Func<object, object>>[]) null!).Should().Be(subject.GetHashCode());
+    string.Empty.GetHashCode((string[]) null!).Should().NotBe(new object().GetHashCode((string[]) null!));
+    string.Empty.GetHashCode((string[]) null!).Should().Be(string.Empty.GetHashCode((string[]) null!));
+
+    Guid.NewGuid().ToString().GetHashCode("Length").Should().Be(Guid.NewGuid().ToString().GetHashCode("Length"));
+    Guid.NewGuid().ToString().GetHashCode("Length").Should().Be(Guid.NewGuid().ToString().GetHashCode(it => it.Length));
+    Guid.NewGuid().ToString().GetHashCode(it => it.Length).Should().Be(Guid.NewGuid().ToString().GetHashCode(it => it.Length));
+
+    var testObject = new TestObject();
+    testObject.GetHashCode((string[]) null!).Should().Be(testObject.GetHashCode((string[]) null!));
+    testObject.GetHashCode("PublicProperty").Should().Be(testObject.GetHashCode("PublicProperty"));
+    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode("PublicProperty"));
+    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode(it => it.PublicProperty));
+    testObject.GetHashCode("PublicProperty").Should().Be(testObject.GetHashCode("ProtectedProperty"));
+    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode("ProtectedProperty"));
+    testObject.GetHashCode("invalid").Should().Be(testObject.GetHashCode("invalid"));
+    testObject.GetHashCode("invalid_1").Should().Be(testObject.GetHashCode("invalid_2"));
+
+    testObject.PublicProperty = "property";
+    new TestObject {PublicProperty = "property"}.GetHashCode((string[]) null!).Should().Be(new TestObject {PublicProperty = "property"}.GetHashCode((string[]) null!));
+    new TestObject {PublicProperty = "first"}.GetHashCode((string[]) null!).Should().NotBe(new TestObject {PublicProperty = "second"}.GetHashCode((string[]) null!));
+    testObject.GetHashCode("PublicProperty").Should().Be(testObject.GetHashCode("PublicProperty"));
+    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode("PublicProperty"));
+    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode(it => it.PublicProperty));
+    testObject.GetHashCode("PublicProperty").Should().NotBe(testObject.GetHashCode("ProtectedProperty"));
+    testObject.GetHashCode(it => it.PublicProperty).Should().NotBe(testObject.GetHashCode("ProtectedProperty"));*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.HashCode{T}(T?, Expression{Func{T, object?}}[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_HashCode_Expression_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Print{T}(T, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_Print_Method()
+  {
+    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Member{T, TResult}(T, Expression{Func{T, TResult}})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_Member_Method()
+  {
+    AssertionExtensions.Should(() => ObjectExtensions.Member(null, Enumerable.Empty<Expression<Func<object?, object?>>>().First())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new object().Member<object, object>(null!)).ThrowExactly<ArgumentNullException>();
+
+    var text = RandomString;
+    text.Member(instance => instance.Length).Should().Be(text.Length);
+    text.Member(instance => instance.ToString(CultureInfo.InvariantCulture)).Should().Be(text);
+    DateTime.UtcNow.Member(instance => instance.Ticks <= DateTime.UtcNow.Ticks).Should().BeTrue();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Field(object, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_Field_Method()
+  {
+    /*AssertionExtensions.Should(() => ObjectExtensions.Field(null!, string.Empty)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new object().Field(null!)).ThrowExactly<ArgumentNullException>();
+
+    new object().Field("field").Should().BeNull();
+
+    var subject = new TestObject {PublicField = "value"};
+    subject.Field("PublicField").To<string>().Should().Be("value");*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Method(object, string, IEnumerable{object?}?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_Method_Enumerable_Method()
+  {
+    AssertionExtensions.Should(() => ObjectExtensions.Method(null!, string.Empty, (IEnumerable<string>) null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new object().Method(null!, (IEnumerable<string>) null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Method(object, string, object?[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_Method_Array_Method()
+  {
+    /*AssertionExtensions.Should(() => ObjectExtensions.Method(null!, string.Empty)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new object().Method(null!)).ThrowExactly<ArgumentNullException>();
+
+    new object().Method("method").Should().BeNull();
+    ((bool) string.Empty.Method("Contains", string.Empty)).Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ObjectExtensions.Property(object, string)"/></description></item>
+  ///     <item><description><see cref="ObjectExtensions.Property{T}(T, string, object?)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Object_Property_Methods()
+  {
+    /*using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Binary(null));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Binary(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => new object().Binary(null));
+      AssertionExtensions.Should(() => ObjectExtensions.Property(null!, string.Empty)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new object().Property(null!)).ThrowExactly<ArgumentNullException>();
 
-      var subject = new object();
-      var serialized = new object().Binary();
-      Assert.True(serialized.Length > 0);
-      Assert.False(new object().Binary().Binary().SequenceEqual(new object().Binary()));
-      Assert.False(new object().Binary().SequenceEqual(string.Empty.Binary()));
-      Assert.True(subject.Binary().SequenceEqual(subject.Binary()));
-      Assert.True(Guid.Empty.ToString().Binary().SequenceEqual(Guid.Empty.ToString().Binary()));
-
-      using (var stream = new MemoryStream())
-      {
-        Assert.True(ReferenceEquals(subject.Binary(stream), subject));
-        Assert.True(stream.ToArray().SequenceEqual(serialized));
-        Assert.True(stream.CanWrite);
-      }
-      using (var stream = new MemoryStream())
-      {
-        Assert.True(ReferenceEquals(subject.Binary(stream, true), subject));
-        Assert.True(stream.ToArray().SequenceEqual(serialized));
-        Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      };
-    }
-
-    [Fact]
-    public void dump()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Dump(null));
-
-      Assert.Equal("[]", new object().Dump());
-
-      var subject = new DumpTestObject();
-      Assert.Equal(@"[Property:""""]", subject.Dump());
-      subject.Property = Guid.Empty;
-      Assert.Equal($"[Property:\"{Guid.Empty}\"]", subject.Dump());
-    }
-
-    [Fact]
-    public void equality()
-    {
-      Assert.True(ObjectExtensions.Equality<object>(null, null, (string[]) null));
-      Assert.True(ObjectExtensions.Equality(null, null, (Expression<Func<object, object>>[]) null));
-      Assert.False(ObjectExtensions.Equality(null, new object(), (string[])null));
-      Assert.False(ObjectExtensions.Equality(null, new object(), (Expression<Func<object, object>>[])null));
-      Assert.False(new object().Equality(null, (string[])null));
-      Assert.False(new object().Equality(null, (Expression<Func<object, object>>[]) null));
-      Assert.False(new object().Equality(string.Empty, (string[]) null));
-      Assert.False(new object().Equality(string.Empty, (Expression<Func<object, object>>[])null));
-      Assert.False(new object().Equality(new object(), (string[])null));
-      Assert.False(new object().Equality(new object(), (Expression<Func<object, object>>[])null));
-
-      var subject = new object();
-      Assert.True(subject.Equality(subject, (string[])null));
-      Assert.True(subject.Equality(subject, (Expression<Func<object, object>>[]) null));
-      Assert.True(Guid.Empty.ToString().Equality(Guid.Empty.ToString(), (string[]) null));
-      Assert.True(Guid.Empty.ToString().Equality(Guid.Empty.ToString(), (Expression<Func<object, object>>[]) null));
-      Assert.True(Guid.NewGuid().ToString().Equality(Guid.NewGuid().ToString(), new[] { "Length" }));
-      Assert.True(Guid.NewGuid().ToString().Equality(Guid.NewGuid().ToString(), it => it.Length));
-      Assert.False("first".Equality("second", "Length"));
-      Assert.False("first".Equality("second", it => it.Length));
-      Assert.True("text".Equality("text", "property"));
-      Assert.False("first".Equality("second", "property"));
-      
-      var testSubject = new TestObject();
-      Assert.True(testSubject.Equality(testSubject, (string[]) null));
-      Assert.True(testSubject.Equality(testSubject, (Expression<Func<TestObject, object>>[]) null));
-      Assert.True(new TestObject().Equality(new TestObject(), (string[])null));
-      Assert.True(new TestObject().Equality(new TestObject(), (Expression<Func<TestObject, object>>[])null));
-      Assert.True(new TestObject { PublicProperty = "property" }.Equality(new TestObject { PublicProperty = "property" }, (string[]) null));
-      Assert.True(new TestObject { PublicProperty = "property" }.Equality(new TestObject { PublicProperty = "property" }, (Expression<Func<TestObject, object>>[]) null));
-      Assert.False(new TestObject { PublicProperty = "property" }.Equality(new TestObject(), (string[])null));
-      Assert.False(new TestObject { PublicProperty = "property" }.Equality(new TestObject(), (Expression<Func<TestObject, object>>[])null));
-      Assert.False(new TestObject { PublicProperty = "first" }.Equality(new TestObject { PublicProperty = "second" }, (string[])null));
-      Assert.False(new TestObject { PublicProperty = "first" }.Equality(new TestObject { PublicProperty = "second" }, (Expression<Func<TestObject, object>>[])null));
-    }
-
-    [Fact]
-    public void field()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Field(null, "field"));
-      Assert.Throws<ArgumentNullException>(() => new object().Field(null));
-      Assert.Throws<ArgumentException>(() => new object().Field(string.Empty));
-
-      Assert.Null(new object().Field("field"));
-
-      var subject = new TestObject { PublicField = "value" };
-      Assert.Equal("value", subject.Field("PublicField").To<string>());
-    }
-
-    [Fact]
-    public void get_hash_code()
-    {
-      Assert.Equal(0, ObjectExtensions.GetHashCode<object>(null, (string[]) null));
-      Assert.Equal(0, ObjectExtensions.GetHashCode<object>(null, Enumerable.Empty<string>().ToArray()));
-      Assert.Equal(0, ObjectExtensions.GetHashCode(null, (Expression<Func<object, object>>[]) null));
-      Assert.Equal(0, ObjectExtensions.GetHashCode(null, Enumerable.Empty<Expression<Func<object, object>>>().ToArray()));
-
-      Assert.NotEqual(0, new object().GetHashCode((string[])null));
-      Assert.NotEqual(0, new object().GetHashCode((Expression<Func<object, object>>[]) null));
-
-      Assert.NotEqual(new object().GetHashCode((string[])null), new object().GetHashCode((string[])null));
-      Assert.NotEqual(new object().GetHashCode((Expression<Func<object, object>>[]) null), new object().GetHashCode((Expression<Func<object, object>>[]) null));
-
-      var subject = new object();
-      Assert.Equal(subject.GetHashCode((string[])null), subject.GetHashCode((string[])null));
-      Assert.Equal(subject.GetHashCode((Expression<Func<object, object>>[]) null), subject.GetHashCode((Expression<Func<object, object>>[]) null));
-      Assert.Equal(subject.GetHashCode(), subject.GetHashCode((string[])null));
-      Assert.Equal(subject.GetHashCode(), subject.GetHashCode((Expression<Func<object, object>>[])null));
-      Assert.NotEqual(new object().GetHashCode((string[]) null), string.Empty.GetHashCode((string[]) null));
-      Assert.Equal( string.Empty.GetHashCode((string[]) null), string.Empty.GetHashCode((string[]) null));
-
-      Assert.Equal(Guid.NewGuid().ToString().GetHashCode(new[] { "Length" }), Guid.NewGuid().ToString().GetHashCode(new[] { "Length" }));
-      Assert.Equal(Guid.NewGuid().ToString().GetHashCode(it => it.Length), Guid.NewGuid().ToString().GetHashCode(new[] { "Length" }));
-      Assert.Equal(Guid.NewGuid().ToString().GetHashCode(it => it.Length), Guid.NewGuid().ToString().GetHashCode(it => it.Length));
-
-      var testObject = new TestObject();
-      Assert.Equal(testObject.GetHashCode((string[])null), testObject.GetHashCode((string[])null));
-      Assert.Equal(testObject.GetHashCode(new[] { "PublicProperty" }), testObject.GetHashCode(new[] { "PublicProperty" }));
-      Assert.Equal(testObject.GetHashCode(new[] { "PublicProperty" }), testObject.GetHashCode(it => it.PublicProperty));
-      Assert.Equal(testObject.GetHashCode(it => it.PublicProperty), testObject.GetHashCode(it => it.PublicProperty));
-      Assert.Equal(testObject.GetHashCode(new[] { "ProtectedProperty" }), testObject.GetHashCode(new[] { "PublicProperty" }));
-      Assert.Equal(testObject.GetHashCode(new[] { "ProtectedProperty" }), testObject.GetHashCode(it => it.PublicProperty));
-      Assert.Equal(testObject.GetHashCode(new[] { "invalid" }), testObject.GetHashCode(new[] { "invalid" }));
-      Assert.Equal(testObject.GetHashCode(new[] { "invalid_2" }), testObject.GetHashCode(new[] { "invalid_1" }));
-      testObject.PublicProperty = "property";
-      Assert.Equal(new TestObject { PublicProperty = "property" }.GetHashCode((string[]) null), new TestObject { PublicProperty = "property" }.GetHashCode((string[])null));
-      Assert.NotEqual(new TestObject { PublicProperty = "second" }.GetHashCode((string[])null), new TestObject { PublicProperty = "first" }.GetHashCode((string[])null));
-      Assert.Equal(testObject.GetHashCode(new[] { "PublicProperty" }), testObject.GetHashCode(new[] { "PublicProperty" }));
-      Assert.Equal(testObject.GetHashCode(new[] { "PublicProperty" }), testObject.GetHashCode(it => it.PublicProperty));
-      Assert.Equal(testObject.GetHashCode(it => it.PublicProperty), testObject.GetHashCode(it => it.PublicProperty));
-      Assert.NotEqual(testObject.GetHashCode(new[] { "ProtectedProperty" }), testObject.GetHashCode(new[] { "PublicProperty" }));
-      Assert.NotEqual(testObject.GetHashCode(new[] { "ProtectedProperty" }), testObject.GetHashCode(it => it.PublicProperty));
-    }
-
-    [Fact]
-    public void is_instance_of()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Is<object>(null));
-
-      Assert.True(new object().Is<object>());
-      Assert.False(new object().Is<string>());
-      Assert.True(string.Empty.Is<IEnumerable<char>>());
-    }
-
-    [Fact]
-    public void member()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Member(null, Enumerable.Empty<Expression<Func<object, object>>>().FirstOrDefault()));
-      Assert.Throws<ArgumentNullException>(() => new object().Member<object, object>(null));
-
-      var text = Guid.NewGuid().ToString();
-      Assert.Equal(text.Length, text.Member(it => it.Length));
-      Assert.Equal(text, text.Member(it => it.ToString(CultureInfo.InvariantCulture)));
-      Assert.True(DateTime.UtcNow.Member(it => it.Ticks <= DateTime.UtcNow.Ticks));
-    }
-
-    [Fact]
-    public void method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Method(null, string.Empty));
-      Assert.Throws<ArgumentNullException>(() => new object().Method(null));
-      Assert.Throws<ArgumentException>(() => new object().Method(string.Empty));
-      Assert.Throws<TargetParameterCountException>(() => new object().Method("ToString", new object()));
-      Assert.Throws<AmbiguousMatchException>(() => string.Empty.Method("ToString").To<string>() == string.Empty);
-
-      Assert.Null(new object().Method("method"));
-      Assert.True((bool)string.Empty.Method("Contains", string.Empty));
-    }
-
-    [Fact]
-    public void property()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Property(null, "property"));
-      Assert.Throws<ArgumentNullException>(() => new object().Property(null));
-      Assert.Throws<ArgumentException>(() => new object().Property(string.Empty));
-
-      Assert.Null(new object().Property("property"));
+      new object().Property("property").Should().BeNull();
 
       var subject = new TestObject { PublicProperty = "value" };
-      Assert.Equal("value", subject.Property("PublicProperty").To<string>());
+      subject.Property("PublicProperty").As<string>().Should().Be("value");
 
 
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Property<object>(null, "property", new object()));
-      Assert.Throws<ArgumentNullException>(() => new object().Property(null, new object()));
-      Assert.Throws<ArgumentException>(() => new object().Property(string.Empty, new object()));
+      AssertionExtensions.Should(() => ObjectExtensions.Property<object>(null!, "property", new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new object().Property(null!, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new object().Property(string.Empty, new object())).ThrowExactly<ArgumentException>();
 
       subject = new TestObject();
 
-      Assert.True(ReferenceEquals(subject.Property("PublicProperty", null), subject));
+      subject.Property("PublicProperty", null).Should().BeSameAs(subject);
 
-      var property = Guid.NewGuid().ToString();
+      var property = RandomString;
 
       subject.Property("ReadOnlyProperty", property);
-      Assert.Null(subject.Property("ReadOnlyProperty"));
+      subject.Property("ReadOnlyProperty").Should().BeNull();
 
       subject.Property("PublicStaticProperty", property);
-      Assert.Equal(property, subject.Property("PublicStaticProperty"));
+      subject.Property("PublicStaticProperty").Should().Be(property);
 
       subject.Property("ProtectedStaticProperty", property);
-      Assert.Equal(property, subject.Property("ProtectedStaticProperty"));
+      subject.Property("ProtectedStaticProperty").Should().Be(property);
 
       subject.Property("PrivateStaticProperty", property);
-      Assert.Equal(property, subject.Property("PrivateStaticProperty"));
+      subject.Property("PrivateStaticProperty").Should().Be(property);
 
       subject.Property("PublicProperty", property);
-      Assert.Equal(property, subject.Property("PublicProperty"));
+      subject.Property("PublicProperty").Should().Be(property);
 
       subject.Property("ProtectedProperty", property);
-      Assert.Equal(property, subject.Property("ProtectedProperty"));
+      subject.Property("ProtectedProperty").Should().Be(property);
 
       subject.Property("PrivateProperty", property);
-      Assert.Equal(property, subject.Property("PrivateProperty"));
+      subject.Property("PrivateProperty").Should().Be(property);
     }
 
-    [Fact]
-    public void properties()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Properties<object>(null, new Dictionary<string, object>()));
-      Assert.Throws<ArgumentNullException>(() => new object().Properties((IDictionary<string, object>)null));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Properties<object>(null, (object)null));
-      Assert.Throws<ArgumentNullException>(() => new object().Properties((object)null));
+      AssertionExtensions.Should(() => ObjectExtensions.Property<object>(null!, string.Empty, null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new object().Property(null!, null)).ThrowExactly<ArgumentNullException>();
+    }*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ObjectExtensions.Properties(object)"/></description></item>
+  ///     <item><description><see cref="ObjectExtensions.Properties{T}(T, object)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Object_Properties_Methods()
+  {
+    /*using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Properties(null!)).ThrowExactly<ArgumentNullException>();
 
       var subject = new TestObject();
-      var property = Guid.NewGuid().ToString();
+      var property = RandomString;
 
-      Assert.True(ReferenceEquals(subject.Properties(new Dictionary<string, object> { { "PublicProperty", property }, { "property", new object() } }), subject));
-      Assert.Equal(property, subject.Property("PublicProperty"));
+      subject.Properties(new Dictionary<string, object> { { "PublicProperty", property }, { "property", new object() } }).Should().BeSameAs(subject);
+      subject.Property("PublicProperty").Should().Be(property);
 
-      Assert.True(ReferenceEquals(subject.Properties(new { PublicProperty = property, property = new object() }), subject));
-      Assert.Equal(property, subject.Property("PublicProperty"));
-    }
-
-    [Fact]
-    public void properties_map()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.PropertiesMap(null));
-
-      Assert.Empty(new { }.PropertiesMap());
-      var map = new { name = "value" }.PropertiesMap();
-      Assert.Equal(1, map.Count);
-      Assert.Equal("value", map["name"]);
-    }
-
-    [Fact]
-    public void to()
-    {
-      object subject = null;
-      Assert.Null(subject.To<object>());
-      Assert.Null(subject.To<string>());
-      
-      subject = new object();
-      Assert.True(ReferenceEquals(subject.To<object>(), subject));
-    }
-
-    [Fact]
-    public void to_string()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToString(null, Enumerable.Empty<string>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToString(null, Enumerable.Empty<Expression<Func<object, object>>>().ToArray()));
-      
-      Assert.Equal("[]", new object().ToString(new [] {"property"}));
-      Assert.Equal("[]", new object().ToString((string[]) null));
-      Assert.Equal("[]", new object().ToString(Enumerable.Empty<string>().ToArray()));
-      Assert.Equal("[]", new object().ToString((Expression<Func<object, object>>[]) null));
-      Assert.Equal("[]", new object().ToString(Enumerable.Empty<Expression<Func<object, object>>>().ToArray()));
-
-      var date = DateTime.UtcNow;
-      Assert.Equal($"[Ticks:\"{date.Ticks}\"]", date.ToString(new [] {"Ticks"}));
-      Assert.Equal($"[Ticks:\"{date.Ticks}\"]", date.ToString(it => it.Ticks));
-      Assert.Equal($"[Day:\"{date.Day}\", Month:\"{date.Month}\", Year:\"{date.Year}\"]", date.ToString(new [] {"Day", "Month", "Year"}));
-      Assert.Equal($"[Day:\"{date.Day}\", Month:\"{date.Month}\", Year:\"{date.Year}\"]", date.ToString(it => it.Day, it => it.Month, it => it.Year));
-      Assert.Equal($"[Today:\"{DateTime.Today}\"]", date.ToString(new [] {"Today"}));
-    }
-
-    [Fact]
-    public void to_string_invariant()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.ToStringInvariant(null));
-
-      var subject = new object();
-      Assert.Equal(subject.ToString(), subject.ToStringInvariant());
-
-      subject = "subject";
-      Assert.Equal(subject.ToString(), subject.ToStringInvariant());
-
-      subject = DateTime.UtcNow;
-      Assert.Equal(string.Format(CultureInfo.InvariantCulture, "{0}", subject), subject.ToStringInvariant());
-      Assert.NotEqual(string.Format(CultureInfo.GetCultureInfo("ru"), "{0}", subject), subject.ToStringInvariant());
-
-      subject = 1.5;
-      Assert.Equal(string.Format(CultureInfo.InvariantCulture, "{0}", subject), subject.ToStringInvariant());
-      Assert.NotEqual(string.Format(CultureInfo.GetCultureInfo("ru"), "{0}", subject), subject.ToStringInvariant());
-    }
-
-    [Fact]
-    public void do_action()
-    {
-      Assert.Throws<ArgumentNullException>(() => ObjectExtensions.Do<object>(null, subject => {}));
-      Assert.Throws<ArgumentNullException>(() => new object().Do(null));
-      
-      var text = Guid.NewGuid().ToString();
-      Assert.Throws<ObjectDisposedException>(() => new StringReader(text).Do(disposable =>
+      subject.Properties(new
       {
-        disposable.Do(it => Assert.True(it.ReadToEnd() == text));
-      }).Read());
+        PublicProperty = property,
+        property = new object()
+      }).Should().BeSameAs(subject);
 
-      var list = new List<string>().Do(it => it.Add(text));
-      Assert.Single(list);
-      Assert.Equal(text, list[0]);
-
-      Assert.Equal(text, new object().Do(it => text));
+      subject.Property("PublicProperty").Should().Be(property);
     }
 
-    [Fact]
-    public void to_xml()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.ToXml<object>(null));
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.ToXml<object>(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => new object().ToXml((Stream) null));
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.ToXml<object>(null, TextWriter.Null));
-      Assert.Throws<ArgumentNullException>(() => new object().ToXml((TextWriter) null));
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.ToXml<object>(null, XmlWriter.Create(Stream.Null)));
-      Assert.Throws<ArgumentNullException>(() => new object().ToXml((XmlWriter) null));
+      AssertionExtensions.Should(() => ObjectExtensions.Properties<object>(null!, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new object().Properties(null!)).ThrowExactly<ArgumentNullException>();
+    }*/
 
-      var subject = Guid.NewGuid().ToString();
+    throw new NotImplementedException();
+  }
 
-      var xml = subject.ToXml();
-      var stringWriter = new StringWriter();
-      stringWriter.XmlWriter().Write(writer =>
-      {
-        new XmlSerializer(subject.GetType()).Serialize(writer, subject);
-        Assert.Equal(xml, stringWriter.ToString());
-      });
-      Assert.Equal(xml, subject.ToXml((Type[]) null));
-      Assert.Equal(xml, subject.ToXml(Enumerable.Empty<Type>().ToArray()));
-      Assert.Equal(xml, subject.ToXml((Type[]) null));
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.ToStringState(object)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_ToStringState_Method()
+  {
+    /*AssertionExtensions.Should(() => ObjectExtensions.ToStringState(null!)).ThrowExactly<ArgumentNullException>();
 
-      using (var stream = new MemoryStream())
-      {
-        Assert.True(ReferenceEquals(subject.ToXml(stream, Encoding.Unicode), subject));
-        Assert.Equal(xml, stream.Rewind().Text());
-        Assert.True(stream.CanWrite);
-      }
+    new object().ToStringState().Should().Be("[]");
 
-      using (var writer = new StringWriter())
-      {
-        Assert.True(ReferenceEquals(subject.ToXml(writer), subject));
-        Assert.Equal(xml, writer.ToString());
-        writer.WriteLine();
-      }
+    var subject = new DumpTestObject();
+    ((object) subject).ToStringState().Should().Be(@"[Property:""""]");
 
-      stringWriter = new StringWriter();
-      using (var writer = stringWriter.XmlWriter())
-      {
-        Assert.True(ReferenceEquals(subject.ToXml(writer), subject));
-        Assert.Equal(xml, stringWriter.ToString());
-        stringWriter.WriteLine();
-      }
-    }
+    subject.Property = Guid.Empty;
+    ((object) subject).ToStringState().Should().Be($"[Property:\"{Guid.Empty}\"]");*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.ToStringState(object, string[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_ToStringState_Array_Method()
+  {
+    /*AssertionExtensions.Should(() => ObjectExtensions.ToStringState(null!)).ThrowExactly<ArgumentNullException>();
+
+    new object().ToStringState("property").Should().Be("[]");
+    new object().ToStringState((string[]) null!).Should().Be("[]");
+    new object().ToStringState().Should().Be("[]");
+    new object().ToStringState((Expression<Func<object, object>>[]) null!).Should().Be("[]");
+    new object().ToStringState(Array.Empty<Expression<Func<object, object>>>()).Should().Be("[]");
+
+    var date = DateTime.UtcNow;
+    date.ToStringState("Ticks").Should().Be($"[Ticks:\"{date.Ticks}\"]");
+    date.ToStringState(date => date.Ticks).Should().Be($"[Ticks:\"{date.Ticks}\"]");
+    date.ToStringState("Day", "Month", "Year").Should().Be($"[Day:\"{date.Day}\", Month:\"{date.Month}\", Year:\"{date.Year}\"]");
+    date.ToStringState(date => date.Day, date => date.Month, date => date.Year).Should().Be($"[Day:\"{date.Day}\", Month:\"{date.Month}\", Year:\"{date.Year}\"]");
+    date.ToStringState("Today").Should().Be($"[Today:\"{DateTime.Today}\"]");*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.ToStringState{T}(T, Expression{Func{T, object?}}[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_ToStringState_Expression_Method()
+  {
+    AssertionExtensions.Should(() => ObjectExtensions.ToStringState(null, Array.Empty<Expression<Func<object?, object?>>>())).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.ToStringFormatted(object, IFormatProvider?, string?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_ToStringFormatted_Method()
+  {
+    AssertionExtensions.Should(() => ObjectExtensions.ToStringFormatted(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.ToStringInvariant(object, string?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_ToStringInvariant_Method()
+  {
+    AssertionExtensions.Should(() => ObjectExtensions.ToStringInvariant(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
   }
 }

@@ -1,471 +1,799 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Reflection;
+using System.Text;
+using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
-namespace Catharsis.Commons
+namespace Catharsis.Commons.Tests;
+
+/// <summary>
+///   <para>Tests set for class <see cref="ReflectionExtensions"/>.</para>
+/// </summary>
+public sealed class ReflectionExtensionsTest : UnitTest
 {
-  public sealed class ReflectionExtensionsTest
+  private delegate int Increment(int value);
+  private delegate int Decrement(int value);
+
+  private Delegate IncrementDelegate { get; }
+  private Delegate DecrementDelegate { get; }
+
+  private delegate string AsString(object subject);
+
+  public ReflectionExtensionsTest()
   {
-    private delegate int Increment(int value);
-    private delegate int Decrement(int value);
+    IncrementDelegate = Delegate.CreateDelegate(typeof(Increment), GetType().Method("IncrementValue"));
+    DecrementDelegate = Delegate.CreateDelegate(typeof(Decrement), GetType().Method("DecrementValue"));
+  }
 
-    private readonly Delegate incrementDelegate;
-    private readonly Delegate decrementDelegate;
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.Resource(Assembly, string, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Assembly_Resource_Method()
+  {
+    AssertionExtensions.Should(() => Assembly.GetExecutingAssembly().Resource(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
-    private delegate string AsString(object subject);
+    Assembly.GetExecutingAssembly().Resource("invalid").Should().BeNull();
+    Assembly.GetExecutingAssembly().Resource("Catharsis.Commons.Resource.txt").Should().Be("resource");
 
-    public ReflectionExtensionsTest()
+    // TODO Encoding support
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.And(Delegate, Delegate)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Delegate_And_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.And(null!, IncrementDelegate)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => IncrementDelegate.And(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => IncrementDelegate.And(DecrementDelegate)).ThrowExactly<ArgumentException>();
+
+    var andDelegate = IncrementDelegate.And(IncrementDelegate);
+    andDelegate.Should().BeOfType<MulticastDelegate>();
+    andDelegate.Method.Should().Equals(GetType().Method("IncrementValue")).Should().BeTrue();
+    andDelegate.Target.Should().BeNull();
+    andDelegate.GetInvocationList().Should().Equal(IncrementDelegate, IncrementDelegate);
+    andDelegate.DynamicInvoke(0).As<int>().Should().Be(1);*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.Not(Delegate, Delegate?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Delegate_Not_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.Not(null!, IncrementDelegate)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => IncrementDelegate.Not(DecrementDelegate)).ThrowExactly<ArgumentException>();
+
+    IncrementDelegate.Not(null).Should().BeSameAs(IncrementDelegate);
+    IncrementDelegate.Not(IncrementDelegate).Should().BeNull();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.IsArray{T}(Type)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_IsArray_Method()
+  {
+    AssertionExtensions.Should(() => typeof(object[]).IsArray<object>()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.IsAssignableTo{T}(Type)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_IsAssignableTo_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.IsAssignableTo<object>(null!)).ThrowExactly<ArgumentNullException>();
+
+    typeof(object).IsAssignableTo<object>().Should().BeTrue();
+    typeof(string).IsAssignableTo<object>().Should().BeTrue();
+    typeof(object).IsAssignableTo<string>().Should().BeFalse();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.IsAnonymous(Type)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_IsAnonymous_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.IsAnonymous(null!)).ThrowExactly<ArgumentNullException>();
+
+    typeof(object).IsAnonymous().Should().BeFalse();
+    new
     {
-      this.incrementDelegate = Delegate.CreateDelegate(typeof(Increment), this.GetType().AnyMethod("IncrementValue"));
-      this.decrementDelegate = Delegate.CreateDelegate(typeof(Decrement), this.GetType().AnyMethod("DecrementValue"));
+    }.GetType().IsAnonymous().Should().BeTrue();
+    new
+    {
+      property = "value"
+    }.GetType().IsAnonymous().Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ReflectionExtensions.Implements(Type, Type)"/></description></item>
+  ///     <item><description><see cref="ReflectionExtensions.Implements{T}(Type)"/></description></item>
+  ///     <item><description><see cref="ReflectionExtensions.Implements(Type)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Type_Implements_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ReflectionExtensions.Implements(null!, typeof(object))).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => typeof(object).Implements(null!)).ThrowExactly<ArgumentNullException>();
     }
 
-    [Fact]
-    public void and()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.And(null, this.incrementDelegate));
-      Assert.Throws<ArgumentNullException>(() => this.incrementDelegate.And(null));
-      Assert.Throws<ArgumentException>(() => this.incrementDelegate.And(this.decrementDelegate));
-
-      var andDelegate = this.incrementDelegate.And(this.incrementDelegate);
-      Assert.True(andDelegate is MulticastDelegate);
-      Assert.Equal(this.GetType().AnyMethod("IncrementValue"), andDelegate.Method);
-      Assert.Null(andDelegate.Target);
-      Assert.True(andDelegate.GetInvocationList().SequenceEqual(new[] { this.incrementDelegate, this.incrementDelegate }));
-      Assert.Equal(1, andDelegate.DynamicInvoke(0).To<int>());
+      AssertionExtensions.Should(() => ReflectionExtensions.Implements<object>(null!)).ThrowExactly<ArgumentNullException>();
     }
 
-    [Fact]
-    public void not()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Not(null, this.incrementDelegate));
-      Assert.Throws<ArgumentException>(() => this.incrementDelegate.Not(this.decrementDelegate));
-
-      Assert.True(ReferenceEquals(this.incrementDelegate.Not(null), this.incrementDelegate));
-      Assert.Null(this.incrementDelegate.Not(this.incrementDelegate));
+      AssertionExtensions.Should(() => ReflectionExtensions.Implements(null!)).ThrowExactly<ArgumentNullException>();
     }
 
-    [Fact]
-    public void to_delegate()
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ReflectionExtensions.Properties(Type)"/></description></item>
+  ///     <item><description><see cref="ReflectionExtensions.Properties(Type, object)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Type_Properties_Methods()
+  {
+    /*using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Delegate(null, typeof(object)));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).GetMethod("ToString").Delegate(null));
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Delegate<object>(null));
-
-      var method = typeof(object).GetMethod("ToString");
-      Assert.Throws<ArgumentException>(() => method.Delegate(typeof(object)));
-      var methodDelegate = method.Delegate(typeof(AsString));
-      Assert.True(ReferenceEquals(methodDelegate.Method, method));
-      Assert.Null(methodDelegate.Target);
-      Assert.Throws<TargetParameterCountException>(() => methodDelegate.DynamicInvoke());
-      Assert.Throws<TargetParameterCountException>(() => methodDelegate.DynamicInvoke(new object(), new object()));
-      Assert.Equal("test", methodDelegate.DynamicInvoke("test").To<string>());
-      Assert.Equal(method.Delegate(typeof(AsString)), method.Delegate<AsString>());
-    }
-
-    [Fact]
-    public void descriptions()
-    {
-      Assert.Throws<ArgumentException>(() => ReflectionExtensions.Descriptions<DateTime>());
-      var descriptions = ReflectionExtensions.Descriptions<MockEnumeration>().ToArray();
-      Assert.Equal(3, descriptions.Count());
-      Assert.Equal("FirstOption", descriptions[0]);
-      Assert.Equal("Second", descriptions[1]);
-      Assert.Equal("ThirdOption", descriptions[2]);
-    }
-
-    [Fact]
-    public void is_protected()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsProtected(null));
- 
-      Assert.True(typeof(TestObject).GetField("ProtectedField", BindingFlags.Instance | BindingFlags.NonPublic).IsProtected());
-    }
-
-    [Fact]
-    public void resource()
-    {
-      Assert.Throws<ArgumentNullException>(() => Assembly.GetExecutingAssembly().Resource(null));
-      Assert.Throws<ArgumentException>(() => Assembly.GetExecutingAssembly().Resource(string.Empty));
-
-      Assert.Null(Assembly.GetExecutingAssembly().Resource("invalid"));
-      Assert.Equal("resource", Assembly.GetExecutingAssembly().Resource("Catharsis.Commons.Resource.txt"));
-    }
-
-    [Fact]
-    public void attributes()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Attribute(null, typeof(object)));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).Attribute(null));
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Attribute<object>(null));
-
-      Assert.Null(typeof(TestObject).Attribute(typeof(NonSerializedAttribute)));
-      Assert.Null(typeof(TestObject).Attribute<NonSerializedAttribute>());
-
-      Assert.True(typeof(TestObject).Attribute(typeof(SerializableAttribute)) is SerializableAttribute);
-      Assert.NotNull(typeof(TestObject).Attribute<SerializableAttribute>());
-
-
-      var property = typeof(string).GetProperty("Length");
-      Assert.Null(property.Attribute(typeof(DescriptionAttribute)));
-      Assert.Null(property.Attribute<DescriptionAttribute>());
-
-      property = typeof(TestObject).GetProperty("PublicProperty");
-      Assert.NotNull(property.Attribute(typeof(DescriptionAttribute)));
-      Assert.NotNull(property.Attribute<DescriptionAttribute>());
-
-
-      var method = typeof(object).GetMethod("ToString");
-      Assert.Null(method.Attribute(typeof(DescriptionAttribute)));
-      Assert.Null(method.Attribute<DescriptionAttribute>());
-
-      method = typeof(TestObject).GetMethod("PublicMethod");
-      Assert.NotNull(method.Attribute(typeof(DescriptionAttribute)));
-      Assert.NotNull(method.Attribute<DescriptionAttribute>());
-
-      
-      var field = typeof(string).GetField("Empty");
-      Assert.Null(field.Attribute(typeof(DescriptionAttribute)));
-      Assert.Null(field.Attribute<DescriptionAttribute>());
-
-      field = typeof(TestObject).GetField("PublicField");
-      Assert.NotNull(field.Attribute(typeof(DescriptionAttribute)));
-      Assert.NotNull(field.Attribute<DescriptionAttribute>());
-    }
-
-    [Fact]
-    public void is_constructor()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsConstructor(null));
-
-      Assert.True(typeof(TestObject).DefaultConstructor().To<MemberInfo>().IsConstructor());
-    }
-
-    [Fact]
-    public void is_event()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsEvent(null));
-
-      Assert.True(typeof(TestObject).AnyEvent("PublicEvent").To<MemberInfo>().IsEvent());
-    }
-
-    [Fact]
-    public void is_field()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsField(null));
-
-      Assert.True(typeof(TestObject).AnyField("PublicField").To<MemberInfo>().IsField());
-    }
-
-    [Fact]
-    public void is_method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsMethod(null));
-
-      Assert.True(typeof(TestObject).AnyMethod("PublicMethod").To<MemberInfo>().IsMethod());
-    }
-
-    [Fact]
-    public void is_property()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsProperty(null));
-
-      Assert.True(typeof(TestObject).AnyProperty("PublicProperty").To<MemberInfo>().IsProperty());
-    }
-
-    [Fact]
-    public void is_public()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsPublic(null));
-
-      var type = typeof(TestObject);
-      Assert.True(type.GetProperty("PublicProperty", BindingFlags.Public | BindingFlags.Instance).IsPublic());
-      Assert.False(type.GetProperty("ProtectedProperty", BindingFlags.NonPublic | BindingFlags.Instance).IsPublic());
-      Assert.False(type.GetProperty("PrivateProperty", BindingFlags.NonPublic | BindingFlags.Instance).IsPublic());
-    }
-
-    [Fact]
-    public void type()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Type(null));
-
-      var type = typeof(TestObject);
-
-      var eventMember = type.AnyEvent("PublicEvent");
-      Assert.Equal(eventMember.EventHandlerType, eventMember.Type());
-
-      var fieldMember = type.AnyField("PublicField");
-      Assert.Equal(fieldMember.FieldType, fieldMember.Type());
-
-      var methodMember = type.AnyMethod("PublicMethod");
-      Assert.Equal(methodMember.ReturnType, methodMember.Type());
-      
-      var propertyMember = type.AnyProperty("PublicProperty");
-      Assert.Equal(propertyMember.PropertyType, propertyMember.Type());
-    }
-
-    [Fact]
-    public void any_event()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.AnyEvent(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).AnyEvent(null));
-      Assert.Throws<ArgumentException>(() => typeof(object).AnyEvent(string.Empty));
-
-      var type = typeof(TestObject);
-      Assert.NotNull(type.AnyEvent("PublicEvent"));
-      Assert.NotNull(type.AnyEvent("ProtectedEvent"));
-      Assert.NotNull(type.AnyEvent("PrivateEvent"));
-    }
-
-    [Fact]
-    public void any_field()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.AnyField(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).AnyField(null));
-      Assert.Throws<ArgumentException>(() => typeof(object).AnyField(string.Empty));
-
-      var type = typeof(TestObject);
-
-      type.AnyField("PublicStaticField").Do(field =>
-      {
-        Assert.True(field.IsPublic);
-        Assert.True(field.IsStatic);
-      });
-
-      type.AnyField("ProtectedStaticField").Do(field =>
-      {
-        Assert.False(field.IsPrivate);
-        Assert.True(field.IsStatic);
-      });
-
-      type.AnyField("PrivateStaticField").Do(field =>
-      {
-        Assert.True(field.IsPrivate);
-        Assert.True(field.IsStatic);
-      });
-
-      type.AnyField("PublicField").Do(field =>
-      {
-        Assert.True(field.IsPublic);
-        Assert.False(field.IsStatic);
-      });
-
-      type.AnyField("ProtectedField").Do(field =>
-      {
-        Assert.False(field.IsPrivate);
-        Assert.False(field.IsStatic);
-      });
-
-      type.AnyField("PrivateField").Do(field =>
-      {
-        Assert.True(field.IsPrivate);
-        Assert.False(field.IsStatic);
-      });
-    }
-
-    [Fact]
-    public void any_method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.AnyMethod(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).AnyMethod(null));
-      Assert.Throws<ArgumentException>(() => typeof(object).AnyMethod(string.Empty));
-
-      var type = typeof(TestObject);
-
-      type.AnyMethod("PublicStaticMethod").Do(method =>
-      {
-        Assert.True(method.IsPublic);
-        Assert.True(method.IsStatic);
-      });
-
-      type.AnyMethod("ProtectedStaticMethod").Do(method =>
-      {
-        Assert.False(method.IsPrivate);
-        Assert.True(method.IsStatic);
-      });
-
-      type.AnyMethod("PrivateStaticMethod").Do(method =>
-      {
-        Assert.True(method.IsPrivate);
-        Assert.True(method.IsStatic);
-      });
-
-      type.AnyMethod("PublicMethod").Do(method =>
-      {
-        Assert.True(method.IsPublic);
-        Assert.False(method.IsStatic);
-      });
-
-      type.AnyMethod("ProtectedMethod").Do(method =>
-      {
-        Assert.False(method.IsPrivate);
-        Assert.False(method.IsStatic);
-      });
-
-      type.AnyMethod("PrivateMethod").Do(method =>
-      {
-        Assert.True(method.IsPrivate);
-        Assert.False(method.IsStatic);
-      });
-    }
-
-    [Fact]
-    public void any_property()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.AnyProperty(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).AnyProperty(null));
-      Assert.Throws<ArgumentException>(() => typeof(object).AnyProperty(string.Empty));
-
-      var type = typeof(TestObject);
-
-      type.AnyProperty("PublicStaticProperty").Do(property => Assert.True(property.IsPublic()));
-      type.AnyProperty("ProtectedStaticProperty").Do(property => Assert.False(property.IsPublic()));
-      type.AnyProperty("PrivateStaticProperty").Do(property => Assert.False(property.IsPublic()));
-      type.AnyProperty("PublicProperty").Do(property => Assert.True(property.IsPublic()));
-      type.AnyProperty("ProtectedProperty").Do(property => Assert.False(property.IsPublic()));
-      type.AnyProperty("PrivateProperty").Do(property => Assert.False(property.IsPublic()));
-    }
-
-    [Fact]
-    public void default_constructor()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.DefaultConstructor(null));
-
-      Assert.NotNull(typeof(TestObject).DefaultConstructor());
-      Assert.Null(typeof(string).DefaultConstructor());
-    }
-
-    [Fact]
-    public void has_field()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.HasField(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).HasField(null));
-      Assert.Throws<ArgumentException>(() => typeof(object).HasField(string.Empty));
-
-      Assert.False(typeof(object).HasField("field"));
-
-      var subject = typeof(TestObject);
-      Assert.True(subject.HasField("PublicStaticField"));
-      Assert.True(subject.HasField("ProtectedStaticField"));
-      Assert.True(subject.HasField("PrivateStaticField"));
-      Assert.True(subject.HasField("PublicField"));
-      Assert.True(subject.HasField("ProtectedField"));
-      Assert.True(subject.HasField("PrivateField"));
-    }
-
-    [Fact]
-    public void has_method()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.HasMethod(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).HasMethod(null));
-      Assert.Throws<ArgumentException>(() => typeof(object).HasMethod(string.Empty));
-
-      Assert.False(typeof(object).HasMethod("method"));
-
-      var subject = typeof(TestObject);
-      Assert.True(subject.HasMethod("PublicStaticMethod"));
-      Assert.True(subject.HasMethod("ProtectedStaticMethod"));
-      Assert.True(subject.HasMethod("PrivateStaticMethod"));
-      Assert.True(subject.HasMethod("PublicMethod"));
-      Assert.True(subject.HasMethod("ProtectedMethod"));
-      Assert.True(subject.HasMethod("PrivateMethod"));
-    }
-
-    [Fact]
-    public void has_property()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.HasProperty(null, "name"));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).HasProperty(null));
-      Assert.Throws<ArgumentException>(() => typeof(object).HasProperty(string.Empty));
-
-      Assert.False(typeof(object).HasProperty("property"));
-
-      var subject = typeof(TestObject);
-      Assert.True(subject.HasProperty("PublicStaticProperty"));
-      Assert.True(subject.HasProperty("ProtectedStaticProperty"));
-      Assert.True(subject.HasProperty("PrivateStaticProperty"));
-      Assert.True(subject.HasProperty("PublicProperty"));
-      Assert.True(subject.HasProperty("ProtectedProperty"));
-      Assert.True(subject.HasProperty("PrivateProperty"));
-    }
-
-    [Fact]
-    public void is_anonymous()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsAnonymous(null));
-
-      Assert.False(typeof(object).IsAnonymous());
-      Assert.True(new { }.GetType().IsAnonymous());
-      Assert.True(new { property = "value" }.GetType().IsAnonymous());
-    }
-
-    [Fact]
-    public void is_assignable_to()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.IsAssignableTo<object>(null));
-
-      Assert.True(typeof(object).IsAssignableTo<object>());
-      Assert.True(typeof(string).IsAssignableTo<object>());
-      Assert.False(typeof(object).IsAssignableTo<string>());
-    }
-
-    [Fact]
-    public void new_instance()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.NewInstance(null));
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.NewInstance(null, Enumerable.Empty<KeyValuePair<string, object>>()));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((IDictionary<string, object>) null));
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.NewInstance(null, new object()));
-      Assert.Throws<ArgumentNullException>(() => typeof(object).NewInstance((object) null));
-      
-      Assert.NotNull(typeof(TestObject).NewInstance());
-      Assert.NotNull(typeof(TestObject).NewInstance(Enumerable.Empty<KeyValuePair<string, object>>()));
-      Assert.Throws<MissingMethodException>(() => typeof(TestObject).NewInstance(new object(), new object()));
-
-      Assert.Equal("value", typeof(TestObject).NewInstance(new object[] { "value" }).To<TestObject>().PublicProperty);
-      Assert.Equal("value", typeof(TestObject).NewInstance(new Dictionary<string, object> { { "PublicProperty", "value" } }).To<TestObject>().PublicProperty.ToString());
-      Assert.Equal("value", typeof(TestObject).NewInstance(new { PublicProperty = "value" }).To<TestObject>().PublicProperty);
-    }
-
-    [Fact]
-    public void properties()
-    {
-      Assert.Throws<ArgumentNullException>(() => ReflectionExtensions.Properties(null));
+      AssertionExtensions.Should(() => ReflectionExtensions.Properties(null!)).ThrowExactly<ArgumentNullException>();
 
       var type = typeof(TestObject);
       var properties = type.Properties();
-      Assert.Contains(type.GetProperty("PublicProperty"), properties);
-      Assert.Contains(type.GetProperty("ProtectedProperty", BindingFlags.NonPublic | BindingFlags.Instance), properties);
-      Assert.Contains(type.GetProperty("PrivateProperty", BindingFlags.NonPublic | BindingFlags.Instance), properties);
-      Assert.Contains(type.GetProperty("PublicStaticProperty", BindingFlags.Public | BindingFlags.Static), properties);
-      Assert.Contains(type.GetProperty("ProtectedStaticProperty", BindingFlags.NonPublic | BindingFlags.Static), properties);
-      Assert.Contains(type.GetProperty("PrivateStaticProperty", BindingFlags.NonPublic | BindingFlags.Static), properties);
+      properties.Should().Contain(type.GetProperty("PublicProperty"));
+      properties.Should().Contain(type.GetProperty("ProtectedProperty", BindingFlags.NonPublic | BindingFlags.Instance));
+      properties.Should().Contain(type.GetProperty("PrivateProperty", BindingFlags.NonPublic | BindingFlags.Instance));
+      properties.Should().Contain(type.GetProperty("PublicStaticProperty", BindingFlags.Public | BindingFlags.Static));
+      properties.Should().Contain(type.GetProperty("ProtectedStaticProperty", BindingFlags.NonPublic | BindingFlags.Static));
+      properties.Should().Contain(type.GetProperty("PrivateStaticProperty", BindingFlags.NonPublic | BindingFlags.Static));
     }
 
-    [Description("Enumeration")]
-    private enum MockEnumeration
+    using (new AssertionScope())
     {
-      [Description("FirstOption")]
-      First,
+      AssertionExtensions.Should(() => ReflectionExtensions.Properties(null!, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => typeof(object).Properties(null!)).ThrowExactly<ArgumentNullException>();
+    }*/
 
-      Second,
+    throw new NotImplementedException();
+  }
 
-      [Description("ThirdOption")]
-      Third
-    }
-
-    private static int IncrementValue(int value)
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ReflectionExtensions.Instance(Type, object?[]?)"/></description></item>
+  ///     <item><description><see cref="ReflectionExtensions.Instance(Type, object)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Type_Instance_Methods()
+  {
+    /*using (new AssertionScope())
     {
-      return value + 1;
+      AssertionExtensions.Should(() => ReflectionExtensions.Instance(null!)).ThrowExactly<ArgumentNullException>();
+
+      typeof(TestObject).Instance().Should().NotBeNull();
+      typeof(TestObject).Instance(Enumerable.Empty<KeyValuePair<string, object>>().Should().NotBeNull());
+      AssertionExtensions.Should(() => typeof(TestObject).Instance(new object(), new object())).ThrowExactly<MissingMethodException>();
+
+      typeof(TestObject).Instance(new object[] {"value"}).To<TestObject>().PublicProperty.Should().Be("value");
+      typeof(TestObject).Instance(new Dictionary<string, object> {{"PublicProperty", "value"}}).To<TestObject>().PublicProperty.ToString().Should().Be("value");
+
+      typeof(TestObject).Instance(new
+      {
+        PublicProperty = "value"
+      }).As<TestObject>().PublicProperty.Should().Be("value");
     }
 
-    private static int DecrementValue(int value)
+    using (new AssertionScope())
     {
-      return value - 1;
+      AssertionExtensions.Should(() => ReflectionExtensions.Instance(null!, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => typeof(object).Instance((object) null!)).ThrowExactly<ArgumentNullException>();
+
+    }*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.Event(Type, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_Event_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.Event(null!, "name")).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).Event(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).Event(string.Empty)).ThrowExactly<ArgumentException>();
+
+    var type = typeof(TestObject);
+    type.Event("PublicEvent").Should().NotBeNull();
+    type.Event("ProtectedEvent").Should().NotBeNull();
+    type.Event("PrivateEvent").Should().NotBeNull();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.Field(Type, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_Field_Method()
+  {
+    AssertionExtensions.Should(() => ReflectionExtensions.Field(null!, "name")).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).Field(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).Field(string.Empty)).ThrowExactly<ArgumentException>();
+
+    /*var type = typeof(TestObject);
+
+    type.Field("PublicStaticField").Use(field =>
+    {
+      field.IsPublic.Should().BeTrue();
+      field.IsStatic.Should().BeTrue();
+    });
+
+    type.Field("ProtectedStaticField").Use(field =>
+    {
+      field.IsPrivate.Should().BeFalse();
+      field.IsStatic.Should().BeTrue();
+    });
+
+    type.Field("PrivateStaticField").Use(field =>
+    {
+      field.IsPrivate.Should().BeTrue();
+      field.IsStatic.Should().BeTrue();
+    });
+
+    type.Field("PublicField").Use(field =>
+    {
+      field.IsPublic.Should().BeTrue();
+      field.IsStatic.Should().BeFalse();
+    });
+
+    type.Field("ProtectedField").Use(field =>
+    {
+      field.IsPrivate.Should().BeFalse();
+      field.IsStatic.Should().BeFalse();
+    });
+
+    type.Field("PrivateField").Use(field =>
+    {
+      field.IsPrivate.Should().BeTrue();
+      field.IsStatic.Should().BeFalse();
+    });*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.Method(Type, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_Method_Method()
+  {
+    AssertionExtensions.Should(() => ReflectionExtensions.Method(null!, "name")).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).Method(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).Method(string.Empty)).ThrowExactly<ArgumentException>();
+
+    /*var type = typeof(TestObject);
+
+    type.Method("PublicStaticMethod").Use(method =>
+    {
+      method.IsPublic.Should().BeTrue();
+      method.IsStatic.Should().BeTrue();
+    });
+
+    type.Method("ProtectedStaticMethod").Use(method =>
+    {
+      method.IsPrivate.Should().BeFalse();
+      method.IsStatic.Should().BeTrue();
+    });
+
+    type.Method("PrivateStaticMethod").Use(method =>
+    {
+      method.IsPrivate.Should().BeTrue();
+      method.IsStatic.Should().BeTrue();
+    });
+
+    type.Method("PublicMethod").Use(method =>
+    {
+      method.IsPublic.Should().BeTrue();
+      method.IsStatic.Should().BeFalse();
+    });
+
+    type.Method("ProtectedMethod").Use(method =>
+    {
+      method.IsPrivate.Should().BeFalse();
+      method.IsStatic.Should().BeFalse();
+    });
+
+    type.Method("PrivateMethod").Use(method =>
+    {
+      method.IsPrivate.Should().BeTrue();
+      method.IsStatic.Should().BeFalse();
+    });*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.Property(Type, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_Property_Method()
+  {
+    AssertionExtensions.Should(() => ReflectionExtensions.Property(null!, "name")).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).Property(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).Property(string.Empty)).ThrowExactly<ArgumentException>();
+
+    var type = typeof(TestObject);
+
+    type.Property("PublicStaticProperty").Use(property => property.IsPublic().Should().BeTrue());
+    type.Property("ProtectedStaticProperty").Use(property => property.IsPublic().Should().BeFalse());
+    type.Property("PrivateStaticProperty").Use(property => property.IsPublic().Should().BeFalse());
+    type.Property("PublicProperty").Use(property => property.IsPublic().Should().BeTrue());
+    type.Property("ProtectedProperty").Use(property => property.IsPublic().Should().BeFalse());
+    type.Property("PrivateProperty").Use(property => property.IsPublic().Should().BeFalse());
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.Constructor(Type, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_Constructor_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.Constructor(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.Constructor(null!, Array.Empty<Type>())).ThrowExactly<ArgumentNullException>();
+
+    typeof(TestObject).Constructor().Should().NotBeNull();
+    typeof(string).Constructor().Should().BeNull();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.HasField(Type, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_HasField_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.HasField(null!, "name")).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).HasField(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).HasField(string.Empty)).ThrowExactly<ArgumentException>();
+
+    typeof(object).HasField("field").Should().BeFalse();
+
+    var subject = typeof(TestObject);
+    subject.HasField("PublicStaticField").Should().BeTrue();
+    subject.HasField("ProtectedStaticField").Should().BeTrue();
+    subject.HasField("PrivateStaticField").Should().BeTrue();
+    subject.HasField("PublicField").Should().BeTrue();
+    subject.HasField("ProtectedField").Should().BeTrue();
+    subject.HasField("PrivateField").Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.HasMethod(Type, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_HasMethod_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.HasMethod(null!, "name")).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).HasMethod(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).HasMethod(string.Empty)).ThrowExactly<ArgumentException>();
+
+    typeof(object).HasMethod("method").Should().BeFalse();
+
+    var subject = typeof(TestObject);
+    subject.HasMethod("PublicStaticMethod").Should().BeTrue();
+    subject.HasMethod("ProtectedStaticMethod").Should().BeTrue();
+    subject.HasMethod("PrivateStaticMethod").Should().BeTrue();
+    subject.HasMethod("PublicMethod").Should().BeTrue();
+    subject.HasMethod("ProtectedMethod").Should().BeTrue();
+    subject.HasMethod("PrivateMethod").Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.HasProperty(Type, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Type_HasProperty_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.HasProperty(null!, "name")).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).HasProperty(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => typeof(object).HasProperty(string.Empty)).ThrowExactly<ArgumentException>();
+
+    typeof(object).HasProperty("property").Should().BeFalse();
+
+    var subject = typeof(TestObject);
+    subject.HasProperty("PublicStaticProperty").Should().BeTrue();
+    subject.HasProperty("ProtectedStaticProperty").Should().BeTrue();
+    subject.HasProperty("PrivateStaticProperty").Should().BeTrue();
+    subject.HasProperty("PublicProperty").Should().BeTrue();
+    subject.HasProperty("ProtectedProperty").Should().BeTrue();
+    subject.HasProperty("PrivateProperty").Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.Type(MemberInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MemberInfo_Type_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.Type(null!)).ThrowExactly<ArgumentNullException>();
+
+    var type = typeof(TestObject);
+
+    var eventMember = type.Event("PublicEvent");
+    eventMember.Type().Should().Be(eventMember.EventHandlerType);
+
+    var fieldMember = type.Field("PublicField");
+    fieldMember.Type().Should().Be(fieldMember.FieldType);
+
+    var methodMember = type.Method("PublicMethod");
+    methodMember.Type().Should().Be(methodMember.ReturnType);
+
+    var propertyMember = type.Property("PublicProperty");
+    propertyMember.Type().Should().Be(propertyMember.PropertyType);*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.IsConstructor(MemberInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MemberInfo_IsConstructor_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.IsConstructor(null!)).ThrowExactly<ArgumentNullException>();
+
+    typeof(TestObject).Constructor().As<MemberInfo>().IsConstructor().Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.IsEvent(MemberInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MemberInfo_IsEvent_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.IsEvent(null!)).ThrowExactly<ArgumentNullException>();
+
+    typeof(TestObject).Event("PublicEvent").As<MemberInfo>().IsEvent().Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.IsField(MemberInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MemberInfo_IsField_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.IsField(null!)).ThrowExactly<ArgumentNullException>();
+
+    typeof(TestObject).Field("PublicField").As<MemberInfo>().IsField().Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.IsMethod(MemberInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MemberInfo_IsMethod_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.IsMethod(null!)).ThrowExactly<ArgumentNullException>();
+
+    typeof(TestObject).Method("PublicMethod").As<MemberInfo>().IsMethod().Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.IsProperty(MemberInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MemberInfo_IsProperty_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.IsProperty(null!)).ThrowExactly<ArgumentNullException>();
+
+    typeof(TestObject).Property("PublicProperty").As<MemberInfo>().IsProperty().Should().BeTrue();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ReflectionExtensions.Attribute(MemberInfo, Type)"/></description></item>
+  ///     <item><description><see cref="ReflectionExtensions.Attribute{T}(MemberInfo)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void MemberInfo_Attribute_Methods()
+  {
+    /*using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ReflectionExtensions.Attribute(null!, typeof(object))).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => typeof(object).Attribute(null!)).ThrowExactly<ArgumentNullException>();
+
+      typeof(TestObject).Attribute(typeof(NonSerializedAttribute)).Should().BeNull();
+      typeof(TestObject).Attribute<NonSerializedAttribute>().Should().BeNull();
+
+      typeof(TestObject).Attribute(typeof(SerializableAttribute)).Should().BeOfType<SerializableAttribute>();
+      typeof(TestObject).Attribute<SerializableAttribute>().Should().NotBeNull();
+
+
+      var property = typeof(string).GetProperty("Length");
+      property.Attribute(typeof(DescriptionAttribute)).Should().BeNull();
+      property.Attribute<DescriptionAttribute>().Should().BeNull();
+
+      property = typeof(TestObject).GetProperty("PublicProperty");
+      property.Attribute(typeof(DescriptionAttribute)).Should().NotBeNull();
+      property.Attribute<DescriptionAttribute>().Should().NotBeNull();
+
+
+      var method = typeof(object).GetMethod("ToString");
+      method.Attribute(typeof(DescriptionAttribute)).Should().BeNull();
+      method.Attribute<DescriptionAttribute>().Should().BeNull();
+
+      method = typeof(TestObject).GetMethod("PublicMethod");
+      method.Attribute(typeof(DescriptionAttribute)).Should().NotBeNull();
+      method.Attribute<DescriptionAttribute>().Should().NotBeNull();
+
+
+      var field = typeof(string).GetField("Empty");
+      field.Attribute(typeof(DescriptionAttribute)).Should().BeNull();
+      field.Attribute<DescriptionAttribute>().Should().BeNull();
+
+      field = typeof(TestObject).GetField("PublicField");
+      field.Attribute(typeof(DescriptionAttribute)).Should().NotBeNull();
+      field.Attribute<DescriptionAttribute>().Should().NotBeNull();
     }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ReflectionExtensions.Attribute<object>(null!)).ThrowExactly<ArgumentNullException>();
+    }*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ReflectionExtensions.Attributes(MemberInfo, Type)"/></description></item>
+  ///     <item><description><see cref="ReflectionExtensions.Attributes{T}(MemberInfo)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void MemberInfo_Attributes_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ReflectionExtensions.Attributes(null!, typeof(object))).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => typeof(object).Attributes(null!)).ThrowExactly<ArgumentNullException>();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ReflectionExtensions.Attributes<object>(null!)).ThrowExactly<ArgumentNullException>();
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ReflectionExtensions.IsPublic(PropertyInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void PropertyInfo_IsPublic_Method()
+  {
+    /*AssertionExtensions.Should(() => ReflectionExtensions.IsPublic(null!)).ThrowExactly<ArgumentNullException>();
+
+    var type = typeof(TestObject);
+    type.GetProperty("PublicProperty", BindingFlags.Public | BindingFlags.Instance).IsPublic().Should().BeTrue();
+    type.GetProperty("ProtectedProperty", BindingFlags.NonPublic | BindingFlags.Instance).IsPublic().Should().BeFalse();
+    type.GetProperty("PrivateProperty", BindingFlags.NonPublic | BindingFlags.Instance).IsPublic().Should().BeFalse();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ReflectionExtensions.Delegate(MethodInfo, Type)"/></description></item>
+  ///     <item><description><see cref="ReflectionExtensions.Delegate{T}(MethodInfo)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void MethodInfo_Delegate_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ReflectionExtensions.Delegate(null!, typeof(object))).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => typeof(object).GetMethod("ToString").Delegate(null!)).ThrowExactly<ArgumentNullException>();
+
+      var method = typeof(object).GetMethod("ToString");
+      AssertionExtensions.Should(() => method.Delegate(typeof(object))).ThrowExactly<ArgumentException>();
+      var methodDelegate = method.Delegate(typeof(AsString));
+      methodDelegate.Method.Should().BeSameAs(method);
+      methodDelegate.Target.Should().BeNull();
+      AssertionExtensions.Should(() => methodDelegate.DynamicInvoke()).ThrowExactly<TargetParameterCountException>();
+      AssertionExtensions.Should(() => methodDelegate.DynamicInvoke(new object(), new object())).ThrowExactly<TargetParameterCountException>();
+      methodDelegate.DynamicInvoke("test").To<string>().Should().Be("test");
+      method.Delegate(typeof(AsString)).Should().Be(method.Delegate<AsString>());
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ReflectionExtensions.Delegate<object>(null!)).ThrowExactly<ArgumentNullException>();
+    }
+
+    throw new NotImplementedException();
+  }
+
+
+  [Description("Enumeration")]
+  private enum MockEnumeration
+  {
+    [Description("FirstOption")]
+    First,
+
+    Second,
+
+    [Description("ThirdOption")]
+    Third
+  }
+
+  private static int IncrementValue(int value) => value + 1;
+
+  private static int DecrementValue(int value) => value - 1;
+  
+  [Serializable]
+  private class TestObject : IDisposable, IEquatable<TestObject>
+  {
+    [Description]
+    [DisplayName]
+    private object ReadOnlyProperty => null;
+
+    [Description("PublicStaticProperty Description")]
+    [DisplayName("PublicStaticProperty")]
+    public static object PublicStaticProperty
+    {
+      get; set;
+    }
+
+    protected static object ProtectedStaticProperty
+    {
+      get; set;
+    }
+
+    private static object PrivateStaticProperty
+    {
+      get; set;
+    }
+
+    [Description("PublicProperty")]
+    public object PublicProperty
+    {
+      get; set;
+    }
+
+    [DisplayName("ProtectedProperty")]
+    protected object ProtectedProperty
+    {
+      get; set;
+    }
+
+    private object PrivateProperty
+    {
+      get; set;
+    }
+
+    [Description]
+    public static object PublicStaticField;
+
+    protected static object ProtectedStaticField;
+
+    private static object PrivateStaticField;
+
+    [Description]
+    public object PublicField;
+
+    protected object ProtectedField;
+
+    private object PrivateField;
+
+    public delegate void PublicDelegate();
+
+    protected delegate void ProtectedDelegate();
+
+    private delegate void PrivateDelegate();
+
+    public event PublicDelegate PublicEvent;
+
+    protected event ProtectedDelegate ProtectedEvent;
+
+    private event PrivateDelegate PrivateEvent;
+
+    public TestObject()
+    {
+    }
+
+    public TestObject(object publicProperty) => PublicProperty = publicProperty;
+
+    public static void PublicStaticMethod()
+    {
+    }
+
+    protected static void ProtectedStaticMethod()
+    {
+    }
+
+    private static void PrivateStaticMethod()
+    {
+    }
+
+    [Description]
+    public void PublicMethod()
+    {
+    }
+
+    protected void ProtectedMethod()
+    {
+    }
+
+    private void PrivateMethod()
+    {
+    }
+
+    public void Dispose()
+    {
+      throw new NotImplementedException();
+    }
+
+    public virtual bool Equals(TestObject other) => /*this.Equality(instance => instance.PublicProperty, instance => instance.PublicProperty)*/throw new NotImplementedException();
+
+    public override bool Equals(object other) => Equals(other as TestObject);
+
+    public override int GetHashCode() => this.HashCode(nameof(PublicProperty), nameof(PublicProperty));
   }
 }

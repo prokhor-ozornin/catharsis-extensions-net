@@ -1,374 +1,660 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Serialization;
+using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
-namespace Catharsis.Commons
+namespace Catharsis.Commons.Tests;
+
+/// <summary>
+///   <para>Tests set for class <see cref="XmlExtensions"/>.</para>
+/// </summary>
+public sealed class XmlExtensionsTest : UnitTest
 {
-  public sealed class XmlExtensionsTest
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.IsEmpty(XmlDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlDocument_IsEmpty_Method()
   {
-    [Fact]
-    public void as_x_document()
+    //AssertionExtensions.Should(() => ((XmlDocument) null!).IsEmpty()).ThrowExactly<ArgumentNullException>();
+
+    var xml = new XmlDocument();
+    xml.IsEmpty().Should().BeTrue();
+
+    xml.RemoveAll();
+    xml.AppendChild(xml.CreateComment(null));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveAll();
+    xml.AppendChild(xml.CreateDocumentType("name", null, null, null));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveAll();
+    xml.AppendChild(xml.CreateElement("element"));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveAll();
+    xml.AppendChild(xml.CreateProcessingInstruction("target", "data"));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveAll();
+    xml.AppendChild(xml.CreateSignificantWhitespace(null));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveAll();
+    xml.AppendChild(xml.CreateWhitespace(null));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveAll();
+    xml.AppendChild(xml.CreateXmlDeclaration("1.0", null, null));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveAll();
+    xml.AppendChild(xml.CreateDocumentFragment());
+    xml.IsEmpty().Should().BeTrue();
+
+    xml.RemoveAll();
+    xml.IsEmpty().Should().BeTrue();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.IsEmpty(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XDocument_IsEmpty_Method()
+  {
+    //AssertionExtensions.Should(() => ((XDocument) null!).IsEmpty()).ThrowExactly<ArgumentNullException>();
+
+    var xml = new XDocument();
+    xml.IsEmpty().Should().BeTrue();
+
+    xml.RemoveNodes();
+    xml.Add(new XComment("comment"));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveNodes();
+    xml.Add(new XProcessingInstruction("target", "data"));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveNodes();
+    xml.Add(new XElement("element"));
+    xml.IsEmpty().Should().BeFalse();
+
+    xml.RemoveNodes();
+    xml.IsEmpty().Should().BeTrue();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.Empty(XmlDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlDocument_Empty_Method()
+  {
+    void Validate(XmlDocument xml)
     {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.AsXDocument(null));
-      Assert.Throws<XmlException>(() => Stream.Null.AsXDocument());
-
-      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-
-      using (var stream = new MemoryStream(Xml.Bytes(Encoding.UTF32)))
-      {
-        Assert.Throws<XmlException>(() => stream.AsXDocument());
-      }
-
-      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
-      {
-        Assert.Equal("<article>text</article>", stream.AsXDocument().ToString());
-        Assert.Empty(stream.Bytes());
-        Assert.Equal(-1, stream.ReadByte());
-      }
-
-      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
-      {
-        Assert.Equal("<article>text</article>", stream.AsXDocument(true).ToString());
-        Assert.Equal(-1, stream.ReadByte());
-      }
+      xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
+      xml.HasChildNodes.Should().BeFalse();
     }
 
-    [Fact]
-    public void as_xml_document()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.AsXmlDocument(null));
-      Assert.Throws<XmlException>(() => Stream.Null.AsXmlDocument());
+      //AssertionExtensions.Should(() => ((XmlDocument) null!).IsEmpty()).ThrowExactly<ArgumentNullException>();
 
-      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-
-      using (var stream = new MemoryStream(Xml.Bytes(Encoding.UTF32)))
-      {
-        Assert.Throws<XmlException>(() => stream.AsXmlDocument());
-      }
-
-      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
-      {
-        Assert.Equal(Xml, stream.AsXmlDocument().String());
-        Assert.Empty(stream.Bytes());
-        Assert.Equal(-1, stream.ReadByte());
-      }
-
-      using (var stream = new MemoryStream(Xml.Bytes(Encoding.Unicode)))
-      {
-        Assert.Equal(Xml, stream.AsXmlDocument(true).String());
-        Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      }
-    }
-
-    [Fact]
-    public void as_xml_string()
-    {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.AsXml<object>(null));
-      Assert.Throws<ArgumentException>(() => string.Empty.AsXml<object>());
-
-      var subject = Guid.Empty;
-      Assert.Equal(subject, subject.ToXml().AsXml<Guid>());
-    }
-
-    [Fact]
-    public void as_xml_stream()
-    {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.AsXml<object>(null));
-
-      var subject = Guid.Empty;
-      using (var stream = new MemoryStream())
-      {
-        subject.ToXml(stream, Encoding.Unicode);
-        Assert.Equal(subject, stream.Rewind().AsXml<Guid>());
-        Assert.True(stream.CanWrite);
-      }
-      using (var stream = new MemoryStream())
-      {
-        subject.ToXml(stream, Encoding.Unicode);
-        Assert.Equal(subject, stream.Rewind().AsXml<Guid>(true));
-        Assert.False(stream.CanWrite);
-      }
-    }
-
-    [Fact]
-    public void as_xml_textreader()
-    {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.AsXml<object>(null));
-
-      var subject = Guid.Empty;
-      using (var reader = new StringReader(subject.ToXml()))
-      {
-        Assert.True(reader.AsXml<Guid>() == subject);
-        reader.ReadLine();
-      }
-      using (var reader = new StringReader(subject.ToXml()))
-      {
-        Assert.Equal(subject, reader.AsXml<Guid>(true));
-        Assert.Throws<ObjectDisposedException>(() => reader.ReadLine());
-      }
-    }
-
-    [Fact]
-    public void deserialize()
-    {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.Deserialize<object>(null));
-      Assert.Throws<InvalidOperationException>(() => new StringReader(string.Empty).XmlReader(true).Deserialize<object>());
-
-      var serialized = Guid.NewGuid().ToString();
-      var xml = new StringWriter().Do(writer =>
-      {
-        new XmlSerializer(serialized.GetType()).Serialize(writer, serialized);
-        return writer.ToString();
-      });
-      
-      var xmlReader = new StringReader(xml);
-      using (var reader = new StringReader(xml).XmlReader(true))
-      {
-        var deserialized = reader.Deserialize(serialized.GetType());
-        Assert.False(ReferenceEquals(serialized, deserialized));
-        Assert.Equal(serialized, deserialized);
-      }
-      xmlReader.ReadToEnd();
-      xmlReader.Close();
-
-      xmlReader = new StringReader(xml);
-      using (var reader = xmlReader.XmlReader(true))
-      {
-        var deserialized = reader.Deserialize(serialized.GetType());
-        Assert.False(ReferenceEquals(serialized, deserialized));
-        Assert.Equal(serialized, deserialized);
-        Assert.False(reader.Read());
-        Assert.Equal(-1, xmlReader.Read());
-      }
-
-      Assert.Equal(serialized, new StringReader(xml).XmlReader(true).Deserialize<string>());
-    }
-
-    [Fact]
-    public void dictionary_xml_document()
-    {
-      Assert.Throws<ArgumentNullException>(() => ((XmlDocument) null).Dictionary());
+      Validate(new XmlDocument());
 
       var xml = new XmlDocument();
-      var articlesXml = xml.CreateElement("Articles");
-      xml.AppendChild(articlesXml);
-      var articleXml = xml.CreateElement("Article");
-      articlesXml.AppendChild(articleXml);
-      articleXml.AppendChild(xml.CreateComment("Comment"));
-      articleXml.SetAttribute("Id", "id");
-      var nameXml = xml.CreateElement("Name");
-      nameXml.InnerText = "name";
-      articleXml.AppendChild(nameXml);
-      var dateXml = xml.CreateElement("Date");
-      dateXml.InnerText = DateTime.MaxValue.ToString();
-      articleXml.AppendChild(dateXml);
-      var descriptionXml = xml.CreateElement("Description");
-      descriptionXml.AppendChild(xml.CreateCDataSection("description"));
-      articleXml.AppendChild(descriptionXml);
-      articleXml.AppendChild(xml.CreateElement("Notes"));
-      var tagsXml = xml.CreateElement("Tags");
-      articleXml.AppendChild(tagsXml);
-      var tag1Xml = xml.CreateElement("Tag");
-      tag1Xml.InnerText = "tag1";
-      tagsXml.AppendChild(tag1Xml);
-      var tag2Xml = xml.CreateElement("Tag");
-      tag2Xml.InnerText = "tag2";
-      tagsXml.AppendChild(tag2Xml);
+      xml.AppendChild(xml.CreateElement("root"));
+      Validate(xml);
+    }
+  }
 
-      var dictionary = xml.Dictionary();
-      Assert.Equal(1, dictionary.Keys.Count);
-      Assert.True(dictionary.ContainsKey("Articles"));
-      var article = dictionary["Articles"].To<IDictionary<string, object>>()["Article"].To<IDictionary<string, object>>();
-      Assert.Equal(6, article.Keys.Count);
-      Assert.False(article.ContainsKey("Comment"));
-      Assert.Equal("id", article["Id"].ToString());
-      Assert.Equal("name", article["Name"].ToString());
-      Assert.Equal(DateTime.MaxValue.RFC1121(), article["Date"].ToString().ToDateTime().RFC1121());
-      Assert.Equal("description", article["Description"].ToString());
-      Assert.Null(article["Notes"]);
-      var tags = article["Tags"].To<IDictionary<string, object>>();
-      Assert.Equal(1, tags.Keys.Count);
-      Assert.Equal("tag2", tags["Tag"].ToString());
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.Empty(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XDocument_Empty_Method()
+  {
+    void Validate(XDocument xml)
+    {
+      xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
+      xml.Nodes().Should().BeEmpty();
     }
 
-    [Fact]
-    public void dictionary_x_document()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => ((XDocument)null).Dictionary());
+      //AssertionExtensions.Should(() => ((XDocument) null!).IsEmpty()).ThrowExactly<ArgumentNullException>();
 
-      var xml = new XDocument(
-        new XElement("Articles",
-          new XElement("Article",
-            new XComment("Comment"),
-            new XAttribute("Id", "id"),
-            new XElement("Name", "name"),
-            new XElement("Date", DateTime.MaxValue),
-            new XElement("Description", new XCData("description")),
-            new XElement("Notes", string.Empty),
-            new XElement("Tags",
-            new XElement("Tag", "tag1"),
-            new XElement("Tag", "tag2")))));
-      var dictionary = xml.Dictionary();
-      Assert.Equal(1, dictionary.Keys.Count);
-      Assert.True(dictionary.ContainsKey("Articles"));
-      var article = dictionary["Articles"].To<IDictionary<string, object>>()["Article"].To<IDictionary<string, object>>();
-      Assert.Equal(6, article.Keys.Count);
-      Assert.False(article.ContainsKey("Comment"));
-      Assert.Equal("id", article["Id"].ToString());
-      Assert.Equal("name", article["Name"].ToString());
-      Assert.Equal(DateTime.MaxValue.RFC1121(), article["Date"].ToString().ToDateTime().RFC1121());
-      Assert.Equal("description", article["Description"].ToString());
-      Assert.Null(article["Notes"]);
-      var tags = article["Tags"].To<IDictionary<string, object>>();
-      Assert.Equal(1, tags.Keys.Count);
-      Assert.Equal("tag2", tags["Tag"].ToString());
+      Validate(new XDocument());
+      Validate(new XDocument(new XElement("root")));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="XmlExtensions.Bytes(XmlDocument)"/></description></item>
+  ///     <item><description><see cref="XmlExtensions.Bytes(XmlDocument, IEnumerable{byte}, CancellationToken)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void XmlDocument_Bytes_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XmlDocument) null!).Bytes()).ThrowExactly<ArgumentNullException>();
     }
 
-    [Fact]
-    public void dictionary_x_element()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => ((XElement)null).Dictionary());
-
-      var xml = new XDocument(
-        new XElement("Articles",
-          new XElement("Article",
-            new XComment("Comment"),
-            new XAttribute("Id", "id"),
-            new XElement("Name", "name"),
-            new XElement("Date", DateTime.MaxValue),
-            new XElement("Description", new XCData("description")),
-            new XElement("Notes", string.Empty),
-            new XElement("Tags",
-              new XElement("Tag", "tag1"),
-              new XElement("Tag", "tag2")))));
-      var dictionary = xml.Root.Dictionary();
-      Assert.Equal(1, dictionary.Keys.Count);
-      Assert.True(dictionary.ContainsKey("Articles"));
-      var article = dictionary["Articles"].To<IDictionary<string, object>>()["Article"].To<IDictionary<string, object>>();
-      Assert.Equal(6, article.Keys.Count);
-      Assert.False(article.ContainsKey("Comment"));
-      Assert.Equal("id", article["Id"].ToString());
-      Assert.Equal("name", article["Name"].ToString());
-      Assert.Equal(DateTime.MaxValue.RFC1121(), article["Date"].ToString().ToDateTime().RFC1121());
-      Assert.Equal("description", article["Description"].ToString());
-      Assert.Null(article["Notes"]);
-      var tags = article["Tags"].To<IDictionary<string, object>>();
-      Assert.Equal(1, tags.Keys.Count);
-      Assert.Equal("tag2", tags["Tag"].ToString());
+      AssertionExtensions.Should(() => ((XmlDocument) null!).Bytes(Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => new XmlDocument().Bytes(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
     }
 
-    [Fact]
-    public void dictionary_xml_reader()
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="XmlExtensions.Bytes(XDocument, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="XmlExtensions.Bytes(XDocument, IEnumerable{byte}, CancellationToken)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void XDocument_Bytes_Methods()
+  {
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => ((XmlReader)null).Dictionary());
+      AssertionExtensions.Should(() => ((XDocument) null!).Bytes()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    }
 
-      var xml = new XDocument(
-        new XElement("Articles",
-          new XElement("Article",
-            new XComment("Comment"),
-            new XAttribute("Id", "id"),
-            new XElement("Name", "name"),
-            new XElement("Date", DateTime.MaxValue),
-            new XElement("Description", new XCData("description")),
-            new XElement("Tags",
-              new XElement("Tag", "tag1"),
-              new XElement("Tag", "tag2")))));
-      var xmlDictionary = xml.Dictionary();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null!).Bytes(Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => new XDocument().Bytes(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    }
 
-      IDictionary<string, object> dictionary;
-      using (var reader = new StringReader(xml.ToString()).XmlReader(true))
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="XmlExtensions.Text(XmlDocument)"/></description></item>
+  ///     <item><description><see cref="XmlExtensions.Text(XmlDocument, string)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void XmlDocument_Text_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XmlDocument) null!).Text()).ThrowExactly<ArgumentNullException>();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XmlDocument) null!).Text(string.Empty)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new XmlDocument().Text(null!)).ThrowExactly<ArgumentNullException>();
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="XmlExtensions.Text(XDocument, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="XmlExtensions.Text(XDocument, string, CancellationToken)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void XDocument_Text_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null!).Text()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null!).Text(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => new XDocument().Text(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.Text(XmlReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlReader_Text_Method()
+  {
+    AssertionExtensions.Should(() => ((XmlReader) null!).Text()).ThrowExactlyAsync<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.Text(XmlWriter, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlWriter_Text_Method()
+  {
+    AssertionExtensions.Should(() => ((XmlWriter) null!).Text(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().Text(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.UseTemporarily(XmlDocument, Action{XmlDocument})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlDocument_UseTemporarily_Method()
+  {
+    //AssertionExtensions.Should(() => ((XmlDocument) null!).UseTemporarily(_ => {})).ThrowExactly<ArgumentNullException>();
+    //AssertionExtensions.Should(() => new XmlDocument().UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
+
+    var xml = new XmlDocument();
+    xml.UseTemporarily(xml => xml.AppendChild(xml.CreateElement("root"))).Should().NotBeNull().And.BeSameAs(xml);
+    xml.ChildNodes.Count.Should().Be(0);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.UseTemporarily(XDocument, Action{XDocument})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XDocument_UseTemporarily_Method()
+  {
+    //AssertionExtensions.Should(() => ((XDocument) null!).UseTemporarily(_ => { })).ThrowExactly<ArgumentNullException>();
+    //AssertionExtensions.Should(() => new XDocument().UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
+
+    var xml = new XDocument();
+    xml.UseTemporarily(xml => xml.Add(new XElement("root"))).Should().NotBeNull().And.BeSameAs(xml);
+    xml.Nodes().Should().BeEmpty();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.Print(XmlWriter, object)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlWriter_Print_Method()
+  {
+    AssertionExtensions.Should(() => XmlExtensions.Print(null!, new object())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().Print(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.Skip(XmlReader, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlReader_Skip_Method()
+  {
+    AssertionExtensions.Should(() => XmlExtensions.Skip(null!, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToEnumerable(XmlDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlDocument_ToEnumerable_Method()
+  {
+    AssertionExtensions.Should(() => ((XmlDocument) null!).ToEnumerable()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToEnumerable(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XDocument_ToEnumerable_Method()
+  {
+    AssertionExtensions.Should(() => ((XDocument) null!).ToEnumerable()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReader(TextReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextReader_ToXmlReader_Method()
+  {
+    /*AssertionExtensions.Should(() => ((TextReader) null!).ToXmlReader()).ThrowExactly<ArgumentNullException>();
+
+    const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+
+    var textReader = Xml.ToStringReader();
+    textReader.ToXmlReader().Use(reader =>
+    {
+      reader.Settings.CloseInput.Should().BeFalse();
+      reader.Settings.IgnoreComments.Should().BeTrue();
+      reader.Settings.IgnoreWhitespace.Should().BeTrue();
+      reader.ReadStartElement("article");
+      return reader.ReadString();
+    }).Should().Be("text");
+    textReader.Read().Should().Be(-1);
+
+    textReader = Xml.ToStringReader();
+    textReader.ToXmlReader().Use(reader =>
+    {
+      //reader.Settings.CloseInput.Should().BeTrue();
+      reader.ReadStartElement("article");
+      return reader.ReadString();
+    }).Should().Be("text");
+    AssertionExtensions.Should(() => textReader.Read()).ThrowExactly<ObjectDisposedException>();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReader(Stream, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToXmlReader_Method()
+  {
+    /*AssertionExtensions.Should(() => ((Stream) null!).ToXmlReader()).ThrowExactly<ArgumentNullException>();
+
+    const string Xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
+
+    using (var stream = new MemoryStream(Xml.Bytes()))
+    {
+      var reader = stream.ToXmlReader();
+      reader.Settings.CloseInput.Should().BeFalse();
+      reader.Settings.IgnoreComments.Should().BeTrue();
+      reader.Settings.IgnoreWhitespace.Should().BeTrue();
+      reader.ReadStartElement("article");
+      reader.ReadString().Should().Be("text");
+      reader.ReadEndElement();
+      reader.Close();
+      stream.Bytes().Should().BeEmpty();
+      stream.ReadByte().Should().Be(-1);
+    }
+
+    using (var stream = new MemoryStream(Xml.Bytes()))
+    {
+      stream.ToXmlReader(true).Close();
+      //True(reader.Settings.CloseInput);
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }*/
+
+    // TODO Encoding support
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReader(FileInfo, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FileInfo_ToXmlReader_Method()
+  {
+    AssertionExtensions.Should(() => ((FileInfo) null!).ToXmlReader()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReader(Uri, Encoding?, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToXmlReader_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null!).ToXmlReader()).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReader(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_ToXmlReader_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null!).ToXmlReader()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReader(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XDocument_ToXmlReader_Method()
+  {
+    AssertionExtensions.Should(() => ((XDocument) null!).ToXmlReader()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlWriter(TextWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextWriter_ToXmlWriter_Method()
+  {
+    /*AssertionExtensions.Should(() => ((TextWriter) null!).ToXmlWriter()).ThrowExactly<ArgumentNullException>();
+
+    const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+
+    var textWriter = new StringWriter();
+    textWriter.ToXmlWriter().Write(writer =>
+    {
+      writer.Settings.CloseOutput.Should().BeFalse();
+      writer.Settings.Encoding.ToString().Should().Be(Encoding.Unicode.ToString());
+      writer.Settings.Indent.Should().BeFalse();
+      writer.WriteElementString("article", "text");
+    });
+    textWriter.ToString().Should().Be(Xml);
+    textWriter.Write(string.Empty);
+    textWriter.Close();
+
+    textWriter = new StringWriter();
+    textWriter.ToXmlWriter(true).Write(writer =>
+    {
+      writer.Settings.CloseOutput.Should().BeTrue();
+      writer.Settings.Encoding.ToString().Should().Be(Encoding.Unicode.ToString());
+      writer.Settings.Indent.Should().BeFalse();
+    });
+    textWriter.Write(string.Empty);*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlWriter(Stream, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToXmlWriter_Method()
+  {
+    /*AssertionExtensions.Should(() => ((Stream) null!).ToXmlWriter()).ThrowExactly<ArgumentNullException>();
+
+    var xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
+    using (var stream = new MemoryStream())
+    {
+      using (var writer = stream.ToXmlWriter())
       {
-        dictionary = reader.Dictionary();
-        Assert.True(dictionary.Keys.SequenceEqual(xmlDictionary.Keys));
-      }
-
-      var xmlReader = new StringReader(xml.ToString()).XmlReader(true);
-      dictionary = xmlReader.Dictionary();
-      Assert.False(xmlReader.Read());
-      Assert.True(dictionary.Keys.SequenceEqual(xmlDictionary.Keys));
-    }
-
-    [Fact]
-    public void write()
-    {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.Write<XmlWriter>(null, writer => {}));
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.Write(XmlWriter.Create(Path.GetTempFileName()), null));
-
-      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-      var stringWriter = new StringWriter();
-      var xmlWriter = stringWriter.XmlWriter(true, Encoding.Unicode);
-      Assert.True(ReferenceEquals(xmlWriter.Write(writer =>
-      {
-        writer.WriteStartDocument();
+        writer.Settings.CloseOutput.Should().BeFalse();
+        writer.Settings.Encoding.ToString().Should().Be(Encoding.UTF8.ToString());
+        writer.Settings.Indent.Should().BeFalse();
         writer.WriteElementString("article", "text");
-        writer.WriteEndDocument();
-      }), xmlWriter));
-      Assert.Throws<InvalidOperationException>(() => xmlWriter.WriteRaw(string.Empty));
-      Assert.Equal(Xml, stringWriter.ToString());
-      stringWriter.WriteLine();
+      }
+      stream.ToArray().Should().Equal(xml.Bytes(Encoding.UTF8));
+      stream.Bytes().Should().BeEmpty();
+      stream.ReadByte().Should().Be(-1);
+
+      using (var writer = stream.Rewind().ToXmlWriter(true))
+      {
+        writer.Settings.CloseOutput.Should().BeTrue();
+        writer.Settings.Encoding.ToString().Should().Be(Encoding.UTF8.ToString());
+      }
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
     }
 
-    [Fact]
-    public void x_document()
+    xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+    using (var stream = new MemoryStream())
     {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.XDocument(null));
-      Assert.Throws<XmlException>(() => TextReader.Null.XDocument());
-
-      const string Xml = "<?xml version=\"1.0\"?><article>text</article>";
-
-      using (var reader = new StringReader(Xml))
+      using (var writer = stream.ToXmlWriter(encoding: Encoding.Unicode))
       {
-        Assert.Equal("<article>text</article>", reader.XDocument().ToString());
-        Assert.Equal(-1, reader.Read());
+        writer.Settings.CloseOutput.Should().BeFalse();
+        writer.Settings.Encoding.ToString().Should().Be(Encoding.Unicode.ToString());
+        writer.WriteElementString("article", "text");
       }
+      stream.ToArray().Should().Equal(xml.Bytes(Encoding.Unicode));
+      stream.Bytes().Should().BeEmpty();
+      stream.ReadByte().Should().Be(-1);
 
-      using (var reader = new StringReader(Xml))
+      using (var writer = stream.ToXmlWriter(true, Encoding.Unicode))
       {
-        Assert.Equal("<article>text</article>", reader.XDocument(true).ToString());
-        Assert.Equal(-1, reader.Read());
+        writer.Settings.CloseOutput.Should().BeTrue();
+        writer.Settings.Encoding.ToString().Should().Be(Encoding.Unicode.ToString());
       }
-    }
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }*/
 
-    [Fact]
-    public void xml_string()
-    {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.String(null));
+    // TODO Encoding support
 
-      Assert.Equal(string.Empty, new XmlDocument().String());
+    throw new NotImplementedException();
+  }
 
-      var document = new XmlDocument();
-      var element = document.CreateElement("article");
-      element.SetAttribute("id", "1");
-      element.InnerText = "Text";
-      document.AppendChild(element);
-      Assert.Equal("<?xml version=\"1.0\" encoding=\"utf-16\"?><article id=\"1\">Text</article>", document.String());
-    }
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlWriter(FileInfo, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FileInfo_ToXmlWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((FileInfo) null!).ToXmlWriter()).ThrowExactly<ArgumentNullException>();
 
-    [Fact]
-    public void xml_document()
-    {
-      Assert.Throws<ArgumentNullException>(() => XmlExtensions.XmlDocument(null));
-      Assert.Throws<XmlException>(() => TextReader.Null.XmlDocument());
+    throw new NotImplementedException();
+  }
 
-      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlWriter(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XDocument_ToXmlWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((XDocument) null!).ToXmlWriter()).ThrowExactly<ArgumentNullException>();
 
-      using (var reader = new StringReader(Xml))
-      {
-        Assert.Equal(Xml, reader.XmlDocument().String());
-        Assert.Equal(-1, reader.Read());
-      }
+    throw new NotImplementedException();
+  }
 
-      using (var reader = new StringReader(Xml))
-      {
-        Assert.Equal(Xml, reader.XmlDocument(true).String());
-        Assert.Throws<ObjectDisposedException>(() => reader.Read());
-      }
-    }
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryReader(XmlReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlReader_ToXmlDictionaryReader_Method()
+  {
+    AssertionExtensions.Should(() => ((XmlReader) null!).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryReader(TextReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextReader_ToXmlDictionaryReader_Method()
+  {
+    AssertionExtensions.Should(() => ((TextReader) null!).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryReader(Stream, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToXmlDictionaryReader_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null!).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryReader(FileInfo, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FileInfo_ToXmlDictionaryReader_Method()
+  {
+    AssertionExtensions.Should(() => ((FileInfo) null!).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryReader(Uri, Encoding?, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToXmlDictionaryReader_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null!).ToXmlDictionaryReader()).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryReader(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_ToXmlDictionaryReader_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null!).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryWriter(XmlWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlWriter_ToXmlDictionaryWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((XmlWriter) null!).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryWriter(TextWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextWriter_ToXmlDictionaryWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((TextWriter) null!).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryWriter(Stream, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToXmlDictionaryWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null!).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryWriter(FileInfo, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FileInfo_ToXmlDictionaryWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((FileInfo) null!).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
   }
 }

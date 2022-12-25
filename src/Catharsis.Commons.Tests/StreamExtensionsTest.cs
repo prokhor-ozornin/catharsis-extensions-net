@@ -1,497 +1,1113 @@
-﻿using System;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
+using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
-namespace Catharsis.Commons
-{
-  public sealed class StreamExtensionsTest
-  {
-    [Fact]
-    public void binary_reader()
-    {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.BinaryReader(null));
+namespace Catharsis.Commons.Tests;
 
-      var bytes = Guid.NewGuid().ToByteArray();
-      var stream = new MemoryStream(bytes);
-      using (var reader = stream.BinaryReader())
+/// <summary>
+///   <para>Tests set for class <see cref="StreamExtensions"/>.</para>
+/// </summary>
+public sealed class StreamExtensionsTest : UnitTest
+{
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.IsStart(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_IsStart_Method()
+  {
+    void Validate(Stream stream)
+    {
+      using (stream)
       {
-        Assert.True(ReferenceEquals(reader.BaseStream, stream));
-        Assert.True(reader.ReadBytes(bytes.Length).SequenceEqual(bytes));
+        stream.MoveToStart();
+        stream.IsStart().Should().BeTrue();
+        stream.MoveToEnd();
+        stream.IsStart().Should().Be(stream.Length <= 0);
       }
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
     }
 
-    [Fact]
-    public void binary_writer()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.BinaryWriter(null));
+      //AssertionExtensions.Should(() => StreamExtensions.IsStart(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => RandomReadOnlyForwardStream.IsStart()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsStart()).ThrowExactly<NotSupportedException>();
 
-      var bytes = Guid.NewGuid().ToByteArray();
-      var stream = new MemoryStream();
-      using (var writer = stream.BinaryWriter())
+      Validate(Stream.Null);
+      Validate(EmptyStream);
+      Validate(RandomStream);
+      Validate(RandomReadOnlyStream);
+      Validate(WriteOnlyStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.IsEnd(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_IsEnd_Method()
+  {
+    void Validate(Stream stream)
+    {
+      using (stream)
       {
-        Assert.True(ReferenceEquals(writer.BaseStream, stream));
+        stream.MoveToStart();
+        stream.IsEnd().Should().Be(stream.Length <= 0);
+        stream.MoveToEnd();
+        stream.IsEnd().Should().BeTrue();
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => StreamExtensions.IsEnd(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEnd()).ThrowExactly<ArgumentException>();
+
+      Validate(Stream.Null);
+      Validate(EmptyStream);
+      Validate(RandomStream);
+      Validate(RandomReadOnlyStream);
+      Validate(WriteOnlyStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.IsEmpty(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_IsEmpty_Method()
+  {
+    void Validate(Stream stream, bool empty)
+    {
+      using (stream)
+      {
+        stream.IsEmpty().Should().Be(empty);
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => StreamExtensions.IsEmpty(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEmpty()).ThrowExactly<ArgumentException>();
+
+      Validate(Stream.Null, true);
+      Validate(EmptyStream, true);
+      Validate(RandomStream, false);
+      Validate(RandomReadOnlyStream, false);
+      Validate(RandomReadOnlyForwardStream, false);
+      Validate(WriteOnlyStream, true);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Empty{TStream}(TStream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Empty_Method()
+  {
+    void Validate(Stream stream)
+    {
+      using (stream)
+      {
+        stream.Empty().Should().NotBeNull().And.BeSameAs(stream).And.HaveLength(0).And.HavePosition(0);
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => ((Stream) null!).Empty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => Validate(RandomReadOnlyForwardStream)).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => Validate(WriteOnlyForwardStream)).ThrowExactly<NotSupportedException>();
+
+      Validate(Stream.Null);
+      Validate(EmptyStream);
+      Validate(RandomStream);
+      Validate(RandomReadOnlyStream);
+      Validate(WriteOnlyStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Min(Stream, Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Min_Method()
+  {
+    void Validate(Stream min, Stream max)
+    {
+      using (min)
+      {
+        using (max)
+        {
+          min.Min(min).Should().NotBeNull().And.BeSameAs(min);
+          max.Min(max).Should().NotBeNull().And.BeSameAs(max);
+          min.Min(max).Should().NotBeNull().And.BeSameAs(min);
+        }
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => StreamExtensions.Min(null!, Stream.Null)).ThrowExactly<ArgumentNullException>();
+      //AssertionExtensions.Should(() => Stream.Null.Min(null!)).ThrowExactly<ArgumentNullException>();
+
+      Validate(Stream.Null, Stream.Null);
+      Validate(Stream.Null, EmptyStream);
+      Validate(Stream.Null, RandomStream);
+      
+      Validate(EmptyStream, Stream.Null);
+      Validate(EmptyStream, EmptyStream);
+      Validate(EmptyStream, RandomStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Max(Stream, Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Max_Method()
+  {
+    void Validate(Stream min, Stream max)
+    {
+      using (min)
+      {
+        using (max)
+        {
+          min.Max(min).Should().NotBeNull().And.BeSameAs(min);
+          max.Max(max).Should().NotBeNull().And.BeSameAs(max);
+          max.Max(min).Should().NotBeNull().And.BeSameAs(max);
+        }
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => StreamExtensions.Max(null!, Stream.Null)).ThrowExactly<ArgumentNullException>();
+      //AssertionExtensions.Should(() => Stream.Null.Max(null!)).ThrowExactly<ArgumentNullException>();
+
+      Validate(Stream.Null, Stream.Null);
+      Validate(Stream.Null, EmptyStream);
+      Validate(Stream.Null, RandomStream);
+
+      Validate(EmptyStream, Stream.Null);
+      Validate(EmptyStream, EmptyStream);
+      Validate(EmptyStream, RandomStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Buffered(Stream, int?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Buffered_Method()
+  {
+    void Validate(Stream stream, int? size = null)
+    {
+      using (var buffered = stream.Buffered(size))
+      {
+        AssertionExtensions.Should(() => buffered.ReadTimeout).ThrowExactly<InvalidOperationException>();
+        AssertionExtensions.Should(() => buffered.WriteTimeout).ThrowExactly<InvalidOperationException>();
+
+        buffered.Should().NotBeNull();
+
+        buffered.BufferSize.Should().Be(size ?? 4096);
+        buffered.UnderlyingStream.Should().BeSameAs(stream);
+        buffered.CanRead.Should().Be(stream.CanRead);
+        buffered.CanWrite.Should().Be(stream.CanWrite);
+        buffered.CanSeek.Should().Be(stream.CanSeek);
+        buffered.CanTimeout.Should().Be(stream.CanTimeout);
+
+        if (stream.CanSeek)
+        {
+          buffered.Length.Should().Be(stream.Length);
+
+          buffered.Position.Should().Be(stream.Position);
+
+          buffered.MoveToEnd();
+          stream.Position.Should().Be(buffered.Position);
+        }
+      }
+
+      if (stream.CanSeek)
+      {
+        AssertionExtensions.Should(() => stream.Length).ThrowExactly<ObjectDisposedException>();
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.Buffered(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => Stream.Null.Buffered(int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>();
+      AssertionExtensions.Should(() => Stream.Null.Buffered(0)).ThrowExactly<ArgumentOutOfRangeException>();
+
+      foreach (var buffer in new int?[] {null, 1, 4096, 8192})
+      {
+        Validate(EmptyStream, buffer);
+        Validate(RandomStream, buffer);
+        Validate(RandomReadOnlyStream, buffer);
+        Validate(WriteOnlyStream, buffer);
+        Validate(RandomReadOnlyForwardStream, buffer);
+        Validate(WriteOnlyForwardStream, buffer);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Synchronized(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Synchronized_Method()
+  {
+    void Validate(Stream stream)
+    {
+      using (var synchronized = stream.Synchronized())
+      {
+        AssertionExtensions.Should(() => synchronized.ReadTimeout).ThrowExactly<InvalidOperationException>();
+        AssertionExtensions.Should(() => synchronized.WriteTimeout).ThrowExactly<InvalidOperationException>();
+
+        synchronized.Should().NotBeNull().And.NotBeSameAs(stream);
+
+        synchronized.CanRead.Should().Be(stream.CanRead);
+        synchronized.CanWrite.Should().Be(stream.CanWrite);
+        synchronized.CanSeek.Should().Be(stream.CanSeek);
+        synchronized.CanTimeout.Should().Be(stream.CanTimeout);
+
+        if (stream.CanSeek)
+        {
+          synchronized.Length.Should().Be(stream.Length);
+
+          synchronized.Position.Should().Be(stream.Position);
+
+          synchronized.MoveToEnd();
+          stream.Position.Should().Be(synchronized.Position);
+        }
+      }
+
+      if (stream.CanSeek)
+      {
+        AssertionExtensions.Should(() => stream.Length).ThrowExactly<ObjectDisposedException>();
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.Synchronized(null!)).ThrowExactly<ArgumentNullException>();
+
+      Validate(EmptyStream);
+      Validate(RandomStream);
+      Validate(RandomReadOnlyStream);
+      Validate(WriteOnlyStream);
+      Validate(RandomReadOnlyForwardStream);
+      Validate(WriteOnlyForwardStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ReadOnly(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ReadOnly_Method()
+  {
+    void Validate(Stream stream)
+    {
+      using (var readOnly = stream.ReadOnly())
+      {
+        AssertionExtensions.Should(() => readOnly.ReadTimeout).ThrowExactly<InvalidOperationException>();
+        AssertionExtensions.Should(() => readOnly.WriteTimeout).ThrowExactly<InvalidOperationException>();
+
+        readOnly.Should().NotBeNull().And.NotBeSameAs(stream);
+
+        readOnly.CanRead.Should().BeTrue();
+        readOnly.CanWrite.Should().BeFalse();
+        readOnly.CanSeek.Should().Be(stream.CanSeek);
+        readOnly.CanTimeout.Should().Be(stream.CanTimeout);
+
+        if (stream.CanSeek)
+        {
+          readOnly.Length.Should().Be(stream.Length);
+
+          readOnly.Position.Should().Be(stream.Position);
+
+          readOnly.MoveToEnd();
+          stream.Position.Should().Be(readOnly.Position);
+        }
+      }
+
+      if (stream.CanSeek)
+      {
+        AssertionExtensions.Should(() => stream.Length).ThrowExactly<ObjectDisposedException>();
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => StreamExtensions.ReadOnly(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => WriteOnlyStream.ReadOnly()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ReadOnly()).ThrowExactly<NotSupportedException>();
+
+      Validate(EmptyStream);
+      Validate(RandomStream);
+      Validate(RandomReadOnlyStream);
+      Validate(RandomReadOnlyForwardStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ReadOnlyForward(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ReadOnlyForward_Method()
+  {
+    void Validate(Stream stream)
+    {
+      using (var readOnly = stream.ReadOnlyForward())
+      {
+        AssertionExtensions.Should(() => readOnly.ReadTimeout).ThrowExactly<InvalidOperationException>();
+        AssertionExtensions.Should(() => readOnly.WriteTimeout).ThrowExactly<InvalidOperationException>();
+        AssertionExtensions.Should(() => readOnly.Length).ThrowExactly<NotSupportedException>();
+        AssertionExtensions.Should(() => readOnly.Position).ThrowExactly<NotSupportedException>();
+
+        readOnly.Should().NotBeNull().And.NotBeSameAs(stream);
+
+        readOnly.CanRead.Should().BeTrue();
+        readOnly.CanWrite.Should().BeFalse();
+        readOnly.CanSeek.Should().BeFalse();
+        readOnly.CanTimeout.Should().Be(stream.CanTimeout);
+      }
+
+      if (stream.CanSeek)
+      {
+        AssertionExtensions.Should(() => stream.Length).ThrowExactly<ObjectDisposedException>();
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => StreamExtensions.ReadOnlyForward(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => WriteOnlyStream.ReadOnlyForward()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ReadOnlyForward()).ThrowExactly<NotSupportedException>();
+
+      Validate(EmptyStream);
+      Validate(RandomStream);
+      Validate(RandomReadOnlyStream);
+      Validate(RandomReadOnlyForwardStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteOnly(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_WriteOnly_Method()
+  {
+    void Validate(Stream stream)
+    {
+      using (var writeOnly = stream.WriteOnly())
+      {
+        AssertionExtensions.Should(() => writeOnly.ReadTimeout).ThrowExactly<InvalidOperationException>();
+        AssertionExtensions.Should(() => writeOnly.WriteTimeout).ThrowExactly<InvalidOperationException>();
+
+        writeOnly.Should().NotBeNull().And.NotBeSameAs(stream);
+
+        writeOnly.CanRead.Should().BeFalse();
+        writeOnly.CanWrite.Should().BeTrue();
+        writeOnly.CanSeek.Should().Be(stream.CanSeek);
+        writeOnly.CanTimeout.Should().Be(stream.CanTimeout);
+
+        if (stream.CanSeek)
+        {
+          writeOnly.Length.Should().Be(stream.Length);
+
+          writeOnly.Position.Should().Be(stream.Position);
+
+          writeOnly.MoveToEnd();
+          stream.Position.Should().Be(writeOnly.Position);
+        }
+      }
+
+      if (stream.CanSeek)
+      {
+        AssertionExtensions.Should(() => stream.Length).ThrowExactly<ObjectDisposedException>();
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => StreamExtensions.WriteOnly(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => RandomReadOnlyStream.WriteOnly()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => RandomReadOnlyForwardStream.WriteOnly()).ThrowExactly<NotSupportedException>();
+
+      Validate(EmptyStream);
+      Validate(RandomStream);
+      Validate(WriteOnlyStream);
+      Validate(WriteOnlyForwardStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteOnlyForward(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_WriteOnlyForward_Method()
+  {
+    void Validate(Stream stream)
+    {
+      using (var writeOnly = stream.WriteOnlyForward())
+      {
+        AssertionExtensions.Should(() => writeOnly.ReadTimeout).ThrowExactly<InvalidOperationException>();
+        AssertionExtensions.Should(() => writeOnly.WriteTimeout).ThrowExactly<InvalidOperationException>();
+
+        writeOnly.Should().NotBeNull().And.NotBeSameAs(stream);
+
+        writeOnly.CanRead.Should().BeFalse();
+        writeOnly.CanWrite.Should().BeTrue();
+        writeOnly.CanSeek.Should().BeFalse();
+        writeOnly.CanTimeout.Should().Be(stream.CanTimeout);
+      }
+
+      if (stream.CanSeek)
+      {
+        AssertionExtensions.Should(() => stream.Length).ThrowExactly<ObjectDisposedException>();
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => StreamExtensions.WriteOnly(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => RandomReadOnlyStream.WriteOnlyForward()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => RandomReadOnlyForwardStream.WriteOnlyForward()).ThrowExactly<NotSupportedException>();
+
+      Validate(EmptyStream);
+      Validate(RandomStream);
+      Validate(WriteOnlyStream);
+      Validate(WriteOnlyForwardStream);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StreamExtensions.Bytes(Stream, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="StreamExtensions.Bytes{TStream}(TStream, IEnumerable{byte}, CancellationToken)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Stream_Bytes_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.Bytes(null!)).ThrowExactly<ArgumentNullException>();
+
+      Stream.Null.Bytes().ToArray().Await().Should().BeEmpty();
+
+      var bytes = RandomBytes;
+
+      var stream = new MemoryStream(bytes);
+      stream.Bytes().ToArray().Await().Should().Equal(bytes);
+      stream.ReadByte().Should().Be(-1);
+      stream.Close();
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+
+      stream = new MemoryStream(bytes);
+      stream.Bytes().ToArray().Await().Should().Equal(bytes);
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Stream) null!).Bytes(Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Stream.Null.Bytes(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StreamExtensions.Text(Stream, Encoding?)"/></description></item>
+  ///     <item><description><see cref="StreamExtensions.Text{TStream}(TStream, string, CancellationToken)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Stream_Text_Methods()
+  {
+    using (new AssertionScope())
+    {
+      void Validate(Encoding? encoding = null)
+      {
+        //var bytes = RandomBytes;
+
+        //var text = stream.Text(encoding);
+        //stream.Rewind().ToTextReader(encoding).Text().Should().Be(text);
+        //bytes.Text(encoding).Should().Be(text);
+        //stream.ReadByte().Should().Be(-1);
+        //stream.Rewind().Text(encoding).Should().Be(text);
+        //AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => ((Stream) null!).Text()).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+        Validate();
+        Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Stream) null!).Text(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Stream.Null.Text((string) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Lines(Stream, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Lines_Method()
+  {
+    void Validate(Encoding? encoding = null)
+    {
+
+    }
+
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => StreamExtensions.Lines(null!)).ThrowExactly<ArgumentNullException>();
+
+      Validate(null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Print{TStream}(TStream, object, Encoding?, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Print_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null!).Print(new object())).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.MoveBy{TStream}(TStream, long)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_MoveBy_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.MoveBy<Stream>(null!, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.MoveTo{TStream}(TStream, long)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_MoveTo_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.MoveTo<Stream>(null!, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.MoveToStart{TStream}(TStream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_MoveToStart_Method()
+  {
+
+
+
+    AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null!)).ThrowExactly<ArgumentNullException>();
+
+    Stream.Null.MoveToStart().Should().BeSameAs(Stream.Null);
+
+    var bytes = RandomBytes;
+    var stream = new MemoryStream(bytes);
+    stream.Position.Should().Be(0);
+    stream.MoveToEnd();
+    stream.Position.Should().Be(stream.Length);
+    stream.MoveToStart();
+    stream.Position.Should().Be(0);
+    stream.MoveToStart();
+    stream.Position.Should().Be(0);
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.MoveToEnd{TStream}(TStream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_MoveToEnd_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null!)).ThrowExactly<ArgumentNullException>(); 
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, IEnumerable{byte}, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Write_Enumerable_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null!).Write(Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.Write((IEnumerable<byte>) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Write_Stream_Method()
+  {
+    /*AssertionExtensions.Should(() => ((Stream) null!).Write(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.Write((Stream) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    var bytes = RandomBytes;
+    var text = bytes.ToString();
+
+    var stream = new MemoryStream();
+    stream.Write<MemoryStream>(bytes).Should().BeSameAs(stream);
+    stream.Close();
+    stream.ToArray().Should().Equal(bytes);
+
+    var from = new MemoryStream(bytes);
+    var to = new MemoryStream();
+    to.Write(from).Should().BeSameAs(to);
+    to.ToArray().Should().Equal(bytes);
+    from.Bytes().ToArray().Await().Should().BeEmpty();
+    from.CanRead.Should().BeTrue();
+    to.Bytes().ToArray().Await().Should().BeEmpty();
+    to.CanWrite.Should().BeTrue();
+    from.Close();
+    to.Close();
+
+    using (var s = new MemoryStream())
+    {
+      s.Write(string.Empty).Should().BeSameAs(s);
+      s.Text().Await().Should().BeEmpty();
+    }
+
+    using (var s = new MemoryStream())
+    {
+      s.Write(text).Should().BeSameAs(s);
+      s.Rewind().Text().Should().Be(text);
+    }
+
+    using (var s = new MemoryStream())
+    {
+      s.Write(text, Encoding.Unicode).Should().BeSameAs(s);
+      s.Rewind().Text(encoding: Encoding.Unicode).Should().Be(text);
+    }*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, FileInfo, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Write_FileInfo_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null!).Write(RandomFakeFile)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.Write((FileInfo) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, Uri, IEnumerable{(string Name, object Value)}?, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Write_Uri_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null!).Write("https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.Write((Uri) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, string, Encoding?, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Write_Text_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null!).Write(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.Write((string) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Skip{TStream}(TStream, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Skip_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null!).Skip(0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsBrotli(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_CompressAsBrotli_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.CompressAsBrotli(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsDeflate(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_CompressAsDeflate_Method()
+  {
+    /*AssertionExtensions.Should(() => StreamExtensions.CompressAsDeflate(null!)).ThrowExactly<ArgumentNullException>();
+
+    var bytes = RandomBytes;
+
+    var stream = new MemoryStream();
+    var compressed = Array.Empty<byte>();
+    using (var deflate = stream.Deflate(CompressionMode.Compress))
+    {
+      deflate.BaseStream.Should().BeSameAs(stream);
+      AssertionExtensions.Should(() => deflate.ReadByte()).ThrowExactly<InvalidOperationException>();
+      deflate.Write(bytes);
+    }
+    compressed = stream.ToArray();
+    compressed.Should().NotEqual(bytes);
+    AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+
+    stream = new MemoryStream(compressed);
+    var decompressed = Array.Empty<byte>();
+    using (var deflate = stream.Deflate(CompressionMode.Decompress))
+    {
+      deflate.BaseStream.Should().BeSameAs(stream);
+      decompressed = deflate.Bytes();
+    }
+    decompressed.Should().Equal(bytes);
+    AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+
+    using (var s = new MemoryStream())
+    {
+      s.Deflate(bytes).Should().BeSameAs(s);
+      s.ToArray().Should().Equal(compressed);
+      s.Bytes().Should().BeEmpty();
+      s.CanRead.Should().BeTrue();
+      s.CanWrite.Should().BeTrue();
+    }
+
+    using (var s = new MemoryStream(compressed))
+    {
+      s.Deflate().Should().Equal(bytes);
+      s.Bytes().Should().BeEmpty();
+      s.CanRead.Should().BeTrue();
+      s.CanWrite.Should().BeTrue();
+    }
+
+    new MemoryStream().Deflate(bytes).Rewind().Deflate().Should().Equal(bytes);*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsGzip(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_CompressAsGzip_Method()
+  {
+    /*AssertionExtensions.Should(() => StreamExtensions.CompressAsGzip(null!)).ThrowExactly<ArgumentNullException>();
+
+    var bytes = RandomBytes;
+
+    var stream = new MemoryStream();
+    var compressed = Array.Empty<byte>();
+    using (var gzip = stream.Gzip(CompressionMode.Compress))
+    {
+      gzip.BaseStream.Should().BeSameAs(stream);
+      AssertionExtensions.Should(() => gzip.ReadByte()).ThrowExactly<InvalidOperationException>();
+      gzip.Write(bytes);
+    }
+    compressed = stream.ToArray();
+    compressed.Should().NotEqual(bytes);
+    AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+
+    stream = new MemoryStream(compressed);
+    var decompressed = Array.Empty<byte>();
+    using (var gzip = stream.Gzip(CompressionMode.Decompress))
+    {
+      gzip.BaseStream.Should().BeSameAs(stream);
+      decompressed = gzip.Bytes();
+    }
+    decompressed.Should().Equal(bytes);
+    AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+
+    using (var s = new MemoryStream())
+    {
+      s.CompressAsGzip(bytes).Should().BeSameAs(s);
+      s.ToArray().Should().Equal(compressed);
+      s.Bytes().Should().BeEmpty();
+      s.CanRead.Should().BeTrue();
+      s.CanWrite.Should().BeTrue();
+    }
+
+    using (var s = new MemoryStream(compressed))
+    {
+      s.DecompressAsGzip().Should().Equal(bytes);
+      s.Bytes().Should().BeEmpty();
+      s.CanRead.Should().BeTrue();
+      s.CanWrite.Should().BeTrue();
+    }
+
+    new MemoryStream().CompressAsGzip(bytes).Rewind().CompressAsGzip().Should().Equal(bytes);*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsZlib(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_CompressAsZlib_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.CompressAsZlib(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsBrotli(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_DecompressAsBrotli_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsBrotli(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsDeflate(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_DecompressAsDeflate_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsDeflate(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsGzip(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_DecompressAsGzip_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsGzip(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsZlib(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_DecompressAsZlib_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsZlib(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StreamExtensions.ToEnumerable(Stream)"/></description></item>
+  ///     <item><description><see cref="StreamExtensions.ToEnumerable(Stream, int)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Stream_ToEnumerable_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null!)).ThrowExactly<ArgumentNullException>();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null!, 1)).ThrowExactly<ArgumentNullException>();
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StreamExtensions.ToAsyncEnumerable(Stream)"/></description></item>
+  ///     <item><description><see cref="StreamExtensions.ToAsyncEnumerable(Stream, int)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Stream_ToAsyncEnumerable_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null!)).ThrowExactly<ArgumentNullException>();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null!, 1)).ThrowExactly<ArgumentNullException>();
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToBinaryReader(Stream, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToBinaryReader_Method()
+  {
+    void Validate(Encoding? encoding = null)
+    {
+      using var stream = RandomStream;
+
+      var bytes = stream.ToArray();
+
+      using (var reader = stream.ToBinaryReader(encoding))
+      {
+        reader.BaseStream.Should().NotBeNull().And.BeSameAs(stream);
+        reader.ReadBytes(bytes.Length).Should().Equal(bytes);
+      }
+
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.ToBinaryReader(null!)).ThrowExactly<ArgumentNullException>();
+
+      Validate(null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToBinaryWriter(Stream, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToBinaryWriter_Method()
+  {
+    void Validate(Encoding? encoding = null)
+    {
+      var bytes = RandomBytes;
+
+      using var stream = new MemoryStream();
+
+      using (var writer = stream.ToBinaryWriter(encoding))
+      {
+        writer.BaseStream.Should().BeSameAs(stream);
         writer.Write(bytes);
       }
-      Assert.True(stream.ToArray().SequenceEqual(bytes));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
+
+      stream.ToArray().Should().Equal(bytes);
+
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
     }
 
-    [Fact]
-    public void buffered()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Buffered(null));
-      Assert.Throws<ArgumentOutOfRangeException>(() => Stream.Null.Buffered(-1));
-      Assert.Throws<ArgumentOutOfRangeException>(() => Stream.Null.Buffered(0));
+      AssertionExtensions.Should(() => StreamExtensions.ToBinaryWriter(null!)).ThrowExactly<ArgumentNullException>();
 
-      var bytes = Guid.NewGuid().ToByteArray();
-      var stream = new MemoryStream(bytes);
-      using (var buffered = stream.Buffered())
-      {
-        buffered.Write(bytes);
-      }
-      Assert.True(stream.ToArray().SequenceEqual(bytes));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
+      Validate(null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
 
-    [Fact]
-    public void bytes()
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToStreamReader(Stream, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToStreamReader_Method()
+  {
+    void Validate(Encoding? encoding = null)
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Bytes(null));
-
-      Assert.Empty(Stream.Null.Bytes());
-
-      var bytes = Guid.NewGuid().ToByteArray();
-
-      var stream = new MemoryStream(bytes);
-      Assert.True(stream.Bytes().SequenceEqual(bytes));
-      Assert.Equal(-1, stream.ReadByte());
-      stream.Close();
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      
-      stream = new MemoryStream(bytes);
-      Assert.True(stream.Bytes(true).SequenceEqual(bytes));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-    }
-    
-    [Fact]
-    public void deflate()
-    {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Deflate(null, CompressionMode.Compress));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Deflate<Stream>(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => Stream.Null.Deflate(null));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Deflate(null));
-
-      var bytes = Guid.NewGuid().ToByteArray();
-
-      var stream = new MemoryStream();
-      var compressed = new byte[] { };
-      using (var deflate = stream.Deflate(CompressionMode.Compress))
+      using var stream = RandomStream;
+      var bytes = stream.ToArray();
+      using (var reader = stream.ToStreamReader(encoding))
       {
-        Assert.True(ReferenceEquals(deflate.BaseStream, stream));
-        Assert.Throws<InvalidOperationException>(() => deflate.ReadByte());
-        deflate.Write(bytes);
-      }
-      compressed = stream.ToArray();
-      Assert.False(compressed.SequenceEqual(bytes));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-
-      stream = new MemoryStream(compressed);
-      var decompressed = new byte[] { };
-      using (var deflate = stream.Deflate(CompressionMode.Decompress))
-      {
-        Assert.True(ReferenceEquals(deflate.BaseStream, stream));
-        decompressed = deflate.Bytes();
-      }
-      Assert.True(decompressed.SequenceEqual(bytes));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-
-      using (var s = new MemoryStream())
-      {
-        Assert.True(ReferenceEquals(s.Deflate(bytes), s));
-        Assert.True(s.ToArray().SequenceEqual(compressed));
-        Assert.Empty(s.Bytes());
-        Assert.True(s.CanRead);
-        Assert.True(s.CanWrite);
-      }
-
-      using (var s = new MemoryStream(compressed))
-      {
-        Assert.True(s.Deflate().SequenceEqual(bytes));
-        Assert.Empty(s.Bytes());
-        Assert.True(s.CanRead);
-        Assert.True(s.CanWrite);
-      }
-
-      Assert.True(new MemoryStream().Deflate(bytes).Rewind().Deflate().SequenceEqual(bytes));
-    }
-
-    [Fact]
-    public void gzip()
-    {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.GZip(null, CompressionMode.Compress));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.GZip<Stream>(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => Stream.Null.GZip(null));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.GZip(null));
-
-      var bytes = Guid.NewGuid().ToByteArray();
-      
-      var stream = new MemoryStream();
-      var compressed = new byte[] {};
-      using (var gzip = stream.GZip(CompressionMode.Compress))
-      {
-        Assert.True(ReferenceEquals(gzip.BaseStream, stream));
-        Assert.Throws<InvalidOperationException>(() => gzip.ReadByte());
-        gzip.Write(bytes);
-      }
-      compressed = stream.ToArray();
-      Assert.False(compressed.SequenceEqual(bytes));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-
-      stream = new MemoryStream(compressed);
-      var decompressed = new byte[] {};
-      using (var gzip = stream.GZip(CompressionMode.Decompress))
-      {
-        Assert.True(ReferenceEquals(gzip.BaseStream, stream));
-        decompressed = gzip.Bytes();
-      }
-      Assert.True(decompressed.SequenceEqual(bytes));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-
-      using (var s = new MemoryStream())
-      {
-        Assert.True(ReferenceEquals(s.GZip(bytes), s));
-        Assert.True(s.ToArray().SequenceEqual(compressed));
-        Assert.Empty(s.Bytes());
-        Assert.True(s.CanRead);
-        Assert.True(s.CanWrite);
-      }
-
-      using (var s = new MemoryStream(compressed))
-      {
-        Assert.True(s.GZip().SequenceEqual(bytes));
-        Assert.Empty(s.Bytes());
-        Assert.True(s.CanRead);
-        Assert.True(s.CanWrite);
-      }
-
-      Assert.True(new MemoryStream().GZip(bytes).Rewind().GZip().SequenceEqual(bytes));
-    }
-
-    [Fact]
-    public void rewind()
-    {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Rewind<Stream>(null));
-
-      Assert.True(ReferenceEquals(Stream.Null.Rewind(), Stream.Null));
-      
-      var bytes = Guid.NewGuid().ToByteArray();
-      var stream = new MemoryStream(bytes);
-      Assert.Equal(0, stream.Position);
-      stream.Seek(0, SeekOrigin.End);
-      Assert.Equal(stream.Length, stream.Position);
-      stream.Rewind();
-      Assert.Equal(0, stream.Position);
-      stream.Rewind();
-      Assert.Equal(0, stream.Position);
-    }
-
-    [Fact]
-    public void text_stream()
-    {
-      Assert.Throws<ArgumentNullException>(() => ((Stream) null).Text());
-
-      var bytes = Guid.NewGuid().ToByteArray();
-
-      var stream = new MemoryStream(bytes);
-      var text = stream.Text();
-      Assert.Equal(text, stream.Rewind().TextReader().Text());
-      Assert.Equal(-1, stream.ReadByte());
-      Assert.Equal(text, stream.Rewind().Text(true));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-
-      stream = new MemoryStream(bytes);
-      text = stream.Text(encoding: Encoding.Unicode);
-      Assert.Equal(text, stream.Rewind().TextReader(Encoding.Unicode).Text());
-      Assert.Equal(text, bytes.String(Encoding.Unicode));
-      Assert.Equal(-1, stream.ReadByte());
-      Assert.Equal(text, stream.Rewind().Text(true, Encoding.Unicode));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-    }
-
-    [Fact]
-    public void text_text_reader()
-    {
-      Assert.Throws<ArgumentNullException>(() => ((TextReader) null).Text());
-
-      var text = Guid.NewGuid().ToString();
-
-      using (var reader = new StringReader(text))
-      {
-        Assert.Equal(text, reader.Text());
-        Assert.Equal(-1, reader.Read());
-      }
-
-      using (var reader = new StringReader(text))
-      {
-        Assert.Equal(text, reader.Text(true));
-        Assert.Throws<ObjectDisposedException>(() => reader.Read());
+        reader.BaseStream.Should().BeSameAs(stream);
+        reader.Text().Should().Be(bytes.Text(encoding));
       }
     }
 
-    [Fact]
-    public void text_reader()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.TextReader(null));
+      AssertionExtensions.Should(() => StreamExtensions.ToStreamReader(null!)).ThrowExactly<ArgumentNullException>();
 
-      var text = Guid.NewGuid().ToString();
-      
-      var stream = new MemoryStream(text.Bytes());
-      Assert.Equal(text, stream.TextReader().Text());
-      Assert.Equal(-1, stream.ReadByte());
-      
-      stream = new MemoryStream(text.Bytes(Encoding.Unicode));
-      Assert.Equal(text, stream.TextReader(Encoding.Unicode).Text());
-      Assert.Equal(-1, stream.ReadByte());
+      Validate(null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
 
-    [Fact]
-    public void text_writer()
-    {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.TextWriter(null));
+    throw new NotImplementedException();
+  }
 
-      var text = Guid.NewGuid().ToString();
-      
-      var stream = new MemoryStream();
-      using (var writer = stream.TextWriter())
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToStreamWriter(Stream, Encoding?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToStreamWriter_Method()
+  {
+    void Validate(Encoding? encoding = null)
+    {
+      var text = RandomString;
+
+      using var stream = new MemoryStream();
+
+      using (var writer = stream.ToStreamWriter(encoding))
       {
+        writer.BaseStream.Should().BeSameAs(stream);
         writer.Write(text);
       }
-      Assert.True(stream.ToArray().SequenceEqual(text.Bytes()));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
 
-      stream = new MemoryStream();
-      using (var writer = stream.TextWriter(Encoding.Unicode))
-      {
-        writer.Write(text);
-      }
-      Assert.True(stream.ToArray().SequenceEqual(text.Bytes(Encoding.Unicode)));
-      Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
+      stream.ToArray().Should().Equal(text.Bytes(encoding));
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
     }
 
-    [Fact]
-    public void write()
+    using (new AssertionScope())
     {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Write<Stream>(null, Enumerable.Empty<byte>().ToArray()));
-      Assert.Throws<ArgumentNullException>(() => Stream.Null.Write((byte[])null));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Write<Stream>(null, Stream.Null));
-      Assert.Throws<ArgumentNullException>(() => Stream.Null.Write((Stream)null));
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Write<Stream>(null, "text"));
-      Assert.Throws<ArgumentNullException>(() => Stream.Null.Write((string)null));
+      AssertionExtensions.Should(() => StreamExtensions.ToStreamWriter(null!)).ThrowExactly<ArgumentNullException>();
 
-      var bytes = Guid.NewGuid().ToByteArray();
-      var text = bytes.ToString();
-
-      var stream = new MemoryStream();
-      Assert.True(ReferenceEquals(stream.Write(bytes), stream));
-      stream.Close();
-      Assert.True(stream.ToArray().SequenceEqual(bytes));
-
-      var from = new MemoryStream(bytes);
-      var to = new MemoryStream();
-      Assert.True(ReferenceEquals(to.Write(from), to));
-      Assert.True(to.ToArray().SequenceEqual(bytes));
-      Assert.Empty(from.Bytes());
-      Assert.True(from.CanRead);
-      Assert.Empty(to.Bytes());
-      Assert.True(to.CanWrite);
-      from.Close();
-      to.Close();
-
-      using (var s = new MemoryStream())
-      {
-        Assert.True(ReferenceEquals(s.Write(string.Empty), s));
-        Assert.Equal(string.Empty, s.Text());
-      }
-
-      using (var s = new MemoryStream())
-      {
-        Assert.True(ReferenceEquals(s.Write(text), s));
-        Assert.Equal(text, s.Rewind().Text());
-      }
-
-      using (var s = new MemoryStream())
-      {
-        Assert.True(ReferenceEquals(s.Write(text, Encoding.Unicode), s));
-        Assert.Equal(text, s.Rewind().Text(encoding: Encoding.Unicode));
-      }
+      Validate(null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
 
-    [Fact]
-    public void xml_reader_stream()
-    {
-      Assert.Throws<ArgumentNullException>(() => ((Stream)(null)).XmlReader());
-
-      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
-
-      using (var stream = new MemoryStream(Xml.Bytes()))
-      {
-        var reader = stream.XmlReader();
-        Assert.False(reader.Settings.CloseInput);
-        Assert.True(reader.Settings.IgnoreComments);
-        Assert.True(reader.Settings.IgnoreWhitespace);
-        reader.ReadStartElement("article");
-        Assert.Equal("text", reader.ReadString());
-        reader.ReadEndElement();
-        reader.Close();
-        Assert.Empty(stream.Bytes());
-        Assert.Equal(-1, stream.ReadByte());
-      }
-
-      using (var stream = new MemoryStream(Xml.Bytes()))
-      {
-        stream.XmlReader(true).Close();
-        //Assert.True(reader.Settings.CloseInput);
-        Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      }
-    }
-
-    [Fact]
-    public void xml_reader_text_reader()
-    {
-      Assert.Throws<ArgumentNullException>(() => ((TextReader) null).XmlReader());
-
-      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-
-      var textReader = new StringReader(Xml);
-      Assert.Equal("text", textReader.XmlReader().Do(reader =>
-      {
-        Assert.False(reader.Settings.CloseInput);
-        Assert.True(reader.Settings.IgnoreComments);
-        Assert.True(reader.Settings.IgnoreWhitespace);
-        reader.ReadStartElement("article");
-        return reader.ReadString();
-      }));
-      Assert.Equal(-1, textReader.Read());
-
-      textReader = new StringReader(Xml);
-      Assert.Equal("text", textReader.XmlReader(true).Do(reader =>
-      {
-        //Assert.True(reader.Settings.CloseInput);
-        reader.ReadStartElement("article");
-        return reader.ReadString();
-      }));
-      Assert.Throws<ObjectDisposedException>(() => textReader.Read());
-    }
-
-    [Fact]
-    public void xml_writer_stream()
-    {
-      Assert.Throws<ArgumentNullException>(() => ((Stream) null).XmlWriter());
-      
-      var xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
-      using (var stream = new MemoryStream())
-      {
-        using (var writer = stream.XmlWriter())
-        {
-          Assert.False(writer.Settings.CloseOutput);
-          Assert.Equal(Encoding.UTF8.ToString(), writer.Settings.Encoding.ToString());
-          Assert.False(writer.Settings.Indent);
-          writer.WriteElementString("article", "text");
-        }
-        Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.UTF8)));
-        Assert.Empty(stream.Bytes());
-        Assert.Equal(-1, stream.ReadByte());
-
-        using (var writer = stream.Rewind().XmlWriter(true))
-        {
-          Assert.True(writer.Settings.CloseOutput);
-          Assert.Equal(Encoding.UTF8.ToString(), writer.Settings.Encoding.ToString());
-        }
-        Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      }
-
-      xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-      using (var stream = new MemoryStream())
-      {
-        using (var writer = stream.XmlWriter(encoding: Encoding.Unicode))
-        {
-          Assert.False(writer.Settings.CloseOutput);
-          Assert.Equal(Encoding.Unicode.ToString(), writer.Settings.Encoding.ToString());
-          writer.WriteElementString("article", "text");
-        }
-        Assert.True(stream.ToArray().SequenceEqual(xml.Bytes(Encoding.Unicode)));
-        Assert.Empty(stream.Bytes());
-        Assert.Equal(-1, stream.ReadByte());
-
-        using (var writer = stream.XmlWriter(true, Encoding.Unicode))
-        {
-          Assert.True(writer.Settings.CloseOutput);
-          Assert.Equal(Encoding.Unicode.ToString(), writer.Settings.Encoding.ToString());
-        }
-        Assert.Throws<ObjectDisposedException>(() => stream.ReadByte());
-      }
-    }
-
-    [Fact]
-    public void xml_writer_text_writer()
-    {
-      Assert.Throws<ArgumentNullException>(() => ((TextWriter) null).XmlWriter());
-
-      const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-
-      var textWriter = new StringWriter();
-      textWriter.XmlWriter().Write(writer =>
-      {
-        Assert.False(writer.Settings.CloseOutput);
-        Assert.Equal(Encoding.Unicode.ToString(), writer.Settings.Encoding.ToString());
-        Assert.False(writer.Settings.Indent);
-        writer.WriteElementString("article", "text");
-      });
-      Assert.Equal(Xml, textWriter.ToString());
-      textWriter.Write(string.Empty);
-      textWriter.Close();
-
-      textWriter = new StringWriter();
-      textWriter.XmlWriter(true).Write(writer =>
-      {
-        Assert.True(writer.Settings.CloseOutput);
-        Assert.Equal(Encoding.Unicode.ToString(), writer.Settings.Encoding.ToString());
-        Assert.False(writer.Settings.Indent);
-      });
-      textWriter.Write(string.Empty);
-    }
-
-    [Fact]
-    public void lines()
-    {
-      Assert.Throws<ArgumentNullException>(() => StreamExtensions.Lines(null));
-
-      using (var reader = new StringReader(string.Empty))
-      {
-        Assert.Empty(reader.Lines());
-        Assert.Equal(-1, reader.Read());
-      }
-
-      using (var reader = new StringReader(string.Empty))
-      {
-        Assert.Empty(reader.Lines(true));
-        Assert.Throws<ObjectDisposedException>(() => reader.Read());
-      }
-
-      using (var reader = new StringReader($"First{Environment.NewLine}Second{Environment.NewLine}"))
-      {
-        var lines = reader.Lines();
-        Assert.Equal(3, lines.Count());
-        Assert.Equal("First", lines[0]);
-        Assert.Equal("Second", lines[1]);
-        Assert.Equal(string.Empty, lines[2]);
-        Assert.Empty(reader.Lines());
-        Assert.Equal(-1, reader.Read());
-      }
-    }
+    throw new NotImplementedException();
   }
 }
