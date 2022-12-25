@@ -93,6 +93,30 @@ public sealed class ProcessExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.WriteTo(IEnumerable{byte}, Process, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).WriteTo(Process.GetCurrentProcess())).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => ProcessExtensions.WriteTo(Enumerable.Empty<byte>(), null!)).ThrowExactlyAsync<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.WriteTo(string, Process, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null!).WriteTo(Process.GetCurrentProcess())).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => ProcessExtensions.WriteTo(string.Empty, null!)).ThrowExactlyAsync<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="ProcessExtensions.UseTemporarily(Process, Action{Process})"/> method.</para>
   /// </summary>
   [Fact]

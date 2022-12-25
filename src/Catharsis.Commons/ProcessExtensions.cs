@@ -108,6 +108,32 @@ public static class ProcessExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="process"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, Process process, CancellationToken cancellation = default)
+  {
+    await process.Bytes(bytes, cancellation);
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="process"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<string> WriteTo(this string text, Process process, CancellationToken cancellation = default)
+  {
+    await process.Text(text, cancellation);
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="process"></param>
   /// <param name="action"></param>
   /// <returns></returns>

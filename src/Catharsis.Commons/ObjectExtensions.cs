@@ -471,7 +471,7 @@ public static class ObjectExtensions
   /// <param name="instance">Target object whose public properties names and values are to be returned.</param>
   /// <returns>State of <paramref name="instance"/> as a string.</returns>
   /// <remarks>Property name is separated from property value by a colon, each name-value pairs are separated by comma characters.</remarks>
-  public static string ToStringState(this object instance) => instance.ToStringState(instance.GetType().GetProperties().Select(property => property.Name).ToArray());
+  public static string ToStringState(this object instance) => instance as string ?? instance.ToStringState(instance.GetType().GetProperties().Select(property => property.Name).ToArray());
 
   /// <summary>
   ///   <para></para>
@@ -481,6 +481,11 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static string ToStringState(this object instance, params string[] properties)
   {
+    if (instance is string text)
+    {
+      return text;
+    }
+
     const string separator = ", ";
 
     var result = new StringBuilder();
@@ -504,6 +509,11 @@ public static class ObjectExtensions
   /// <returns>String representation of <paramref name="instance"/>. Property name is separated from value by colon character, name-value pairs are separated by comma and immediately following space characters, and all content is placed in square brackets afterwards.</returns>
   public static string ToStringState<T>(this T instance, params Expression<Func<T, object?>>[] properties)
   {
+    if (instance is string text)
+    {
+      return text;
+    }
+
     const string separator = ", ";
 
     var result = new StringBuilder();

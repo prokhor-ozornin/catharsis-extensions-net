@@ -364,19 +364,31 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_Text_Method()
   {
-    AssertionExtensions.Should(() => BinaryExtensions.Text(null!)).ThrowExactly<ArgumentNullException>();
-
-    /*using (var reader = Stream.Null.ToBinaryReader())
+    void Validate(BinaryReader reader, string value)
     {
-      AssertionExtensions.Should(reader.Text).ThrowExactly<EndOfStreamException>();
+      using (reader)
+      {
+        var position = reader.BaseStream.Position;
+        reader.Text().Should().NotBeNull().And.Be(value);
+        reader.BaseStream.Should().HavePosition(position + value.Length);
+      }
     }
 
-    using (var reader = RandomStream.ToBinaryReader())
+    using (new AssertionScope())
     {
-      AssertionExtensions.Should(reader.Text).ThrowExactly<EndOfStreamException>();
-    }*/
+      //AssertionExtensions.Should(() => BinaryExtensions.Text(null!)).ThrowExactly<ArgumentNullException>();
 
-    throw new NotImplementedException();
+      Validate(Stream.Null.ToBinaryReader(), string.Empty);
+      Validate(EmptyStream.ToBinaryReader(), string.Empty);
+
+      var text = RandomString;
+      //$"{text.Length}{text}".Print()
+
+      //using (var stream = RandomStream)
+      //{
+      //  Validate(stream.ToBinaryReader(), )
+      //}
+    }
   }
 
   /// <summary>
@@ -422,6 +434,30 @@ public sealed class BinaryExtensionsTest : UnitTest
       Validate(EmptyStream.ToBinaryWriter());
       Validate(RandomStream.ToBinaryWriter());
     }*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryExtensions.WriteTo(IEnumerable{byte}, BinaryWriter, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => BinaryExtensions.WriteTo(Enumerable.Empty<byte>(), null!)).ThrowExactlyAsync<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryExtensions.WriteTo(string, BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null!).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => BinaryExtensions.WriteTo(string.Empty, null!)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }

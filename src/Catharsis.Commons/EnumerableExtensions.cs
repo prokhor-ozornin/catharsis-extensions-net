@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System.Text;
 
 #if NET6_0
@@ -281,14 +280,11 @@ public static class EnumerableExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(this IEnumerable<T> sequence, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(this IEnumerable<T> sequence)
   {
     foreach (var element in sequence)
     {
-      cancellation.ThrowIfCancellationRequested();
-
       yield return await Task.FromResult(element);
     }
   }

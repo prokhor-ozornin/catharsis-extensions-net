@@ -345,7 +345,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="EnumerableExtensions.ToAsyncEnumerable{T}(IEnumerable{T}, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.ToAsyncEnumerable{T}(IEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]
   public void IEnumerable_ToAsyncEnumerable_Method()
@@ -360,7 +360,6 @@ public sealed class EnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       //AssertionExtensions.Should(() => EnumerableExtensions.ToAsyncEnumerable<object>(null!)).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => RandomObjects.ToAsyncEnumerable()).ThrowExactly<OperationCanceledException>();
 
       Validate(Enumerable.Empty<object>());
       Validate(Array.Empty<object>());

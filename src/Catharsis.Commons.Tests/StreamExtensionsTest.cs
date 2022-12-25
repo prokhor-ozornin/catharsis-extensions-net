@@ -657,109 +657,36 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, IEnumerable{byte}, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Stream_Write_Enumerable_Method()
-  {
-    AssertionExtensions.Should(() => ((Stream) null!).Write(Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.Write((IEnumerable<byte>) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, Stream, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Stream_Write_Stream_Method()
-  {
-    /*AssertionExtensions.Should(() => ((Stream) null!).Write(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.Write((Stream) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    var bytes = RandomBytes;
-    var text = bytes.ToString();
-
-    var stream = new MemoryStream();
-    stream.Write<MemoryStream>(bytes).Should().BeSameAs(stream);
-    stream.Close();
-    stream.ToArray().Should().Equal(bytes);
-
-    var from = new MemoryStream(bytes);
-    var to = new MemoryStream();
-    to.Write(from).Should().BeSameAs(to);
-    to.ToArray().Should().Equal(bytes);
-    from.Bytes().ToArray().Await().Should().BeEmpty();
-    from.CanRead.Should().BeTrue();
-    to.Bytes().ToArray().Await().Should().BeEmpty();
-    to.CanWrite.Should().BeTrue();
-    from.Close();
-    to.Close();
-
-    using (var s = new MemoryStream())
-    {
-      s.Write(string.Empty).Should().BeSameAs(s);
-      s.Text().Await().Should().BeEmpty();
-    }
-
-    using (var s = new MemoryStream())
-    {
-      s.Write(text).Should().BeSameAs(s);
-      s.Rewind().Text().Should().Be(text);
-    }
-
-    using (var s = new MemoryStream())
-    {
-      s.Write(text, Encoding.Unicode).Should().BeSameAs(s);
-      s.Rewind().Text(encoding: Encoding.Unicode).Should().Be(text);
-    }*/
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, FileInfo, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Stream_Write_FileInfo_Method()
-  {
-    AssertionExtensions.Should(() => ((Stream) null!).Write(RandomFakeFile)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.Write((FileInfo) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, Uri, IEnumerable{(string Name, object Value)}?, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Stream_Write_Uri_Method()
-  {
-    AssertionExtensions.Should(() => ((Stream) null!).Write("https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.Write((Uri) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.Write{TStream}(TStream, string, Encoding?, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Stream_Write_Text_Method()
-  {
-    AssertionExtensions.Should(() => ((Stream) null!).Write(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.Write((string) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="StreamExtensions.Skip{TStream}(TStream, int)"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_Skip_Method()
   {
     AssertionExtensions.Should(() => ((Stream) null!).Skip(0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteTo(IEnumerable{byte}, Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).WriteTo(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.WriteTo(Enumerable.Empty<byte>(), null!)).ThrowExactlyAsync<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteTo(string, Stream, Encoding?, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null!).WriteTo(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.WriteTo(string.Empty, null!)).ThrowExactlyAsync<ArgumentNullException>();
 
     throw new NotImplementedException();
   }

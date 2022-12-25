@@ -3,6 +3,7 @@ using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -614,7 +615,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.Text(TcpClient, string, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.Text(TcpClient, string, Encoding?, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
   public void TcpClient_Text_Method()

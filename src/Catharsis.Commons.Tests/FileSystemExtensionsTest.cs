@@ -65,7 +65,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
       file.Exists.Should().BeTrue();
       file.Length.Should().Be(0);
       file.IsEmpty().Should().BeTrue();
-      file.Write(bytes).Await();
+      file.Bytes(bytes).Await();
       file.Length.Should().Be(bytes.Length);
       file.IsEmpty().Should().BeFalse();
     });
@@ -115,18 +115,18 @@ public sealed class FileSystemExtensionsTest : UnitTest
   public void FileInfo_UseTemporarily_Method()
   {
     //AssertionExtensions.Should(() => ((FileInfo) null!).UseTemporarily(_ => {})).ThrowExactly<ArgumentNullException>();
-    //AssertionExtensions.Should(() => RandomNonExistingFile.UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
+    //AssertionExtensions.Should(() => RandomFakeFile.UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
 
     var bytes = RandomBytes;
 
     var file = RandomFakeFile;
     file.Exists.Should().BeFalse();
-    file.UseTemporarily(file => file.Write(bytes).Await()).Should().NotBeNull().And.BeSameAs(file);
+    file.UseTemporarily(file => file.Bytes(bytes).Await()).Should().NotBeNull().And.BeSameAs(file);
     file.Exists.Should().BeFalse();
 
     file = RandomEmptyFile;
     file.Exists.Should().BeTrue();
-    file.UseTemporarily(file => file.Write(bytes).Await()).Should().NotBeNull().And.BeSameAs(file);
+    file.UseTemporarily(file => file.Bytes(bytes).Await()).Should().NotBeNull().And.BeSameAs(file);
     file.Exists.Should().BeTrue();
     file.Length.Should().Be(0);
   }
@@ -138,7 +138,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
   public void DirectoryInfo_UseTemporarily_Method()
   {
     //AssertionExtensions.Should(() => ((DirectoryInfo) null!).UseTemporarily(_ => { })).ThrowExactly<ArgumentNullException>();
-    //AssertionExtensions.Should(() => RandomNonExistingDirectory.UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
+    //AssertionExtensions.Should(() => RandomFakeDirectory.UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
 
     var directory = RandomFakeDirectory;
     directory.Exists.Should().BeFalse();
@@ -189,7 +189,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
 
       RandomEmptyFile.UseTemporarily(file =>
       {
-        file.Write(bytes).Await();
+        file.Bytes(bytes).Await();
         file.Bytes().ToArray().Await().Should().Equal(bytes);
       });
 
@@ -224,7 +224,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
 
         RandomEmptyFile.UseTemporarily(file =>
         {
-          file.Write(text, encoding).Await();
+          file.Text(text, encoding).Await();
           file.Text(encoding).Should().Be(text);
         });
       }
@@ -270,7 +270,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
       RandomEmptyFile.UseTemporarily(file =>
       {
         var lines = Randomizer.LettersSequence(80, 1000).ToArray();
-        file.Write(lines.Join(Environment.NewLine), encoding).Await();
+        file.Text(lines.Join(Environment.NewLine), encoding).Await();
         file.Lines(encoding).ToList().Await().Should().Equal(lines);
       });
     }
@@ -283,60 +283,36 @@ public sealed class FileSystemExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="FileSystemExtensions.Write(FileInfo, IEnumerable{byte}, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void FileInfo_Write_Enumerable_Method()
-  {
-    AssertionExtensions.Should(() => FileSystemExtensions.Write(null!, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => RandomFakeFile.Write((IEnumerable<byte>) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="FileSystemExtensions.Write(FileInfo, Stream, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void FileInfo_Write_Stream_Method()
-  {
-    AssertionExtensions.Should(() => FileSystemExtensions.Write(null!, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => RandomFakeFile.Write((Stream) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="FileSystemExtensions.Write(FileInfo, string, Encoding?, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void FileInfo_Write_String_Method()
-  {
-    AssertionExtensions.Should(() => FileSystemExtensions.Write(null!, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => RandomFakeFile.Write((string) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="FileSystemExtensions.Write(FileInfo, Uri, CancellationToken, (string Name, object Value)[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void FileInfo_Write_Uri_Method()
-  {
-    AssertionExtensions.Should(() => FileSystemExtensions.Write(null!, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => RandomFakeFile.Write((Uri) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="FileSystemExtensions.Print(FileInfo, object, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
   public void FileInfo_Print_Method()
   {
     AssertionExtensions.Should(() => FileSystemExtensions.Print(null!, new object())).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FileSystemExtensions.WriteTo(IEnumerable{byte}, FileInfo, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).WriteTo(RandomFakeFile)).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => FileSystemExtensions.WriteTo(Enumerable.Empty<byte>(), null!)).ThrowExactlyAsync<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FileSystemExtensions.WriteTo(string, FileInfo, Encoding?, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null!).WriteTo(RandomFakeFile)).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => FileSystemExtensions.WriteTo(string.Empty, null!)).ThrowExactlyAsync<ArgumentNullException>();
 
     throw new NotImplementedException();
   }

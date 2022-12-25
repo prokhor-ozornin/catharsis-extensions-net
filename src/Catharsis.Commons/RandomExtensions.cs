@@ -1085,7 +1085,7 @@ public static class RandomExtensions
 
     var bytes = random.ByteSequence(size, min, max);
     
-    return await random.File(directory).Write(bytes, cancellation);
+    return await random.File(directory).Bytes(bytes, cancellation);
   }
 
   /// <summary>
@@ -1116,7 +1116,7 @@ public static class RandomExtensions
       default:
         var totalRange = ranges.ToRange();
         var bytes = size.Objects(() => (byte) totalRange.Random());
-        return await random.File(directory).Write(bytes, cancellation);
+        return await random.File(directory).Bytes(bytes, cancellation);
     }
   }
 
@@ -1182,7 +1182,7 @@ public static class RandomExtensions
         for (var i = 1; i <= count; i++)
         {
           var bytes = size.Objects(() => (byte) totalRange.Random());
-          yield return await random.File(directory).Write(bytes, cancellation);
+          yield return await random.File(directory).Bytes(bytes, cancellation);
         }
 
         break;
@@ -1209,7 +1209,7 @@ public static class RandomExtensions
 
     var text = random.String(size, min, max);
 
-    return await random.File(directory).Write(text, encoding, cancellation);
+    return await random.File(directory).Text(text, encoding, cancellation);
   }
 
   /// <summary>
@@ -1241,7 +1241,7 @@ public static class RandomExtensions
       default:
         var totalRange = ranges.ToRange();
         var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-        return await random.File(directory).Write(chars.Text(), encoding, cancellation);
+        return await random.File(directory).Text(chars.Text(), encoding, cancellation);
     }
   }
 
@@ -1309,7 +1309,7 @@ public static class RandomExtensions
         for (var i = 1; i <= count; i++)
         {
           var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-          yield return await random.File(directory).Write(chars.Text(), encoding, cancellation);
+          yield return await random.File(directory).Text(chars.Text(), encoding, cancellation);
         }
 
         break;
@@ -1492,7 +1492,7 @@ public static class RandomExtensions
 
     if (count > 0)
     {
-      await stream.Write(random.ByteSequence(count, min, max), cancellation);
+      await stream.Bytes(random.ByteSequence(count, min, max), cancellation);
       stream.MoveToStart();
     }
 
@@ -1516,7 +1516,7 @@ public static class RandomExtensions
       var range = ranges.ToRange();
       var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.ByteSequence(count)).AsArray();
 
-      await stream.Write(bytes, cancellation);
+      await stream.Bytes(bytes, cancellation);
       
       stream.MoveToStart();
     }

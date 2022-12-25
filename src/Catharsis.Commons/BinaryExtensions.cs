@@ -132,7 +132,17 @@ public static class BinaryExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <seealso cref="Text(BinaryWriter, string)"/>
-  public static string Text(this BinaryReader reader) => reader.ReadString();
+  public static string Text(this BinaryReader reader)
+  {
+    try
+    {
+      return reader.ReadString();
+    }
+    catch (EndOfStreamException)
+    {
+      return string.Empty;
+    }
+  }
 
   /// <summary>
   ///   <para></para>
@@ -144,8 +154,32 @@ public static class BinaryExtensions
   public static BinaryWriter Text(this BinaryWriter writer, string text)
   {
     writer.Write(text);
-
     return writer;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, BinaryWriter destination, CancellationToken cancellation = default)
+  {
+    await destination.Bytes(bytes, cancellation);
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  public static string WriteTo(this string text, BinaryWriter destination)
+  {
+    destination.Text(text);
+    return text;
   }
 
   /// <summary>
@@ -154,12 +188,7 @@ public static class BinaryExtensions
   /// <param name="destination"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static BinaryWriter Print(this BinaryWriter destination, object instance)
-  {
-    destination.Write(instance.ToStringState());
-
-    return destination;
-  }
+  public static BinaryWriter Print(this BinaryWriter destination, object instance) => destination.Text(instance.ToStringState());
 
   /// <summary>
   ///   <para></para>

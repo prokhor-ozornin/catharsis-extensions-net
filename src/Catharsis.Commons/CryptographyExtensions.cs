@@ -107,7 +107,7 @@ public static class CryptographyExtensions
     foreach (var chunk in bytes.Chunk(encryptor.InputBlockSize))
     {
       var block = encryptor.TransformFinalBlock(chunk, 0, chunk.Length);
-      await stream.Write(block, cancellation);
+      await stream.Bytes(block, cancellation);
     }
 
     return stream.ToArray();
@@ -155,7 +155,7 @@ public static class CryptographyExtensions
     foreach (var chunk in bytes.Chunk(decryptor.InputBlockSize))
     {
       var block = decryptor.TransformFinalBlock(chunk, 0, chunk.Length);
-      await stream.Write(block, cancellation);
+      await stream.Bytes(block, cancellation);
     }
 
     return stream.ToArray();

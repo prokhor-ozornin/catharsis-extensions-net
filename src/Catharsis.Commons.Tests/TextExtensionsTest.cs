@@ -520,6 +520,30 @@ public sealed class TextExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteTo(string, TextWriter, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_TextWriter_Method()
+  {
+    AssertionExtensions.Should(() => TextExtensions.WriteTo(null!, Stream.Null.ToStreamWriter()));
+    AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null!));
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteTo(string, StringBuilder)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_StringBuilder_Method()
+  {
+    AssertionExtensions.Should(() => TextExtensions.WriteTo(null!, string.Empty.ToStringBuilder()));
+    AssertionExtensions.Should(() => TextExtensions.WriteTo(string.Empty, null!));
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="TextExtensions.UseTemporarily(StringBuilder, Action{StringBuilder})"/> method.</para>
   /// </summary>
   [Fact]

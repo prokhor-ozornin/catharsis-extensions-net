@@ -106,7 +106,7 @@ public sealed class UriExtensionsTest : UnitTest
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="UriExtensions.Text(Uri, Encoding?, (string Name, object Value)[])"/></description></item>
-  ///     <item><description><see cref="UriExtensions.Text(Uri, string, CancellationToken, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriExtensions.Text(Uri, string, Encoding?, CancellationToken, (string Name, object Value)[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]

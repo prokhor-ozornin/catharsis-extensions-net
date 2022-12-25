@@ -4,6 +4,7 @@ using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Catharsis.Commons;
 
@@ -475,11 +476,12 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <param name="text"></param>
+  /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<TcpClient> Text(this TcpClient tcp, string text, CancellationToken cancellation = default)
+  public static async Task<TcpClient> Text(this TcpClient tcp, string text, Encoding? encoding = null, CancellationToken cancellation = default)
   {
-    await tcp.GetStream().Text(text, cancellation);
+    await tcp.GetStream().Text(text, encoding, cancellation);
 
     return tcp;
   }

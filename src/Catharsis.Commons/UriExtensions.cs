@@ -155,19 +155,20 @@ public static class UriExtensions
   /// <param name="uri"></param>
   /// <param name="text"></param>
   /// <param name="headers"></param>
+  /// <param name="encoding"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<Uri> Text(this Uri uri, string text, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object? Value)[] headers)
+  public static async Task<Uri> Text(this Uri uri, string text, Encoding? encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object? Value)[] headers)
   {
     if (uri.IsFile)
     {
-      await uri.LocalPath.ToFile().Text(text, cancellation);
+      await uri.LocalPath.ToFile().Text(text, encoding, cancellation);
     }
     else if (uri.Scheme == Uri.UriSchemeNetTcp)
     {
       using var tcp = new TcpClient(uri.Host, uri.Port).Timeout(timeout);
-      await tcp.Text(text, cancellation);
+      await tcp.Text(text, encoding, cancellation);
     }
     else if (uri.Scheme == Uri.UriSchemeMailto)
     {

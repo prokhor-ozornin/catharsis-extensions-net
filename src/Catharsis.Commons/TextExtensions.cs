@@ -186,14 +186,14 @@ public static class TextExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="TWriter"></typeparam>
-  /// <param name="to"></param>
+  /// <param name="writer"></param>
   /// <param name="text"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<TWriter> Text<TWriter>(this TWriter to, string text, CancellationToken cancellation = default) where TWriter : TextWriter
+  public static async Task<TWriter> Text<TWriter>(this TWriter writer, string text, CancellationToken cancellation = default) where TWriter : TextWriter
   {
-    await to.WriteAsync(text.ToReadOnlyMemory(), cancellation);
-    return to;
+    await writer.WriteAsync(text.ToReadOnlyMemory(), cancellation);
+    return writer;
   }
 
   /// <summary>
@@ -235,6 +235,31 @@ public static class TextExtensions
   {
     count.Times(() => reader.Read());
     return reader;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<string> WriteTo(this string text, TextWriter destination, CancellationToken cancellation = default)
+  {
+    await destination.Text(text, cancellation);
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  public static string WriteTo(this string text, StringBuilder destination)
+  {
+    destination.Text(text);
+    return text;
   }
 
   /// <summary>

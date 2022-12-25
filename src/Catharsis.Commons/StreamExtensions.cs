@@ -30,7 +30,7 @@ public static class StreamExtensions
       return stream.Position == stream.Length;
     }
 
-    using var reader = new StreamReader(stream, leaveOpen: true);
+    using var reader = new StreamReader(stream, null!, true, -1, true);
     
     return reader.IsEnd();
   }
@@ -128,14 +128,14 @@ public static class StreamExtensions
   /// <summary>
   ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte"/> array. The input is closed before this method returns.</para>
   /// </summary>
-  /// <param name="stream"></param>
+  /// <param name="source"></param>
   /// <param name="cancellation"></param>
-  /// <returns>The <see cref="byte"/> array from that <paramref name="stream"/></returns>
-  public static async IAsyncEnumerable<byte> Bytes(this Stream stream, [EnumeratorCancellation] CancellationToken cancellation = default)
+  /// <returns>The <see cref="byte"/> array from that <paramref name="source"/></returns>
+  public static async IAsyncEnumerable<byte> Bytes(this Stream source, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
     var buffer = new byte[4096];
 
-    for (int count; (count = await stream.ReadAsync(buffer, 0, buffer.Length, cancellation)) > 0;)
+    for (int count; (count = await source.ReadAsync(buffer, 0, buffer.Length, cancellation)) > 0;)
     {
       for (var i = 0; i < count; i++)
       {
@@ -145,32 +145,52 @@ public static class StreamExtensions
   }
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Writes binary data to target stream.</para>
   /// </summary>
-  /// <typeparam name="TStream"></typeparam>
-  /// <param name="stream"></param>
-  /// <param name="bytes"></param>
+  /// <typeparam name="TStream">Type of target stream.</typeparam>
+  /// <param name="destination">Target stream to write to.</param>
+  /// <param name="bytes">Binary data to write to a stream.</param>
   /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<TStream> Bytes<TStream>(this TStream stream, IEnumerable<byte> bytes, CancellationToken cancellation = default) where TStream : Stream => await stream.Write(bytes, cancellation);
+  /// <returns>Back reference to <see cref="destination"/> stream.</returns>
+  public static async Task<TStream> Bytes<TStream>(this TStream destination, IEnumerable<byte> bytes, CancellationToken cancellation = default) where TStream : Stream
+  {
+    if (!bytes.Any())
+    {
+      return destination;
+    }
+
+    foreach (var chunk in bytes.Chunk(4096))
+    {
+      await destination.WriteAsync(chunk, 0, chunk.Length, cancellation);
+    }
+
+    return destination;
+  }
 
   /// <summary>
   ///   <para>Returns all available text data from a source stream.</para>
   /// </summary>
-  /// <param name="stream">Source stream to read from.</param>
+  /// <param name="source">Source stream to read from.</param>
   /// <param name="encoding">Encoding to be used for bytes-to-text conversion. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
-  /// <returns>Text data from a <see cref="stream"/> stream.</returns>
-  public static async Task<string> Text(this Stream stream, Encoding? encoding = null) => await stream.ToStreamReader(encoding).Text();
+  /// <returns>Text data from a <see cref="source"/> stream.</returns>
+  public static async Task<string> Text(this Stream source, Encoding? encoding = null) => await source.ToStreamReader(encoding).Text();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="TStream"></typeparam>
-  /// <param name="stream"></param>
+  /// <param name="destination"></param>
   /// <param name="text"></param>
+  /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<TStream> Text<TStream>(this TStream stream, string text, CancellationToken cancellation = default) where TStream : Stream => await stream.Write(text, cancellation: cancellation);
+  public static async Task<TStream> Text<TStream>(this TStream destination, string text, Encoding? encoding = null, CancellationToken cancellation = default) where TStream : Stream
+  {
+    await using var writer = new StreamWriter(destination, encoding ?? Encoding.Default, 4096, true);
+    await writer.WriteAsync(text.ToReadOnlyMemory(), cancellation);
+
+    return destination;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -268,96 +288,6 @@ public static class StreamExtensions
   }
 
   /// <summary>
-  ///   <para>Writes binary data to target stream.</para>
-  /// </summary>
-  /// <typeparam name="TStream">Type of target stream.</typeparam>
-  /// <param name="to">Target stream to write to.</param>
-  /// <param name="bytes">Binary data to write to a stream.</param>
-  /// <param name="cancellation"></param>
-  /// <returns>Back reference to <see cref="to"/> stream.</returns>
-  public static async Task<TStream> Write<TStream>(this TStream to, IEnumerable<byte> bytes, CancellationToken cancellation = default) where TStream : Stream
-  {
-    if (!bytes.Any())
-    {
-      return to;
-    }
-
-    foreach (var chunk in bytes.Chunk(4096))
-    {
-      await to.WriteAsync(chunk, 0, chunk.Length, cancellation);
-    }
-
-    return to;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TStream"></typeparam>
-  /// <param name="from"></param>
-  /// <param name="to"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<TStream> Write<TStream>(this TStream from, Stream to, CancellationToken cancellation = default) where TStream : Stream
-  {
-    await using var fromStream = from;
-    await using var toStream = to;
-
-    await fromStream.CopyToAsync(toStream, cancellation);
-
-    return from;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TStream"></typeparam>
-  /// <param name="to"></param>
-  /// <param name="from"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<TStream> Write<TStream>(this TStream to, FileInfo from, CancellationToken cancellation = default) where TStream : Stream
-  {
-    await from.OpenRead().Write(to, cancellation);
-
-    return to;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TStream"></typeparam>
-  /// <param name="to"></param>
-  /// <param name="from"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  public static async Task<TStream> Write<TStream>(this TStream to, Uri from, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object? Value)[] headers) where TStream : Stream
-  {
-    await (await from.ToStream(timeout, headers)).Write(to, cancellation);
-
-    return to;
-  }
-
-  /// <summary>
-  ///   <para>Writes text data to target <see cref="Stream"/>, using specified <see cref="Encoding"/>.</para>
-  /// </summary>
-  /// <typeparam name="TStream">Type of target stream.</typeparam>
-  /// <param name="to">Target stream to write to.</param>
-  /// <param name="text">Text to write to a stream.</param>
-  /// <param name="encoding">Encoding to be used for text-to-bytes conversion. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
-  /// <param name="cancellation"></param>
-  /// <returns>Back reference to <see cref="to"/> stream.</returns>
-  public static async Task<TStream> Write<TStream>(this TStream to, string text, Encoding? encoding = null, CancellationToken cancellation = default) where TStream : Stream
-  {
-    await using var writer = new StreamWriter(to, encoding ?? Encoding.Default, 4096, true);
-    await writer.WriteAsync(text.ToReadOnlyMemory(), cancellation);
-
-    return to;
-  }
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="TStream"></typeparam>
@@ -381,6 +311,33 @@ public static class StreamExtensions
     }
 
     return stream;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, Stream destination, CancellationToken cancellation = default)
+  {
+    await destination.Bytes(bytes, cancellation);
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<string> WriteTo(this string text, Stream destination, Encoding? encoding = null, CancellationToken cancellation = default)
+  {
+    await destination.Text(text, encoding, cancellation);
+    return text;
   }
 
   /// <summary>
