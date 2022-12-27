@@ -292,12 +292,12 @@ public sealed class CollectionsExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="CollectionsExtensions.ToTuple{TKey, TValue}(IDictionary{TKey, TValue?}, IComparer{TKey}?)"/> method.</para>
+  ///   <para>Performs testing of <see cref="CollectionsExtensions.ToTuple{TKey, TValue}(IDictionary{TKey, TValue}, IComparer{TKey}?)"/> method.</para>
   /// </summary>
   [Fact]
   public void IDictionary_ToTuple_Method()
   {
-    AssertionExtensions.Should(() => ((Dictionary<object, object?>) null!).ToTuple()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((Dictionary<object, object>) null!).ToTuple()).ThrowExactly<ArgumentNullException>();
     
     throw new NotImplementedException();
   }

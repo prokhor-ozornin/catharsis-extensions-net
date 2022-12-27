@@ -369,9 +369,9 @@ public static class NetworkExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<byte> Bytes(this TcpClient tcp, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
-    await foreach (var item in tcp.GetStream().Bytes(cancellation))
+    await foreach (var element in tcp.GetStream().Bytes(cancellation))
     {
-      yield return item;
+      yield return element;
     }
   }
 
@@ -403,9 +403,9 @@ public static class NetworkExtensions
     var result = await udp.ReceiveAsync();
 #endif
 
-    foreach (var item in result.Buffer)
+    foreach (var element in result.Buffer)
     {
-      yield return item;
+      yield return element;
     }
   }
 
@@ -611,27 +611,28 @@ public static class NetworkExtensions
       this.endpoint = endpoint;
     }
 
-    public IEnumerator<byte[]> GetEnumerator() => new UdpClientEnumerator(this);
+    public IEnumerator<byte[]> GetEnumerator() => new Enumerator(this);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    private sealed class UdpClientEnumerator : IEnumerator<byte[]>
+    private sealed class Enumerator : IEnumerator<byte[]>
     {
-      private UdpClientEnumerable Parent { get; }
+      private readonly UdpClientEnumerable parent;
 
-      public UdpClientEnumerator(UdpClientEnumerable parent)
-      {
-        Parent = parent;
-        Current = Array.Empty<byte>();
-      }
+      public Enumerator(UdpClientEnumerable parent) => this.parent = parent;
 
-      public byte[] Current { get; private set; }
+      public byte[] Current { get; private set; } = Array.Empty<byte>();
 
       public bool MoveNext()
       {
-        Current = Parent.client.Receive(ref Parent.endpoint);
+        var buffer = parent.client.Receive(ref parent.endpoint);
 
-        return Current.Length > 0;
+        if (buffer.Length > 0)
+        {
+          Current = buffer;
+        }
+
+        return buffer.Length > 0;
       }
 
       public void Reset() { throw new InvalidOperationException(); }
@@ -648,34 +649,37 @@ public static class NetworkExtensions
 
     public UdpClientAsyncEnumerable(UdpClient client) => this.client = client;
 
-    public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new UdpClientAsyncEnumerator(this, cancellation);
+    public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this, cancellation);
 
-    private sealed class UdpClientAsyncEnumerator : IAsyncEnumerator<byte[]>
+    private sealed class Enumerator : IAsyncEnumerator<byte[]>
     {
       private readonly UdpClientAsyncEnumerable parent;
       private readonly CancellationToken cancellation;
 
-      public UdpClientAsyncEnumerator(UdpClientAsyncEnumerable parent, CancellationToken cancellation)
+      public Enumerator(UdpClientAsyncEnumerable parent, CancellationToken cancellation)
       {
         this.parent = parent;
         this.cancellation = cancellation;
-
-        Current = Array.Empty<byte>();
       }
 
       public ValueTask DisposeAsync() => default;
 
-      public byte[] Current { get; private set; }
+      public byte[] Current { get; private set; } = Array.Empty<byte>();
 
       public async ValueTask<bool> MoveNextAsync()
       {
 #if NET6_0
-        var result = parent.client.ReceiveAsync(cancellation);
+        var buffer = (await parent.client.ReceiveAsync(cancellation)).Buffer;
 #else
-        var result = parent.client.ReceiveAsync();
+        var buffer = (await parent.client.ReceiveAsync()).Buffer;
 #endif
-        Current = (await result).Buffer;
-        return Current.Length > 0;
+
+        if (buffer.Length > 0)
+        {
+          Current = buffer;
+        }
+
+        return buffer.Length > 0;
       }
     }
   }

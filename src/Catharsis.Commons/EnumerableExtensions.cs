@@ -83,9 +83,9 @@ public static class EnumerableExtensions
 
     var result = new StringBuilder();
 
-    foreach (var item in sequence)
+    foreach (var element in sequence)
     {
-      var value = item?.ToStringInvariant() ?? string.Empty;
+      var value = element?.ToStringInvariant() ?? string.Empty;
 
       if (value.Length <= 0)
       {
@@ -148,9 +148,9 @@ public static class EnumerableExtensions
       return false;
     }
 
-    var item = sequence.First();
+    var first = sequence.First();
 
-    return elements.Contains(item);
+    return elements.Contains(first);
   }
 
   /// <summary>
@@ -176,9 +176,9 @@ public static class EnumerableExtensions
       return false;
     }
 
-    var item = sequence.Last();
+    var last = sequence.Last();
 
-    return elements.Contains(item);
+    return elements.Contains(last);
   }
 
   /// <summary>

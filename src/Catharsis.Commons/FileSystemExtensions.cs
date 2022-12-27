@@ -113,9 +113,9 @@ public static class FileSystemExtensions
   {
     await using var stream = source.OpenRead();
 
-    await foreach (var item in stream.Bytes(cancellation))
+    await foreach (var element in stream.Bytes(cancellation))
     {
-      yield return item;
+      yield return element;
     }
   }
 

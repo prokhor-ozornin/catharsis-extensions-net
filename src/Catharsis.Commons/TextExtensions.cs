@@ -289,7 +289,7 @@ public static class TextExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static IEnumerable<char> ToEnumerable(this TextReader reader) => new TextReaderEnumerable(reader);
+  public static IEnumerable<char> ToEnumerable(this TextReader reader) => reader.ToEnumerable(4096).SelectMany(chars => chars);
 
   /// <summary>
   ///   <para></para>
@@ -297,29 +297,23 @@ public static class TextExtensions
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<char[]> ToEnumerable(this TextReader reader, int count) => new TextReaderChunkEnumerable(reader, count);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <returns></returns>
-  public static IEnumerable<char> ToEnumerable(this StringBuilder builder) => new StringBuilderEnumerable(builder);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <param name="count"></param>
-  /// <returns></returns>
-  public static IEnumerable<char[]> ToEnumerable(this StringBuilder builder, int count) => new StringBuilderChunkEnumerable(builder, count);
+  public static IEnumerable<char[]> ToEnumerable(this TextReader reader, int count) => new TextReaderEnumerable(reader, count);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<char> ToAsyncEnumerable(this TextReader reader) => new TextReaderAsyncEnumerable(reader);
+  public static async IAsyncEnumerable<char> ToAsyncEnumerable(this TextReader reader)
+  {
+    await foreach (var elements in reader.ToAsyncEnumerable(4096))
+    {
+      foreach (var element in elements)
+      {
+        yield return element;
+      }
+    }
+  }
 
   /// <summary>
   ///   <para></para>
@@ -327,7 +321,7 @@ public static class TextExtensions
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<char[]> ToAsyncEnumerable(this TextReader reader, int count) => new TextReaderChunkAsyncEnumerable(reader, count);
+  public static IAsyncEnumerable<char[]> ToAsyncEnumerable(this TextReader reader, int count) => new TextReaderAsyncEnumerable(reader, count);
 
   /// <summary>
   ///   <para></para>
@@ -344,39 +338,44 @@ public static class TextExtensions
   /// <returns></returns>
   public static XmlWriter ToXmlWriter(this StringBuilder builder) => XmlWriter.Create(builder);
 
-  private sealed class TextReaderEnumerable : IEnumerable<char>
+  private sealed class TextReaderEnumerable : IEnumerable<char[]>
   {
     private readonly TextReader reader;
+    private readonly int count;
 
-    public TextReaderEnumerable(TextReader reader) => this.reader = reader;
+    public TextReaderEnumerable(TextReader reader, int count)
+    {
+      this.reader = reader;
+      this.count = count;
+    }
 
-    public IEnumerator<char> GetEnumerator() => new TextReaderEnumerator(this);
+    public IEnumerator<char[]> GetEnumerator() => new Enumerator(this);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    private sealed class TextReaderEnumerator : IEnumerator<char>
+    private sealed class Enumerator : IEnumerator<char[]>
     {
       private readonly TextReaderEnumerable parent;
+      private readonly char[] buffer;
 
-      public TextReaderEnumerator(TextReaderEnumerable parent) => this.parent = parent;
+      public Enumerator(TextReaderEnumerable parent)
+      {
+        this.parent = parent;
+        buffer = new char[parent.count];
+      }
 
-      public char Current { get; private set; }
+      public char[] Current { get; private set; } = Array.Empty<char>();
 
       public bool MoveNext()
       {
-        if (parent.reader.Peek() < 0)
+        var count = parent.reader.Read(buffer, 0, parent.count);
+
+        if (count > 0)
         {
-          return false;
+          Current = buffer.Segment(0, count);
         }
 
-        var result = parent.reader.Read();
-
-        if (result >= 0)
-        {
-          Current = (char) result;
-        }
-
-        return result >= 0;
+        return count > 0;
       }
 
       public void Reset() { throw new InvalidOperationException(); }
@@ -387,213 +386,45 @@ public static class TextExtensions
     }
   }
 
-  private sealed class TextReaderChunkEnumerable : IEnumerable<char[]>
+  private sealed class TextReaderAsyncEnumerable : IAsyncEnumerable<char[]>
   {
     private readonly TextReader reader;
     private readonly int count;
 
-    public TextReaderChunkEnumerable(TextReader reader, int count)
+    public TextReaderAsyncEnumerable(TextReader reader, int count)
     {
       this.reader = reader;
       this.count = count;
     }
 
-    public IEnumerator<char[]> GetEnumerator() => new TextReaderChunkEnumerator(this);
+    public IAsyncEnumerator<char[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this);
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    private sealed class TextReaderChunkEnumerator : IEnumerator<char[]>
-    {
-      private readonly TextReaderChunkEnumerable parent;
-
-      public TextReaderChunkEnumerator(TextReaderChunkEnumerable parent)
-      {
-        this.parent = parent;
-        Current = new char[parent.count];
-      }
-
-      public char[] Current { get; }
-
-      public bool MoveNext()
-      {
-        if (parent.reader.Peek() < 0)
-        {
-          return false;
-        }
-
-        return parent.reader.Read(Current, 0, parent.count) > 0;
-      }
-
-      public void Reset() { throw new InvalidOperationException(); }
-
-      public void Dispose() {}
-
-      object IEnumerator.Current => Current;
-    }
-  }
-
-  private sealed class TextReaderAsyncEnumerable : IAsyncEnumerable<char>
-  {
-    private readonly TextReader reader;
-
-    public TextReaderAsyncEnumerable(TextReader reader) => this.reader = reader;
-
-    public IAsyncEnumerator<char> GetAsyncEnumerator(CancellationToken cancellation = default) => new TextReaderAsyncEnumerator(this);
-
-    private sealed class TextReaderAsyncEnumerator : IAsyncEnumerator<char>
+    private sealed class Enumerator : IAsyncEnumerator<char[]>
     {
       private readonly TextReaderAsyncEnumerable parent;
-      private readonly char[] buffer = new char[1];
+      private readonly char[] buffer;
 
-      public TextReaderAsyncEnumerator(TextReaderAsyncEnumerable parent) => this.parent = parent;
-
-      public ValueTask DisposeAsync() => default;
-
-      public char Current { get; private set; }
-
-      public async ValueTask<bool> MoveNextAsync()
-      {
-        if (parent.reader.Peek() < 0)
-        {
-          return false;
-        }
-
-        var result = await parent.reader.ReadAsync(buffer, 0, 1);
-
-        if (result <= 0)
-        {
-          return false;
-        }
-
-        Current = buffer[0];
-
-        return true;
-      }
-    }
-  }
-
-  private sealed class TextReaderChunkAsyncEnumerable : IAsyncEnumerable<char[]>
-  {
-    private readonly TextReader reader;
-    private readonly int count;
-
-    public TextReaderChunkAsyncEnumerable(TextReader reader, int count)
-    {
-      this.reader = reader;
-      this.count = count;
-    }
-
-    public IAsyncEnumerator<char[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new TextReaderChunkAsyncEnumerator(this);
-
-    private sealed class TextReaderChunkAsyncEnumerator : IAsyncEnumerator<char[]>
-    {
-      private readonly TextReaderChunkAsyncEnumerable parent;
-
-      public TextReaderChunkAsyncEnumerator(TextReaderChunkAsyncEnumerable parent)
+      public Enumerator(TextReaderAsyncEnumerable parent)
       {
         this.parent = parent;
-        Current = new char[parent.count];
+        buffer = new char[parent.count];
       }
 
       public ValueTask DisposeAsync() => default;
 
-      public char[] Current { get; }
+      public char[] Current { get; private set; } = Array.Empty<char>();
 
       public async ValueTask<bool> MoveNextAsync()
       {
-        if (parent.reader.Peek() < 0)
+        var count = await parent.reader.ReadAsync(buffer, 0, parent.count);
+
+        if (count > 0)
         {
-          return false;
+          Current = buffer.Segment(0, count);
         }
 
-        var result = await parent.reader.ReadAsync(Current, 0, parent.count);
-
-        return result > 0;
+        return count > 0;
       }
-    }
-  }
-
-  private sealed class StringBuilderEnumerable : IEnumerable<char>
-  {
-    private readonly StringBuilder builder;
-
-    public StringBuilderEnumerable(StringBuilder builder) => this.builder = builder;
-
-    public IEnumerator<char> GetEnumerator() => new StringBuilderEnumerator(this);
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    private sealed class StringBuilderEnumerator : IEnumerator<char>
-    {
-      private readonly StringBuilderEnumerable parent;
-      private int index = -1;
-
-      public StringBuilderEnumerator(StringBuilderEnumerable parent) => this.parent = parent;
-
-      public char Current => parent.builder[index];
-
-      public bool MoveNext()
-      {
-        index++;
-        return index < parent.builder.Length;
-      }
-
-      public void Reset() { index = -1; }
-
-      public void Dispose() {}
-
-      object IEnumerator.Current => Current;
-    }
-  }
-
-  private sealed class StringBuilderChunkEnumerable : IEnumerable<char[]>
-  {
-    private readonly StringBuilder builder;
-    private readonly int count;
-
-    public StringBuilderChunkEnumerable(StringBuilder builder, int count)
-    {
-      this.builder = builder;
-      this.count = count;
-    }
-
-    public IEnumerator<char[]> GetEnumerator() => new StringBuilderChunkEnumerator(this);
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    private sealed class StringBuilderChunkEnumerator : IEnumerator<char[]>
-    {
-      private readonly StringBuilderChunkEnumerable parent;
-      private int index = -1;
-
-      public StringBuilderChunkEnumerator(StringBuilderChunkEnumerable parent)
-      {
-        this.parent = parent;
-
-        Current = new char[parent.count];
-      }
-
-      public char[] Current { get; }
-
-      public bool MoveNext()
-      {
-        index++;
-
-        if (index * parent.count >= parent.builder.Length)
-        {
-          return false;
-        }
-
-        parent.builder.CopyTo(index * parent.count, Current, 0, parent.count);
-
-        return true;
-      }
-
-      public void Reset() { index = -1; }
-
-      public void Dispose() {}
-
-      object IEnumerator.Current => Current;
     }
   }
 }

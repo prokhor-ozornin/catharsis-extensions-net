@@ -66,9 +66,20 @@ public sealed class ArrayExtensionsTest : UnitTest
       {
         //AssertionExtensions.Should(() => ((byte[]) null!).Text()).ThrowExactly<ArgumentNullException>();
 
-        Validate(RandomBytes, null);
+        Validate(RandomBytes);
         Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(RandomBytes, encoding));
       }
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ArrayExtensions.Segment{T}(T[], int?, int?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Array_Segment_Method()
+  {
+    AssertionExtensions.Should(() => ArrayExtensions.Segment<object>(null!)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
   }
 }

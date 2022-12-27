@@ -269,7 +269,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IDictionary<TKey, TValue?> ToSortedList<TKey, TValue>(this IDictionary<TKey, TValue?> dictionary, IComparer<TKey>? comparer = null) where TKey : notnull => new SortedList<TKey, TValue?>(dictionary, comparer);
+  public static IDictionary<TKey, TValue> ToSortedList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey>? comparer = null) where TKey : notnull => new SortedList<TKey, TValue>(dictionary, comparer);
 
   /// <summary>
   ///   <para></para>
@@ -279,7 +279,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IEnumerable<(TKey Key, TValue? Value)> ToTuple<TKey, TValue>(this IDictionary<TKey, TValue?> dictionary, IComparer<TKey>? comparer = null) where TKey: notnull => comparer != null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
+  public static IEnumerable<(TKey Key, TValue Value)> ToTuple<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey>? comparer = null) where TKey: notnull => comparer != null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
 
   /// <summary>
   ///   <para></para>

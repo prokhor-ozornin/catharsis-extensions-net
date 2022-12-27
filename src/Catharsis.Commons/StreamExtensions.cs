@@ -406,7 +406,7 @@ public static class StreamExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToEnumerable(this Stream stream) => new StreamEnumerable(stream);
+  public static IEnumerable<byte> ToEnumerable(this Stream stream) => stream.ToEnumerable(4096).SelectMany(bytes => bytes);
 
   /// <summary>
   ///   <para></para>
@@ -414,14 +414,23 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<byte[]> ToEnumerable(this Stream stream, int count) => new StreamChunkEnumerable(stream, count);
+  public static IEnumerable<byte[]> ToEnumerable(this Stream stream, int count) => new StreamEnumerable(stream, count);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this Stream stream) => new StreamAsyncEnumerable(stream);
+  public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Stream stream)
+  {
+    await foreach (var elements in stream.ToAsyncEnumerable(4096))
+    {
+      foreach (var element in elements)
+      {
+        yield return element;
+      }
+    }
+  }
 
   /// <summary>
   ///   <para></para>
@@ -429,7 +438,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Stream stream, int count) => new StreamChunkAsyncEnumerable(stream, count);
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Stream stream, int count) => new StreamAsyncEnumerable(stream, count);
 
   /// <summary>
   ///   <para>Returns a <see cref="ToBinaryReader"/> for reading data from specified <see cref="Stream"/>.</para>
@@ -615,48 +624,52 @@ public static class StreamExtensions
     public override void SetLength(long value) => throw new NotSupportedException();
   }
 
-  private sealed class StreamEnumerable : IEnumerable<byte>
+  private sealed class StreamEnumerable : IEnumerable<byte[]>
   {
     private readonly Stream stream;
+    private readonly int count;
 
-    public StreamEnumerable(Stream stream) => this.stream = stream;
+    public StreamEnumerable(Stream stream, int count)
+    {
+      if (count <= 0)
+      {
+        throw new ArgumentOutOfRangeException(nameof(count));
+      }
 
-    public IEnumerator<byte> GetEnumerator() => new StreamEnumerator(this);
+      this.stream = stream;
+      this.count = count;
+    }
+
+    public IEnumerator<byte[]> GetEnumerator() => new Enumerator(this);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    private sealed class StreamEnumerator : IEnumerator<byte>
+    private sealed class Enumerator : IEnumerator<byte[]>
     {
       private readonly StreamEnumerable parent;
-      private readonly byte[] buffer = new byte[1];
+      private readonly byte[] buffer;
 
-      public StreamEnumerator(StreamEnumerable parent) => this.parent = parent;
+      public Enumerator(StreamEnumerable parent)
+      {
+        this.parent = parent;
+        buffer = new byte[parent.count];
+      }
 
-      public byte Current { get; private set; }
+      public byte[] Current { get; private set; } = Array.Empty<byte>();
 
       public bool MoveNext()
       {
-        var result = parent.stream.Read(buffer, 0, 1);
+        var count = parent.stream.Read(buffer, 0, parent.count);
 
-        if (result <= 0)
+        if (count > 0)
         {
-          return false;
+          Current = buffer.Segment(0, count);
         }
 
-        Current = buffer[0];
-
-        return true;
+        return count > 0;
       }
 
-      public void Reset()
-      {
-        if (!parent.stream.CanSeek)
-        {
-          throw new InvalidOperationException();
-        }
-
-        parent.stream.Seek(-1, SeekOrigin.Begin);
-      }
+      public void Reset() => throw new NotSupportedException();
 
       public void Dispose() {}
 
@@ -664,127 +677,51 @@ public static class StreamExtensions
     }
   }
 
-  private sealed class StreamChunkEnumerable : IEnumerable<byte[]>
+  private sealed class StreamAsyncEnumerable : IAsyncEnumerable<byte[]>
   {
     private readonly Stream stream;
     private readonly int count;
 
-    public StreamChunkEnumerable(Stream stream, int count)
+    public StreamAsyncEnumerable(Stream stream, int count)
     {
+      if (count <= 0)
+      {
+        throw new ArgumentOutOfRangeException(nameof(count));
+      }
+
       this.stream = stream;
       this.count = count;
     }
 
-    public IEnumerator<byte[]> GetEnumerator() => new StreamChunkEnumerator(this);
+    public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this, cancellation);
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-    private sealed class StreamChunkEnumerator : IEnumerator<byte[]>
-    {
-      private readonly StreamChunkEnumerable parent;
-
-      public StreamChunkEnumerator(StreamChunkEnumerable parent)
-      {
-        this.parent = parent;
-
-        Current = new byte[parent.count];
-      }
-
-      public byte[] Current { get; }
-
-      public bool MoveNext() => parent.stream.Read(Current, 0, parent.count) > 0;
-
-      public void Reset()
-      {
-        if (!parent.stream.CanSeek)
-        {
-          throw new InvalidOperationException();
-        }
-
-        parent.stream.Seek(-1, SeekOrigin.Begin);
-      }
-
-      public void Dispose() {}
-
-      object IEnumerator.Current => Current;
-    }
-  }
-
-  private sealed class StreamAsyncEnumerable : IAsyncEnumerable<byte>
-  {
-    private readonly Stream stream;
-
-    public StreamAsyncEnumerable(Stream stream) => this.stream = stream;
-
-    public IAsyncEnumerator<byte> GetAsyncEnumerator(CancellationToken cancellation = default) => new StreamAsyncEnumerator(this, cancellation);
-
-    private sealed class StreamAsyncEnumerator : IAsyncEnumerator<byte>
+    private sealed class Enumerator : IAsyncEnumerator<byte[]>
     {
       private readonly StreamAsyncEnumerable parent;
       private readonly CancellationToken cancellation;
-      private readonly byte[] buffer = new byte[1];
+      private readonly byte[] buffer;
 
-      public StreamAsyncEnumerator(StreamAsyncEnumerable parent, CancellationToken cancellation)
+      public Enumerator(StreamAsyncEnumerable parent, CancellationToken cancellation)
       {
         this.parent = parent;
         this.cancellation = cancellation;
+        buffer = new byte[parent.count];
       }
 
       public ValueTask DisposeAsync() => default;
 
-      public byte Current { get; private set; }
+      public byte[] Current { get; private set; } = Array.Empty<byte>();
 
       public async ValueTask<bool> MoveNextAsync()
       {
-        var result = await parent.stream.ReadAsync(buffer, 0, 1, cancellation);
+        var count = await parent.stream.ReadAsync(buffer, 0, parent.count, cancellation);
 
-        if (result <= 0)
+        if (count > 0)
         {
-          return false;
+          Current = buffer.Segment(0, count);
         }
 
-        Current = buffer[0];
-
-        return true;
-      }
-    }
-  }
-
-  private sealed class StreamChunkAsyncEnumerable : IAsyncEnumerable<byte[]>
-  {
-    private readonly Stream stream;
-    private readonly int count;
-
-    public StreamChunkAsyncEnumerable(Stream stream, int count)
-    {
-      this.stream = stream;
-      this.count = count;
-    }
-
-    public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new StreamChunkAsyncEnumerator(this, cancellation);
-
-    private sealed class StreamChunkAsyncEnumerator : IAsyncEnumerator<byte[]>
-    {
-      private readonly StreamChunkAsyncEnumerable parent;
-      private readonly CancellationToken cancellation;
-
-      public StreamChunkAsyncEnumerator(StreamChunkAsyncEnumerable parent, CancellationToken cancellation)
-      {
-        this.parent = parent;
-        this.cancellation = cancellation;
-
-        Current = new byte[parent.count];
-      }
-
-      public ValueTask DisposeAsync() => default;
-
-      public byte[] Current { get; }
-
-      public async ValueTask<bool> MoveNextAsync()
-      {
-        var result = await parent.stream.ReadAsync(Current, 0, parent.count, cancellation);
-
-        return result > 0;
+        return count > 0;
       }
     }
   }

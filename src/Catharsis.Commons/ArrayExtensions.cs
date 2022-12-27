@@ -30,4 +30,14 @@ public static class ArrayExtensions
   /// <param name="encoding">Encoding to be used for transforming between <see cref="byte"/> at its <see cref="char"/> equivalent. If not specified, uses <see cref="Encoding.UTF8"/> encoding.</param>
   /// <returns>Array of characters as a string which represents <paramref name="bytes"/> array in <paramref name="encoding"/>.</returns>
   public static string Text(this byte[] bytes, Encoding? encoding = null) => bytes.Length > 0 ? (encoding ?? Encoding.Default).GetString(bytes) : string.Empty;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="array"></param>
+  /// <param name="offset"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  public static T[] Segment<T>(this T[] array, int? offset = null, int? count = null) => array.ToArraySegment(offset, count).ToArray();
 }

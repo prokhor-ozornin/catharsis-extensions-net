@@ -79,7 +79,14 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static BinaryReader Skip(this BinaryReader reader, int count)
   {
-    count.Times(() => reader.ReadByte());
+    try
+    {
+      count.Times(() => reader.ReadByte());
+    }
+    catch (EndOfStreamException)
+    {
+    }
+
     return reader;
   }
 

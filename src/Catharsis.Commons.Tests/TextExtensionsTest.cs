@@ -595,29 +595,6 @@ public sealed class TextExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="TextExtensions.ToEnumerable(StringBuilder)"/></description></item>
-  ///     <item><description><see cref="TextExtensions.ToEnumerable(StringBuilder, int)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void StringBuilder_ToEnumerable_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StringBuilder) null!).ToEnumerable()).ThrowExactly<ArgumentNullException>();
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StringBuilder) null!).ToEnumerable(1)).ThrowExactly<ArgumentNullException>();
-    }
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
   ///     <item><description><see cref="TextExtensions.ToAsyncEnumerable(TextReader)"/></description></item>
   ///     <item><description><see cref="TextExtensions.ToAsyncEnumerable(TextReader, int)"/></description></item>
   ///   </list>

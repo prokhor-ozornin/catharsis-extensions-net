@@ -311,9 +311,9 @@ public static class UriExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Uri uri, TimeSpan? timeout = null, params (string Name, object? Value)[] headers)
   {
-    await foreach (var item in (await uri.ToStream(timeout, headers)).ToAsyncEnumerable())
+    await foreach (var element in (await uri.ToStream(timeout, headers)).ToAsyncEnumerable())
     {
-      yield return item;
+      yield return element;
     }
   }
 
@@ -327,9 +327,9 @@ public static class UriExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Uri uri, int count, TimeSpan? timeout = null, params (string Name, object? Value)[] headers)
   {
-    await foreach (var item in (await uri.ToStream(timeout, headers)).ToAsyncEnumerable(count))
+    await foreach (var element in (await uri.ToStream(timeout, headers)).ToAsyncEnumerable(count))
     {
-      yield return item;
+      yield return element;
     }
   }
 

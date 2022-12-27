@@ -76,9 +76,9 @@ public static class AsyncEnumerableExtensions
   {
     var result = new List<T>();
 
-    await foreach (var item in sequence.WithCancellation(cancellation))
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
-      result.Add(item);
+      result.Add(element);
     }
 
     return result;
@@ -98,9 +98,9 @@ public static class AsyncEnumerableExtensions
   {
     var result = new LinkedList<T>();
 
-    await foreach (var item in sequence.WithCancellation(cancellation))
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
-      result.AddLast(item);
+      result.AddLast(element);
     }
 
     return result;
@@ -121,9 +121,9 @@ public static class AsyncEnumerableExtensions
   {
     var result = new HashSet<T>(comparer);
 
-    await foreach (var item in sequence.WithCancellation(cancellation))
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
-      result.Add(item);
+      result.Add(element);
     }
 
     return result;
@@ -142,9 +142,9 @@ public static class AsyncEnumerableExtensions
   {
     var result = new SortedSet<T>(comparer);
 
-    await foreach (var item in sequence.WithCancellation(cancellation))
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
-      result.Add(item);
+      result.Add(element);
     }
 
     return result;
@@ -164,9 +164,9 @@ public static class AsyncEnumerableExtensions
   {
     var result = new Dictionary<TKey, TValue>(comparer);
 
-    await foreach (var item in sequence.WithCancellation(cancellation))
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
-      result.Add(key(item), item);
+      result.Add(key(element), element);
     }
 
     return result;
@@ -184,9 +184,9 @@ public static class AsyncEnumerableExtensions
   {
     var result = new Stack<T>();
 
-    await foreach (var item in sequence.WithCancellation(cancellation))
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
-      result.Push(item);
+      result.Push(element);
     }
 
     return result;
@@ -204,9 +204,9 @@ public static class AsyncEnumerableExtensions
   {
     var result = new Queue<T>();
 
-    await foreach (var item in sequence.WithCancellation(cancellation))
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
-      result.Enqueue(item);
+      result.Enqueue(element);
     }
 
     return result;
@@ -246,9 +246,9 @@ public static class AsyncEnumerableExtensions
   {
     var stream = new MemoryStream();
 
-    await foreach (var value in sequence.WithCancellation(cancellation))
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
-      stream.WriteByte(value);
+      stream.WriteByte(element);
     }
 
     return stream.MoveToStart();
@@ -264,9 +264,9 @@ public static class AsyncEnumerableExtensions
   {
     var stream = new MemoryStream();
 
-    await foreach (var value in sequence.WithCancellation(cancellation))
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
-      await stream.WriteAsync(value, 0, value.Length, cancellation);
+      await stream.WriteAsync(element, 0, element.Length, cancellation);
     }
 
     return stream.MoveToStart();
