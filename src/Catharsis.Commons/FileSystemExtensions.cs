@@ -83,7 +83,7 @@ public static class FileSystemExtensions
   {
     using var reader = file.ToStreamReader(encoding);
 
-    await foreach (var line in reader.Lines())
+    await foreach (var line in reader.Lines().ConfigureAwait(false))
     {
       yield return line;
     }
@@ -272,7 +272,7 @@ public static class FileSystemExtensions
   {
     await using var stream = source.ToReadOnlyStream();
 
-    await foreach (var element in stream.ToBytes(cancellation))
+    await foreach (var element in stream.ToBytes(cancellation).ConfigureAwait(false))
     {
       yield return element;
     }

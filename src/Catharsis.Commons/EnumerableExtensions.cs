@@ -254,7 +254,7 @@ public static class EnumerableExtensions
   {
     foreach (var element in sequence)
     {
-      yield return await Task.FromResult(element);
+      yield return await Task.FromResult(element).ConfigureAwait(false);
     }
   }
 

@@ -1158,7 +1158,7 @@ public static class RandomExtensions
   {
     for (var i = 1; i <= count; i++)
     {
-      yield return await random.BinaryFile(size, min, max, directory, cancellation);
+      yield return await random.BinaryFile(size, min, max, directory, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1182,7 +1182,7 @@ public static class RandomExtensions
     switch (ranges.Length)
     {
       case 0:
-        await foreach (var file in random.BinaryFileSequence(size, count, null, null, directory, cancellation))
+        await foreach (var file in random.BinaryFileSequence(size, count, null, null, directory, cancellation).ConfigureAwait(false))
         {
           yield return file;
         }
@@ -1192,7 +1192,7 @@ public static class RandomExtensions
       case 1:
         var range = ranges.First();
 
-        await foreach (var file in random.BinaryFileSequence(size, count, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation))
+        await foreach (var file in random.BinaryFileSequence(size, count, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false))
         {
           yield return file;
         }
@@ -1210,7 +1210,7 @@ public static class RandomExtensions
 
           try
           {
-            await bytes.WriteTo(file, cancellation);
+            await bytes.WriteTo(file, cancellation).ConfigureAwait(false);
           }
           catch
           {
@@ -1296,7 +1296,7 @@ public static class RandomExtensions
   {
     for (var i = 1; i <= count; i++)
     {
-      yield return await random.TextFile(size, encoding, min, max, directory, cancellation);
+      yield return await random.TextFile(size, encoding, min, max, directory, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1321,7 +1321,7 @@ public static class RandomExtensions
     switch (ranges.Length)
     {
       case 0:
-        await foreach (var file in random.TextFileSequence(size, count, encoding, null, null, directory, cancellation))
+        await foreach (var file in random.TextFileSequence(size, count, encoding, null, null, directory, cancellation).ConfigureAwait(false))
         {
           yield return file;
         }
@@ -1331,7 +1331,7 @@ public static class RandomExtensions
       case 1:
         var range = ranges.First();
 
-        await foreach (var file in random.TextFileSequence(size, count, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation))
+        await foreach (var file in random.TextFileSequence(size, count, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false))
         {
           yield return file;
         }
@@ -1344,7 +1344,7 @@ public static class RandomExtensions
         for (var i = 1; i <= count; i++)
         {
           var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-          yield return await random.File(directory).WriteText(chars.ToText(), encoding, cancellation);
+          yield return await random.File(directory).WriteText(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
         }
 
         break;

@@ -111,7 +111,7 @@ public static class TaskExtensions
   /// <returns></returns>
   public static async ValueTask Execute(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null)
   {
-    await task;
+    await task.ConfigureAwait(false);
 
     if (task.IsCompletedSuccessfully && success != null)
     {
@@ -137,7 +137,7 @@ public static class TaskExtensions
   /// <returns></returns>
   public static async Task Execute(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null)
   {
-    await task;
+    await task.ConfigureAwait(false);
 
     if (task.IsCompletedSuccessfully && success != null)
     {

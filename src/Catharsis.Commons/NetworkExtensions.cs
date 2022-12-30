@@ -458,9 +458,9 @@ public static class NetworkExtensions
   public static async IAsyncEnumerable<byte> ToBytes(this HttpClient http, Uri uri, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
 #if NET6_0
-      var result = http.GetByteArrayAsync(uri, cancellation);
+      var result = http.GetByteArrayAsync(uri, cancellation).ConfigureAwait(false);
 #else
-      var result = http.GetByteArrayAsync(uri);
+      var result = http.GetByteArrayAsync(uri).ConfigureAwait(false);
 #endif
 
     foreach (var value in await result)
@@ -478,9 +478,9 @@ public static class NetworkExtensions
   public static async IAsyncEnumerable<byte> ToBytes(this HttpContent content, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
 #if NET6_0
-      var result = content.ReadAsByteArrayAsync(cancellation);
+      var result = content.ReadAsByteArrayAsync(cancellation).ConfigureAwait(false);
 #else
-      var result = content.ReadAsByteArrayAsync();
+      var result = content.ReadAsByteArrayAsync().ConfigureAwait(false);
 #endif
 
     foreach (var value in await result)
@@ -497,7 +497,7 @@ public static class NetworkExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<byte> ToBytes(this TcpClient tcp, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
-    await foreach (var element in tcp.GetStream().ToBytes(cancellation))
+    await foreach (var element in tcp.GetStream().ToBytes(cancellation).ConfigureAwait(false))
     {
       yield return element;
     }
@@ -512,9 +512,9 @@ public static class NetworkExtensions
   public static async IAsyncEnumerable<byte> ToBytes(this UdpClient udp, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
 #if NET6_0
-    var result = await udp.ReceiveAsync(cancellation);
+    var result = await udp.ReceiveAsync(cancellation).ConfigureAwait(false);
 #else
-    var result = await udp.ReceiveAsync();
+    var result = await udp.ReceiveAsync().ConfigureAwait(false);
 #endif
 
     foreach (var element in result.Buffer)
@@ -796,9 +796,9 @@ public static class NetworkExtensions
       public async ValueTask<bool> MoveNextAsync()
       {
 #if NET6_0
-        var buffer = (await parent.client.ReceiveAsync(cancellation)).Buffer;
+        var buffer = (await parent.client.ReceiveAsync(cancellation).ConfigureAwait(false)).Buffer;
 #else
-        var buffer = (await parent.client.ReceiveAsync()).Buffer;
+        var buffer = (await parent.client.ReceiveAsync().ConfigureAwait(false)).Buffer;
 #endif
 
         if (buffer.Length > 0)

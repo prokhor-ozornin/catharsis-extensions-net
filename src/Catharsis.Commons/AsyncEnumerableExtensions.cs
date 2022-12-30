@@ -350,7 +350,7 @@ public static class AsyncEnumerableExtensions
     {
       cancellation.ThrowIfCancellationRequested();
 
-      await stream.WriteAsync(element, 0, element.Length, cancellation);
+      await stream.WriteAsync(element, 0, element.Length, cancellation).ConfigureAwait(false);
     }
 
     return stream.MoveToStart();
@@ -460,7 +460,7 @@ public static class AsyncEnumerableExtensions
 
       public void Reset() => throw new NotSupportedException();
 
-      public async void Dispose() { await parent.enumerator.DisposeAsync(); }
+      public async void Dispose() { await parent.enumerator.DisposeAsync().ConfigureAwait(false); }
 
       object IEnumerator.Current => Current;
     }

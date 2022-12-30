@@ -124,7 +124,7 @@ public static class TextExtensions
   /// <returns>List of strings which have been read from a <paramref name="reader"/>.</returns>
   public static async IAsyncEnumerable<string> Lines(this TextReader reader)
   {
-    foreach (var line in (await reader.ToText()).Lines())
+    foreach (var line in (await reader.ToText().ConfigureAwait(false)).Lines())
     {
       yield return line;
     }
@@ -223,7 +223,7 @@ public static class TextExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<char> ToAsyncEnumerable(this TextReader reader)
   {
-    await foreach (var elements in reader.ToAsyncEnumerable(4096))
+    await foreach (var elements in reader.ToAsyncEnumerable(4096).ConfigureAwait(false))
     {
       foreach (var element in elements)
       {
@@ -384,7 +384,7 @@ public static class TextExtensions
 
       public async ValueTask<bool> MoveNextAsync()
       {
-        var count = await parent.reader.ReadAsync(buffer, 0, parent.count);
+        var count = await parent.reader.ReadAsync(buffer, 0, parent.count).ConfigureAwait(false);
 
         if (count > 0)
         {

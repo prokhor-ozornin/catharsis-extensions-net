@@ -145,7 +145,7 @@ public static class StreamExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<string> Lines(this Stream stream, Encoding encoding = null)
   {
-    await foreach (var line in stream.ToStreamReader(encoding).Lines())
+    await foreach (var line in stream.ToStreamReader(encoding).Lines().ConfigureAwait(false))
     {
       yield return line;
     }
@@ -247,7 +247,7 @@ public static class StreamExtensions
   {
     var buffer = new byte[4096];
 
-    for (int count; (count = await source.ReadAsync(buffer, 0, buffer.Length, cancellation)) > 0;)
+    for (int count; (count = await source.ReadAsync(buffer, 0, buffer.Length, cancellation).ConfigureAwait(false)) > 0;)
     {
       for (var i = 0; i < count; i++)
       {
@@ -409,7 +409,7 @@ public static class StreamExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Stream stream)
   {
-    await foreach (var elements in stream.ToAsyncEnumerable(4096))
+    await foreach (var elements in stream.ToAsyncEnumerable(4096).ConfigureAwait(false))
     {
       foreach (var element in elements)
       {
@@ -712,7 +712,7 @@ public static class StreamExtensions
 
       public async ValueTask<bool> MoveNextAsync()
       {
-        var count = await parent.stream.ReadAsync(buffer, 0, parent.count, cancellation);
+        var count = await parent.stream.ReadAsync(buffer, 0, parent.count, cancellation).ConfigureAwait(false);
 
         if (count > 0)
         {

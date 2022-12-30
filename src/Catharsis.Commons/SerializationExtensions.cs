@@ -637,7 +637,7 @@ public static class SerializationExtensions
   {
     using var reader = await source.ToXmlReader(encoding, timeout, headers).ConfigureAwait(false);
     
-    return await reader.ToXDocument(cancellation);
+    return await reader.ToXDocument(cancellation).ConfigureAwait(false);
   }
 
   /// <summary>

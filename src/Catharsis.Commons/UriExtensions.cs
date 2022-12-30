@@ -103,10 +103,10 @@ public static class UriExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<string> Lines(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
-    await using var stream = await uri.ToStream(timeout, headers);
+    await using var stream = await uri.ToStream(timeout, headers).ConfigureAwait(false);
     using var reader = stream.ToStreamReader(encoding);
 
-    await foreach (var line in reader.Lines())
+    await foreach (var line in reader.Lines().ConfigureAwait(false))
     {
       yield return line;
     }
@@ -152,7 +152,7 @@ public static class UriExtensions
       async void Finalizer(Uri uri)
       {
         using var http = new HttpClient().WithTimeout(timeout).WithHeaders(headers);
-        await http.Delete(uri, cancellation);
+        await http.Delete(uri, cancellation).ConfigureAwait(false);
       }
 
       finalizer = Finalizer;
@@ -189,7 +189,7 @@ public static class UriExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
-    await foreach (var element in (await uri.ToStream(timeout, headers)).ToAsyncEnumerable())
+    await foreach (var element in (await uri.ToStream(timeout, headers).ConfigureAwait(false)).ToAsyncEnumerable().ConfigureAwait(false))
     {
       yield return element;
     }
@@ -205,7 +205,7 @@ public static class UriExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Uri uri, int count, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
-    await foreach (var element in (await uri.ToStream(timeout, headers)).ToAsyncEnumerable(count))
+    await foreach (var element in (await uri.ToStream(timeout, headers).ConfigureAwait(false)).ToAsyncEnumerable(count).ConfigureAwait(false))
     {
       yield return element;
     }
@@ -288,9 +288,9 @@ public static class UriExtensions
   /// <returns>Response of web server in a binary format.</returns>
   public static async IAsyncEnumerable<byte> ToBytes(this Uri uri, TimeSpan? timeout = null, [EnumeratorCancellation] CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    await using var stream = await uri.ToStream(timeout, headers);
+    await using var stream = await uri.ToStream(timeout, headers).ConfigureAwait(false);
 
-    await foreach (var value in stream.ToBytes(cancellation))
+    await foreach (var value in stream.ToBytes(cancellation).ConfigureAwait(false))
     {
       yield return value;
     }
@@ -323,7 +323,7 @@ public static class UriExtensions
   {
     if (destination.IsFile)
     {
-      await destination.LocalPath.ToFile().WriteBytes(bytes);
+      await destination.LocalPath.ToFile().WriteBytes(bytes).ConfigureAwait(false);
     }
     else if (destination.Scheme == Uri.UriSchemeNetTcp)
     {
