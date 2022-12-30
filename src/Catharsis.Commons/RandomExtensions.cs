@@ -1089,7 +1089,7 @@ public static class RandomExtensions
 
     try
     {
-      await bytes.WriteTo(file, cancellation);
+      await bytes.WriteTo(file, cancellation).ConfigureAwait(false);
     }
     catch
     {
@@ -1112,17 +1112,17 @@ public static class RandomExtensions
   {
     if (size <= 0)
     {
-      return await random.BinaryFile(size, null, null, directory, cancellation);
+      return await random.BinaryFile(size, null, null, directory, cancellation).ConfigureAwait(false);
     }
 
     switch (ranges.Length)
     {
       case 0:
-        return await random.BinaryFile(size, null, null, directory, cancellation);
+        return await random.BinaryFile(size, null, null, directory, cancellation).ConfigureAwait(false);
 
       case 1:
         var range = ranges.First();
-        return await random.BinaryFile(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation);
+        return await random.BinaryFile(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false);
 
       default:
         var totalRange = ranges.ToRange();
@@ -1132,7 +1132,7 @@ public static class RandomExtensions
 
         try
         {
-          await bytes.WriteTo(file, cancellation);
+          await bytes.WriteTo(file, cancellation).ConfigureAwait(false);
         }
         catch
         {
@@ -1244,7 +1244,7 @@ public static class RandomExtensions
 
     var text = random.String(size, min, max);
 
-    return await random.File(directory).WriteText(text, encoding, cancellation);
+    return await random.File(directory).WriteText(text, encoding, cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -1261,22 +1261,22 @@ public static class RandomExtensions
   {
     if (size <= 0)
     {
-      return await random.TextFile(size, encoding, null, null, directory, cancellation);
+      return await random.TextFile(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
     }
 
     switch (ranges.Length)
     {
       case 0:
-        return await random.TextFile(size, encoding, null, null, directory, cancellation);
+        return await random.TextFile(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
 
       case 1:
         var range = ranges.First();
-        return await random.TextFile(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation);
+        return await random.TextFile(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false);
 
       default:
         var totalRange = ranges.ToRange();
         var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-        return await random.File(directory).WriteText(chars.ToText(), encoding, cancellation);
+        return await random.File(directory).WriteText(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1527,7 +1527,7 @@ public static class RandomExtensions
 
     if (count > 0)
     {
-      (await stream.WriteBytes(random.ByteSequence(count, min, max), cancellation)).MoveToStart();
+      (await stream.WriteBytes(random.ByteSequence(count, min, max), cancellation).ConfigureAwait(false)).MoveToStart();
     }
 
     return stream;
@@ -1550,7 +1550,7 @@ public static class RandomExtensions
       var range = ranges.ToRange();
       var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.ByteSequence(count)).AsArray();
 
-      (await stream.WriteBytes(bytes, cancellation)).MoveToStart();
+      (await stream.WriteBytes(bytes, cancellation).ConfigureAwait(false)).MoveToStart();
     }
 
     return stream;

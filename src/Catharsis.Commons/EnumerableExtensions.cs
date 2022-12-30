@@ -336,7 +336,7 @@ public static class EnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<MemoryStream> ToMemoryStream(this IEnumerable<byte> sequence, CancellationToken cancellation = default) => await sequence.Chunk(4096).ToMemoryStream(cancellation);
+  public static async Task<MemoryStream> ToMemoryStream(this IEnumerable<byte> sequence, CancellationToken cancellation = default) => await sequence.Chunk(4096).ToMemoryStream(cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -350,7 +350,7 @@ public static class EnumerableExtensions
 
     foreach (var bytes in sequence)
     {
-      await stream.WriteAsync(bytes, 0, bytes.Length, cancellation);
+      await stream.WriteAsync(bytes, 0, bytes.Length, cancellation).ConfigureAwait(false);
     }
 
     stream.MoveToStart();

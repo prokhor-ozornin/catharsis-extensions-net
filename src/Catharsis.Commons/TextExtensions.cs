@@ -160,7 +160,7 @@ public static class TextExtensions
   /// <returns></returns>
   public static async Task<T> Print<T>(this T instance, TextWriter destination, CancellationToken cancellation = default)
   {
-    await destination.WriteAsync(instance.ToStateString().ToReadOnlyMemory(), cancellation);
+    await destination.WriteAsync(instance.ToStateString().ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
     return instance;
   }
 
@@ -192,14 +192,14 @@ public static class TextExtensions
   /// <param name="reader"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static async Task<byte[]> ToBytes(this TextReader reader, Encoding encoding = null) => (await reader.ToText()).ToBytes(encoding);
+  public static async Task<byte[]> ToBytes(this TextReader reader, Encoding encoding = null) => (await reader.ToText().ConfigureAwait(false)).ToBytes(encoding);
 
   /// <summary>
   ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>
   /// </summary>
   /// <param name="reader"><see cref="TextReader"/> which is used to read text from its underlying source.</param>
   /// <returns>Text content which have been read from a <paramref name="reader"/>.</returns>
-  public static async Task<string> ToText(this TextReader reader) => await reader.ReadToEndAsync();
+  public static async Task<string> ToText(this TextReader reader) => await reader.ReadToEndAsync().ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -263,7 +263,7 @@ public static class TextExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static async Task<TWriter> WriteBytes<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter => await destination.WriteText(bytes.AsArray().ToText(encoding));
+  public static async Task<TWriter> WriteBytes<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter => await destination.WriteText(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -275,7 +275,7 @@ public static class TextExtensions
   /// <returns></returns>
   public static async Task<TWriter> WriteText<TWriter>(this TWriter destination, string text, CancellationToken cancellation = default) where TWriter : TextWriter
   {
-    await destination.WriteAsync(text.ToReadOnlyMemory(), cancellation);
+    await destination.WriteAsync(text.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
 
     return destination;
   }
@@ -289,7 +289,7 @@ public static class TextExtensions
   /// <returns></returns>
   public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, TextWriter writer, Encoding encoding = null)
   {
-    await bytes.AsArray().ToText(encoding).WriteTo(writer);
+    await bytes.AsArray().ToText(encoding).WriteTo(writer).ConfigureAwait(false);
     return bytes;
   }
 
@@ -302,7 +302,7 @@ public static class TextExtensions
   /// <returns></returns>
   public static async Task<string> WriteTo(this string text, TextWriter destination, CancellationToken cancellation = default)
   {
-    await destination.WriteText(text, cancellation);
+    await destination.WriteText(text, cancellation).ConfigureAwait(false);
     return text;
   }
 

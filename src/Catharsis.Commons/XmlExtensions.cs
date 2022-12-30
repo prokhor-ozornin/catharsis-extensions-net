@@ -69,7 +69,7 @@ public static class XmlExtensions
   /// <returns></returns>
   public static async Task<T> Print<T>(this T instance, XmlWriter destination)
   {
-    await destination.WriteText(instance.ToStateString());
+    await destination.WriteText(instance.ToStateString()).ConfigureAwait(false);
     return instance;
   }
 
@@ -134,7 +134,7 @@ public static class XmlExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<XmlReader> ToXmlReader(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStream(timeout, headers)).ToXmlReader(encoding);
+  public static async Task<XmlReader> ToXmlReader(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStream(timeout, headers).ConfigureAwait(false)).ToXmlReader(encoding);
 
   /// <summary>
   ///   <para></para>
@@ -218,7 +218,7 @@ public static class XmlExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<XmlDictionaryReader> ToXmlDictionaryReader(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStream(timeout, headers)).ToXmlDictionaryReader(encoding);
+  public static async Task<XmlDictionaryReader> ToXmlDictionaryReader(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStream(timeout, headers).ConfigureAwait(false)).ToXmlDictionaryReader(encoding);
 
   /// <summary>
   ///   <para></para>
@@ -263,7 +263,7 @@ public static class XmlExtensions
   /// <param name="reader"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static async Task<byte[]> ToBytes(this XmlReader reader, Encoding encoding = null) => (await reader.ToText()).ToBytes(encoding);
+  public static async Task<byte[]> ToBytes(this XmlReader reader, Encoding encoding = null) => (await reader.ToText().ConfigureAwait(false)).ToBytes(encoding);
 
   /// <summary>
   ///   <para></para>
@@ -289,7 +289,7 @@ public static class XmlExtensions
   {
     using var stream = new MemoryStream();
 
-    await xml.SaveAsync(stream, SaveOptions.None, cancellation);
+    await xml.SaveAsync(stream, SaveOptions.None, cancellation).ConfigureAwait(false);
 
     return stream.ToArray();
   }
@@ -299,7 +299,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static async Task<string> ToText(this XmlReader reader) => await reader.ReadOuterXmlAsync();
+  public static async Task<string> ToText(this XmlReader reader) => await reader.ReadOuterXmlAsync().ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -325,7 +325,7 @@ public static class XmlExtensions
   {
     await using var writer = new StringWriter();
 
-    await xml.SaveAsync(writer, SaveOptions.None, cancellation);
+    await xml.SaveAsync(writer, SaveOptions.None, cancellation).ConfigureAwait(false);
 
     return writer.ToString();
   }
@@ -337,7 +337,7 @@ public static class XmlExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static async Task<XmlWriter> WriteBytes(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) => await destination.WriteText(bytes.AsArray().ToText(encoding));
+  public static async Task<XmlWriter> WriteBytes(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) => await destination.WriteText(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
   
   /// <summary>
   ///   <para></para>
@@ -347,7 +347,7 @@ public static class XmlExtensions
   /// <returns></returns>
   public static async Task<XmlWriter> WriteText(this XmlWriter destination, string text)
   {
-    await destination.WriteRawAsync(text);
+    await destination.WriteRawAsync(text).ConfigureAwait(false);
     return destination;
   }
 
@@ -360,7 +360,7 @@ public static class XmlExtensions
   /// <returns></returns>
   public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, XmlWriter destination, Encoding encoding = null)
   {
-    await destination.WriteBytes(bytes, encoding);
+    await destination.WriteBytes(bytes, encoding).ConfigureAwait(false);
     return bytes;
   }
 
@@ -372,7 +372,7 @@ public static class XmlExtensions
   /// <returns></returns>
   public static async Task<string> WriteTo(this string text, XmlWriter destination)
   {
-    await destination.WriteText(text);
+    await destination.WriteText(text).ConfigureAwait(false);
     return text;
   }
 }

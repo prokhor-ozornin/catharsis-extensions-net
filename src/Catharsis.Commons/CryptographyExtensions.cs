@@ -25,7 +25,7 @@ public static class CryptographyExtensions
     foreach (var chunk in bytes.Chunk(encryptor.InputBlockSize))
     {
       var block = encryptor.TransformFinalBlock(chunk, 0, chunk.Length);
-      await block.WriteTo(stream, cancellation);
+      await block.WriteTo(stream, cancellation).ConfigureAwait(false);
     }
 
     return stream.ToArray();
@@ -38,7 +38,7 @@ public static class CryptographyExtensions
   /// <param name="stream">Stream of binary data to be encrypted.</param>
   /// <param name="cancellation"></param>
   /// <returns>Encrypted binary data.</returns>
-  public static async Task<byte[]> Encrypt(this SymmetricAlgorithm algorithm, Stream stream, CancellationToken cancellation = default) => await algorithm.Encrypt(stream.ToEnumerable(), cancellation);
+  public static async Task<byte[]> Encrypt(this SymmetricAlgorithm algorithm, Stream stream, CancellationToken cancellation = default) => await algorithm.Encrypt(stream.ToEnumerable(), cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -47,7 +47,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<byte[]> Encrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.Encrypt(bytes, cancellation);
+  public static async Task<byte[]> Encrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.Encrypt(bytes, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -56,7 +56,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<byte[]> Encrypt(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.Encrypt(stream, cancellation);
+  public static async Task<byte[]> Encrypt(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.Encrypt(stream, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para>Decrypts encrypted binary data, using specified symmetric algorithm.</para>
@@ -73,7 +73,7 @@ public static class CryptographyExtensions
     foreach (var chunk in bytes.Chunk(decryptor.InputBlockSize))
     {
       var block = decryptor.TransformFinalBlock(chunk, 0, chunk.Length);
-      await block.WriteTo(stream, cancellation);
+      await block.WriteTo(stream, cancellation).ConfigureAwait(false);
     }
 
     return stream.ToArray();
@@ -86,7 +86,7 @@ public static class CryptographyExtensions
   /// <param name="stream">Stream of binary data to be decrypted.</param>
   /// <param name="cancellation"></param>
   /// <returns>Decrypted binary data.</returns>
-  public static async Task<byte[]> Decrypt(this SymmetricAlgorithm algorithm, Stream stream, CancellationToken cancellation = default) => await algorithm.Decrypt(stream.ToEnumerable(), cancellation);
+  public static async Task<byte[]> Decrypt(this SymmetricAlgorithm algorithm, Stream stream, CancellationToken cancellation = default) => await algorithm.Decrypt(stream.ToEnumerable(), cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -95,7 +95,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<byte[]> Decrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.Decrypt(bytes, cancellation);
+  public static async Task<byte[]> Decrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.Decrypt(bytes, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -104,7 +104,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<byte[]> Decrypt(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.Decrypt(stream, cancellation);
+  public static async Task<byte[]> Decrypt(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.Decrypt(stream, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -124,7 +124,7 @@ public static class CryptographyExtensions
   public static async Task<byte[]> Hash(this Stream stream, HashAlgorithm algorithm, CancellationToken cancellation = default)
   {
     #if NET6_0
-    return await algorithm.ComputeHashAsync(stream, cancellation);
+    return await algorithm.ComputeHashAsync(stream, cancellation).ConfigureAwait(false);
 #else
     return algorithm.ComputeHash(stream);
 #endif
@@ -158,7 +158,7 @@ public static class CryptographyExtensions
   public static async Task<byte[]> HashMd5(this Stream stream, CancellationToken cancellation = default)
   {
     using var algorithm = HashAlgorithm.Create("MD5");
-    return algorithm != null ? await stream.Hash(algorithm, cancellation) : throw new InvalidOperationException("Unsupported hash algorithm");
+    return algorithm != null ? await stream.Hash(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
   }
 
   /// <summary>
@@ -192,7 +192,7 @@ public static class CryptographyExtensions
   public static async Task<byte[]> HashSha1(this Stream stream, CancellationToken cancellation = default)
   {
     using var algorithm = HashAlgorithm.Create("SHA1");
-    return algorithm != null ? await stream.Hash(algorithm, cancellation) : throw new InvalidOperationException("Unsupported hash algorithm");
+    return algorithm != null ? await stream.Hash(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
   }
 
   /// <summary>
@@ -226,7 +226,7 @@ public static class CryptographyExtensions
   public static async Task<byte[]> HashSha256(this Stream stream, CancellationToken cancellation = default)
   {
     using var algorithm = HashAlgorithm.Create("SHA256");
-    return algorithm != null ? await stream.Hash(algorithm, cancellation) : throw new InvalidOperationException("Unsupported hash algorithm");
+    return algorithm != null ? await stream.Hash(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
   }
 
   /// <summary>
@@ -260,7 +260,7 @@ public static class CryptographyExtensions
   public static async Task<byte[]> HashSha384(this Stream stream, CancellationToken cancellation = default)
   {
     using var algorithm = HashAlgorithm.Create("SHA384");
-    return algorithm != null ? await stream.Hash(algorithm, cancellation) : throw new InvalidOperationException("Unsupported hash algorithm");
+    return algorithm != null ? await stream.Hash(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
   }
 
   /// <summary>
@@ -294,7 +294,7 @@ public static class CryptographyExtensions
   public static async Task<byte[]> HashSha512(this Stream stream, CancellationToken cancellation = default)
   {
     using var algorithm = HashAlgorithm.Create("SHA512");
-    return algorithm != null ? await stream.Hash(algorithm, cancellation) : throw new InvalidOperationException("Unsupported hash algorithm");
+    return algorithm != null ? await stream.Hash(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
   }
 
   /// <summary>

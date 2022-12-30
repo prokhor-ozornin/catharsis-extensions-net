@@ -189,7 +189,7 @@ public static class StreamExtensions
   {
     await using var writer = destination.ToStreamWriter(encoding, false);
 
-    await instance.Print(writer, cancellation);
+    await instance.Print(writer, cancellation).ConfigureAwait(false);
 
     return instance;
   }
@@ -262,7 +262,7 @@ public static class StreamExtensions
   /// <param name="source">Source stream to read from.</param>
   /// <param name="encoding">Encoding to be used for bytes-to-text conversion. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <returns>Text data from a <see cref="source"/> stream.</returns>
-  public static async Task<string> ToText(this Stream source, Encoding encoding = null) => await source.ToStreamReader(encoding).ToText();
+  public static async Task<string> ToText(this Stream source, Encoding encoding = null) => await source.ToStreamReader(encoding).ToText().ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -276,7 +276,7 @@ public static class StreamExtensions
   {
     foreach (var chunk in bytes.Chunk(4096))
     {
-      await destination.WriteAsync(chunk, 0, chunk.Length, cancellation);
+      await destination.WriteAsync(chunk, 0, chunk.Length, cancellation).ConfigureAwait(false);
     }
 
     return destination;
@@ -294,7 +294,7 @@ public static class StreamExtensions
   public static async Task<TStream> WriteText<TStream>(this TStream destination, string text, Encoding encoding = null, CancellationToken cancellation = default) where TStream : Stream
   {
     await using var writer = destination.ToStreamWriter(encoding, false);
-    await writer.WriteAsync(text.ToReadOnlyMemory(), cancellation);
+    await writer.WriteAsync(text.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
 
     return destination;
   }
@@ -308,7 +308,7 @@ public static class StreamExtensions
   /// <returns></returns>
   public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, Stream destination, CancellationToken cancellation = default)
   {
-    await destination.WriteBytes(bytes, cancellation);
+    await destination.WriteBytes(bytes, cancellation).ConfigureAwait(false);
     return bytes;
   }
 
@@ -322,7 +322,7 @@ public static class StreamExtensions
   /// <returns></returns>
   public static async Task<string> WriteTo(this string text, Stream destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
-    await destination.WriteText(text, encoding, cancellation);
+    await destination.WriteText(text, encoding, cancellation).ConfigureAwait(false);
     return text;
   }
 

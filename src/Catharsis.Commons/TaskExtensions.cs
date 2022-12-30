@@ -164,7 +164,7 @@ public static class TaskExtensions
   /// <returns></returns>
   public static async Task<T> Execute<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null)
   {
-    await task;
+    await task.ConfigureAwait(false);
 
     if (task.IsCompletedSuccessfully && success != null)
     {

@@ -25,7 +25,7 @@ public static class UriExtensions
     using var http = new HttpClient().WithTimeout(timeout);
     using var message = new HttpRequestMessage(HttpMethod.Head, uri);
 
-    return (await http.SendAsync(message, cancellation)).IsSuccessStatusCode;
+    return (await http.SendAsync(message, cancellation).ConfigureAwait(false)).IsSuccessStatusCode;
   }
 
   /// <summary>
@@ -125,9 +125,9 @@ public static class UriExtensions
   /// <returns></returns>
   public static async Task<T> Print<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    await using var stream = await destination.ToStream(timeout, headers);
+    await using var stream = await destination.ToStream(timeout, headers).ConfigureAwait(false);
 
-    return await instance.Print(stream, encoding, cancellation);
+    return await instance.Print(stream, encoding, cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -168,7 +168,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte>> ToEnumerable(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStream(timeout, headers)).ToEnumerable();
+  public static async Task<IEnumerable<byte>> ToEnumerable(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStream(timeout, headers).ConfigureAwait(false)).ToEnumerable();
 
   /// <summary>
   ///   <para></para>
@@ -178,7 +178,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte[]>> ToEnumerable(this Uri uri, int count, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStream(timeout, headers)).ToEnumerable(count);
+  public static async Task<IEnumerable<byte[]>> ToEnumerable(this Uri uri, int count, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStream(timeout, headers).ConfigureAwait(false)).ToEnumerable(count);
 
   /// <summary>
   ///   <para></para>
@@ -241,7 +241,7 @@ public static class UriExtensions
     if (uri.Scheme == Uri.UriSchemeHttp && uri.Scheme == Uri.UriSchemeHttps)
     {
       using var http = new HttpClient().WithTimeout(timeout).WithHeaders(headers);
-      return await http.ToStream(uri);
+      return await http.ToStream(uri).ConfigureAwait(false);
     }
 
     throw new InvalidOperationException($"Unsupported URI scheme: {uri.Scheme}");
@@ -306,8 +306,8 @@ public static class UriExtensions
   /// <returns>Web server's response in a text format.</returns>
   public static async Task<string> ToText(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
-    await using var stream = await uri.ToStream(timeout, headers);
-    return await stream.ToText(encoding);
+    await using var stream = await uri.ToStream(timeout, headers).ConfigureAwait(false);
+    return await stream.ToText(encoding).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -328,7 +328,7 @@ public static class UriExtensions
     else if (destination.Scheme == Uri.UriSchemeNetTcp)
     {
       using var tcp = new TcpClient(destination.Host, destination.Port).WithTimeout(timeout);
-      await tcp.WriteBytes(bytes, cancellation);
+      await tcp.WriteBytes(bytes, cancellation).ConfigureAwait(false);
     }
     else if (destination.Scheme == Uri.UriSchemeMailto)
     {
@@ -342,15 +342,15 @@ public static class UriExtensions
       }
 
 #if NET6_0
-      await smtp.SendMailAsync(email, cancellation);
+      await smtp.SendMailAsync(email, cancellation).ConfigureAwait(false);
 #else
-      await smtp.SendMailAsync(email);
+      await smtp.SendMailAsync(email).ConfigureAwait(false);
 #endif
     }
     else if (destination.Scheme == Uri.UriSchemeHttp || destination.Scheme == Uri.UriSchemeHttps)
     {
       using var http = new HttpClient().WithTimeout(timeout).WithHeaders(headers);
-      await http.WriteBytes(bytes, destination, cancellation);
+      await http.WriteBytes(bytes, destination, cancellation).ConfigureAwait(false);
     }
 
     return destination;
@@ -366,7 +366,7 @@ public static class UriExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<Uri> WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers) => await destination.WriteBytes(text.AsArray().ToBytes(encoding), timeout, cancellation, headers);
+  public static async Task<Uri> WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers) => await destination.WriteBytes(text.AsArray().ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -379,7 +379,7 @@ public static class UriExtensions
   /// <returns></returns>
   public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, Uri destination, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    await destination.WriteBytes(bytes, timeout, cancellation, headers);
+    await destination.WriteBytes(bytes, timeout, cancellation, headers).ConfigureAwait(false);
     return bytes;
   }
 
@@ -395,7 +395,7 @@ public static class UriExtensions
   /// <returns></returns>
   public static async Task<string> WriteTo(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    await destination.WriteBytes(text.ToBytes(encoding), timeout, cancellation, headers);
+    await destination.WriteBytes(text.ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
     return text;
   }
 }

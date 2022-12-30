@@ -466,7 +466,7 @@ public static class ObjectExtensions
   {
     if (instance != null)
     {
-      await instance.Print(Console.Out, cancellation);
+      await instance.Print(Console.Out, cancellation).ConfigureAwait(false);
     }
 
     return instance;

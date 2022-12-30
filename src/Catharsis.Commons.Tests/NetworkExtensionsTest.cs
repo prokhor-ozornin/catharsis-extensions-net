@@ -562,7 +562,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ToStream(HttpContent)"/> method.</para>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ToStream(HttpContent, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
   public void HttpContent_ToStream_Method()

@@ -101,7 +101,7 @@ public static class FileSystemExtensions
   {
     await using var writer = destination.ToStreamWriter(encoding);
 
-    return await instance.Print(writer, cancellation);
+    return await instance.Print(writer, cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -288,7 +288,7 @@ public static class FileSystemExtensions
   {
     using var reader = source.ToStreamReader(encoding);
 
-    return await reader.ToText();
+    return await reader.ToText().ConfigureAwait(false);
   }
 
   /// <summary>
@@ -303,7 +303,7 @@ public static class FileSystemExtensions
     try
     {
       await using var stream = destination.ToWriteOnlyStream();
-      await stream.WriteBytes(bytes, cancellation);
+      await stream.WriteBytes(bytes, cancellation).ConfigureAwait(false);
 
       return destination;
     }
@@ -326,7 +326,7 @@ public static class FileSystemExtensions
     try
     {
       await using var writer = destination.ToStreamWriter(encoding);
-      await writer.WriteText(text, cancellation);
+      await writer.WriteText(text, cancellation).ConfigureAwait(false);
 
       return destination;
     }
@@ -345,7 +345,7 @@ public static class FileSystemExtensions
   /// <returns></returns>
   public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, FileInfo destination, CancellationToken cancellation = default)
   {
-    await destination.WriteBytes(bytes, cancellation);
+    await destination.WriteBytes(bytes, cancellation).ConfigureAwait(false);
     return bytes;
   }
 
@@ -359,7 +359,7 @@ public static class FileSystemExtensions
   /// <returns></returns>
   public static async Task<string> WriteTo(this string text, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
-    await destination.WriteText(text, encoding, cancellation);
+    await destination.WriteText(text, encoding, cancellation).ConfigureAwait(false);
     return text;
   }
 }
