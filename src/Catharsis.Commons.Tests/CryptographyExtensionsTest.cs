@@ -1,5 +1,4 @@
-﻿using System.Security;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -13,177 +12,6 @@ namespace Catharsis.Commons.Tests;
 public sealed class CryptographyExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="CryptographyExtensions.IsEmpty(SecureString)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void SecureString_IsEmpty_Method()
-  {
-    //AssertionExtensions.Should(() => CryptographyExtensions.IsEmpty(null!)).ThrowExactly<ArgumentNullException>();
-
-    using var secure = EmptySecureString;
-
-    secure.IsEmpty().Should().BeTrue();
-
-    secure.AppendChar(char.MinValue);
-    secure.IsEmpty().Should().BeFalse();
-
-    secure.RemoveAt(0);
-    secure.IsEmpty().Should().BeTrue();
-
-    secure.AppendChar(char.MinValue);
-    secure.Clear();
-    secure.IsEmpty().Should().BeTrue();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="CryptographyExtensions.Empty(SecureString)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void SecureString_Empty_Method()
-  {
-    void Validate(SecureString secure)
-    {
-      using (secure)
-      {
-        secure.Empty().Should().NotBeNull().And.BeSameAs(secure);
-        secure.Length.Should().Be(0);
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      //AssertionExtensions.Should(() => CryptographyExtensions.Empty(null!)).ThrowExactly<ArgumentNullException>();
-
-      Validate(EmptySecureString);
-      Validate(RandomSecureString);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="CryptographyExtensions.Min(SecureString, SecureString)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void SecureString_Min_Method()
-  {
-    void Validate(SecureString min, SecureString max)
-    {
-      using (min)
-      {
-        using (max)
-        {
-          min.Min(min).Should().NotBeNull().And.BeSameAs(min);
-          max.Min(max).Should().NotBeNull().And.BeSameAs(max);
-          min.Min(max).Should().NotBeNull().And.BeSameAs(min);
-        }
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      //AssertionExtensions.Should(() => CryptographyExtensions.Min(null!, new SecureString())).ThrowExactly<ArgumentNullException>();
-      //AssertionExtensions.Should(() => new SecureString().Min(null!)).ThrowExactly<ArgumentNullException>();
-
-      Validate(EmptySecureString, EmptySecureString);
-      Validate(EmptySecureString, RandomSecureString);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="CryptographyExtensions.Max(SecureString, SecureString)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void SecureString_Max_Method()
-  {
-    void Validate(SecureString min, SecureString max)
-    {
-      using (min)
-      {
-        using (max)
-        {
-          min.Max(min).Should().NotBeNull().And.BeSameAs(min);
-          max.Max(max).Should().NotBeNull().And.BeSameAs(max);
-          max.Max(min).Should().NotBeNull().And.BeSameAs(max);
-        }
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      //AssertionExtensions.Should(() => CryptographyExtensions.Max(null!, new SecureString())).ThrowExactly<ArgumentNullException>();
-      //AssertionExtensions.Should(() => new SecureString().Max(null!)).ThrowExactly<ArgumentNullException>();
-
-      Validate(EmptySecureString, EmptySecureString);
-      Validate(EmptySecureString, RandomSecureString);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="CryptographyExtensions.Bytes(SecureString, Encoding?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void SecureString_Bytes_Method()
-  {
-    void Validate(Encoding? encoding = null)
-    {
-      using (var secure = EmptySecureString)
-      {
-        secure.Bytes(encoding).Should().BeSameAs(secure.Bytes(encoding)).And.BeEmpty();
-      }
-
-      using (var secure = RandomSecureString)
-      {
-        var text = secure.Text();
-        secure.Bytes(encoding).Should().NotBeNull().And.NotBeSameAs(secure.Bytes(encoding)).And.Equal(text.Bytes(encoding));
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => CryptographyExtensions.Text(null!));
-
-      Validate(null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="CryptographyExtensions.Text(SecureString)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void SecureString_Text_Method()
-  {
-    AssertionExtensions.Should(() => CryptographyExtensions.Text(null!));
-
-    using (var secure = new SecureString())
-    {
-      secure.Text().Should().BeSameAs(secure.Text()).And.BeEmpty();
-    }
-
-    using (var secure = new SecureString())
-    {
-      var text = RandomString;
-
-      text.ForEach(secure.AppendChar);
-      secure.Text().Should().NotBeNull().And.NotBeSameAs(secure.Text()).And.Be(text);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="CryptographyExtensions.UseTemporarily(SecureString, Action{SecureString})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void SecureString_UseTemporarily_Method()
-  {
-    //AssertionExtensions.Should(() => CryptographyExtensions.UseTemporarily(null!, _ => {})).ThrowExactly<ArgumentNullException>();
-    //AssertionExtensions.Should(() => new SecureString().UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
-
-    using var secure = new SecureString();
-
-    secure.UseTemporarily(secure => secure.AppendChar(char.MinValue)).Should().NotBeNull().And.BeSameAs(secure);
-    secure.Length.Should().Be(0);
-  }
-
-  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="CryptographyExtensions.Encrypt(SymmetricAlgorithm, IEnumerable{byte}, CancellationToken)"/></description></item>
@@ -195,8 +23,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CryptographyExtensions.Encrypt(null!, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-      AssertionExtensions.Should(() => Aes.Create().Encrypt((IEnumerable<byte>) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => CryptographyExtensions.Encrypt(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Aes.Create().Encrypt((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
       var bytes = RandomBytes;
       var algorithm = Aes.Create();
@@ -268,8 +96,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CryptographyExtensions.Encrypt(null!, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-      AssertionExtensions.Should(() => Aes.Create().Encrypt((Stream) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => CryptographyExtensions.Encrypt(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Aes.Create().Encrypt((Stream) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
     }
 
     throw new NotImplementedException();
@@ -281,8 +109,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Encrypt_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).Encrypt(Aes.Create())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().Encrypt(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Encrypt(Aes.Create())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().Encrypt(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -293,8 +121,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void Stream_Encrypt_Method()
   {
-    AssertionExtensions.Should(() => ((Stream) null!).Encrypt(Aes.Create())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.Encrypt(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((Stream) null).Encrypt(Aes.Create())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.Encrypt(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -303,10 +131,10 @@ public sealed class CryptographyExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="CryptographyExtensions.Decrypt(IEnumerable{byte}, SymmetricAlgorithm, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public async void IEnumerable_Decrypt_Method()
+  public void IEnumerable_Decrypt_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).Decrypt(Aes.Create())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.Decrypt(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Decrypt(Aes.Create())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.Decrypt(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -317,8 +145,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void Stream_Decrypt_Method()
   {
-    AssertionExtensions.Should(() => ((Stream) null!).Decrypt(Aes.Create())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.Decrypt(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((Stream) null).Decrypt(Aes.Create())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.Decrypt(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -335,8 +163,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CryptographyExtensions.Decrypt(null!, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-      AssertionExtensions.Should(() => Aes.Create().Decrypt((IEnumerable<byte>) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => CryptographyExtensions.Decrypt(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Aes.Create().Decrypt((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
       /*var bytes = RandomBytes;
       var algorithm = Aes.Create();
@@ -389,8 +217,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CryptographyExtensions.Decrypt(null!, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-      AssertionExtensions.Should(() => Aes.Create().Decrypt((Stream) null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => CryptographyExtensions.Decrypt(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Aes.Create().Decrypt((Stream) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
     }
 
     throw new NotImplementedException();
@@ -402,8 +230,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Hash_Method()
   {
-    //AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).Hash(HashAlgorithm.Create("MD5")!)).ThrowExactly<ArgumentNullException>();
-    //AssertionExtensions.Should(() => Enumerable.Empty<byte>().Hash(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Hash(HashAlgorithm.Create("MD5")!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().Hash(null)).ThrowExactly<ArgumentNullException>();
 
     var algorithm = HashAlgorithm.Create("MD5")!;
     algorithm.Should().NotBeNull();
@@ -420,8 +248,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void Stream_Hash_Method()
   {
-    //AssertionExtensions.Should(() => ((Stream) null!).Hash(HashAlgorithm.Create("MD5")!)).ThrowExactly<ArgumentNullException>();
-    //AssertionExtensions.Should(() => Stream.Null.Hash(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((Stream) null).Hash(HashAlgorithm.Create("MD5")!)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.Hash(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     var algorithm = HashAlgorithm.Create("MD5")!;
     algorithm.Should().NotBeNull();
@@ -445,8 +273,8 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void String_Hash_Method()
   {
-    //AssertionExtensions.Should(() => ((string) null!).Hash(HashAlgorithm.Create("MD5")!)).ThrowExactly<ArgumentNullException>();
-    //AssertionExtensions.Should(() => string.Empty.Hash(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((string) null).Hash(HashAlgorithm.Create("MD5")!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => string.Empty.Hash(null)).ThrowExactly<ArgumentNullException>();
 
     var algorithm = HashAlgorithm.Create("MD5")!;
     algorithm.Should().NotBeNull();
@@ -465,7 +293,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_HashMd5_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).HashMd5()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashMd5()).ThrowExactly<ArgumentNullException>();
 
     var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
 
@@ -481,7 +309,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void Stream_HashMd5_Method()
   {
-    AssertionExtensions.Should(() => ((Stream) null!).HashMd5()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((Stream) null).HashMd5()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     foreach (var stream in new[] { Stream.Null, RandomStream })
     {
@@ -502,7 +330,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void String_HashMd5_Method()
   {
-    //AssertionExtensions.Should(() => ((string) null!).HashMd5()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((string) null).HashMd5()).ThrowExactly<ArgumentNullException>();
 
     var texts = new[] { string.Empty, RandomString };
 
@@ -518,7 +346,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_HashSha1_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).HashSha1()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha1()).ThrowExactly<ArgumentNullException>();
 
     var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
     
@@ -534,7 +362,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void Stream_HashSha1_Method()
   {
-    AssertionExtensions.Should(() => ((Stream) null!).HashSha1()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((Stream) null).HashSha1()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     foreach (var stream in new[] { Stream.Null, RandomStream })
     {
@@ -555,7 +383,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void String_HashSha1_Method()
   {
-    //AssertionExtensions.Should(() => ((string) null!).HashSha1()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((string) null).HashSha1()).ThrowExactly<ArgumentNullException>();
 
     var texts = new[] { string.Empty, RandomString };
 
@@ -571,7 +399,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_HashSha256_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).HashSha256()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha256()).ThrowExactly<ArgumentNullException>();
 
     var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
 
@@ -587,7 +415,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void Stream_HashSha256_Method()
   {
-    AssertionExtensions.Should(() => ((Stream) null!).HashSha256()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((Stream) null).HashSha256()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     foreach (var stream in new[] { Stream.Null, RandomStream })
     {
@@ -608,7 +436,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void String_HashSha256_Method()
   {
-    //AssertionExtensions.Should(() => ((string) null!).HashSha256()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((string) null).HashSha256()).ThrowExactly<ArgumentNullException>();
 
     var texts = new[] { string.Empty, RandomString };
 
@@ -624,7 +452,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_HashSha384_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).HashSha384()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha384()).ThrowExactly<ArgumentNullException>();
 
     var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
 
@@ -640,7 +468,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void Stream_HashSha384_Method()
   {
-    AssertionExtensions.Should(() => ((Stream) null!).HashSha384()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((Stream) null).HashSha384()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     foreach (var stream in new[] { Stream.Null, RandomStream })
     {
@@ -661,7 +489,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void String_HashSha384_Method()
   {
-    //AssertionExtensions.Should(() => ((string) null!).HashSha384()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((string) null).HashSha384()).ThrowExactly<ArgumentNullException>();
 
     var texts = new[] { string.Empty, RandomString };
 
@@ -677,7 +505,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_HashSha512_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null!).HashSha512()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha512()).ThrowExactly<ArgumentNullException>();
 
     var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
 
@@ -693,7 +521,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void Stream_HashSha512_Method()
   {
-    //AssertionExtensions.Should(() => ((Stream) null!).HashSha512()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((Stream) null).HashSha512()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     foreach (var stream in new[] {Stream.Null, RandomStream})
     {
@@ -714,7 +542,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
   [Fact]
   public void String_HashSha512_Method()
   {
-    //AssertionExtensions.Should(() => ((string) null!).HashSha512()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((string) null).HashSha512()).ThrowExactly<ArgumentNullException>();
 
     var texts = new[] { string.Empty, RandomString };
 

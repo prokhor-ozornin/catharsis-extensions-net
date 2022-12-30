@@ -1,97 +1,15 @@
-using System.Security;
 using System.Security.Cryptography;
 using System.Text;
-using System.Runtime.InteropServices;
 
 namespace Catharsis.Commons;
 
 /// <summary>
 ///   <para>Extension methods for cryptographic functions and types.</para>
 /// </summary>
-/// <seealso cref="SecureString"/>
 /// <seealso cref="SymmetricAlgorithm"/>
 /// <seealso cref="HashAlgorithm"/>
 public static class CryptographyExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="secure"></param>
-  /// <returns></returns>
-  public static bool IsEmpty(this SecureString secure) => secure.Length <= 0;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="secure"></param>
-  /// <returns></returns>
-  public static SecureString Empty(this SecureString secure)
-  {
-    secure.Clear();
-    return secure;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static SecureString Min(this SecureString left, SecureString right) => left.Length <= right.Length ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static SecureString Max(this SecureString left, SecureString right) => left.Length >= right.Length ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="secure"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static byte[] Bytes(this SecureString secure, Encoding? encoding = null) => secure.Text().Bytes(encoding);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="secure"></param>
-  /// <returns></returns>
-  public static string Text(this SecureString secure)
-  {
-    if (secure.Length <= 0)
-    {
-      return string.Empty;
-    }
-
-    var pointer = IntPtr.Zero;
-
-    try
-    {
-      pointer = Marshal.SecureStringToGlobalAllocUnicode(secure);
-
-      return Marshal.PtrToStringAuto(pointer) ?? string.Empty;
-    }
-    finally
-    {
-      if (pointer != IntPtr.Zero)
-      {
-        Marshal.ZeroFreeGlobalAllocUnicode(pointer);
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="secure"></param>
-  /// <param name="action"></param>
-  /// <returns></returns>
-  public static SecureString UseTemporarily(this SecureString secure, Action<SecureString> action) => secure.UseFinally(action, secure => secure.Empty());
-
   /// <summary>
   ///   <para>Encrypts binary data, using specified symmetric algorithm.</para>
   /// </summary>
@@ -107,7 +25,7 @@ public static class CryptographyExtensions
     foreach (var chunk in bytes.Chunk(encryptor.InputBlockSize))
     {
       var block = encryptor.TransformFinalBlock(chunk, 0, chunk.Length);
-      await stream.Bytes(block, cancellation);
+      await block.WriteTo(stream, cancellation);
     }
 
     return stream.ToArray();
@@ -155,7 +73,7 @@ public static class CryptographyExtensions
     foreach (var chunk in bytes.Chunk(decryptor.InputBlockSize))
     {
       var block = decryptor.TransformFinalBlock(chunk, 0, chunk.Length);
-      await stream.Bytes(block, cancellation);
+      await block.WriteTo(stream, cancellation);
     }
 
     return stream.ToArray();
@@ -218,7 +136,7 @@ public static class CryptographyExtensions
   /// <param name="text"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
-  public static string Hash(this string text, HashAlgorithm algorithm) => text.Bytes(Encoding.UTF8).Hash(algorithm).Hex();
+  public static string Hash(this string text, HashAlgorithm algorithm) => text.ToBytes(Encoding.UTF8).Hash(algorithm).ToHex();
 
   /// <summary>
   ///   <para>Computes hash digest for the given sequence of bytes, using <c>MD5</c> algorithm.</para>

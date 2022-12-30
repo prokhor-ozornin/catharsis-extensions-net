@@ -12,7 +12,7 @@
     <Copyright>Copyright © 2013 - 2022</Copyright>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <AnalysisLevel>latest</AnalysisLevel>
@@ -36,14 +36,12 @@
     <Compile Include="..\Catharsis.Commons\ArrayExtensions.cs" Link="ArrayExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\AsyncEnumerableExtensions.cs" Link="AsyncEnumerableExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\BinaryExtensions.cs" Link="BinaryExtensions.cs" />
-    <Compile Include="..\Catharsis.Commons\BooleanExtensions.cs" Link="BooleanExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\CollectionsExtensions.cs" Link="CollectionsExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\Convert.cs" Link="Convert.cs" />
     <Compile Include="..\Catharsis.Commons\CryptographyExtensions.cs" Link="CryptographyExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\EnumerableExtensions.cs" Link="EnumerableExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\FileSystemExtensions.cs" Link="FileSystemExtensions.cs" />
-    <Compile Include="..\Catharsis.Commons\GlobalizationExtensions.cs" Link="GlobalizationExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\NetworkExtensions.cs" Link="NetworkExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\NumericExtensions.cs" Link="NumericExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\ObjectExtensions.cs" Link="ObjectExtensions.cs" />
@@ -52,6 +50,7 @@
     <Compile Include="..\Catharsis.Commons\RangeExtensions.cs" Link="RangeExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\ReflectionExtensions.cs" Link="ReflectionExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\RegexExtensions.cs" Link="RegexExtensions.cs" />
+    <Compile Include="..\Catharsis.Commons\SecureStringExtensions.cs" Link="SecureStringExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\SerializationExtensions.cs" Link="SerializationExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\StreamExtensions.cs" Link="StreamExtensions.cs" />
     <Compile Include="..\Catharsis.Commons\StringExtensions.cs" Link="StringExtensions.cs" />

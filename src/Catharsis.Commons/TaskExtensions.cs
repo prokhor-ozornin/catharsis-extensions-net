@@ -109,7 +109,7 @@ public static class TaskExtensions
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async ValueTask Execute(this ValueTask task, Action<ValueTask>? success = null, Action<ValueTask>? failure = null, Action<ValueTask>? cancellation = null)
+  public static async ValueTask Execute(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null)
   {
     await task;
 
@@ -135,17 +135,7 @@ public static class TaskExtensions
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static ValueTask Execute(this ValueTask task, Action? success = null, Action? failure = null, Action? cancellation = null) => task.Execute(_ => success?.Invoke(), _ => failure?.Invoke(), _ => cancellation?.Invoke());
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="task"></param>
-  /// <param name="success"></param>
-  /// <param name="failure"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task Execute(this Task task, Action<Task>? success = null, Action<Task>? failure = null, Action<Task>? cancellation = null)
+  public static async Task Execute(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null)
   {
     await task;
 
@@ -166,34 +156,13 @@ public static class TaskExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="task"></param>
-  /// <param name="success"></param>
-  /// <param name="failure"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static Task Execute(this Task task, Action? success = null, Action? failure = null, Action? cancellation = null) => task.Execute(_ => success?.Invoke(), _ => failure?.Invoke(), _ => cancellation?.Invoke());
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="task"></param>
   /// <param name="success"></param>
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static Task<T> Execute<T>(this Task<T> task, Action? success = null, Action? failure = null, Action? cancellation = null) => task.Execute(_ => success?.Invoke(), _ => failure?.Invoke(), _ => cancellation?.Invoke());
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="task"></param>
-  /// <param name="success"></param>
-  /// <param name="failure"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<T> Execute<T>(this Task<T> task, Action<Task<T>>? success = null, Action<Task<T>>? failure = null, Action<Task<T>>? cancellation = null)
+  public static async Task<T> Execute<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null)
   {
     await task;
 
@@ -217,30 +186,30 @@ public static class TaskExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="action"></param>
-  /// <param name="cancellation"></param>
   /// <param name="options"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static Task ToTask(this Action action, CancellationToken cancellation = default, TaskCreationOptions options = TaskCreationOptions.None) => new(action, cancellation, options);
+  public static Task ToTask(this Action action, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => new(action, cancellation, options);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="action"></param>
   /// <param name="state"></param>
-  /// <param name="cancellation"></param>
   /// <param name="options"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static Task ToTask(this Action<object?> action, object? state, CancellationToken cancellation = default, TaskCreationOptions options = TaskCreationOptions.None) => new(action, state, cancellation, options);
+  public static Task ToTask(this Action<object> action, object state, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => new(action, state, cancellation, options);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="function"></param>
-  /// <param name="cancellation"></param>
   /// <param name="options"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static Task<T> ToTask<T>(this Func<T> function, CancellationToken cancellation = default, TaskCreationOptions options = TaskCreationOptions.None) => new(function, cancellation, options);
+  public static Task<T> ToTask<T>(this Func<T> function, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => new(function, cancellation, options);
 
   /// <summary>
   ///   <para></para>
@@ -248,10 +217,10 @@ public static class TaskExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="function"></param>
   /// <param name="state"></param>
-  /// <param name="cancellation"></param>
   /// <param name="options"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static Task<T> ToTask<T>(this Func<object?, T> function, object? state, CancellationToken cancellation = default, TaskCreationOptions options = TaskCreationOptions.None) => new(function, state, cancellation, options);
+  public static Task<T> ToTask<T>(this Func<object, T> function, object state, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => new(function, state, cancellation, options);
 
   /// <summary>
   ///   <para></para>

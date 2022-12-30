@@ -15,6 +15,11 @@ public abstract class UnitTest
   /// <summary>
   ///   <para></para>
   /// </summary>
+  protected IAsyncEnumerable<object> EmptyAsyncEnumerable { get; } = Enumerable.Empty<object>().ToAsyncEnumerable();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   protected Random Randomizer { get; } = new();
 
   /// <summary>
@@ -66,22 +71,22 @@ public abstract class UnitTest
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected Stream RandomReadOnlyStream => new Random().MemoryStream(short.MaxValue).Await().ReadOnly();
+  protected Stream RandomReadOnlyStream => new Random().MemoryStream(short.MaxValue).Await().AsReadOnly();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected Stream RandomReadOnlyForwardStream => new Random().MemoryStream(short.MaxValue).Await().ReadOnlyForward();
+  protected Stream RandomReadOnlyForwardStream => new Random().MemoryStream(short.MaxValue).Await().AsReadOnlyForward();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected Stream WriteOnlyStream => new MemoryStream().WriteOnly();
+  protected Stream WriteOnlyStream => new MemoryStream().AsWriteOnly();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected Stream WriteOnlyForwardStream => new MemoryStream().WriteOnlyForward();
+  protected Stream WriteOnlyForwardStream => new MemoryStream().AsWriteOnlyForward();
 
   /// <summary>
   ///   <para></para>

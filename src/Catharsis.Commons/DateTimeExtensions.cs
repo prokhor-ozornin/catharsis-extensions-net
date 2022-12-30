@@ -123,7 +123,7 @@ public static class DateTimeExtensions
   /// <param name="to"></param>
   /// <param name="offset"></param>
   /// <returns></returns>
-  public static IEnumerable<DateTime> To(this DateTime from, DateTime to, TimeSpan offset)
+  public static IEnumerable<DateTime> Range(this DateTime from, DateTime to, TimeSpan offset)
   {
     if (from == to || offset == TimeSpan.Zero)
     {
@@ -146,7 +146,7 @@ public static class DateTimeExtensions
   /// <param name="to"></param>
   /// <param name="offset"></param>
   /// <returns></returns>
-  public static IEnumerable<DateTimeOffset> To(this DateTimeOffset from, DateTimeOffset to, TimeSpan offset)
+  public static IEnumerable<DateTimeOffset> Range(this DateTimeOffset from, DateTimeOffset to, TimeSpan offset)
   {
     if (from == to || offset == TimeSpan.Zero)
     {
@@ -170,7 +170,7 @@ public static class DateTimeExtensions
   /// <param name="to"></param>
   /// <param name="offset"></param>
   /// <returns></returns>
-  public static IEnumerable<DateOnly> To(this DateOnly from, DateOnly to, TimeSpan offset)
+  public static IEnumerable<DateOnly> Range(this DateOnly from, DateOnly to, TimeSpan offset)
   {
     if (from == to || offset == TimeSpan.Zero)
     {
@@ -193,7 +193,7 @@ public static class DateTimeExtensions
   /// <param name="to"></param>
   /// <param name="offset"></param>
   /// <returns></returns>
-  public static IEnumerable<TimeOnly> To(this TimeOnly from, TimeOnly to, TimeSpan offset)
+  public static IEnumerable<TimeOnly> Range(this TimeOnly from, TimeOnly to, TimeSpan offset)
   {
     if (from == to || offset == TimeSpan.Zero)
     {
@@ -593,34 +593,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static TimeOnly TruncateToSecondEnd(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 999);
 #endif
-  
-  /// <summary>
-  ///   <para>Formats given date/time instance according to ISO 8601 specification and returns formatted date as a string.</para>
-  /// </summary>
-  /// <param name="date">Date/time object instance.</param>
-  /// <returns>Formatted date/time value as a string.</returns>
-  public static string ToIsoString(this DateTime date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  public static string ToIsoString(this DateTimeOffset date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
-
-  /// <summary>
-  ///   <para>Formats given date/time instance according to RFC 1123 specification and returns formatted date as a string.</para>
-  /// </summary>
-  /// <param name="date">Date/time object instance.</param>
-  /// <returns>Formatted date/time value as a string.</returns>
-  public static string ToRfcString(this DateTime date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <returns></returns>
-  public static string ToRfcString(this DateTimeOffset date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
-  
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -697,4 +670,31 @@ public static class DateTimeExtensions
   /// <see cref="ToTimeOnly(DateTime)"/>
   public static TimeOnly ToTimeOnly(this DateTimeOffset date) => TimeOnly.FromDateTime(date.DateTime);
 #endif
+
+  /// <summary>
+  ///   <para>Formats given date/time instance according to ISO 8601 specification and returns formatted date as a string.</para>
+  /// </summary>
+  /// <param name="date">Date/time object instance.</param>
+  /// <returns>Formatted date/time value as a string.</returns>
+  public static string ToIsoString(this DateTime date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static string ToIsoString(this DateTimeOffset date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
+
+  /// <summary>
+  ///   <para>Formats given date/time instance according to RFC 1123 specification and returns formatted date as a string.</para>
+  /// </summary>
+  /// <param name="date">Date/time object instance.</param>
+  /// <returns>Formatted date/time value as a string.</returns>
+  public static string ToRfcString(this DateTime date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  public static string ToRfcString(this DateTimeOffset date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
 }

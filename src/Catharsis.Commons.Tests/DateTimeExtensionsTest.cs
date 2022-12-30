@@ -309,110 +309,110 @@ public sealed class DateTimeExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.To(DateTime, DateTime, TimeSpan)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.Range(DateTime, DateTime, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
-  public void DateTime_To_Method()
+  public void DateTime_Range_Method()
   {
     foreach (var date in new[] {DateTime.Now, DateTime.UtcNow})
     {
-      date.To(date, TimeSpan.Zero).Should().BeEmpty();
-      date.To(date, TimeSpan.FromTicks(1)).Should().BeEmpty();
-      date.To(date, TimeSpan.FromTicks(-1)).Should().BeEmpty();
+      date.Range(date, TimeSpan.Zero).Should().BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(1)).Should().BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeEmpty();
 
-      date.To(date.AddDays(1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(1), 1.Days())).And.HaveCount(1).And.Equal(date);
-      date.To(date.AddDays(-1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(-1), 1.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(1), 1.Days())).And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-1), 1.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.To(date.AddDays(1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(1), 2.Days())).And.HaveCount(1).And.Equal(date);
-      date.To(date.AddDays(-1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(-1), 2.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(1), 2.Days())).And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-1), 2.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.To(date.AddDays(2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(2), 1.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(1));
-      date.To(date.AddDays(-2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(-2), 1.Days())).And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
+      date.Range(date.AddDays(2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(2), 1.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(1));
+      date.Range(date.AddDays(-2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-2), 1.Days())).And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
 
-      date.To(date.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(2));
-      date.To(date.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
+      date.Range(date.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(2));
+      date.Range(date.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
     }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.To(DateTimeOffset, DateTimeOffset, TimeSpan)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.Range(DateTimeOffset, DateTimeOffset, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
-  public void DateTimeOffset_To_Method()
+  public void DateTimeOffset_Range_Method()
   {
     foreach (var date in new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow })
     {
-      date.To(date, TimeSpan.Zero).Should().BeEmpty();
-      date.To(date, TimeSpan.FromTicks(1)).Should().BeEmpty();
-      date.To(date, TimeSpan.FromTicks(-1)).Should().BeEmpty();
+      date.Range(date, TimeSpan.Zero).Should().BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(1)).Should().BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeEmpty();
 
-      date.To(date.AddDays(1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(1), 1.Days())).And.HaveCount(1).And.Equal(date);
-      date.To(date.AddDays(-1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(-1), 1.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(1), 1.Days())).And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-1), 1.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.To(date.AddDays(1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(1), 2.Days())).And.HaveCount(1).And.Equal(date);
-      date.To(date.AddDays(-1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(-1), 2.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(1), 2.Days())).And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-1), 2.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.To(date.AddDays(2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(2), 1.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(1));
-      date.To(date.AddDays(-2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(-2), 1.Days())).And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
+      date.Range(date.AddDays(2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(2), 1.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(1));
+      date.Range(date.AddDays(-2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-2), 1.Days())).And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
 
-      date.To(date.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(2));
-      date.To(date.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.To(date.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
+      date.Range(date.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(2));
+      date.Range(date.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
     }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.To(DateOnly, DateOnly, TimeSpan)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.Range(DateOnly, DateOnly, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
-  public void DateOnly_To_Methods()
+  public void DateOnly_Range_Methods()
   {
     foreach (var date in new[] { DateTime.Now, DateTime.UtcNow })
     {
       var dateOnly = DateOnly.FromDateTime(date);
 
-      dateOnly.To(dateOnly, TimeSpan.Zero).Should().BeEmpty();
-      dateOnly.To(dateOnly, TimeSpan.FromTicks(1)).Should().BeEmpty();
-      dateOnly.To(dateOnly, TimeSpan.FromTicks(-1)).Should().BeEmpty();
+      dateOnly.Range(dateOnly, TimeSpan.Zero).Should().BeEmpty();
+      dateOnly.Range(dateOnly, TimeSpan.FromTicks(1)).Should().BeEmpty();
+      dateOnly.Range(dateOnly, TimeSpan.FromTicks(-1)).Should().BeEmpty();
 
-      dateOnly.To(dateOnly.AddDays(1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.To(dateOnly.AddDays(1), 1.Days())).And.HaveCount(1).And.Equal(dateOnly);
-      dateOnly.To(dateOnly.AddDays(-1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.To(dateOnly.AddDays(-1), 1.Days())).And.HaveCount(1).And.Equal(dateOnly.AddDays(-1));
+      dateOnly.Range(dateOnly.AddDays(1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(1), 1.Days())).And.HaveCount(1).And.Equal(dateOnly);
+      dateOnly.Range(dateOnly.AddDays(-1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-1), 1.Days())).And.HaveCount(1).And.Equal(dateOnly.AddDays(-1));
 
-      dateOnly.To(dateOnly.AddDays(1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.To(dateOnly.AddDays(1), 2.Days())).And.HaveCount(1).And.Equal(dateOnly);
-      dateOnly.To(dateOnly.AddDays(-1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.To(dateOnly.AddDays(-1), 2.Days())).And.HaveCount(1).And.Equal(dateOnly.AddDays(-1));
+      dateOnly.Range(dateOnly.AddDays(1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(1), 2.Days())).And.HaveCount(1).And.Equal(dateOnly);
+      dateOnly.Range(dateOnly.AddDays(-1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-1), 2.Days())).And.HaveCount(1).And.Equal(dateOnly.AddDays(-1));
 
-      dateOnly.To(dateOnly.AddDays(2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.To(dateOnly.AddDays(2), 1.Days())).And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(1));
-      dateOnly.To(dateOnly.AddDays(-2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.To(dateOnly.AddDays(-2), 1.Days())).And.HaveCount(2).And.Equal(dateOnly.AddDays(-2), dateOnly.AddDays(-1));
+      dateOnly.Range(dateOnly.AddDays(2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(2), 1.Days())).And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(1));
+      dateOnly.Range(dateOnly.AddDays(-2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-2), 1.Days())).And.HaveCount(2).And.Equal(dateOnly.AddDays(-2), dateOnly.AddDays(-1));
 
-      dateOnly.To(dateOnly.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.To(dateOnly.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(2));
-      dateOnly.To(dateOnly.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.To(dateOnly.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly.AddDays(-3), dateOnly.AddDays(-1));
+      dateOnly.Range(dateOnly.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(2));
+      dateOnly.Range(dateOnly.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly.AddDays(-3), dateOnly.AddDays(-1));
     }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.To(TimeOnly, TimeOnly, TimeSpan)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.Range(TimeOnly, TimeOnly, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TimeOnly_To_Methods()
+  public void TimeOnly_Range_Methods()
   {
     foreach (var date in new[] {DateTime.Now, DateTime.UtcNow})
     {
       var timeOnly = TimeOnly.FromDateTime(date);
 
-      timeOnly.To(timeOnly, TimeSpan.Zero).Should().BeEmpty();
-      timeOnly.To(timeOnly, TimeSpan.FromTicks(1)).Should().BeEmpty();
-      timeOnly.To(timeOnly, TimeSpan.FromTicks(-1)).Should().BeEmpty();
+      timeOnly.Range(timeOnly, TimeSpan.Zero).Should().BeEmpty();
+      timeOnly.Range(timeOnly, TimeSpan.FromTicks(1)).Should().BeEmpty();
+      timeOnly.Range(timeOnly, TimeSpan.FromTicks(-1)).Should().BeEmpty();
 
-      timeOnly.To(timeOnly.Add(1.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.To(timeOnly.Add(1.Milliseconds()), 1.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly);
-      timeOnly.To(timeOnly.Add(-1.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.To(timeOnly.Add(-1.Milliseconds()), 1.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(1.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(1.Milliseconds()), 1.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly);
+      timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 1.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
 
-      timeOnly.To(timeOnly.Add(1.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.To(timeOnly.Add(1.Milliseconds()), 2.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly);
-      timeOnly.To(timeOnly.Add(-1.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.To(timeOnly.Add(-1.Milliseconds()), 2.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(1.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(1.Milliseconds()), 2.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly);
+      timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 2.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
 
-      timeOnly.To(timeOnly.Add(2.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.To(timeOnly.Add(2.Milliseconds()), 1.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(1.Milliseconds()));
-      timeOnly.To(timeOnly.Add(-2.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.To(timeOnly.Add(-2.Milliseconds()), 1.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly.Add(-2.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(2.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(2.Milliseconds()), 1.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(-2.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(-2.Milliseconds()), 1.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly.Add(-2.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
 
-      timeOnly.To(timeOnly.Add(3.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.To(timeOnly.Add(3.Milliseconds()), 2.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(2.Milliseconds()));
-      timeOnly.To(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.To(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly.Add(-3.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(3.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(3.Milliseconds()), 2.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(2.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly.Add(-3.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
     }
   }
 
@@ -1063,72 +1063,12 @@ public sealed class DateTimeExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.ToIsoString(DateTime)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DateTime_ToIsoString_Method()
-  {
-    var now = DateTime.Now;
-    now.ToIsoString().Should().Be(now.ToUniversalTime().ToString("o"));
-    DateTime.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture).Should().Be(now);
-
-    now = DateTime.UtcNow;
-    now.ToIsoString().Should().Be(now.ToString("o"));
-    DateTime.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.ToIsoString(DateTimeOffset)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DateTimeOffset_ToIsoString_Method()
-  {
-    var now = DateTimeOffset.Now;
-    now.ToIsoString().Should().Be(now.ToUniversalTime().ToString("o"));
-    DateTimeOffset.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture).Should().Be(now);
-
-    now = DateTimeOffset.UtcNow;
-    now.ToIsoString().Should().Be(now.ToString("o"));
-    DateTimeOffset.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.ToRfcString(DateTime)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DateTime_ToRfcString_Method()
-  {
-    var now = DateTime.Now;
-    now.ToRfcString().Should().Be(now.ToUniversalTime().ToString("r"));
-    DateTime.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.ToUniversalTime().TruncateToSecondStart());
-
-    now = DateTime.UtcNow;
-    now.ToRfcString().Should().Be(now.ToString("r"));
-    DateTime.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now.TruncateToSecondStart());
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.ToRfcString(DateTimeOffset)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DateTimeOffset_ToRfcString_Method()
-  {
-    var now = DateTimeOffset.Now;
-    now.ToRfcString().Should().Be(now.ToUniversalTime().ToString("r"));
-    DateTimeOffset.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.ToUniversalTime().TruncateToSecondStart());
-
-    now = DateTimeOffset.UtcNow;
-    now.ToRfcString().Should().Be(now.ToString("r"));
-    DateTimeOffset.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.TruncateToSecondStart());
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="DateTimeExtensions.ToDateTime(DateTimeOffset)"/> method.</para>
   /// </summary>
   [Fact]
   public void DateTimeOffset_ToDateTime_Method()
   {
-    foreach (var date in new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow})
+    foreach (var date in new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow })
     {
       date.ToDateTime().Should().BeSameDateAs(date.ToDateTime()).And.BeSameDateAs(date.UtcDateTime).And.BeIn(DateTimeKind.Utc);
     }
@@ -1169,7 +1109,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void TimeOnly_ToDateTime_Method()
   {
-    foreach (var date in new[] {DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow})
+    foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
     {
       var timeOnly = TimeOnly.FromDateTime(date);
       var now = DateTime.UtcNow;
@@ -1199,7 +1139,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void DateTime_ToDateTimeOffset_Method()
   {
-    foreach (var date in new[] {DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow})
+    foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
     {
       date.ToDateTimeOffset().Should().BeSameDateAs(date.ToDateTimeOffset()).And.BeSameDateAs(new DateTimeOffset(date.ToUniversalTime())).And.BeWithin(TimeSpan.Zero);
     }
@@ -1211,7 +1151,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void DateOnly_ToDateTimeOffset_Method()
   {
-    foreach (var date in new[] {DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow})
+    foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
     {
       var dateOnly = DateOnly.FromDateTime(date);
 
@@ -1270,7 +1210,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void DateTime_ToDateOnly_Method()
   {
-    foreach (var date in new[] {DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow})
+    foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
     {
       date.ToDateOnly().Should().Be(date.ToDateOnly()).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day);
     }
@@ -1282,7 +1222,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void DateTimeOffset_ToDateOnly_Method()
   {
-    foreach (var date in new[] {DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow})
+    foreach (var date in new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow })
     {
       date.ToDateOnly().Should().Be(date.ToDateOnly()).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day);
     }
@@ -1306,9 +1246,69 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void DateTimeOffset_ToTimeOnly_Method()
   {
-    foreach (var date in new[] {DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow})
+    foreach (var date in new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow })
     {
       date.ToTimeOnly().Should().Be(date.ToTimeOnly()).And.HaveHours(date.Hour).And.HaveMinutes(date.Minute).And.HaveSeconds(date.Second).And.HaveMilliseconds(date.Millisecond);
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.ToIsoString(DateTime)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DateTime_ToIsoString_Method()
+  {
+    var now = DateTime.Now;
+    now.ToIsoString().Should().Be(now.ToUniversalTime().ToString("o"));
+    DateTime.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture).Should().Be(now);
+
+    now = DateTime.UtcNow;
+    now.ToIsoString().Should().Be(now.ToString("o"));
+    DateTime.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.ToIsoString(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DateTimeOffset_ToIsoString_Method()
+  {
+    var now = DateTimeOffset.Now;
+    now.ToIsoString().Should().Be(now.ToUniversalTime().ToString("o"));
+    DateTimeOffset.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture).Should().Be(now);
+
+    now = DateTimeOffset.UtcNow;
+    now.ToIsoString().Should().Be(now.ToString("o"));
+    DateTimeOffset.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.ToRfcString(DateTime)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DateTime_ToRfcString_Method()
+  {
+    var now = DateTime.Now;
+    now.ToRfcString().Should().Be(now.ToUniversalTime().ToString("r"));
+    DateTime.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.ToUniversalTime().TruncateToSecondStart());
+
+    now = DateTime.UtcNow;
+    now.ToRfcString().Should().Be(now.ToString("r"));
+    DateTime.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now.TruncateToSecondStart());
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.ToRfcString(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DateTimeOffset_ToRfcString_Method()
+  {
+    var now = DateTimeOffset.Now;
+    now.ToRfcString().Should().Be(now.ToUniversalTime().ToString("r"));
+    DateTimeOffset.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.ToUniversalTime().TruncateToSecondStart());
+
+    now = DateTimeOffset.UtcNow;
+    now.ToRfcString().Should().Be(now.ToString("r"));
+    DateTimeOffset.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.TruncateToSecondStart());
   }
 }

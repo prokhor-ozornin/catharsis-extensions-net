@@ -30,7 +30,7 @@ public static class StreamExtensions
       return stream.Position == stream.Length;
     }
 
-    using var reader = new StreamReader(stream, null!, true, -1, true);
+    using var reader = stream.ToStreamReader(null, false);
     
     return reader.IsEnd();
   }
@@ -80,156 +80,6 @@ public static class StreamExtensions
     var second = right.CanSeek ? right.Length : right.ToEnumerable().Count();
 
     return first >= second ? left : right;
-  }
-
-  /// <summary>
-  ///   <para>Creates a buffered version of <see cref="Stream"/> from specified one.</para>
-  /// </summary>
-  /// <param name="stream">Original stream that should be buffered.</param>
-  /// <param name="size">Size of buffer in bytes. If not specified, default buffer size will be used.</param>
-  /// <returns>Buffer version of stream that wraps original <paramref name="stream"/>.</returns>
-  public static BufferedStream Buffered(this Stream stream, int? size = null) => size != null ? new BufferedStream(stream, size.Value) : new BufferedStream(stream);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="stream"></param>
-  /// <returns></returns>
-  public static Stream Synchronized(this Stream stream) => Stream.Synchronized(stream);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="stream"></param>
-  /// <returns></returns>
-  public static Stream ReadOnly(this Stream stream) => new ReadOnlyStream(stream);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="stream"></param>
-  /// <returns></returns>
-  public static Stream ReadOnlyForward(this Stream stream) => new ReadOnlyForwardStream(stream);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="stream"></param>
-  /// <returns></returns>
-  public static Stream WriteOnly(this Stream stream) => new WriteOnlyStream(stream);
-  
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="stream"></param>
-  /// <returns></returns>
-  public static Stream WriteOnlyForward(this Stream stream) => new WriteOnlyForwardStream(stream);
-
-  /// <summary>
-  ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte"/> array. The input is closed before this method returns.</para>
-  /// </summary>
-  /// <param name="source"></param>
-  /// <param name="cancellation"></param>
-  /// <returns>The <see cref="byte"/> array from that <paramref name="source"/></returns>
-  public static async IAsyncEnumerable<byte> Bytes(this Stream source, [EnumeratorCancellation] CancellationToken cancellation = default)
-  {
-    var buffer = new byte[4096];
-
-    for (int count; (count = await source.ReadAsync(buffer, 0, buffer.Length, cancellation)) > 0;)
-    {
-      for (var i = 0; i < count; i++)
-      {
-        yield return buffer[i];
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Writes binary data to target stream.</para>
-  /// </summary>
-  /// <typeparam name="TStream">Type of target stream.</typeparam>
-  /// <param name="destination">Target stream to write to.</param>
-  /// <param name="bytes">Binary data to write to a stream.</param>
-  /// <param name="cancellation"></param>
-  /// <returns>Back reference to <see cref="destination"/> stream.</returns>
-  public static async Task<TStream> Bytes<TStream>(this TStream destination, IEnumerable<byte> bytes, CancellationToken cancellation = default) where TStream : Stream
-  {
-    if (!bytes.Any())
-    {
-      return destination;
-    }
-
-    foreach (var chunk in bytes.Chunk(4096))
-    {
-      await destination.WriteAsync(chunk, 0, chunk.Length, cancellation);
-    }
-
-    return destination;
-  }
-
-  /// <summary>
-  ///   <para>Returns all available text data from a source stream.</para>
-  /// </summary>
-  /// <param name="source">Source stream to read from.</param>
-  /// <param name="encoding">Encoding to be used for bytes-to-text conversion. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
-  /// <returns>Text data from a <see cref="source"/> stream.</returns>
-  public static async Task<string> Text(this Stream source, Encoding? encoding = null) => await source.ToStreamReader(encoding).Text();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TStream"></typeparam>
-  /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<TStream> Text<TStream>(this TStream destination, string text, Encoding? encoding = null, CancellationToken cancellation = default) where TStream : Stream
-  {
-    await using var writer = new StreamWriter(destination, encoding ?? Encoding.Default, 4096, true);
-    await writer.WriteAsync(text.ToReadOnlyMemory(), cancellation);
-
-    return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="stream"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static async IAsyncEnumerable<string> Lines(this Stream stream, Encoding? encoding = null)
-  {
-    await foreach (var line in stream.ToStreamReader(encoding).Lines())
-    {
-      yield return line;
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="stream"></param>
-  /// <param name="action"></param>
-  /// <returns></returns>
-  public static TStream UseTemporarily<TStream>(this TStream stream, Action<TStream> action) where TStream : Stream => stream.UseFinally(action, stream => stream.Empty());
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TStream"></typeparam>
-  /// <param name="destination"></param>
-  /// <param name="instance"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<TStream> Print<TStream>(this TStream destination, object instance, Encoding? encoding = null, CancellationToken cancellation = default) where TStream : Stream
-  {
-    await using var writer = new StreamWriter(destination, encoding ?? Encoding.Default, 4096, true);
-
-    await writer.Print(instance, cancellation);
-
-    return destination;
   }
 
   /// <summary>
@@ -290,6 +140,20 @@ public static class StreamExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async IAsyncEnumerable<string> Lines(this Stream stream, Encoding encoding = null)
+  {
+    await foreach (var line in stream.ToStreamReader(encoding).Lines())
+    {
+      yield return line;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <typeparam name="TStream"></typeparam>
   /// <param name="stream"></param>
   /// <param name="count"></param>
@@ -316,13 +180,135 @@ public static class StreamExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<T> Print<T>(this T instance, Stream destination, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    await using var writer = destination.ToStreamWriter(encoding, false);
+
+    await instance.Print(writer, cancellation);
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="action"></param>
+  /// <returns></returns>
+  public static TStream TryFinallyClear<TStream>(this TStream stream, Action<TStream> action) where TStream : Stream => stream.TryFinally(action, stream => stream.Empty());
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static Stream AsSynchronized(this Stream stream) => Stream.Synchronized(stream);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static Stream AsReadOnly(this Stream stream) => new ReadOnlyStream(stream);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static Stream AsReadOnlyForward(this Stream stream) => new ReadOnlyForwardStream(stream);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static Stream AsWriteOnly(this Stream stream) => new WriteOnlyStream(stream);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static Stream AsWriteOnlyForward(this Stream stream) => new WriteOnlyForwardStream(stream);
+
+  /// <summary>
+  ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte"/> array. The input is closed before this method returns.</para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <param name="cancellation"></param>
+  /// <returns>The <see cref="byte"/> array from that <paramref name="source"/></returns>
+  public static async IAsyncEnumerable<byte> ToBytes(this Stream source, [EnumeratorCancellation] CancellationToken cancellation = default)
+  {
+    var buffer = new byte[4096];
+
+    for (int count; (count = await source.ReadAsync(buffer, 0, buffer.Length, cancellation)) > 0;)
+    {
+      for (var i = 0; i < count; i++)
+      {
+        yield return buffer[i];
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Returns all available text data from a source stream.</para>
+  /// </summary>
+  /// <param name="source">Source stream to read from.</param>
+  /// <param name="encoding">Encoding to be used for bytes-to-text conversion. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+  /// <returns>Text data from a <see cref="source"/> stream.</returns>
+  public static async Task<string> ToText(this Stream source, Encoding encoding = null) => await source.ToStreamReader(encoding).ToText();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TStream"></typeparam>
+  /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<TStream> WriteBytes<TStream>(this TStream destination, IEnumerable<byte> bytes, CancellationToken cancellation = default) where TStream : Stream
+  {
+    foreach (var chunk in bytes.Chunk(4096))
+    {
+      await destination.WriteAsync(chunk, 0, chunk.Length, cancellation);
+    }
+
+    return destination;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TStream"></typeparam>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<TStream> WriteText<TStream>(this TStream destination, string text, Encoding encoding = null, CancellationToken cancellation = default) where TStream : Stream
+  {
+    await using var writer = destination.ToStreamWriter(encoding, false);
+    await writer.WriteAsync(text.ToReadOnlyMemory(), cancellation);
+
+    return destination;
+  }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="bytes"></param>
   /// <param name="destination"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, Stream destination, CancellationToken cancellation = default)
   {
-    await destination.Bytes(bytes, cancellation);
+    await destination.WriteBytes(bytes, cancellation);
     return bytes;
   }
 
@@ -334,9 +320,9 @@ public static class StreamExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> WriteTo(this string text, Stream destination, Encoding? encoding = null, CancellationToken cancellation = default)
+  public static async Task<string> WriteTo(this string text, Stream destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
-    await destination.Text(text, encoding, cancellation);
+    await destination.WriteText(text, encoding, cancellation);
     return text;
   }
 
@@ -441,36 +427,48 @@ public static class StreamExtensions
   public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Stream stream, int count) => new StreamAsyncEnumerable(stream, count);
 
   /// <summary>
+  ///   <para>Creates a buffered version of <see cref="Stream"/> from specified one.</para>
+  /// </summary>
+  /// <param name="stream">Original stream that should be buffered.</param>
+  /// <param name="bufferSize">Size of buffer in bytes. If not specified, default buffer size will be used.</param>
+  /// <returns>Buffer version of stream that wraps original <paramref name="stream"/>.</returns>
+  public static BufferedStream ToBufferedStream(this Stream stream, int? bufferSize = null) => bufferSize != null ? new BufferedStream(stream, bufferSize.Value) : new BufferedStream(stream);
+
+  /// <summary>
   ///   <para>Returns a <see cref="ToBinaryReader"/> for reading data from specified <see cref="Stream"/>.</para>
   /// </summary>
   /// <param name="stream">Source stream to read from.</param>
   /// <param name="encoding">Text encoding to use by <see cref="ToBinaryReader"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+  /// <param name="close"></param>
   /// <returns>Binary reader instance that wraps <see cref="stream"/> stream.</returns>
-  public static BinaryReader ToBinaryReader(this Stream stream, Encoding? encoding = null) => encoding != null ? new BinaryReader(stream, encoding) : new BinaryReader(stream);
+  public static BinaryReader ToBinaryReader(this Stream stream, Encoding encoding = null, bool close = true) => new(stream, encoding ?? Encoding.Default, !close);
 
   /// <summary>
   ///   <para>Returns a <see cref="ToBinaryWriter"/> for writing data to specified <see cref="Stream"/>.</para>
   /// </summary>
   /// <param name="stream">Target stream to write to.</param>
   /// <param name="encoding">Text encoding to use by <see cref="ToBinaryWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+  /// <param name="close"></param>
   /// <returns>Binary writer instance that wraps <see cref="stream"/> stream.</returns>
-  public static BinaryWriter ToBinaryWriter(this Stream stream, Encoding? encoding = null) => new(stream, encoding ?? Encoding.Default);
+  public static BinaryWriter ToBinaryWriter(this Stream stream, Encoding encoding = null, bool close = true) => new(stream, encoding ?? Encoding.Default, !close);
 
   /// <summary>
   ///   <para>Returns a <see cref="ToStreamReader"/> for reading text data from specified <see cref="Stream"/>.</para>
   /// </summary>
   /// <param name="stream">Source stream to read from.</param>
   /// <param name="encoding">Text encoding to use by <see cref="ToStreamReader"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
-  /// <returns>Text reader instance that wraps <see cref="stream"/> stream.</returns>
-  public static StreamReader ToStreamReader(this Stream stream, Encoding? encoding = null) => new(stream, encoding ?? Encoding.Default);
+  /// <param name="close"></param>
+  /// <returns>Text reader instance that wraps <see cref="stream"/> stream.</returns> 
+  public static StreamReader ToStreamReader(this Stream stream, Encoding encoding = null, bool close = true) => new(stream, encoding ?? Encoding.Default, true, -1, !close);
 
   /// <summary>
   ///   <para>Returns a <see cref="ToStreamWriter"/> for writing text data to specified <see cref="Stream"/>.</para>
   /// </summary>
   /// <param name="stream">Target stream to write to.</param>
   /// <param name="encoding">Text encoding to use by <see cref="ToStreamWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+  /// <param name="close"></param>
   /// <returns>Text writer instance that wraps <see cref="stream"/> stream.</returns>
-  public static StreamWriter ToStreamWriter(this Stream stream, Encoding? encoding = null) => new(stream, encoding ?? Encoding.Default, 4096);
+  public static StreamWriter ToStreamWriter(this Stream stream, Encoding encoding = null, bool close = true) => new(stream, encoding ?? Encoding.Default, -1, !close);
 
   private class ReadOnlyStream : Stream
   {
@@ -663,7 +661,7 @@ public static class StreamExtensions
 
         if (count > 0)
         {
-          Current = buffer.Segment(0, count);
+          Current = buffer.Range(0, count);
         }
 
         return count > 0;
@@ -718,7 +716,7 @@ public static class StreamExtensions
 
         if (count > 0)
         {
-          Current = buffer.Segment(0, count);
+          Current = buffer.Range(0, count);
         }
 
         return count > 0;

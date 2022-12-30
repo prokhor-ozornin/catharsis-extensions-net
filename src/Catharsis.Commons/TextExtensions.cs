@@ -18,14 +18,6 @@ public static class TextExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="character"></param>
-  /// <param name="count"></param>
-  /// <returns></returns>
-  public static string Repeat(this char character, int count) => new(character, count);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
   public static bool IsStart(this StreamReader reader) => reader.BaseStream.IsStart();
@@ -86,6 +78,22 @@ public static class TextExtensions
   /// <param name="builder"></param>
   /// <returns></returns>
   public static StringBuilder Empty(this StringBuilder builder) => builder.Clear();
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static StringBuilder Min(this StringBuilder left, StringBuilder right) => left.Length <= right.Length ? left : right;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static StringBuilder Max(this StringBuilder left, StringBuilder right) => left.Length >= right.Length ? left : right;
 
   /// <summary>
   ///   <para></para>
@@ -110,115 +118,13 @@ public static class TextExtensions
   }
 
   /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static StringBuilder Min(this StringBuilder left, StringBuilder right) => left.Length <= right.Length ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static StringBuilder Max(this StringBuilder left, StringBuilder right) => left.Length >= right.Length ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
-  public static TextReader Synchronized(this TextReader reader) => TextReader.Synchronized(reader);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <returns></returns>
-  public static TextWriter Synchronized(this TextWriter writer) => TextWriter.Synchronized(writer);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static async Task<byte[]> Bytes(this TextReader reader, Encoding? encoding = null) => (await reader.Text()).Bytes(encoding);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TWriter"></typeparam>
-  /// <param name="to"></param>
-  /// <param name="bytes"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<TWriter> Bytes<TWriter>(this TWriter to, IEnumerable<byte> bytes, Encoding? encoding = null, CancellationToken cancellation = default) where TWriter : TextWriter => await to.Text(bytes.AsArray().Text(encoding), cancellation);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static byte[] Bytes(this StringBuilder builder, Encoding? encoding = null) => builder.ToString().Bytes(encoding);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <param name="bytes"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static StringBuilder Bytes(this StringBuilder builder, IEnumerable<byte> bytes, Encoding? encoding = null) => builder.Text(bytes.AsArray().Text(encoding));
-
-  /// <summary>
-  ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>
-  /// </summary>
-  /// <param name="reader"><see cref="TextReader"/> which is used to read text from its underlying source.</param>
-  /// <returns>Text content which have been read from a <paramref name="reader"/>.</returns>
-  public static async Task<string> Text(this TextReader reader) => await reader.ReadToEndAsync();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TWriter"></typeparam>
-  /// <param name="writer"></param>
-  /// <param name="text"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<TWriter> Text<TWriter>(this TWriter writer, string text, CancellationToken cancellation = default) where TWriter : TextWriter
-  {
-    await writer.WriteAsync(text.ToReadOnlyMemory(), cancellation);
-    return writer;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <returns></returns>
-  public static string Text(this StringBuilder builder) => builder.ToString();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  public static StringBuilder Text(this StringBuilder builder, string text) => builder.Clear().Append(text);
-
-  /// <summary>
   ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a list of strings, using default system-dependent string separator.</para>
   /// </summary>
   /// <param name="reader"><see cref="TextReader"/> which is used to read text from its underlying source.</param>
   /// <returns>List of strings which have been read from a <paramref name="reader"/>.</returns>
   public static async IAsyncEnumerable<string> Lines(this TextReader reader)
   {
-    foreach (var line in (await reader.Text()).Lines())
+    foreach (var line in (await reader.ToText()).Lines())
     {
       yield return line;
     }
@@ -240,26 +146,22 @@ public static class TextExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="text"></param>
-  /// <param name="destination"></param>
-  /// <param name="cancellation"></param>
+  /// <param name="character"></param>
+  /// <param name="count"></param>
   /// <returns></returns>
-  public static async Task<string> WriteTo(this string text, TextWriter destination, CancellationToken cancellation = default)
-  {
-    await destination.Text(text, cancellation);
-    return text;
-  }
+  public static string Repeat(this char character, int count) => new(character, count);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="text"></param>
+  /// <param name="instance"></param>
   /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static string WriteTo(this string text, StringBuilder destination)
+  public static async Task<T> Print<T>(this T instance, TextWriter destination, CancellationToken cancellation = default)
   {
-    destination.Text(text);
-    return text;
+    await destination.WriteAsync(instance.ToStateString().ToReadOnlyMemory(), cancellation);
+    return instance;
   }
 
   /// <summary>
@@ -268,21 +170,36 @@ public static class TextExtensions
   /// <param name="builder"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static StringBuilder UseTemporarily(this StringBuilder builder, Action<StringBuilder> action) => builder.UseFinally(action, builder => builder.Empty());
+  public static StringBuilder TryFinallyClear(this StringBuilder builder, Action<StringBuilder> action) => builder.TryFinally(action, builder => builder.Empty());
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <typeparam name="TWriter"></typeparam>
-  /// <param name="destination"></param>
-  /// <param name="instance"></param>
-  /// <param name="cancellation"></param>
+  /// <param name="reader"></param>
   /// <returns></returns>
-  public static async Task<TWriter> Print<TWriter>(this TWriter destination, object instance, CancellationToken cancellation = default) where TWriter : TextWriter
-  {
-    await destination.WriteAsync(instance.ToStringState().ToReadOnlyMemory(), cancellation);
-    return destination;
-  }
+  public static TextReader AsSynchronized(this TextReader reader) => TextReader.Synchronized(reader);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="writer"></param>
+  /// <returns></returns>
+  public static TextWriter AsSynchronized(this TextWriter writer) => TextWriter.Synchronized(writer);
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async Task<byte[]> ToBytes(this TextReader reader, Encoding encoding = null) => (await reader.ToText()).ToBytes(encoding);
+
+  /// <summary>
+  ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>
+  /// </summary>
+  /// <param name="reader"><see cref="TextReader"/> which is used to read text from its underlying source.</param>
+  /// <returns>Text content which have been read from a <paramref name="reader"/>.</returns>
+  public static async Task<string> ToText(this TextReader reader) => await reader.ReadToEndAsync();
 
   /// <summary>
   ///   <para></para>
@@ -329,7 +246,7 @@ public static class TextExtensions
   /// <param name="builder"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static StringWriter ToStringWriter(this StringBuilder builder, IFormatProvider? format = null) => new(builder, format ?? CultureInfo.InvariantCulture);
+  public static StringWriter ToStringWriter(this StringBuilder builder, IFormatProvider format = null) => new(builder, format ?? CultureInfo.InvariantCulture);
 
   /// <summary>
   ///   <para></para>
@@ -337,6 +254,57 @@ public static class TextExtensions
   /// <param name="builder"></param>
   /// <returns></returns>
   public static XmlWriter ToXmlWriter(this StringBuilder builder) => XmlWriter.Create(builder);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TWriter"></typeparam>
+  /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async Task<TWriter> WriteBytes<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter => await destination.WriteText(bytes.AsArray().ToText(encoding));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TWriter"></typeparam>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<TWriter> WriteText<TWriter>(this TWriter destination, string text, CancellationToken cancellation = default) where TWriter : TextWriter
+  {
+    await destination.WriteAsync(text.ToReadOnlyMemory(), cancellation);
+
+    return destination;
+  }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="writer"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, TextWriter writer, Encoding encoding = null)
+  {
+    await bytes.AsArray().ToText(encoding).WriteTo(writer);
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<string> WriteTo(this string text, TextWriter destination, CancellationToken cancellation = default)
+  {
+    await destination.WriteText(text, cancellation);
+    return text;
+  }
 
   private sealed class TextReaderEnumerable : IEnumerable<char[]>
   {
@@ -372,7 +340,7 @@ public static class TextExtensions
 
         if (count > 0)
         {
-          Current = buffer.Segment(0, count);
+          Current = buffer.Range(0, count);
         }
 
         return count > 0;
@@ -420,7 +388,7 @@ public static class TextExtensions
 
         if (count > 0)
         {
-          Current = buffer.Segment(0, count);
+          Current = buffer.Range(0, count);
         }
 
         return count > 0;

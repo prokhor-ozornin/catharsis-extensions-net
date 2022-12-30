@@ -75,25 +75,6 @@ public static class BinaryExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
-  /// <param name="count"></param>
-  /// <returns></returns>
-  public static BinaryReader Skip(this BinaryReader reader, int count)
-  {
-    try
-    {
-      count.Times(() => reader.ReadByte());
-    }
-    catch (EndOfStreamException)
-    {
-    }
-
-    return reader;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
   /// <returns></returns>
   public static BinaryReader Rewind(this BinaryReader reader)
   {
@@ -116,86 +97,33 @@ public static class BinaryExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
-  /// <param name="cancellation"></param>
+  /// <param name="count"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> Bytes(this BinaryReader reader, CancellationToken cancellation = default) => reader.BaseStream.Bytes(cancellation);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <param name="bytes"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<BinaryWriter> Bytes(this BinaryWriter writer, IEnumerable<byte> bytes, CancellationToken cancellation = default)
-  {
-    await writer.BaseStream.Bytes(bytes, cancellation);
-    return writer;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
-  /// <seealso cref="Text(BinaryWriter, string)"/>
-  public static string Text(this BinaryReader reader)
+  public static BinaryReader Skip(this BinaryReader reader, int count)
   {
     try
     {
-      return reader.ReadString();
+      count.Times(() => reader.ReadByte());
     }
     catch (EndOfStreamException)
     {
-      return string.Empty;
     }
+
+    return reader;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="writer"></param>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  /// <seealso cref="Text(BinaryReader)"/>
-  public static BinaryWriter Text(this BinaryWriter writer, string text)
-  {
-    writer.Write(text);
-    return writer;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, BinaryWriter destination, CancellationToken cancellation = default)
-  {
-    await destination.Bytes(bytes, cancellation);
-    return bytes;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="destination"></param>
-  /// <returns></returns>
-  public static string WriteTo(this string text, BinaryWriter destination)
-  {
-    destination.Text(text);
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
+  /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
+  /// <param name="destination"></param>
   /// <returns></returns>
-  public static BinaryWriter Print(this BinaryWriter destination, object instance) => destination.Text(instance.ToStringState());
+  public static T Print<T>(this T instance, BinaryWriter destination)
+  {
+    destination.WriteText(instance.ToStateString());
+    return instance;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -203,7 +131,7 @@ public static class BinaryExtensions
   /// <param name="reader"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static BinaryReader UseTemporarily(this BinaryReader reader, Action<BinaryReader> action) => reader.UseFinally(action, reader => reader.Empty());
+  public static BinaryReader TryFinallyClear(this BinaryReader reader, Action<BinaryReader> action) => reader.TryFinally(action, reader => reader.Empty());
 
   /// <summary>
   ///   <para></para>
@@ -211,14 +139,13 @@ public static class BinaryExtensions
   /// <param name="writer"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static BinaryWriter UseTemporarily(this BinaryWriter writer, Action<BinaryWriter> action) => writer.UseFinally(action, writer => writer.Empty());
+  public static BinaryWriter TryFinallyClear(this BinaryWriter writer, Action<BinaryWriter> action) => writer.TryFinally(action, writer => writer.Empty());
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  /// <seealso cref="ToEnumerable(BinaryReader,int)"/>
   public static IEnumerable<byte> ToEnumerable(this BinaryReader reader) => reader.BaseStream.ToEnumerable();
 
   /// <summary>
@@ -243,4 +170,78 @@ public static class BinaryExtensions
   /// <param name="count"></param>
   /// <returns></returns>
   public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this BinaryReader reader, int count) => reader.BaseStream.ToAsyncEnumerable(count);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static IAsyncEnumerable<byte> ToBytes(this BinaryReader reader, CancellationToken cancellation = default) => reader.BaseStream.ToBytes(cancellation);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
+  public static string ToText(this BinaryReader reader)
+  {
+    try
+    {
+      return reader.ReadString();
+    }
+    catch (EndOfStreamException)
+    {
+      return string.Empty;
+    }
+  }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <returns></returns>
+  public static BinaryWriter WriteBytes(this BinaryWriter destination, IEnumerable<byte> bytes)
+  {
+    destination.Write(bytes.AsArray());
+    return destination;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  public static BinaryWriter WriteText(this BinaryWriter destination, string text)
+  {
+    destination.Write(text);
+    return destination;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, BinaryWriter destination)
+  {
+    destination.WriteBytes(bytes);
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  public static string WriteTo(this string text, BinaryWriter destination)
+  {
+    destination.WriteText(text);
+    return text;
+  }
+
 }

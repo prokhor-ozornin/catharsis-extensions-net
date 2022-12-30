@@ -15,6 +15,13 @@ public static class NumericExtensions
   public static IEnumerable<int> To(this int from, int to) => from <= to ? Enumerable.Range(from, to - from) : Enumerable.Range(to, from - to);
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="count"></param>
+  /// <param name="action"></param>
+  public static void Times(this int count, Action action) => count.Times(_ => action());
+
+  /// <summary>
   ///   <para>Calls given delegate specified number of times.</para>
   /// </summary>
   /// <param name="count">Number of times to call a delegate.</param>
@@ -31,23 +38,16 @@ public static class NumericExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="count"></param>
-  /// <param name="action"></param>
-  public static void Times(this int count, Action action) => count.Times(_ => action());
+  /// <returns></returns>
+  public static IEnumerable<object> Nulls(this int count) => count.Objects<object>(() => null);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="count"></param>
-  /// <param name="constructor"></param>
   /// <returns></returns>
-  public static IEnumerable<T> Objects<T>(this int count, Func<int, T> constructor)
-  {
-    for (var i = 0; i < count; i++)
-    {
-      yield return constructor(i);
-    }
-  }
+  public static IEnumerable<T> Objects<T>(this int count) where T : new() => count.Objects(() => new T());
 
   /// <summary>
   ///   <para></para>
@@ -69,22 +69,15 @@ public static class NumericExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="count"></param>
+  /// <param name="constructor"></param>
   /// <returns></returns>
-  public static IEnumerable<T> Objects<T>(this int count) where T : new() => count.Objects(() => new T());
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="count"></param>
-  /// <returns></returns>
-  public static IEnumerable<object?> Nulls(this int count) => count.Objects<object?>(() => null);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="guid"></param>
-  /// <returns></returns>
-  public static bool IsEmpty(this Guid guid) => guid == Guid.Empty;
+  public static IEnumerable<T> Objects<T>(this int count, Func<int, T> constructor)
+  {
+    for (var i = 0; i < count; i++)
+    {
+      yield return constructor(i);
+    }
+  }
 
   /// <summary>
   ///   <para></para>
@@ -98,17 +91,19 @@ public static class NumericExtensions
   ///   <para>Rounds a double-precision floating-point value to the nearest integral value.</para>
   /// </summary>
   /// <param name="number">A double-precision floating-point number to be rounded.</param>
+  /// <param name="digits"></param>
   /// <returns>The integer nearest <paramref name="number"/>.</returns>
   /// <seealso cref="Math.Round(double)"/>
-  public static double Round(this double number) => Math.Round(number);
+  public static double Round(this double number, int? digits = null) => digits != null ? Math.Round(number, digits.Value) : Math.Round(number);
 
   /// <summary>
   ///   <para>Rounds a decimal value to the nearest integral value.</para>
   /// </summary>
   /// <param name="number">A decimal number to be rounded.</param>
+  /// <param name="digits"></param>
   /// <returns>The integer nearest <paramref name="number"/>.</returns>
   /// <seealso cref="Math.Round(decimal)"/>
-  public static decimal Round(this decimal number) => Math.Round(number);
+  public static decimal Round(this decimal number, int? digits = null) => digits != null ? Math.Round(number, digits.Value) : Math.Round(number);
 
   /// <summary>
   ///   <para></para>
@@ -231,60 +226,4 @@ public static class NumericExtensions
   /// <returns></returns>
   /// <seealso cref="Math.Floor(double)"/>
   public static decimal Floor(this decimal number) => Math.Floor(number);
-
-  /// <summary>
-  ///   <para>Determines whether specified numeric value is an even number.</para>
-  /// </summary>
-  /// <param name="number">Numeric value.</param>
-  /// <returns><c>true</c> if <paramref name="number"/> is even number, <c>false</c> if not.</returns>
-  public static bool Even(this sbyte number) => number % 2 == 0;
-
-  /// <summary>
-  ///   <para>Determines whether specified numeric value is an even number.</para>
-  /// </summary>
-  /// <param name="number">Numeric value.</param>
-  /// <returns><c>true</c> if <paramref name="number"/> is even number, <c>false</c> if not.</returns>
-  public static bool Even(this byte number) => number % 2 == 0;
-
-  /// <summary>
-  ///   <para>Determines whether specified numeric value is an even number.</para>
-  /// </summary>
-  /// <param name="number">Numeric value.</param>
-  /// <returns><c>true</c> if <paramref name="number"/> is even number, <c>false</c> if not.</returns>
-  public static bool Even(this short number) => number % 2 == 0;
-
-  /// <summary>
-  ///   <para>Determines whether specified numeric value is an even number.</para>
-  /// </summary>
-  /// <param name="number">Numeric value.</param>
-  /// <returns><c>true</c> if <paramref name="number"/> is even number, <c>false</c> if not.</returns>
-  public static bool Even(this ushort number) => number % 2 == 0;
-
-  /// <summary>
-  ///   <para>Determines whether specified numeric value is an even number.</para>
-  /// </summary>
-  /// <param name="number">Numeric value.</param>
-  /// <returns><c>true</c> if <paramref name="number"/> is even number, <c>false</c> if not.</returns>
-  public static bool Even(this int number) => number % 2 == 0;
-
-  /// <summary>
-  ///   <para>Determines whether specified numeric value is an even number.</para>
-  /// </summary>
-  /// <param name="number">Numeric value.</param>
-  /// <returns><c>true</c> if <paramref name="number"/> is even number, <c>false</c> if not.</returns>
-  public static bool Even(this uint number) => number % 2 == 0;
-
-  /// <summary>
-  ///   <para>Determines whether specified numeric value is an even number.</para>
-  /// </summary>
-  /// <param name="number">Numeric value.</param>
-  /// <returns><c>true</c> if <paramref name="number"/> is even number, <c>false</c> if not.</returns>
-  public static bool Even(this long number) => number % 2 == 0;
-
-  /// <summary>
-  ///   <para>Determines whether specified numeric value is an even number.</para>
-  /// </summary>
-  /// <param name="number">Numeric value.</param>
-  /// <returns><c>true</c> if <paramref name="number"/> is even number, <c>false</c> if not.</returns>
-  public static bool Even(this ulong number) => number % 2 == 0;
 }

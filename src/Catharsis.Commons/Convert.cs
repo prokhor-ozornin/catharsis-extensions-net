@@ -36,7 +36,7 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="encoding"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="string"/>, or a <c>null</c> reference.</returns>
-  public static string? String(this Convert convert, object? instance, Encoding? encoding = null)
+  public static string String(this Convert convert, object instance, Encoding encoding = null)
   {
     if (convert == null)
     {
@@ -47,18 +47,18 @@ public static class ConvertExtensions
     {
       null => null,
       string text => text,
-      BinaryReader reader => reader.Text(),
-      SecureString secure => secure.Text(),
-      FileInfo file => file.Text(encoding).Await(),
-      HttpContent http => http.Text().Await(),
-      Process process => process.Text().Await(),
-      Stream stream => stream.Text(encoding).Await(),
-      TextReader reader => reader.Text().Await(),
-      Uri uri => uri.Text(encoding).Await(),
-      XmlDocument xml => xml.Text(),
-      XDocument xml => xml.Text().Await(),
-      XmlReader xml => xml.Text().Await(),
-      _ => instance.ToStringInvariant()
+      BinaryReader reader => reader.ToText(),
+      SecureString secure => secure.ToText(),
+      FileInfo file => file.ToText(encoding).Await(),
+      HttpContent http => http.ToText().Await(),
+      Process process => process.ToText().Await(),
+      Stream stream => stream.ToText(encoding).Await(),
+      TextReader reader => reader.ToText().Await(),
+      Uri uri => uri.ToText(encoding).Await(),
+      XmlDocument xml => xml.ToText(),
+      XDocument xml => xml.ToText().Await(),
+      XmlReader xml => xml.ToText().Await(),
+      _ => instance.ToInvariantString()
     };
   }
 
@@ -69,25 +69,25 @@ public static class ConvertExtensions
   /// <param name="instance"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static byte[]? Binary(this Convert convert, object? instance, Encoding? encoding = null)
+  public static byte[] Binary(this Convert convert, object instance, Encoding encoding = null)
   {
     return instance switch
     {
       null => null,
       IEnumerable<byte> bytes => bytes.AsArray(),
-      string text => text.Bytes(encoding),
-      SecureString secure => secure.Text().Bytes(encoding),
+      string text => text.ToBytes(encoding),
+      SecureString secure => secure.ToText().ToBytes(encoding),
       Guid guid => guid.ToByteArray(),
-      FileInfo file => file.Bytes().ToArray().Await(),
-      IPAddress address => address.Bytes(),
-      PhysicalAddress address => address.Bytes(),
-      HttpContent http => http.Bytes().ToArray().Await(),
-      Process process => process.Bytes().ToArray().Await(),
-      Stream stream => stream.Bytes().ToArray().Await(),
-      Uri uri => uri.Bytes().ToArray().Await(),
-      XmlDocument xml => xml.Bytes(),
-      XDocument xml => xml.Bytes().Await(),
-      _ => instance.AsBinary()
+      FileInfo file => file.ToBytes().ToArray().Await(),
+      IPAddress address => address.ToBytes(),
+      PhysicalAddress address => address.ToBytes(),
+      HttpContent http => http.ToBytes().ToArray().Await(),
+      Process process => process.ToBytes().ToArray().Await(),
+      Stream stream => stream.ToBytes().ToArray().Await(),
+      Uri uri => uri.ToBytes().ToArray().Await(),
+      XmlDocument xml => xml.ToBytes(),
+      XDocument xml => xml.ToBytes().Await(),
+      _ => instance.SerializeAsBinary()
     };
   }
 
@@ -98,7 +98,7 @@ public static class ConvertExtensions
   /// <param name="convert"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static T[]? Array<T>(this Convert convert, object? instance)
+  public static T[] Array<T>(this Convert convert, object instance)
   {
     return instance switch
     {
@@ -117,12 +117,12 @@ public static class ConvertExtensions
   /// <param name="instance"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static sbyte? Sbyte(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static sbyte? Sbyte(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
       null => null,
-      sbyte value => (sbyte) value,
+      sbyte value => value,
       byte value => (sbyte) value,
       short value => (sbyte) value,
       ushort value => (sbyte) value,
@@ -133,7 +133,7 @@ public static class ConvertExtensions
       float value => (sbyte) Round(value),
       double value => (sbyte) Round(value),
       decimal value => (sbyte) Round(value),
-      _ => instance.ToStringFormatted(format).ToSbyte(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToSbyte(out var result, format) ? result : null
     };
   }
 
@@ -144,13 +144,13 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="format"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="byte"/>, or a <c>null</c> reference.</returns>
-  public static byte? Byte(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static byte? Byte(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
       null => null,
       sbyte value => (byte) value,
-      byte value => (byte) value,
+      byte value => value,
       short value => (byte) value,
       ushort value => (byte) value,
       int value => (byte) value,
@@ -160,7 +160,7 @@ public static class ConvertExtensions
       float value => (byte) Round(value),
       double value => (byte) Round(value),
       decimal value => (byte) Round(value),
-      _ => instance.ToStringFormatted(format).ToByte(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToByte(out var result, format) ? result : null
     };
   }
 
@@ -171,14 +171,14 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="format"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="short"/>, or a <c>null</c> reference.</returns>
-  public static short? Short(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static short? Short(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
       null => null,
-      sbyte value => (short) value,
-      byte value => (short) value,
-      short value => (short) value,
+      sbyte value => value,
+      byte value => value,
+      short value => value,
       ushort value => (short) value,
       int value => (short) value,
       uint value => (short) value,
@@ -187,7 +187,7 @@ public static class ConvertExtensions
       float value => (short) Round(value),
       double value => (short) Round(value),
       decimal value => (short) Round(value),
-      _ => instance.ToStringFormatted(format).ToShort(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToShort(out var result, format) ? result : null
     };
   }
 
@@ -198,15 +198,15 @@ public static class ConvertExtensions
   /// <param name="instance"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static ushort? Ushort(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static ushort? Ushort(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
       null => null,
       sbyte value => (ushort) value,
-      byte value => (ushort) value,
+      byte value => value,
       short value => (ushort) value,
-      ushort value => (ushort) value,
+      ushort value => value,
       int value => (ushort) value,
       uint value => (ushort) value,
       long value => (ushort) value,
@@ -214,7 +214,7 @@ public static class ConvertExtensions
       float value => (ushort) Round(value),
       double value => (ushort) Round(value),
       decimal value => (ushort) Round(value),
-      _ => instance.ToStringFormatted(format).ToUshort(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToUshort(out var result, format) ? result : null
     };
   }
 
@@ -225,23 +225,23 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="format"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="int"/>, or a <c>null</c> reference.</returns>
-  public static int? Int(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static int? Int(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
       null => null,
-      sbyte value => (int) value,
-      byte value => (int) value,
-      short value => (int) value,
-      ushort value => (int) value,
-      int value => (int) value,
+      sbyte value => value,
+      byte value => value,
+      short value => value,
+      ushort value => value,
+      int value => value,
       uint value => (int) value,
       long value => (int) value,
       ulong value => (int) value,
       float value => (int) Round(value),
       double value => (int) Round(value),
       decimal value => (int) Round(value),
-      _ => instance.ToStringFormatted(format).ToInt(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToInt(out var result, format) ? result : null
     };
   }
 
@@ -252,23 +252,23 @@ public static class ConvertExtensions
   /// <param name="instance"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static uint? Uint(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static uint? Uint(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
       null => null,
       sbyte value => (uint) value,
-      byte value => (uint) value,
+      byte value => value,
       short value => (uint) value,
-      ushort value => (uint) value,
+      ushort value => value,
       int value => (uint) value,
-      uint value => (uint) value,
+      uint value => value,
       long value => (uint) value,
       ulong value => (uint) value,
       float value => (uint) Round(value),
       double value => (uint) Round(value),
       decimal value => (uint) Round(value),
-      _ => instance.ToStringFormatted(format).ToUint(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToUint(out var result, format) ? result : null
     };
   }
 
@@ -279,23 +279,23 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="format"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="long"/>, or a <c>null</c> reference.</returns>
-  public static long? Long(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static long? Long(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
       null => null,
-      sbyte value => (long) value,
-      byte value => (long) value,
-      short value => (long) value,
-      ushort value => (long) value,
-      int value => (long) value,
-      uint value => (long) value,
-      long value => (long) value,
+      sbyte value => value,
+      byte value => value,
+      short value => value,
+      ushort value => value,
+      int value => value,
+      uint value => value,
+      long value => value,
       ulong value => (long) value,
       float value => (long) Round(value),
       double value => (long) Round(value),
       decimal value => (long) Round(value),
-      _ => instance.ToStringFormatted(format).ToLong(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToLong(out var result, format) ? result : null
     };
   }
 
@@ -306,23 +306,23 @@ public static class ConvertExtensions
   /// <param name="instance"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static ulong? Ulong(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static ulong? Ulong(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
       null => null,
       sbyte value => (ulong) value,
-      byte value => (ulong) value,
+      byte value => value,
       short value => (ulong) value,
-      ushort value => (ulong) value,
+      ushort value => value,
       int value => (ulong) value,
-      uint value => (ulong) value,
+      uint value => value,
       long value => (ulong) value,
-      ulong value => (ulong) value,
+      ulong value => value,
       float value => (ulong) Round(value),
       double value => (ulong) Round(value),
       decimal value => (ulong) Round(value),
-      _ => instance.ToStringFormatted(format).ToUlong(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToUlong(out var result, format) ? result : null
     };
   }
 
@@ -333,7 +333,7 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="format"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="Float"/>, or a <c>null</c> reference.</returns>
-  public static float? Float(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static float? Float(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
@@ -346,10 +346,10 @@ public static class ConvertExtensions
       uint value => (float) value,
       long value => (float) value,
       ulong value => (float) value,
-      float value => (float) value,
+      float value => value,
       double value => (float) value,
       decimal value => (float) value,
-      _ => instance.ToStringFormatted(format).ToFloat(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToFloat(out var result, format) ? result : null
     };
   }
 
@@ -360,7 +360,7 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="format"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="double"/>, or a <c>null</c> reference.</returns>
-  public static double? Double(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static double? Double(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
@@ -374,9 +374,9 @@ public static class ConvertExtensions
       long value => (double) value,
       ulong value => (double) value,
       float value => (double) value,
-      double value => (double) value,
+      double value => value,
       decimal value => (double) value,
-      _ => instance.ToStringFormatted(format).ToDouble(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToDouble(out var result, format) ? result : null
     };
   }
 
@@ -387,23 +387,23 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="format"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="decimal"/>, or a <c>null</c> reference.</returns>
-  public static decimal? Decimal(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static decimal? Decimal(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
       null => null,
-      sbyte value => (decimal) value,
-      byte value => (decimal) value,
-      short value => (decimal) value,
-      ushort value => (decimal) value,
-      int value => (decimal) value,
-      uint value => (decimal) value,
-      long value => (decimal) value,
-      ulong value => (decimal) value,
+      sbyte value => value,
+      byte value => value,
+      short value => value,
+      ushort value => value,
+      int value => value,
+      uint value => value,
+      long value => value,
+      ulong value => value,
       float value => (decimal) value,
       double value => (decimal) value,
-      decimal value => (decimal) value,
-      _ => instance.ToStringFormatted(format).ToDecimal(out var result, format) ? result : null
+      decimal value => value,
+      _ => instance.ToFormattedString(format).ToDecimal(out var result, format) ? result : null
     };
   }
   
@@ -414,12 +414,12 @@ public static class ConvertExtensions
   /// <param name="convert"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static T? Enum<T>(this Convert convert, object? instance) where T : struct
+  public static T? Enum<T>(this Convert convert, object instance) where T : struct
   {
     return instance switch
     {
       null => null,
-      _ => (T?) (instance is T ? instance : instance.ToStringInvariant().ToEnum<T>(out var result) ? result : null)
+      _ => (T?) (instance is T ? instance : instance.ToInvariantString().ToEnum<T>(out var result) ? result : null)
     };
   }
 
@@ -430,7 +430,7 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="format"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="DateTime"/>, or a <c>null</c> reference.</returns>
-  public static DateTime? DateTime(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static DateTime? DateTime(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
@@ -441,7 +441,7 @@ public static class ConvertExtensions
       DateOnly dateOnly => dateOnly.ToDateTime(),
       TimeOnly timeOnly => timeOnly.ToDateTime(),
 #endif
-      _ => instance.ToStringFormatted(format).ToDateTime(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToDateTime(out var result, format) ? result : null
     };
   }
 
@@ -452,7 +452,7 @@ public static class ConvertExtensions
   /// <param name="instance"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static DateTimeOffset? DateTimeOffset(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static DateTimeOffset? DateTimeOffset(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
@@ -463,7 +463,7 @@ public static class ConvertExtensions
       DateOnly dateOnly => dateOnly.ToDateTimeOffset(),
       TimeOnly timeOnly => timeOnly.ToDateTimeOffset(),
 #endif
-      _ => instance.ToStringFormatted(format).ToDateTimeOffset(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToDateTimeOffset(out var result, format) ? result : null
     };
   }
 
@@ -475,7 +475,7 @@ public static class ConvertExtensions
   /// <param name="instance"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static DateOnly? DateOnly(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static DateOnly? DateOnly(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
@@ -483,7 +483,7 @@ public static class ConvertExtensions
       DateTime dateTime => dateTime.ToDateOnly(),
       DateTimeOffset dateTimeOffset => dateTimeOffset.ToDateOnly(),
       DateOnly dateOnly => dateOnly,
-      _ => instance.ToStringFormatted(format).ToDateOnly(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToDateOnly(out var result, format) ? result : null
     };
   }
 
@@ -494,7 +494,7 @@ public static class ConvertExtensions
   /// <param name="instance"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static TimeOnly? TimeOnly(this Convert convert, object? instance, IFormatProvider? format = null)
+  public static TimeOnly? TimeOnly(this Convert convert, object instance, IFormatProvider format = null)
   {
     return instance switch
     {
@@ -502,7 +502,7 @@ public static class ConvertExtensions
       DateTime dateTime => dateTime.ToTimeOnly(),
       DateTimeOffset dateTimeOffset => dateTimeOffset.ToTimeOnly(),
       TimeOnly timeOnly => timeOnly,
-      _ => instance.ToStringFormatted(format).ToTimeOnly(out var result, format) ? result : null
+      _ => instance.ToFormattedString(format).ToTimeOnly(out var result, format) ? result : null
     };
   }
 #endif
@@ -513,14 +513,14 @@ public static class ConvertExtensions
   /// <param name="convert">Extended converter instance.</param>
   /// <param name="instance">Target object for conversion.</param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="Guid"/>, or a <c>null</c> reference.</returns>
-  public static Guid? Guid(this Convert convert, object? instance)
+  public static Guid? Guid(this Convert convert, object instance)
   {
     return instance switch
     {
       null => null,
       Guid guid => guid,
       byte[] bytes => bytes.Length == 16 ? new Guid(bytes) : null,
-      _ => instance.ToStringInvariant().ToGuid(out var result) ? result : null
+      _ => instance.ToInvariantString().ToGuid(out var result) ? result : null
     };
   }
 
@@ -531,13 +531,13 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="options"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="Regex"/>, or a <c>null</c> reference.</returns>
-  public static Regex? Regex(this Convert convert, object? instance, RegexOptions? options = null)
+  public static Regex Regex(this Convert convert, object instance, RegexOptions? options = null)
   {
     return instance switch
     {
       null => null,
       Regex regex => regex,
-      _ => instance.ToStringInvariant().ToRegex(options)
+      _ => instance.ToInvariantString().ToRegex(options)
     };
   }
 
@@ -547,13 +547,13 @@ public static class ConvertExtensions
   /// <param name="convert">Extended converter instance.</param>
   /// <param name="instance">Target object for conversion.</param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="Uri"/>, or a <c>null</c> reference.</returns>
-  public static Uri? Uri(this Convert convert, object? instance)
+  public static Uri Uri(this Convert convert, object instance)
   {
     return instance switch
     {
       null => null,
       Uri uri => uri,
-      _ => instance.ToStringInvariant().ToUri(out var result) ? result : null
+      _ => instance.ToInvariantString().ToUri(out var result) ? result : null
     };
   }
 
@@ -563,13 +563,13 @@ public static class ConvertExtensions
   /// <param name="convert"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static StringBuilder? StringBuilder(this Convert convert, object? instance)
+  public static StringBuilder StringBuilder(this Convert convert, object instance)
   {
     return instance switch
     {
       null => null,
       StringBuilder builder => builder,
-      _ => instance.ToStringInvariant().ToStringBuilder()
+      _ => instance.ToInvariantString().ToStringBuilder()
     };
   }
 
@@ -579,7 +579,7 @@ public static class ConvertExtensions
   /// <param name="convert"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static IPAddress? IpAddress(this Convert convert, object? instance)
+  public static IPAddress IpAddress(this Convert convert, object instance)
   {
     return instance switch
     {
@@ -587,7 +587,7 @@ public static class ConvertExtensions
       IPAddress ipAddress => ipAddress,
       long address => new IPAddress(address),
       uint address => new IPAddress(address),
-      _ => instance.ToStringInvariant().ToIpAddress(out var result) ? result : null
+      _ => instance.ToInvariantString().ToIpAddress(out var result) ? result : null
     };
   }
 
@@ -597,13 +597,13 @@ public static class ConvertExtensions
   /// <param name="convert"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static DirectoryInfo? Directory(this Convert convert, object? instance)
+  public static DirectoryInfo Directory(this Convert convert, object instance)
   {
     return instance switch
     {
       null => null,
       DirectoryInfo directory => directory,
-      _ => instance.ToStringInvariant().ToDirectory(out var result) ? result : null
+      _ => instance.ToInvariantString().ToDirectory(out var result) ? result : null
     };
   }
 
@@ -613,13 +613,13 @@ public static class ConvertExtensions
   /// <param name="convert"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static FileInfo? File(this Convert convert, object? instance)
+  public static FileInfo File(this Convert convert, object instance)
   {
     return instance switch
     {
       null => null,
       FileInfo file => file,
-      _ => instance.ToStringInvariant().ToFile(out var result) ? result : null
+      _ => instance.ToInvariantString().ToFile(out var result) ? result : null
     };
   }
 
@@ -629,13 +629,13 @@ public static class ConvertExtensions
   /// <param name="convert"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static Type? Type(this Convert convert, object? instance)
+  public static Type Type(this Convert convert, object instance)
   {
     return instance switch
     {
       null => null,
       Type type => type,
-      _ => instance.ToStringInvariant().ToType(out var result) ? result : null
+      _ => instance.ToInvariantString().ToType(out var result) ? result : null
     };
   }
 
@@ -656,7 +656,7 @@ public static class ConvertExtensions
   /// <param name="convert">Extended converter instance.</param>
   /// <param name="instance">Target object for conversion.</param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="bool"/>.</returns>
-  public static bool Boolean(this Convert convert, object? instance)
+  public static bool Boolean(this Convert convert, object instance)
   {
     return instance switch
     {

@@ -9,29 +9,6 @@ namespace Catharsis.Commons;
 public static class ArrayExtensions
 {
   /// <summary>
-  ///   <para>Converts array of characters into array of bytes, using specified encoding.</para>
-  /// </summary>
-  /// <param name="chars">Source array of characters.</param>
-  /// <param name="encoding">Encoding to be used for transforming between <see cref="char"/> at its <see cref="byte"/> equivalent. If not specified, uses <see cref="Encoding.Default"/> encoding.</param>
-  /// <returns>Array of bytes which represents <paramref name="chars"/> array in <paramref name="encoding"/>.</returns>
-  public static byte[] Bytes(this char[] chars, Encoding? encoding = null) => chars.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(chars) : Array.Empty<byte>();
-
-  /// <summary>
-  ///   <para>Returns string representation of specified array of characters.</para>
-  /// </summary>
-  /// <param name="chars">Source array of characters.</param>
-  /// <returns>String which is formed from contents of <paramref name="chars"/> array.</returns>
-  public static string Text(this char[] chars) => chars.Length > 0 ? new string(chars) : string.Empty;
-
-  /// <summary>
-  ///   <para>Converts array of bytes into a string, using specified encoding.</para>
-  /// </summary>
-  /// <param name="bytes">Source array of bytes.</param>
-  /// <param name="encoding">Encoding to be used for transforming between <see cref="byte"/> at its <see cref="char"/> equivalent. If not specified, uses <see cref="Encoding.UTF8"/> encoding.</param>
-  /// <returns>Array of characters as a string which represents <paramref name="bytes"/> array in <paramref name="encoding"/>.</returns>
-  public static string Text(this byte[] bytes, Encoding? encoding = null) => bytes.Length > 0 ? (encoding ?? Encoding.Default).GetString(bytes) : string.Empty;
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
@@ -39,5 +16,46 @@ public static class ArrayExtensions
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static T[] Segment<T>(this T[] array, int? offset = null, int? count = null) => array.ToArraySegment(offset, count).ToArray();
+  public static T[] Range<T>(this T[] array, int? offset = null, int? count = null)
+  {
+    if (offset == null && count == null)
+    {
+      return array;
+    }
+
+    var fromIndex = offset ?? 0;
+    var toIndex = count ?? array.Length - fromIndex;
+
+    return new ArraySegment<T>(array, fromIndex, toIndex).ToArray();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="chars"></param>
+  /// <returns></returns>
+  public static byte[] FromBase64(this char[] chars) => System.Convert.FromBase64CharArray(chars, 0, chars.Length);
+
+  /// <summary>
+  ///   <para>Converts array of characters into array of bytes, using specified encoding.</para>
+  /// </summary>
+  /// <param name="chars">Source array of characters.</param>
+  /// <param name="encoding">Encoding to be used for transforming between <see cref="char"/> at its <see cref="byte"/> equivalent. If not specified, uses <see cref="Encoding.Default"/> encoding.</param>
+  /// <returns>Array of bytes which represents <paramref name="chars"/> array in <paramref name="encoding"/>.</returns>
+  public static byte[] ToBytes(this char[] chars, Encoding encoding = null) => chars.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(chars) : Array.Empty<byte>();
+
+  /// <summary>
+  ///   <para>Returns string representation of specified array of characters.</para>
+  /// </summary>
+  /// <param name="chars">Source array of characters.</param>
+  /// <returns>String which is formed from contents of <paramref name="chars"/> array.</returns>
+  public static string ToText(this char[] chars) => chars.Length > 0 ? new string(chars) : string.Empty;
+
+  /// <summary>
+  ///   <para>Converts array of bytes into a string, using specified encoding.</para>
+  /// </summary>
+  /// <param name="bytes">Source array of bytes.</param>
+  /// <param name="encoding">Encoding to be used for transforming between <see cref="byte"/> at its <see cref="char"/> equivalent. If not specified, uses <see cref="Encoding.UTF8"/> encoding.</param>
+  /// <returns>Array of characters as a string which represents <paramref name="bytes"/> array in <paramref name="encoding"/>.</returns>
+  public static string ToText(this byte[] bytes, Encoding encoding = null) => bytes.Length > 0 ? (encoding ?? Encoding.Default).GetString(bytes) : string.Empty;
 }

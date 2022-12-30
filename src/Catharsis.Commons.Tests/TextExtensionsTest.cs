@@ -13,26 +13,6 @@ namespace Catharsis.Commons.Tests;
 public sealed class TextExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Repeat(char, int)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Char_Repeat_Method()
-  {
-    AssertionExtensions.Should(() => char.MinValue.Repeat(int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>();
-
-    const int count = 1000;
-
-    foreach (var character in new[] { char.MinValue, char.MaxValue })
-    {
-      character.Repeat(0).Should().NotBeNull().And.BeSameAs(character.Repeat(0)).And.BeEmpty();
-
-      var text = character.Repeat(count);
-      text.Should().NotBeNull().And.NotBeSameAs(character.Repeat(count)).And.HaveLength(count);
-      text.ToCharArray().Should().AllBeEquivalentTo(character);
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="TextExtensions.IsStart(StreamReader)"/> method.</para>
   /// </summary>
   [Fact]
@@ -51,7 +31,7 @@ public sealed class TextExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      //AssertionExtensions.Should(() => ((StreamReader) null!).IsStart()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((StreamReader) null).IsStart()).ThrowExactly<ArgumentNullException>();
       AssertionExtensions.Should(() => RandomReadOnlyForwardStream.ToStreamReader().IsStart()).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null.ToStreamReader());
@@ -73,15 +53,15 @@ public sealed class TextExtensionsTest : UnitTest
       {
         reader.BaseStream.MoveToStart();
         reader.IsEnd().Should().Be(reader.BaseStream.Length <= 0);
-        reader.Bytes().Await();
+        reader.ToBytes().Await();
         reader.IsEnd().Should().BeTrue();
       }
     }
 
     using (new AssertionScope())
     {
-      //AssertionExtensions.Should(() => ((TextReader) null!).IsEnd()).ThrowExactly<ArgumentNullException>();
-      //AssertionExtensions.Should(() => RandomReadOnlyForwardStream.ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => RandomReadOnlyForwardStream.ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null.ToStreamReader());
       Validate(EmptyStream.ToStreamReader());
@@ -106,7 +86,7 @@ public sealed class TextExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      //AssertionExtensions.Should(() => ((StreamReader) null!).IsEmpty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((StreamReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>();
 
       Validate(Stream.Null.ToStreamReader(), true);
       Validate(EmptyStream.ToStreamReader(), true);
@@ -134,7 +114,7 @@ public sealed class TextExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      //AssertionExtensions.Should(() => ((StreamWriter) null!).IsEmpty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>();
       AssertionExtensions.Should(() => WriteOnlyForwardStream.ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
 
       Validate(EmptyStream.ToStreamWriter());
@@ -149,7 +129,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StringBuilder_IsEmpty_Method()
   {
-    //AssertionExtensions.Should(() => ((StringBuilder) null!).IsEmpty()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((StringBuilder) null).IsEmpty()).ThrowExactly<ArgumentNullException>();
 
     var builder = new StringBuilder();
     builder.IsEmpty().Should().BeTrue();
@@ -179,7 +159,7 @@ public sealed class TextExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      //AssertionExtensions.Should(() => ((StreamReader) null!).Empty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((StreamReader) null).Empty()).ThrowExactly<ArgumentNullException>();
 
       Validate(Stream.Null.ToStreamReader());
       Validate(RandomStream.ToStreamReader());
@@ -203,7 +183,7 @@ public sealed class TextExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      //AssertionExtensions.Should(() => ((StreamWriter) null!).Empty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((StreamWriter) null).Empty()).ThrowExactly<ArgumentNullException>();
 
       Validate(Stream.Null.ToStreamWriter());
       Validate(RandomStream.ToStreamWriter());
@@ -224,61 +204,10 @@ public sealed class TextExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      //AssertionExtensions.Should(() => ((StringBuilder) null!).Empty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((StringBuilder) null).Empty()).ThrowExactly<ArgumentNullException>();
 
       Validate(new StringBuilder());
       Validate(RandomString.ToStringBuilder());
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Rewind(StreamReader)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void StreamReader_Rewind_Method()
-  {
-    void Validate(StreamReader reader)
-    {
-      using (reader)
-      {
-        reader.Bytes().Await();
-        reader.Rewind().Should().NotBeNull().And.BeSameAs(reader);
-        reader.BaseStream.Should().HavePosition(0);
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      //AssertionExtensions.Should(() => ((StreamReader) null!).Rewind()).ThrowExactly<ArgumentNullException>();
-
-      Validate(Stream.Null.ToStreamReader());
-      Validate(RandomStream.ToStreamReader());
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Rewind(StreamWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void StreamWriter_Rewind_Method()
-  {
-    void Validate(StreamWriter writer)
-    {
-      using (writer)
-      {
-        writer.Bytes(RandomBytes).Await();
-        writer.Flush();
-        writer.Rewind().Should().NotBeNull().And.BeSameAs(writer);
-        writer.BaseStream.Should().HavePosition(0);
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      //AssertionExtensions.Should(() => ((StreamWriter) null!).Rewind()).ThrowExactly<ArgumentNullException>();
-
-      Validate(Stream.Null.ToStreamWriter());
-      Validate(RandomStream.ToStreamWriter());
     }
   }
 
@@ -288,8 +217,8 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StringBuilder_Min_Method()
   {
-    //AssertionExtensions.Should(() => TextExtensions.Min(null!, new StringBuilder())).ThrowExactly<ArgumentNullException>();
-    //AssertionExtensions.Should(() => new StringBuilder().Min(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => TextExtensions.Min(null, new StringBuilder())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new StringBuilder().Min(null)).ThrowExactly<ArgumentNullException>();
 
     var first = new StringBuilder();
     var second = new StringBuilder();
@@ -314,8 +243,8 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StringBuilder_Max_Method()
   {
-    //AssertionExtensions.Should(() => TextExtensions.Max(null!, new StringBuilder())).ThrowExactly<ArgumentNullException>();
-    //AssertionExtensions.Should(() => new StringBuilder().Max(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => TextExtensions.Max(null, new StringBuilder())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new StringBuilder().Max(null)).ThrowExactly<ArgumentNullException>();
 
     var first = new StringBuilder();
     var second = new StringBuilder();
@@ -335,166 +264,54 @@ public sealed class TextExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Synchronized(TextReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextExtensions.Rewind(StreamReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TextReader_Synchronized_Method()
+  public void StreamReader_Rewind_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null!).Synchronized()).ThrowExactly<ArgumentNullException>();
-
-    using (var reader = EmptyTextReader)
+    void Validate(StreamReader reader)
     {
-      using (var synchronized = reader.Synchronized())
+      using (reader)
       {
-        synchronized.Should().NotBeNull().And.NotBeSameAs(reader).And.NotBeSameAs(reader.Synchronized());
-        synchronized.Peek().Should().Be(reader.Peek());
+        reader.ToBytes().Await();
+        reader.Rewind().Should().NotBeNull().And.BeSameAs(reader);
+        reader.BaseStream.Should().HavePosition(0);
       }
     }
 
-    var value = RandomString;
-    using (var reader = value.ToStringReader())
+    using (new AssertionScope())
     {
-      using (var synchronized = reader.Synchronized())
+      AssertionExtensions.Should(() => ((StreamReader) null).Rewind()).ThrowExactly<ArgumentNullException>();
+
+      Validate(Stream.Null.ToStreamReader());
+      Validate(RandomStream.ToStreamReader());
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.Rewind(StreamWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void StreamWriter_Rewind_Method()
+  {
+    void Validate(StreamWriter writer)
+    {
+      using (writer)
       {
-        synchronized.Should().NotBeNull().And.NotBeSameAs(reader).And.NotBeSameAs(reader.Synchronized());
-        synchronized.Peek().Should().Be(reader.Peek());
+        RandomBytes.WriteTo(writer).Await();
+        writer.Flush();
+        writer.Rewind().Should().NotBeNull().And.BeSameAs(writer);
+        writer.BaseStream.Should().HavePosition(0);
       }
     }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Synchronized(TextWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TextWriter_Synchronized_Method()
-  {
-    AssertionExtensions.Should(() => ((TextWriter) null!).Synchronized()).ThrowExactly<ArgumentNullException>();
-
-    using var writer = new StringWriter();
-
-    var value = RandomString;
-    
-    var synchronized = writer.Synchronized();
-
-    synchronized.Should().NotBeNull().And.NotBeSameAs(writer).And.NotBeSameAs(writer.Synchronized());
-
-    synchronized.Encoding.Should().Be(writer.Encoding);
-    synchronized.FormatProvider.Should().Be(writer.FormatProvider);
-    synchronized.NewLine.Should().Be(writer.NewLine);
-
-    synchronized.Write(value);
-    writer.ToString().Should().Be(value);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Bytes(TextReader, Encoding?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TextReader_Bytes_Method()
-  {
-    AssertionExtensions.Should(() => ((TextReader) null!).Bytes()).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Bytes{TWriter}(TWriter, IEnumerable{byte}, Encoding?, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TextWriter_Bytes_Method()
-  {
-    AssertionExtensions.Should(() => ((TextWriter) null!).Bytes(Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().Bytes(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="TextExtensions.Bytes(StringBuilder, Encoding?)"/></description></item>
-  ///     <item><description><see cref="TextExtensions.Bytes(StringBuilder, IEnumerable{byte}, Encoding?)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void StringBuilder_Bytes_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StringBuilder) null!).Bytes()).ThrowExactly<ArgumentNullException>();
-    }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TextExtensions.Bytes(null!, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => new StringBuilder().Bytes((IEnumerable<byte>) null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>();
+
+      Validate(Stream.Null.ToStreamWriter());
+      Validate(RandomStream.ToStreamWriter());
     }
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Text(TextReader)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TextReader_Text_Methods()
-  {
-    //AssertionExtensions.Should(() => ((TextReader) null!).Text()).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    using (var reader = EmptyTextReader)
-    {
-      reader.Text().Should().NotBeNull().And.NotBeSameAs(reader.Text());
-    }
-
-    using (var reader = EmptyTextReader)
-    {
-      reader.Text().Await().Should().BeEmpty();
-      reader.Read().Should().Be(-1);
-    }
-
-    var text = RandomString;
-
-    using (var reader = text.ToStringReader())
-    {
-      reader.Text().Await().Should().Be(text);
-      reader.Read().Should().Be(-1);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Text{TWriter}(TWriter, string, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TextWriter_Text_Method()
-  {
-    AssertionExtensions.Should(() => ((TextWriter) null!).Text(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().Text(null!)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="TextExtensions.Text(StringBuilder)"/></description></item>
-  ///     <item><description><see cref="TextExtensions.Text(StringBuilder, string)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void StringBuilder_Text_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StringBuilder) null!).Text()).ThrowExactly<ArgumentNullException>();
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => TextExtensions.Text(null!, string.Empty)).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => new StringBuilder().Text(null!)).ThrowExactly<ArgumentNullException>();
-    }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -503,7 +320,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void TextReader_Lines_Method()
   {
-    AssertionExtensions.Should(() => TextExtensions.Lines(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => TextExtensions.Lines(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
@@ -514,59 +331,146 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void TextReader_Skip_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null!).Skip(0)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((TextReader) null).Skip(0)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.WriteTo(string, TextWriter, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextExtensions.Repeat(char, int)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_WriteTo_TextWriter_Method()
+  public void Char_Repeat_Method()
   {
-    AssertionExtensions.Should(() => TextExtensions.WriteTo(null!, Stream.Null.ToStreamWriter()));
-    AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null!));
+    AssertionExtensions.Should(() => char.MinValue.Repeat(int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>();
+
+    const int count = 1000;
+
+    foreach (var character in new[] { char.MinValue, char.MaxValue })
+    {
+      character.Repeat(0).Should().NotBeNull().And.BeSameAs(character.Repeat(0)).And.BeEmpty();
+
+      var text = character.Repeat(count);
+      text.Should().NotBeNull().And.NotBeSameAs(character.Repeat(count)).And.HaveLength(count);
+      text.ToCharArray().Should().AllBeEquivalentTo(character);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.Print{T}(T, TextWriter, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_Print_Method()
+  {
+    AssertionExtensions.Should(() => TextExtensions.Print<object>(null, Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => TextExtensions.Print(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.WriteTo(string, StringBuilder)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextExtensions.TryFinallyClear(StringBuilder, Action{StringBuilder})"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_WriteTo_StringBuilder_Method()
+  public void StringBuilder_TryFinallyClear_Method()
   {
-    AssertionExtensions.Should(() => TextExtensions.WriteTo(null!, string.Empty.ToStringBuilder()));
-    AssertionExtensions.Should(() => TextExtensions.WriteTo(string.Empty, null!));
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.UseTemporarily(StringBuilder, Action{StringBuilder})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void StringBuilder_UseTemporarily_Method()
-  {
-    //AssertionExtensions.Should(() => TextExtensions.UseTemporarily(null!, _ => {})).ThrowExactly<ArgumentNullException>();
-    //AssertionExtensions.Should(() => new StringBuilder().UseTemporarily(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => TextExtensions.TryFinallyClear(null, _ => { })).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new StringBuilder().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>();
 
     var builder = new StringBuilder();
-    builder.UseTemporarily(builder => builder.Append(RandomString)).Should().NotBeNull().And.BeSameAs(builder);
+    builder.TryFinallyClear(builder => builder.Append(RandomString)).Should().NotBeNull().And.BeSameAs(builder);
     builder.Length.Should().Be(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Print{TWriter}(TWriter, object, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextExtensions.AsSynchronized(TextReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TextWriter_Print_Method()
+  public void TextReader_AsSynchronized_Method()
   {
-    AssertionExtensions.Should(() => ((TextWriter) null!).Print(new object())).ThrowExactlyAsync<ArgumentNullException>();
-    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().Print(null!)).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((TextReader) null).AsSynchronized()).ThrowExactly<ArgumentNullException>();
+
+    using (var reader = EmptyTextReader)
+    {
+      using (var synchronized = reader.AsSynchronized())
+      {
+        synchronized.Should().NotBeNull().And.NotBeSameAs(reader).And.NotBeSameAs(reader.AsSynchronized());
+        synchronized.Peek().Should().Be(reader.Peek());
+      }
+    }
+
+    var value = RandomString;
+    using (var reader = value.ToStringReader())
+    {
+      using (var synchronized = reader.AsSynchronized())
+      {
+        synchronized.Should().NotBeNull().And.NotBeSameAs(reader).And.NotBeSameAs(reader.AsSynchronized());
+        synchronized.Peek().Should().Be(reader.Peek());
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.AsSynchronized(TextWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextWriter_AsSynchronized_Method()
+  {
+    AssertionExtensions.Should(() => ((TextWriter) null).AsSynchronized()).ThrowExactly<ArgumentNullException>();
+
+    using var writer = new StringWriter();
+
+    var value = RandomString;
+
+    var synchronized = writer.AsSynchronized();
+
+    synchronized.Should().NotBeNull().And.NotBeSameAs(writer).And.NotBeSameAs(writer.AsSynchronized());
+
+    synchronized.Encoding.Should().Be(writer.Encoding);
+    synchronized.FormatProvider.Should().Be(writer.FormatProvider);
+    synchronized.NewLine.Should().Be(writer.NewLine);
+
+    synchronized.Write(value);
+    writer.ToString().Should().Be(value);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.ToBytes(TextReader, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextReader_ToBytes_Method()
+  {
+    AssertionExtensions.Should(() => ((TextReader) null).ToBytes()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.ToText(TextReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextReader_ToText_Method()
+  {
+    AssertionExtensions.Should(() => ((TextReader) null).ToText()).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    using (var reader = EmptyTextReader)
+    {
+      reader.ToText().Should().NotBeNull().And.NotBeSameAs(reader.ToText());
+    }
+
+    using (var reader = EmptyTextReader)
+    {
+      reader.ToText().Await().Should().BeEmpty();
+      reader.Read().Should().Be(-1);
+    }
+
+    var text = RandomString;
+
+    using (var reader = text.ToStringReader())
+    {
+      reader.ToText().Await().Should().Be(text);
+      reader.Read().Should().Be(-1);
+    }
   }
 
   /// <summary>
@@ -581,12 +485,12 @@ public sealed class TextExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TextReader) null!).ToEnumerable()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable()).ThrowExactly<ArgumentNullException>();
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TextReader) null!).ToEnumerable(1)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>();
     }
 
     throw new NotImplementedException();
@@ -604,24 +508,24 @@ public sealed class TextExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TextReader) null!).ToAsyncEnumerable()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable()).ThrowExactly<ArgumentNullException>();
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TextReader) null!).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>();
     }
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.ToStringWriter(StringBuilder, IFormatProvider?)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextExtensions.ToStringWriter(StringBuilder, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void StringBuilder_ToStringWriter_Method()
   {
-    void Validate(IFormatProvider? format = null)
+    void Validate(IFormatProvider format = null)
     {
       var value = RandomString;
       var builder = new StringBuilder();
@@ -637,7 +541,7 @@ public sealed class TextExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TextExtensions.ToStringWriter(null!)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => TextExtensions.ToStringWriter(null)).ThrowExactly<ArgumentNullException>();
 
       Validate();
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -650,12 +554,12 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StringBuilder_ToXmlWriter_Method()
   {
-    AssertionExtensions.Should(() => TextExtensions.ToXmlWriter(null!)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => TextExtensions.ToXmlWriter(null)).ThrowExactly<ArgumentNullException>();
 
     var value = RandomName;
 
     var builder = new StringBuilder();
-    
+
     using var writer = builder.ToXmlWriter();
 
     writer.Should().NotBeNull().And.NotBeSameAs(builder.ToXmlWriter());
@@ -669,5 +573,53 @@ public sealed class TextExtensionsTest : UnitTest
     writer.Flush();
 
     builder.ToString().Should().Be($"<?xml version=\"1.0\" encoding=\"utf-16\"?>{value}");
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteBytes{TWriter}(TWriter, IEnumerable{byte}, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextWriter_WriteBytes_Method()
+  {
+    AssertionExtensions.Should(() => TextExtensions.WriteBytes<TextWriter>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytes<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteText{TWriter}(TWriter, string, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextWriter_WriteText_Method()
+  {
+    AssertionExtensions.Should(() => TextExtensions.WriteText<TextWriter>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteText<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteTo(IEnumerable{byte}, TextWriter, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToStreamWriter()));
+    AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null));
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteTo(string, TextWriter, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToStreamWriter()));
+    AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null));
+
+    throw new NotImplementedException();
   }
 }
