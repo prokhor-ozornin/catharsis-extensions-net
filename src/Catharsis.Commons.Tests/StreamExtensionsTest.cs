@@ -257,6 +257,17 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_Lines_Method()
   {
+    AssertionExtensions.Should(() => StreamExtensions.Lines(null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.LinesAsync(Stream, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_LinesAsync_Method()
+  {
     void Validate(Encoding encoding = null)
     {
 
@@ -264,7 +275,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.Lines(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.LinesAsync(null)).ThrowExactly<ArgumentNullException>();
 
       Validate();
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
@@ -285,13 +296,25 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.Print{T}(T, Stream, Encoding, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Print{T}(T, Stream, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
   public void Object_Print_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.Print<object>(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => StreamExtensions.Print(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => StreamExtensions.Print<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.Print(new object(), null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.PrintAsync{T}(T, Stream, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_PrintAsync_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.PrintAsync<object>(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => StreamExtensions.PrintAsync(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -541,29 +564,12 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytes(Stream, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytes(Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_ToBytes_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StreamExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>();
-
-      Stream.Null.ToBytes().ToArray().Await().Should().BeEmpty();
-
-      var bytes = RandomBytes;
-
-      var stream = new MemoryStream(bytes);
-      stream.ToBytes().ToArray().Await().Should().Equal(bytes);
-      stream.ReadByte().Should().Be(-1);
-      stream.Close();
-      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
-
-      stream = new MemoryStream(bytes);
-      stream.ToBytes().ToArray().Await().Should().Equal(bytes);
-      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
-    }
+    AssertionExtensions.Should(() => StreamExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
@@ -573,6 +579,45 @@ public sealed class StreamExtensionsTest : UnitTest
   /// </summary>
   [Fact]
   public void Stream_ToText_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).ToText()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytesAsync(Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToBytesAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>();
+
+      Stream.Null.ToBytesAsync().ToArrayAsync().Await().Should().BeEmpty();
+
+      var bytes = RandomBytes;
+
+      var stream = new MemoryStream(bytes);
+      stream.ToBytesAsync().ToArrayAsync().Await().Should().Equal(bytes);
+      stream.ReadByte().Should().Be(-1);
+      stream.Close();
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+
+      stream = new MemoryStream(bytes);
+      stream.ToBytesAsync().ToArrayAsync().Await().Should().Equal(bytes);
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToTextAsync(Stream, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToTextAsync_Method()
   {
     using (new AssertionScope())
     {
@@ -590,7 +635,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
       using (new AssertionScope())
       {
-        AssertionExtensions.Should(() => ((Stream) null).ToText()).ThrowExactlyAsync<ArgumentNullException>().Await();
+        AssertionExtensions.Should(() => ((Stream) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
         Validate();
         Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
@@ -601,49 +646,97 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.WriteBytes{TStream}(TStream, IEnumerable{byte}, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteBytes{TStream}(TStream, IEnumerable{byte})"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_WriteBytes_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.WriteBytes<Stream>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.WriteBytes(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => StreamExtensions.WriteBytes<Stream>(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => Stream.Null.WriteBytes(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.WriteText{TStream}(TStream, string, Encoding, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteText{TStream}(TStream, string, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_WriteText_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.WriteText<Stream>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.WriteText(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => StreamExtensions.WriteText<Stream>(null, string.Empty)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => Stream.Null.WriteText(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.WriteTo(IEnumerable{byte}, Stream, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteBytesAsync{TStream}(TStream, IEnumerable{byte}, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_WriteBytesAsync_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.WriteBytesAsync<Stream>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteTextAsync{TStream}(TStream, string, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_WriteTextAsync_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.WriteTextAsync<Stream>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteTo(IEnumerable{byte}, Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void IEnumerable_WriteTo_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>();
-    AssertionExtensions.Should(() => StreamExtensions.WriteTo(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.WriteTo(Enumerable.Empty<byte>(), null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.WriteTo(string, Stream, Encoding, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteTo(string, Stream, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
   public void String_WriteTo_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>();
-    AssertionExtensions.Should(() => StreamExtensions.WriteTo(string.Empty, null)).ThrowExactlyAsync<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteToAsync(IEnumerable{byte}, Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_WriteToAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => StreamExtensions.WriteToAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteToAsync(string, Stream, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteToAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => StreamExtensions.WriteToAsync(string.Empty, null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -1004,7 +1097,7 @@ public sealed class StreamExtensionsTest : UnitTest
       using var reader = stream.ToStreamReader(encoding);
 
       reader.BaseStream.Should().BeSameAs(stream);
-      reader.ToText().Should().Be(bytes.ToText(encoding));
+      reader.ToTextAsync().Should().Be(bytes.ToText(encoding));
     }
 
     using (new AssertionScope())

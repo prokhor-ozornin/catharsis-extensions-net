@@ -55,7 +55,7 @@ public static class ProcessExtensions
   /// <param name="process"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<Process> Finish(this Process process, CancellationToken cancellation = default)
+  public static async Task<Process> FinishAsync(this Process process, CancellationToken cancellation = default)
   {
     cancellation.Register(process.Kill);
     await process.WaitForExitAsync(cancellation).ConfigureAwait(false);
@@ -66,11 +66,20 @@ public static class ProcessExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  public static T Print<T>(this T instance, Process destination) => instance.Print(destination.StandardInput);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="destination"></param>
   /// <param name="instance"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<T> Print<T>(this T instance, Process destination, CancellationToken cancellation = default) => await instance.Print(destination.StandardInput, cancellation).ConfigureAwait(false);
+  public static async Task<T> PrintAsync<T>(this T instance, Process destination, CancellationToken cancellation = default) => await instance.PrintAsync(destination.StandardInput, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -79,28 +88,73 @@ public static class ProcessExtensions
   /// <param name="action"></param>
   /// <returns></returns>
   public static Process TryFinallyKill(this Process process, Action<Process> action) => process.TryFinally(action, process => process.Kill());
-  
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> ToBytes(this Process process) => process.StandardOutput.BaseStream.ToBytes();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <returns></returns>
+  public static string ToText(this Process process) => process.StandardOutput.ToText();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <returns></returns>
+  public static string ToErrorText(this Process process) => process.StandardError.ToText();
+
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="process"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToBytes(this Process process, CancellationToken cancellation = default) => process.StandardOutput.BaseStream.ToBytes(cancellation);
+  public static IAsyncEnumerable<byte> ToBytesAsync(this Process process, CancellationToken cancellation = default) => process.StandardOutput.BaseStream.ToBytesAsync(cancellation);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  public static async Task<string> ToText(this Process process) => await process.StandardOutput.ToText().ConfigureAwait(false);
+  public static async Task<string> ToTextAsync(this Process process) => await process.StandardOutput.ToTextAsync().ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  public static async Task<string> ToErrorText(this Process process) => await process.StandardError.ToText().ConfigureAwait(false);
+  public static async Task<string> ToErrorTextAsync(this Process process) => await process.StandardError.ToTextAsync().ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <returns></returns>
+  public static Process WriteBytes(this Process destination, IEnumerable<byte> bytes)
+  {
+    destination.StandardInput.BaseStream.WriteBytes(bytes);
+    return destination;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  public static Process WriteText(this Process destination, string text)
+  {
+    destination.StandardInput.WriteText(text);
+    return destination;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -109,9 +163,9 @@ public static class ProcessExtensions
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<Process> WriteBytes(this Process destination, IEnumerable<byte> bytes, CancellationToken cancellation = default)
+  public static async Task<Process> WriteBytesAsync(this Process destination, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
-    await destination.StandardInput.BaseStream.WriteBytes(bytes, cancellation).ConfigureAwait(false);
+    await destination.StandardInput.BaseStream.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
     return destination;
   }
 
@@ -122,9 +176,9 @@ public static class ProcessExtensions
   /// <param name="text"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<Process> WriteText(this Process destination, string text, CancellationToken cancellation = default)
+  public static async Task<Process> WriteTextAsync(this Process destination, string text, CancellationToken cancellation = default)
   {
-    await destination.StandardInput.WriteText(text, cancellation).ConfigureAwait(false);
+    await destination.StandardInput.WriteTextAsync(text, cancellation).ConfigureAwait(false);
     return destination;
   }
 
@@ -133,15 +187,38 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="bytes"></param>
   /// <param name="process"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, Process process, CancellationToken cancellation = default)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, Process process)
   {
-    await process.WriteBytes(bytes, cancellation).ConfigureAwait(false);
+    process.WriteBytes(bytes);
     return bytes;
   }
 
- 
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="process"></param>
+  /// <returns></returns>
+  public static string WriteTo(this string text, Process process)
+  {
+    process.WriteText(text);
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="process"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Process process, CancellationToken cancellation = default)
+  {
+    await process.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+    return bytes;
+  }
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -149,9 +226,9 @@ public static class ProcessExtensions
   /// <param name="process"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> WriteTo(this string text, Process process, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, Process process, CancellationToken cancellation = default)
   {
-    await process.WriteText(text, cancellation).ConfigureAwait(false);
+    await process.WriteTextAsync(text, cancellation).ConfigureAwait(false);
     return text;
   }
 }

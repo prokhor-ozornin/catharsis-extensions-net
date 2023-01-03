@@ -2,7 +2,6 @@
 using System.Xml;
 using System.Xml.Linq;
 using FluentAssertions;
-using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Commons.Tests;
@@ -69,12 +68,12 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsBinary{T}(IEnumerable{byte}, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsBinary{T}(IEnumerable{byte})"/> method.</para>
   /// </summary>
   [Fact]
   public void IEnumerable_DeserializeAsBinary_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).DeserializeAsBinary<object>()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).DeserializeAsBinary<object>()).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
@@ -102,25 +101,36 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="SerializationExtensions.DeserializeAsBinary{T}(Uri, TimeSpan?, IEnumerable{(string Name, object Value)})"/></description></item>
-  ///     <item><description><see cref="SerializationExtensions.DeserializeAsBinary{T}(Uri, TimeSpan?, (string Name, object Value)[])"/></description></item>
-  ///   </list>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsBinary{T}(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
-  public void Uri_DeserializeAsBinary_Methods()
+  public void Uri_DeserializeAsBinary_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((Uri) null).DeserializeAsBinary<object>()).ThrowExactlyAsync<ArgumentNullException>().Await();
-    }
+    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsBinary<object>()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => SerializationExtensions.DeserializeAsBinary<object>(null, null, Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>();
 
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => SerializationExtensions.DeserializeAsBinary<object>(null, null, Array.Empty<(string Name, object Value)>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    throw new NotImplementedException();
+  }
 
-    }
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsBinaryAsync{T}(IEnumerable{byte}, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_DeserializeAsBinaryAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).DeserializeAsBinaryAsync<object>()).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsBinaryAsync{T}(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_DeserializeAsBinaryAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsBinaryAsync<object>()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => SerializationExtensions.DeserializeAsBinaryAsync<object>(null, null, default, Array.Empty<(string Name, object Value)>())).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -207,7 +217,7 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsDataContract{T}(Stream, Encoding, Type[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsDataContract{T}(Stream, Type[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_DeserializeAsDataContract_Method()
@@ -218,24 +228,13 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsDataContract{T}(FileInfo, Encoding, Type[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsDataContract{T}(FileInfo, Type[])"/> method.</para>
   /// </summary>
   [Fact]
   public void FileInfo_DeserializeAsDataContract_Method()
   {
     AssertionExtensions.Should(() => ((FileInfo) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>();
 
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsDataContract{T}(Uri, Encoding, TimeSpan?, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Uri_DeserializeAsDataContract_Method()
-  {
-    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsDataContract<object>()).ThrowExactlyAsync<ArgumentNullException>().Await();
-    
     throw new NotImplementedException();
   }
 
@@ -247,6 +246,28 @@ public sealed class SerializationExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((string) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>();
 
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsDataContract{T}(Uri, TimeSpan?, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_DeserializeAsDataContract_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsDataContractAsync{T}(Uri, TimeSpan?, CancellationToken, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_DeserializeAsDataContractAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsDataContractAsync<object>()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    
     throw new NotImplementedException();
   }
 
@@ -417,7 +438,7 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsXml{T}(Stream, Encoding, Type[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsXml{T}(Stream, Type[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_DeserializeAsXml_Method()
@@ -446,23 +467,12 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsXml{T}(FileInfo, Encoding, Type[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsXml{T}(FileInfo, Type[])"/> method.</para>
   /// </summary>
   [Fact]
   public void FileInfo_DeserializeAsXml_Method()
   {
     AssertionExtensions.Should(() => ((FileInfo) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsXml{T}(Uri, Encoding, TimeSpan?, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Uri_DeserializeAsXml_Method()
-  {
-    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsXml<object>()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -477,6 +487,28 @@ public sealed class SerializationExtensionsTest : UnitTest
 
     /*var subject = Guid.Empty;
     subject.AsXml().AsXml<Guid>().Should().Be(subject);*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsXml{T}(Uri, TimeSpan?, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_DeserializeAsXml_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsXmlAsync{T}(Uri, TimeSpan?, CancellationToken, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_DeserializeAsXmlAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsXmlAsync<object>()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -577,7 +609,7 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXmlDocument(Stream, Encoding)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXmlDocument(Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_ToXmlDocument_Method()
@@ -610,23 +642,12 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXmlDocument(FileInfo, Encoding)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXmlDocument(FileInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void FileInfo_ToXmlDocument_Method()
   {
     AssertionExtensions.Should(() => ((FileInfo) null).ToXmlDocument()).ThrowExactly<ArgumentNullException>();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXmlDocument(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Uri_ToXmlDocument_Method()
-  {
-    AssertionExtensions.Should(() => ((Uri) null).ToXmlDocument()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -647,6 +668,28 @@ public sealed class SerializationExtensionsTest : UnitTest
     element.InnerText = "Text";
     document.AppendChild(element);
     document.Text().Should().Be("<?xml version=\"1.0\" encoding=\"utf-16\"?><article id=\"1\">Text</article>");*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXmlDocument(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToXmlDocument_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null).ToXmlDocument()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXmlDocumentAsync(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToXmlDocumentAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null).ToXmlDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -709,37 +752,103 @@ public sealed class SerializationExtensionsTest : UnitTest
 
     throw new NotImplementedException();
   }
-
+  
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(XmlReader, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(XmlReader)"/> method.</para>
   /// </summary>
   [Fact]
   public void XmlReader_ToXDocument_Method()
   {
-    AssertionExtensions.Should(() => ((XmlReader) null).ToXDocument()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((XmlReader) null).ToXDocument()).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(TextReader, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(TextReader)"/> method.</para>
   /// </summary>
   [Fact]
   public void TextReader_ToXDocument_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToXDocument()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((TextReader) null).ToXDocument()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToXDocument_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).ToXDocument()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(FileInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FileInfo_ToXDocument_Method()
+  {
+    AssertionExtensions.Should(() => ((FileInfo) null).ToXDocument()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_ToXDocument_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).ToXDocument()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToXDocument_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null).ToXDocument()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocumentAsync(XmlReader, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlReader_ToXDocumentAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((XmlReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocumentAsync(TextReader, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextReader_ToXDocumentAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((TextReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     const string Xml = "<?xml version=\"1.0\"?><article>text</article>";
 
     using (var reader = Xml.ToStringReader())
     {
-      reader.ToXDocument().ToString().Should().Be("<article>text</article>");
+      reader.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
       reader.Read().Should().Be(-1);
     }
 
     using (var reader = Xml.ToStringReader())
     {
-      reader.ToXDocument().ToString().Should().Be("<article>text</article>");
+      reader.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
       reader.Read().Should().Be(-1);
     }
 
@@ -747,30 +856,30 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(Stream, Encoding, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocumentAsync(Stream, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToXDocument_Method()
+  public void Stream_ToXDocumentAsync_Method()
   {
-    AssertionExtensions.Should(() => ((Stream) null).ToXDocument()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((Stream) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
 
     using (var stream = new MemoryStream(Xml.ToBytes(Encoding.UTF32)))
     {
-      AssertionExtensions.Should(() => stream.ToXDocument()).ThrowExactlyAsync<XmlException>().Await();
+      AssertionExtensions.Should(() => stream.ToXDocumentAsync()).ThrowExactlyAsync<XmlException>().Await();
     }
 
     using (var stream = new MemoryStream(Xml.ToBytes(Encoding.Unicode)))
     {
-      stream.ToXDocument().ToString().Should().Be("<article>text</article>");
+      stream.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
       stream.ToArray().Should().BeEmpty();
       stream.ReadByte().Should().Be(-1);
     }
 
     using (var stream = new MemoryStream(Xml.ToBytes(Encoding.Unicode)))
     {
-      stream.ToXDocument().ToString().Should().Be("<article>text</article>");
+      stream.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
       stream.ReadByte().Should().Be(-1);
     }
 
@@ -780,34 +889,34 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(FileInfo, Encoding, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocumentAsync(FileInfo, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public void FileInfo_ToXDocument_Method()
+  public void FileInfo_ToXDocumentAsync_Method()
   {
-    AssertionExtensions.Should(() => ((FileInfo) null).ToXDocument()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((FileInfo) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(Uri, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocumentAsync(string, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Uri_ToXDocument_Method()
+  public void String_ToXDocumentAsync_Method()
   {
-    AssertionExtensions.Should(() => ((Uri) null).ToXDocument()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((string) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(string, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocumentAsync(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_ToXDocument_Method()
+  public void Uri_ToXDocumentAsync_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).ToXDocument()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((Uri) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }

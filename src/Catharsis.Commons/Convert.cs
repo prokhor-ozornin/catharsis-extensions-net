@@ -49,15 +49,15 @@ public static class ConvertExtensions
       string text => text,
       BinaryReader reader => reader.ToText(),
       SecureString secure => secure.ToText(),
-      FileInfo file => file.ToText(encoding).Await(),
-      HttpContent http => http.ToText().Await(),
-      Process process => process.ToText().Await(),
-      Stream stream => stream.ToText(encoding).Await(),
-      TextReader reader => reader.ToText().Await(),
-      Uri uri => uri.ToText(encoding).Await(),
+      FileInfo file => file.ToTextAsync(encoding).Await(),
+      HttpContent http => http.ToTextAsync().Await(),
+      Process process => process.ToTextAsync().Await(),
+      Stream stream => stream.ToTextAsync(encoding).Await(),
+      TextReader reader => reader.ToTextAsync().Await(),
+      Uri uri => uri.ToTextAsync(encoding).Await(),
       XmlDocument xml => xml.ToText(),
-      XDocument xml => xml.ToText().Await(),
-      XmlReader xml => xml.ToText().Await(),
+      XDocument xml => xml.ToTextAsync().Await(),
+      XmlReader xml => xml.ToTextAsync().Await(),
       _ => instance.ToInvariantString()
     };
   }
@@ -78,15 +78,15 @@ public static class ConvertExtensions
       string text => text.ToBytes(encoding),
       SecureString secure => secure.ToText().ToBytes(encoding),
       Guid guid => guid.ToByteArray(),
-      FileInfo file => file.ToBytes().ToArray().Await(),
+      FileInfo file => file.ToBytesAsync().ToArrayAsync().Await(),
       IPAddress address => address.ToBytes(),
       PhysicalAddress address => address.ToBytes(),
-      HttpContent http => http.ToBytes().ToArray().Await(),
-      Process process => process.ToBytes().ToArray().Await(),
-      Stream stream => stream.ToBytes().ToArray().Await(),
-      Uri uri => uri.ToBytes().ToArray().Await(),
+      HttpContent http => http.ToBytesAsync().ToArrayAsync().Await(),
+      Process process => process.ToBytesAsync().ToArrayAsync().Await(),
+      Stream stream => stream.ToBytesAsync().ToArrayAsync().Await(),
+      Uri uri => uri.ToBytesAsync().ToArrayAsync().Await(),
       XmlDocument xml => xml.ToBytes(),
-      XDocument xml => xml.ToBytes().Await(),
+      XDocument xml => xml.ToBytesAsync().Await(),
       _ => instance.SerializeAsBinary()
     };
   }
@@ -105,7 +105,7 @@ public static class ConvertExtensions
       null => null,
       T[] array => array,
       IEnumerable<T> sequence => sequence.AsArray(),
-      IAsyncEnumerable<T> sequence => sequence.ToArray().Await(),
+      IAsyncEnumerable<T> sequence => sequence.ToArray(),
       _ => new[] { (T) instance }
     };
   }

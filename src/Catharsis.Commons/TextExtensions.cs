@@ -118,13 +118,26 @@ public static class TextExtensions
   }
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
+  public static IEnumerable<string> Lines(this TextReader reader)
+  {
+    for (string line; (line = reader.ReadLine()) != null;)
+    {
+      yield return line;
+    }
+  }
+
+  /// <summary>
   ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a list of strings, using default system-dependent string separator.</para>
   /// </summary>
   /// <param name="reader"><see cref="TextReader"/> which is used to read text from its underlying source.</param>
   /// <returns>List of strings which have been read from a <paramref name="reader"/>.</returns>
-  public static async IAsyncEnumerable<string> Lines(this TextReader reader)
+  public static async IAsyncEnumerable<string> LinesAsync(this TextReader reader)
   {
-    foreach (var line in (await reader.ToText().ConfigureAwait(false)).Lines())
+    for (string line; (line = await reader.ReadLineAsync()) != null;)
     {
       yield return line;
     }
@@ -154,11 +167,24 @@ public static class TextExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  public static T Print<T>(this T instance, TextWriter destination)
+  {
+    destination.Write(instance.ToStateString());
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<T> Print<T>(this T instance, TextWriter destination, CancellationToken cancellation = default)
+  public static async Task<T> PrintAsync<T>(this T instance, TextWriter destination, CancellationToken cancellation = default)
   {
     await destination.WriteAsync(instance.ToStateString().ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
     return instance;
@@ -185,21 +211,36 @@ public static class TextExtensions
   /// <param name="writer"></param>
   /// <returns></returns>
   public static TextWriter AsSynchronized(this TextWriter writer) => TextWriter.Synchronized(writer);
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static async Task<byte[]> ToBytes(this TextReader reader, Encoding encoding = null) => (await reader.ToText().ConfigureAwait(false)).ToBytes(encoding);
+  public static byte[] ToBytes(this TextReader reader, Encoding encoding = null) => reader.ToText().ToBytes(encoding);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async Task<byte[]> ToBytesAsync(this TextReader reader, Encoding encoding = null) => (await reader.ToTextAsync().ConfigureAwait(false)).ToBytes(encoding);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
+  public static string ToText(this TextReader reader) => reader.ReadToEnd();
 
   /// <summary>
   ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>
   /// </summary>
   /// <param name="reader"><see cref="TextReader"/> which is used to read text from its underlying source.</param>
   /// <returns>Text content which have been read from a <paramref name="reader"/>.</returns>
-  public static async Task<string> ToText(this TextReader reader) => await reader.ReadToEndAsync().ConfigureAwait(false);
+  public static async Task<string> ToTextAsync(this TextReader reader) => await reader.ReadToEndAsync().ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -253,7 +294,7 @@ public static class TextExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  public static XmlWriter ToXmlWriter(this StringBuilder builder) => XmlWriter.Create(builder);
+  public static XmlWriter ToXmlWriter(this StringBuilder builder) => XmlWriter.Create(builder, new XmlWriterSettings { Indent = true });
 
   /// <summary>
   ///   <para></para>
@@ -263,7 +304,30 @@ public static class TextExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static async Task<TWriter> WriteBytes<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter => await destination.WriteText(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
+  public static TWriter WriteBytes<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter => destination.WriteText(bytes.AsArray().ToText(encoding));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TWriter"></typeparam>
+  /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async Task<TWriter> WriteBytesAsync<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter => await destination.WriteTextAsync(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TWriter"></typeparam>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  public static TWriter WriteText<TWriter>(this TWriter destination, string text) where TWriter : TextWriter
+  {
+    destination.Write(text);
+    return destination;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -273,13 +337,12 @@ public static class TextExtensions
   /// <param name="text"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<TWriter> WriteText<TWriter>(this TWriter destination, string text, CancellationToken cancellation = default) where TWriter : TextWriter
+  public static async Task<TWriter> WriteTextAsync<TWriter>(this TWriter destination, string text, CancellationToken cancellation = default) where TWriter : TextWriter
   {
     await destination.WriteAsync(text.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
-
     return destination;
   }
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -287,9 +350,22 @@ public static class TextExtensions
   /// <param name="writer"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, TextWriter writer, Encoding encoding = null)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, TextWriter writer, Encoding encoding = null)
   {
-    await bytes.AsArray().ToText(encoding).WriteTo(writer).ConfigureAwait(false);
+    bytes.AsArray().ToText(encoding).WriteTo(writer);
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="writer"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, TextWriter writer, Encoding encoding = null)
+  {
+    await bytes.AsArray().ToText(encoding).WriteToAsync(writer).ConfigureAwait(false);
     return bytes;
   }
 
@@ -298,11 +374,23 @@ public static class TextExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <param name="destination"></param>
+  /// <returns></returns>
+  public static string WriteTo(this string text, TextWriter destination)
+  {
+    destination.WriteText(text);
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> WriteTo(this string text, TextWriter destination, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, TextWriter destination, CancellationToken cancellation = default)
   {
-    await destination.WriteText(text, cancellation).ConfigureAwait(false);
+    await destination.WriteTextAsync(text, cancellation).ConfigureAwait(false);
     return text;
   }
 

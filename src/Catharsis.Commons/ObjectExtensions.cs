@@ -460,13 +460,29 @@ public static class ObjectExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<T> Print<T>(this T instance, CancellationToken cancellation = default)
+  public static T Print<T>(this T instance)
   {
     if (instance != null)
     {
-      await instance.Print(Console.Out, cancellation).ConfigureAwait(false);
+      instance.Print(Console.Out);
+    }
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<T> PrintAsync<T>(this T instance, CancellationToken cancellation = default)
+  {
+    if (instance != null)
+    {
+      await instance.PrintAsync(Console.Out, cancellation).ConfigureAwait(false);
     }
 
     return instance;
@@ -508,6 +524,15 @@ public static class ObjectExtensions
 
     return instance;
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="properties"></param>
+  /// <returns></returns>
+  public static T SetState<T>(this T instance, object properties) => instance.SetState(properties.GetState());
 
   /// <summary>
   ///   <para>Returns the value of a member on a target object, using expression tree to specify type's member.</para>

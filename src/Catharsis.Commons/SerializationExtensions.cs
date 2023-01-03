@@ -59,12 +59,11 @@ public static class SerializationExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="source"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsBinary<T>(this IEnumerable<byte> source, CancellationToken cancellation = default)
+  public static T DeserializeAsBinary<T>(this IEnumerable<byte> source)
   {
-    using var stream = await source.ToMemoryStream(cancellation).ConfigureAwait(false);
-    
+    using var stream = source.ToMemoryStream();
+
     return stream.DeserializeAsBinary<T>();
   }
 
@@ -97,9 +96,34 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsBinary<T>(this Uri source, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  public static T DeserializeAsBinary<T>(this Uri source, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => source.DeserializeAsBinaryAsync<T>(timeout, default, headers).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="source"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<T> DeserializeAsBinaryAsync<T>(this IEnumerable<byte> source, CancellationToken cancellation = default)
   {
-    await using var stream = await source.ToStream(timeout, headers).ConfigureAwait(false);
+    using var stream = await source.ToMemoryStreamAsync(cancellation).ConfigureAwait(false);
+
+    return stream.DeserializeAsBinary<T>();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="source"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static async Task<T> DeserializeAsBinaryAsync<T>(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    await using var stream = await source.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
 
     return stream.DeserializeAsBinary<T>();
   }
@@ -129,7 +153,12 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T SerializeAsDataContract<T>(this T instance, TextWriter destination, params Type[] types) => instance.SerializeAsDataContract(destination.ToXmlWriter(), types);
+  public static T SerializeAsDataContract<T>(this T instance, TextWriter destination, params Type[] types)
+  {
+    using var writer = destination.ToXmlWriter(false);
+   
+    return instance.SerializeAsDataContract(writer, types);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -140,7 +169,12 @@ public static class SerializationExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T SerializeAsDataContract<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types) => instance.SerializeAsDataContract(destination.ToXmlWriter(encoding), types);
+  public static T SerializeAsDataContract<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
+  {
+    using var writer = destination.ToXmlWriter(encoding, false);
+    
+    return instance.SerializeAsDataContract(writer, types);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -194,29 +228,9 @@ public static class SerializationExtensions
   /// <param name="source"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this TextReader source, params Type[] types) => source.ToXmlReader().DeserializeAsDataContract<T>(types);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
-  /// <param name="encoding"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this Stream source, Encoding encoding = null, params Type[] types) => source.ToXmlReader(encoding).DeserializeAsDataContract<T>(types);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
-  /// <param name="encoding"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this FileInfo source, Encoding encoding = null, params Type[] types)
+  public static T DeserializeAsDataContract<T>(this TextReader source, params Type[] types)
   {
-    using var reader = source.ToXmlReader(encoding);
+    using var reader = source.ToXmlReader(false);
 
     return reader.DeserializeAsDataContract<T>(types);
   }
@@ -226,14 +240,25 @@ public static class SerializationExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="source"></param>
-  /// <param name="encoding"></param>
   /// <param name="types"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsDataContract<T>(this Uri source, Encoding encoding = null, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  public static T DeserializeAsDataContract<T>(this Stream source, params Type[] types)
   {
-    using var reader = await source.ToXmlReader(encoding, timeout, headers?.AsArray()).ConfigureAwait(false);
+    using var reader = source.ToXmlReader(false);
+
+    return reader.DeserializeAsDataContract<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="source"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  public static T DeserializeAsDataContract<T>(this FileInfo source, params Type[] types)
+  {
+    using var reader = source.ToXmlReader();
 
     return reader.DeserializeAsDataContract<T>(types);
   }
@@ -248,6 +273,34 @@ public static class SerializationExtensions
   public static T DeserializeAsDataContract<T>(this string source, params Type[] types)
   {
     using var reader = source.ToXmlReader();
+
+    return reader.DeserializeAsDataContract<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="source"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  public static T DeserializeAsDataContract<T>(this Uri source, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => source.DeserializeAsDataContractAsync<T>(timeout, default, headers, types).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="source"></param>
+  /// <param name="types"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static async Task<T> DeserializeAsDataContractAsync<T>(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  {
+    using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
 
     return reader.DeserializeAsDataContract<T>(types);
   }
@@ -277,7 +330,12 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T SerializeAsXml<T>(this T instance, TextWriter destination, params Type[] types) => instance.SerializeAsXml(destination.ToXmlWriter(), types);
+  public static T SerializeAsXml<T>(this T instance, TextWriter destination, params Type[] types)
+  {
+    using var writer = destination.ToXmlWriter(false);
+
+    return instance.SerializeAsXml(writer, types);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -288,7 +346,12 @@ public static class SerializationExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T SerializeAsXml<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types) => instance.SerializeAsXml(destination.ToXmlWriter(encoding), types);
+  public static T SerializeAsXml<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
+  {
+    using var writer = destination.ToXmlWriter(encoding, false);
+    
+    return instance.SerializeAsXml(writer, types);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -342,29 +405,23 @@ public static class SerializationExtensions
   /// <param name="source"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsXml<T>(this TextReader source, params Type[] types) => source.ToXmlReader().DeserializeAsXml<T>(types);
+  public static T DeserializeAsXml<T>(this TextReader source, params Type[] types)
+  {
+    using var reader = source.ToXmlReader(false);
+
+    return reader.DeserializeAsXml<T>(types);
+  }
 
   /// <summary>
   ///   <para>Deserializes XML contents of stream into object of specified type.</para>
   /// </summary>
   /// <typeparam name="T">Type of object which is to be the result of deserialization process.</typeparam>
   /// <param name="source">Stream of XML data for deserialization.</param>
-  /// <param name="encoding"></param>
   /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
   /// <returns>Deserialized XML contents of source <paramref name="source"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
-  public static T DeserializeAsXml<T>(this Stream source, Encoding encoding = null, params Type[] types) => source.ToXmlReader(encoding).DeserializeAsXml<T>(types);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
-  /// <param name="encoding"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  public static T DeserializeAsXml<T>(this FileInfo source, Encoding encoding = null, params Type[] types)
+  public static T DeserializeAsXml<T>(this Stream source, params Type[] types)
   {
-    using var reader = source.ToXmlReader(encoding);
+    using var reader = source.ToXmlReader(false);
 
     return reader.DeserializeAsXml<T>(types);
   }
@@ -374,14 +431,11 @@ public static class SerializationExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="source"></param>
-  /// <param name="encoding"></param>
   /// <param name="types"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsXml<T>(this Uri source, Encoding encoding = null, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  public static T DeserializeAsXml<T>(this FileInfo source, params Type[] types)
   {
-    using var reader = await source.ToXmlReader(encoding, timeout, headers?.AsArray()).ConfigureAwait(false);
+    using var reader = source.ToXmlReader();
 
     return reader.DeserializeAsXml<T>(types);
   }
@@ -396,6 +450,34 @@ public static class SerializationExtensions
   public static T DeserializeAsXml<T>(this string source, params Type[] types)
   {
     using var reader = source.ToXmlReader();
+
+    return reader.DeserializeAsXml<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="source"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  public static T DeserializeAsXml<T>(this Uri source, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => source.DeserializeAsXmlAsync<T>(timeout, default, headers, types).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="source"></param>
+  /// <param name="types"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static async Task<T> DeserializeAsXmlAsync<T>(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  {
+    using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
 
     return reader.DeserializeAsXml<T>(types);
   }
@@ -419,7 +501,12 @@ public static class SerializationExtensions
   /// <param name="xml"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  public static XmlDocument Serialize(this XmlDocument xml, TextWriter destination) => xml.Serialize(destination.ToXmlWriter());
+  public static XmlDocument Serialize(this XmlDocument xml, TextWriter destination)
+  {
+    using var writer = destination.ToXmlWriter(false);
+
+    return xml.Serialize(writer);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -428,7 +515,12 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static XmlDocument Serialize(this XmlDocument xml, Stream destination, Encoding encoding = null) => xml.Serialize(destination.ToXmlWriter(encoding));
+  public static XmlDocument Serialize(this XmlDocument xml, Stream destination, Encoding encoding = null)
+  {
+    using var writer = destination.ToXmlWriter(encoding, false);
+
+    return xml.Serialize(writer);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -477,25 +569,9 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="source"></param>
   /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this TextReader source) => source.ToXmlReader().ToXmlDocument();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="source"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this Stream source, Encoding encoding = null) => source.ToXmlReader(encoding).ToXmlDocument();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="source"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this FileInfo source, Encoding encoding = null)
+  public static XmlDocument ToXmlDocument(this TextReader source)
   {
-    using var reader = source.ToXmlReader(encoding);
+    using var reader = source.ToXmlReader(false);
 
     return reader.ToXmlDocument();
   }
@@ -504,13 +580,22 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="source"></param>
-  /// <param name="encoding"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<XmlDocument> ToXmlDocument(this Uri source, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  public static XmlDocument ToXmlDocument(this Stream source)
   {
-    using var reader = await source.ToXmlReader(encoding, timeout, headers).ConfigureAwait(false);
+    using var reader = source.ToXmlReader(false);
+    
+    return reader.ToXmlDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <returns></returns>
+  public static XmlDocument ToXmlDocument(this FileInfo source)
+  {
+    using var reader = source.ToXmlReader();
 
     return reader.ToXmlDocument();
   }
@@ -523,6 +608,30 @@ public static class SerializationExtensions
   public static XmlDocument ToXmlDocument(this string source)
   {
     using var reader = source.ToXmlReader();
+
+    return reader.ToXmlDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static XmlDocument ToXmlDocument(this Uri source, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => source.ToXmlDocumentAsync(timeout, default, headers).Result; 
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static async Task<XmlDocument> ToXmlDocumentAsync(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers).ConfigureAwait(false);
 
     return reader.ToXmlDocument();
   }
@@ -546,7 +655,12 @@ public static class SerializationExtensions
   /// <param name="xml"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  public static XDocument Serialize(this XDocument xml, TextWriter destination) => xml.Serialize(destination.ToXmlWriter());
+  public static XDocument Serialize(this XDocument xml, TextWriter destination)
+  {
+    using var writer = destination.ToXmlWriter(false);
+
+    return xml.Serialize(writer);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -555,7 +669,12 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static XDocument Serialize(this XDocument xml, Stream destination, Encoding encoding = null) => xml.Serialize(destination.ToXmlWriter(encoding));
+  public static XDocument Serialize(this XDocument xml, Stream destination, Encoding encoding = null)
+  {
+    using var writer = destination.ToXmlWriter(encoding, false);
+
+    return xml.Serialize(writer);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -586,12 +705,76 @@ public static class SerializationExtensions
   }
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <returns></returns>
+  public static XDocument ToXDocument(this XmlReader source) => XDocument.Load(source, LoadOptions.None);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <returns></returns>
+  public static XDocument ToXDocument(this TextReader source)
+  {
+    using var reader = source.ToXmlReader(false);
+    
+    return reader.ToXDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <returns></returns>
+  public static XDocument ToXDocument(this Stream source)
+  {
+    using var reader = source.ToXmlReader(false);
+    
+    return reader.ToXDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <returns></returns>
+  public static XDocument ToXDocument(this FileInfo source)
+  {
+    using var reader = source.ToXmlReader();
+
+    return reader.ToXDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <returns></returns>
+  public static XDocument ToXDocument(this string source) => XDocument.Parse(source);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static XDocument ToXDocument(this Uri source, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    using var reader = source.ToXmlReader(timeout, headers);
+
+    return reader.ToXDocument();
+  }
+
+  /// <summary>
   ///   <para>Deserialize XML contents from a <see cref="XmlReader"/> into <see cref="XDocument"/> object.</para>
   /// </summary>
   /// <param name="source"><see cref="XmlReader"/> which is used to read XML text content from its underlying source.</param>
   /// <param name="cancellation"></param>
   /// <returns><see cref="XDocument"/> instance, constructed from XML contents which have been read through a <paramref name="source"/>.</returns>
-  public static async Task<XDocument> ToXDocument(this XmlReader source, CancellationToken cancellation = default) => await XDocument.LoadAsync(source, LoadOptions.None, cancellation).ConfigureAwait(false);
+  public static async Task<XDocument> ToXDocumentAsync(this XmlReader source, CancellationToken cancellation = default) => await XDocument.LoadAsync(source, LoadOptions.None, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -599,57 +782,64 @@ public static class SerializationExtensions
   /// <param name="source"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<XDocument> ToXDocument(this TextReader source, CancellationToken cancellation = default) => await source.ToXmlReader().ToXDocument(cancellation).ConfigureAwait(false);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="source"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<XDocument> ToXDocument(this Stream source, Encoding encoding = null, CancellationToken cancellation = default) => await source.ToXmlReader(encoding).ToXDocument(cancellation).ConfigureAwait(false);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="source"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<XDocument> ToXDocument(this FileInfo source, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<XDocument> ToXDocumentAsync(this TextReader source, CancellationToken cancellation = default)
   {
-    using var reader = source.ToXmlReader(encoding);
+    using var reader = source.ToXmlReader(false);
 
-    return await reader.ToXDocument(cancellation).ConfigureAwait(false);
+    return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="source"></param>
-  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<XDocument> ToXDocumentAsync(this Stream source, CancellationToken cancellation = default)
+  {
+    using var reader = source.ToXmlReader(false);
+
+    return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<XDocument> ToXDocumentAsync(this FileInfo source, CancellationToken cancellation = default)
+  {
+    using var reader = source.ToXmlReader();
+
+    return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<XDocument> ToXDocumentAsync(this string source, CancellationToken cancellation = default)
+  {
+    using var reader = source.ToXmlReader();
+
+    return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<XDocument> ToXDocument(this Uri source, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<XDocument> ToXDocumentAsync(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    using var reader = await source.ToXmlReader(encoding, timeout, headers).ConfigureAwait(false);
+    using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers).ConfigureAwait(false);
     
-    return await reader.ToXDocument(cancellation).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="source"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<XDocument> ToXDocument(this string source, CancellationToken cancellation = default)
-  {
-    using var reader = source.ToXmlReader();
-
-    return await reader.ToXDocument(cancellation).ConfigureAwait(false);
+    return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }
 }

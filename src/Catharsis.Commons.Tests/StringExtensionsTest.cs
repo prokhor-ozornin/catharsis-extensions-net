@@ -2456,6 +2456,17 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToIpHost(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_ToIpHost_Method()
+  {
+    AssertionExtensions.Should(() => StringExtensions.ToIpHost(null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.ToRegex(string, RegexOptions?)"/> method.</para>
   /// </summary>
   [Fact]

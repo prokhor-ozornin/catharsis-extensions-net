@@ -972,6 +972,18 @@ public static class StringExtensions
   public static bool ToIpAddress(this string text, out IPAddress result) => IPAddress.TryParse(text, out result);
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  public static IPHostEntry ToIpHost(this string text)
+  {
+    text.ToIpAddress(out var ip);
+
+    return ip != null ? new IPHostEntry { AddressList = new[] { ip } } : new IPHostEntry { HostName = text };
+  }
+
+  /// <summary>
   ///   <para>Converts specified string into <see cref="Regex"/> value.</para>
   /// </summary>
   /// <param name="text">String to be converted.</param>

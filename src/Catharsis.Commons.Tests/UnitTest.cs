@@ -66,17 +66,17 @@ public abstract class UnitTest
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected MemoryStream RandomStream => new Random().MemoryStream(short.MaxValue).Await();
+  protected MemoryStream RandomStream => new Random().MemoryStreamAsync(short.MaxValue).Await();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected Stream RandomReadOnlyStream => new Random().MemoryStream(short.MaxValue).Await().AsReadOnly();
+  protected Stream RandomReadOnlyStream => new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnly();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected Stream RandomReadOnlyForwardStream => new Random().MemoryStream(short.MaxValue).Await().AsReadOnlyForward();
+  protected Stream RandomReadOnlyForwardStream => new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnlyForward();
 
   /// <summary>
   ///   <para></para>
@@ -106,7 +106,7 @@ public abstract class UnitTest
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected FileInfo RandomNonEmptyFile => new Random().TextFile(short.MaxValue).Await();
+  protected FileInfo RandomNonEmptyFile => new Random().TextFileAsync(short.MaxValue).Await();
 
   /// <summary>
   ///   <para></para>

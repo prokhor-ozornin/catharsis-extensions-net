@@ -1532,14 +1532,102 @@ public sealed class RandomExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFile(Random, int, byte?, byte?, DirectoryInfo, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFile(Random, int, byte?, byte?, DirectoryInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void Random_BinaryFile_Method()
   {
+    AssertionExtensions.Should(() => RandomExtensions.BinaryFile(null, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileInRange(Random, int, DirectoryInfo, Range[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_BinaryFileInRange_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.BinaryFileInRange(null, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileSequence(Random, int, int, byte?, byte?, DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_BinaryFileSequence_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.BinaryFileSequence(null, 0, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileSequenceInRange(Random, int, int, DirectoryInfo, Range[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_BinaryFileSequenceInRange_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.BinaryFileSequenceInRange(null, 0, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.TextFile(Random, int, Encoding, char?, char?, DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_TextFile_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.TextFile(null, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileInRange(Random, int, Encoding, DirectoryInfo, Range[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_TextFileInRange_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.TextFileInRange(null, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileSequence(Random, int, int, Encoding, char?, char?, DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_TextFileSequence_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.TextFileSequence(null, 0, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileSequenceInRange(Random, int, int, Encoding, DirectoryInfo, Range[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_TextFileSequenceInRange_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.TextFileSequenceInRange(null, 0, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileAsync(Random, int, byte?, byte?, DirectoryInfo, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_BinaryFileAsync_Method()
+  {
     void Validate(FileInfo file, string path, int size, byte? min = null, byte? max = null)
     {
-      AssertionExtensions.Should(() => Randomizer.BinaryFile(0, min, max, path.ToDirectory(), Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await(); // TODO TaskCancelledException
+      AssertionExtensions.Should(() => Randomizer.BinaryFileAsync(0, min, max, path.ToDirectory(), Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
 
       size = Math.Max(0, size);
 
@@ -1555,7 +1643,7 @@ public sealed class RandomExtensionsTest : UnitTest
         file.Length.Should().Be(0);
         file.IsReadOnly.Should().BeFalse();
 
-        var bytes = file.ToBytes().ToList().Await(); // TODO ToList -> ToEnumerable
+        var bytes = file.ToBytesAsync().ToEnumerable();
 
         bytes.Should().HaveCount(size);
 
@@ -1573,7 +1661,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.BinaryFile(null, 0)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
       /*const int size = 4096;
 
@@ -1591,19 +1679,21 @@ public sealed class RandomExtensionsTest : UnitTest
       Validate(size, byte.MinValue, byte.MinValue);
       Validate(size, byte.MaxValue, byte.MaxValue);*/
     }
+
+    throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileInRange(Random, int, DirectoryInfo, CancellationToken, Range[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileInRangeAsync(Random, int, DirectoryInfo, CancellationToken, Range[])"/> method.</para>
   /// </summary>
   [Fact]
-  public void Random_BinaryFileInRange_Method()
+  public void Random_BinaryFileInRangeAsync_Method()
   {
     void Validate(int size, params Range[] ranges)
     {
-      AssertionExtensions.Should(() => Randomizer.BinaryFileInRange(0, null, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await(); // TODO TaskCancelledException
+      AssertionExtensions.Should(() => Randomizer.BinaryFileInRangeAsync(0, null, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await(); // TODO TaskCancelledException
 
-      var file = Randomizer.BinaryFileInRange(size, null, default, ranges).Await();
+      var file = Randomizer.BinaryFileInRangeAsync(size, null, default, ranges).Await();
 
       size = Math.Max(0, size);
 
@@ -1618,7 +1708,7 @@ public sealed class RandomExtensionsTest : UnitTest
         file.Length.Should().Be(size);
         file.IsReadOnly.Should().BeFalse();
 
-        var bytes = file.ToBytes().ToList().Await(); // TODO ToList -> ToEnumerable
+        var bytes = file.ToBytesAsync().ToListAsync().Await(); // TODO ToList -> ToEnumerable
 
         bytes.Should().HaveCount(size);
 
@@ -1632,7 +1722,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.BinaryFileInRange(null, 0)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => RandomExtensions.BinaryFileInRangeAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
       const int size = 4096;
 
@@ -1649,73 +1739,73 @@ public sealed class RandomExtensionsTest : UnitTest
       //Validate(size, ..0, Range.All);
       //Validate(size, ..0, ..byte.MaxValue);
       Validate(size, ..0, 1..2);
-
-      throw new NotImplementedException();
     }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileSequence(Random, int, int, byte?, byte?, DirectoryInfo, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Random_BinaryFileSequence_Method()
-  {
-    AssertionExtensions.Should(() => RandomExtensions.BinaryFileSequence(null, 0, 0)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileSequenceInRange(Random, int, int, DirectoryInfo, CancellationToken, Range[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileSequenceAsync(Random, int, int, byte?, byte?, DirectoryInfo, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Random_BinaryFileSequenceInRange_Method()
+  public void Random_BinaryFileSequenceAsync_Method()
   {
-    AssertionExtensions.Should(() => RandomExtensions.BinaryFileSequenceInRange(null, 0, 0)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => RandomExtensions.BinaryFileSequenceAsync(null, 0, 0)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.TextFile(Random, int, Encoding, char?, char?, DirectoryInfo, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="RandomExtensions.BinaryFileSequenceInRangeAsync(Random, int, int, DirectoryInfo, CancellationToken, Range[])"/> method.</para>
   /// </summary>
   [Fact]
-  public void Random_TextFile_Method()
+  public void Random_BinaryFileSequenceInRangeAsync_Method()
   {
-    AssertionExtensions.Should(() => RandomExtensions.TextFile(null, 0)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => RandomExtensions.BinaryFileSequenceInRangeAsync(null, 0, 0)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileInRange(Random, int, Encoding, DirectoryInfo, CancellationToken, Range[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileAsync(Random, int, Encoding, char?, char?, DirectoryInfo, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Random_TextFileInRange_Method()
+  public void Random_TextFileAsync_Method()
   {
-    AssertionExtensions.Should(() => RandomExtensions.TextFileInRange(null, 0)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => RandomExtensions.TextFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileSequence(Random, int, int, Encoding, char?, char?, DirectoryInfo, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileInRangeAsync(Random, int, Encoding, DirectoryInfo, CancellationToken, Range[])"/> method.</para>
   /// </summary>
   [Fact]
-  public void Random_TextFileSequence_Method()
+  public void Random_TextFileInRangeAsync_Method()
   {
-    AssertionExtensions.Should(() => RandomExtensions.TextFileSequence(null, 0, 0)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => RandomExtensions.TextFileInRangeAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileSequenceInRange(Random, int, int, Encoding, DirectoryInfo, CancellationToken, Range[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileSequenceAsync(Random, int, int, Encoding, char?, char?, DirectoryInfo, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Random_TextFileSequenceInRange_Method()
+  public void Random_TextFileSequenceAsync_Method()
   {
-    AssertionExtensions.Should(() => RandomExtensions.TextFileSequenceInRange(null, 0, 0)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => RandomExtensions.TextFileSequenceAsync(null, 0, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.TextFileSequenceInRangeAsync(Random, int, int, Encoding, DirectoryInfo, CancellationToken, Range[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_TextFileSequenceInRangeAsync_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.TextFileSequenceInRangeAsync(null, 0, 0)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
@@ -1841,6 +1931,143 @@ public sealed class RandomExtensionsTest : UnitTest
     throw new NotImplementedException();
   }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.MemoryStream(Random, int, byte?, byte?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_MemoryStream_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.MemoryStream(null, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.MemoryStreamInRange(Random, int, Range[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_MemoryStreamInRange_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.MemoryStreamInRange(null, 0)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.MemoryStreamAsync(Random, int, byte?, byte?, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_MemoryStreamAsync_Method()
+  {
+    void Validate(MemoryStream stream, int count)
+    {
+      stream.Length.Should().Be(count);
+      stream.Position.Should().Be(0);
+      stream.CanRead.Should().BeTrue();
+      stream.CanWrite.Should().BeTrue();
+      stream.CanSeek.Should().BeTrue();
+      stream.CanTimeout.Should().BeFalse();
+      stream.Capacity.Should().Be(count);
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => RandomExtensions.MemoryStreamAsync(null, 0, 1, 2)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+      const int count = 1000;
+
+      Randomizer.MemoryStreamAsync(int.MinValue).Await().Length.Should().Be(0);
+      Randomizer.MemoryStreamAsync(-1, null, null, Cancellation).Await().Length.Should().Be(0);
+
+      Randomizer.MemoryStreamAsync(0).Await().Length.Should().Be(0);
+      Randomizer.MemoryStreamAsync(0, null, null, Cancellation).Await().Length.Should().Be(0);
+
+      using (var stream = Randomizer.MemoryStreamAsync(count).Await())
+      {
+        AssertionExtensions.Should(() => Randomizer.MemoryStreamAsync(count, null, null, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
+
+        Validate(stream, count);
+
+        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
+      }
+
+      using (var stream = Randomizer.MemoryStreamAsync(count, 0, 100).Await())
+      {
+        AssertionExtensions.Should(() => Randomizer.MemoryStreamAsync(count, null, null, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
+
+        Validate(stream, count);
+
+        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, 100));
+      }
+
+      using (var stream = Randomizer.MemoryStreamAsync(count, 0, 0).Await())
+      {
+        AssertionExtensions.Should(() => Randomizer.MemoryStreamAsync(count, null, null, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
+
+        Validate(stream, count);
+
+        stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.MemoryStreamInRangeAsync(Random, int, CancellationToken, Range[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_MemoryStreamInRangeAsync_Method()
+  {
+    void Validate(MemoryStream stream, int count)
+    {
+      stream.Length.Should().Be(count);
+      stream.Position.Should().Be(0);
+      stream.CanRead.Should().BeTrue();
+      stream.CanWrite.Should().BeTrue();
+      stream.CanSeek.Should().BeTrue();
+      stream.CanTimeout.Should().BeFalse();
+      stream.Capacity.Should().Be(count);
+    }
+
+    using (new AssertionScope())
+    {
+      const int count = 1000;
+
+      AssertionExtensions.Should(() => RandomExtensions.MemoryStreamInRangeAsync(null, 0, default, 1..2)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+      Randomizer.MemoryStreamInRangeAsync(-1, default, Range.All).Await().Length.Should().Be(0);
+      Randomizer.MemoryStreamInRangeAsync(-1, Cancellation, Range.All).Await().Length.Should().Be(0);
+
+      Randomizer.MemoryStreamInRangeAsync(0, default, Range.All).Await().Length.Should().Be(0);
+      Randomizer.MemoryStreamInRangeAsync(0, Cancellation, Range.All).Await().Length.Should().Be(0);
+
+      using (var stream = Randomizer.MemoryStreamInRangeAsync(count, default, Range.All).Await())
+      {
+        AssertionExtensions.Should(() => Randomizer.MemoryStreamInRangeAsync(count, Cancellation, Range.All)).ThrowExactlyAsync<TaskCanceledException>().Await();
+
+        Validate(stream, count);
+
+        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
+      }
+
+      using (var stream = Randomizer.MemoryStreamInRangeAsync(count, default, ..100).Await())
+      {
+        AssertionExtensions.Should(() => Randomizer.MemoryStreamInRangeAsync(count, Cancellation, Range.All)).ThrowExactlyAsync<TaskCanceledException>().Await();
+
+        Validate(stream, count);
+
+        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, 100));
+      }
+
+      using (var stream = Randomizer.MemoryStreamInRangeAsync(count, default, ..0).Await())
+      {
+        AssertionExtensions.Should(() => Randomizer.MemoryStreamInRangeAsync(count, Cancellation, Range.All)).ThrowExactlyAsync<TaskCanceledException>().Await();
+
+        Validate(stream, count);
+
+        stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
+      }
+    }
+  }
 
   /// <summary>
   ///   <para>Performs testing of <see cref="RandomExtensions.Stream(Random, byte?, byte?)"/> method.</para>
@@ -1862,121 +2089,5 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.StreamInRange(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.MemoryStream(Random, int, byte?, byte?, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Random_MemoryStream_Method()
-  {
-    void Validate(MemoryStream stream, int count)
-    {
-      stream.Length.Should().Be(count);
-      stream.Position.Should().Be(0);
-      stream.CanRead.Should().BeTrue();
-      stream.CanWrite.Should().BeTrue();
-      stream.CanSeek.Should().BeTrue();
-      stream.CanTimeout.Should().BeFalse();
-      stream.Capacity.Should().Be(count);
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.MemoryStream(null, 0, 1, 2)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-      const int count = 1000;
-
-      Randomizer.MemoryStream(int.MinValue).Await().Length.Should().Be(0);
-      Randomizer.MemoryStream(-1, null, null, Cancellation).Await().Length.Should().Be(0);
-
-      Randomizer.MemoryStream(0).Await().Length.Should().Be(0);
-      Randomizer.MemoryStream(0, null, null, Cancellation).Await().Length.Should().Be(0);
-
-      using (var stream = Randomizer.MemoryStream(count).Await())
-      {
-        AssertionExtensions.Should(() => Randomizer.MemoryStream(count, null, null, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
-
-        Validate(stream, count);
-
-        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
-      }
-
-      using (var stream = Randomizer.MemoryStream(count, 0, 100).Await())
-      {
-        AssertionExtensions.Should(() => Randomizer.MemoryStream(count, null, null, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
-
-        Validate(stream, count);
-
-        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, 100));
-      }
-
-      using (var stream = Randomizer.MemoryStream(count, 0, 0).Await())
-      {
-        AssertionExtensions.Should(() => Randomizer.MemoryStream(count, null, null, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
-
-        Validate(stream, count);
-
-        stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.MemoryStreamInRange(Random, int, CancellationToken, Range[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Random_MemoryStreamInRange_Method()
-  {
-    void Validate(MemoryStream stream, int count)
-    {
-      stream.Length.Should().Be(count);
-      stream.Position.Should().Be(0);
-      stream.CanRead.Should().BeTrue();
-      stream.CanWrite.Should().BeTrue();
-      stream.CanSeek.Should().BeTrue();
-      stream.CanTimeout.Should().BeFalse();
-      stream.Capacity.Should().Be(count);
-    }
-
-    using (new AssertionScope())
-    {
-      const int count = 1000;
-
-      AssertionExtensions.Should(() => RandomExtensions.MemoryStreamInRange(null, 0, default, 1..2)).ThrowExactlyAsync<ArgumentNullException>().Await();
-
-      Randomizer.MemoryStreamInRange(-1, default, Range.All).Await().Length.Should().Be(0);
-      Randomizer.MemoryStreamInRange(-1, Cancellation, Range.All).Await().Length.Should().Be(0);
-
-      Randomizer.MemoryStreamInRange(0, default, Range.All).Await().Length.Should().Be(0);
-      Randomizer.MemoryStreamInRange(0, Cancellation, Range.All).Await().Length.Should().Be(0);
-
-      using (var stream = Randomizer.MemoryStreamInRange(count, default, Range.All).Await())
-      {
-        AssertionExtensions.Should(() => Randomizer.MemoryStreamInRange(count, Cancellation, Range.All)).ThrowExactlyAsync<TaskCanceledException>().Await();
-
-        Validate(stream, count);
-
-        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
-      }
-
-      using (var stream = Randomizer.MemoryStreamInRange(count, default, ..100).Await())
-      {
-        AssertionExtensions.Should(() => Randomizer.MemoryStreamInRange(count, Cancellation, Range.All)).ThrowExactlyAsync<TaskCanceledException>().Await();
-
-        Validate(stream, count);
-
-        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, 100));
-      }
-
-      using (var stream = Randomizer.MemoryStreamInRange(count, default, ..0).Await())
-      {
-        AssertionExtensions.Should(() => Randomizer.MemoryStreamInRange(count, Cancellation, Range.All)).ThrowExactlyAsync<TaskCanceledException>().Await();
-
-        Validate(stream, count);
-
-        stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
-      }
-    }
   }
 }

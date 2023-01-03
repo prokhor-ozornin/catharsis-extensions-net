@@ -390,12 +390,23 @@ public sealed class ObjectExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ObjectExtensions.Print{T}(T, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Print{T}(T)"/> method.</para>
   /// </summary>
   [Fact]
   public void Object_Print_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.PrintAsync{T}(T, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_PrintAsync_Method()
+  {
+    AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -439,13 +450,26 @@ public sealed class ObjectExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ObjectExtensions.SetState{T}(T, IEnumerable{(string Name, object Value)})"/> method.</para>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ObjectExtensions.SetState{T}(T, IEnumerable{(string Name, object Value)})"/></description></item>
+  ///     <item><description><see cref="ObjectExtensions.SetState{T}(T, object)"/></description></item>
+  ///   </list>
   /// </summary>
   [Fact]
-  public void Object_SetState_Method()
+  public void Object_SetState_Methods()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SetState<object>(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new object().SetState(null)).ThrowExactly<ArgumentNullException>();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SetState<object>(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new object().SetState(null)).ThrowExactly<ArgumentNullException>();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SetState<object>(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new object().SetState((object) null)).ThrowExactly<ArgumentNullException>();
+    }
 
     throw new NotImplementedException();
 

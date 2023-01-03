@@ -53,7 +53,7 @@ public sealed class TextExtensionsTest : UnitTest
       {
         reader.BaseStream.MoveToStart();
         reader.IsEnd().Should().Be(reader.BaseStream.Length <= 0);
-        reader.ToBytes().Await();
+        reader.ToBytesAsync().Await();
         reader.IsEnd().Should().BeTrue();
       }
     }
@@ -273,7 +273,7 @@ public sealed class TextExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.ToBytes().Await();
+        reader.ToBytesAsync().Await();
         reader.Rewind().Should().NotBeNull().And.BeSameAs(reader);
         reader.BaseStream.Should().HavePosition(0);
       }
@@ -298,7 +298,7 @@ public sealed class TextExtensionsTest : UnitTest
     {
       using (writer)
       {
-        RandomBytes.WriteTo(writer).Await();
+        RandomBytes.WriteToAsync(writer).Await();
         writer.Flush();
         writer.Rewind().Should().NotBeNull().And.BeSameAs(writer);
         writer.BaseStream.Should().HavePosition(0);
@@ -321,6 +321,17 @@ public sealed class TextExtensionsTest : UnitTest
   public void TextReader_Lines_Method()
   {
     AssertionExtensions.Should(() => TextExtensions.Lines(null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.LinesAsync(TextReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextReader_LinesAsync_Method()
+  {
+    AssertionExtensions.Should(() => TextExtensions.LinesAsync(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
@@ -357,13 +368,25 @@ public sealed class TextExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.Print{T}(T, TextWriter, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextExtensions.Print{T}(T, TextWriter)"/> method.</para>
   /// </summary>
   [Fact]
   public void Object_Print_Method()
   {
-    AssertionExtensions.Should(() => TextExtensions.Print<object>(null, Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => TextExtensions.Print(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => TextExtensions.Print<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => TextExtensions.Print(new object(), null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.PrintAsync{T}(T, TextWriter, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_PrintAsync_Method()
+  {
+    AssertionExtensions.Should(() => TextExtensions.PrintAsync<object>(null, Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => TextExtensions.PrintAsync(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -440,7 +463,18 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void TextReader_ToBytes_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToBytes()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((TextReader) null).ToBytes()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.ToBytesAsync(TextReader, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextReader_ToBytesAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((TextReader) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -451,16 +485,27 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void TextReader_ToText_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToText()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((TextReader) null).ToText()).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.ToTextAsync(TextReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextReader_ToTextAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     using (var reader = EmptyTextReader)
     {
-      reader.ToText().Should().NotBeNull().And.NotBeSameAs(reader.ToText());
+      reader.ToTextAsync().Should().NotBeNull().And.NotBeSameAs(reader.ToTextAsync());
     }
 
     using (var reader = EmptyTextReader)
     {
-      reader.ToText().Await().Should().BeEmpty();
+      reader.ToTextAsync().Await().Should().BeEmpty();
       reader.Read().Should().Be(-1);
     }
 
@@ -468,7 +513,7 @@ public sealed class TextExtensionsTest : UnitTest
 
     using (var reader = text.ToStringReader())
     {
-      reader.ToText().Await().Should().Be(text);
+      reader.ToTextAsync().Await().Should().Be(text);
       reader.Read().Should().Be(-1);
     }
   }
@@ -581,20 +626,44 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void TextWriter_WriteBytes_Method()
   {
-    AssertionExtensions.Should(() => TextExtensions.WriteBytes<TextWriter>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytes<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => TextExtensions.WriteBytes<TextWriter>(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytes<TextWriter>(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.WriteText{TWriter}(TWriter, string, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteBytesAsync{TWriter}(TWriter, IEnumerable{byte}, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextWriter_WriteBytesAsync_Method()
+  {
+    AssertionExtensions.Should(() => TextExtensions.WriteBytesAsync<TextWriter>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteText{TWriter}(TWriter, string)"/> method.</para>
   /// </summary>
   [Fact]
   public void TextWriter_WriteText_Method()
   {
-    AssertionExtensions.Should(() => TextExtensions.WriteText<TextWriter>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteText<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => TextExtensions.WriteText<TextWriter>(null, string.Empty)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteText<TextWriter>(null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteTextAsync{TWriter}(TWriter, string, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TextWriter_WriteTextAsync_Method()
+  {
+    AssertionExtensions.Should(() => TextExtensions.WriteTextAsync<TextWriter>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -612,13 +681,37 @@ public sealed class TextExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextExtensions.WriteTo(string, TextWriter, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteToAsync(IEnumerable{byte}, TextWriter, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_WriteToAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null.ToStreamWriter()));
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync((TextWriter) null));
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteTo(string, TextWriter)"/> method.</para>
   /// </summary>
   [Fact]
   public void String_WriteTo_Method()
   {
     AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToStreamWriter()));
     AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null));
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextExtensions.WriteToAsync(string, TextWriter, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteToAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null.ToStreamWriter()));
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync((TextWriter) null));
 
     throw new NotImplementedException();
   }

@@ -1074,9 +1074,41 @@ public static class RandomExtensions
   /// <param name="min"></param>
   /// <param name="max"></param>
   /// <param name="directory"></param>
+  /// <returns></returns>
+  public static FileInfo BinaryFile(this Random random, int size, byte? min = null, byte? max = null, DirectoryInfo directory = null)
+  {
+    if (size <= 0)
+    {
+      return random.File(directory);
+    }
+
+    var bytes = random.ByteSequence(size, min, max);
+
+    var file = random.File(directory);
+
+    try
+    {
+      bytes.WriteTo(file);
+    }
+    catch
+    {
+      file.Delete();
+    }
+
+    return file;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="min"></param>
+  /// <param name="max"></param>
+  /// <param name="directory"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<FileInfo> BinaryFile(this Random random, int size, byte? min = null, byte? max = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
+  public static async Task<FileInfo> BinaryFileAsync(this Random random, int size, byte? min = null, byte? max = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
   {
     if (size <= 0)
     {
@@ -1089,7 +1121,7 @@ public static class RandomExtensions
 
     try
     {
-      await bytes.WriteTo(file, cancellation).ConfigureAwait(false);
+      await bytes.WriteToAsync(file, cancellation).ConfigureAwait(false);
     }
     catch
     {
@@ -1105,24 +1137,146 @@ public static class RandomExtensions
   /// <param name="random"></param>
   /// <param name="size"></param>
   /// <param name="directory"></param>
-  /// <param name="cancellation"></param>
   /// <param name="ranges"></param>
   /// <returns></returns>
-  public static async Task<FileInfo> BinaryFileInRange(this Random random, int size, DirectoryInfo directory = null, CancellationToken cancellation = default, params Range[] ranges)
+  public static FileInfo BinaryFileInRange(this Random random, int size, DirectoryInfo directory = null, params Range[] ranges)
   {
     if (size <= 0)
     {
-      return await random.BinaryFile(size, null, null, directory, cancellation).ConfigureAwait(false);
+      return random.BinaryFile(size, null, null, directory);
     }
 
     switch (ranges.Length)
     {
       case 0:
-        return await random.BinaryFile(size, null, null, directory, cancellation).ConfigureAwait(false);
+        return random.BinaryFile(size, null, null, directory);
 
       case 1:
         var range = ranges.First();
-        return await random.BinaryFile(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false);
+        return random.BinaryFile(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory);
+
+      default:
+        var totalRange = ranges.ToRange();
+        var bytes = size.Objects(() => (byte) totalRange.Random());
+
+        var file = random.File(directory);
+
+        try
+        {
+          bytes.WriteTo(file);
+        }
+        catch
+        {
+          file.Delete();
+        }
+
+        return file;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="count"></param>
+  /// <param name="min"></param>
+  /// <param name="max"></param>
+  /// <param name="directory"></param>
+  /// <returns></returns>
+  public static IEnumerable<FileInfo> BinaryFileSequence(this Random random, int size, int count, byte? min = null, byte? max = null, DirectoryInfo directory = null)
+  {
+    for (var i = 1; i <= count; i++)
+    {
+      yield return random.BinaryFile(size, min, max, directory);
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="count"></param>
+  /// <param name="directory"></param>
+  /// <param name="ranges"></param>
+  /// <returns></returns>
+  public static IEnumerable<FileInfo> BinaryFileSequenceInRange(this Random random, int size, int count, DirectoryInfo directory = null, params Range[] ranges)
+  {
+    if (count <= 0)
+    {
+      yield break;
+    }
+
+    switch (ranges.Length)
+    {
+      case 0:
+        foreach (var file in random.BinaryFileSequence(size, count, null, null, directory))
+        {
+          yield return file;
+        }
+
+        break;
+
+      case 1:
+        var range = ranges.First();
+
+        foreach (var file in random.BinaryFileSequence(size, count, (byte?) range.Start.Value, (byte?) range.End.Value, directory))
+        {
+          yield return file;
+        }
+
+        break;
+
+      default:
+        var totalRange = ranges.ToRange();
+
+        for (var i = 1; i <= count; i++)
+        {
+          var bytes = size.Objects(() => (byte) totalRange.Random());
+
+          var file = random.File(directory);
+
+          try
+          {
+            bytes.WriteTo(file);
+          }
+          catch
+          {
+            file.Delete();
+          }
+
+          yield return file;
+        }
+
+        break;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="directory"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="ranges"></param>
+  /// <returns></returns>
+  public static async Task<FileInfo> BinaryFileInRangeAsync(this Random random, int size, DirectoryInfo directory = null, CancellationToken cancellation = default, params Range[] ranges)
+  {
+    if (size <= 0)
+    {
+      return await random.BinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
+    }
+
+    switch (ranges.Length)
+    {
+      case 0:
+        return await random.BinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
+
+      case 1:
+        var range = ranges.First();
+        return await random.BinaryFileAsync(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false);
 
       default:
         var totalRange = ranges.ToRange();
@@ -1132,7 +1286,7 @@ public static class RandomExtensions
 
         try
         {
-          await bytes.WriteTo(file, cancellation).ConfigureAwait(false);
+          await bytes.WriteToAsync(file, cancellation).ConfigureAwait(false);
         }
         catch
         {
@@ -1154,11 +1308,11 @@ public static class RandomExtensions
   /// <param name="directory"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<FileInfo> BinaryFileSequence(this Random random, int size, int count, byte? min = null, byte? max = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<FileInfo> BinaryFileSequenceAsync(this Random random, int size, int count, byte? min = null, byte? max = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
     for (var i = 1; i <= count; i++)
     {
-      yield return await random.BinaryFile(size, min, max, directory, cancellation).ConfigureAwait(false);
+      yield return await random.BinaryFileAsync(size, min, max, directory, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1172,7 +1326,7 @@ public static class RandomExtensions
   /// <param name="cancellation"></param>
   /// <param name="ranges"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<FileInfo> BinaryFileSequenceInRange(this Random random, int size, int count, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default, params Range[] ranges)
+  public static async IAsyncEnumerable<FileInfo> BinaryFileSequenceInRangeAsync(this Random random, int size, int count, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default, params Range[] ranges)
   {
     if (count <= 0)
     {
@@ -1182,7 +1336,7 @@ public static class RandomExtensions
     switch (ranges.Length)
     {
       case 0:
-        await foreach (var file in random.BinaryFileSequence(size, count, null, null, directory, cancellation).ConfigureAwait(false))
+        await foreach (var file in random.BinaryFileSequenceAsync(size, count, null, null, directory, cancellation).ConfigureAwait(false))
         {
           yield return file;
         }
@@ -1192,7 +1346,7 @@ public static class RandomExtensions
       case 1:
         var range = ranges.First();
 
-        await foreach (var file in random.BinaryFileSequence(size, count, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false))
+        await foreach (var file in random.BinaryFileSequenceAsync(size, count, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false))
         {
           yield return file;
         }
@@ -1210,7 +1364,7 @@ public static class RandomExtensions
 
           try
           {
-            await bytes.WriteTo(file, cancellation).ConfigureAwait(false);
+            await bytes.WriteToAsync(file, cancellation).ConfigureAwait(false);
           }
           catch
           {
@@ -1233,9 +1387,8 @@ public static class RandomExtensions
   /// <param name="min"></param>
   /// <param name="max"></param>
   /// <param name="directory"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<FileInfo> TextFile(this Random random, int size, Encoding encoding = null, char? min = null, char? max = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
+  public static FileInfo TextFile(this Random random, int size, Encoding encoding = null, char? min = null, char? max = null, DirectoryInfo directory = null)
   {
     if (size <= 0)
     {
@@ -1244,7 +1397,131 @@ public static class RandomExtensions
 
     var text = random.String(size, min, max);
 
-    return await random.File(directory).WriteText(text, encoding, cancellation).ConfigureAwait(false);
+    return random.File(directory).WriteText(text, encoding);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="encoding"></param>
+  /// <param name="directory"></param>
+  /// <param name="ranges"></param>
+  /// <returns></returns>
+  public static FileInfo TextFileInRange(this Random random, int size, Encoding encoding = null, DirectoryInfo directory = null, params Range[] ranges)
+  {
+    if (size <= 0)
+    {
+      return random.TextFile(size, encoding, null, null, directory);
+    }
+
+    switch (ranges.Length)
+    {
+      case 0:
+        return random.TextFile(size, encoding, null, null, directory);
+
+      case 1:
+        var range = ranges.First();
+        return random.TextFile(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory);
+
+      default:
+        var totalRange = ranges.ToRange();
+        var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
+        return random.File(directory).WriteText(chars.ToText(), encoding);
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="count"></param>
+  /// <param name="encoding"></param>
+  /// <param name="min"></param>
+  /// <param name="max"></param>
+  /// <param name="directory"></param>
+  /// <returns></returns>
+  public static IEnumerable<FileInfo> TextFileSequence(this Random random, int size, int count, Encoding encoding = null, char? min = null, char? max = null, DirectoryInfo directory = null)
+  {
+    for (var i = 1; i <= count; i++)
+    {
+      yield return random.TextFile(size, encoding, min, max, directory);
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="count"></param>
+  /// <param name="encoding"></param>
+  /// <param name="directory"></param>
+  /// <param name="ranges"></param>
+  /// <returns></returns>
+  public static IEnumerable<FileInfo> TextFileSequenceInRange(this Random random, int size, int count, Encoding encoding = null, DirectoryInfo directory = null, params Range[] ranges)
+  {
+    if (count <= 0)
+    {
+      yield break;
+    }
+
+    switch (ranges.Length)
+    {
+      case 0:
+        foreach (var file in random.TextFileSequence(size, count, encoding, null, null, directory))
+        {
+          yield return file;
+        }
+
+        break;
+
+      case 1:
+        var range = ranges.First();
+
+        foreach (var file in random.TextFileSequence(size, count, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory))
+        {
+          yield return file;
+        }
+
+        break;
+
+      default:
+        var totalRange = ranges.ToRange();
+
+        for (var i = 1; i <= count; i++)
+        {
+          var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
+          yield return random.File(directory).WriteText(chars.ToText(), encoding);
+        }
+
+        break;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="encoding"></param>
+  /// <param name="min"></param>
+  /// <param name="max"></param>
+  /// <param name="directory"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<FileInfo> TextFileAsync(this Random random, int size, Encoding encoding = null, char? min = null, char? max = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
+  {
+    if (size <= 0)
+    {
+      return random.File(directory);
+    }
+
+    var text = random.String(size, min, max);
+
+    return await random.File(directory).WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -1257,26 +1534,26 @@ public static class RandomExtensions
   /// <param name="cancellation"></param>
   /// <param name="ranges"></param>
   /// <returns></returns>
-  public static async Task<FileInfo> TextFileInRange(this Random random, int size, Encoding encoding = null, DirectoryInfo directory = null, CancellationToken cancellation = default, params Range[] ranges)
+  public static async Task<FileInfo> TextFileInRangeAsync(this Random random, int size, Encoding encoding = null, DirectoryInfo directory = null, CancellationToken cancellation = default, params Range[] ranges)
   {
     if (size <= 0)
     {
-      return await random.TextFile(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
+      return await random.TextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
     }
 
     switch (ranges.Length)
     {
       case 0:
-        return await random.TextFile(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
+        return await random.TextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
 
       case 1:
         var range = ranges.First();
-        return await random.TextFile(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false);
+        return await random.TextFileAsync(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false);
 
       default:
         var totalRange = ranges.ToRange();
         var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-        return await random.File(directory).WriteText(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
+        return await random.File(directory).WriteTextAsync(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1292,11 +1569,11 @@ public static class RandomExtensions
   /// <param name="directory"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<FileInfo> TextFileSequence(this Random random, int size, int count, Encoding encoding = null, char? min = null, char? max = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<FileInfo> TextFileSequenceAsync(this Random random, int size, int count, Encoding encoding = null, char? min = null, char? max = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
     for (var i = 1; i <= count; i++)
     {
-      yield return await random.TextFile(size, encoding, min, max, directory, cancellation).ConfigureAwait(false);
+      yield return await random.TextFileAsync(size, encoding, min, max, directory, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1311,7 +1588,7 @@ public static class RandomExtensions
   /// <param name="cancellation"></param>
   /// <param name="ranges"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<FileInfo> TextFileSequenceInRange(this Random random, int size, int count, Encoding encoding = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default, params Range[] ranges)
+  public static async IAsyncEnumerable<FileInfo> TextFileSequenceInRangeAsync(this Random random, int size, int count, Encoding encoding = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default, params Range[] ranges)
   {
     if (count <= 0)
     {
@@ -1321,7 +1598,7 @@ public static class RandomExtensions
     switch (ranges.Length)
     {
       case 0:
-        await foreach (var file in random.TextFileSequence(size, count, encoding, null, null, directory, cancellation).ConfigureAwait(false))
+        await foreach (var file in random.TextFileSequenceAsync(size, count, encoding, null, null, directory, cancellation).ConfigureAwait(false))
         {
           yield return file;
         }
@@ -1331,7 +1608,7 @@ public static class RandomExtensions
       case 1:
         var range = ranges.First();
 
-        await foreach (var file in random.TextFileSequence(size, count, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false))
+        await foreach (var file in random.TextFileSequenceAsync(size, count, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false))
         {
           yield return file;
         }
@@ -1344,7 +1621,7 @@ public static class RandomExtensions
         for (var i = 1; i <= count; i++)
         {
           var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-          yield return await random.File(directory).WriteText(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
+          yield return await random.File(directory).WriteTextAsync(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
         }
 
         break;
@@ -1519,15 +1796,57 @@ public static class RandomExtensions
   /// <param name="count"></param>
   /// <param name="min"></param>
   /// <param name="max"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<MemoryStream> MemoryStream(this Random random, int count, byte? min = null, byte? max = null, CancellationToken cancellation = default)
+  public static MemoryStream MemoryStream(this Random random, int count, byte? min = null, byte? max = null)
   {
     var stream = new MemoryStream();
 
     if (count > 0)
     {
-      (await stream.WriteBytes(random.ByteSequence(count, min, max), cancellation).ConfigureAwait(false)).MoveToStart();
+      stream.WriteBytes(random.ByteSequence(count, min, max)).MoveToStart();
+    }
+
+    return stream;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="count"></param>
+  /// <param name="ranges"></param>
+  /// <returns></returns>
+  public static MemoryStream MemoryStreamInRange(this Random random, int count, params Range[] ranges)
+  {
+    var stream = new MemoryStream();
+
+    if (count > 0)
+    {
+      var range = ranges.ToRange();
+      var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.ByteSequence(count)).AsArray();
+
+      stream.WriteBytes(bytes).MoveToStart();
+    }
+
+    return stream;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="count"></param>
+  /// <param name="min"></param>
+  /// <param name="max"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<MemoryStream> MemoryStreamAsync(this Random random, int count, byte? min = null, byte? max = null, CancellationToken cancellation = default)
+  {
+    var stream = new MemoryStream();
+
+    if (count > 0)
+    {
+      (await stream.WriteBytesAsync(random.ByteSequence(count, min, max), cancellation).ConfigureAwait(false)).MoveToStart();
     }
 
     return stream;
@@ -1541,7 +1860,7 @@ public static class RandomExtensions
   /// <param name="cancellation"></param>
   /// <param name="ranges"></param>
   /// <returns></returns>
-  public static async Task<MemoryStream> MemoryStreamInRange(this Random random, int count, CancellationToken cancellation = default, params Range[] ranges)
+  public static async Task<MemoryStream> MemoryStreamInRangeAsync(this Random random, int count, CancellationToken cancellation = default, params Range[] ranges)
   {
     var stream = new MemoryStream();
 
@@ -1550,7 +1869,7 @@ public static class RandomExtensions
       var range = ranges.ToRange();
       var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.ByteSequence(count)).AsArray();
 
-      (await stream.WriteBytes(bytes, cancellation).ConfigureAwait(false)).MoveToStart();
+      (await stream.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false)).MoveToStart();
     }
 
     return stream;

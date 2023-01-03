@@ -28,7 +28,44 @@ public static class NetworkExtensions
   /// <param name="address"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  public static async Task<bool> IsAvailable(this IPAddress address, TimeSpan? timeout = null)
+  public static bool IsAvailable(this IPAddress address, TimeSpan? timeout = null)
+  {
+    using var ping = new Ping();
+
+    var reply = timeout != null ? ping.Send(address, (int) timeout.Value.TotalMilliseconds) : ping.Send(address);
+
+    return reply.Status == IPStatus.Success;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="host"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  public static bool IsAvailable(this IPHostEntry host, TimeSpan? timeout = null)
+  {
+    var address = host.HostName.IsEmpty() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
+
+    if (address == null)
+    {
+      return false;
+    }
+
+    using var ping = new Ping();
+
+    var reply = timeout != null ? ping.Send(address, (int) timeout.Value.TotalMilliseconds) : ping.Send(address);
+
+    return reply.Status == IPStatus.Success;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  public static async Task<bool> IsAvailableAsync(this IPAddress address, TimeSpan? timeout = null)
   {
     using var ping = new Ping();
 
@@ -43,7 +80,7 @@ public static class NetworkExtensions
   /// <param name="host"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  public static async Task<bool> IsAvailable(this IPHostEntry host, TimeSpan? timeout = null)
+  public static async Task<bool> IsAvailableAsync(this IPHostEntry host, TimeSpan? timeout = null)
   {
     var address = host.HostName.IsEmpty() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
 
@@ -129,7 +166,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static HttpClient WithHeaders(this HttpClient http, IDictionary<string, object> headers)
+  public static HttpClient WithHeaders(this HttpClient http, IReadOnlyDictionary<string, object> headers)
   {
     headers.ForEach(header => http.DefaultRequestHeaders.Add(header.Key, header.Value?.ToInvariantString()));
     return http;
@@ -218,9 +255,60 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="http"></param>
   /// <param name="uri"></param>
+  /// <returns></returns>
+  public static HttpContent ExecuteHead(this HttpClient http, Uri uri) => http.ExecuteHeadAsync(uri).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <returns></returns>
+  public static HttpContent ExecuteGet(this HttpClient http, Uri uri) => http.ExecuteGetAsync(uri).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="content"></param>
+  /// <returns></returns>
+  public static HttpContent ExecutePost(this HttpClient http, Uri uri, HttpContent content = null) => http.ExecutePostAsync(uri, content).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="content"></param>
+  /// <returns></returns>
+  public static HttpContent ExecutePut(this HttpClient http, Uri uri, HttpContent content = null) => http.ExecutePutAsync(uri, content).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="content"></param>
+  /// <returns></returns>
+  public static HttpContent ExecutePatch(this HttpClient http, Uri uri, HttpContent content = null) => http.ExecutePatchAsync(uri, content).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <returns></returns>
+  public static HttpContent ExecuteDelete(this HttpClient http, Uri uri) => http.ExecuteDeleteAsync(uri).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpContent> Head(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  public static async Task<HttpContent> ExecuteHeadAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
     var response = await http.SendAsync(new HttpRequestMessage(HttpMethod.Head, uri), cancellation).ConfigureAwait(false);
     
@@ -236,7 +324,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpContent> Get(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  public static async Task<HttpContent> ExecuteGetAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
     var response = await http.GetAsync(uri, cancellation).ConfigureAwait(false);
     
@@ -253,7 +341,7 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpContent> Post(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
+  public static async Task<HttpContent> ExecutePostAsync(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
   {
     var response = await http.PostAsync(uri, content, cancellation).ConfigureAwait(false);
     
@@ -270,7 +358,7 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpContent> Put(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
+  public static async Task<HttpContent> ExecutePutAsync(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
   {
     var response = await http.PutAsync(uri, content, cancellation).ConfigureAwait(false);
     
@@ -287,7 +375,7 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpContent> Patch(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
+  public static async Task<HttpContent> ExecutePatchAsync(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
   {
     var response = await http.PatchAsync(uri, content, cancellation).ConfigureAwait(false);
     
@@ -303,7 +391,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpContent> Delete(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  public static async Task<HttpContent> ExecuteDeleteAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
     var response = await http.DeleteAsync(uri, cancellation).ConfigureAwait(false);
     
@@ -401,7 +489,29 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  public static IPHostEntry ToHost(this IPAddress address) => new() { AddressList = new[] { address }, Aliases = Array.Empty<string>() };
+  public static IPHostEntry ToIpHost(this IPAddress address) => new() { AddressList = new[] { address }, Aliases = Array.Empty<string>() };
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <returns></returns>
+  public static Stream ToStream(this HttpClient http, Uri uri) => http.ToStreamAsync(uri).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="content"></param>
+  /// <returns></returns>
+  public static Stream ToStream(this HttpContent content)
+  {
+    #if NET6_0
+    return content.ReadAsStream();
+    #else
+      return content.ReadAsStreamAsync().Result;
+    #endif
+  }
 
   /// <summary>
   ///   <para></para>
@@ -410,7 +520,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<Stream> ToStream(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  public static async Task<Stream> ToStreamAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
 #if NET6_0
       return await http.GetStreamAsync(uri, cancellation).ConfigureAwait(false);
@@ -425,7 +535,7 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<Stream> ToStream(this HttpContent content, CancellationToken cancellation = default)
+  public static async Task<Stream> ToStreamAsync(this HttpContent content, CancellationToken cancellation = default)
   {
 #if NET6_0
     return await content.ReadAsStreamAsync(cancellation).ConfigureAwait(false);
@@ -453,17 +563,52 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="http"></param>
   /// <param name="uri"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> ToBytes(this HttpClient http, Uri uri)
+  {
+    using var stream = http.ToStream(uri);
+    return stream.ToBytes();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="content"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> ToBytes(this HttpContent content)
+  {
+    using var stream = content.ToStream();
+    return stream.ToBytes();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> ToBytes(this TcpClient tcp) => tcp.GetStream().ToBytes();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> ToBytes(this UdpClient udp) => udp.ReceiveAsync().Result.Buffer;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToBytes(this HttpClient http, Uri uri, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpClient http, Uri uri, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
-#if NET6_0
-      var result = http.GetByteArrayAsync(uri, cancellation).ConfigureAwait(false);
-#else
-      var result = http.GetByteArrayAsync(uri).ConfigureAwait(false);
-#endif
+    await using var stream = await http.ToStreamAsync(uri, cancellation);
 
-    foreach (var value in await result)
+    var result = stream.ToBytesAsync(cancellation).ConfigureAwait(false);
+
+    await foreach (var value in result)
     {
       yield return value;
     }
@@ -475,10 +620,10 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToBytes(this HttpContent content, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpContent content, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
 #if NET6_0
-      var result = content.ReadAsByteArrayAsync(cancellation).ConfigureAwait(false);
+    var result = content.ReadAsByteArrayAsync(cancellation).ConfigureAwait(false);
 #else
       var result = content.ReadAsByteArrayAsync().ConfigureAwait(false);
 #endif
@@ -495,9 +640,9 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToBytes(this TcpClient tcp, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this TcpClient tcp, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
-    await foreach (var element in tcp.GetStream().ToBytes(cancellation).ConfigureAwait(false))
+    await foreach (var element in tcp.GetStream().ToBytesAsync(cancellation).ConfigureAwait(false))
     {
       yield return element;
     }
@@ -509,7 +654,7 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToBytes(this UdpClient udp, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this UdpClient udp, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
 #if NET6_0
     var result = await udp.ReceiveAsync(cancellation).ConfigureAwait(false);
@@ -528,9 +673,40 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="http"></param>
   /// <param name="uri"></param>
+  /// <returns></returns>
+  public static string ToText(this HttpClient http, Uri uri) => http.ToTextAsync(uri).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="content"></param>
+  /// <returns></returns>
+  public static string ToText(this HttpContent content) => content.ToTextAsync().Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static string ToText(this TcpClient tcp, Encoding encoding = null) => tcp.ToBytes().AsArray().ToText(encoding);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static string ToText(this UdpClient udp, Encoding encoding = null) => udp.ToBytes().AsArray().ToText(encoding);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> ToText(this HttpClient http, Uri uri, CancellationToken cancellation = default)
+  public static async Task<string> ToTextAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
 #if NET6_0
       return await http.GetStringAsync(uri, cancellation).ConfigureAwait(false);
@@ -545,7 +721,7 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> ToText(this HttpContent content, CancellationToken cancellation = default)
+  public static async Task<string> ToTextAsync(this HttpContent content, CancellationToken cancellation = default)
   {
 #if NET6_0
       return await content.ReadAsStringAsync(cancellation).ConfigureAwait(false);
@@ -561,7 +737,7 @@ public static class NetworkExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> ToText(this TcpClient tcp, Encoding encoding = null, CancellationToken cancellation = default) => (await tcp.ToBytes(cancellation).ToArray().ConfigureAwait(false)).ToText(encoding);
+  public static async Task<string> ToTextAsync(this TcpClient tcp, Encoding encoding = null, CancellationToken cancellation = default) => (await tcp.ToBytesAsync(cancellation).ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
 
   /// <summary>
   ///   <para></para>
@@ -570,8 +746,42 @@ public static class NetworkExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> ToText(this UdpClient udp, Encoding encoding = null, CancellationToken cancellation = default) => (await udp.ToBytes(cancellation).ToArray().ConfigureAwait(false)).ToText(encoding);
+  public static async Task<string> ToTextAsync(this UdpClient udp, Encoding encoding = null, CancellationToken cancellation = default) => (await udp.ToBytesAsync(cancellation).ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="http"></param>
+  /// <param name="bytes"></param>
+  /// <param name="uri"></param>
+  /// <returns></returns>
+  public static HttpContent WriteBytes(this HttpClient http, IEnumerable<byte> bytes, Uri uri) => http.WriteBytesAsync(bytes, uri).Result;
   
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="bytes"></param>
+  /// <returns></returns>
+  public static TcpClient WriteBytes(this TcpClient tcp, IEnumerable<byte> bytes)
+  {
+    tcp.GetStream().WriteBytes(bytes);
+    return tcp;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <param name="bytes"></param>
+  /// <returns></returns>
+  public static UdpClient WriteBytes(this UdpClient udp, IEnumerable<byte> bytes)
+  {
+    var datagram = bytes.AsArray();
+    udp.Send(datagram, datagram.Length);
+    return udp;
+  }
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -580,11 +790,11 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpResponseMessage> WriteBytes(this HttpClient http, IEnumerable<byte> bytes, Uri uri, CancellationToken cancellation = default)
+  public static async Task<HttpContent> WriteBytesAsync(this HttpClient http, IEnumerable<byte> bytes, Uri uri, CancellationToken cancellation = default)
   {
     using var content = new ByteArrayContent(bytes.AsArray());
     
-    return await http.PostAsync(uri, content, cancellation).ConfigureAwait(false);
+    return await http.ExecutePostAsync(uri, content, cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -594,9 +804,9 @@ public static class NetworkExtensions
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<TcpClient> WriteBytes(this TcpClient tcp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
+  public static async Task<TcpClient> WriteBytesAsync(this TcpClient tcp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
-    await tcp.GetStream().WriteBytes(bytes, cancellation).ConfigureAwait(false);
+    await tcp.GetStream().WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
     return tcp;
   }
 
@@ -607,13 +817,13 @@ public static class NetworkExtensions
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<UdpClient> WriteBytes(this UdpClient udp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
+  public static async Task<UdpClient> WriteBytesAsync(this UdpClient udp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
 #if NET6_0
       await udp.SendAsync(bytes.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
 #else
-    var array = bytes.AsArray();
-    await udp.SendAsync(array, array.Length).ConfigureAwait(false);
+    var datagram = bytes.AsArray();
+    await udp.SendAsync(datagram, datagram.Length).ConfigureAwait(false);
 #endif
 
     return udp;
@@ -625,13 +835,8 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="text"></param>
   /// <param name="uri"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpContent> WriteText(this HttpClient http, string text, Uri uri, CancellationToken cancellation = default)
-  {
-    using var content = new StringContent(text);
-    return await http.Post(uri, content, cancellation).ConfigureAwait(false);
-  }
+  public static HttpContent WriteText(this HttpClient http, string text, Uri uri) => http.WriteTextAsync(text, uri).Result;
 
   /// <summary>
   ///   <para></para>
@@ -639,9 +844,8 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="text"></param>
   /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<TcpClient> WriteText(this TcpClient tcp, string text, Encoding encoding = null, CancellationToken cancellation = default) => await tcp.WriteBytes(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
+  public static TcpClient WriteText(this TcpClient tcp, string text, Encoding encoding = null) => tcp.WriteBytes(text.ToBytes(encoding));
 
   /// <summary>
   ///   <para></para>
@@ -649,19 +853,120 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="text"></param>
   /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<UdpClient> WriteText(this UdpClient udp, string text, Encoding encoding = null, CancellationToken cancellation = default) => await udp.WriteBytes(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
+  public static UdpClient WriteText(this UdpClient udp, string text, Encoding encoding = null) => udp.WriteBytes(text.ToBytes(encoding));
   
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="http"></param>
+  /// <param name="text"></param>
+  /// <param name="uri"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<HttpContent> WriteTextAsync(this HttpClient http, string text, Uri uri, CancellationToken cancellation = default)
+  {
+    using var content = new StringContent(text);
+    return await ExecutePostAsync(http, uri, content, cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <param name="text"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<TcpClient> WriteTextAsync(this TcpClient tcp, string text, Encoding encoding = null, CancellationToken cancellation = default) => await tcp.WriteBytesAsync(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <param name="text"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<UdpClient> WriteTextAsync(this UdpClient udp, string text, Encoding encoding = null, CancellationToken cancellation = default) => await udp.WriteBytesAsync(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <returns></returns>
+  public static HttpContent WriteTo(this IEnumerable<byte> bytes, HttpClient http, Uri uri) => http.WriteBytes(bytes, uri);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="tcp"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, TcpClient tcp)
+  {
+    tcp.WriteBytes(bytes);
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="udp"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, UdpClient udp)
+  {
+    udp.WriteBytes(bytes);
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <returns></returns>
+  public static HttpContent WriteTo(this string text, HttpClient http, Uri uri) => http.WriteText(text, uri);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="tcp"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static string WriteTo(this string text, TcpClient tcp, Encoding encoding = null)
+  {
+    tcp.WriteText(text, encoding);
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="udp"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static string WriteTo(this string text, UdpClient udp, Encoding encoding = null)
+  {
+    udp.WriteText(text, encoding);
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="bytes"></param>
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpResponseMessage> WriteTo(this IEnumerable<byte> bytes, HttpClient http, Uri uri, CancellationToken cancellation = default) => await http.WriteBytes(bytes, uri, cancellation).ConfigureAwait(false);
+  public static async Task<HttpContent> WriteToAsync(this IEnumerable<byte> bytes, HttpClient http, Uri uri, CancellationToken cancellation = default) => await http.WriteBytesAsync(bytes, uri, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -670,9 +975,9 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, TcpClient tcp, CancellationToken cancellation = default)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, TcpClient tcp, CancellationToken cancellation = default)
   {
-    await tcp.WriteBytes(bytes, cancellation).ConfigureAwait(false);
+    await tcp.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
     return bytes;
   }
 
@@ -683,9 +988,9 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, UdpClient udp, CancellationToken cancellation = default)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, UdpClient udp, CancellationToken cancellation = default)
   {
-    await udp.WriteBytes(bytes, cancellation).ConfigureAwait(false);
+    await udp.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
     return bytes;
   }
 
@@ -697,7 +1002,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<HttpContent> WriteTo(this string text, HttpClient http, Uri uri, CancellationToken cancellation = default) => await http.WriteText(text, uri, cancellation).ConfigureAwait(false);
+  public static async Task<HttpContent> WriteToAsync(this string text, HttpClient http, Uri uri, CancellationToken cancellation = default) => await http.WriteTextAsync(text, uri, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
@@ -707,9 +1012,9 @@ public static class NetworkExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> WriteTo(this string text, TcpClient tcp, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, TcpClient tcp, Encoding encoding = null, CancellationToken cancellation = default)
   {
-    await tcp.WriteText(text, encoding, cancellation).ConfigureAwait(false);
+    await tcp.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
     return text;
   }
 
@@ -721,9 +1026,9 @@ public static class NetworkExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> WriteTo(this string text, UdpClient udp, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, UdpClient udp, Encoding encoding = null, CancellationToken cancellation = default)
   {
-    await udp.WriteText(text, encoding, cancellation).ConfigureAwait(false);
+    await udp.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
     return text;
   }
 

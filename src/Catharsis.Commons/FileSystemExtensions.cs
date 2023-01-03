@@ -74,19 +74,46 @@ public static class FileSystemExtensions
   }
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static IEnumerable<string> Lines(this FileInfo file, Encoding encoding = null)
+  {
+    using var reader = file.ToStreamReader(encoding);
+    return reader.Lines();
+  }
+
+  /// <summary>
   ///   <para>Reads text content of a file and returns it as a list of strings, using default system-dependent string separator.</para>
   /// </summary>
   /// <param name="file">File to read text from.</param>
   /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
   /// <returns>List of strings which have been read from a <paramref name="file"/>.</returns>
-  public static async IAsyncEnumerable<string> Lines(this FileInfo file, Encoding encoding = null)
+  public static async IAsyncEnumerable<string> LinesAsync(this FileInfo file, Encoding encoding = null)
   {
     using var reader = file.ToStreamReader(encoding);
 
-    await foreach (var line in reader.Lines().ConfigureAwait(false))
+    await foreach (var line in reader.LinesAsync().ConfigureAwait(false))
     {
       yield return line;
     }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static T Print<T>(this T instance, FileInfo destination, Encoding encoding = null)
+  {
+    using var writer = destination.ToStreamWriter(encoding);
+
+    return instance.Print(writer);
   }
 
   /// <summary>
@@ -97,11 +124,11 @@ public static class FileSystemExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<T> Print<T>(this T instance, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<T> PrintAsync<T>(this T instance, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
     await using var writer = destination.ToStreamWriter(encoding);
 
-    return await instance.Print(writer, cancellation).ConfigureAwait(false);
+    return await instance.PrintAsync(writer, cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -261,21 +288,44 @@ public static class FileSystemExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   public static StreamWriter ToStreamWriter(this FileInfo file, Encoding encoding = null) => new(file.FullName, true, encoding ?? Encoding.Default, -1);
-  
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> ToBytes(this FileInfo source)
+  {
+    using var stream = source.ToReadOnlyStream();
+    return stream.ToBytes();
+  }
+
   /// <summary>
   ///  <para>Reads entire contents of file and returns it as a byte array.</para>
   /// </summary>
   /// <param name="source">File to read data from.</param>
   /// <param name="cancellation"></param>
   /// <returns>Byte content of specified <paramref name="source"/>.</returns>
-  public static async IAsyncEnumerable<byte> ToBytes(this FileInfo source, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this FileInfo source, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
     await using var stream = source.ToReadOnlyStream();
 
-    await foreach (var element in stream.ToBytes(cancellation).ConfigureAwait(false))
+    await foreach (var element in stream.ToBytesAsync(cancellation).ConfigureAwait(false))
     {
       yield return element;
     }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="source"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static string ToText(this FileInfo source, Encoding encoding = null)
+  {
+    using var reader = source.ToStreamReader(encoding);
+    return reader.ToText();
   }
 
   /// <summary>
@@ -284,11 +334,31 @@ public static class FileSystemExtensions
   /// <param name="source">File to read text from.</param>
   /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
   /// <returns>Text contents of a <paramref name="source"/>.</returns>
-  public static async Task<string> ToText(this FileInfo source, Encoding encoding = null)
+  public static async Task<string> ToTextAsync(this FileInfo source, Encoding encoding = null)
   {
     using var reader = source.ToStreamReader(encoding);
+    return await reader.ToTextAsync().ConfigureAwait(false);
+  }
 
-    return await reader.ToText().ConfigureAwait(false);
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <returns></returns>
+  public static FileInfo WriteBytes(this FileInfo destination, IEnumerable<byte> bytes)
+  {
+    try
+    {
+      using var stream = destination.ToWriteOnlyStream();
+      stream.WriteBytes(bytes);
+
+      return destination;
+    }
+    finally
+    {
+      destination.Refresh();
+    }
   }
 
   /// <summary>
@@ -298,12 +368,12 @@ public static class FileSystemExtensions
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<FileInfo> WriteBytes(this FileInfo destination, IEnumerable<byte> bytes, CancellationToken cancellation = default)
+  public static async Task<FileInfo> WriteBytesAsync(this FileInfo destination, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     try
     {
       await using var stream = destination.ToWriteOnlyStream();
-      await stream.WriteBytes(bytes, cancellation).ConfigureAwait(false);
+      await stream.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
 
       return destination;
     }
@@ -321,12 +391,34 @@ public static class FileSystemExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<FileInfo> WriteText(this FileInfo destination, string text, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<FileInfo> WriteTextAsync(this FileInfo destination, string text, Encoding encoding = null, CancellationToken cancellation = default)
   {
     try
     {
       await using var writer = destination.ToStreamWriter(encoding);
-      await writer.WriteText(text, cancellation).ConfigureAwait(false);
+      await writer.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+
+      return destination;
+    }
+    finally
+    {
+      destination.Refresh();
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static FileInfo WriteText(this FileInfo destination, string text, Encoding encoding = null)
+  {
+    try
+    {
+      using var writer = destination.ToStreamWriter(encoding);
+      writer.WriteText(text);
 
       return destination;
     }
@@ -341,11 +433,23 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="bytes"></param>
   /// <param name="destination"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, FileInfo destination)
+  {
+    destination.WriteBytes(bytes);
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="destination"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteTo(this IEnumerable<byte> bytes, FileInfo destination, CancellationToken cancellation = default)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, FileInfo destination, CancellationToken cancellation = default)
   {
-    await destination.WriteBytes(bytes, cancellation).ConfigureAwait(false);
+    await destination.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
     return bytes;
   }
 
@@ -355,11 +459,24 @@ public static class FileSystemExtensions
   /// <param name="text"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static string WriteTo(this string text, FileInfo destination, Encoding encoding = null)
+  {
+    destination.WriteText(text, encoding);
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> WriteTo(this string text, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
-    await destination.WriteText(text, encoding, cancellation).ConfigureAwait(false);
+    await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
     return text;
   }
 }

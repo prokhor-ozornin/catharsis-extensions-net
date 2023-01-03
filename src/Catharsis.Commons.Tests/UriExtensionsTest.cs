@@ -11,12 +11,23 @@ namespace Catharsis.Commons.Tests;
 public sealed class UriExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.IsAvailable(Uri, TimeSpan?, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.IsAvailable(Uri, TimeSpan?)"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_IsAvailable_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.IsAvailable(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.IsAvailable(null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.IsAvailableAsync(Uri, TimeSpan?, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_IsAvailableAsync_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.IsAvailableAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -65,7 +76,7 @@ public sealed class UriExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="UriExtensions.WithQuery(UriBuilder, IDictionary{string, object})"/></description></item>
+  ///     <item><description><see cref="UriExtensions.WithQuery(UriBuilder, IReadOnlyDictionary{string, object})"/></description></item>
   ///     <item><description><see cref="UriExtensions.WithQuery(UriBuilder, (string Name, object Value)[])"/></description></item>
   ///   </list>
   /// </summary>
@@ -75,7 +86,7 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.WithQuery(null, new Dictionary<string, object>())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => new UriBuilder().WithQuery((IDictionary<string, object>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new UriBuilder().WithQuery((IReadOnlyDictionary<string, object>) null)).ThrowExactly<ArgumentNullException>();
 
     }
 
@@ -101,7 +112,7 @@ public sealed class UriExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.Lines(Uri, Encoding, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.Lines(Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_Lines_Method()
@@ -112,13 +123,36 @@ public sealed class UriExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.Print{T}(T, Uri, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.LinesAsync(Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_LinesAsync_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.LinesAsync(null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.Print{T}(T, Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Object_Print_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.Print<object>(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => UriExtensions.Print(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.Print<object>(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => UriExtensions.Print(new object(), null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.PrintAsync{T}(T, Uri, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_PrintAsync_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.PrintAsync<object>(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.PrintAsync(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -138,8 +172,8 @@ public sealed class UriExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="UriExtensions.ToEnumerable(Uri, (string Name, object Value)[])"/></description></item>
-  ///     <item><description><see cref="UriExtensions.ToEnumerable(Uri, int, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriExtensions.ToEnumerable(Uri, CancellationToken, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriExtensions.ToEnumerable(Uri, int, CancellationToken, (string Name, object Value)[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -161,8 +195,8 @@ public sealed class UriExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="UriExtensions.ToAsyncEnumerable(Uri, (string Name, object Value)[])"/></description></item>
-  ///     <item><description><see cref="UriExtensions.ToAsyncEnumerable(Uri, int, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriExtensions.ToAsyncEnumerable(Uri, CancellationToken, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriExtensions.ToAsyncEnumerable(Uri, int, CancellationToken, (string Name, object Value)[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -209,7 +243,18 @@ public sealed class UriExtensionsTest : UnitTest
   [Fact]
   public void Uri_ToStream_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.ToStream(null, null, ("name", "value"))).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.ToStream(null, null, ("name", "value"))).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToStreamAsync(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToStreamAsync_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.ToStreamAsync(null, null, default, ("name", "value"))).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
@@ -226,7 +271,7 @@ public sealed class UriExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.ToBytes(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToBytes(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_ToBytes_Method()
@@ -242,50 +287,126 @@ public sealed class UriExtensionsTest : UnitTest
   [Fact]
   public void Uri_ToText_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.ToText(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.WriteBytes(Uri, IEnumerable{byte}, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToBytesAsync(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToBytesAsync_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToTextAsync(Uri, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToTextAsync_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteBytes(Uri, IEnumerable{byte}, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_WriteBytes_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.WriteBytes(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => "https://localhost".ToUri().WriteBytes(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.WriteBytes(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => "https://localhost".ToUri().WriteBytes(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.WriteText(Uri, string, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteText(Uri, string, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_WriteText_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.WriteText(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => "https://localhost".ToUri().WriteText(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => "https://localhost".ToUri().WriteText(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.WriteTo(IEnumerable{byte}, Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteBytesAsync(Uri, IEnumerable{byte}, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_WriteBytesAsync_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.WriteBytesAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => "https://localhost".ToUri().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteTextAsync(Uri, string, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_WriteTextAsync_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.WriteTextAsync(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => "https://localhost".ToUri().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteTo(IEnumerable{byte}, Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void IEnumerable_WriteTo_Method()
   {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo("https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => UriExtensions.WriteTo(Enumerable.Empty<byte>(), null)).ThrowExactly<ArgumentNullException>();
+
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.WriteTo(string, Uri, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteTo(string, Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void String_WriteTo_Method()
   {
+    AssertionExtensions.Should(() => ((string) null).WriteTo("https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => UriExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteToAsync(IEnumerable{byte}, Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_WriteToAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync("https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.WriteToAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteToAsync(string, Uri, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteToAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync("https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.WriteToAsync(string.Empty, null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+
     throw new NotImplementedException();
   }
 }

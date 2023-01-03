@@ -81,7 +81,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
       RandomNonEmptyFile.TryFinallyDelete(file =>
       {
-        Convert.To.String(file, encoding).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(file, encoding)).And.Be(file.ToText(encoding).Await());
+        Convert.To.String(file, encoding).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(file, encoding)).And.Be(file.ToTextAsync(encoding).Await());
       });
     }
 
@@ -94,7 +94,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
       using (var stream = RandomStream)
       {
-        Convert.To.String(stream, encoding).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(stream.MoveToStart(), encoding)).And.Be(stream.MoveToStart().ToText(encoding).Await());
+        Convert.To.String(stream, encoding).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(stream.MoveToStart(), encoding)).And.Be(stream.MoveToStart().ToTextAsync(encoding).Await());
       }
     }
 
@@ -105,7 +105,7 @@ public sealed class ConvertExtensionsTests : UnitTest
       file.TryFinallyDelete(file =>
       {
         var uri = file.ToUri();
-        Convert.To.String(uri, encoding).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(uri, encoding)).And.Be(file.ToText(encoding).Await());
+        Convert.To.String(uri, encoding).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(uri, encoding)).And.Be(file.ToTextAsync(encoding).Await());
       });
     }
 
@@ -227,7 +227,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     using (new AssertionScope())
     {
       var xml = new XDocument(new XElement("root"));
-      Convert.To.String(xml).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(xml)).And.Be(xml.ToText().Await());
+      Convert.To.String(xml).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(xml)).And.Be(xml.ToTextAsync().Await());
     }
 
     // XmlReader
@@ -235,7 +235,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       var value = RandomName;
       var xml = new XDocument(new XElement("root", value));
-      using (var reader = xml.ToText().Await().ToXmlReader())
+      using (var reader = xml.ToTextAsync().Await().ToXmlReader())
       {
         reader.MoveToContent();
         Convert.To.String(reader).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(reader)).And.Be(xml.Root!.ToString());
@@ -329,7 +329,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
       RandomNonEmptyFile.TryFinallyDelete(file =>
       {
-        Convert.To.Binary(file).Should().NotBeNull().And.NotBeSameAs(Convert.To.Binary(file)).And.Equal(file.ToBytes().ToArray().Await());
+        Convert.To.Binary(file).Should().NotBeNull().And.NotBeSameAs(Convert.To.Binary(file)).And.Equal(file.ToBytesAsync().ToArrayAsync().Await());
       });
     }
 
@@ -392,7 +392,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     using (new AssertionScope())
     {
       var file = RandomNonEmptyFile;
-      var bytes = file.ToBytes().ToArray().Await();
+      var bytes = file.ToBytesAsync().ToArrayAsync().Await();
 
       file.TryFinallyDelete(file =>
       {
@@ -413,7 +413,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     using (new AssertionScope())
     {
       var xml = new XDocument(new XElement("root"));
-      Convert.To.Binary(xml).Should().NotBeNull().And.NotBeSameAs(Convert.To.Binary(xml)).And.Equal(xml.ToBytes().Await());
+      Convert.To.Binary(xml).Should().NotBeNull().And.NotBeSameAs(Convert.To.Binary(xml)).And.Equal(xml.ToBytesAsync().Await());
     }
 
     // Default
@@ -451,11 +451,11 @@ public sealed class ConvertExtensionsTests : UnitTest
     // IAsyncEnumerable
     using (var stream = RandomStream)
     {
-      var enumerable = stream.ToBytes();
+      var enumerable = stream.ToBytesAsync();
       var result = Convert.To.Array<byte>(enumerable);
       result.Should().NotBeNull().And.NotBeSameAs(Convert.To.Array<byte>(enumerable));
       stream.MoveToStart();
-      result.Should().Equal(enumerable.ToArray().Await());
+      result.Should().Equal(enumerable.ToArrayAsync().Await());
     }
 
     // Default
@@ -1674,7 +1674,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     Convert.To.Boolean(Environment.SystemDirectory.ToDirectory()).Should().BeTrue();
 
     Convert.To.Boolean(Stream.Null).Should().BeFalse();
-    using (var stream = Randomizer.MemoryStream(1).Await())
+    using (var stream = Randomizer.MemoryStreamAsync(1).Await())
     {
       Convert.To.Boolean(stream).Should().BeTrue();
     }
@@ -1683,7 +1683,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       Convert.To.Boolean(reader).Should().BeFalse();
     }
-    using (var stream = Randomizer.MemoryStream(1, byte.MinValue, byte.MinValue).Await())
+    using (var stream = Randomizer.MemoryStreamAsync(1, byte.MinValue, byte.MinValue).Await())
     {
       using (var reader = stream.ToBinaryReader())
       {

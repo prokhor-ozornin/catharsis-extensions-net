@@ -177,7 +177,14 @@ public static class BinaryExtensions
   /// <param name="reader"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToBytes(this BinaryReader reader, CancellationToken cancellation = default) => reader.BaseStream.ToBytes(cancellation);
+  public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader, CancellationToken cancellation = default) => reader.BaseStream.ToBytesAsync(cancellation);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
+  public static IEnumerable<byte> ToBytes(this BinaryReader reader) => reader.BaseStream.ToBytes();
 
   /// <summary>
   ///   <para></para>
@@ -243,5 +250,4 @@ public static class BinaryExtensions
     destination.WriteText(text);
     return text;
   }
-
 }

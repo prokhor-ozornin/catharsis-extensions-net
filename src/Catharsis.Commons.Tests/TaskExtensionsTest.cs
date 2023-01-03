@@ -73,7 +73,7 @@ public sealed class TaskExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="TaskExtensions.Execute(ValueTask, Action{ValueTask}, Action{ValueTask}, Action{ValueTask})"/> method.</para>
   /// </summary>
   [Fact]
-  public void ValueTask_Execute_Methods()
+  public void ValueTask_Execute_Method()
   {
     throw new NotImplementedException();
   }
@@ -96,7 +96,41 @@ public sealed class TaskExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Task<object>) null).Execute()).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((Task<object>) null).Execute()).ThrowExactly<ArgumentNullException>();
+
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TaskExtensions.ExecuteAsync(ValueTask, Action{ValueTask}, Action{ValueTask}, Action{ValueTask})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ValueTask_ExecuteAsync_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="TaskExtensions.ExecuteAsync(Task, Action{Task}, Action{Task}, Action{Task})"/></description></item>
+  ///     <item><description><see cref="TaskExtensions.ExecuteAsync{T}(Task{T}, Action{Task{T}}, Action{Task{T}}, Action{Task{T}})"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Task_ExecuteAsync_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Task) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Task<object>) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     }
 

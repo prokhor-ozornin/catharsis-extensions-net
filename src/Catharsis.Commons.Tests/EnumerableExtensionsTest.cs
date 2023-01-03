@@ -317,7 +317,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
     {
       var result = sequence.ToAsyncEnumerable();
       result.Should().NotBeNull().And.NotBeSameAs(sequence.ToAsyncEnumerable());
-      result.ToArray().Await().Should().Equal(sequence.ToArray());
+      result.ToArrayAsync().Await().Should().Equal(sequence.ToArray());
     }
 
     using (new AssertionScope())
@@ -431,30 +431,6 @@ public sealed class EnumerableExtensionsTest : UnitTest
   public void IEnumerable_ToImmutableQueue_Method()
   {
     AssertionExtensions.Should(() => EnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<ArgumentNullException>();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="EnumerableExtensions.ToMemoryStream(IEnumerable{byte}, CancellationToken)"/></description></item>
-  ///     <item><description><see cref="EnumerableExtensions.ToMemoryStream(IEnumerable{byte[]}, CancellationToken)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void IEnumerable_ToMemoryStream_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStream()).ThrowExactlyAsync<ArgumentNullException>().Await();
-      
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStream()).ThrowExactlyAsync<ArgumentNullException>().Await();
-    }
 
     throw new NotImplementedException();
   }
@@ -584,6 +560,54 @@ public sealed class EnumerableExtensionsTest : UnitTest
   public void IEnumerable_ToReadOnlyDictionary_Method()
   {
     AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlyDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="EnumerableExtensions.ToMemoryStream(IEnumerable{byte})"/></description></item>
+  ///     <item><description><see cref="EnumerableExtensions.ToMemoryStream(IEnumerable{byte[]})"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_ToMemoryStream_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>();
+
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>();
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="EnumerableExtensions.ToMemoryStreamAsync(IEnumerable{byte}, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="EnumerableExtensions.ToMemoryStreamAsync(IEnumerable{byte[]}, CancellationToken)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_ToMemoryStreamAsync_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+    }
 
     throw new NotImplementedException();
   }

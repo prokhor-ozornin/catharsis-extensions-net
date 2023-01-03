@@ -109,7 +109,38 @@ public static class TaskExtensions
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async ValueTask Execute(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null)
+  public static ValueTask Execute(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="task"></param>
+  /// <param name="success"></param>
+  /// <param name="failure"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static Task Execute(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="task"></param>
+  /// <param name="success"></param>
+  /// <param name="failure"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static T Execute<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="task"></param>
+  /// <param name="success"></param>
+  /// <param name="failure"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async ValueTask ExecuteAsync(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null)
   {
     await task.ConfigureAwait(false);
 
@@ -135,7 +166,7 @@ public static class TaskExtensions
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task Execute(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null)
+  public static async Task ExecuteAsync(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null)
   {
     await task.ConfigureAwait(false);
 
@@ -162,7 +193,7 @@ public static class TaskExtensions
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<T> Execute<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null)
+  public static async Task<T> ExecuteAsync<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null)
   {
     await task.ConfigureAwait(false);
 

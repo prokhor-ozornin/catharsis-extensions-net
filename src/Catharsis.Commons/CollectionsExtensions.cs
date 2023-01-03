@@ -320,7 +320,6 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull => new(dictionary, comparer);
 
-
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -329,7 +328,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey: notnull => comparer != null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
+  public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey: notnull => comparer != null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
 
   /// <summary>
   /// 

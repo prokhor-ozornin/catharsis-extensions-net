@@ -333,34 +333,6 @@ public static class EnumerableExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="sequence"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<MemoryStream> ToMemoryStream(this IEnumerable<byte> sequence, CancellationToken cancellation = default) => await sequence.Chunk(4096).ToMemoryStream(cancellation).ConfigureAwait(false);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="sequence"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<MemoryStream> ToMemoryStream(this IEnumerable<byte[]> sequence, CancellationToken cancellation = default)
-  {
-    var stream = new MemoryStream();
-
-    foreach (var bytes in sequence)
-    {
-      await stream.WriteAsync(bytes, 0, bytes.Length, cancellation).ConfigureAwait(false);
-    }
-
-    stream.MoveToStart();
-
-    return stream;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
@@ -451,4 +423,57 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> sequence, IEqualityComparer<TKey> comparer = null) where TKey : notnull => sequence.ToDictionary(comparer);
 
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="sequence"></param>
+  /// <returns></returns>
+  public static MemoryStream ToMemoryStream(this IEnumerable<byte> sequence) => sequence.Chunk(4096).ToMemoryStream();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="sequence"></param>
+  /// <returns></returns>
+  public static MemoryStream ToMemoryStream(this IEnumerable<byte[]> sequence)
+  {
+    var stream = new MemoryStream();
+
+    foreach (var bytes in sequence)
+    {
+      stream.Write(bytes, 0, bytes.Length);
+    }
+
+    stream.MoveToStart();
+
+    return stream;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="sequence"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte> sequence, CancellationToken cancellation = default) => await sequence.Chunk(4096).ToMemoryStreamAsync(cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="sequence"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte[]> sequence, CancellationToken cancellation = default)
+  {
+    var stream = new MemoryStream();
+
+    foreach (var bytes in sequence)
+    {
+      await stream.WriteAsync(bytes, 0, bytes.Length, cancellation).ConfigureAwait(false);
+    }
+
+    stream.MoveToStart();
+
+    return stream;
+  }
 }
