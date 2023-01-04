@@ -12,17 +12,6 @@ namespace Catharsis.Commons.Tests;
 public sealed class ObjectExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="ObjectExtensions.IsSameAs(object, object)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Object_IsSameAs_Method()
-  {
-    AssertionExtensions.Should(() => ObjectExtensions.IsSameAs(null, new object())).ThrowExactly<ArgumentNullException>();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="ObjectExtensions.Is{T}(object)"/> method.</para>
   /// </summary>
   [Fact]
@@ -33,6 +22,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     new object().Is<object>().Should().BeTrue();
     new object().Is<string>().Should().BeFalse();
     string.Empty.Is<IEnumerable<char>>().Should().BeTrue();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.IsSameAs(object, object)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_IsSameAs_Method()
+  {
+    AssertionExtensions.Should(() => ObjectExtensions.IsSameAs(null, new object())).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
@@ -493,15 +493,15 @@ public sealed class ObjectExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ObjectExtensions.GetFieldValue(object, string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.GetFieldValue{T}(object, string)"/> method.</para>
   /// </summary>
   [Fact]
   public void Object_GetFieldValue_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.GetFieldValue(null, string.Empty)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new object().GetFieldValue(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ObjectExtensions.GetFieldValue<object>(null, string.Empty)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new object().GetFieldValue<object>(null)).ThrowExactly<ArgumentNullException>();
 
-    //new object().Field("field").Should().BeNull();
+    //var result = new object().GetFieldValue<Guid>("field");
 
     //var subject = new TestObject {PublicField = "value"};
     //subject.Field("PublicField").To<string>().Should().Be("value");
@@ -510,13 +510,13 @@ public sealed class ObjectExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ObjectExtensions.GetPropertyValue(object, string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.GetPropertyValue{T}(object, string)"/> method.</para>
   /// </summary>
   [Fact]
   public void Object_GetPropertyValue_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.GetPropertyValue(null, string.Empty)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new object().GetPropertyValue(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ObjectExtensions.GetPropertyValue<object>(null, string.Empty)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new object().GetPropertyValue<object>(null)).ThrowExactly<ArgumentNullException>();
 
     /*new object().Property("property").Should().BeNull();
 
@@ -571,25 +571,25 @@ public sealed class ObjectExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ObjectExtensions.CallMethod(object, string, IEnumerable{object})"/> method.</para>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.CallMethod{T}(object, string, IEnumerable{object})"/> method.</para>
   /// </summary>
   [Fact]
   public void Object_CallMethod_Enumerable_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.CallMethod(null, string.Empty, (IEnumerable<string>) null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new object().CallMethod(null, (IEnumerable<string>) null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ObjectExtensions.CallMethod<object>(null, string.Empty)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new object().CallMethod<object>(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ObjectExtensions.CallMethod(object, string, object[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.CallMethod{T}(object, string, object[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Object_CallMethod_Array_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.CallMethod(null, string.Empty)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new object().CallMethod(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ObjectExtensions.CallMethod<object>(null, string.Empty, Array.Empty<object>())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new object().CallMethod<object>(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>();
 
     /*new object().Method("method").Should().BeNull();
     ((bool) string.Empty.Method("Contains", string.Empty)).Should().BeTrue();*/

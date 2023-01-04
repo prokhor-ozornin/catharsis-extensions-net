@@ -18,7 +18,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static bool IsEmpty<T>(this IEnumerable<T> sequence) => !sequence.Any();
+  public static bool IsEmpty<T>(this IEnumerable<T> sequence) => !sequence?.Any() ?? throw new ArgumentNullException(nameof(sequence));
   
   /// <summary>
   ///   <para></para>
@@ -38,6 +38,9 @@ public static class EnumerableExtensions
   /// <returns>Back reference to the current sequence.</returns>
   public static IEnumerable<T> ForEach<T>(this IEnumerable<T> sequence, Action<int, T> action)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
     var index = 0;
 
     foreach (var element in sequence)
@@ -56,7 +59,13 @@ public static class EnumerableExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  public static IEnumerable<T> Min<T>(this IEnumerable<T> left, IEnumerable<T> right) => left.Count() <= right.Count() ? left : right;
+  public static IEnumerable<T> Min<T>(this IEnumerable<T> left, IEnumerable<T> right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Count() <= right.Count() ? left : right;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -65,7 +74,13 @@ public static class EnumerableExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  public static IEnumerable<T> Max<T>(this IEnumerable<T> left, IEnumerable<T> right) => left.Count() >= right.Count() ? left : right;
+  public static IEnumerable<T> Max<T>(this IEnumerable<T> left, IEnumerable<T> right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Count() >= right.Count() ? left : right;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -75,7 +90,13 @@ public static class EnumerableExtensions
   /// <param name="other"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static bool Contains<T>(this IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => !sequence.Except(other, comparer).Any();
+  public static bool Contains<T>(this IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (other is null) throw new ArgumentNullException(nameof(other));
+
+    return !sequence.Except(other, comparer).Any();
+  }
 
   /// <summary>
   ///   <para></para>
@@ -87,6 +108,10 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static IEnumerable<T> Range<T>(this IEnumerable<T> sequence, int? offset = null, int? count = null)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (offset is < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
     if (offset != null)
     {
       sequence = sequence.Skip(offset.Value);
@@ -108,7 +133,13 @@ public static class EnumerableExtensions
   /// <param name="other"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static bool StartsWith<T>(this IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => sequence.Take(other.Count()).SequenceEqual(other, comparer);
+  public static bool StartsWith<T>(this IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (other is null) throw new ArgumentNullException(nameof(other));
+
+    return sequence.Take(other.Count()).SequenceEqual(other, comparer);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -118,8 +149,14 @@ public static class EnumerableExtensions
   /// <param name="other"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static bool EndsWith<T>(this IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => sequence.TakeLast(other.Count()).SequenceEqual(other, comparer);
-  
+  public static bool EndsWith<T>(this IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (other is null) throw new ArgumentNullException(nameof(other));
+
+    return sequence.TakeLast(other.Count()).SequenceEqual(other, comparer);
+  }
+
   /// <summary>
   ///   <para>Concatenates all elements in a sequence into a string, using specified separator.</para>
   /// </summary>
@@ -129,6 +166,8 @@ public static class EnumerableExtensions
   /// <returns>String which is formed from string representation of each element in a <paramref name="sequence"/> with a <paramref name="separator"/> between them.</returns>
   public static string Join<T>(this IEnumerable<T> sequence, string separator = null)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     separator ??= string.Empty;
 
     var result = new StringBuilder();
@@ -162,6 +201,8 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static IEnumerable<T> Repeat<T>(this IEnumerable<T> sequence, int count)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     switch (count)
     {
       case < 0:
@@ -187,6 +228,8 @@ public static class EnumerableExtensions
   /// <returns>Random member of <paramref name="sequence"/> sequence. If <paramref name="sequence"/> contains no elements, returns <c>null</c>.</returns>
   public static T Random<T>(this IEnumerable<T> sequence, Random random = null)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var randomizer = random ?? new Random();
     var count = sequence.Count();
 
@@ -202,9 +245,32 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static IEnumerable<T> Randomize<T>(this IEnumerable<T> sequence, Random random = null)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var randomizer = random ?? new Random();
 
     return sequence.OrderBy(_ => randomizer.Next());
+  }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static IEnumerable<T> WithCancellation<T>(this IEnumerable<T> sequence, CancellationToken cancellation)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    foreach (var element in sequence)
+    {
+      cancellation.ThrowIfCancellationRequested();
+
+      yield return element;
+    }
   }
 
   /// <summary>
@@ -213,7 +279,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static T[] AsArray<T>(this IEnumerable<T> sequence) => sequence as T[] ?? sequence.ToArray();
+  public static T[] AsArray<T>(this IEnumerable<T> sequence) => sequence is not null ? sequence as T[] ?? sequence.ToArray() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -221,14 +287,14 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IEnumerable<T> AsNotNullable<T>(this IEnumerable<T> sequence) => sequence.Where(element => element != null);
+  public static IEnumerable<T> AsNotNullable<T>(this IEnumerable<T> sequence) => sequence is not null ? sequence.Where(element => element != null) : throw new ArgumentNullException(nameof(sequence));
   
   /// <summary>
   ///   <para>Returns BASE64-encoded representation of a bytes sequence.</para>
   /// </summary>
   /// <param name="bytes">Bytes to convert to BASE64 encoding.</param>
   /// <returns>BASE64 string representation of <paramref name="bytes"/> array.</returns>
-  public static string ToBase64(this IEnumerable<byte> bytes) => System.Convert.ToBase64String(bytes.AsArray());
+  public static string ToBase64(this IEnumerable<byte> bytes) => bytes is not null ? System.Convert.ToBase64String(bytes.AsArray()) : throw new ArgumentNullException(nameof(bytes));
 
   /// <summary>
   ///   <para></para>
@@ -237,6 +303,8 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static string ToHex(this IEnumerable<byte> bytes)
   {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
 #if NET6_0
     return System.Convert.ToHexString(bytes.AsArray());
 #else
@@ -252,6 +320,8 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<T> ToAsyncEnumerable<T>(this IEnumerable<T> sequence)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     foreach (var element in sequence)
     {
       yield return await Task.FromResult(element).ConfigureAwait(false);
@@ -264,7 +334,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static LinkedList<T> ToLinkedList<T>(this IEnumerable<T> sequence) => new(sequence);
+  public static LinkedList<T> ToLinkedList<T>(this IEnumerable<T> sequence) => sequence is not null ? new LinkedList<T>(sequence) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -272,7 +342,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> sequence) => sequence.ToList();
+  public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> sequence) => sequence is not null ? sequence.ToList() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para>Converts sequence of elements into a set collection type.</para>
@@ -281,7 +351,7 @@ public static class EnumerableExtensions
   /// <param name="sequence">Source sequence of elements.</param>
   /// <param name="comparer"></param>
   /// <returns>Set collection which contains elements from <paramref name="sequence"/> sequence without duplicates. Order of elements in a set is not guaranteed to be the same as returned by <paramref name="sequence"/>'s enumerator.</returns>
-  public static SortedSet<T> ToSortedSet<T>(this IEnumerable<T> sequence, IComparer<T> comparer = null) => new(sequence, comparer);
+  public static SortedSet<T> ToSortedSet<T>(this IEnumerable<T> sequence, IComparer<T> comparer = null) => sequence is not null ? new SortedSet<T>(sequence, comparer) : throw new ArgumentNullException(nameof(sequence));
 
 #if NET6_0
   /// <summary>
@@ -291,7 +361,7 @@ public static class EnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IReadOnlySet<T> ToReadOnlySet<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence.ToHashSet(comparer);
+  public static IReadOnlySet<T> ToReadOnlySet<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence is not null ? sequence.ToHashSet(comparer) : throw new ArgumentNullException(nameof(sequence));
 #endif
 
   /// <summary>
@@ -300,7 +370,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static Stack<T> ToStack<T>(this IEnumerable<T> sequence) => new(sequence);
+  public static Stack<T> ToStack<T>(this IEnumerable<T> sequence) => sequence is not null ? new Stack<T>(sequence) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -308,7 +378,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static Queue<T> ToQueue<T>(this IEnumerable<T> sequence) => new(sequence);
+  public static Queue<T> ToQueue<T>(this IEnumerable<T> sequence) => sequence is not null ? new Queue<T>(sequence) : throw new ArgumentNullException(nameof(sequence));
 
 #if NET6_0
   /// <summary>
@@ -319,7 +389,7 @@ public static class EnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static PriorityQueue<TElement, TPriority> ToPriorityQueue<TElement, TPriority>(this IEnumerable<(TElement Element, TPriority Priority)> sequence, IComparer<TPriority> comparer = null) => new(sequence, comparer);
+  public static PriorityQueue<TElement, TPriority> ToPriorityQueue<TElement, TPriority>(this IEnumerable<(TElement Element, TPriority Priority)> sequence, IComparer<TPriority> comparer = null) => sequence is not null ? new PriorityQueue<TElement, TPriority>(sequence, comparer) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -327,7 +397,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static ImmutableQueue<T> ToImmutableQueue<T>(this IEnumerable<T> sequence) => ImmutableQueue.CreateRange(sequence);
+  public static ImmutableQueue<T> ToImmutableQueue<T>(this IEnumerable<T> sequence) => sequence is not null ? ImmutableQueue.CreateRange(sequence) : throw new ArgumentNullException(nameof(sequence));
 #endif
 
   /// <summary>
@@ -336,7 +406,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static ArraySegment<T> ToArraySegment<T>(this IEnumerable<T> sequence) => new(sequence.AsArray());
+  public static ArraySegment<T> ToArraySegment<T>(this IEnumerable<T> sequence) => sequence is not null ? new ArraySegment<T>(sequence.AsArray()) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -344,7 +414,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static Memory<T> ToMemory<T>(this IEnumerable<T> sequence) => new(sequence.AsArray());
+  public static Memory<T> ToMemory<T>(this IEnumerable<T> sequence) => sequence is not null ? new Memory<T>(sequence.AsArray()) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -352,7 +422,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static ReadOnlyMemory<T> ToReadOnlyMemory<T>(this IEnumerable<T> sequence) => new(sequence.AsArray());
+  public static ReadOnlyMemory<T> ToReadOnlyMemory<T>(this IEnumerable<T> sequence) => sequence is not null ? new ReadOnlyMemory<T>(sequence.AsArray()) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -360,7 +430,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static Span<T> ToSpan<T>(this IEnumerable<T> sequence) => new(sequence.AsArray());
+  public static Span<T> ToSpan<T>(this IEnumerable<T> sequence) => sequence is not null ? new Span<T>(sequence.AsArray()) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -368,14 +438,14 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static ReadOnlySpan<T> ToReadOnlySpan<T>(this IEnumerable<T> sequence) => new(sequence.AsArray());
+  public static ReadOnlySpan<T> ToReadOnlySpan<T>(this IEnumerable<T> sequence) => sequence is not null ? new ReadOnlySpan<T>(sequence.AsArray()) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IEnumerable<int> ToRange(this IEnumerable<Range> sequence) => sequence.SelectMany(range => range.ToEnumerable()).ToHashSet();
+  public static IEnumerable<int> ToRange(this IEnumerable<Range> sequence) => sequence is not null ? sequence.SelectMany(range => range.ToEnumerable()).ToHashSet() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -383,7 +453,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IEnumerable<(T item, int index)> ToValueTuple<T>(this IEnumerable<T> sequence) => sequence.Select((item, index) => (item, index));
+  public static IEnumerable<(T item, int index)> ToValueTuple<T>(this IEnumerable<T> sequence) => sequence is not null ? sequence.Select((item, index) => (item, index)) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -394,7 +464,13 @@ public static class EnumerableExtensions
   /// <param name="key"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> comparer = null) where TKey : notnull => comparer != null ? sequence.OrderBy(key, comparer).Select(tuple => (Key: key(tuple), Value: tuple)) : sequence.Select(tuple => (Key: key(tuple), Value: tuple));
+  public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> comparer = null) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return comparer != null ? sequence.OrderBy(key, comparer).Select(tuple => (Key: key(tuple), Value: tuple)) : sequence.Select(tuple => (Key: key(tuple), Value: tuple));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -406,6 +482,8 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> sequence, IEqualityComparer<TKey> comparer = null) where TKey : notnull
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var result = new Dictionary<TKey, TValue>(comparer);
 
     sequence.ForEach(tuple => result.Add(tuple.Key, tuple.Value));
@@ -421,14 +499,14 @@ public static class EnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> sequence, IEqualityComparer<TKey> comparer = null) where TKey : notnull => sequence.ToDictionary(comparer);
+  public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> sequence, IEqualityComparer<TKey> comparer = null) where TKey : notnull => sequence.ToDictionary(comparer) ;
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static MemoryStream ToMemoryStream(this IEnumerable<byte> sequence) => sequence.Chunk(4096).ToMemoryStream();
+  public static MemoryStream ToMemoryStream(this IEnumerable<byte> sequence) => sequence is not null ? sequence.Chunk(4096).ToMemoryStream() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -437,6 +515,8 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static MemoryStream ToMemoryStream(this IEnumerable<byte[]> sequence)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var stream = new MemoryStream();
 
     foreach (var bytes in sequence)
@@ -455,7 +535,7 @@ public static class EnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte> sequence, CancellationToken cancellation = default) => await sequence.Chunk(4096).ToMemoryStreamAsync(cancellation).ConfigureAwait(false);
+  public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte> sequence, CancellationToken cancellation = default) => sequence is not null ? await sequence.Chunk(4096).ToMemoryStreamAsync(cancellation).ConfigureAwait(false) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -465,6 +545,8 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte[]> sequence, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new NotImplementedException(nameof(sequence));
+
     var stream = new MemoryStream();
 
     foreach (var bytes in sequence)

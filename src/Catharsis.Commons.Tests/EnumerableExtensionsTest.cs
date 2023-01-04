@@ -242,6 +242,18 @@ public sealed class EnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.WithCancellation{T}(IEnumerable{T}, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_WithCancellation_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.WithCancellation<object>(null, default)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.WithCancellation<object>(null, Cancellation)).ThrowExactly<OperationCanceledException>();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="EnumerableExtensions.AsArray{T}(IEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]

@@ -426,7 +426,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     foreach (var sequence in sequences)
     {
-      sequence.HashMd5().Should().NotBeNull().And.NotBeSameAs(sequence.HashMd5()).And.HaveCount(16).And.Equal(HashAlgorithm.Create("MD5")!.ComputeHash(sequence));
+      sequence.HashMd5().Should().NotBeNull().And.NotBeSameAs(sequence.HashMd5()).And.HaveCount(16).And.Equal(HashAlgorithm.Create("MD5").ComputeHash(sequence));
     }
   }
 
@@ -442,7 +442,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     foreach (var text in texts)
     {
-      text.HashMd5().Should().NotBeNull().And.NotBeSameAs(text.HashMd5()).And.HaveLength(32).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("MD5")!.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashMd5().Should().NotBeNull().And.NotBeSameAs(text.HashMd5()).And.HaveLength(32).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("MD5").ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -462,7 +462,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashMd5();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashMd5());
-        hash.Should().HaveCount(16).And.Equal(HashAlgorithm.Create("MD5")!.ComputeHash(stream.MoveToStart()));
+        hash.Should().HaveCount(16).And.Equal(HashAlgorithm.Create("MD5").ComputeHash(stream.MoveToStart()));
       }
     }
   }
@@ -483,7 +483,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashMd5Async();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashMd5Async());
-        hash.Await().Should().HaveCount(16).And.Equal(HashAlgorithm.Create("MD5")!.ComputeHash(stream.MoveToStart()));
+        hash.Await().Should().HaveCount(16).And.Equal(HashAlgorithm.Create("MD5").ComputeHash(stream.MoveToStart()));
       }
     }
   }
@@ -500,7 +500,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
     
     foreach (var sequence in sequences)
     {
-      sequence.HashSha1().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha1()).And.HaveCount(20).And.Equal(HashAlgorithm.Create("SHA1")!.ComputeHash(sequence));
+      sequence.HashSha1().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha1()).And.HaveCount(20).And.Equal(HashAlgorithm.Create("SHA1").ComputeHash(sequence));
     }
   }
 
@@ -516,7 +516,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     foreach (var text in texts)
     {
-      text.HashSha1().Should().NotBeNull().And.NotBeSameAs(text.HashSha1()).And.HaveLength(40).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("SHA1")!.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashSha1().Should().NotBeNull().And.NotBeSameAs(text.HashSha1()).And.HaveLength(40).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("SHA1").ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -536,7 +536,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashSha1();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha1());
-        hash.Should().HaveCount(20).And.Equal(HashAlgorithm.Create("SHA1")!.ComputeHash(stream.MoveToStart()));
+        hash.Should().HaveCount(20).And.Equal(HashAlgorithm.Create("SHA1").ComputeHash(stream.MoveToStart()));
       }
     }
   }
@@ -557,7 +557,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashSha1Async();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha1Async());
-        hash.Await().Should().HaveCount(20).And.Equal(HashAlgorithm.Create("SHA1")!.ComputeHash(stream.MoveToStart()));
+        hash.Await().Should().HaveCount(20).And.Equal(HashAlgorithm.Create("SHA1").ComputeHash(stream.MoveToStart()));
       }
     }
   }
@@ -574,7 +574,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     foreach (var sequence in sequences)
     {
-      sequence.HashSha256().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha256()).And.HaveCount(32).And.Equal(HashAlgorithm.Create("SHA256")!.ComputeHash(sequence));
+      sequence.HashSha256().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha256()).And.HaveCount(32).And.Equal(HashAlgorithm.Create("SHA256").ComputeHash(sequence));
     }
   }
 
@@ -590,7 +590,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     foreach (var text in texts)
     {
-      text.HashSha256().Should().NotBeNull().And.NotBeSameAs(text.HashSha256()).And.HaveLength(64).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("SHA256")!.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashSha256().Should().NotBeNull().And.NotBeSameAs(text.HashSha256()).And.HaveLength(64).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("SHA256").ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -610,7 +610,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashSha256();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha256());
-        hash.Should().HaveCount(32).And.Equal(HashAlgorithm.Create("SHA256")!.ComputeHash(stream.MoveToStart()));
+        hash.Should().HaveCount(32).And.Equal(HashAlgorithm.Create("SHA256").ComputeHash(stream.MoveToStart()));
       }
     }
   }
@@ -631,7 +631,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashSha256Async();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha256Async());
-        hash.Await().Should().HaveCount(32).And.Equal(HashAlgorithm.Create("SHA256")!.ComputeHash(stream.MoveToStart()));
+        hash.Await().Should().HaveCount(32).And.Equal(HashAlgorithm.Create("SHA256").ComputeHash(stream.MoveToStart()));
       }
     }
   }
@@ -648,7 +648,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     foreach (var sequence in sequences)
     {
-      sequence.HashSha384().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha384()).And.HaveCount(48).And.Equal(HashAlgorithm.Create("SHA384")!.ComputeHash(sequence));
+      sequence.HashSha384().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha384()).And.HaveCount(48).And.Equal(HashAlgorithm.Create("SHA384").ComputeHash(sequence));
     }
   }
 
@@ -664,7 +664,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     foreach (var text in texts)
     {
-      text.HashSha384().Should().NotBeNull().And.NotBeSameAs(text.HashSha384()).And.HaveLength(96).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("SHA384")!.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashSha384().Should().NotBeNull().And.NotBeSameAs(text.HashSha384()).And.HaveLength(96).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("SHA384").ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -684,7 +684,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashSha384();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha384());
-        hash.Should().HaveCount(48).And.Equal(HashAlgorithm.Create("SHA384")!.ComputeHash(stream.MoveToStart()));
+        hash.Should().HaveCount(48).And.Equal(HashAlgorithm.Create("SHA384").ComputeHash(stream.MoveToStart()));
       }
     }
   }
@@ -705,7 +705,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashSha384Async();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha384Async());
-        hash.Await().Should().HaveCount(48).And.Equal(HashAlgorithm.Create("SHA384")!.ComputeHash(stream.MoveToStart()));
+        hash.Await().Should().HaveCount(48).And.Equal(HashAlgorithm.Create("SHA384").ComputeHash(stream.MoveToStart()));
       }
     }
   }
@@ -722,7 +722,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     foreach (var sequence in sequences)
     {
-      sequence.HashSha512().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha512()).And.HaveCount(64).And.Equal(HashAlgorithm.Create("SHA512")!.ComputeHash(sequence));
+      sequence.HashSha512().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha512()).And.HaveCount(64).And.Equal(HashAlgorithm.Create("SHA512").ComputeHash(sequence));
     }
   }
 
@@ -738,7 +738,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
     foreach (var text in texts)
     {
-      text.HashSha512().Should().NotBeNull().And.NotBeSameAs(text.HashSha512()).And.HaveLength(128).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("SHA512")!.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashSha512().Should().NotBeNull().And.NotBeSameAs(text.HashSha512()).And.HaveLength(128).And.Be(System.Convert.ToHexString(HashAlgorithm.Create("SHA512").ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -758,7 +758,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashSha512();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha512());
-        hash.Should().HaveCount(64).And.Equal(HashAlgorithm.Create("SHA512")!.ComputeHash(stream.MoveToStart()));
+        hash.Should().HaveCount(64).And.Equal(HashAlgorithm.Create("SHA512").ComputeHash(stream.MoveToStart()));
       }
     }
   }
@@ -779,7 +779,7 @@ public sealed class CryptographyExtensionsTest : UnitTest
 
         var hash = stream.HashSha512Async();
         hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha512Async());
-        hash.Await().Should().HaveCount(64).And.Equal(HashAlgorithm.Create("SHA512")!.ComputeHash(stream.MoveToStart()));
+        hash.Await().Should().HaveCount(64).And.Equal(HashAlgorithm.Create("SHA512").ComputeHash(stream.MoveToStart()));
       }
     }
   }

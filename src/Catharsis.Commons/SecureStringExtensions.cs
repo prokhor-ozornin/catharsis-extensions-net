@@ -15,7 +15,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this SecureString secure) => secure.Length <= 0;
+  public static bool IsEmpty(this SecureString secure) => secure is not null ? secure.Length <= 0 : throw new ArgumentNullException(nameof(secure));
 
   /// <summary>
   ///   <para></para>
@@ -24,7 +24,10 @@ public static class SecureStringExtensions
   /// <returns></returns>
   public static SecureString Empty(this SecureString secure)
   {
+    if (secure is null) throw new ArgumentNullException(nameof(secure));
+
     secure.Clear();
+   
     return secure;
   }
 
@@ -34,7 +37,13 @@ public static class SecureStringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  public static SecureString Min(this SecureString left, SecureString right) => left.Length <= right.Length ? left : right;
+  public static SecureString Min(this SecureString left, SecureString right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Length <= right.Length ? left : right;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -42,7 +51,13 @@ public static class SecureStringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  public static SecureString Max(this SecureString left, SecureString right) => left.Length >= right.Length ? left : right;
+  public static SecureString Max(this SecureString left, SecureString right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Length >= right.Length ? left : right;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -59,7 +74,10 @@ public static class SecureStringExtensions
   /// <returns></returns>
   public static SecureString AsReadOnly(this SecureString secure)
   {
+    if (secure is null) throw new ArgumentNullException(nameof(secure));
+
     secure.MakeReadOnly();
+
     return secure;
   }
 
@@ -78,6 +96,8 @@ public static class SecureStringExtensions
   /// <returns></returns>
   public static string ToText(this SecureString secure)
   {
+    if (secure is null) throw new ArgumentNullException(nameof(secure));
+
     if (secure.Length <= 0)
     {
       return string.Empty;
@@ -108,7 +128,11 @@ public static class SecureStringExtensions
   /// <returns></returns>
   public static SecureString WriteText(this SecureString destination, IEnumerable<char> text)
   {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     text.ForEach(destination.AppendChar);
+
     return destination;
   }
 
@@ -120,7 +144,11 @@ public static class SecureStringExtensions
   /// <returns></returns>
   public static IEnumerable<char> WriteTo(this IEnumerable<char> text, SecureString destination)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
     destination.WriteText(text);
+
     return text;
   }
 }

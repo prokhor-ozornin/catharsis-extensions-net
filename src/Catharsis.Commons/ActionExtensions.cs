@@ -15,6 +15,9 @@ public static class ActionExtensions
   /// <returns></returns>
   public static Action Execute(this Action action, Func<bool> condition)
   {
+    if (action is null) throw new ArgumentNullException(nameof(action));
+    if (condition is null) throw new ArgumentNullException(nameof(condition));
+
     while (condition())
     {
       action();
@@ -33,6 +36,9 @@ public static class ActionExtensions
   /// <returns></returns>
   public static Action<T> Execute<T>(this Action<T> action, Predicate<T> condition, T instance)
   {
+    if (action is null) throw new ArgumentNullException(nameof(action));
+    if (condition is null) throw new ArgumentNullException(nameof(condition));
+
     while (condition(instance))
     {
       action(instance);

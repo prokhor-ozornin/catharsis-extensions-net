@@ -28,6 +28,9 @@ public static class NumericExtensions
   /// <param name="action">Delegate that represents a method to be called.</param>
   public static void Times(this int count, Action<int> action)
   {
+    if (action is null) throw new ArgumentNullException(nameof(action));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
     for (var value = 0; value < count; value++)
     {
       action(value);
@@ -58,6 +61,9 @@ public static class NumericExtensions
   /// <returns></returns>
   public static IEnumerable<T> Objects<T>(this int count, Func<T> constructor)
   {
+    if (constructor is null) throw new ArgumentNullException(nameof(constructor));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
     for (var i = 1; i <= count; i++)
     {
       yield return constructor();
@@ -73,6 +79,9 @@ public static class NumericExtensions
   /// <returns></returns>
   public static IEnumerable<T> Objects<T>(this int count, Func<int, T> constructor)
   {
+    if (constructor is null) throw new ArgumentNullException(nameof(constructor));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
     for (var i = 0; i < count; i++)
     {
       yield return constructor(i);

@@ -22,7 +22,11 @@ public static class CollectionsExtensions
   /// <returns>Reference to the supplied collection <paramref name="to"/>.</returns>
   public static ICollection<T> AddRange<T>(this ICollection<T> to, IEnumerable<T> from)
   {
+    if (to is null) throw new ArgumentNullException(nameof(to));
+    if (from is null) throw new ArgumentNullException(nameof(from));
+
     from.ForEach(to.Add);
+    
     return to;
   }
 
@@ -43,7 +47,11 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static NameValueCollection AddRange(this NameValueCollection to, IEnumerable<(string Name, object Value)> from)
   {
+    if (to is null) throw new ArgumentNullException(nameof(to));
+    if (from is null) throw new ArgumentNullException(nameof(from));
+
     from.ForEach(tuple => to.Add(tuple.Name, tuple.Value?.ToInvariantString()));
+    
     return to;
   }
 
@@ -64,7 +72,11 @@ public static class CollectionsExtensions
   /// <seealso cref="ICollection{T}.Remove(T)"/>
   public static ICollection<T> RemoveRange<T>(this ICollection<T> from, IEnumerable<T> sequence)
   {
+    if (from is null) throw new ArgumentNullException(nameof(from));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     sequence.ForEach(element => from.Remove(element));
+    
     return from;
   }
 
@@ -88,15 +100,9 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static IList<T> RemoveRange<T>(this IList<T> from, int offset, int? count = null, Predicate<T> condition = null)
   {
-    if (offset < 0)
-    {
-      throw new ArgumentOutOfRangeException(nameof(offset));
-    }
-
-    if (count is < 0)
-    {
-      throw new ArgumentOutOfRangeException(nameof(count));
-    }
+    if (from is null) throw new ArgumentNullException(nameof(from));
+    if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     for (var i = offset; i < offset + (count ?? from.Count - offset); i++)
     {
@@ -119,10 +125,9 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static IList<T> InsertRange<T>(this IList<T> to, int offset, IEnumerable<T> from)
   {
-    if (offset < 0)
-    {
-      throw new ArgumentOutOfRangeException(nameof(offset));
-    }
+    if (to is null) throw new ArgumentNullException(nameof(to));
+    if (from is null) throw new ArgumentNullException(nameof(from));
+    if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
 
     from.ForEach((index, element) => to.Insert(offset + index, element));
 
@@ -147,7 +152,10 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static ICollection<T> Empty<T>(this ICollection<T> collection)
   {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+
     collection.Clear();
+
     return collection;
   }
 
@@ -158,7 +166,10 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static NameValueCollection Empty(this NameValueCollection collection)
   {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+
     collection.Clear();
+    
     return collection;
   }
 
@@ -184,10 +195,10 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static IList<T> Fill<T>(this IList<T> list, Func<int, T> filler, int? offset = null, int? count = null)
   {
-    if (offset is < 0 || count is <= 0)
-    {
-      return list;
-    }
+    if (list is null) throw new ArgumentNullException(nameof(list));
+    if (filler is null) throw new ArgumentNullException(nameof(filler));
+    if (offset is < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     var fromIndex = offset ?? 0;
     var toIndex = Min(list.Count, count != null ? fromIndex + count.Value : list.Count - fromIndex);
@@ -209,6 +220,10 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static IList<T> Swap<T>(this IList<T> list, int firstIndex, int secondIndex)
   {
+    if (list is null) throw new ArgumentNullException(nameof(list));
+    if (firstIndex < 0 || firstIndex >= list.Count) throw new ArgumentOutOfRangeException(nameof(firstIndex));
+    if (secondIndex < 0 || secondIndex >= list.Count) throw new ArgumentOutOfRangeException(nameof(secondIndex));
+
     (list[firstIndex], list[secondIndex]) = (list[secondIndex], list[firstIndex]);
 
     return list;
@@ -223,6 +238,8 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static IList<T> Randomize<T>(this IList<T> list, Random random = null)
   {
+    if (list is null) throw new ArgumentNullException(nameof(list));
+
     if (list.Count <= 0)
     {
       return list;
@@ -258,7 +275,7 @@ public static class CollectionsExtensions
   /// <param name="action"></param>
   /// <returns></returns>
   public static NameValueCollection TryFinallyClear(this NameValueCollection collection, Action<NameValueCollection> action) => collection.TryFinally(action, collection => collection.Clear());
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -266,7 +283,7 @@ public static class CollectionsExtensions
   /// <param name="list"></param>
   /// <returns></returns>
   /// <seealso cref="AsReadOnly{TKey,TValue}"/>
-  public static IReadOnlyList<T> AsReadOnly<T>(this IList<T> list) => new ReadOnlyCollection<T>(list);
+  public static IReadOnlyList<T> AsReadOnly<T>(this IList<T> list) => list is not null ? new ReadOnlyCollection<T>(list) : throw new ArgumentNullException(nameof(list));
 
   /// <summary>
   ///   <para></para>
@@ -276,7 +293,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <returns></returns>
   /// <seealso cref="AsReadOnly{T}"/>
-  public static IReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) where TKey : notnull => new ReadOnlyDictionary<TKey, TValue>(dictionary);
+  public static IReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) where TKey : notnull => dictionary is not null ? new ReadOnlyDictionary<TKey, TValue>(dictionary) : throw new ArgumentNullException(nameof(dictionary));
 
   /// <summary>
   ///   <para></para>
@@ -286,7 +303,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static SortedList<TKey, TValue> ToSortedList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull => new(dictionary, comparer);
+  public static SortedList<TKey, TValue> ToSortedList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull => dictionary is not null ? new SortedList<TKey, TValue>(dictionary, comparer) : throw new ArgumentNullException(nameof(dictionary));
 
   /// <summary>
   ///   <para></para>
@@ -295,6 +312,8 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static Dictionary<string, string> ToDictionary(this NameValueCollection collection)
   {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+
     var result = new Dictionary<string, string>();
 
     for (var i = 0; i < collection.Count; i++)
@@ -318,7 +337,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull => new(dictionary, comparer);
+  public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull => dictionary is not null ? new SortedDictionary<TKey, TValue>(dictionary, comparer) : throw new ArgumentNullException(nameof(dictionary));
 
   /// <summary>
   ///   <para></para>
@@ -328,7 +347,12 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey: notnull => comparer != null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
+  public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull
+  {
+    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+
+    return comparer != null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
+  }
 
   /// <summary>
   /// 
@@ -337,6 +361,8 @@ public static class CollectionsExtensions
   /// <returns></returns>
   public static IEnumerable<(string Name, string Value)> ToValueTuple(this NameValueCollection collection)
   {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+
     for (var i = 0; i < collection.Count; i++)
     {
       var key = collection.GetKey(i);

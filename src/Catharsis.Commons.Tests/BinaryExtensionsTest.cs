@@ -16,7 +16,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_IsStart_Method()
   {
-    void Validate(BinaryReader reader)
+    static void Validate(BinaryReader reader)
     {
       using (reader)
       {
@@ -45,7 +45,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryWriter_IsStart_Method()
   {
-    void Validate(BinaryWriter writer)
+    static void Validate(BinaryWriter writer)
     {
       using (writer)
       {
@@ -74,7 +74,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_IsEnd_Method()
   {
-    void Validate(BinaryReader reader)
+    static void Validate(BinaryReader reader)
     {
       using (reader)
       {
@@ -102,7 +102,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryWriter_IsEnd_Method()
   {
-    void Validate(BinaryWriter writer)
+    static void Validate(BinaryWriter writer)
     {
       using (writer)
       {
@@ -131,7 +131,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_IsEmpty_Method()
   {
-    void Validate(BinaryReader reader, bool empty)
+    static void Validate(BinaryReader reader, bool empty)
     {
       using (reader)
       {
@@ -157,7 +157,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryWriter_IsEmpty_Method()
   {
-    void Validate(BinaryWriter writer, bool empty)
+    static void Validate(BinaryWriter writer, bool empty)
     {
       using (writer)
       {
@@ -183,7 +183,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_Empty_Method()
   {
-    void Validate(BinaryReader reader)
+    static void Validate(BinaryReader reader)
     {
       using (reader)
       {
@@ -210,7 +210,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryWriter_Empty_Method()
   {
-    void Validate(BinaryWriter writer)
+    static void Validate(BinaryWriter writer)
     {
       using (writer)
       {
@@ -236,7 +236,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_Rewind_Method()
   {
-    void Validate(BinaryReader reader)
+    static void Validate(BinaryReader reader)
     {
       using (reader)
       {
@@ -263,7 +263,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryWriter_Rewind_Method()
   {
-    void Validate(BinaryWriter writer)
+    static void Validate(BinaryWriter writer)
     {
       using (writer)
       {
@@ -290,7 +290,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_Skip_Method()
   {
-    void Validate(BinaryReader reader)
+    static void Validate(BinaryReader reader)
     {
       using (reader)
       {
@@ -325,7 +325,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void Object_Print_Method()
   {
-    void Validate(BinaryWriter writer)
+    static void Validate(BinaryWriter writer)
     {
       using (writer)
       {
@@ -354,7 +354,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_TryFinallyClear_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (stream)
       {
@@ -385,7 +385,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryWriter_TryFinallyClear_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (stream)
       {
@@ -422,7 +422,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      void Validate(BinaryReader reader, byte[] bytes)
+      static void Validate(BinaryReader reader, byte[] bytes)
       {
         using (reader)
         {
@@ -449,7 +449,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      void Validate(BinaryReader reader, byte[] bytes)
+      static void Validate(BinaryReader reader, byte[] bytes)
       {
         using (reader)
         {
@@ -490,7 +490,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      void Validate(BinaryReader reader, byte[] bytes)
+      static void Validate(BinaryReader reader, byte[] bytes)
       {
         using (reader)
         {
@@ -517,7 +517,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      void Validate(BinaryReader reader, byte[] bytes)
+      static void Validate(BinaryReader reader, byte[] bytes)
       {
         using (reader)
         {
@@ -552,7 +552,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_ToBytesAsync_Method()
   {
-    void Validate(BinaryReader reader)
+    static void Validate(BinaryReader reader)
     {
       using (reader)
       {
@@ -585,7 +585,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_ToBytes_Method()
   {
-    void Validate(BinaryReader reader)
+    static void Validate(BinaryReader reader)
     {
       using (reader)
       {
@@ -616,7 +616,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryReader_ToText_Method()
   {
-    void Validate(BinaryReader reader, string value)
+    static void Validate(BinaryReader reader, string value)
     {
       using (reader)
       {
@@ -672,7 +672,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_WriteTo_Method()
   {
-    void Validate(BinaryWriter writer)
+    static void Validate(BinaryWriter writer)
     {
       using (writer)
       {
@@ -708,7 +708,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void String_WriteTo_Method()
   {
-    void Validate(BinaryWriter writer, string text)
+    static void Validate(BinaryWriter writer, string text)
     {
       using (writer)
       {

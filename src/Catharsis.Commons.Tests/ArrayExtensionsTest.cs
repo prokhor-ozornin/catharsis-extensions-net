@@ -43,7 +43,7 @@ public sealed class ArrayExtensionsTest : UnitTest
   [Fact]
   public void Array_ToBytes_Method()
   {
-    void Validate(char[] chars, Encoding encoding = null)
+    static void Validate(char[] chars, Encoding encoding)
     {
       Array.Empty<char>().ToBytes(encoding).Should().NotBeNull().And.BeSameAs(Array.Empty<char>().ToBytes(encoding)).And.BeEmpty();
 
@@ -55,7 +55,7 @@ public sealed class ArrayExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>();
 
-      Validate(RandomChars);
+      Validate(RandomChars, null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(RandomChars, encoding));
     }
   }
@@ -83,7 +83,7 @@ public sealed class ArrayExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      void Validate(byte[] bytes, Encoding encoding = null)
+      static void Validate(byte[] bytes, Encoding encoding)
       {
         Array.Empty<byte>().ToText(encoding).Should().NotBeNull().And.BeSameAs(Array.Empty<byte>().ToText(encoding)).And.BeEmpty();
         bytes.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(bytes.ToText(encoding)).And.HaveLength((encoding ?? Encoding.Default).GetCharCount(bytes)).And.Be((encoding ?? Encoding.Default).GetString(bytes));
@@ -93,7 +93,7 @@ public sealed class ArrayExtensionsTest : UnitTest
       {
         AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>();
 
-        Validate(RandomBytes);
+        Validate(RandomBytes, null);
         Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(RandomBytes, encoding));
       }
     }

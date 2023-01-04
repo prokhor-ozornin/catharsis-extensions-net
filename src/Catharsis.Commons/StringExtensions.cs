@@ -563,7 +563,7 @@ public static class StringExtensions
   /// <param name="encoding">Encoding to be used for transformation between characters of <paramref name="text"/> and their bytes equivalents. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
   /// <returns>Sequence of bytes that form <paramref name="text"/> string in given <paramref name="encoding"/>.</returns>
   /// <seealso cref="Encoding.GetBytes(string)"/>
-  public static byte[] ToBytes(this string text, Encoding encoding = null) => text.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(text) : Array.Empty<byte>();
+  public static byte[] ToBytes(this string text, Encoding encoding = null) => text is not null ? text.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
 
     /// <summary>
   ///   <para>Converts specified string into <see cref="bool"/> value.</para>
@@ -837,7 +837,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
-  public static Type ToType(this string text) => Type.GetType(text);
+  public static Type ToType(this string text) => text is not null ? Type.GetType(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para></para>
@@ -845,7 +845,19 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static bool ToType(this string text, out Type result) => (result = text.ToType()) != null;
+  public static bool ToType(this string text, out Type result)
+  {
+    try
+    {
+      result = text.ToType();
+      return result is not null;
+    }
+    catch
+    {
+      result = null;
+      return false;
+    }
+  }
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="DateTime"/> value.</para>
@@ -924,7 +936,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
-  public static FileInfo ToFile(this string text) => new(text);
+  public static FileInfo ToFile(this string text) => text is not null ? new FileInfo(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para></para>
@@ -932,14 +944,26 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static bool ToFile(this string text, out FileInfo result) => (result = text.ToFile()).Exists;
+  public static bool ToFile(this string text, out FileInfo result)
+  {
+    try
+    {
+      result = text.ToFile();
+      return result.Exists;
+    }
+    catch
+    {
+      result = null;
+      return false;
+    }
+  }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
-  public static DirectoryInfo ToDirectory(this string text) => new(text);
+  public static DirectoryInfo ToDirectory(this string text) => text is not null ? new DirectoryInfo(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para></para>
@@ -947,7 +971,19 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static bool ToDirectory(this string text, out DirectoryInfo result) => (result = text.ToDirectory()).Exists;
+  public static bool ToDirectory(this string text, out DirectoryInfo result)
+  {
+    try
+    {
+      result = text.ToDirectory();
+      return result.Exists;
+    }
+    catch
+    {
+      result = null;
+      return false;
+    }
+  }
 
   /// <summary>
   ///   <para></para>
@@ -989,21 +1025,21 @@ public static class StringExtensions
   /// <param name="text">String to be converted.</param>
   /// <param name="options"></param>
   /// <returns>The <see cref="Regex"/> value to which string <paramref name="text"/> was converted.</returns>
-  public static Regex ToRegex(this string text, RegexOptions? options = null) => options != null ? new Regex(text, options.Value) : new Regex(text);
+  public static Regex ToRegex(this string text, RegexOptions options = RegexOptions.None) => text is not null ? new Regex(text, options) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
-  public static StringBuilder ToStringBuilder(this string text) => new(text);
+  public static StringBuilder ToStringBuilder(this string text) => text is not null ? new StringBuilder(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
-  public static StringReader ToStringReader(this string text) => new(text);
+  public static StringReader ToStringReader(this string text) => text is not null ? new StringReader(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para></para>
@@ -1013,6 +1049,8 @@ public static class StringExtensions
   /// <returns></returns>
   public static Process ToProcess(this string text, ProcessStartInfo info = null)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     var process = new Process();
 
     if (info != null)

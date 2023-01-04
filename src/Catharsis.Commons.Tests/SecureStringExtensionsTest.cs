@@ -40,7 +40,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void SecureString_Empty_Method()
   {
-    void Validate(SecureString secure)
+    static void Validate(SecureString secure)
     {
       using (secure)
       {
@@ -64,7 +64,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void SecureString_Min_Method()
   {
-    void Validate(SecureString min, SecureString max)
+    static void Validate(SecureString min, SecureString max)
     {
       using (min)
       {
@@ -93,7 +93,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void SecureString_Max_Method()
   {
-    void Validate(SecureString min, SecureString max)
+    static void Validate(SecureString min, SecureString max)
     {
       using (min)
       {
@@ -148,7 +148,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void SecureString_ToBytes_Method()
   {
-    void Validate(Encoding encoding = null)
+    static void Validate(Encoding encoding)
     {
       using (var secure = EmptySecureString)
       {
@@ -166,7 +166,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => SecureStringExtensions.ToText(null));
 
-      Validate();
+      Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
   }

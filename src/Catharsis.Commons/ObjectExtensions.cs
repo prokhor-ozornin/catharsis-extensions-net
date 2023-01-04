@@ -14,7 +14,7 @@ public static class ObjectExtensions
   /// <typeparam name="T">Type of object.</typeparam>
   /// <param name="instance">Object whose type compatibility with <typeparamref name="T"/> is to be determined.</param>
   /// <returns><c>true</c> if <paramref name="instance"/> is type-compatible with <typeparamref name="T"/>, <c>false</c> if not.</returns>
-  public static bool Is<T>(this object instance) => instance is T;
+  public static bool Is<T>(this object instance) => instance is not null ? instance is T : throw new ArgumentNullException(nameof(instance));
 
   /// <summary>
   ///   <para></para>
@@ -60,7 +60,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static T As<T>(this object instance) => instance is T s ? s : default;
+  public static T As<T>(this object instance) => instance is not null ? instance is T s ? s : default : throw new ArgumentNullException(nameof(instance));
 
   /// <summary>
   ///   <para>Tries to convert given object to specified type and throws exception on failure.</para>
@@ -70,7 +70,7 @@ public static class ObjectExtensions
   /// <returns>Object, converted to the specified type.</returns>
   /// <exception cref="InvalidCastException">If conversion to specified type cannot be performed.</exception>
   /// <remarks>If specified object instance is a <c>null</c> reference, a <c>null</c> reference will be returned as a result.</remarks>
-  public static T To<T>(this object instance) => (T) instance;
+  public static T To<T>(this object instance) => instance is not null ? (T) instance : throw new ArgumentNullException(nameof(instance));
 
   /// <summary>
   ///   <para></para>
@@ -82,6 +82,9 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static T With<T>(this T instance, Action<T> action, Predicate<T> condition = null)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
     if (condition != null)
     {
       action.Execute(condition, instance);
@@ -105,6 +108,7 @@ public static class ObjectExtensions
   public static T While<T>(this T instance, Predicate<T> condition, Action<T> action)
   {
     action.Execute(condition, instance);
+
     return instance;
   }
 
@@ -266,6 +270,8 @@ public static class ObjectExtensions
   /// <returns>Hash code for <paramref name="instance"/>.</returns>
   public static int HashCode<T>(this T instance, IEnumerable<string> properties)
   {
+    if (properties is null) throw new ArgumentNullException(nameof(properties));
+
     if (instance == null)
     {
       return 0;
@@ -313,6 +319,8 @@ public static class ObjectExtensions
   /// <returns>Hash code for <paramref name="instance"/>.</returns>
   public static int HashCode<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties)
   {
+    if (properties is null) throw new ArgumentNullException(nameof(properties));
+
     if (instance == null)
     {
       return 0;
@@ -351,6 +359,9 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static T TryFinally<T>(this T instance, Action<T> function, Action<T> finalizer = null) => instance.TryFinally(_ =>
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (function is null) throw new ArgumentNullException(nameof(function));
+
     function(instance);
     return instance;
   }, finalizer);
@@ -366,6 +377,9 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static TResult TryFinally<TSubject, TResult>(this TSubject instance, Func<TSubject, TResult> function, Action<TSubject> finalizer = null)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (function is null) throw new ArgumentNullException(nameof(function));
+
     try
     {
       return function(instance);
@@ -399,6 +413,9 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static TException TryCatchFinally<T, TException>(this T instance, Action<T> function, Action<T> exception = null, Action<T> finalizer = null) where TException : Exception
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (function is null) throw new ArgumentNullException(nameof(function));
+
     try
     {
       function(instance);
@@ -444,6 +461,9 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static TResult TryFinallyDispose<TSubject, TResult>(this TSubject instance, Func<TSubject, TResult> function, Action<TSubject> finalizer = null) where TSubject : IDisposable
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (function is null) throw new ArgumentNullException(nameof(function));
+
     try
     {
       return function(instance);
@@ -463,10 +483,9 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static T Print<T>(this T instance)
   {
-    if (instance != null)
-    {
-      instance.Print(Console.Out);
-    }
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
+    instance.Print(Console.Out);
 
     return instance;
   }
@@ -480,10 +499,9 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static async Task<T> PrintAsync<T>(this T instance, CancellationToken cancellation = default)
   {
-    if (instance != null)
-    {
-      await instance.PrintAsync(Console.Out, cancellation).ConfigureAwait(false);
-    }
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
+    await instance.PrintAsync(Console.Out, cancellation).ConfigureAwait(false);
 
     return instance;
   }
@@ -496,10 +514,12 @@ public static class ObjectExtensions
   /// <returns>Dictionary of name - value pairs for public properties of <paramref name="instance"/>.</returns>
   public static IEnumerable<(string Name, object Value)> GetState(this object instance, IEnumerable<string> properties = null)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
     var type = instance.GetType();
     var typeProperties = properties?.Select(property => type.AnyProperty(property)) ?? instance.GetType().GetProperties();
 
-    return typeProperties.Select(property => (property.Name, instance.GetPropertyValue(property.Name)));
+    return typeProperties.Select(property => (property.Name, instance.GetPropertyValue<object>(property.Name)));
   }
 
   /// <summary>
@@ -520,6 +540,9 @@ public static class ObjectExtensions
   /// <returns>Back reference to the current target object.</returns>
   public static T SetState<T>(this T instance, IEnumerable<(string Name, object Value)> properties)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (properties is null) throw new ArgumentNullException(nameof(properties));
+
     properties.ForEach(property => instance.SetPropertyValue(property.Name, property.Value));
 
     return instance;
@@ -542,27 +565,44 @@ public static class ObjectExtensions
   /// <param name="instance">Target object, whose member's value is to be returned.</param>
   /// <param name="expression">Lambda expression that represents a member of <typeparamref name="T"/> type, whose value for <paramref name="instance"/> instance is to be returned. Generally it should represents either a public property/field or no-arguments method.</param>
   /// <returns>Value of member of <typeparamref name="T"/> type on a <paramref name="instance"/> instance.</returns>
-  public static TResult GetMember<T, TResult>(this T instance, Expression<Func<T, TResult>> expression) => expression.Compile()(instance);
+  public static TResult GetMember<T, TResult>(this T instance, Expression<Func<T, TResult>> expression)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (expression is null) throw new ArgumentNullException(nameof(expression));
+
+    return expression.Compile()(instance);
+  }
 
   /// <summary>
   ///   <para>Returns the value of object's field with a specified name.</para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
   /// <param name="instance">Object whose field's value is to be returned.</param>
   /// <param name="name">Name of field of <paramref name="instance"/>'s type.</param>
   /// <returns>Value of <paramref name="instance"/>'s field with a given <paramref name="name"/>.</returns>
-  public static object GetFieldValue(this object instance, string name) => instance.GetType().AnyField(name)?.GetValue(instance);
+  public static T GetFieldValue<T>(this object instance, string name)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (name is null) throw new ArgumentNullException(nameof(name));
+
+    return (T) instance.GetType().AnyField(name)?.GetValue(instance);
+  }
 
   /// <summary>
   ///   <para>Returns the value of given property for specified target object.</para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
   /// <param name="instance">Target object, whose property's value is to be returned.</param>
   /// <param name="name">Name of property to inspect.</param>
   /// <returns>Value of property <paramref name="name"/> for <paramref name="instance"/> instance, or a <c>null</c> reference in case this property does not exists for <paramref name="instance"/>'s type.</returns>
-  public static object GetPropertyValue(this object instance, string name)
+  public static T GetPropertyValue<T>(this object instance, string name)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (name is null) throw new ArgumentNullException(nameof(name));
+
     var propertyInfo = instance.GetType().AnyProperty(name);
 
-    return propertyInfo != null && propertyInfo.CanRead ? propertyInfo.GetValue(instance, null) : null;
+    return propertyInfo != null && propertyInfo.CanRead ? (T) propertyInfo.GetValue(instance, null) : default;
   }
 
   /// <summary>
@@ -575,6 +615,9 @@ public static class ObjectExtensions
   /// <returns>Back reference to the current target object.</returns>
   public static T SetPropertyValue<T>(this T instance, string name, object value)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (name is null) throw new ArgumentNullException(nameof(name));
+
     var propertyInfo = instance.GetType().AnyProperty(name);
 
     if (propertyInfo != null && propertyInfo.CanWrite)
@@ -592,16 +635,23 @@ public static class ObjectExtensions
   /// <param name="name"></param>
   /// <param name="parameters"></param>
   /// <returns></returns>
-  public static object CallMethod(this object instance, string name, IEnumerable<object> parameters) => instance.GetType().AnyMethod(name)?.Invoke(instance, parameters?.AsArray());
+  public static T CallMethod<T>(this object instance, string name, IEnumerable<object> parameters = null)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (name is null) throw new ArgumentNullException(nameof(name));
+
+    return (T) instance.GetType().AnyMethod(name)?.Invoke(instance, parameters?.AsArray());
+  }
 
   /// <summary>
   ///   <para>Calls/invokes instance method on a target object, passing specified parameters.</para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
   /// <param name="instance">The object on which to invoke the method.</param>
   /// <param name="name">Name of the method to be invoked.</param>
   /// <param name="parameters">Optional set of parameters to be passed to invoked method, if it requires some.</param>
   /// <returns>An object containing the return value of the invoked method.</returns>
-  public static object CallMethod(this object instance, string name, params object[] parameters) => instance.CallMethod(name, parameters as IEnumerable<object>);
+  public static T CallMethod<T>(this object instance, string name, params object[] parameters) => instance.CallMethod<T>(name, parameters as IEnumerable<object>);
 
   /// <summary>
   ///   <para></para>
@@ -610,7 +660,7 @@ public static class ObjectExtensions
   /// <param name="provider"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static string ToFormattedString(this object instance, IFormatProvider provider = null, string format = null) => provider == null ? FormattableString.Invariant($"{instance}") : string.Format(provider, format == null ? "{0}" : $"{{0:{format}}}", instance);
+  public static string ToFormattedString(this object instance, IFormatProvider provider = null, string format = null) => instance is not null ? provider == null ? FormattableString.Invariant($"{instance}") : string.Format(provider, format == null ? "{0}" : $"{{0:{format}}}", instance) : throw new ArgumentNullException(nameof(instance));
 
   /// <summary>
   ///   <para></para>
@@ -628,6 +678,8 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static string ToStateString(this object instance, IEnumerable<string> properties = null)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
     if (instance is string text)
     {
       return text;
@@ -655,6 +707,8 @@ public static class ObjectExtensions
   /// <returns>String representation of <paramref name="instance"/>. Property name is separated from value by colon character, name-value pairs are separated by comma and immediately following space characters, and all content is placed in square brackets afterwards.</returns>
   public static string ToStateString<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
     if (instance is string text)
     {
       return text;

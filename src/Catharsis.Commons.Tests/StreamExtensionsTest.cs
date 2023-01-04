@@ -16,7 +16,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_IsStart_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (stream)
       {
@@ -47,7 +47,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_IsEnd_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (stream)
       {
@@ -77,7 +77,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_IsEmpty_Method()
   {
-    void Validate(Stream stream, bool empty)
+    static void Validate(Stream stream, bool empty)
     {
       using (stream)
       {
@@ -105,7 +105,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_Empty_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (stream)
       {
@@ -133,7 +133,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_Min_Method()
   {
-    void Validate(Stream min, Stream max)
+    static void Validate(Stream min, Stream max)
     {
       using (min)
       {
@@ -167,7 +167,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_Max_Method()
   {
-    void Validate(Stream min, Stream max)
+    static void Validate(Stream min, Stream max)
     {
       using (min)
       {
@@ -268,7 +268,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_LinesAsync_Method()
   {
-    void Validate(Encoding encoding = null)
+    static void Validate(Encoding encoding)
     {
 
     }
@@ -277,7 +277,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => StreamExtensions.LinesAsync(null)).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
 
@@ -337,7 +337,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsSynchronized_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (var synchronized = stream.AsSynchronized())
       {
@@ -387,7 +387,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsReadOnly_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (var readOnly = stream.AsReadOnly())
       {
@@ -437,7 +437,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsReadOnlyForward_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (var readOnly = stream.AsReadOnlyForward())
       {
@@ -479,7 +479,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsWriteOnly_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (var writeOnly = stream.AsWriteOnly())
       {
@@ -529,7 +529,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsWriteOnlyForward_Method()
   {
-    void Validate(Stream stream)
+    static void Validate(Stream stream)
     {
       using (var writeOnly = stream.AsWriteOnlyForward())
       {
@@ -621,7 +621,7 @@ public sealed class StreamExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      void Validate(Encoding encoding = null)
+      static void Validate(Encoding encoding)
       {
         //var bytes = RandomBytes;
 
@@ -637,7 +637,7 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         AssertionExtensions.Should(() => ((Stream) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
 
-        Validate();
+        Validate(null);
         Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
       }
     }
@@ -967,7 +967,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToBufferedStream_Method()
   {
-    void Validate(Stream stream, int? size = null)
+    static void Validate(Stream stream, int? size)
     {
       using (var buffered = stream.ToBufferedStream(size))
       {
@@ -1024,7 +1024,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToBinaryReader_Method()
   {
-    void Validate(Encoding encoding = null)
+    static void Validate(Encoding encoding)
     {
       using var stream = RandomStream;
 
@@ -1043,7 +1043,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToBinaryReader(null)).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
 
@@ -1056,7 +1056,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToBinaryWriter_Method()
   {
-    void Validate(Encoding encoding = null)
+    static void Validate(Encoding encoding)
     {
       var bytes = RandomBytes;
 
@@ -1077,7 +1077,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToBinaryWriter(null)).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
 
@@ -1090,7 +1090,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToStreamReader_Method()
   {
-    void Validate(Encoding encoding = null)
+    static void Validate(Encoding encoding)
     {
       using var stream = RandomStream;
       var bytes = stream.ToArray();
@@ -1104,7 +1104,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToStreamReader(null)).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
 
@@ -1117,7 +1117,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToStreamWriter_Method()
   {
-    void Validate(Encoding encoding = null)
+    static void Validate(Encoding encoding)
     {
       var text = RandomString;
 
@@ -1137,7 +1137,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToStreamWriter(null)).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
 

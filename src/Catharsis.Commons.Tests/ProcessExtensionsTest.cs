@@ -78,7 +78,7 @@ public sealed class ProcessExtensionsTest : UnitTest
     const string command = "cmd.exe";
     var process = Process.Start(command);
     process.TryFinallyKill(_ => { }).Should().NotBeNull().And.BeSameAs(process);
-    process!.HasExited.Should().BeTrue();
+    process.HasExited.Should().BeTrue();
   }
 
   /// <summary>

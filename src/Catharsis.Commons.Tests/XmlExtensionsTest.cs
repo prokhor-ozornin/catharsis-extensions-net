@@ -92,7 +92,7 @@ public sealed class XmlExtensionsTest : UnitTest
   [Fact]
   public void XmlDocument_Empty_Method()
   {
-    void Validate(XmlDocument xml)
+    static void Validate(XmlDocument xml)
     {
       xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
       xml.HasChildNodes.Should().BeFalse();
@@ -116,7 +116,7 @@ public sealed class XmlExtensionsTest : UnitTest
   [Fact]
   public void XDocument_Empty_Method()
   {
-    void Validate(XDocument xml)
+    static void Validate(XDocument xml)
     {
       xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
       xml.Nodes().Should().BeEmpty();

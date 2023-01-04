@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.CompilerServices;
 #if NET6_0
 using System.Collections.Immutable;
 #endif
@@ -26,7 +27,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<bool> IsEmptyAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => !await sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false).GetAsyncEnumerator().MoveNextAsync();
+  public static async Task<bool> IsEmptyAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => sequence is not null ? !await sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false).GetAsyncEnumerator().MoveNextAsync() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -54,7 +55,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="action"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IAsyncEnumerable<T>> ForEachAsync<T>(this IAsyncEnumerable<T> sequence, Action<T> action, CancellationToken cancellation = default) => await sequence.ForEachAsync((_, element) => action(element), cancellation).ConfigureAwait(false);
+  public static async Task<IAsyncEnumerable<T>> ForEachAsync<T>(this IAsyncEnumerable<T> sequence, Action<T> action, CancellationToken cancellation = default)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return await sequence.ForEachAsync((_, element) => action(element), cancellation).ConfigureAwait(false);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -65,6 +72,9 @@ public static class AsyncEnumerableExtensions
   /// <param name="cancellation"></param>
   public static async Task<IAsyncEnumerable<T>> ForEachAsync<T>(this IAsyncEnumerable<T> sequence, Action<int, T> action, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
     var index = 0;
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -83,11 +93,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<T> WithEnforcedCancellation<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<T> WithEnforcedCancellation<T>(this IAsyncEnumerable<T> sequence, [EnumeratorCancellation] CancellationToken cancellation)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     cancellation.ThrowIfCancellationRequested();
 
-    await foreach (var element in sequence)
+    await foreach (var element in sequence.WithCancellation(cancellation))
     {
       cancellation.ThrowIfCancellationRequested();
 
@@ -101,7 +113,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IEnumerable<T> ToEnumerable<T>(this IAsyncEnumerable<T> sequence) => new AsyncEnumerable<T>(sequence);
+  public static IEnumerable<T> ToEnumerable<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? new AsyncEnumerable<T>(sequence) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -120,7 +132,7 @@ public static class AsyncEnumerableExtensions
   /// <returns></returns>
   /// <seealso cref="ToImmutableArrayAsync{T}"/>
   /// <seealso cref="Enumerable.ToArray{TSource}(IEnumerable{TSource})"/>
-  public static async Task<T[]> ToArrayAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).AsArray();
+  public static async Task<T[]> ToArrayAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => sequence is not null ? (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).AsArray() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -142,6 +154,8 @@ public static class AsyncEnumerableExtensions
   /// <seealso cref="Enumerable.ToList{TSource}(IEnumerable{TSource})"/>
   public static async Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var result = new List<T>();
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -172,6 +186,8 @@ public static class AsyncEnumerableExtensions
   /// <seealso cref="EnumerableExtensions.ToLinkedList{T}(IEnumerable{T})"/>
   public static async Task<LinkedList<T>> ToLinkedListAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var result = new LinkedList<T>();
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -197,7 +213,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IReadOnlyList<T>> ToReadOnlyListAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => await sequence.ToListAsync(cancellation).ConfigureAwait(false);
+  public static async Task<IReadOnlyList<T>> ToReadOnlyListAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => sequence is not null ? await sequence.ToListAsync(cancellation).ConfigureAwait(false) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -221,6 +237,8 @@ public static class AsyncEnumerableExtensions
   /// <seealso cref="Enumerable.ToHashSet{TSource}(IEnumerable{TSource}, IEqualityComparer{TSource})"/>
   public static async Task<HashSet<T>> ToHashSetAsync<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var result = new HashSet<T>(comparer);
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -251,6 +269,8 @@ public static class AsyncEnumerableExtensions
   /// <seealso cref="SortedSet{T}"/>
   public static async Task<SortedSet<T>> ToSortedSetAsync<T>(this IAsyncEnumerable<T> sequence, IComparer<T> comparer = null, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var result = new SortedSet<T>(comparer);
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -279,7 +299,8 @@ public static class AsyncEnumerableExtensions
   /// <param name="comparer"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IReadOnlySet<T>> ToReadOnlySetAsync<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null, CancellationToken cancellation = default) => await sequence.ToHashSetAsync(comparer, cancellation).ConfigureAwait(false);
+  public static async Task<IReadOnlySet<T>> ToReadOnlySetAsync<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null, CancellationToken cancellation = default) => sequence is not null ? await sequence.ToHashSetAsync(comparer, cancellation).ConfigureAwait(false) : throw new ArgumentNullException(nameof(sequence));
+  
 #endif
   /// <summary>
   ///   <para></para>
@@ -304,6 +325,9 @@ public static class AsyncEnumerableExtensions
   /// <returns></returns>
   public static async Task<Dictionary<TKey, TValue>> ToDictionaryAsync<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null, CancellationToken cancellation = default) where TKey : notnull
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
     var result = new Dictionary<TKey, TValue>(comparer);
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -335,7 +359,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="comparer"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IReadOnlyDictionary<TKey, TValue>> ToReadOnlyDictionaryAsync<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null, CancellationToken cancellation = default) where TKey : notnull => await sequence.ToDictionaryAsync(key, comparer, cancellation).ConfigureAwait(false);
+  public static async Task<IReadOnlyDictionary<TKey, TValue>> ToReadOnlyDictionaryAsync<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null, CancellationToken cancellation = default) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return await sequence.ToDictionaryAsync(key, comparer, cancellation).ConfigureAwait(false);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -352,7 +382,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<(T item, int index)>> ToValueTupleAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToValueTuple();
+  public static async Task<IEnumerable<(T item, int index)>> ToValueTupleAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => sequence is not null ? (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToValueTuple() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -375,7 +405,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="comparer"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<(TKey Key, TValue Value)>> ToValueTupleAsync<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> comparer = null, CancellationToken cancellation = default) where TKey : notnull => (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToValueTuple(key, comparer);
+  public static async Task<IEnumerable<(TKey Key, TValue Value)>> ToValueTupleAsync<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> comparer = null, CancellationToken cancellation = default) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToValueTuple(key, comparer);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -395,6 +431,8 @@ public static class AsyncEnumerableExtensions
   /// <seealso cref="Stack{T}"/>
   public static async Task<Stack<T>> ToStackAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var result = new Stack<T>();
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -423,6 +461,8 @@ public static class AsyncEnumerableExtensions
   /// <seealso cref="Queue{T}"/>
   public static async Task<Queue<T>> ToQueueAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var result = new Queue<T>();
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -456,6 +496,8 @@ public static class AsyncEnumerableExtensions
   /// <seealso cref="PriorityQueue{TElement, TPriority}"/>
   public static async Task<PriorityQueue<TElement, TPriority>> ToPriorityQueueAsync<TElement, TPriority>(this IAsyncEnumerable<(TElement Element, TPriority Priority)> sequence, IComparer<TPriority> comparer = null, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var result = new PriorityQueue<TElement, TPriority>(comparer);
 
     await foreach (var (element, priority) in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -482,6 +524,8 @@ public static class AsyncEnumerableExtensions
   /// <returns></returns>
   public static async Task<MemoryStream> ToMemoryStreamAsync(this IAsyncEnumerable<byte> sequence, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var stream = new MemoryStream();
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -507,6 +551,8 @@ public static class AsyncEnumerableExtensions
   /// <returns></returns>
   public static async Task<MemoryStream> ToMemoryStreamAsync(this IAsyncEnumerable<byte[]> sequence, CancellationToken cancellation = default)
   {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
     var stream = new MemoryStream();
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -535,7 +581,7 @@ public static class AsyncEnumerableExtensions
   /// <returns></returns>
   /// <seealso cref="ToArrayAsync{T}"/>
   /// <seealso cref="ImmutableArray.ToImmutableArray{TSource}(IEnumerable{TSource})"/>
-  public static async Task<ImmutableArray<T>> ToImmutableArrayAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableArray();
+  public static async Task<ImmutableArray<T>> ToImmutableArrayAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => sequence is not null ? (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableArray() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -555,7 +601,7 @@ public static class AsyncEnumerableExtensions
   /// <seealso cref="ToListAsync{T}"/>
   /// <seealso cref="ToLinkedListAsync{T}"/>
   /// <seealso cref="ImmutableList.ToImmutableList{TSource}(IEnumerable{TSource})"/>
-  public static async Task<ImmutableList<T>> ToImmutableListAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableList();
+  public static async Task<ImmutableList<T>> ToImmutableListAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => sequence is not null ? (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableList() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -577,7 +623,7 @@ public static class AsyncEnumerableExtensions
   /// <seealso cref="ToHashSetAsync{T}"/>
   /// <seealso cref="ImmutableHashSet.ToImmutableHashSet{TSource}(IEnumerable{TSource})"/>
   /// <seealso cref="ImmutableHashSet.ToImmutableHashSet{TSource}(IEnumerable{TSource}, IEqualityComparer{TSource})"/>
-  public static async Task<ImmutableHashSet<T>> ToImmutableHashSetAsync<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null, CancellationToken cancellation = default) => (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableHashSet(comparer);
+  public static async Task<ImmutableHashSet<T>> ToImmutableHashSetAsync<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null, CancellationToken cancellation = default) => sequence is not null ? (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableHashSet(comparer) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -596,7 +642,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="comparer"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<ImmutableSortedSet<T>> ToImmutableSortedSetAsync<T>(this IAsyncEnumerable<T> sequence, IComparer<T> comparer = null, CancellationToken cancellation = default) => (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableSortedSet(comparer);
+  public static async Task<ImmutableSortedSet<T>> ToImmutableSortedSetAsync<T>(this IAsyncEnumerable<T> sequence, IComparer<T> comparer = null, CancellationToken cancellation = default) => sequence is not null ? (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableSortedSet(comparer) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -619,7 +665,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="comparer"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<ImmutableDictionary<TKey, TValue>> ToImmutableDictionaryAsync<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null, CancellationToken cancellation = default) where TKey : notnull => (await sequence.ToDictionaryAsync(key, comparer, cancellation).ConfigureAwait(false)).ToImmutableDictionary();
+  public static async Task<ImmutableDictionary<TKey, TValue>> ToImmutableDictionaryAsync<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null, CancellationToken cancellation = default) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return (await sequence.ToDictionaryAsync(key, comparer, cancellation).ConfigureAwait(false)).ToImmutableDictionary();
+  }
 
   /// <summary>
   ///   <para></para>
@@ -644,7 +696,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="valueComparer"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<ImmutableSortedDictionary<TKey, TValue>> ToImmutableSortedDictionaryAsync<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null, CancellationToken cancellation = default) where TKey : notnull => (await sequence.ToDictionaryAsync(key, null, cancellation).ConfigureAwait(false)).ToImmutableSortedDictionary(keyComparer, valueComparer);
+  public static async Task<ImmutableSortedDictionary<TKey, TValue>> ToImmutableSortedDictionaryAsync<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null, CancellationToken cancellation = default) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return (await sequence.ToDictionaryAsync(key, null, cancellation).ConfigureAwait(false)).ToImmutableSortedDictionary(keyComparer, valueComparer);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -661,14 +719,19 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<ImmutableQueue<T>> ToImmutableQueueAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableQueue();
+  public static async Task<ImmutableQueue<T>> ToImmutableQueueAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => sequence is not null ? (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableQueue() : throw new ArgumentNullException(nameof(sequence));
 #endif
 
   private sealed class AsyncEnumerable<T> : IEnumerable<T>
   {
     private readonly IAsyncEnumerator<T> enumerator;
 
-    public AsyncEnumerable(IAsyncEnumerable<T> sequence) => enumerator = sequence.GetAsyncEnumerator();
+    public AsyncEnumerable(IAsyncEnumerable<T> sequence)
+    {
+      if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+      enumerator = sequence.GetAsyncEnumerator();
+    }
 
     public IEnumerator<T> GetEnumerator() => new Enumerator(this);
 

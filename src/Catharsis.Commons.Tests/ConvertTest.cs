@@ -238,7 +238,7 @@ public sealed class ConvertExtensionsTests : UnitTest
       using (var reader = xml.ToTextAsync().Await().ToXmlReader())
       {
         reader.MoveToContent();
-        Convert.To.String(reader).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(reader)).And.Be(xml.Root!.ToString());
+        Convert.To.String(reader).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(reader)).And.Be(xml.Root.ToString());
       }
     }
 
@@ -469,7 +469,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Sbyte_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Sbyte(null, format).Should().BeNull();
       Convert.To.Sbyte(string.Empty, format).Should().BeNull();
@@ -526,7 +526,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Sbyte(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -537,7 +537,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Byte_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Byte(null, format).Should().BeNull();
       Convert.To.Byte(string.Empty, format).Should().BeNull();
@@ -594,7 +594,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Byte(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -605,7 +605,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Short_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Short(null, format).Should().BeNull();
       Convert.To.Short(string.Empty, format).Should().BeNull();
@@ -662,7 +662,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Short(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -673,7 +673,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Ushort_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Ushort(null, format).Should().BeNull();
       Convert.To.Ushort(string.Empty, format).Should().BeNull();
@@ -730,7 +730,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Ushort(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -741,7 +741,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Int_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Int(null, format).Should().BeNull();
       Convert.To.Int(string.Empty, format).Should().BeNull();
@@ -798,7 +798,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Int(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -809,7 +809,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Uint_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Uint(null, format).Should().BeNull();
       Convert.To.Uint(string.Empty, format).Should().BeNull();
@@ -866,7 +866,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Uint(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -877,7 +877,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Long_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Long(null, format).Should().BeNull();
       Convert.To.Long(string.Empty, format).Should().BeNull();
@@ -935,7 +935,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Long(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -946,7 +946,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Ulong_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Ulong(null, format).Should().BeNull();
       Convert.To.Ulong(string.Empty, format).Should().BeNull();
@@ -1003,7 +1003,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Ulong(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -1014,7 +1014,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Float_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Float(null, format).Should().BeNull();
       Convert.To.Float(string.Empty, format).Should().BeNull();
@@ -1075,7 +1075,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Float(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -1086,7 +1086,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Double_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Double(null, format).Should().BeNull();
       Convert.To.Double(string.Empty, format).Should().BeNull();
@@ -1147,7 +1147,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Double(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -1158,7 +1158,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Decimal_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       Convert.To.Decimal(null, format).Should().BeNull();
       Convert.To.Decimal(string.Empty, format).Should().BeNull();
@@ -1205,7 +1205,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.Decimal(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -1232,7 +1232,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_DateTime_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       foreach (var date in new[] {DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow})
       {
@@ -1254,7 +1254,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.DateTime(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -1265,7 +1265,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_DateTimeOffset_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       foreach (var date in new[] {DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow})
       {
@@ -1287,7 +1287,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.DateTimeOffset(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -1298,7 +1298,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_DateOnly_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
       {
@@ -1320,7 +1320,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.DateOnly(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -1331,7 +1331,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_TimeOnly_Method()
   {
-    void Validate(IFormatProvider format = null)
+    static void Validate(IFormatProvider format)
     {
       foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
       {
@@ -1354,7 +1354,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       AssertionExtensions.Should(() => ConvertExtensions.TimeOnly(null, new object())).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
@@ -1387,7 +1387,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ConvertExtensions.Regex(Convert, object, RegexOptions?)"/> method.</para>
+  ///   <para>Performs testing of <see cref="ConvertExtensions.Regex(Convert, object, RegexOptions)"/> method.</para>
   /// </summary>
   [Fact]
   public void Convert_Regex_Method()
@@ -1401,14 +1401,14 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     regex = Convert.To.Regex(string.Empty);
     regex.Should().NotBeNull();
-    regex!.ToString().Should().BeEmpty();
+    regex.ToString().Should().BeEmpty();
     regex.Options.Should().Be(RegexOptions.None);
     regex.MatchTimeout.Should().Be(Timeout.InfiniteTimeSpan);
     regex.RightToLeft.Should().BeFalse();
 
     regex = Convert.To.Regex("[a-z]*", RegexOptions.IgnoreCase | RegexOptions.RightToLeft);
     regex.Should().NotBeNull();
-    regex!.ToString().Should().Be("[a-z]*");
+    regex.ToString().Should().Be("[a-z]*");
     regex.Options.Should().Be(RegexOptions.IgnoreCase | RegexOptions.RightToLeft);
     regex.MatchTimeout.Should().Be(Timeout.InfiniteTimeSpan);
     regex.RightToLeft.Should().BeTrue();
@@ -1429,25 +1429,25 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     uri = Convert.To.Uri(string.Empty);
     uri.Should().NotBeNull();
-    uri!.IsAbsoluteUri.Should().BeFalse();
+    uri.IsAbsoluteUri.Should().BeFalse();
     uri.OriginalString.Should().BeEmpty();
     uri.ToString().Should().BeEmpty();
 
     uri = Convert.To.Uri("path");
     uri.Should().NotBeNull();
-    uri!.IsAbsoluteUri.Should().BeFalse();
+    uri.IsAbsoluteUri.Should().BeFalse();
     uri.OriginalString.Should().Be("path");
     uri.ToString().Should().Be("path");
 
     uri = Convert.To.Uri("scheme:");
     uri.Should().NotBeNull();
-    uri!.IsAbsoluteUri.Should().BeTrue();
+    uri.IsAbsoluteUri.Should().BeTrue();
     uri.OriginalString.Should().Be("scheme:");
     uri.ToString().Should().Be("scheme:");
 
     uri = Convert.To.Uri("https://user:password@localhost:8080/path?query#id");
     uri.Should().NotBeNull();
-    uri!.IsAbsoluteUri.Should().BeTrue();
+    uri.IsAbsoluteUri.Should().BeTrue();
     uri.OriginalString.Should().Be("https://user:password@localhost:8080/path?query#id");
     uri.AbsolutePath.Should().Be("/path");
     uri.AbsoluteUri.Should().Be("https://user:password@localhost:8080/path?query#id");
@@ -1483,7 +1483,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     builder = Convert.To.StringBuilder(string.Empty);
     builder.Should().NotBeNull();
-    builder!.Length.Should().Be(0);
+    builder.Length.Should().Be(0);
     builder.Capacity.Should().Be(16);
     builder.MaxCapacity.Should().Be(int.MaxValue);
     builder.ToString().Should().BeEmpty();
@@ -1491,7 +1491,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     var value = RandomString;
     builder = Convert.To.StringBuilder(value);
     builder.Should().NotBeNull();
-    builder!.Length.Should().Be(value.Length);
+    builder.Length.Should().Be(value.Length);
     builder.Capacity.Should().Be(value.Length);
     builder.MaxCapacity.Should().Be(int.MaxValue);
     builder.ToString().Should().Be(value);

@@ -362,13 +362,13 @@ public sealed class StringExtensionsTest : UnitTest
     RandomName.IsType().Should().BeFalse();
 
     nameof(Object).IsType().Should().BeFalse();
-    typeof(object).FullName!.IsType().Should().BeTrue();
-    typeof(object).AssemblyQualifiedName!.IsType().Should().BeTrue();
+    typeof(object).FullName.IsType().Should().BeTrue();
+    typeof(object).AssemblyQualifiedName.IsType().Should().BeTrue();
 
     Assembly.GetExecutingAssembly().DefinedTypes.ForEach(type =>
     {
       nameof(type).IsType().Should().BeFalse();
-      type.AssemblyQualifiedName!.IsType().Should().BeTrue();
+      type.AssemblyQualifiedName.IsType().Should().BeTrue();
     });
   }
 
@@ -1170,7 +1170,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_ToBytes_Method()
   {
-    void Validate(Encoding encoding = null)
+    static void Validate(Encoding encoding)
     {
       var text = RandomString;
 
@@ -1185,7 +1185,7 @@ public sealed class StringExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>();
 
-      Validate();
+      Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
   }
@@ -1274,7 +1274,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      void Validate(IFormatProvider format = null)
+      static void Validate(IFormatProvider format)
       {
         AssertionExtensions.Should(() => string.Empty.ToSbyte(format)).ThrowExactly<FormatException>();
         AssertionExtensions.Should(() => "invalid".ToSbyte(format)).ThrowExactly<FormatException>();
@@ -1289,7 +1289,7 @@ public sealed class StringExtensionsTest : UnitTest
       {
         AssertionExtensions.Should(() => StringExtensions.ToSbyte(null)).ThrowExactly<ArgumentNullException>();
 
-        Validate();
+        Validate(null);
         CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
@@ -2019,25 +2019,25 @@ public sealed class StringExtensionsTest : UnitTest
 
       string.Empty.ToUri(out var uri);
       uri.Should().NotBeNull();
-      uri!.IsAbsoluteUri.Should().BeFalse();
+      uri.IsAbsoluteUri.Should().BeFalse();
       uri.OriginalString.Should().BeEmpty();
       uri.ToString().Should().BeEmpty();
 
       "path".ToUri(out uri);
       uri.Should().NotBeNull();
-      uri!.IsAbsoluteUri.Should().BeFalse();
+      uri.IsAbsoluteUri.Should().BeFalse();
       uri.OriginalString.Should().Be("path");
       uri.ToString().Should().Be("path");
 
       "scheme:".ToUri(out uri);
       uri.Should().NotBeNull();
-      uri!.IsAbsoluteUri.Should().BeTrue();
+      uri.IsAbsoluteUri.Should().BeTrue();
       uri.OriginalString.Should().Be("scheme:");
       uri.ToString().Should().Be("scheme:");
 
       "https://user:password@localhost:8080/path?query#id".ToUri(out uri);
       uri.Should().NotBeNull();
-      uri!.IsAbsoluteUri.Should().BeTrue();
+      uri.IsAbsoluteUri.Should().BeTrue();
       uri.OriginalString.Should().Be("https://user:password@localhost:8080/path?query#id");
       uri.ToString().Should().Be("https://user:password@localhost:8080/path?query#id");
       uri.AbsolutePath.Should().Be("/path");
@@ -2078,14 +2078,14 @@ public sealed class StringExtensionsTest : UnitTest
       RandomName.ToType().Should().BeNull();
 
       nameof(Object).ToType().Should().BeNull();
-      typeof(object).FullName!.ToType().Should().Be(typeof(object));
-      typeof(object).AssemblyQualifiedName!.ToType().Should().Be(typeof(object));
+      typeof(object).FullName.ToType().Should().Be(typeof(object));
+      typeof(object).AssemblyQualifiedName.ToType().Should().Be(typeof(object));
 
       Assembly.GetExecutingAssembly().DefinedTypes.ForEach(type =>
       {
         nameof(type).ToType().Should().BeNull();
-        type.AssemblyQualifiedName!.ToType().Should().Be(type);
-        type.AssemblyQualifiedName!.ToType().Should().NotBeSameAs(type.AssemblyQualifiedName!.ToType());
+        type.AssemblyQualifiedName.ToType().Should().Be(type);
+        type.AssemblyQualifiedName.ToType().Should().NotBeSameAs(type.AssemblyQualifiedName.ToType());
       });
     }
 
@@ -2102,10 +2102,10 @@ public sealed class StringExtensionsTest : UnitTest
       nameof(Object).ToType(out type).Should().BeFalse();
       type.Should().BeNull();
 
-      typeof(object).FullName!.ToType(out type).Should().BeTrue();
+      typeof(object).FullName.ToType(out type).Should().BeTrue();
       type.Should().Be(typeof(object));
 
-      typeof(object).AssemblyQualifiedName!.ToType(out type).Should().BeTrue();
+      typeof(object).AssemblyQualifiedName.ToType(out type).Should().BeTrue();
       type.Should().Be(typeof(object));
 
       Assembly.GetExecutingAssembly().DefinedTypes.ForEach(typeInfo =>
@@ -2113,7 +2113,7 @@ public sealed class StringExtensionsTest : UnitTest
         nameof(typeInfo).ToType(out type).Should().BeFalse();
         type.Should().BeNull();
 
-        typeInfo.AssemblyQualifiedName!.ToType(out type).Should().BeTrue();
+        typeInfo.AssemblyQualifiedName.ToType(out type).Should().BeTrue();
         type.Should().Be(typeInfo);
       });
     }
@@ -2467,7 +2467,7 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.ToRegex(string, RegexOptions?)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToRegex(string, RegexOptions)"/> method.</para>
   /// </summary>
   [Fact]
   public void String_ToRegex_Method()

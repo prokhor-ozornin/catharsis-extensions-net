@@ -20,35 +20,35 @@ public static class TextExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsStart(this StreamReader reader) => reader.BaseStream.IsStart();
+  public static bool IsStart(this StreamReader reader) => reader is not null ? reader.BaseStream.IsStart() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsEnd(this TextReader reader) => reader.Peek() < 0;
+  public static bool IsEnd(this TextReader reader) => reader is not null ? reader.Peek() < 0 : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this StreamReader reader) => reader.BaseStream.IsEmpty();
+  public static bool IsEmpty(this StreamReader reader) => reader is not null ? reader.BaseStream.IsEmpty() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this StreamWriter writer) => writer.BaseStream.IsEmpty();
+  public static bool IsEmpty(this StreamWriter writer) => writer is not null ? writer.BaseStream.IsEmpty() : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this StringBuilder builder) => builder.Length <= 0;
+  public static bool IsEmpty(this StringBuilder builder) => builder is not null ? builder.Length <= 0 : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
   ///   <para></para>
@@ -57,7 +57,10 @@ public static class TextExtensions
   /// <returns></returns>
   public static StreamReader Empty(this StreamReader reader)
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
     reader.BaseStream.Empty();
+
     return reader;
   }
 
@@ -68,7 +71,10 @@ public static class TextExtensions
   /// <returns></returns>
   public static StreamWriter Empty(this StreamWriter writer)
   {
+    if (writer is null) throw new ArgumentNullException(nameof(writer));
+
     writer.BaseStream.Empty();
+
     return writer;
   }
 
@@ -77,15 +83,7 @@ public static class TextExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  public static StringBuilder Empty(this StringBuilder builder) => builder.Clear();
-  
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static StringBuilder Min(this StringBuilder left, StringBuilder right) => left.Length <= right.Length ? left : right;
+  public static StringBuilder Empty(this StringBuilder builder) => builder is not null ? builder.Clear() : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
   ///   <para></para>
@@ -93,7 +91,27 @@ public static class TextExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  public static StringBuilder Max(this StringBuilder left, StringBuilder right) => left.Length >= right.Length ? left : right;
+  public static StringBuilder Min(this StringBuilder left, StringBuilder right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Length <= right.Length ? left : right;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static StringBuilder Max(this StringBuilder left, StringBuilder right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Length >= right.Length ? left : right;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -102,7 +120,10 @@ public static class TextExtensions
   /// <returns></returns>
   public static StreamReader Rewind(this StreamReader reader)
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
     reader.BaseStream.MoveToStart();
+
     return reader;
   }
 
@@ -113,7 +134,10 @@ public static class TextExtensions
   /// <returns></returns>
   public static StreamWriter Rewind(this StreamWriter writer)
   {
+    if (writer is null) throw new ArgumentNullException(nameof(writer));
+
     writer.BaseStream.MoveToStart();
+
     return writer;
   }
 
@@ -124,6 +148,8 @@ public static class TextExtensions
   /// <returns></returns>
   public static IEnumerable<string> Lines(this TextReader reader)
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
     for (string line; (line = reader.ReadLine()) != null;)
     {
       yield return line;
@@ -137,6 +163,8 @@ public static class TextExtensions
   /// <returns>List of strings which have been read from a <paramref name="reader"/>.</returns>
   public static async IAsyncEnumerable<string> LinesAsync(this TextReader reader)
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
     for (string line; (line = await reader.ReadLineAsync()) != null;)
     {
       yield return line;
@@ -152,7 +180,11 @@ public static class TextExtensions
   /// <returns></returns>
   public static TReader Skip<TReader>(this TReader reader, int count) where TReader : TextReader
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
     count.Times(() => reader.Read());
+
     return reader;
   }
 
@@ -162,7 +194,7 @@ public static class TextExtensions
   /// <param name="character"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static string Repeat(this char character, int count) => new(character, count);
+  public static string Repeat(this char character, int count) => count >= 0 ? new string(character, count) : throw new ArgumentOutOfRangeException(nameof(count));
 
   /// <summary>
   ///   <para></para>
@@ -173,7 +205,11 @@ public static class TextExtensions
   /// <returns></returns>
   public static T Print<T>(this T instance, TextWriter destination)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
     destination.Write(instance.ToStateString());
+
     return instance;
   }
 
@@ -186,7 +222,11 @@ public static class TextExtensions
   /// <returns></returns>
   public static async Task<T> PrintAsync<T>(this T instance, TextWriter destination, CancellationToken cancellation = default)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
     await destination.WriteAsync(instance.ToStateString().ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
+
     return instance;
   }
 
@@ -203,14 +243,14 @@ public static class TextExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static TextReader AsSynchronized(this TextReader reader) => TextReader.Synchronized(reader);
+  public static TextReader AsSynchronized(this TextReader reader) => reader is not null ? TextReader.Synchronized(reader) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  public static TextWriter AsSynchronized(this TextWriter writer) => TextWriter.Synchronized(writer);
+  public static TextWriter AsSynchronized(this TextWriter writer) => writer is not null ? TextWriter.Synchronized(writer) : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>
@@ -233,14 +273,14 @@ public static class TextExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static string ToText(this TextReader reader) => reader.ReadToEnd();
+  public static string ToText(this TextReader reader) => reader is not null ? reader.ReadToEnd() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>
   /// </summary>
   /// <param name="reader"><see cref="TextReader"/> which is used to read text from its underlying source.</param>
   /// <returns>Text content which have been read from a <paramref name="reader"/>.</returns>
-  public static async Task<string> ToTextAsync(this TextReader reader) => await reader.ReadToEndAsync().ConfigureAwait(false);
+  public static async Task<string> ToTextAsync(this TextReader reader) => reader is not null ? await reader.ReadToEndAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -255,7 +295,13 @@ public static class TextExtensions
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<char[]> ToEnumerable(this TextReader reader, int count) => new TextReaderEnumerable(reader, count);
+  public static IEnumerable<char[]> ToEnumerable(this TextReader reader, int count)
+  {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+    if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return new TextReaderEnumerable(reader, count);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -264,6 +310,8 @@ public static class TextExtensions
   /// <returns></returns>
   public static async IAsyncEnumerable<char> ToAsyncEnumerable(this TextReader reader)
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
     await foreach (var elements in reader.ToAsyncEnumerable(4096).ConfigureAwait(false))
     {
       foreach (var element in elements)
@@ -279,7 +327,13 @@ public static class TextExtensions
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<char[]> ToAsyncEnumerable(this TextReader reader, int count) => new TextReaderAsyncEnumerable(reader, count);
+  public static IAsyncEnumerable<char[]> ToAsyncEnumerable(this TextReader reader, int count)
+  {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+    if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return new TextReaderAsyncEnumerable(reader, count);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -287,14 +341,14 @@ public static class TextExtensions
   /// <param name="builder"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static StringWriter ToStringWriter(this StringBuilder builder, IFormatProvider format = null) => new(builder, format ?? CultureInfo.InvariantCulture);
+  public static StringWriter ToStringWriter(this StringBuilder builder, IFormatProvider format = null) => builder is not null ? new StringWriter(builder, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  public static XmlWriter ToXmlWriter(this StringBuilder builder) => XmlWriter.Create(builder, new XmlWriterSettings { Indent = true });
+  public static XmlWriter ToXmlWriter(this StringBuilder builder) => builder is not null ? XmlWriter.Create(builder, new XmlWriterSettings { Indent = true }) : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
   ///   <para></para>
@@ -325,7 +379,11 @@ public static class TextExtensions
   /// <returns></returns>
   public static TWriter WriteText<TWriter>(this TWriter destination, string text) where TWriter : TextWriter
   {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     destination.Write(text);
+
     return destination;
   }
 
@@ -339,7 +397,11 @@ public static class TextExtensions
   /// <returns></returns>
   public static async Task<TWriter> WriteTextAsync<TWriter>(this TWriter destination, string text, CancellationToken cancellation = default) where TWriter : TextWriter
   {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     await destination.WriteAsync(text.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
+
     return destination;
   }
 
@@ -352,7 +414,11 @@ public static class TextExtensions
   /// <returns></returns>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, TextWriter writer, Encoding encoding = null)
   {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (writer is null) throw new ArgumentNullException(nameof(writer));
+
     bytes.AsArray().ToText(encoding).WriteTo(writer);
+
     return bytes;
   }
 
@@ -365,7 +431,11 @@ public static class TextExtensions
   /// <returns></returns>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, TextWriter writer, Encoding encoding = null)
   {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (writer is null) throw new ArgumentNullException(nameof(writer));
+
     await bytes.AsArray().ToText(encoding).WriteToAsync(writer).ConfigureAwait(false);
+
     return bytes;
   }
 
@@ -377,7 +447,11 @@ public static class TextExtensions
   /// <returns></returns>
   public static string WriteTo(this string text, TextWriter destination)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
     destination.WriteText(text);
+
     return text;
   }
 
@@ -390,7 +464,11 @@ public static class TextExtensions
   /// <returns></returns>
   public static async Task<string> WriteToAsync(this string text, TextWriter destination, CancellationToken cancellation = default)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
     await destination.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+
     return text;
   }
 
@@ -401,7 +479,9 @@ public static class TextExtensions
 
     public TextReaderEnumerable(TextReader reader, int count)
     {
-      this.reader = reader;
+      if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+      this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
       this.count = count;
     }
 
@@ -416,7 +496,7 @@ public static class TextExtensions
 
       public Enumerator(TextReaderEnumerable parent)
       {
-        this.parent = parent;
+        this.parent = parent ?? throw new ArgumentOutOfRangeException(nameof(parent));
         buffer = new char[parent.count];
       }
 
@@ -449,7 +529,9 @@ public static class TextExtensions
 
     public TextReaderAsyncEnumerable(TextReader reader, int count)
     {
-      this.reader = reader;
+      if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+      this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
       this.count = count;
     }
 
@@ -462,7 +544,7 @@ public static class TextExtensions
 
       public Enumerator(TextReaderAsyncEnumerable parent)
       {
-        this.parent = parent;
+        this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
         buffer = new char[parent.count];
       }
 

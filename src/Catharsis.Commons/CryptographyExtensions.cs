@@ -18,6 +18,9 @@ public static class CryptographyExtensions
   /// <returns></returns>
   public static byte[] Encrypt(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes)
   {
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     using var encryptor = algorithm.CreateEncryptor();
     using var stream = new MemoryStream();
 
@@ -63,6 +66,9 @@ public static class CryptographyExtensions
   /// <returns>Encrypted binary data.</returns>
   public static async Task<byte[]> EncryptAsync(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     using var encryptor = algorithm.CreateEncryptor();
     using var stream = new MemoryStream();
 
@@ -110,6 +116,9 @@ public static class CryptographyExtensions
   /// <returns></returns>
   public static byte[] Decrypt(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes)
   {
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     using var decryptor = algorithm.CreateDecryptor();
     using var stream = new MemoryStream();
 
@@ -155,6 +164,9 @@ public static class CryptographyExtensions
   /// <returns>Decrypted binary data.</returns>
   public static async Task<byte[]> DecryptAsync(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     using var decryptor = algorithm.CreateDecryptor();
     using var stream = new MemoryStream();
 
@@ -200,7 +212,13 @@ public static class CryptographyExtensions
   /// <param name="bytes"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
-  public static byte[] Hash(this IEnumerable<byte> bytes, HashAlgorithm algorithm) => algorithm.ComputeHash(bytes.AsArray());
+  public static byte[] Hash(this IEnumerable<byte> bytes, HashAlgorithm algorithm)
+  {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+
+    return algorithm.ComputeHash(bytes.AsArray());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -216,7 +234,13 @@ public static class CryptographyExtensions
   /// <param name="stream"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
-  public static byte[] Hash(this Stream stream, HashAlgorithm algorithm) => algorithm.ComputeHash(stream);
+  public static byte[] Hash(this Stream stream, HashAlgorithm algorithm)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+
+    return algorithm.ComputeHash(stream);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -227,8 +251,11 @@ public static class CryptographyExtensions
   /// <returns></returns>
   public static async Task<byte[]> HashAsync(this Stream stream, HashAlgorithm algorithm, CancellationToken cancellation = default)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+
     #if NET6_0
-    return await algorithm.ComputeHashAsync(stream, cancellation).ConfigureAwait(false);
+      return await algorithm.ComputeHashAsync(stream, cancellation).ConfigureAwait(false);
     #else
       return algorithm.ComputeHash(stream);
     #endif
@@ -242,8 +269,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashMd5(this IEnumerable<byte> bytes)
   {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     using var algorithm = HashAlgorithm.Create("MD5");
-    return algorithm != null ? bytes.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+
+    return bytes.Hash(algorithm);
   }
 
   /// <summary>
@@ -254,8 +284,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashMd5(this string text)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     using var algorithm = HashAlgorithm.Create("MD5");
-    return algorithm != null ? text.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+
+    return text.Hash(algorithm);
   }
 
   /// <summary>
@@ -266,8 +299,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashMd5(this Stream stream)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("MD5");
-    return algorithm != null ? stream.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+
+    return stream.Hash(algorithm);
   }
   
   /// <summary>
@@ -279,8 +315,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashMd5Async(this Stream stream, CancellationToken cancellation = default)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("MD5");
-    return algorithm != null ? await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
+
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -291,8 +330,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha1(this IEnumerable<byte> bytes)
   {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     using var algorithm = HashAlgorithm.Create("SHA1");
-    return algorithm != null ? bytes.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+
+    return bytes.Hash(algorithm);
   }
 
   /// <summary>
@@ -303,8 +345,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashSha1(this string text)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     using var algorithm = HashAlgorithm.Create("SHA1");
-    return algorithm != null ? text.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+
+    return text.Hash(algorithm);
   }
 
   /// <summary>
@@ -315,8 +360,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha1(this Stream stream)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("SHA1");
-    return algorithm != null ? stream.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+
+    return stream.Hash(algorithm);
   }
 
   /// <summary>
@@ -328,8 +376,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashSha1Async(this Stream stream, CancellationToken cancellation = default)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("SHA1");
-    return algorithm != null ? await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
+
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -340,8 +391,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha256(this IEnumerable<byte> bytes)
   {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     using var algorithm = HashAlgorithm.Create("SHA256");
-    return algorithm != null ? bytes.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return bytes.Hash(algorithm);
   }
 
   /// <summary>
@@ -352,8 +406,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashSha256(this string text)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     using var algorithm = HashAlgorithm.Create("SHA256");
-    return algorithm != null ? text.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return text.Hash(algorithm);
   }
 
   /// <summary>
@@ -364,8 +421,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha256(this Stream stream)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("SHA256");
-    return algorithm != null ? stream.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return stream.Hash(algorithm);
   }
 
   /// <summary>
@@ -377,8 +437,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashSha256Async(this Stream stream, CancellationToken cancellation = default)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("SHA256");
-    return algorithm != null ? await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
   }
   
   /// <summary>
@@ -389,8 +452,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha384(this IEnumerable<byte> bytes)
   {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     using var algorithm = HashAlgorithm.Create("SHA384");
-    return algorithm != null ? bytes.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return bytes.Hash(algorithm);
   }
 
   /// <summary>
@@ -401,8 +467,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashSha384(this string text)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     using var algorithm = HashAlgorithm.Create("SHA384");
-    return algorithm != null ? text.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return text.Hash(algorithm);
   }
 
   /// <summary>
@@ -413,8 +482,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha384(this Stream stream)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("SHA384");
-    return algorithm != null ? stream.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return stream.Hash(algorithm);
   }
 
   /// <summary>
@@ -426,8 +498,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashSha384Async(this Stream stream, CancellationToken cancellation = default)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("SHA384");
-    return algorithm != null ? await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
   }
   
   /// <summary>
@@ -438,8 +513,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha512(this IEnumerable<byte> bytes)
   {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     using var algorithm = HashAlgorithm.Create("SHA512");
-    return algorithm != null ? bytes.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return bytes.Hash(algorithm);
   }
 
   /// <summary>
@@ -450,8 +528,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashSha512(this string text)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     using var algorithm = HashAlgorithm.Create("SHA512");
-    return algorithm != null ? text.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return text.Hash(algorithm);
   }
 
   /// <summary>
@@ -462,8 +543,11 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha512(this Stream stream)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("SHA512");
-    return algorithm != null ? stream.Hash(algorithm) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return stream.Hash(algorithm);
   }
 
   /// <summary>
@@ -475,7 +559,10 @@ public static class CryptographyExtensions
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashSha512Async(this Stream stream, CancellationToken cancellation = default)
   {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
     using var algorithm = HashAlgorithm.Create("SHA512");
-    return algorithm != null ? await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false) : throw new InvalidOperationException("Unsupported hash algorithm");
+    
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
   }
 }

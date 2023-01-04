@@ -1126,7 +1126,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_RangeSequence_Method()
   {
-    void Validate(Range range, int? max = null)
+    static void Validate(Range range, int? max)
     {
       range.Start.IsFromEnd.Should().BeFalse();
       range.Start.Value.Should().Be(0);
@@ -1148,7 +1148,7 @@ public sealed class RandomExtensionsTest : UnitTest
       Randomizer.RangeSequence(0).Should().BeEmpty();
 
       Randomizer.RangeSequence(count, 0).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => Validate(element, 0));
-      Randomizer.RangeSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => Validate(element));
+      Randomizer.RangeSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => Validate(element, null));
     }
   }
 
@@ -1319,7 +1319,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_FilePathSequence_Method()
   {
-    void Validate(string path, string directory)
+    static void Validate(string path, string directory)
     {
       var file = Path.GetFileName(path);
       path.Should().NotBeNullOrWhiteSpace().And.NotBe(Randomizer.FilePath()).And.Be(Path.Combine(directory, file));
@@ -1368,7 +1368,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_DirectoryPathSequence_Method()
   {
-    void Validate(string directory, string path)
+    static void Validate(string directory, string path)
     {
       var file = Path.GetFileName(path);
       path.Should().NotBeNullOrWhiteSpace().And.NotBe(Randomizer.DirectoryPath()).And.Be(Path.Combine(directory, file));
@@ -1397,7 +1397,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_Directory_Method()
   {
-    void Validate(DirectoryInfo directory, string path)
+    static void Validate(DirectoryInfo directory, string path)
     {
       directory.TryFinallyDelete(directory =>
       {
@@ -1429,7 +1429,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_DirectorySequence_Method()
   {
-    void Validate(DirectoryInfo directory, string path)
+    static void Validate(DirectoryInfo directory, string path)
     {
       directory.TryFinallyDelete(directory =>
       {
@@ -1466,7 +1466,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_File_Method()
   {
-    void Validate(FileInfo file, string path)
+    static void Validate(FileInfo file, string path)
     {
       file.TryFinallyDelete(file =>
       {
@@ -1499,7 +1499,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_FileSequence_Method()
   {
-    void Validate(FileInfo file, string path)
+    static void Validate(FileInfo file, string path)
     {
       file.TryFinallyDelete(file =>
       {
@@ -1625,7 +1625,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_BinaryFileAsync_Method()
   {
-    void Validate(FileInfo file, string path, int size, byte? min = null, byte? max = null)
+    static void Validate(FileInfo file, string path, int size, byte? min, byte? max)
     {
       AssertionExtensions.Should(() => Randomizer.BinaryFileAsync(0, min, max, path.ToDirectory(), Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
 
@@ -1689,7 +1689,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_BinaryFileInRangeAsync_Method()
   {
-    void Validate(int size, params Range[] ranges)
+    static void Validate(int size, params Range[] ranges)
     {
       AssertionExtensions.Should(() => Randomizer.BinaryFileInRangeAsync(0, null, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await(); // TODO TaskCancelledException
 
@@ -1959,7 +1959,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_MemoryStreamAsync_Method()
   {
-    void Validate(MemoryStream stream, int count)
+    static void Validate(MemoryStream stream, int count)
     {
       stream.Length.Should().Be(count);
       stream.Position.Should().Be(0);
@@ -2017,7 +2017,7 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_MemoryStreamInRangeAsync_Method()
   {
-    void Validate(MemoryStream stream, int count)
+    static void Validate(MemoryStream stream, int count)
     {
       stream.Length.Should().Be(count);
       stream.Position.Should().Be(0);

@@ -38,11 +38,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="string"/>, or a <c>null</c> reference.</returns>
   public static string String(this Convert convert, object instance, Encoding encoding = null)
   {
-    if (convert == null)
-    {
-      throw new ArgumentNullException();
-    }
-
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+  
     return instance switch
     {
       null => null,
@@ -71,6 +68,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static byte[] Binary(this Convert convert, object instance, Encoding encoding = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -100,6 +99,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static T[] Array<T>(this Convert convert, object instance)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -119,6 +120,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static sbyte? Sbyte(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -146,6 +149,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="byte"/>, or a <c>null</c> reference.</returns>
   public static byte? Byte(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -173,6 +178,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="short"/>, or a <c>null</c> reference.</returns>
   public static short? Short(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -200,6 +207,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static ushort? Ushort(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -227,6 +236,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="int"/>, or a <c>null</c> reference.</returns>
   public static int? Int(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -254,6 +265,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static uint? Uint(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -281,6 +294,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="long"/>, or a <c>null</c> reference.</returns>
   public static long? Long(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -308,6 +323,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static ulong? Ulong(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -335,6 +352,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="Float"/>, or a <c>null</c> reference.</returns>
   public static float? Float(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -362,6 +381,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="double"/>, or a <c>null</c> reference.</returns>
   public static double? Double(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -389,6 +410,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="decimal"/>, or a <c>null</c> reference.</returns>
   public static decimal? Decimal(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -416,6 +439,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static T? Enum<T>(this Convert convert, object instance) where T : struct
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -432,6 +457,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="DateTime"/>, or a <c>null</c> reference.</returns>
   public static DateTime? DateTime(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -454,6 +481,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static DateTimeOffset? DateTimeOffset(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -477,6 +506,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static DateOnly? DateOnly(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -496,6 +527,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static TimeOnly? TimeOnly(this Convert convert, object instance, IFormatProvider format = null)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -515,6 +548,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="Guid"/>, or a <c>null</c> reference.</returns>
   public static Guid? Guid(this Convert convert, object instance)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -531,8 +566,10 @@ public static class ConvertExtensions
   /// <param name="instance">Target object for conversion.</param>
   /// <param name="options"></param>
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="Regex"/>, or a <c>null</c> reference.</returns>
-  public static Regex Regex(this Convert convert, object instance, RegexOptions? options = null)
+  public static Regex Regex(this Convert convert, object instance, RegexOptions options = RegexOptions.None)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -549,6 +586,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="Uri"/>, or a <c>null</c> reference.</returns>
   public static Uri Uri(this Convert convert, object instance)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -565,6 +604,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static StringBuilder StringBuilder(this Convert convert, object instance)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -581,6 +622,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static IPAddress IpAddress(this Convert convert, object instance)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -599,6 +642,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static DirectoryInfo Directory(this Convert convert, object instance)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -615,6 +660,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static FileInfo File(this Convert convert, object instance)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -631,6 +678,8 @@ public static class ConvertExtensions
   /// <returns></returns>
   public static Type Type(this Convert convert, object instance)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => null,
@@ -658,6 +707,8 @@ public static class ConvertExtensions
   /// <returns><paramref name="instance"/> instance that was converted to <see cref="bool"/>.</returns>
   public static bool Boolean(this Convert convert, object instance)
   {
+    if (convert is null) throw new ArgumentNullException(nameof(convert));
+
     return instance switch
     {
       null => false,

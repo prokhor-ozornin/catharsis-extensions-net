@@ -12,42 +12,42 @@ public static class BinaryExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsStart(this BinaryReader reader) => reader.BaseStream.IsStart();
+  public static bool IsStart(this BinaryReader reader) => reader is not null ? reader.BaseStream.IsStart() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  public static bool IsStart(this BinaryWriter writer) => writer.BaseStream.IsStart();
+  public static bool IsStart(this BinaryWriter writer) => writer is not null ? writer.BaseStream.IsStart() : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsEnd(this BinaryReader reader) => reader.BaseStream.IsEnd();
+  public static bool IsEnd(this BinaryReader reader) => reader is not null ? reader.BaseStream.IsEnd() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  public static bool IsEnd(this BinaryWriter writer) => writer.BaseStream.IsEnd();
+  public static bool IsEnd(this BinaryWriter writer) => writer is not null ? writer.BaseStream.IsEnd() : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this BinaryReader reader) => reader.BaseStream.IsEmpty();
+  public static bool IsEmpty(this BinaryReader reader) => reader is not null ? reader.BaseStream.IsEmpty() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this BinaryWriter writer) => writer.BaseStream.IsEmpty();
+  public static bool IsEmpty(this BinaryWriter writer) => writer is not null ? writer.BaseStream.IsEmpty() : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>
@@ -56,7 +56,10 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static BinaryReader Empty(this BinaryReader reader)
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
     reader.BaseStream.Empty();
+
     return reader;
   }
 
@@ -67,7 +70,10 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static BinaryWriter Empty(this BinaryWriter writer)
   {
+    if (writer is null) throw new ArgumentNullException(nameof(writer));
+
     writer.BaseStream.Empty();
+    
     return writer;
   }
 
@@ -78,7 +84,10 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static BinaryReader Rewind(this BinaryReader reader)
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
     reader.BaseStream.MoveToStart();
+    
     return reader;
   }
 
@@ -89,7 +98,10 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static BinaryWriter Rewind(this BinaryWriter writer)
   {
+    if (writer is null) throw new ArgumentNullException(nameof(writer));
+
     writer.BaseStream.MoveToStart();
+    
     return writer;
   }
 
@@ -101,6 +113,9 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static BinaryReader Skip(this BinaryReader reader, int count)
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
     try
     {
       count.Times(() => reader.ReadByte());
@@ -121,7 +136,11 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static T Print<T>(this T instance, BinaryWriter destination)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
     destination.WriteText(instance.ToStateString());
+    
     return instance;
   }
 
@@ -146,7 +165,7 @@ public static class BinaryExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToEnumerable(this BinaryReader reader) => reader.BaseStream.ToEnumerable();
+  public static IEnumerable<byte> ToEnumerable(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToEnumerable() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -154,14 +173,14 @@ public static class BinaryExtensions
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<byte[]> ToEnumerable(this BinaryReader reader, int count) => reader.BaseStream.ToEnumerable(count);
+  public static IEnumerable<byte[]> ToEnumerable(this BinaryReader reader, int count) => reader is not null ? reader.BaseStream.ToEnumerable(count) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this BinaryReader reader) => reader.BaseStream.ToAsyncEnumerable();
+  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToAsyncEnumerable() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -169,7 +188,7 @@ public static class BinaryExtensions
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this BinaryReader reader, int count) => reader.BaseStream.ToAsyncEnumerable(count);
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this BinaryReader reader, int count) => reader is not null ? reader.BaseStream.ToAsyncEnumerable(count) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -177,14 +196,14 @@ public static class BinaryExtensions
   /// <param name="reader"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader, CancellationToken cancellation = default) => reader.BaseStream.ToBytesAsync(cancellation);
+  public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader, CancellationToken cancellation = default) => reader is not null ? reader.BaseStream.ToBytesAsync(cancellation) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this BinaryReader reader) => reader.BaseStream.ToBytes();
+  public static IEnumerable<byte> ToBytes(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToBytes() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -193,6 +212,8 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static string ToText(this BinaryReader reader)
   {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
     try
     {
       return reader.ReadString();
@@ -211,7 +232,11 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static BinaryWriter WriteBytes(this BinaryWriter destination, IEnumerable<byte> bytes)
   {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
     destination.Write(bytes.AsArray());
+   
     return destination;
   }
 
@@ -223,7 +248,11 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static BinaryWriter WriteText(this BinaryWriter destination, string text)
   {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     destination.Write(text);
+
     return destination;
   }
 
@@ -235,7 +264,11 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, BinaryWriter destination)
   {
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
     destination.WriteBytes(bytes);
+    
     return bytes;
   }
 
@@ -247,7 +280,11 @@ public static class BinaryExtensions
   /// <returns></returns>
   public static string WriteTo(this string text, BinaryWriter destination)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
     destination.WriteText(text);
+    
     return text;
   }
 }

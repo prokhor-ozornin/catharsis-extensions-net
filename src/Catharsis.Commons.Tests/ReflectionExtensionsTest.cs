@@ -339,7 +339,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
       typeof(TestObject).Instance(Enumerable.Empty<KeyValuePair<string, object>>().Should().NotBeNull());
       AssertionExtensions.Should(() => typeof(TestObject).Instance(new object(), new object())).ThrowExactly<MissingMethodException>();
 
-      typeof(TestObject).Instance(new object[] { "value" }).To<TestObject>().PublicProperty.Should().Be("value");
+      typeof(TestObject).Instance("value").To<TestObject>().PublicProperty.Should().Be("value");
       typeof(TestObject).Instance(new Dictionary<string, object> { { "PublicProperty", "value" } }).To<TestObject>().PublicProperty.ToString().Should().Be("value");
 
       typeof(TestObject).Instance(new
