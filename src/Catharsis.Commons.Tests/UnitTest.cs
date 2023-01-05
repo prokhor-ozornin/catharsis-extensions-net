@@ -5,8 +5,13 @@ namespace Catharsis.Commons.Tests;
 /// <summary>
 ///   <para></para>
 /// </summary>
-public abstract class UnitTest
+public abstract class UnitTest : IDisposable
 {
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  protected const string ShellCommand = "cmd.exe";
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -117,4 +122,11 @@ public abstract class UnitTest
   ///   <para></para>
   /// </summary>
   protected static DirectoryInfo RandomFakeDirectory => new Random().DirectoryPath().ToDirectory();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  public virtual void Dispose()
+  {
+  }
 }

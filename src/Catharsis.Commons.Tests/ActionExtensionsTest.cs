@@ -21,8 +21,8 @@ public sealed class ActionExtensionsTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Action) null).Execute(() => true)).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => ActionExtensions.Execute(() => { }, null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((Action) null).Execute(() => true)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => ActionExtensions.Execute(() => { }, null)).ThrowExactly<ArgumentNullException>().WithParameterName("condition");
 
       const int count = 1000;
 
@@ -40,8 +40,8 @@ public sealed class ActionExtensionsTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Action<object>) null).Execute(_ => true, new object())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => ActionExtensions.Execute(_ => {}, null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((Action<object>) null).Execute(_ => true, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => ActionExtensions.Execute(_ => {}, null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("condition");
 
       const int count = 1000;
       

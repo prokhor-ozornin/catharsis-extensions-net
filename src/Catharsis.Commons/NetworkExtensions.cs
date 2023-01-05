@@ -352,6 +352,8 @@ public static class NetworkExtensions
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var response = await http.SendAsync(new HttpRequestMessage(HttpMethod.Head, uri), cancellation).ConfigureAwait(false);
     
     response.EnsureSuccessStatusCode();
@@ -370,6 +372,8 @@ public static class NetworkExtensions
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var response = await http.GetAsync(uri, cancellation).ConfigureAwait(false);
     
@@ -391,6 +395,8 @@ public static class NetworkExtensions
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var response = await http.PostAsync(uri, content, cancellation).ConfigureAwait(false);
     
     response.EnsureSuccessStatusCode();
@@ -410,6 +416,8 @@ public static class NetworkExtensions
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var response = await http.PutAsync(uri, content, cancellation).ConfigureAwait(false);
     
@@ -431,6 +439,8 @@ public static class NetworkExtensions
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var response = await http.PatchAsync(uri, content, cancellation).ConfigureAwait(false);
     
     response.EnsureSuccessStatusCode();
@@ -449,6 +459,8 @@ public static class NetworkExtensions
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var response = await http.DeleteAsync(uri, cancellation).ConfigureAwait(false);
     
@@ -495,7 +507,13 @@ public static class NetworkExtensions
   /// <param name="socket"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static Socket TryFinallyDisconnect(this Socket socket, Action<Socket> action) => socket.TryFinally(action, socket => socket.Disconnect(true));
+  public static Socket TryFinallyDisconnect(this Socket socket, Action<Socket> action)
+  {
+    if (socket is null) throw new ArgumentNullException(nameof(socket));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return socket.TryFinally(action, socket => socket.Disconnect(true));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -554,7 +572,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  public static IPHostEntry ToIpHost(this IPAddress address) => address is not null ? new IPHostEntry() { AddressList = new[] { address }, Aliases = Array.Empty<string>() } : throw new ArgumentNullException(nameof(address));
+  public static IPHostEntry ToIpHost(this IPAddress address) => address is not null ? new IPHostEntry { AddressList = new[] { address }, Aliases = Array.Empty<string>() } : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
   ///   <para></para>
@@ -592,6 +610,8 @@ public static class NetworkExtensions
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
+    cancellation.ThrowIfCancellationRequested();
+
 #if NET6_0
       return await http.GetStreamAsync(uri, cancellation).ConfigureAwait(false);
 #else
@@ -608,6 +628,8 @@ public static class NetworkExtensions
   public static async Task<Stream> ToStreamAsync(this HttpContent content, CancellationToken cancellation = default)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
+
+    cancellation.ThrowIfCancellationRequested();
 
 #if NET6_0
     return await content.ReadAsStreamAsync(cancellation).ConfigureAwait(false);
@@ -686,6 +708,8 @@ public static class NetworkExtensions
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await using var stream = await http.ToStreamAsync(uri, cancellation);
 
     var result = stream.ToBytesAsync(cancellation).ConfigureAwait(false);
@@ -705,6 +729,8 @@ public static class NetworkExtensions
   public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpContent content, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
+
+    cancellation.ThrowIfCancellationRequested();
 
 #if NET6_0
     var result = content.ReadAsByteArrayAsync(cancellation).ConfigureAwait(false);
@@ -728,6 +754,8 @@ public static class NetworkExtensions
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await foreach (var element in tcp.GetStream().ToBytesAsync(cancellation).ConfigureAwait(false))
     {
       yield return element;
@@ -743,6 +771,8 @@ public static class NetworkExtensions
   public static async IAsyncEnumerable<byte> ToBytesAsync(this UdpClient udp, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
+
+    cancellation.ThrowIfCancellationRequested();
 
 #if NET6_0
     var result = await udp.ReceiveAsync(cancellation).ConfigureAwait(false);
@@ -799,6 +829,8 @@ public static class NetworkExtensions
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
+    cancellation.ThrowIfCancellationRequested();
+
 #if NET6_0
       return await http.GetStringAsync(uri, cancellation).ConfigureAwait(false);
 #else
@@ -815,6 +847,8 @@ public static class NetworkExtensions
   public static async Task<string> ToTextAsync(this HttpContent content, CancellationToken cancellation = default)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
+
+    cancellation.ThrowIfCancellationRequested();
 
 #if NET6_0
       return await content.ReadAsStringAsync(cancellation).ConfigureAwait(false);
@@ -898,6 +932,8 @@ public static class NetworkExtensions
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
+    cancellation.ThrowIfCancellationRequested();
+
     using var content = new ByteArrayContent(bytes.AsArray());
     
     return await http.ExecutePostAsync(uri, content, cancellation).ConfigureAwait(false);
@@ -915,6 +951,8 @@ public static class NetworkExtensions
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await tcp.GetStream().WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
     
     return tcp;
@@ -931,6 +969,8 @@ public static class NetworkExtensions
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    cancellation.ThrowIfCancellationRequested();
 
 #if NET6_0
       await udp.SendAsync(bytes.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
@@ -982,6 +1022,8 @@ public static class NetworkExtensions
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (text is null) throw new ArgumentNullException(nameof(text));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    cancellation.ThrowIfCancellationRequested();
 
     using var content = new StringContent(text);
 
@@ -1114,6 +1156,8 @@ public static class NetworkExtensions
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await tcp.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
 
     return bytes;
@@ -1130,6 +1174,8 @@ public static class NetworkExtensions
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
     if (udp is null) throw new ArgumentNullException(nameof(udp));
+
+    cancellation.ThrowIfCancellationRequested();
 
     await udp.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
 
@@ -1159,6 +1205,8 @@ public static class NetworkExtensions
     if (text is null) throw new ArgumentNullException(nameof(text));
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await tcp.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
 
     return text;
@@ -1176,6 +1224,8 @@ public static class NetworkExtensions
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
     if (udp is null) throw new ArgumentNullException(nameof(udp));
+
+    cancellation.ThrowIfCancellationRequested();
 
     await udp.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
 

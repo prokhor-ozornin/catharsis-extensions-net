@@ -225,6 +225,8 @@ public static class TextExtensions
     if (instance is null) throw new ArgumentNullException(nameof(instance));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await destination.WriteAsync(instance.ToStateString().ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
 
     return instance;
@@ -236,7 +238,13 @@ public static class TextExtensions
   /// <param name="builder"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static StringBuilder TryFinallyClear(this StringBuilder builder, Action<StringBuilder> action) => builder.TryFinally(action, builder => builder.Empty());
+  public static StringBuilder TryFinallyClear(this StringBuilder builder, Action<StringBuilder> action)
+  {
+    if (builder is null) throw new ArgumentNullException(nameof(builder));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return builder.TryFinally(action, builder => builder.Empty());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -400,6 +408,8 @@ public static class TextExtensions
     if (destination is null) throw new ArgumentNullException(nameof(destination));
     if (text is null) throw new ArgumentNullException(nameof(text));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await destination.WriteAsync(text.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
 
     return destination;
@@ -466,6 +476,8 @@ public static class TextExtensions
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
 
     await destination.WriteTextAsync(text, cancellation).ConfigureAwait(false);
 

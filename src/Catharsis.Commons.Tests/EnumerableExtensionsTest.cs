@@ -15,7 +15,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_IsEmpty_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.IsEmpty<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.IsEmpty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     Enumerable.Empty<object>().IsEmpty().Should().BeTrue();
     Array.Empty<object>().IsEmpty().Should().BeTrue();
@@ -35,14 +35,14 @@ public sealed class EnumerableExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => EnumerableExtensions.ForEach<object>(null, _ => {})).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Enumerable.Empty<object>().ForEach((Action<object>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => EnumerableExtensions.ForEach<object>(null, _ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => Enumerable.Empty<object>().ForEach((Action<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => EnumerableExtensions.ForEach<object>(null, (_, _) => { })).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Enumerable.Empty<object>().ForEach((Action<int, object>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => EnumerableExtensions.ForEach<object>(null, (_, _) => { })).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => Enumerable.Empty<object>().ForEach((Action<int, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     }
 
@@ -55,11 +55,11 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Min_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.Min(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Enumerable.Empty<object>().Min(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.Min(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-    IEnumerable<object> first = Enumerable.Empty<object>();
-    IEnumerable<object> second = Enumerable.Empty<object>();
+    var first = Enumerable.Empty<object>();
+    var second = Enumerable.Empty<object>();
     first.Min(second).Should().BeSameAs(first);
 
     first = Enumerable.Empty<object>();
@@ -81,11 +81,11 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Max_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.Max(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Enumerable.Empty<object>().Max(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.Max(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-    IEnumerable<object> first = Enumerable.Empty<object>();
-    IEnumerable<object> second = Enumerable.Empty<object>();
+    var first = Enumerable.Empty<object>();
+    var second = Enumerable.Empty<object>();
     first.Max(second).Should().BeSameAs(first);
 
     first = Enumerable.Empty<object>();
@@ -107,13 +107,15 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Contains_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.Contains(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Enumerable.Empty<object>().Contains(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.Contains(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().Contains(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
     Enumerable.Empty<object>().Contains(Enumerable.Empty<object>()).Should().BeTrue();
 
     Enumerable.Empty<object>().Contains(new object[] { null }).Should().BeFalse();
     new object[] { null }.Contains(Enumerable.Empty<object>()).Should().BeTrue();
+
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -122,7 +124,9 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Range_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.Range<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.Range<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().Range(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().Range(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
   }
@@ -133,8 +137,8 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_StartsWith_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.StartsWith(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Enumerable.Empty<object>().StartsWith(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.StartsWith(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().StartsWith(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
     throw new NotImplementedException();
   }
@@ -145,8 +149,8 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_EndsWith_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.EndsWith(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Enumerable.Empty<object>().EndsWith(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.EndsWith(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().EndsWith(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
     throw new NotImplementedException();
   }
@@ -157,7 +161,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Join_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.Join<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.Join<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     Enumerable.Empty<object>().Join().Should().BeEmpty();
     Enumerable.Empty<object>().Join(",").Should().BeEmpty();
@@ -173,28 +177,18 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Repeat_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.Repeat<object>(null, 1)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.Repeat<object>(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().Repeat(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-    Enumerable.Empty<object>().Repeat(-1).Should().BeEmpty();
     Enumerable.Empty<object>().Repeat(0).Should().BeEmpty();
     Enumerable.Empty<object>().Repeat(1).Should().BeEmpty();
 
     var sequence = new object[] { null, 1, 55.5, string.Empty, Guid.Empty, null };
 
-    sequence.Repeat(-1).Should().BeEmpty();
     sequence.Repeat(0).Should().BeEmpty();
-
-    var result = sequence.Repeat(1);
-    result.Should().BeSameAs(sequence);
-    result.Should().Equal(sequence);
-
-    result = sequence.Repeat(2);
-    result.Should().NotBeSameAs(sequence);
-    result.Should().Equal(sequence.Concat(sequence));
-
-    result = sequence.Repeat(3);
-    result.Should().NotBeSameAs(sequence);
-    result.Should().Equal(sequence.Concat(sequence).Concat(sequence));
+    sequence.Repeat(1).Should().BeSameAs(sequence).And.Equal(sequence);
+    sequence.Repeat(2).Should().NotBeSameAs(sequence).And.Equal(sequence.Concat(sequence));
+    sequence.Repeat(3).Should().NotBeSameAs(sequence).And.Equal(sequence.Concat(sequence).Concat(sequence));
   }
 
   /// <summary>
@@ -203,7 +197,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Random_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.Random<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.Random<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     Enumerable.Empty<object>().Random().Should().BeNull();
 
@@ -222,23 +216,17 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_Randomize_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     IEnumerable<object> collection = Array.Empty<object>();
-    var result = collection.Randomize();
-    result.Should().NotBeSameAs(collection);
-    result.Should().BeEmpty();
+    collection.Randomize().Should().NotBeSameAs(collection).And.BeEmpty();
 
     collection = new object[] { string.Empty };
-    result = collection.Randomize();
-    result.Should().NotBeSameAs(collection);
-    result.Should().Equal(string.Empty);
+    collection.Randomize().Should().NotBeSameAs(collection).And.Equal(string.Empty);
 
     var sequence = new object[] { 1, 2, 3, 4, 5 };
     collection = new List<object>(sequence);
-    result = collection.Randomize();
-    result.Should().NotBeSameAs(collection);
-    result.Should().Contain(sequence);
+    collection.Randomize().Should().NotBeSameAs(collection).And.Contain(sequence);
   }
 
   /// <summary>
@@ -247,7 +235,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_WithCancellation_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.WithCancellation<object>(null, default)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.WithCancellation<object>(null, default)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
     AssertionExtensions.Should(() => EnumerableExtensions.WithCancellation<object>(null, Cancellation)).ThrowExactly<OperationCanceledException>();
 
     throw new NotImplementedException();
@@ -259,19 +247,15 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_AsArray_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.AsArray<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.AsArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().AsArray().Should().BeEmpty();
-    Enumerable.Empty<object>().AsArray().Should().BeSameAs(Enumerable.Empty<object>().AsArray());
+    Enumerable.Empty<object>().AsArray().Should().BeEmpty().And.BeSameAs(Enumerable.Empty<object>().AsArray());
 
     var array = Array.Empty<object>();
     array.AsArray().Should().BeSameAs(array);
 
     var list = new List<object> {null, 1, 55.5, string.Empty, Guid.Empty, null};
-    var result = list.AsArray();
-    result.Should().NotBeSameAs(list);
-    result.Should().Equal(list);
-    list.AsArray().Should().NotBeSameAs(list.AsArray());
+    list.AsArray().Should().NotBeSameAs(list.AsArray()).And.NotBeSameAs(list).And.Equal(list);
   }
 
 
@@ -281,14 +265,12 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_AsNotNullable_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.AsNotNullable<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.AsNotNullable<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().AsNotNullable().Should().BeEmpty();
-    Enumerable.Empty<object>().AsNotNullable().Should().NotBeSameAs(Enumerable.Empty<object>().AsNotNullable());
+    Enumerable.Empty<object>().AsNotNullable().Should().BeEmpty().And.NotBeSameAs(Enumerable.Empty<object>().AsNotNullable());
 
     var sequence = new object[] {null, 1, 55.5, string.Empty, Guid.Empty, null};
-    sequence.AsNotNullable().Should().Equal(sequence.Where(element => element != null));
-    sequence.AsNotNullable().Should().NotBeSameAs(sequence.AsNotNullable());
+    sequence.AsNotNullable().Should().NotBeSameAs(sequence.AsNotNullable()).And.Equal(sequence.Where(element => element != null));
   }
 
   /// <summary>
@@ -297,7 +279,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToBase64_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToBase64()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToBase64()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
   }
@@ -308,7 +290,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToHex_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToHex(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToHex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     var bytes = RandomBytes;
 
@@ -329,12 +311,12 @@ public sealed class EnumerableExtensionsTest : UnitTest
     {
       var result = sequence.ToAsyncEnumerable();
       result.Should().NotBeNull().And.NotBeSameAs(sequence.ToAsyncEnumerable());
-      result.ToArrayAsync().Await().Should().Equal(sequence.ToArray());
+      result.ToArray().Should().Equal(sequence.ToArray());
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => EnumerableExtensions.ToAsyncEnumerable<object>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => EnumerableExtensions.ToAsyncEnumerable<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(Enumerable.Empty<object>());
       Validate(Array.Empty<object>());
@@ -348,15 +330,12 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToLinkedList_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToLinkedList<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToLinkedList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().ToLinkedList().Should().BeEmpty();
-    Enumerable.Empty<object>().ToLinkedList().Should().NotBeSameAs(Enumerable.Empty<object>().ToLinkedList());
+    Enumerable.Empty<object>().ToLinkedList().Should().NotBeSameAs(Enumerable.Empty<object>().ToLinkedList()).And.BeEmpty();
 
     IEnumerable<int?> sequence = new int?[] {1, null, 2, null, 3};
-
-    sequence.ToLinkedList().Should().Equal(sequence);
-    sequence.ToLinkedList().Should().NotBeSameAs(sequence.ToLinkedList());
+    sequence.ToLinkedList().Should().NotBeSameAs(sequence.ToLinkedList()).And.Equal(sequence);
   }
 
   /// <summary>
@@ -365,7 +344,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToReadOnlyList_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlyList<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlyList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -376,15 +355,13 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToSortedSet_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToSortedSet<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToSortedSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().ToSortedSet().Should().BeEmpty();
-    Enumerable.Empty<object>().ToSortedSet().Should().NotBeSameAs(Enumerable.Empty<object>().ToSortedSet());
+    Enumerable.Empty<object>().ToSortedSet().Should().NotBeSameAs(Enumerable.Empty<object>().ToSortedSet()).And.BeEmpty();
 
     IEnumerable<int?> sequence = new int?[] {1, null, 2, null, 3, null, 3, 2, 1};
-    sequence.ToSortedSet().Should().Equal(null, 1, 2, 3);
+    sequence.ToSortedSet().Should().NotBeSameAs(sequence.ToSortedSet()).And.Equal(null, 1, 2, 3);
     sequence.ToSortedSet(Comparer<int?>.Create((x, y) => x.GetValueOrDefault() < y.GetValueOrDefault() ? 1 : x.GetValueOrDefault() > y.GetValueOrDefault() ? -1 : 0)).Should().Equal(3, 2, 1, null);
-    sequence.ToSortedSet().Should().NotBeSameAs(sequence.ToSortedSet());
   }
 
   /// <summary>
@@ -393,7 +370,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToReadOnlySet_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -404,14 +381,12 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToStack_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToStack<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToStack<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().ToStack().Should().BeEmpty();
-    Enumerable.Empty<object>().ToStack().Should().NotBeSameAs(Enumerable.Empty<object>().ToStack());
+    Enumerable.Empty<object>().ToStack().Should().NotBeSameAs(Enumerable.Empty<object>().ToStack()).And.BeEmpty();
 
     IEnumerable<int?> sequence = new int?[] {null, 1, null, 2, null, 3, null};
-    sequence.ToStack().Should().Equal(sequence.Reverse());
-    sequence.ToStack().Should().NotBeSameAs(sequence.ToStack());
+    sequence.ToStack().Should().NotBeSameAs(sequence.ToStack()).And.Equal(sequence.Reverse());
   }
 
   /// <summary>
@@ -420,7 +395,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToQueue_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToQueue<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -431,7 +406,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToPriorityQueue_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToPriorityQueue<int, object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToPriorityQueue<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -442,7 +417,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToImmutableQueue_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -453,7 +428,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToArraySegment_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToArraySegment<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToArraySegment<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     Enumerable.Empty<object>().ToArraySegment().Should().NotBeNull().And.NotBeSameAs(Enumerable.Empty<object>().ToArraySegment()).And.BeEmpty();
 
@@ -462,7 +437,6 @@ public sealed class EnumerableExtensionsTest : UnitTest
     result.Should().NotBeNull().And.NotBeSameAs(sequence.ToArraySegment()).And.Equal(sequence);
     result.Array.Should().BeSameAs(sequence);
     result.Offset.Should().Be(0);
-    result.Should().Equal(sequence);
   }
 
   /// <summary>
@@ -471,6 +445,8 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToMemory_Method()
   {
+    AssertionExtensions.Should(() => EnumerableExtensions.ToMemory<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
     var memory = Enumerable.Empty<object>().ToMemory();
     memory.Should().NotBeNull().And.NotBeSameAs(Enumerable.Empty<object>().ToMemory());
     memory.IsEmpty.Should().BeTrue();
@@ -488,6 +464,8 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToReadOnlyMemory_Method()
   {
+    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlyMemory<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
     var memory = Enumerable.Empty<object>().ToReadOnlyMemory();
     memory.IsEmpty.Should().BeTrue();
     memory.Should().NotBeNull().And.NotBeSameAs(Enumerable.Empty<object>().ToReadOnlyMemory());
@@ -505,6 +483,8 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToSpan_Method()
   {
+    AssertionExtensions.Should(() => EnumerableExtensions.ToSpan<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
     Enumerable.Empty<object>().ToSpan().IsEmpty.Should().BeTrue();
 
     var sequence = new object[] {null, 1, 55.5, string.Empty, Guid.Empty, null};
@@ -519,6 +499,8 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToReadOnlySpan_Method()
   {
+    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlySpan<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
     Enumerable.Empty<object>().ToReadOnlySpan().IsEmpty.Should().BeTrue();
 
     var sequence = new object[] {null, 1, 55.5, string.Empty, Guid.Empty, null};
@@ -533,7 +515,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToRange_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToRange(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -548,10 +530,20 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToValueTuple_Methods()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToValueTuple<object, object>(null, element => element)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Enumerable.Empty<object>().ToValueTuple<object, object>(null)).ThrowExactly<ArgumentNullException>();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => EnumerableExtensions.ToValueTuple<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    throw new NotImplementedException();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => EnumerableExtensions.ToValueTuple<object, object>(null, element => element)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => Enumerable.Empty<object>().ToValueTuple<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
+
+    }
+
+    //throw new NotImplementedException();
   }
 
   /// <summary>
@@ -560,7 +552,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToDictionary_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -571,7 +563,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_ToReadOnlyDictionary_Method()
   {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlyDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlyDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -588,13 +580,13 @@ public sealed class EnumerableExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
     }
 
     throw new NotImplementedException();
@@ -612,13 +604,15 @@ public sealed class EnumerableExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

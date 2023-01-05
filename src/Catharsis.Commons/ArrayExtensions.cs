@@ -19,6 +19,8 @@ public static class ArrayExtensions
   public static T[] Range<T>(this T[] array, int? offset = null, int? count = null)
   {
     if (array is null) throw new ArgumentNullException(nameof(array));
+    if (offset is < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     if (offset is null && count is null)
     {

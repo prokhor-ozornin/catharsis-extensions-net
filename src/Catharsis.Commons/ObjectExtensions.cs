@@ -501,6 +501,8 @@ public static class ObjectExtensions
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await instance.PrintAsync(Console.Out, cancellation).ConfigureAwait(false);
 
     return instance;

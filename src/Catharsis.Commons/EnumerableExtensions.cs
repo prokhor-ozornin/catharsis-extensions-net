@@ -27,7 +27,7 @@ public static class EnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> sequence, Action<T> action) => sequence.ForEach((_, element) => action(element));
+  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> sequence, Action<T> action) => action is not null ? sequence.ForEach((_, element) => action(element)) : throw new ArgumentNullException(nameof(action));
 
   /// <summary>
   ///   <para>Iterates through a sequence, calling a delegate for each element in it.</para>
@@ -545,7 +545,9 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte[]> sequence, CancellationToken cancellation = default)
   {
-    if (sequence is null) throw new NotImplementedException(nameof(sequence));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var stream = new MemoryStream();
 

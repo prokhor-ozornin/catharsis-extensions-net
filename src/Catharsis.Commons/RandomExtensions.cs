@@ -1171,6 +1171,8 @@ public static class RandomExtensions
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
 
+    cancellation.ThrowIfCancellationRequested();
+
     if (size == 0)
     {
       return random.File(directory);
@@ -1339,6 +1341,8 @@ public static class RandomExtensions
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
 
+    cancellation.ThrowIfCancellationRequested();
+
     if (size == 0)
     {
       return await random.BinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
@@ -1389,6 +1393,8 @@ public static class RandomExtensions
     if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
+    cancellation.ThrowIfCancellationRequested();
+
     for (var i = 1; i <= count; i++)
     {
       yield return await random.BinaryFileAsync(size, min, max, directory, cancellation).ConfigureAwait(false);
@@ -1410,6 +1416,8 @@ public static class RandomExtensions
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    cancellation.ThrowIfCancellationRequested();
 
     if (count == 0)
     {
@@ -1614,6 +1622,8 @@ public static class RandomExtensions
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
 
+    cancellation.ThrowIfCancellationRequested();
+
     if (size == 0)
     {
       return random.File(directory);
@@ -1638,6 +1648,8 @@ public static class RandomExtensions
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
+
+    cancellation.ThrowIfCancellationRequested();
 
     if (size == 0)
     {
@@ -1678,6 +1690,8 @@ public static class RandomExtensions
     if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
+    cancellation.ThrowIfCancellationRequested();
+
     for (var i = 1; i <= count; i++)
     {
       yield return await random.TextFileAsync(size, encoding, min, max, directory, cancellation).ConfigureAwait(false);
@@ -1700,6 +1714,8 @@ public static class RandomExtensions
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    cancellation.ThrowIfCancellationRequested();
 
     if (count == 0)
     {
@@ -1987,6 +2003,8 @@ public static class RandomExtensions
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var stream = new MemoryStream();
 
     if (count > 0)
@@ -2009,6 +2027,8 @@ public static class RandomExtensions
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var stream = new MemoryStream();
 

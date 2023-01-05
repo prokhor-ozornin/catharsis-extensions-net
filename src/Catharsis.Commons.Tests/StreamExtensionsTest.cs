@@ -595,18 +595,18 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>();
 
-      Stream.Null.ToBytesAsync().ToArrayAsync().Await().Should().BeEmpty();
+      Stream.Null.ToBytesAsync().ToArray().Should().BeEmpty();
 
       var bytes = RandomBytes;
 
       var stream = new MemoryStream(bytes);
-      stream.ToBytesAsync().ToArrayAsync().Await().Should().Equal(bytes);
+      stream.ToBytesAsync().ToArray().Should().Equal(bytes);
       stream.ReadByte().Should().Be(-1);
       stream.Close();
       AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
 
       stream = new MemoryStream(bytes);
-      stream.ToBytesAsync().ToArrayAsync().Await().Should().Equal(bytes);
+      stream.ToBytesAsync().ToArray().Should().Equal(bytes);
       AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
     }
 

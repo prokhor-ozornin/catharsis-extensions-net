@@ -1708,7 +1708,7 @@ public sealed class RandomExtensionsTest : UnitTest
         file.Length.Should().Be(size);
         file.IsReadOnly.Should().BeFalse();
 
-        var bytes = file.ToBytesAsync().ToListAsync().Await(); // TODO ToList -> ToEnumerable
+        var bytes = file.ToBytesAsync().ToArray();
 
         bytes.Should().HaveCount(size);
 

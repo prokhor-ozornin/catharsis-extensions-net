@@ -75,6 +75,8 @@ public static class AsyncEnumerableExtensions
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var index = 0;
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -149,12 +151,12 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <seealso cref="ToLinkedListAsync{T}"/>
-  /// <seealso cref="ToImmutableListAsync{T}"/>
   /// <seealso cref="Enumerable.ToList{TSource}(IEnumerable{TSource})"/>
   public static async Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var result = new List<T>();
 
@@ -187,6 +189,8 @@ public static class AsyncEnumerableExtensions
   public static async Task<LinkedList<T>> ToLinkedListAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var result = new LinkedList<T>();
 
@@ -239,6 +243,8 @@ public static class AsyncEnumerableExtensions
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var result = new HashSet<T>(comparer);
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -270,6 +276,8 @@ public static class AsyncEnumerableExtensions
   public static async Task<SortedSet<T>> ToSortedSetAsync<T>(this IAsyncEnumerable<T> sequence, IComparer<T> comparer = null, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var result = new SortedSet<T>(comparer);
 
@@ -328,6 +336,8 @@ public static class AsyncEnumerableExtensions
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
     if (key is null) throw new ArgumentNullException(nameof(key));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var result = new Dictionary<TKey, TValue>(comparer);
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -378,15 +388,6 @@ public static class AsyncEnumerableExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="sequence"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<IEnumerable<(T item, int index)>> ToValueTupleAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => sequence is not null ? (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToValueTuple() : throw new ArgumentNullException(nameof(sequence));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <typeparam name="TKey"></typeparam>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="sequence"></param>
@@ -394,6 +395,15 @@ public static class AsyncEnumerableExtensions
   /// <param name="comparer"></param>
   /// <returns></returns>
   public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> comparer = null) where TKey : notnull => sequence.ToValueTupleAsync(key, comparer).Result;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<(T item, int index)>> ToValueTupleAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default) => sequence is not null ? (await sequence.ToListAsync(cancellation).ConfigureAwait(false)).ToValueTuple() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -433,6 +443,8 @@ public static class AsyncEnumerableExtensions
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var result = new Stack<T>();
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -462,6 +474,8 @@ public static class AsyncEnumerableExtensions
   public static async Task<Queue<T>> ToQueueAsync<T>(this IAsyncEnumerable<T> sequence, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var result = new Queue<T>();
 
@@ -498,6 +512,8 @@ public static class AsyncEnumerableExtensions
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var result = new PriorityQueue<TElement, TPriority>(comparer);
 
     await foreach (var (element, priority) in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -526,6 +542,8 @@ public static class AsyncEnumerableExtensions
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var stream = new MemoryStream();
 
     await foreach (var element in sequence.WithEnforcedCancellation(cancellation).ConfigureAwait(false))
@@ -552,6 +570,8 @@ public static class AsyncEnumerableExtensions
   public static async Task<MemoryStream> ToMemoryStreamAsync(this IAsyncEnumerable<byte[]> sequence, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    cancellation.ThrowIfCancellationRequested();
 
     var stream = new MemoryStream();
 

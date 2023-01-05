@@ -29,7 +29,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryReader) null).IsStart()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryReader) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => RandomReadOnlyForwardStream.ToBinaryReader().IsStart()).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null.ToBinaryReader());
@@ -58,7 +58,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).IsStart()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryWriter) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsStart()).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null.ToBinaryWriter());
@@ -87,7 +87,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryReader) null).IsEnd()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       Validate(Stream.Null.ToBinaryReader());
       Validate(EmptyStream.ToBinaryReader());
@@ -115,7 +115,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEnd()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEnd()).ThrowExactly<ArgumentException>();
 
       Validate(Stream.Null.ToBinaryWriter());
@@ -141,7 +141,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       Validate(Stream.Null.ToBinaryReader(), true);
       Validate(EmptyStream.ToBinaryReader(), true);
@@ -167,7 +167,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEmpty()).ThrowExactly<ArgumentException>();
 
       Validate(Stream.Null.ToBinaryWriter(), true);
@@ -195,7 +195,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryReader) null).Empty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryReader) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => RandomReadOnlyForwardStream.ToBinaryReader().Empty()).ThrowExactly<NotSupportedException>();
 
       Validate(EmptyStream.ToBinaryReader());
@@ -221,7 +221,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).Empty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().Empty()).ThrowExactly<NotSupportedException>();
 
       Validate(EmptyStream.ToBinaryWriter());
@@ -248,7 +248,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryReader) null).Rewind()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => RandomReadOnlyForwardStream.ToBinaryReader().Rewind()).ThrowExactly<NotSupportedException>();
 
       Validate(EmptyStream.ToBinaryReader());
@@ -275,7 +275,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).Rewind()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().Rewind()).ThrowExactly<NotSupportedException>();
 
       Validate(EmptyStream.ToBinaryWriter());
@@ -294,8 +294,7 @@ public sealed class BinaryExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.Skip(int.MinValue).Should().NotBeNull().And.BeSameAs(reader);
-        reader.IsStart().Should().BeTrue();
+        AssertionExtensions.Should(() => reader.Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
         reader.Skip(0).Should().NotBeNull().And.BeSameAs(reader);
         reader.IsStart().Should().BeTrue();
@@ -341,8 +340,8 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => BinaryExtensions.Print<object>(null, Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => new object().Print((BinaryWriter) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => BinaryExtensions.Print<object>(null, Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().Print((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
       Validate(EmptyStream.ToBinaryWriter());
     }
@@ -356,20 +355,16 @@ public sealed class BinaryExtensionsTest : UnitTest
   {
     static void Validate(Stream stream)
     {
-      using (stream)
-      {
-        using (var reader = stream.ToBinaryReader())
-        {
-          reader.TryFinallyClear(_ => { }).Should().NotBeNull().And.BeSameAs(reader);
-          reader.BaseStream.Should().HavePosition(0).And.HaveLength(0);
-        }
-      }
+      using var reader = stream.ToBinaryReader();
+
+      reader.TryFinallyClear(_ => { }).Should().NotBeNull().And.BeSameAs(reader);
+      reader.BaseStream.Should().HavePosition(0).And.HaveLength(0);
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryReader) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Stream.Null.ToBinaryReader().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryReader) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => Stream.Null.ToBinaryReader().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
       AssertionExtensions.Should(() => RandomReadOnlyForwardStream.ToBinaryReader().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null);
@@ -387,20 +382,16 @@ public sealed class BinaryExtensionsTest : UnitTest
   {
     static void Validate(Stream stream)
     {
-      using (stream)
-      {
-        using (var writer = stream.ToBinaryWriter())
-        {
-          writer.TryFinallyClear(_ => { }).Should().NotBeNull().And.BeSameAs(writer);
-          writer.BaseStream.Should().HavePosition(0).And.HaveLength(0);
-        }
-      }
+      using var writer = stream.ToBinaryWriter();
+
+      writer.TryFinallyClear(_ => { }).Should().NotBeNull().And.BeSameAs(writer);
+      writer.BaseStream.Should().HavePosition(0).And.HaveLength(0);
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((BinaryWriter) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null);
@@ -434,7 +425,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
       using (new AssertionScope())
       {
-        AssertionExtensions.Should(() => BinaryExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>();
+        AssertionExtensions.Should(() => BinaryExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
         Validate(Stream.Null.ToBinaryReader(), Array.Empty<byte>());
         Validate(EmptyStream.ToBinaryReader(), Array.Empty<byte>());
@@ -453,8 +444,8 @@ public sealed class BinaryExtensionsTest : UnitTest
       {
         using (reader)
         {
-          AssertionExtensions.Should(() => reader.ToEnumerable(int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>();
-          AssertionExtensions.Should(() => reader.ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>();
+          AssertionExtensions.Should(() => reader.ToEnumerable(int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+          AssertionExtensions.Should(() => reader.ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
           var sequence = reader.ToEnumerable(1);
           sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToEnumerable(1));
@@ -464,7 +455,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
       using (new AssertionScope())
       {
-        AssertionExtensions.Should(() => BinaryExtensions.ToEnumerable(null, 1)).ThrowExactly<ArgumentNullException>();
+        AssertionExtensions.Should(() => BinaryExtensions.ToEnumerable(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
         Validate(Stream.Null.ToBinaryReader(), Array.Empty<byte>());
         Validate(EmptyStream.ToBinaryReader(), Array.Empty<byte>());
@@ -496,13 +487,13 @@ public sealed class BinaryExtensionsTest : UnitTest
         {
           var sequence = reader.ToAsyncEnumerable();
           sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToAsyncEnumerable());
-          sequence.ToArrayAsync().Await().Should().Equal(bytes);
+          sequence.ToArray().Should().Equal(bytes);
         }
       }
 
       using (new AssertionScope())
       {
-        AssertionExtensions.Should(() => BinaryExtensions.ToAsyncEnumerable(null)).ThrowExactly<ArgumentNullException>();
+        AssertionExtensions.Should(() => BinaryExtensions.ToAsyncEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
         Validate(Stream.Null.ToBinaryReader(), Array.Empty<byte>());
         Validate(EmptyStream.ToBinaryReader(), Array.Empty<byte>());
@@ -521,18 +512,18 @@ public sealed class BinaryExtensionsTest : UnitTest
       {
         using (reader)
         {
-          AssertionExtensions.Should(() => reader.ToAsyncEnumerable(int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>();
-          AssertionExtensions.Should(() => reader.ToAsyncEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>();
+          AssertionExtensions.Should(() => reader.ToAsyncEnumerable(int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+          AssertionExtensions.Should(() => reader.ToAsyncEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-          var sequence = reader.ToAsyncEnumerable(5);
+          var sequence = reader.ToAsyncEnumerable(1);
           sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToAsyncEnumerable(5));
-          sequence.ToArrayAsync().Await().SelectMany(bytes => bytes).Should().Equal(bytes);
+          sequence.ToArray().SelectMany(bytes => bytes).Should().Equal(bytes);
         }
       }
 
       using (new AssertionScope())
       {
-        AssertionExtensions.Should(() => BinaryExtensions.ToAsyncEnumerable(null, 1)).ThrowExactly<ArgumentNullException>();
+        AssertionExtensions.Should(() => BinaryExtensions.ToAsyncEnumerable(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
         Validate(Stream.Null.ToBinaryReader(), Array.Empty<byte>());
         Validate(EmptyStream.ToBinaryReader(), Array.Empty<byte>());
@@ -543,39 +534,6 @@ public sealed class BinaryExtensionsTest : UnitTest
           Validate(stream.ToBinaryReader(), bytes);
         }
       }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryExtensions.ToBytesAsync(BinaryReader, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void BinaryReader_ToBytesAsync_Method()
-  {
-    static void Validate(BinaryReader reader)
-    {
-      using (reader)
-      {
-        AssertionExtensions.Should(() => reader.ToBytesAsync(Cancellation).ToArrayAsync()).ThrowExactlyAsync<TaskCanceledException>().Await();
-
-        var bytes = reader.BaseStream.ToBytesAsync().ToArrayAsync().Await();
-        reader.BaseStream.MoveToStart();
-
-        var sequence = reader.ToBytesAsync();
-        sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToBytesAsync());
-
-        sequence.ToArrayAsync().Await().Should().Equal(bytes);
-        sequence.ToArrayAsync().Await().Should().BeEmpty();
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => BinaryExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>();
-
-      Validate(EmptyStream.ToBinaryReader());
-      Validate(RandomStream.ToBinaryReader());
-      Validate(RandomReadOnlyStream.ToBinaryReader());
     }
   }
 
@@ -602,7 +560,40 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => BinaryExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => BinaryExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      Validate(EmptyStream.ToBinaryReader());
+      Validate(RandomStream.ToBinaryReader());
+      Validate(RandomReadOnlyStream.ToBinaryReader());
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryExtensions.ToBytesAsync(BinaryReader, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void BinaryReader_ToBytesAsync_Method()
+  {
+    static void Validate(BinaryReader reader)
+    {
+      using (reader)
+      {
+        AssertionExtensions.Should(() => reader.ToBytesAsync(Cancellation).ToArrayAsync()).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+        var bytes = reader.BaseStream.ToBytesAsync().ToArray();
+        reader.BaseStream.MoveToStart();
+
+        var sequence = reader.ToBytesAsync();
+        sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToBytesAsync());
+
+        sequence.ToArray().Should().Equal(bytes);
+        sequence.ToArray().Should().BeEmpty();
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => BinaryExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       Validate(EmptyStream.ToBinaryReader());
       Validate(RandomStream.ToBinaryReader());
@@ -626,7 +617,7 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => BinaryExtensions.ToText(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => BinaryExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       Validate(Stream.Null.ToBinaryReader(), string.Empty);
       Validate(EmptyStream.ToBinaryReader(), string.Empty);
@@ -648,8 +639,8 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryWriter_WriteBytes_Method()
   {
-    AssertionExtensions.Should(() => BinaryExtensions.WriteBytes(null, Enumerable.Empty<byte>()));
-    AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteBytes(null));
+    AssertionExtensions.Should(() => BinaryExtensions.WriteBytes(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     
     throw new NotImplementedException();
   }
@@ -660,8 +651,8 @@ public sealed class BinaryExtensionsTest : UnitTest
   [Fact]
   public void BinaryWriter_WriteText_Method()
   {
-    AssertionExtensions.Should(() => BinaryExtensions.WriteText(null, string.Empty));
-    AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteText(null));
+    AssertionExtensions.Should(() => BinaryExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
   }
@@ -688,14 +679,14 @@ public sealed class BinaryExtensionsTest : UnitTest
 
         writer.BaseStream.Length.Should().Be(length + count);
         writer.BaseStream.Position.Should().Be(position + count);
-        writer.BaseStream.MoveBy(-count).ToBytesAsync().ToArrayAsync().Await().Should().Equal(bytes);
+        writer.BaseStream.MoveBy(-count).ToBytesAsync().ToArray().Should().Equal(bytes);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
       Validate(EmptyStream.ToBinaryWriter());
       Validate(RandomStream.ToBinaryWriter());
@@ -723,8 +714,8 @@ public sealed class BinaryExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => BinaryExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => BinaryExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
       Validate(Stream.Null.ToBinaryWriter(), string.Empty);
       Validate(EmptyStream.ToBinaryWriter(), RandomString);

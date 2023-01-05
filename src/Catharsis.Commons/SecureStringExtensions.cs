@@ -65,7 +65,13 @@ public static class SecureStringExtensions
   /// <param name="secure"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static SecureString TryFinallyClear(this SecureString secure, Action<SecureString> action) => secure.TryFinally(action, secure => secure.Empty());
+  public static SecureString TryFinallyClear(this SecureString secure, Action<SecureString> action)
+  {
+    if (secure is null) throw new ArgumentNullException(nameof(secure));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return secure.TryFinally(action, secure => secure.Empty());
+  }
 
   /// <summary>
   ///   <para></para>

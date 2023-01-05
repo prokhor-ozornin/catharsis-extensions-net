@@ -121,6 +121,8 @@ public static class SerializationExtensions
   {
     if (source is null) throw new ArgumentNullException(nameof(source));
 
+    cancellation.ThrowIfCancellationRequested();
+
     using var stream = await source.ToMemoryStreamAsync(cancellation).ConfigureAwait(false);
 
     return stream.DeserializeAsBinary<T>();
@@ -138,6 +140,8 @@ public static class SerializationExtensions
   public static async Task<T> DeserializeAsBinaryAsync<T>(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (source is null) throw new ArgumentNullException(nameof(source));
+
+    cancellation.ThrowIfCancellationRequested();
 
     await using var stream = await source.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
 
@@ -342,6 +346,8 @@ public static class SerializationExtensions
   {
     if (source is null) throw new ArgumentNullException(nameof(source));
 
+    cancellation.ThrowIfCancellationRequested();
+
     using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
 
     return reader.DeserializeAsDataContract<T>(types);
@@ -545,6 +551,8 @@ public static class SerializationExtensions
   {
     if (source is null) throw new ArgumentNullException(nameof(source));
 
+    cancellation.ThrowIfCancellationRequested();
+
     using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
 
     return reader.DeserializeAsXml<T>(types);
@@ -635,15 +643,15 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para>Deserializes XML contents of stream into <see cref="XmlDocument"/> object.</para>
   /// </summary>
-  /// <param name="source">Stream of XML data for deserialization.</param>
-  /// <returns>Deserialized XML contents of source <paramref name="source"/> as instance of <see cref="XmlDocument"/> class.</returns>
-  public static XmlDocument ToXmlDocument(this XmlReader source)
+  /// <param name="reader">Stream of XML data for deserialization.</param>
+  /// <returns>Deserialized XML contents of source <paramref name="reader"/> as instance of <see cref="XmlDocument"/> class.</returns>
+  public static XmlDocument ToXmlDocument(this XmlReader reader)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
     var document = new XmlDocument();
 
-    document.Load(source);
+    document.Load(reader);
 
     return document;
   }
@@ -651,27 +659,27 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="reader"></param>
   /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this TextReader source)
+  public static XmlDocument ToXmlDocument(this TextReader reader)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
-    using var reader = source.ToXmlReader(false);
+    using var xmlReader = reader.ToXmlReader(false);
 
-    return reader.ToXmlDocument();
+    return xmlReader.ToXmlDocument();
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="stream"></param>
   /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this Stream source)
+  public static XmlDocument ToXmlDocument(this Stream stream)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
 
-    using var reader = source.ToXmlReader(false);
+    using var reader = stream.ToXmlReader(false);
     
     return reader.ToXmlDocument();
   }
@@ -679,13 +687,13 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="file"></param>
   /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this FileInfo source)
+  public static XmlDocument ToXmlDocument(this FileInfo file)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    using var reader = source.ToXmlReader();
+    using var reader = file.ToXmlReader();
 
     return reader.ToXmlDocument();
   }
@@ -693,13 +701,13 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="text"></param>
   /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this string source)
+  public static XmlDocument ToXmlDocument(this string text)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (text is null) throw new ArgumentNullException(nameof(text));
 
-    using var reader = source.ToXmlReader();
+    using var reader = text.ToXmlReader();
 
     return reader.ToXmlDocument();
   }
@@ -707,25 +715,27 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this Uri source, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => source.ToXmlDocumentAsync(timeout, default, headers).Result; 
+  public static XmlDocument ToXmlDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToXmlDocumentAsync(timeout, default, headers).Result; 
   
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<XmlDocument> ToXmlDocumentAsync(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<XmlDocument> ToXmlDocumentAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    cancellation.ThrowIfCancellationRequested();
+
+    using var reader = await uri.ToXmlReaderAsync(timeout, cancellation, headers).ConfigureAwait(false);
 
     return reader.ToXmlDocument();
   }
@@ -815,20 +825,34 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="reader"></param>
   /// <returns></returns>
-  public static XDocument ToXDocument(this XmlReader source) => source is not null ? XDocument.Load(source, LoadOptions.None) : throw new ArgumentNullException(nameof(source));
+  public static XDocument ToXDocument(this XmlReader reader) => reader is not null ? XDocument.Load(reader, LoadOptions.None) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="reader"></param>
   /// <returns></returns>
-  public static XDocument ToXDocument(this TextReader source)
+  public static XDocument ToXDocument(this TextReader reader)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
-    using var reader = source.ToXmlReader(false);
+    using var xmlReader = reader.ToXmlReader(false);
+    
+    return xmlReader.ToXDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static XDocument ToXDocument(this Stream stream)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var reader = stream.ToXmlReader(false);
     
     return reader.ToXDocument();
   }
@@ -836,27 +860,13 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="file"></param>
   /// <returns></returns>
-  public static XDocument ToXDocument(this Stream source)
+  public static XDocument ToXDocument(this FileInfo file)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    using var reader = source.ToXmlReader(false);
-    
-    return reader.ToXDocument();
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="source"></param>
-  /// <returns></returns>
-  public static XDocument ToXDocument(this FileInfo source)
-  {
-    if (source is null) throw new ArgumentNullException(nameof(source));
-
-    using var reader = source.ToXmlReader();
+    using var reader = file.ToXmlReader();
 
     return reader.ToXDocument();
   }
@@ -864,22 +874,22 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="text"></param>
   /// <returns></returns>
-  public static XDocument ToXDocument(this string source) => source is not null ? XDocument.Parse(source) : throw new ArgumentNullException(nameof(source));
+  public static XDocument ToXDocument(this string text) => text is not null ? XDocument.Parse(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static XDocument ToXDocument(this Uri source, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  public static XDocument ToXDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    using var reader = source.ToXmlReader(timeout, headers);
+    using var reader = uri.ToXmlReader(timeout, headers);
 
     return reader.ToXDocument();
   }
@@ -887,22 +897,48 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para>Deserialize XML contents from a <see cref="XmlReader"/> into <see cref="XDocument"/> object.</para>
   /// </summary>
-  /// <param name="source"><see cref="XmlReader"/> which is used to read XML text content from its underlying source.</param>
+  /// <param name="reader"><see cref="XmlReader"/> which is used to read XML text content from its underlying source.</param>
   /// <param name="cancellation"></param>
-  /// <returns><see cref="XDocument"/> instance, constructed from XML contents which have been read through a <paramref name="source"/>.</returns>
-  public static async Task<XDocument> ToXDocumentAsync(this XmlReader source, CancellationToken cancellation = default) => source is not null ? await XDocument.LoadAsync(source, LoadOptions.None, cancellation).ConfigureAwait(false) : throw new ArgumentNullException(nameof(source));
+  /// <returns><see cref="XDocument"/> instance, constructed from XML contents which have been read through a <paramref name="reader"/>.</returns>
+  public static async Task<XDocument> ToXDocumentAsync(this XmlReader reader, CancellationToken cancellation = default)
+  {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    return await XDocument.LoadAsync(reader, LoadOptions.None, cancellation).ConfigureAwait(false);
+  }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="reader"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<XDocument> ToXDocumentAsync(this TextReader source, CancellationToken cancellation = default)
+  public static async Task<XDocument> ToXDocumentAsync(this TextReader reader, CancellationToken cancellation = default)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
-    using var reader = source.ToXmlReader(false);
+    cancellation.ThrowIfCancellationRequested();
+
+    using var xmlReader = reader.ToXmlReader(false);
+
+    return await xmlReader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<XDocument> ToXDocumentAsync(this Stream stream, CancellationToken cancellation = default)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var reader = stream.ToXmlReader(false);
 
     return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }
@@ -910,14 +946,16 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="file"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<XDocument> ToXDocumentAsync(this Stream source, CancellationToken cancellation = default)
+  public static async Task<XDocument> ToXDocumentAsync(this FileInfo file, CancellationToken cancellation = default)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    using var reader = source.ToXmlReader(false);
+    cancellation.ThrowIfCancellationRequested();
+
+    using var reader = file.ToXmlReader();
 
     return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }
@@ -925,14 +963,16 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="text"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<XDocument> ToXDocumentAsync(this FileInfo source, CancellationToken cancellation = default)
+  public static async Task<XDocument> ToXDocumentAsync(this string text, CancellationToken cancellation = default)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (text is null) throw new ArgumentNullException(nameof(text));
 
-    using var reader = source.ToXmlReader();
+    cancellation.ThrowIfCancellationRequested();
+
+    using var reader = text.ToXmlReader();
 
     return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }
@@ -940,31 +980,18 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<XDocument> ToXDocumentAsync(this string source, CancellationToken cancellation = default)
-  {
-    if (source is null) throw new ArgumentNullException(nameof(source));
-
-    using var reader = source.ToXmlReader();
-
-    return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<XDocument> ToXDocumentAsync(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<XDocument> ToXDocumentAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    cancellation.ThrowIfCancellationRequested();
+
+    using var reader = await uri.ToXmlReaderAsync(timeout, cancellation, headers).ConfigureAwait(false);
     
     return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }

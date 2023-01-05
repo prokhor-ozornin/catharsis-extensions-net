@@ -69,6 +69,8 @@ public static class CryptographyExtensions
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
+    cancellation.ThrowIfCancellationRequested();
+
     using var encryptor = algorithm.CreateEncryptor();
     using var stream = new MemoryStream();
 
@@ -166,6 +168,8 @@ public static class CryptographyExtensions
   {
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    cancellation.ThrowIfCancellationRequested();
 
     using var decryptor = algorithm.CreateDecryptor();
     using var stream = new MemoryStream();
@@ -317,6 +321,8 @@ public static class CryptographyExtensions
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
 
+    cancellation.ThrowIfCancellationRequested();
+
     using var algorithm = HashAlgorithm.Create("MD5");
 
     return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
@@ -377,6 +383,8 @@ public static class CryptographyExtensions
   public static async Task<byte[]> HashSha1Async(this Stream stream, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    cancellation.ThrowIfCancellationRequested();
 
     using var algorithm = HashAlgorithm.Create("SHA1");
 
@@ -439,6 +447,8 @@ public static class CryptographyExtensions
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
 
+    cancellation.ThrowIfCancellationRequested();
+
     using var algorithm = HashAlgorithm.Create("SHA256");
     
     return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
@@ -500,6 +510,8 @@ public static class CryptographyExtensions
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
 
+    cancellation.ThrowIfCancellationRequested();
+
     using var algorithm = HashAlgorithm.Create("SHA384");
     
     return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
@@ -560,6 +572,8 @@ public static class CryptographyExtensions
   public static async Task<byte[]> HashSha512Async(this Stream stream, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    cancellation.ThrowIfCancellationRequested();
 
     using var algorithm = HashAlgorithm.Create("SHA512");
     

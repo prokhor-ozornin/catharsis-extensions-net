@@ -110,7 +110,13 @@ public static class XmlExtensions
   /// <param name="xml"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static XmlDocument TryFinallyClear(this XmlDocument xml, Action<XmlDocument> action) => xml.TryFinally(action, xml => xml.Empty());
+  public static XmlDocument TryFinallyClear(this XmlDocument xml, Action<XmlDocument> action)
+  {
+    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return xml.TryFinally(action, xml => xml.Empty());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -118,7 +124,13 @@ public static class XmlExtensions
   /// <param name="xml"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static XDocument TryFinallyClear(this XDocument xml, Action<XDocument> action) => xml.TryFinally(action, xml => xml.Empty());
+  public static XDocument TryFinallyClear(this XDocument xml, Action<XDocument> action)
+  {
+    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return xml.TryFinally(action, xml => xml.Empty());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -368,6 +380,8 @@ public static class XmlExtensions
   {
     if (xml is null) throw new ArgumentNullException(nameof(xml));
 
+    cancellation.ThrowIfCancellationRequested();
+
     using var stream = new MemoryStream();
 
     await xml.SaveAsync(stream, SaveOptions.None, cancellation).ConfigureAwait(false);
@@ -430,6 +444,8 @@ public static class XmlExtensions
   public static async Task<string> ToTextAsync(this XDocument xml, CancellationToken cancellation = default)
   {
     if (xml is null) throw new ArgumentNullException(nameof(xml));
+
+    cancellation.ThrowIfCancellationRequested();
 
     await using var writer = new StringWriter();
 

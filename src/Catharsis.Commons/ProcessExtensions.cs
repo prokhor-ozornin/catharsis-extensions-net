@@ -63,6 +63,8 @@ public static class ProcessExtensions
   {
     if (process is null) throw new ArgumentNullException(nameof(process));
 
+    cancellation.ThrowIfCancellationRequested();
+
     cancellation.Register(process.Kill);
 
     await process.WaitForExitAsync(cancellation).ConfigureAwait(false);
@@ -78,7 +80,13 @@ public static class ProcessExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  public static T Print<T>(this T instance, Process destination) => instance.Print(destination.StandardInput);
+  public static T Print<T>(this T instance, Process destination)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    return instance.Print(destination.StandardInput);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -95,7 +103,13 @@ public static class ProcessExtensions
   /// <param name="process"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static Process TryFinallyKill(this Process process, Action<Process> action) => process.TryFinally(action, process => process.Kill());
+  public static Process TryFinallyKill(this Process process, Action<Process> action)
+  {
+    if (process is null) throw new ArgumentNullException(nameof(process));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return process.TryFinally(action, process => process.Kill());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -103,20 +117,6 @@ public static class ProcessExtensions
   /// <param name="process"></param>
   /// <returns></returns>
   public static IEnumerable<byte> ToBytes(this Process process) => process is not null ? process.StandardOutput.BaseStream.ToBytes() : throw new ArgumentNullException(nameof(process));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="process"></param>
-  /// <returns></returns>
-  public static string ToText(this Process process) => process is not null ? process.StandardOutput.ToText() : throw new ArgumentNullException(nameof(process));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="process"></param>
-  /// <returns></returns>
-  public static string ToErrorText(this Process process) => process is not null ? process.StandardError.ToText() : throw new ArgumentNullException(nameof(process));
 
   /// <summary>
   ///   <para></para>
@@ -131,7 +131,21 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
+  public static string ToText(this Process process) => process is not null ? process.StandardOutput.ToText() : throw new ArgumentNullException(nameof(process));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <returns></returns>
   public static async Task<string> ToTextAsync(this Process process) => process is not null ? await process.StandardOutput.ToTextAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(process));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <returns></returns>
+  public static string ToErrorText(this Process process) => process is not null ? process.StandardError.ToText() : throw new ArgumentNullException(nameof(process));
 
   /// <summary>
   ///   <para></para>
@@ -160,21 +174,6 @@ public static class ProcessExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  public static Process WriteText(this Process destination, string text)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    destination.StandardInput.WriteText(text);
-    return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
@@ -184,7 +183,22 @@ public static class ProcessExtensions
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
     await destination.StandardInput.BaseStream.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
-   
+
+    return destination;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  public static Process WriteText(this Process destination, string text)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    destination.StandardInput.WriteText(text);
     return destination;
   }
 

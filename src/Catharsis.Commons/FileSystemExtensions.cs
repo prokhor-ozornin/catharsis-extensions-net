@@ -33,20 +33,6 @@ public static class FileSystemExtensions
   public static bool IsEmpty(this FileInfo file) => file is not null ? !file.Exists || file.Length <= 0 : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
-  ///   <para>Erases all content from a file, making it a zero-length one.</para>
-  /// </summary>
-  /// <param name="file">File to truncate.</param>
-  /// <returns>Back reference to the current file.</returns>
-  public static FileInfo Empty(this FileInfo file)
-  {
-    if (file is null) throw new ArgumentNullException(nameof(file));
-
-    file.CreateWithPath().Refresh();
-
-    return file;
-  }
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="directory"></param>
@@ -59,6 +45,20 @@ public static class FileSystemExtensions
     directory.Files().ForEach(file => file.Delete());
 
     return directory;
+  }
+
+  /// <summary>
+  ///   <para>Erases all content from a file, making it a zero-length one.</para>
+  /// </summary>
+  /// <param name="file">File to truncate.</param>
+  /// <returns>Back reference to the current file.</returns>
+  public static FileInfo Empty(this FileInfo file)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+
+    file.CreateWithPath().Refresh();
+
+    return file;
   }
 
   /// <summary>
@@ -86,13 +86,13 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static IEnumerable<string> Lines(this FileInfo file, Encoding encoding = null)
+  public static string[] Lines(this FileInfo file, Encoding encoding = null)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
 
     using var reader = file.ToStreamReader(encoding);
 
-    return reader.Lines();
+    return reader.Lines().AsArray();
   }
 
   /// <summary>
@@ -144,6 +144,8 @@ public static class FileSystemExtensions
     if (instance is null) throw new ArgumentNullException(nameof(instance));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await using var writer = destination.ToStreamWriter(encoding);
 
     return await instance.PrintAsync(writer, cancellation).ConfigureAwait(false);
@@ -155,11 +157,17 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static FileInfo TryFinallyClear(this FileInfo file, Action<FileInfo> action) => file.TryFinally(file =>
+  public static FileInfo TryFinallyClear(this FileInfo file, Action<FileInfo> action)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return file.TryFinally(file =>
     {
       file.CreateWithPath();
       action(file);
     }, file => file.Empty());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -167,11 +175,17 @@ public static class FileSystemExtensions
   /// <param name="directory"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static DirectoryInfo TryFinallyClear(this DirectoryInfo directory, Action<DirectoryInfo> action) => directory.TryFinally(directory =>
+  public static DirectoryInfo TryFinallyClear(this DirectoryInfo directory, Action<DirectoryInfo> action)
+  {
+    if (directory is null) throw new ArgumentNullException(nameof(directory));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return directory.TryFinally(directory =>
     {
       directory.Create();
       action(directory);
     }, directory => directory.Empty());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -179,11 +193,17 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static FileInfo TryFinallyDelete(this FileInfo file, Action<FileInfo> action) => file.TryFinally(file =>
+  public static FileInfo TryFinallyDelete(this FileInfo file, Action<FileInfo> action)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return file.TryFinally(file =>
     {
       file.CreateWithPath();
       action(file);
     }, file => file.Delete());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -191,11 +211,17 @@ public static class FileSystemExtensions
   /// <param name="directory"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static DirectoryInfo TryFinallyDelete(this DirectoryInfo directory, Action<DirectoryInfo> action) => directory.TryFinally(directory =>
+  public static DirectoryInfo TryFinallyDelete(this DirectoryInfo directory, Action<DirectoryInfo> action)
+  {
+    if (directory is null) throw new ArgumentNullException(nameof(directory));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return directory.TryFinally(directory =>
     {
       directory.Create();
       action(directory);
     }, directory => directory.Delete(true));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -293,18 +319,18 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static StreamWriter ToStreamWriter(this FileInfo file, Encoding encoding = null) => file is not null ? new StreamWriter(file.FullName, true, encoding ?? Encoding.Default, -1) : throw new ArgumentNullException(nameof(file));
+  public static StreamWriter ToStreamWriter(this FileInfo file, Encoding encoding = null) => file is not null ? new StreamWriter(file.FullName, true, encoding ?? Encoding.Default, 1024) : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="file"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this FileInfo source)
+  public static IEnumerable<byte> ToBytes(this FileInfo file)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    using var stream = source.ToReadOnlyStream();
+    using var stream = file.ToReadOnlyStream();
 
     return stream.ToBytes();
   }
@@ -312,14 +338,16 @@ public static class FileSystemExtensions
   /// <summary>
   ///  <para>Reads entire contents of file and returns it as a byte array.</para>
   /// </summary>
-  /// <param name="source">File to read data from.</param>
+  /// <param name="file">File to read data from.</param>
   /// <param name="cancellation"></param>
-  /// <returns>Byte content of specified <paramref name="source"/>.</returns>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this FileInfo source, [EnumeratorCancellation] CancellationToken cancellation = default)
+  /// <returns>Byte content of specified <paramref name="file"/>.</returns>
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this FileInfo file, [EnumeratorCancellation] CancellationToken cancellation = default)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    await using var stream = source.ToReadOnlyStream();
+    cancellation.ThrowIfCancellationRequested();
+
+    await using var stream = file.ToReadOnlyStream();
 
     await foreach (var element in stream.ToBytesAsync(cancellation).ConfigureAwait(false))
     {
@@ -330,14 +358,14 @@ public static class FileSystemExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="source"></param>
+  /// <param name="file"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static string ToText(this FileInfo source, Encoding encoding = null)
+  public static string ToText(this FileInfo file, Encoding encoding = null)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    using var reader = source.ToStreamReader(encoding);
+    using var reader = file.ToStreamReader(encoding);
 
     return reader.ToText();
   }
@@ -345,14 +373,14 @@ public static class FileSystemExtensions
   /// <summary>
   ///   <para>Reads text content of a file and returns it as a string.</para>
   /// </summary>
-  /// <param name="source">File to read text from.</param>
+  /// <param name="file">File to read text from.</param>
   /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
-  /// <returns>Text contents of a <paramref name="source"/>.</returns>
-  public static async Task<string> ToTextAsync(this FileInfo source, Encoding encoding = null)
+  /// <returns>Text contents of a <paramref name="file"/>.</returns>
+  public static async Task<string> ToTextAsync(this FileInfo file, Encoding encoding = null)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    using var reader = source.ToStreamReader(encoding);
+    using var reader = file.ToStreamReader(encoding);
 
     return await reader.ToTextAsync().ConfigureAwait(false);
   }
@@ -394,6 +422,8 @@ public static class FileSystemExtensions
     if (destination is null) throw new ArgumentNullException(nameof(destination));
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
+    cancellation.ThrowIfCancellationRequested();
+
     try
     {
       await using var stream = destination.ToWriteOnlyStream();
@@ -420,6 +450,8 @@ public static class FileSystemExtensions
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
     if (text is null) throw new ArgumentNullException(nameof(text));
+
+    cancellation.ThrowIfCancellationRequested();
 
     try
     {
@@ -488,6 +520,8 @@ public static class FileSystemExtensions
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await destination.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
 
     return bytes;
@@ -522,6 +556,8 @@ public static class FileSystemExtensions
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
 
     await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
 

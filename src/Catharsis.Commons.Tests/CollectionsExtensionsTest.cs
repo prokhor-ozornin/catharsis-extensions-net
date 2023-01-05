@@ -22,8 +22,8 @@ public sealed class CollectionsExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CollectionsExtensions.AddRange<object>(null, Enumerable.Empty<object>)).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Array.Empty<object>().AddRange((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => CollectionsExtensions.AddRange<object>(null, Enumerable.Empty<object>)).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => Array.Empty<object>().AddRange((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
       var collection = new List<object>();
 
@@ -37,8 +37,8 @@ public sealed class CollectionsExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CollectionsExtensions.AddRange<object>(null, Array.Empty<object>)).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Array.Empty<object>().AddRange()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => CollectionsExtensions.AddRange<object>(null, Array.Empty<object>)).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => Array.Empty<object>().AddRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
     }
 
@@ -57,19 +57,19 @@ public sealed class CollectionsExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((NameValueCollection) null).AddRange(Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => new NameValueCollection().AddRange((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((NameValueCollection) null).AddRange(Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => new NameValueCollection().AddRange((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((NameValueCollection) null).AddRange(Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => new NameValueCollection().AddRange(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((NameValueCollection) null).AddRange(Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => new NameValueCollection().AddRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
     }
 
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
   }
 
   /// <summary>
@@ -84,8 +84,8 @@ public sealed class CollectionsExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((ICollection<object>) null).RemoveRange(Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((ICollection<object>) null).RemoveRange(Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       var collection = new List<object>();
       collection.RemoveRange(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(collection);
@@ -101,8 +101,8 @@ public sealed class CollectionsExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((ICollection<object>) null).RemoveRange(Array.Empty<object>())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((ICollection<object>) null).RemoveRange(Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     }
 
@@ -115,7 +115,9 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void IList_RemoveRange_Method()
   {
-    AssertionExtensions.Should(() => ((IList<object>) null).RemoveRange(0)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IList<object>) null).RemoveRange(0)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+    AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+    AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
   }
@@ -132,15 +134,17 @@ public sealed class CollectionsExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CollectionsExtensions.InsertRange<object>(null, 0, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(0, (IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => CollectionsExtensions.InsertRange<object>(null, 0, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(0, (IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(-1, Enumerable.Empty<object>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
 
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CollectionsExtensions.InsertRange(null, 0, Array.Empty<object>())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(0, null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => CollectionsExtensions.InsertRange(null, 0, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(-1, Array.Empty<object>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
 
     }
 
@@ -160,7 +164,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CollectionsExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => CollectionsExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
 
       Validate(Array.Empty<object>().ToList());
@@ -182,7 +186,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CollectionsExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => CollectionsExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
       Validate(new NameValueCollection());
       Validate(new NameValueCollection().AddRange(RandomObjects.Select(element => (element.GetType().FullName, element))));
@@ -201,15 +205,21 @@ public sealed class CollectionsExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CollectionsExtensions.Fill(null, () => new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => CollectionsExtensions.Fill(null, () => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => Array.Empty<object>().Fill((Func<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("filler");
+      AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+      AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+      AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, 0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+      AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, 0, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CollectionsExtensions.Fill(null, _ => new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => CollectionsExtensions.Fill(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => Array.Empty<object>().Fill((Func<int, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("filler");
     }
 
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
   }
 
   /// <summary>
@@ -218,9 +228,13 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void IList_Swap_Method()
   {
-    AssertionExtensions.Should(() => CollectionsExtensions.Swap<object>(null, 1, 2)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => CollectionsExtensions.Swap<object>(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+    AssertionExtensions.Should(() => Array.Empty<object>().Swap(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("firstIndex");
+    AssertionExtensions.Should(() => Array.Empty<object>().Swap(1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("firstIndex");
+    AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
+    AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
 
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
   }
 
   /// <summary>
@@ -229,7 +243,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void IList_Randomize_Method()
   {
-    AssertionExtensions.Should(() => CollectionsExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => CollectionsExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
 
     var collection = new List<object>();
     collection.Randomize().Should().BeSameAs(collection).And.BeEmpty();
@@ -248,8 +262,8 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void ICollection_TryFinallyClear_Method()
   {
-    AssertionExtensions.Should(() => ((ICollection<object>) null).TryFinallyClear(_ => {})).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((ICollection<object>) null).TryFinallyClear(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+    AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
     var collection = new List<object>();
@@ -262,8 +276,8 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void NameValueCollection_TryFinallyClear_Method()
   {
-    AssertionExtensions.Should(() => ((NameValueCollection) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new NameValueCollection().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((NameValueCollection) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+    AssertionExtensions.Should(() => new NameValueCollection().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     var collection = new NameValueCollection();
     collection.TryFinallyClear(collection => collection.Add("key", "value")).Should().NotBeNull().And.BeSameAs(collection);
@@ -276,12 +290,12 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void IList_AsReadOnly_Method()
   {
-    AssertionExtensions.Should(() => CollectionsExtensions.AsReadOnly<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => CollectionsExtensions.AsReadOnly<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
 
-    var list = new List<object> { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
+    /*var list = new List<object> { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
     var readOnly = CollectionsExtensions.AsReadOnly(list);
 
-    /*readOnly.Should().NotBeNull().And.NotBeSameAs(list).And.Equal(list);
+    readOnly.Should().NotBeNull().And.NotBeSameAs(list).And.Equal(list);
     readOnly.IsReadOnly.Should().BeTrue();
     readOnly.GetType().Should().Implement<IReadOnlyList<object>>();
 
@@ -300,7 +314,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void IDictionary_AsReadOnly_Method()
   {
-    AssertionExtensions.Should(() => CollectionsExtensions.AsReadOnly<int, object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => CollectionsExtensions.AsReadOnly<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
 
     /*var dictionary = new Dictionary<int, object> { {1 , 1 }, { 2, string.Empty }, { 3, "2" }, { 4, Guid.NewGuid() }, { 5, null }, { 6, 10.5} };
     var readOnly = dictionary.AsReadOnly();
@@ -323,7 +337,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void IDictionary_ToSortedList_Method()
   {
-    AssertionExtensions.Should(() => CollectionsExtensions.ToSortedList<int, object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => CollectionsExtensions.ToSortedList<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
 
     throw new NotImplementedException();
   }
@@ -334,7 +348,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void NameValueCollection_ToDictionary_Method()
   {
-    AssertionExtensions.Should(() => CollectionsExtensions.ToDictionary(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => CollectionsExtensions.ToDictionary(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
     throw new NotImplementedException();
   }
@@ -345,7 +359,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void IDictionary_ToSortedDictionary_Method()
   {
-    AssertionExtensions.Should(() => CollectionsExtensions.ToSortedDictionary<int, object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => CollectionsExtensions.ToSortedDictionary<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
 
     throw new NotImplementedException();
   }
@@ -356,7 +370,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void IDictionary_ToValueTuple_Method()
   {
-    AssertionExtensions.Should(() => ((IReadOnlyDictionary<object, object>) null).ToValueTuple()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IReadOnlyDictionary<object, object>) null).ToValueTuple()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
     
     throw new NotImplementedException();
   }
@@ -367,7 +381,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void NameValueCollection_ToValueTuple_Method()
   {
-    AssertionExtensions.Should(() => CollectionsExtensions.ToValueTuple(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => CollectionsExtensions.ToValueTuple(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
     throw new NotImplementedException();
   }

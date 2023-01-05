@@ -15,15 +15,14 @@ public sealed class RegexExtensionsTest : UnitTest
   [Fact]
   public void String_IsMatch_Method()
   {
-    /*AssertionExtensions.Should(() => RegexExtensions.IsMatch(null, string.Empty)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => string.Empty.IsMatch(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => RegexExtensions.IsMatch(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.IsMatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
 
-    string.Empty.IsMatch("anything").Should().BeFalse();
+    /*string.Empty.IsMatch("anything").Should().BeFalse();
     "ab4Zg95kf".IsMatch("[a-zA-z0-9]").Should().BeTrue();
     "~#$%".IsMatch("[a-zA-z0-9]").Should().BeFalse();*/
 
     throw new NotImplementedException();
-
   }
 
   /// <summary>
@@ -32,10 +31,10 @@ public sealed class RegexExtensionsTest : UnitTest
   [Fact]
   public void String_Matches_Method()
   {
-    /*AssertionExtensions.Should(() => RegexExtensions.Matches(null, string.Empty)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => string.Empty.Matches(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => RegexExtensions.Matches(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.Matches(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
 
-    string.Empty.Matches("anything").Should().BeEmpty();
+    /*string.Empty.Matches("anything").Should().BeEmpty();
     var matches = "ab#1".Matches("[a-zA-z0-9]");
     matches.Should().HaveCount(3);
     matches.ElementAt(0).Value.Should().Be("a");
@@ -51,8 +50,8 @@ public sealed class RegexExtensionsTest : UnitTest
   [Fact]
   public void Regex_ToEnumerable_Method()
   {
-    AssertionExtensions.Should(() => RegexExtensions.ToEnumerable(null, string.Empty)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new Regex(".*").ToEnumerable(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => RegexExtensions.ToEnumerable(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
+    AssertionExtensions.Should(() => new Regex(".*").ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
   }
@@ -63,7 +62,7 @@ public sealed class RegexExtensionsTest : UnitTest
   [Fact]
   public void Match_ToEnumerable_Method()
   {
-    AssertionExtensions.Should(() => RegexExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => RegexExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("match");
 
     throw new NotImplementedException();
   }

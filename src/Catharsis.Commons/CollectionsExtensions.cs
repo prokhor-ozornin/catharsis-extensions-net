@@ -182,7 +182,7 @@ public static class CollectionsExtensions
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IList<T> Fill<T>(this IList<T> list, Func<T> filler, int? offset = null, int? count = null) => list.Fill(_ => filler(), offset, count);
+  public static IList<T> Fill<T>(this IList<T> list, Func<T> filler, int? offset = null, int? count = null) => filler is not null ? list.Fill(_ => filler(), offset, count) : throw new ArgumentNullException(nameof(filler));
 
   /// <summary>
   ///   <para></para>
@@ -197,9 +197,9 @@ public static class CollectionsExtensions
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
     if (filler is null) throw new ArgumentNullException(nameof(filler));
-    if (offset is < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+    if (offset is < 0 || offset > list.Count) throw new ArgumentOutOfRangeException(nameof(offset));
     if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
+    
     var fromIndex = offset ?? 0;
     var toIndex = Min(list.Count, count != null ? fromIndex + count.Value : list.Count - fromIndex);
 
@@ -221,8 +221,8 @@ public static class CollectionsExtensions
   public static IList<T> Swap<T>(this IList<T> list, int firstIndex, int secondIndex)
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
-    if (firstIndex < 0 || firstIndex >= list.Count) throw new ArgumentOutOfRangeException(nameof(firstIndex));
-    if (secondIndex < 0 || secondIndex >= list.Count) throw new ArgumentOutOfRangeException(nameof(secondIndex));
+    if (firstIndex < 0 || firstIndex > list.Count) throw new ArgumentOutOfRangeException(nameof(firstIndex));
+    if (secondIndex < 0 || secondIndex > list.Count) throw new ArgumentOutOfRangeException(nameof(secondIndex));
 
     (list[firstIndex], list[secondIndex]) = (list[secondIndex], list[firstIndex]);
 
@@ -266,7 +266,13 @@ public static class CollectionsExtensions
   /// <param name="collection"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static ICollection<T> TryFinallyClear<T>(this ICollection<T> collection, Action<ICollection<T>> action) => collection.TryFinally(action, collection => collection.Clear());
+  public static ICollection<T> TryFinallyClear<T>(this ICollection<T> collection, Action<ICollection<T>> action)
+  {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return collection.TryFinally(action, collection => collection.Clear());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -274,7 +280,13 @@ public static class CollectionsExtensions
   /// <param name="collection"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static NameValueCollection TryFinallyClear(this NameValueCollection collection, Action<NameValueCollection> action) => collection.TryFinally(action, collection => collection.Clear());
+  public static NameValueCollection TryFinallyClear(this NameValueCollection collection, Action<NameValueCollection> action)
+  {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return collection.TryFinally(action, collection => collection.Clear());
+  }
 
   /// <summary>
   ///   <para></para>

@@ -17,6 +17,8 @@ public sealed class ArrayExtensionsTest : UnitTest
   public void Array_Range_Method()
   {
     AssertionExtensions.Should(() => ArrayExtensions.Range<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => Array.Empty<object>().Range(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+    AssertionExtensions.Should(() => Array.Empty<object>().Range(null, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
   }
@@ -25,9 +27,9 @@ public sealed class ArrayExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="ArrayExtensions.FromBase64(char[])"/> method.</para>
   /// </summary>
   [Fact]
-  public void IEnumerable_FromBase64_Method()
+  public void CharArray_FromBase64_Method()
   {
-    AssertionExtensions.Should(() => ArrayExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ArrayExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
 
     var bytes = RandomBytes;
 
@@ -41,7 +43,7 @@ public sealed class ArrayExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="ArrayExtensions.ToBytes(char[], Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Array_ToBytes_Method()
+  public void CharArray_ToBytes_Method()
   {
     static void Validate(char[] chars, Encoding encoding)
     {
@@ -53,7 +55,7 @@ public sealed class ArrayExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
 
       Validate(RandomChars, null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(RandomChars, encoding));
@@ -61,41 +63,38 @@ public sealed class ArrayExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="ArrayExtensions.ToText(char[])"/></description></item>
-  ///     <item><description><see cref="ArrayExtensions.ToText(byte[], Encoding)"/></description></item>
-  ///   </list>
+  ///   <para>Performs testing of <see cref="ArrayExtensions.ToText(char[])"/> method.</para>
   /// </summary>
   [Fact]
-  public void Array_ToText_Methods()
+  public void CharArray_ToText_Method()
   {
-    using (new AssertionScope())
+    AssertionExtensions.Should(() => ArrayExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
+
+    Array.Empty<char>().ToText().Should().NotBeNull().And.BeSameAs(Array.Empty<char>().ToText()).And.BeEmpty();
+
+    var text = RandomString;
+    var chars = text.ToCharArray();
+    chars.ToText().Should().NotBeNull().And.NotBeSameAs(chars.ToText()).And.Be(text);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ArrayExtensions.ToText(byte[], Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ByteArray_ToText_Method()
+  {
+    static void Validate(byte[] bytes, Encoding encoding)
     {
-      AssertionExtensions.Should(() => ArrayExtensions.ToText(null)).ThrowExactly<ArgumentNullException>();
-
-      Array.Empty<char>().ToText().Should().NotBeNull().And.BeSameAs(Array.Empty<char>().ToText()).And.BeEmpty();
-
-      var text = RandomString;
-      var chars = text.ToCharArray();
-      chars.ToText().Should().NotBeNull().And.NotBeSameAs(chars.ToText()).And.Be(text);
+      Array.Empty<byte>().ToText(encoding).Should().NotBeNull().And.BeSameAs(Array.Empty<byte>().ToText(encoding)).And.BeEmpty();
+      bytes.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(bytes.ToText(encoding)).And.HaveLength((encoding ?? Encoding.Default).GetCharCount(bytes)).And.Be((encoding ?? Encoding.Default).GetString(bytes));
     }
 
     using (new AssertionScope())
     {
-      static void Validate(byte[] bytes, Encoding encoding)
-      {
-        Array.Empty<byte>().ToText(encoding).Should().NotBeNull().And.BeSameAs(Array.Empty<byte>().ToText(encoding)).And.BeEmpty();
-        bytes.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(bytes.ToText(encoding)).And.HaveLength((encoding ?? Encoding.Default).GetCharCount(bytes)).And.Be((encoding ?? Encoding.Default).GetString(bytes));
-      }
+      AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      using (new AssertionScope())
-      {
-        AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>();
-
-        Validate(RandomBytes, null);
-        Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(RandomBytes, encoding));
-      }
+      Validate(RandomBytes, null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(RandomBytes, encoding));
     }
   }
 }

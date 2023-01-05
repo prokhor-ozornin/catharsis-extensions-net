@@ -162,13 +162,13 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static IEnumerable<string> Lines(this Stream stream, Encoding encoding = null)
+  public static string[] Lines(this Stream stream, Encoding encoding = null)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
 
     using var reader = stream.ToStreamReader(encoding, false);
     
-    return reader.Lines();
+    return reader.Lines().AsArray();
   }
 
   /// <summary>
@@ -249,6 +249,8 @@ public static class StreamExtensions
     if (instance is null) throw new ArgumentNullException(nameof(instance));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await using var writer = destination.ToStreamWriter(encoding, false);
 
     return await instance.PrintAsync(writer, cancellation).ConfigureAwait(false);
@@ -260,7 +262,13 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static TStream TryFinallyClear<TStream>(this TStream stream, Action<TStream> action) where TStream : Stream => stream.TryFinally(action, stream => stream.Empty());
+  public static TStream TryFinallyClear<TStream>(this TStream stream, Action<TStream> action) where TStream : Stream
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return stream.TryFinally(action, stream => stream.Empty());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -327,10 +335,14 @@ public static class StreamExtensions
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
 
+    cancellation.ThrowIfCancellationRequested();
+
     var buffer = new byte[4096];
 
     for (int count; (count = await stream.ReadAsync(buffer, 0, buffer.Length, cancellation).ConfigureAwait(false)) > 0;)
     {
+      cancellation.ThrowIfCancellationRequested();
+
       for (var i = 0; i < count; i++)
       {
         yield return buffer[i];
@@ -421,6 +433,8 @@ public static class StreamExtensions
     if (destination is null) throw new ArgumentNullException(nameof(destination));
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
+    cancellation.ThrowIfCancellationRequested();
+
     foreach (var chunk in bytes.Chunk(4096))
     {
       await destination.WriteAsync(chunk, 0, chunk.Length, cancellation).ConfigureAwait(false);
@@ -442,6 +456,8 @@ public static class StreamExtensions
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
     if (text is null) throw new ArgumentNullException(nameof(text));
+
+    cancellation.ThrowIfCancellationRequested();
 
     await using var writer = destination.ToStreamWriter(encoding, false);
     
@@ -495,6 +511,8 @@ public static class StreamExtensions
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await destination.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
 
     return bytes;
@@ -512,6 +530,8 @@ public static class StreamExtensions
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
+    
+    cancellation.ThrowIfCancellationRequested();
 
     await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
 
@@ -641,7 +661,7 @@ public static class StreamExtensions
   public static BufferedStream ToBufferedStream(this Stream stream, int? bufferSize = null)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
-    if (bufferSize is <= 0) throw new ArgumentException(nameof(bufferSize));
+    if (bufferSize is <= 0) throw new ArgumentOutOfRangeException(nameof(bufferSize));
 
     return bufferSize != null ? new BufferedStream(stream, bufferSize.Value) : new BufferedStream(stream);
   }
@@ -653,7 +673,7 @@ public static class StreamExtensions
   /// <param name="encoding">Text encoding to use by <see cref="ToBinaryReader"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
   /// <returns>Binary reader instance that wraps <see cref="stream"/> stream.</returns>
-  public static BinaryReader ToBinaryReader(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new(stream, encoding ?? Encoding.Default, !close) : throw new ArgumentNullException(nameof(stream));
+  public static BinaryReader ToBinaryReader(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new BinaryReader(stream, encoding ?? Encoding.Default, !close) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para>Returns a <see cref="ToBinaryWriter"/> for writing data to specified <see cref="Stream"/>.</para>
@@ -662,7 +682,7 @@ public static class StreamExtensions
   /// <param name="encoding">Text encoding to use by <see cref="ToBinaryWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
   /// <returns>Binary writer instance that wraps <see cref="stream"/> stream.</returns>
-  public static BinaryWriter ToBinaryWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new(stream, encoding ?? Encoding.Default, !close) : throw new ArgumentNullException(nameof(stream));
+  public static BinaryWriter ToBinaryWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new BinaryWriter(stream, encoding ?? Encoding.Default, !close) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para>Returns a <see cref="ToStreamReader"/> for reading text data from specified <see cref="Stream"/>.</para>
@@ -671,7 +691,7 @@ public static class StreamExtensions
   /// <param name="encoding">Text encoding to use by <see cref="ToStreamReader"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
   /// <returns>Text reader instance that wraps <see cref="stream"/> stream.</returns> 
-  public static StreamReader ToStreamReader(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new(stream, encoding ?? Encoding.Default, true, -1, !close) : throw new ArgumentNullException(nameof(stream));
+  public static StreamReader ToStreamReader(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new StreamReader(stream, encoding ?? Encoding.Default, true, -1, !close) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para>Returns a <see cref="ToStreamWriter"/> for writing text data to specified <see cref="Stream"/>.</para>
@@ -680,7 +700,7 @@ public static class StreamExtensions
   /// <param name="encoding">Text encoding to use by <see cref="ToStreamWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
   /// <returns>Text writer instance that wraps <see cref="stream"/> stream.</returns>
-  public static StreamWriter ToStreamWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new(stream, encoding ?? Encoding.Default, -1, !close) : throw new ArgumentNullException(nameof(stream));
+  public static StreamWriter ToStreamWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new StreamWriter(stream, encoding ?? Encoding.Default, -1, !close) : throw new ArgumentNullException(nameof(stream));
 
   private class ReadOnlyStream : Stream
   {

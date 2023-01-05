@@ -40,16 +40,13 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_String_Method()
   {
-    void ValidateBinaryReader(Encoding encoding)
+    static void ValidateBinaryReader(Encoding encoding)
     {
       var text = RandomString;
 
-      using (var stream = Stream.Null)
+      using (var reader = Stream.Null.ToBinaryReader(encoding))
       {
-        using (var reader = stream.ToBinaryReader(encoding))
-        {
-          AssertionExtensions.Should(() => Convert.To.String(reader, encoding)).ThrowExactly<EndOfStreamException>();
-        }
+        Convert.To.String(reader, encoding).Should().BeEmpty();
       }
 
       using (var stream = new MemoryStream())
@@ -70,7 +67,7 @@ public sealed class ConvertExtensionsTests : UnitTest
       }
     }
 
-    void ValidateFile(Encoding encoding)
+    static void ValidateFile(Encoding encoding)
     {
       AssertionExtensions.Should(() => Convert.To.String(RandomFakeFile)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<FileNotFoundException>();
       
@@ -79,13 +76,13 @@ public sealed class ConvertExtensionsTests : UnitTest
         Convert.To.String(file, encoding).Should().NotBeNull().And.BeSameAs(Convert.To.String(file, encoding)).And.BeEmpty();
       });
 
-      RandomNonEmptyFile.TryFinallyDelete(file =>
+      RandomNonEmptyFile.TryFinallyDelete(x =>
       {
-        Convert.To.String(file, encoding).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(file, encoding)).And.Be(file.ToTextAsync(encoding).Await());
+        Convert.To.String(x, encoding).Should().NotBeNull().And.NotBeSameAs(Convert.To.String(x, encoding)).And.Be(x.ToTextAsync(encoding).Await());
       });
     }
 
-    void ValidateStream(Encoding encoding)
+    static void ValidateStream(Encoding encoding)
     {
       using (var stream = Stream.Null)
       {
@@ -98,7 +95,7 @@ public sealed class ConvertExtensionsTests : UnitTest
       }
     }
 
-    void ValidateUri(Encoding encoding)
+    static void ValidateUri(Encoding encoding)
     {
       var file = RandomNonEmptyFile;
 
@@ -111,7 +108,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.String(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.String(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
     }
 
     // NULL
@@ -175,7 +172,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     // Process
     using (new AssertionScope())
     {
-      var process = "cmd.exe".Execute("/c", "dir");
+      var process = ShellCommand.Execute("/c", "dir");
       process.Start();
       process.Finish(TimeSpan.FromSeconds(5));
       Convert.To.String(process).Should().NotBeNullOrEmpty().And.NotBeSameAs(Convert.To.String(process));
@@ -193,12 +190,9 @@ public sealed class ConvertExtensionsTests : UnitTest
     {
       var text = RandomString;
 
-      using (var stream = Stream.Null)
+      using (var reader = Stream.Null.ToStreamReader())
       {
-        using (var reader = stream.ToStreamReader())
-        {
-          Convert.To.String(reader).Should().NotBeNull().And.BeSameAs(Convert.To.String(reader)).And.BeEmpty();
-        }
+        Convert.To.String(reader).Should().NotBeNull().And.BeSameAs(Convert.To.String(reader)).And.BeEmpty();
       }
 
       using (var reader = text.ToStringReader())
@@ -278,7 +272,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Binary(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Binary(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
     }
 
     // NULL
@@ -329,7 +323,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
       RandomNonEmptyFile.TryFinallyDelete(file =>
       {
-        Convert.To.Binary(file).Should().NotBeNull().And.NotBeSameAs(Convert.To.Binary(file)).And.Equal(file.ToBytesAsync().ToArrayAsync().Await());
+        Convert.To.Binary(file).Should().NotBeNull().And.NotBeSameAs(Convert.To.Binary(file)).And.Equal(file.ToBytesAsync().ToArray());
       });
     }
 
@@ -369,7 +363,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     // Process
     using (new AssertionScope())
     {
-      var process = "cmd.exe".Execute("/c", "dir");
+      var process = ShellCommand.Execute("/c", "dir");
       process.Start();
       process.Finish(TimeSpan.FromSeconds(5));
       Convert.To.Binary(process).Should().NotBeNullOrEmpty().And.NotBeSameAs(Convert.To.Binary(process));
@@ -392,7 +386,7 @@ public sealed class ConvertExtensionsTests : UnitTest
     using (new AssertionScope())
     {
       var file = RandomNonEmptyFile;
-      var bytes = file.ToBytesAsync().ToArrayAsync().Await();
+      var bytes = file.ToBytesAsync().ToArray();
 
       file.TryFinallyDelete(file =>
       {
@@ -430,7 +424,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Array_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.Array<object>(null, new object())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ConvertExtensions.Array<object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
     AssertionExtensions.Should(() => Convert.To.Array<string>(new object())).ThrowExactly<InvalidCastException>();
 
     // NULL
@@ -451,11 +445,11 @@ public sealed class ConvertExtensionsTests : UnitTest
     // IAsyncEnumerable
     using (var stream = RandomStream)
     {
-      var enumerable = stream.ToBytesAsync();
-      var result = Convert.To.Array<byte>(enumerable);
-      result.Should().NotBeNull().And.NotBeSameAs(Convert.To.Array<byte>(enumerable));
+      var sequence = stream.ToBytesAsync();
+      var result = Convert.To.Array<byte>(sequence);
+      result.Should().NotBeNull().And.NotBeSameAs(Convert.To.Array<byte>(sequence));
       stream.MoveToStart();
-      result.Should().Equal(enumerable.ToArrayAsync().Await());
+      result.Should().Equal(sequence.ToArray());
     }
 
     // Default
@@ -524,7 +518,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Sbyte(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Sbyte(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -592,7 +586,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Byte(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Byte(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -660,7 +654,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Short(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Short(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -728,7 +722,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Ushort(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Ushort(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -796,7 +790,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Int(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Int(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -864,7 +858,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Uint(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Uint(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -933,7 +927,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Long(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Long(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -1001,7 +995,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Ulong(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Ulong(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -1073,7 +1067,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Float(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Float(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -1145,7 +1139,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Double(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Double(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -1203,7 +1197,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.Decimal(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.Decimal(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -1216,7 +1210,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Enum_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.Enum<DayOfWeek>(null, DayOfWeek.Monday)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ConvertExtensions.Enum<DayOfWeek>(null, DayOfWeek.Monday)).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.Enum<DayOfWeek>(string.Empty).Should().BeNull();
 
@@ -1252,7 +1246,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.DateTime(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.DateTime(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -1285,7 +1279,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.DateTimeOffset(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.DateTimeOffset(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -1318,7 +1312,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.DateOnly(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.DateOnly(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -1352,7 +1346,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ConvertExtensions.TimeOnly(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ConvertExtensions.TimeOnly(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
       Validate(null);
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -1365,7 +1359,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Guid_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.Guid(null, new object())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ConvertExtensions.Guid(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.Guid(null).Should().BeNull();
     Convert.To.Guid(string.Empty).Should().BeNull();
@@ -1392,7 +1386,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Regex_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.Regex(null, new object())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ConvertExtensions.Regex(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.Regex(null).Should().BeNull();
 
@@ -1420,7 +1414,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Uri_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.Uri(null, new object())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ConvertExtensions.Uri(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.Uri(null).Should().BeNull();
 
@@ -1474,7 +1468,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_StringBuilder_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.StringBuilder(null, new object())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ConvertExtensions.StringBuilder(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.StringBuilder(null).Should().BeNull();
 
@@ -1503,7 +1497,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_IpAddress_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.IpAddress(null, new object())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ConvertExtensions.IpAddress(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.IpAddress(null).Should().BeNull();
     Convert.To.IpAddress(string.Empty).Should().BeNull();
@@ -1528,8 +1522,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Directory_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.Directory(null, new object())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Convert.To.Directory(string.Empty)).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ConvertExtensions.Directory(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.Directory(null).Should().BeNull();
 
@@ -1550,8 +1543,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_File_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.File(null, new object())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Convert.To.File(string.Empty)).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ConvertExtensions.File(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.File(null).Should().BeNull();
 
@@ -1572,7 +1564,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Type_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.Type(null, new object())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ConvertExtensions.Type(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.Type(null).Should().BeNull();
     Convert.To.Type(string.Empty).Should().BeNull();
@@ -1595,7 +1587,7 @@ public sealed class ConvertExtensionsTests : UnitTest
   [Fact]
   public void Convert_Boolean_Method()
   {
-    AssertionExtensions.Should(() => ConvertExtensions.Boolean(null, new object())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ConvertExtensions.Boolean(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("convert");
 
     Convert.To.Boolean(null).Should().BeFalse();
     

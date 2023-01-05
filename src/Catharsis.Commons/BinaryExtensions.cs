@@ -150,7 +150,13 @@ public static class BinaryExtensions
   /// <param name="reader"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static BinaryReader TryFinallyClear(this BinaryReader reader, Action<BinaryReader> action) => reader.TryFinally(action, reader => reader.Empty());
+  public static BinaryReader TryFinallyClear(this BinaryReader reader, Action<BinaryReader> action)
+  {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return reader.TryFinally(action, reader => reader.Empty());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -158,7 +164,13 @@ public static class BinaryExtensions
   /// <param name="writer"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static BinaryWriter TryFinallyClear(this BinaryWriter writer, Action<BinaryWriter> action) => writer.TryFinally(action, writer => writer.Empty());
+  public static BinaryWriter TryFinallyClear(this BinaryWriter writer, Action<BinaryWriter> action)
+  {
+    if (writer is null) throw new ArgumentNullException(nameof(writer));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return writer.TryFinally(action, writer => writer.Empty());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -194,16 +206,16 @@ public static class BinaryExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader, CancellationToken cancellation = default) => reader is not null ? reader.BaseStream.ToBytesAsync(cancellation) : throw new ArgumentNullException(nameof(reader));
+  public static IEnumerable<byte> ToBytes(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToBytes() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToBytes() : throw new ArgumentNullException(nameof(reader));
+  public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader, CancellationToken cancellation = default) => reader is not null ? reader.BaseStream.ToBytesAsync(cancellation) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
