@@ -36,7 +36,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ReflectionExtensions.IsArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>

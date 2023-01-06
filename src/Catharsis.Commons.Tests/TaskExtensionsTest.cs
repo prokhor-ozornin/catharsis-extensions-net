@@ -36,7 +36,7 @@ public sealed class TaskExtensionsTest : UnitTest
 
     }
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -68,7 +68,7 @@ public sealed class TaskExtensionsTest : UnitTest
 
     }
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>

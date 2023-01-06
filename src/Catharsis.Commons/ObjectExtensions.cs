@@ -152,16 +152,16 @@ public static class ObjectExtensions
 
     var propertiesArray = properties.AsArray();
 
-    if (propertiesArray.Length <= 0)
+    if (propertiesArray.Length == 0)
     {
       return left.Equals(right);
     }
 
     var type = left.GetType();
-    var typeProperties = propertiesArray.Select(property => ReflectionExtensions.AnyProperty(type, property)).Where(property => property != null).AsArray();
-    var typeFields = propertiesArray.Select(field => ReflectionExtensions.AnyField(type, field)).Where(field => field != null).AsArray();
+    var typeProperties = propertiesArray.Select(property => type.AnyProperty(property)).Where(property => property != null).AsArray();
+    var typeFields = propertiesArray.Select(field => type.AnyField(field)).Where(field => field != null).AsArray();
 
-    if (typeProperties.Length <= 0 && typeFields.Length <= 0)
+    if (typeProperties.Length == 0 && typeFields.Length == 0)
     {
       return Equals(left, right);
     }
@@ -241,7 +241,7 @@ public static class ObjectExtensions
 
     var propertiesArray = properties.AsArray();
 
-    if (propertiesArray.Length <= 0)
+    if (propertiesArray.Length == 0)
     {
       return left.Equals(right);
     }
@@ -283,7 +283,7 @@ public static class ObjectExtensions
 
     var propertiesArray = properties.AsArray();
 
-    if (propertiesArray.Length <= 0)
+    if (propertiesArray.Length == 0)
     {
       return instance.GetHashCode();
     }
@@ -332,7 +332,7 @@ public static class ObjectExtensions
 
     var propertiesArray = properties.AsArray();
 
-    if (propertiesArray.Length <= 0)
+    if (propertiesArray.Length == 0)
     {
       return instance.GetHashCode();
     }

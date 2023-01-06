@@ -39,7 +39,7 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.Finish(null, TimeSpan.Zero)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>

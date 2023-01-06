@@ -18,14 +18,14 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="xml"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this XmlDocument xml) => xml.ToEnumerable().IsEmpty();
+  public static bool IsEmpty(this XmlDocument xml) => xml is not null ? xml.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(xml));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="xml"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this XDocument xml) => xml.ToEnumerable().IsEmpty();
+  public static bool IsEmpty(this XDocument xml) => xml is not null ? xml.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(xml));
 
   /// <summary>
   ///   <para></para>
@@ -461,7 +461,13 @@ public static class XmlExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static XmlWriter WriteBytes(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) => destination.WriteText(bytes.AsArray().ToText(encoding));
+  public static XmlWriter WriteBytes(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    return destination.WriteText(bytes.AsArray().ToText(encoding));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -486,7 +492,13 @@ public static class XmlExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static async Task<XmlWriter> WriteBytesAsync(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) => await destination.WriteTextAsync(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
+  public static async Task<XmlWriter> WriteBytesAsync(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    return await destination.WriteTextAsync(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
+  }
 
   /// <summary>
   ///   <para></para>

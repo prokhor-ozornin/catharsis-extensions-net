@@ -23,7 +23,7 @@ public sealed class StreamExtensionsTest : UnitTest
         stream.MoveToStart();
         stream.IsStart().Should().BeTrue();
         stream.MoveToEnd();
-        stream.IsStart().Should().Be(stream.Length <= 0);
+        stream.IsStart().Should().Be(stream.Length == 0);
       }
     }
 
@@ -52,7 +52,7 @@ public sealed class StreamExtensionsTest : UnitTest
       using (stream)
       {
         stream.MoveToStart();
-        stream.IsEnd().Should().Be(stream.Length <= 0);
+        stream.IsEnd().Should().Be(stream.Length == 0);
         stream.MoveToEnd();
         stream.IsEnd().Should().BeTrue();
       }
@@ -645,7 +645,7 @@ public sealed class StreamExtensionsTest : UnitTest
       }
     }
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -695,7 +695,7 @@ public sealed class StreamExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
     AssertionExtensions.Should(() => Stream.Null.WriteTextAsync(string.Empty, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>

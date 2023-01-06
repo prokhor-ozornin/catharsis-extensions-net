@@ -449,7 +449,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => FileSystemExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -512,7 +512,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
       // Cancellation & offset
     }
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>

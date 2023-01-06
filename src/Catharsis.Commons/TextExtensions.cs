@@ -48,7 +48,7 @@ public static class TextExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this StringBuilder builder) => builder is not null ? builder.Length <= 0 : throw new ArgumentNullException(nameof(builder));
+  public static bool IsEmpty(this StringBuilder builder) => builder is not null ? builder.Length == 0 : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
   ///   <para></para>

@@ -15,7 +15,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this SecureString secure) => secure is not null ? secure.Length <= 0 : throw new ArgumentNullException(nameof(secure));
+  public static bool IsEmpty(this SecureString secure) => secure is not null ? secure.Length == 0 : throw new ArgumentNullException(nameof(secure));
 
   /// <summary>
   ///   <para></para>
@@ -104,7 +104,7 @@ public static class SecureStringExtensions
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
 
-    if (secure.Length <= 0)
+    if (secure.Length == 0)
     {
       return string.Empty;
     }

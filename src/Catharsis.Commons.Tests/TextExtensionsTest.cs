@@ -25,7 +25,7 @@ public sealed class TextExtensionsTest : UnitTest
         reader.BaseStream.MoveToStart();
         reader.IsStart().Should().BeTrue();
         reader.BaseStream.MoveToEnd();
-        reader.IsStart().Should().Be(reader.BaseStream.Length <= 0);
+        reader.IsStart().Should().Be(reader.BaseStream.Length == 0);
       }
     }
 
@@ -52,7 +52,7 @@ public sealed class TextExtensionsTest : UnitTest
       using (reader)
       {
         reader.BaseStream.MoveToStart();
-        reader.IsEnd().Should().Be(reader.BaseStream.Length <= 0);
+        reader.IsEnd().Should().Be(reader.BaseStream.Length == 0);
         reader.ToBytesAsync().Await();
         reader.IsEnd().Should().BeTrue();
       }

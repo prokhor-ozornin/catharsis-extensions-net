@@ -240,7 +240,7 @@ public static class CollectionsExtensions
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
 
-    if (list.Count <= 0)
+    if (list.Count == 0)
     {
       return list;
     }

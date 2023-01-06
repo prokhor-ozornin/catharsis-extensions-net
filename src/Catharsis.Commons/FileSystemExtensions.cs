@@ -30,7 +30,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this FileInfo file) => file is not null ? !file.Exists || file.Length <= 0 : throw new ArgumentNullException(nameof(file));
+  public static bool IsEmpty(this FileInfo file) => file is not null ? !file.Exists || file.Length == 0 : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
   ///   <para></para>

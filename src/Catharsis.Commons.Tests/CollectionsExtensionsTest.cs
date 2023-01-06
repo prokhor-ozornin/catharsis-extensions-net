@@ -69,7 +69,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
 
     }
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -219,7 +219,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
       AssertionExtensions.Should(() => Array.Empty<object>().Fill((Func<int, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("filler");
     }
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -234,7 +234,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
     AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>

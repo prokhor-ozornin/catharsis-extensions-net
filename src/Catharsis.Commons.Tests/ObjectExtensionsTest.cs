@@ -506,7 +506,7 @@ public sealed class ObjectExtensionsTest : UnitTest
     text.GetMember(instance => instance.ToString(CultureInfo.InvariantCulture)).Should().Be(text);
     DateTime.UtcNow.GetMember(instance => instance.Ticks <= DateTime.UtcNow.Ticks).Should().BeTrue();
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -613,7 +613,7 @@ public sealed class ObjectExtensionsTest : UnitTest
       ((bool) string.Empty.Method("Contains", string.Empty)).Should().BeTrue();*/
     }
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>

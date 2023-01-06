@@ -543,7 +543,7 @@ public sealed class EnumerableExtensionsTest : UnitTest
 
     }
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>

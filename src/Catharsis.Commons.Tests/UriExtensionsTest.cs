@@ -299,7 +299,7 @@ public sealed class UriExtensionsTest : UnitTest
     AssertionExtensions.Should(() => UriExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
     AssertionExtensions.Should(() => LocalHost.ToTextAsync(null, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>

@@ -23,7 +23,7 @@ public sealed class BinaryExtensionsTest : UnitTest
         reader.BaseStream.MoveToStart();
         reader.IsStart().Should().BeTrue();
         reader.BaseStream.MoveToEnd();
-        reader.IsStart().Should().Be(reader.BaseStream.Length <= 0);
+        reader.IsStart().Should().Be(reader.BaseStream.Length == 0);
       }
     }
 
@@ -52,7 +52,7 @@ public sealed class BinaryExtensionsTest : UnitTest
         writer.BaseStream.MoveToStart();
         writer.IsStart().Should().BeTrue();
         writer.BaseStream.MoveToEnd();
-        writer.IsStart().Should().Be(writer.BaseStream.Length <= 0);
+        writer.IsStart().Should().Be(writer.BaseStream.Length == 0);
       }
     }
 
@@ -79,7 +79,7 @@ public sealed class BinaryExtensionsTest : UnitTest
       using (reader)
       {
         reader.BaseStream.MoveToStart();
-        reader.IsEnd().Should().Be(reader.BaseStream.Length <= 0);
+        reader.IsEnd().Should().Be(reader.BaseStream.Length == 0);
         reader.BaseStream.MoveToEnd();
         reader.IsEnd().Should().BeTrue();
       }
@@ -107,7 +107,7 @@ public sealed class BinaryExtensionsTest : UnitTest
       using (writer)
       {
         writer.BaseStream.MoveToStart();
-        writer.IsEnd().Should().Be(writer.BaseStream.Length <= 0);
+        writer.IsEnd().Should().Be(writer.BaseStream.Length == 0);
         writer.BaseStream.MoveToEnd();
         writer.IsEnd().Should().BeTrue();
       }

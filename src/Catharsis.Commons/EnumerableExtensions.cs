@@ -176,7 +176,7 @@ public static class EnumerableExtensions
     {
       var value = element?.ToInvariantString() ?? string.Empty;
 
-      if (value.Length <= 0)
+      if (value.Length == 0)
       {
         continue;
       }
