@@ -19,7 +19,13 @@ public static class NumericExtensions
   /// </summary>
   /// <param name="count"></param>
   /// <param name="action"></param>
-  public static void Times(this int count, Action action) => count.Times(_ => action());
+  public static void Times(this int count, Action action)
+  {
+    if (action is null) throw new ArgumentNullException(nameof(action));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    count.Times(_ => action());
+  }
 
   /// <summary>
   ///   <para>Calls given delegate specified number of times.</para>
@@ -42,7 +48,12 @@ public static class NumericExtensions
   /// </summary>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<object> Nulls(this int count) => count.Objects<object>(() => null);
+  public static IEnumerable<object> Nulls(this int count)
+  {
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects<object>(() => null);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -50,7 +61,12 @@ public static class NumericExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<T> Objects<T>(this int count) where T : new() => count.Objects(() => new T());
+  public static IEnumerable<T> Objects<T>(this int count) where T : new()
+  {
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => new T());
+  }
 
   /// <summary>
   ///   <para></para>

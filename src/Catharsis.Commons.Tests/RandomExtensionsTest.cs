@@ -16,13 +16,13 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_Sbyte_Method()
   {
-    AssertionExtensions.Should(() => RandomExtensions.Sbyte(null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Randomizer.Sbyte(1, 0)).ThrowExactly<ArgumentOutOfRangeException>();
+    AssertionExtensions.Should(() => RandomExtensions.Sbyte(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
     Randomizer.Sbyte(0, 0).Should().Be(0);
     Randomizer.Sbyte(sbyte.MinValue, sbyte.MinValue).Should().Be(sbyte.MinValue);
     Randomizer.Sbyte(sbyte.MaxValue, sbyte.MaxValue).Should().Be(sbyte.MaxValue);
-    Randomizer.Sbyte().Should().BeInRange(sbyte.MinValue, sbyte.MaxValue);
+    Randomizer.Sbyte(sbyte.MinValue, sbyte.MaxValue).Should().BeInRange(sbyte.MinValue, sbyte.MaxValue);
+    Randomizer.Sbyte(sbyte.MaxValue, sbyte.MinValue).Should().BeInRange(sbyte.MinValue, sbyte.MaxValue);
   }
 
   /// <summary>
@@ -31,8 +31,8 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Random_SbyteInRange_Method()
   {
-    AssertionExtensions.Should(() => RandomExtensions.SbyteInRange(null, Range.All)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Randomizer.SbyteInRange(1..0)).ThrowExactly<ArgumentOutOfRangeException>();
+    AssertionExtensions.Should(() => RandomExtensions.SbyteInRange(null, Range.All)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => Randomizer.SbyteInRange(1..0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("minValue");
 
     Randomizer.SbyteInRange(..0).Should().Be(0);
     Randomizer.SbyteInRange(Range.All).Should().Be(0);

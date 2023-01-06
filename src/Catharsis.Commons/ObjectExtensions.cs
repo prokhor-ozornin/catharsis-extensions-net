@@ -107,6 +107,10 @@ public static class ObjectExtensions
   /// <returns></returns>
   public static T While<T>(this T instance, Predicate<T> condition, Action<T> action)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (condition is null) throw new ArgumentNullException(nameof(condition));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
     action.Execute(condition, instance);
 
     return instance;
@@ -354,17 +358,20 @@ public static class ObjectExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
-  /// <param name="function"></param>
+  /// <param name="action"></param>
   /// <param name="finalizer"></param>
   /// <returns></returns>
-  public static T TryFinally<T>(this T instance, Action<T> function, Action<T> finalizer = null) => instance.TryFinally(_ =>
+  public static T TryFinally<T>(this T instance, Action<T> action, Action<T> finalizer = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (function is null) throw new ArgumentNullException(nameof(function));
+    if (action is null) throw new ArgumentNullException(nameof(action));
 
-    function(instance);
-    return instance;
-  }, finalizer);
+    return instance.TryFinally(_ =>
+    {
+      action(instance);
+      return instance;
+    }, finalizer);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -395,11 +402,17 @@ public static class ObjectExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
-  /// <param name="function"></param>
+  /// <param name="action"></param>
   /// <param name="exception"></param>
   /// <param name="finalizer"></param>
   /// <returns></returns>
-  public static Exception TryCatchFinally<T>(this T instance, Action<T> function, Action<T> exception = null, Action<T> finalizer = null) => instance.TryCatchFinally<T, Exception>(function, exception, finalizer);
+  public static Exception TryCatchFinally<T>(this T instance, Action<T> action, Action<T> exception = null, Action<T> finalizer = null)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return instance.TryCatchFinally<T, Exception>(action, exception, finalizer);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -438,14 +451,17 @@ public static class ObjectExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
-  /// <param name="function"></param>
+  /// <param name="action"></param>
   /// <param name="finalizer"></param>
   /// <returns></returns>
-  public static T TryFinallyDispose<T>(this T instance, Action<T> function, Action<T> finalizer = null) where T : IDisposable
+  public static T TryFinallyDispose<T>(this T instance, Action<T> action, Action<T> finalizer = null) where T : IDisposable
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (action is null)  throw new ArgumentNullException(nameof(action));
+
     return instance.TryFinallyDispose(_ =>
     {
-      function(instance);
+      action(instance);
       return instance;
     }, finalizer);
   }
@@ -557,7 +573,14 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
-  public static T SetState<T>(this T instance, object properties) => instance.SetState(properties.GetState());
+  public static T SetState<T>(this T instance, object properties)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (properties is null) throw new ArgumentNullException(nameof(properties));
+
+    return instance.SetState(properties.GetState());
+  }
+  
 
   /// <summary>
   ///   <para>Returns the value of a member on a target object, using expression tree to specify type's member.</para>

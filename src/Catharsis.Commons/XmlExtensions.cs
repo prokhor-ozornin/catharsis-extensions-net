@@ -217,7 +217,7 @@ public static class XmlExtensions
   /// <param name="encoding">Text encoding to use by <see cref="XmlWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
   /// <returns>XML writer instance that wraps <see cref="stream"/> stream.</returns>
-  public static XmlWriter ToXmlWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = close, Indent = true, Encoding = encoding }) : throw new ArgumentNullException(nameof(stream));
+  public static XmlWriter ToXmlWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = close, Indent = true, Encoding = encoding ?? Encoding.Default }) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para></para>

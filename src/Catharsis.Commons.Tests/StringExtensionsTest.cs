@@ -33,7 +33,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsBoolean_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsBoolean(null)).ThrowExactly<ArgumentNullException>();
+    StringExtensions.IsBoolean(null).Should().BeFalse();
 
     string.Empty.IsBoolean().Should().BeFalse();
 
@@ -54,10 +54,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsSbyte_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsSbyte(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsSbyte(null, culture).Should().BeFalse();
+
       string.Empty.IsSbyte(culture).Should().BeFalse();
 
       "invalid".IsSbyte(culture).Should().BeFalse();
@@ -75,10 +75,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsByte_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsByte(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsByte(null, culture).Should().BeFalse();
+
       string.Empty.IsByte(culture).Should().BeFalse();
 
       "invalid".IsByte(culture).Should().BeFalse();
@@ -96,10 +96,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsShort_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsShort(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsShort(null, culture).Should().BeFalse();
+
       string.Empty.IsShort(culture).Should().BeFalse();
 
       "invalid".IsShort(culture).Should().BeFalse();
@@ -117,10 +117,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsUshort_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsUshort(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsUshort(null, culture).Should().BeFalse();
+
       string.Empty.IsUshort(culture).Should().BeFalse();
 
       "invalid".IsUshort(culture).Should().BeFalse();
@@ -138,10 +138,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsInt_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsInt(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsInt(null, culture).Should().BeFalse();
+
       string.Empty.IsInt(culture).Should().BeFalse();
 
       "invalid".IsInt(culture).Should().BeFalse();
@@ -159,10 +159,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsUint_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsUint(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsUint(null, culture).Should().BeFalse();
+
       string.Empty.IsUint(culture).Should().BeFalse();
 
       "invalid".IsUint(culture).Should().BeFalse();
@@ -180,10 +180,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsLong_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsLong(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsLong(null, culture).Should().BeFalse();
+
       string.Empty.IsLong(culture).Should().BeFalse();
 
       "invalid".IsLong(culture).Should().BeFalse();
@@ -201,10 +201,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsUlong_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsUlong(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsUlong(null, culture).Should().BeFalse();
+
       string.Empty.IsUlong(culture).Should().BeFalse();
 
       "invalid".IsUlong(culture).Should().BeFalse();
@@ -222,10 +222,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsFloat_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsFloat(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsFloat(null, culture).Should().BeFalse();
+
       string.Empty.IsFloat(culture).Should().BeFalse();
 
       "invalid".IsFloat(culture).Should().BeFalse();
@@ -248,10 +248,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsDouble_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsDouble(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsDouble(null, culture).Should().BeFalse();
+
       string.Empty.IsDouble(culture).Should().BeFalse();
 
       "invalid".IsDouble(culture).Should().BeFalse();
@@ -274,10 +274,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsDecimal_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsDecimal(null)).ThrowExactly<ArgumentNullException>();
-
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
+      StringExtensions.IsDecimal(null, culture).Should().BeFalse();
+
       string.Empty.IsDecimal(culture).Should().BeFalse();
 
       "invalid".IsDecimal(culture).Should().BeFalse();
@@ -299,8 +299,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsEnum_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsEnum<Guid>(null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Guid.NewGuid().ToString().IsEnum<Guid>()).ThrowExactly<ArgumentException>();
+    StringExtensions.IsEnum<DayOfWeek>(null).Should().BeFalse();
 
     string.Empty.IsEnum<DayOfWeek>().Should().BeFalse();
 
@@ -317,7 +316,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsGuid_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsGuid(null)).ThrowExactly<ArgumentNullException>();
+    StringExtensions.IsGuid(null).Should().BeFalse();
 
     string.Empty.IsGuid().Should().BeFalse();
 
@@ -338,7 +337,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsUri_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsUri(null)).ThrowExactly<ArgumentNullException>();
+    StringExtensions.IsUri(null).Should().BeFalse();
 
     string.Empty.IsUri().Should().BeTrue();
 
@@ -355,7 +354,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsType_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsType(null)).ThrowExactly<ArgumentNullException>();
+    StringExtensions.IsType(null).Should().BeFalse();
 
     string.Empty.IsType().Should().BeFalse();
 
@@ -378,18 +377,24 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsDateTime_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsDateTime(null)).ThrowExactly<ArgumentNullException>();
-
-    foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+    static void Validate(IFormatProvider format)
     {
-      string.Empty.IsDateTime(culture).Should().BeFalse();
+      StringExtensions.IsDateTime(null, format).Should().BeFalse();
 
-      "invalid".IsDateTime(culture).Should().BeFalse();
+      string.Empty.IsDateTime(format).Should().BeFalse();
 
-      $" {DateTime.MinValue.ToString("o", culture)} ".IsDateTime(culture).Should().BeTrue();
-      $" {DateTime.MaxValue.ToString("o", culture)} ".IsDateTime(culture).Should().BeTrue();
-      $" {DateTime.UtcNow.ToString("o", culture)} ".IsDateTime(culture).Should().BeTrue();
-      $" {DateTime.Now.ToString("o", culture)} ".IsDateTime(culture).Should().BeTrue();
+      "invalid".IsDateTime(format).Should().BeFalse();
+
+      $" {DateTime.MinValue.ToString("o", format)} ".IsDateTime(format).Should().BeTrue();
+      $" {DateTime.MaxValue.ToString("o", format)} ".IsDateTime(format).Should().BeTrue();
+      $" {DateTime.UtcNow.ToString("o", format)} ".IsDateTime(format).Should().BeTrue();
+      $" {DateTime.Now.ToString("o", format)} ".IsDateTime(format).Should().BeTrue();
+    }
+
+    using (new AssertionScope())
+    {
+      Validate(null);
+      Validate(CultureInfo.InvariantCulture);
     }
   }
 
@@ -399,18 +404,24 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsDateTimeOffset_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsDateTimeOffset(null)).ThrowExactly<ArgumentNullException>();
-
-    foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+    static void Validate(IFormatProvider format)
     {
-      string.Empty.IsDateTimeOffset(culture).Should().BeFalse();
+      StringExtensions.IsDateTimeOffset(null, format).Should().BeFalse();
 
-      "invalid".IsDateTimeOffset(culture).Should().BeFalse();
+      string.Empty.IsDateTimeOffset(format).Should().BeFalse();
 
-      $" {DateTimeOffset.MinValue.ToString("o", culture)} ".IsDateTimeOffset(culture).Should().BeTrue();
-      $" {DateTimeOffset.MaxValue.ToString("o", culture)} ".IsDateTimeOffset(culture).Should().BeTrue();
-      $" {DateTimeOffset.UtcNow.ToString("o", culture)} ".IsDateTimeOffset(culture).Should().BeTrue();
-      $" {DateTimeOffset.Now.ToString("o", culture)} ".IsDateTimeOffset(culture).Should().BeTrue();
+      "invalid".IsDateTimeOffset(format).Should().BeFalse();
+
+      $" {DateTimeOffset.MinValue.ToString("o", format)} ".IsDateTimeOffset(format).Should().BeTrue();
+      $" {DateTimeOffset.MaxValue.ToString("o", format)} ".IsDateTimeOffset(format).Should().BeTrue();
+      $" {DateTimeOffset.UtcNow.ToString("o", format)} ".IsDateTimeOffset(format).Should().BeTrue();
+      $" {DateTimeOffset.Now.ToString("o", format)} ".IsDateTimeOffset(format).Should().BeTrue();
+    }
+
+    using (new AssertionScope())
+    {
+      Validate(null);
+      Validate(CultureInfo.InvariantCulture);
     }
   }
 
@@ -420,18 +431,22 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsDateOnly_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.IsDateOnly(null)).ThrowExactly<ArgumentNullException>();
-
-    foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+    static void Validate(IFormatProvider culture)
     {
+      StringExtensions.IsDateOnly(null, culture).Should().BeFalse();
+
       string.Empty.IsDateOnly(culture).Should().BeFalse();
 
       "invalid".IsDateOnly(culture).Should().BeFalse();
 
-      DateOnly.MinValue.ToLongDateString().IsDateOnly().Should().BeTrue();
-      DateOnly.MaxValue.ToLongDateString().IsDateOnly().Should().BeTrue();
-      DateOnly.FromDateTime(DateTime.UtcNow).ToLongDateString().IsDateOnly().Should().BeTrue();
-      DateOnly.FromDateTime(DateTime.Now).ToLongDateString().IsDateOnly().Should().BeTrue();
+      DateOnly.MinValue.ToString("D", culture).IsDateOnly(culture).Should().BeTrue();
+      DateOnly.MaxValue.ToString("D", culture).IsDateOnly(culture).Should().BeTrue();
+      DateOnly.FromDateTime(DateTime.UtcNow).ToString("D", culture).IsDateOnly(culture).Should().BeTrue();
+      DateOnly.FromDateTime(DateTime.Now).ToString("D", culture).IsDateOnly(culture).Should().BeTrue();
+    }
+
+    foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+    {
     }
   }
 

@@ -66,13 +66,13 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="bytes"></param>
   /// <returns></returns>
-  public static T DeserializeAsBinary<T>(this IEnumerable<byte> source)
+  public static T DeserializeAsBinary<T>(this IEnumerable<byte> bytes)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
-    using var stream = source.ToMemoryStream();
+    using var stream = bytes.ToMemoryStream();
 
     return stream.DeserializeAsBinary<T>();
   }
@@ -81,21 +81,21 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="stream"></param>
   /// <returns></returns>
-  public static T DeserializeAsBinary<T>(this Stream source) => source is not null ? (T) new BinaryFormatter().Deserialize(source) : throw new ArgumentNullException(nameof(source));
+  public static T DeserializeAsBinary<T>(this Stream stream) => stream is not null ? (T) new BinaryFormatter().Deserialize(stream) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="file"></param>
   /// <returns></returns>
-  public static T DeserializeAsBinary<T>(this FileInfo source)
+  public static T DeserializeAsBinary<T>(this FileInfo file)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    using var stream = source.ToReadOnlyStream();
+    using var stream = file.ToReadOnlyStream();
 
     return stream.DeserializeAsBinary<T>();
   }
@@ -104,26 +104,26 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static T DeserializeAsBinary<T>(this Uri source, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => source.DeserializeAsBinaryAsync<T>(timeout, default, headers).Result;
+  public static T DeserializeAsBinary<T>(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.DeserializeAsBinaryAsync<T>(timeout, default, headers).Result;
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsBinaryAsync<T>(this IEnumerable<byte> source, CancellationToken cancellation = default)
+  public static async Task<T> DeserializeAsBinaryAsync<T>(this IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
     cancellation.ThrowIfCancellationRequested();
 
-    using var stream = await source.ToMemoryStreamAsync(cancellation).ConfigureAwait(false);
+    using var stream = await bytes.ToMemoryStreamAsync(cancellation).ConfigureAwait(false);
 
     return stream.DeserializeAsBinary<T>();
   }
@@ -132,18 +132,18 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsBinaryAsync<T>(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<T> DeserializeAsBinaryAsync<T>(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await using var stream = await source.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    await using var stream = await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
 
     return stream.DeserializeAsBinary<T>();
   }
@@ -245,30 +245,46 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="reader"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this XmlReader source, params Type[] types)
+  public static T DeserializeAsDataContract<T>(this XmlReader reader, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
     var serializer = new DataContractSerializer(typeof(T), types);
 
-    return (T) serializer.ReadObject(source);
+    return (T) serializer.ReadObject(reader);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="reader"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this TextReader source, params Type[] types)
+  public static T DeserializeAsDataContract<T>(this TextReader reader, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
-    using var reader = source.ToXmlReader(false);
+    using var xmlReader = reader.ToXmlReader(false);
+
+    return xmlReader.DeserializeAsDataContract<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="stream"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  public static T DeserializeAsDataContract<T>(this Stream stream, params Type[] types)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var reader = stream.ToXmlReader(false);
 
     return reader.DeserializeAsDataContract<T>(types);
   }
@@ -277,14 +293,14 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="file"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this Stream source, params Type[] types)
+  public static T DeserializeAsDataContract<T>(this FileInfo file, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    using var reader = source.ToXmlReader(false);
+    using var reader = file.ToXmlReader();
 
     return reader.DeserializeAsDataContract<T>(types);
   }
@@ -293,14 +309,14 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="text"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this FileInfo source, params Type[] types)
+  public static T DeserializeAsDataContract<T>(this string text, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (text is null) throw new ArgumentNullException(nameof(text));
 
-    using var reader = source.ToXmlReader();
+    using var reader = text.ToXmlReader();
 
     return reader.DeserializeAsDataContract<T>(types);
   }
@@ -309,46 +325,30 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this string source, params Type[] types)
-  {
-    if (source is null) throw new ArgumentNullException(nameof(source));
-
-    using var reader = source.ToXmlReader();
-
-    return reader.DeserializeAsDataContract<T>(types);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this Uri source, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => source.DeserializeAsDataContractAsync<T>(timeout, default, headers, types).Result;
+  public static T DeserializeAsDataContract<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri.DeserializeAsDataContractAsync<T>(timeout, default, headers, types).Result;
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="types"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsDataContractAsync<T>(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  public static async Task<T> DeserializeAsDataContractAsync<T>(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
-    using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
+    using var reader = await uri.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
 
     return reader.DeserializeAsDataContract<T>(types);
   }
@@ -450,46 +450,46 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="reader"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsXml<T>(this XmlReader source, params Type[] types)
+  public static T DeserializeAsXml<T>(this XmlReader reader, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
     var serializer = new XmlSerializer(typeof(T), types);
 
-    return (T) serializer.Deserialize(source);
+    return (T) serializer.Deserialize(reader);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="reader"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsXml<T>(this TextReader source, params Type[] types)
+  public static T DeserializeAsXml<T>(this TextReader reader, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
-    using var reader = source.ToXmlReader(false);
+    using var xmlReader = reader.ToXmlReader(false);
 
-    return reader.DeserializeAsXml<T>(types);
+    return xmlReader.DeserializeAsXml<T>(types);
   }
 
   /// <summary>
   ///   <para>Deserializes XML contents of stream into object of specified type.</para>
   /// </summary>
   /// <typeparam name="T">Type of object which is to be the result of deserialization process.</typeparam>
-  /// <param name="source">Stream of XML data for deserialization.</param>
+  /// <param name="stream">Stream of XML data for deserialization.</param>
   /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
-  /// <returns>Deserialized XML contents of source <paramref name="source"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
-  public static T DeserializeAsXml<T>(this Stream source, params Type[] types)
+  /// <returns>Deserialized XML contents of source <paramref name="stream"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
+  public static T DeserializeAsXml<T>(this Stream stream, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
 
-    using var reader = source.ToXmlReader(false);
+    using var reader = stream.ToXmlReader(false);
 
     return reader.DeserializeAsXml<T>(types);
   }
@@ -498,14 +498,14 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="file"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsXml<T>(this FileInfo source, params Type[] types)
+  public static T DeserializeAsXml<T>(this FileInfo file, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
-    using var reader = source.ToXmlReader();
+    using var reader = file.ToXmlReader();
 
     return reader.DeserializeAsXml<T>(types);
   }
@@ -514,14 +514,14 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="text"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsXml<T>(this string source, params Type[] types)
+  public static T DeserializeAsXml<T>(this string text, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (text is null) throw new ArgumentNullException(nameof(text));
 
-    using var reader = source.ToXmlReader();
+    using var reader = text.ToXmlReader();
 
     return reader.DeserializeAsXml<T>(types);
   }
@@ -530,30 +530,30 @@ public static class SerializationExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsXml<T>(this Uri source, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => source.DeserializeAsXmlAsync<T>(timeout, default, headers, types).Result;
+  public static T DeserializeAsXml<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri.DeserializeAsXmlAsync<T>(timeout, default, headers, types).Result;
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="source"></param>
+  /// <param name="uri"></param>
   /// <param name="types"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsXmlAsync<T>(this Uri source, TimeSpan? timeout = null, CancellationToken cancellation = default, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  public static async Task<T> DeserializeAsXmlAsync<T>(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
   {
-    if (source is null) throw new ArgumentNullException(nameof(source));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
-    using var reader = await source.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
+    using var reader = await uri.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
 
     return reader.DeserializeAsXml<T>(types);
   }
@@ -885,14 +885,7 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static XDocument ToXDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
-  {
-    if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-    using var reader = uri.ToXmlReader(timeout, headers);
-
-    return reader.ToXDocument();
-  }
+  public static XDocument ToXDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToXDocumentAsync(timeout, default, headers).Result;
 
   /// <summary>
   ///   <para>Deserialize XML contents from a <see cref="XmlReader"/> into <see cref="XDocument"/> object.</para>

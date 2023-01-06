@@ -22,6 +22,8 @@ public sealed class TaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
+      AssertionExtensions.Should(() => ValueTask.CompletedTask.Await(null, Cancellation)).NotThrow<OperationCanceledException>();
+      AssertionExtensions.Should(() => ValueTask.FromCanceled(Cancellation).Await()).NotThrow<OperationCanceledException>();
     }
 
     using (new AssertionScope())
@@ -34,7 +36,7 @@ public sealed class TaskExtensionsTest : UnitTest
 
     }
 
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
   }
 
   /// <summary>
@@ -50,13 +52,13 @@ public sealed class TaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Task) null).Await()).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((Task) null).Await()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Task<object>) null).Await()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((Task<object>) null).Await()).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
     }
 
@@ -66,7 +68,7 @@ public sealed class TaskExtensionsTest : UnitTest
 
     }
 
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
   }
 
   /// <summary>

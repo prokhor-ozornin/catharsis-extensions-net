@@ -29,7 +29,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.IsStart(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.IsStart(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => RandomReadOnlyForwardStream.IsStart()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => WriteOnlyForwardStream.IsStart()).ThrowExactly<NotSupportedException>();
 
@@ -60,7 +60,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.IsEnd(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.IsEnd(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEnd()).ThrowExactly<ArgumentException>();
 
       Validate(Stream.Null);
@@ -87,7 +87,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.IsEmpty(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.IsEmpty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEmpty()).ThrowExactly<ArgumentException>();
 
       Validate(Stream.Null, true);
@@ -115,7 +115,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Stream) null).Empty()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((Stream) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => Validate(RandomReadOnlyForwardStream)).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => Validate(WriteOnlyForwardStream)).ThrowExactly<NotSupportedException>();
 
@@ -148,8 +148,8 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.Min(null, Stream.Null)).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Stream.Null.Min(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.Min(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+      AssertionExtensions.Should(() => Stream.Null.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
       Validate(Stream.Null, Stream.Null);
       Validate(Stream.Null, EmptyStream);
@@ -182,8 +182,8 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.Max(null, Stream.Null)).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Stream.Null.Max(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.Max(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+      AssertionExtensions.Should(() => Stream.Null.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
       Validate(Stream.Null, Stream.Null);
       Validate(Stream.Null, EmptyStream);
@@ -201,7 +201,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_MoveBy_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.MoveBy<Stream>(null, 0)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.MoveBy<Stream>(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -212,7 +212,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_MoveTo_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.MoveTo<Stream>(null, 0)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.MoveTo<Stream>(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -223,7 +223,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_MoveToStart_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     Stream.Null.MoveToStart().Should().BeSameAs(Stream.Null);
 
@@ -246,7 +246,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_MoveToEnd_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -257,7 +257,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_Lines_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.Lines(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -275,7 +275,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.LinesAsync(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.LinesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("stream");
 
       Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
@@ -290,7 +290,8 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_Skip_Method()
   {
-    AssertionExtensions.Should(() => ((Stream) null).Skip(0)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((Stream) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+    AssertionExtensions.Should(() => Stream.Null.Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
   }
@@ -301,8 +302,8 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Object_Print_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.Print<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => StreamExtensions.Print(new object(), null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.Print<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    AssertionExtensions.Should(() => StreamExtensions.Print(new object(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
   }
@@ -313,8 +314,9 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Object_PrintAsync_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.PrintAsync<object>(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => StreamExtensions.PrintAsync(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => StreamExtensions.PrintAsync<object>(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+    AssertionExtensions.Should(() => StreamExtensions.PrintAsync(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -325,8 +327,8 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void TryFinallyClear_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.TryFinallyClear<Stream>(null, _ => { })).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Stream.Null.TryFinallyClear(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.TryFinallyClear<Stream>(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+    AssertionExtensions.Should(() => Stream.Null.TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     throw new NotImplementedException();
   }
@@ -370,7 +372,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.AsSynchronized(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.AsSynchronized(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Validate(EmptyStream);
       Validate(RandomStream);
@@ -420,7 +422,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.AsReadOnly(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.AsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => WriteOnlyStream.AsReadOnly()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => WriteOnlyForwardStream.AsReadOnly()).ThrowExactly<NotSupportedException>();
 
@@ -462,7 +464,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.AsReadOnlyForward(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.AsReadOnlyForward(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => WriteOnlyStream.AsReadOnlyForward()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => WriteOnlyForwardStream.AsReadOnlyForward()).ThrowExactly<NotSupportedException>();
 
@@ -512,7 +514,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.AsWriteOnly(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.AsWriteOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => RandomReadOnlyStream.AsWriteOnly()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => RandomReadOnlyForwardStream.AsWriteOnly()).ThrowExactly<NotSupportedException>();
 
@@ -552,7 +554,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.AsWriteOnlyForward(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.AsWriteOnlyForward(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => RandomReadOnlyStream.AsWriteOnlyForward()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => RandomReadOnlyForwardStream.AsWriteOnlyForward()).ThrowExactly<NotSupportedException>();
 
@@ -569,7 +571,36 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToBytes_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.ToBytes(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    throw new NotImplementedException();
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytesAsync(Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_ToBytesAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.ToBytesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => Stream.Null.ToBytesAsync(Cancellation).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<TaskCanceledException>();
+
+      Stream.Null.ToBytesAsync().ToArray().Should().BeEmpty();
+
+      var bytes = RandomBytes;
+
+      var stream = new MemoryStream(bytes);
+      stream.ToBytesAsync().ToArray().Should().Equal(bytes);
+      stream.ReadByte().Should().Be(-1);
+      stream.Close();
+      //AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+
+      stream = new MemoryStream(bytes);
+      stream.ToBytesAsync().ToArray().Should().Equal(bytes);
+      //AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }
 
     throw new NotImplementedException();
   }
@@ -580,35 +611,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToText_Method()
   {
-    AssertionExtensions.Should(() => ((Stream) null).ToText()).ThrowExactly<ArgumentNullException>();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytesAsync(Stream, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Stream_ToBytesAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StreamExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>();
-
-      Stream.Null.ToBytesAsync().ToArray().Should().BeEmpty();
-
-      var bytes = RandomBytes;
-
-      var stream = new MemoryStream(bytes);
-      stream.ToBytesAsync().ToArray().Should().Equal(bytes);
-      stream.ReadByte().Should().Be(-1);
-      stream.Close();
-      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
-
-      stream = new MemoryStream(bytes);
-      stream.ToBytesAsync().ToArray().Should().Equal(bytes);
-      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
-    }
+    AssertionExtensions.Should(() => ((Stream) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -635,14 +638,14 @@ public sealed class StreamExtensionsTest : UnitTest
 
       using (new AssertionScope())
       {
-        AssertionExtensions.Should(() => ((Stream) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+        AssertionExtensions.Should(() => ((Stream) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
 
         Validate(null);
         Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
       }
     }
 
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
   }
 
   /// <summary>
@@ -651,8 +654,8 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_WriteBytes_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.WriteBytes<Stream>(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Stream.Null.WriteBytes(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.WriteBytes<Stream>(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    AssertionExtensions.Should(() => Stream.Null.WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
   }
@@ -663,8 +666,8 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_WriteText_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.WriteText<Stream>(null, string.Empty)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Stream.Null.WriteText(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.WriteText<Stream>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    AssertionExtensions.Should(() => Stream.Null.WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
   }
@@ -675,8 +678,9 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_WriteBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.WriteBytesAsync<Stream>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => StreamExtensions.WriteBytesAsync<Stream>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    AssertionExtensions.Should(() => Stream.Null.WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => Stream.Null.WriteBytesAsync(Enumerable.Empty<byte>(), Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -687,10 +691,11 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_WriteTextAsync_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.WriteTextAsync<Stream>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Stream.Null.WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => StreamExtensions.WriteTextAsync<Stream>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    AssertionExtensions.Should(() => Stream.Null.WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => Stream.Null.WriteTextAsync(string.Empty, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
   }
 
   /// <summary>
@@ -699,8 +704,8 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_WriteTo_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => StreamExtensions.WriteTo(Enumerable.Empty<byte>(), null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => StreamExtensions.WriteTo(Enumerable.Empty<byte>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
   }
@@ -711,8 +716,8 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void String_WriteTo_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => StreamExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => StreamExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
   }
@@ -723,8 +728,9 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_WriteToAsync_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => StreamExtensions.WriteToAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => StreamExtensions.WriteToAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Stream.Null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -735,8 +741,9 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void String_WriteToAsync_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => StreamExtensions.WriteToAsync(string.Empty, null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => StreamExtensions.WriteToAsync(string.Empty, null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -747,7 +754,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_CompressAsBrotli_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.CompressAsBrotli(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.CompressAsBrotli(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -758,7 +765,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_CompressAsDeflate_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.CompressAsDeflate(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.CompressAsDeflate(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     /*var bytes = RandomBytes;
 
@@ -812,7 +819,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_CompressAsGzip_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.CompressAsGzip(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.CompressAsGzip(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     /*var bytes = RandomBytes;
 
@@ -866,7 +873,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_CompressAsZlib_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.CompressAsZlib(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.CompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -877,7 +884,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_DecompressAsBrotli_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.DecompressAsBrotli(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsBrotli(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -888,7 +895,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_DecompressAsDeflate_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.DecompressAsDeflate(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsDeflate(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -899,7 +906,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_DecompressAsGzip_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.DecompressAsGzip(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsGzip(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -910,7 +917,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_DecompressAsZlib_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.DecompressAsZlib(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -927,12 +934,13 @@ public sealed class StreamExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null, 1)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => Stream.Null.ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
     }
 
     throw new NotImplementedException();
@@ -950,12 +958,13 @@ public sealed class StreamExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.ToAsyncEnumerable(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("stream");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null, 1)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.ToAsyncEnumerable(null, 1).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable(0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
     }
 
     throw new NotImplementedException();
@@ -1002,9 +1011,8 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToBufferedStream(null)).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Stream.Null.ToBufferedStream(int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>();
-      AssertionExtensions.Should(() => Stream.Null.ToBufferedStream(0)).ThrowExactly<ArgumentOutOfRangeException>();
+      AssertionExtensions.Should(() => StreamExtensions.ToBufferedStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => Stream.Null.ToBufferedStream(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("bufferSize");
 
       foreach (var buffer in new int?[] {null, 1, 4096, 8192})
       {
@@ -1041,7 +1049,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToBinaryReader(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.ToBinaryReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
@@ -1075,7 +1083,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToBinaryWriter(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.ToBinaryWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
@@ -1097,12 +1105,12 @@ public sealed class StreamExtensionsTest : UnitTest
       using var reader = stream.ToStreamReader(encoding);
 
       reader.BaseStream.Should().BeSameAs(stream);
-      reader.ToTextAsync().Should().Be(bytes.ToText(encoding));
+      reader.ToText().Should().Be(bytes.ToText(encoding));
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToStreamReader(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.ToStreamReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
@@ -1135,7 +1143,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToStreamWriter(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StreamExtensions.ToStreamWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);

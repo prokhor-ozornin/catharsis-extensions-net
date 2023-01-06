@@ -1418,7 +1418,7 @@ public sealed class ConvertExtensionsTests : UnitTest
 
     Convert.To.Uri(null).Should().BeNull();
 
-    var uri = "https://localhost".ToUri();
+    var uri = LocalHost;
     Convert.To.Uri(uri).Should().NotBeNull().And.BeSameAs(uri);
 
     uri = Convert.To.Uri(string.Empty);

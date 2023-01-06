@@ -416,7 +416,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecuteHead_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecuteHead(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecuteHead(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => new HttpClient().ExecuteHead(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -428,7 +428,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecuteGet_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecuteGet(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecuteGet(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => new HttpClient().ExecuteGet(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -440,7 +440,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecutePost_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecutePost(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecutePost(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => new HttpClient().ExecutePost(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -452,7 +452,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecutePut_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecutePut(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecutePut(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => new HttpClient().ExecutePut(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -464,7 +464,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecutePatch_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecutePatch(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecutePatch(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => new HttpClient().ExecutePatch(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -476,7 +476,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecuteDelete_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecuteDelete(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecuteDelete(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => new HttpClient().ExecuteDelete(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -488,7 +488,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecuteHeadAsync_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecuteHeadAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecuteHeadAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => new HttpClient().ExecuteHeadAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -500,7 +500,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecuteGetAsync_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecuteGetAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecuteGetAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => new HttpClient().ExecuteGetAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -512,7 +512,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecutePostAsync_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecutePostAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecutePostAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => new HttpClient().ExecutePostAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -524,7 +524,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecutePutAsync_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecutePutAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecutePutAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => new HttpClient().ExecutePutAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -536,7 +536,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecutePatchAsync_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecutePatchAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecutePatchAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => new HttpClient().ExecutePatchAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -548,7 +548,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ExecuteDeleteAsync_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecuteDeleteAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => NetworkExtensions.ExecuteDeleteAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => new HttpClient().ExecuteDeleteAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -677,7 +677,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ToStream_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ToStream(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => NetworkExtensions.ToStream(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => new HttpClient().ToStream(null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -700,7 +700,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_ToStreamAsync_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.ToStreamAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => NetworkExtensions.ToStreamAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => new HttpClient().ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -758,7 +758,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NetworkExtensions.ToBytes(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => NetworkExtensions.ToBytes(null, LocalHost)).ThrowExactly<ArgumentNullException>();
       AssertionExtensions.Should(() => new HttpClient().ToBytes(null)).ThrowExactly<ArgumentNullException>();
     }
 
@@ -829,7 +829,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NetworkExtensions.ToBytesAsync(null, "https://localhost".ToUri()).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => NetworkExtensions.ToBytesAsync(null, LocalHost).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
       AssertionExtensions.Should(() => new HttpClient().ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
     }
 
@@ -901,7 +901,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NetworkExtensions.ToText(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => NetworkExtensions.ToText(null, LocalHost)).ThrowExactly<ArgumentNullException>();
       AssertionExtensions.Should(() => new HttpClient().ToText(null)).ThrowExactly<ArgumentNullException>();
     }
 
@@ -956,7 +956,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NetworkExtensions.ToTextAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => NetworkExtensions.ToTextAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
       AssertionExtensions.Should(() => new HttpClient().ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
     }
 
@@ -1010,8 +1010,8 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_WriteBytes_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.WriteBytes(null, Enumerable.Empty<byte>(), "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new HttpClient().WriteBytes(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => NetworkExtensions.WriteBytes(null, Enumerable.Empty<byte>(), LocalHost)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new HttpClient().WriteBytes(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => new HttpClient().WriteBytes(Enumerable.Empty<byte>(), null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -1047,8 +1047,8 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_WriteBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.WriteBytesAsync(null, Enumerable.Empty<byte>(), "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => new HttpClient().WriteBytesAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => NetworkExtensions.WriteBytesAsync(null, Enumerable.Empty<byte>(), LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => new HttpClient().WriteBytesAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => new HttpClient().WriteBytesAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -1084,8 +1084,8 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_WriteText_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.WriteText(null, string.Empty, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new HttpClient().WriteText(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => NetworkExtensions.WriteText(null, string.Empty, LocalHost)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => new HttpClient().WriteText(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => new HttpClient().WriteText(string.Empty, null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -1121,8 +1121,8 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpClient_WriteTextAsync_Method()
   {
-    AssertionExtensions.Should(() => NetworkExtensions.WriteTextAsync(null, string.Empty, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => new HttpClient().WriteTextAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => NetworkExtensions.WriteTextAsync(null, string.Empty, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => new HttpClient().WriteTextAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => new HttpClient().WriteTextAsync(string.Empty, null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -1158,8 +1158,8 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_WriteTo_HttpClient_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(new HttpClient(), "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(new HttpClient(), LocalHost)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(new HttpClient(), null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -1195,8 +1195,8 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void String_WriteTo_HttpClient_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(new HttpClient(), "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => string.Empty.WriteTo(null, "https://localhost".ToUri())).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ((string) null).WriteTo(new HttpClient(), LocalHost)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => string.Empty.WriteTo(null, LocalHost)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => string.Empty.WriteTo(new HttpClient(), null)).ThrowExactly<ArgumentNullException>();
 
     throw new NotImplementedException();
@@ -1232,8 +1232,8 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void IEnumerable_WriteToAsync_HttpClient_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(new HttpClient(), "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(new HttpClient(), LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(new HttpClient(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();
@@ -1269,8 +1269,8 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void String_WriteToAsync_HttpClient_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteToAsync(new HttpClient(), "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(null, "https://localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(new HttpClient(), LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(new HttpClient(), null)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
     throw new NotImplementedException();

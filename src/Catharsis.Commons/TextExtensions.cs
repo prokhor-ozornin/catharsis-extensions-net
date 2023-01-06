@@ -366,7 +366,13 @@ public static class TextExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static TWriter WriteBytes<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter => destination.WriteText(bytes.AsArray().ToText(encoding));
+  public static TWriter WriteBytes<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    return destination.WriteText(bytes.AsArray().ToText(encoding));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -375,8 +381,15 @@ public static class TextExtensions
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<TWriter> WriteBytesAsync<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter => await destination.WriteTextAsync(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
+  public static async Task<TWriter> WriteBytesAsync<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null, CancellationToken cancellation = default) where TWriter : TextWriter
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    return await destination.WriteTextAsync(bytes.AsArray().ToText(encoding), cancellation).ConfigureAwait(false);
+  }
   
   /// <summary>
   ///   <para></para>
@@ -419,15 +432,15 @@ public static class TextExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="bytes"></param>
-  /// <param name="writer"></param>
+  /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, TextWriter writer, Encoding encoding = null)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, TextWriter destination, Encoding encoding = null)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (writer is null) throw new ArgumentNullException(nameof(writer));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
 
-    bytes.AsArray().ToText(encoding).WriteTo(writer);
+    bytes.AsArray().ToText(encoding).WriteTo(destination);
 
     return bytes;
   }
@@ -436,15 +449,15 @@ public static class TextExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="bytes"></param>
-  /// <param name="writer"></param>
+  /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, TextWriter writer, Encoding encoding = null)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, TextWriter destination, Encoding encoding = null)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (writer is null) throw new ArgumentNullException(nameof(writer));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
 
-    await bytes.AsArray().ToText(encoding).WriteToAsync(writer).ConfigureAwait(false);
+    await bytes.AsArray().ToText(encoding).WriteToAsync(destination).ConfigureAwait(false);
 
     return bytes;
   }

@@ -15,8 +15,7 @@ public sealed class NumericExtensionsTest : UnitTest
   [Fact]
   public void To_Method()
   {
-    AssertionExtensions.Should(() => 0.To(0)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => int.MinValue.To(0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>();
+    AssertionExtensions.Should(() => int.MinValue.To(0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     int.MinValue.To(int.MinValue).Should().NotBeNull().And.BeSameAs(int.MinValue.To(int.MinValue)).And.BeEmpty();
     int.MaxValue.To(int.MaxValue).Should().NotBeNull().And.BeSameAs(int.MaxValue.To(int.MaxValue)).And.BeEmpty();
@@ -42,13 +41,10 @@ public sealed class NumericExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => 0.Times((Action) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => 0.Times((Action) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => (-1).Times(() => {})).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       var counter = 0;
-      int.MinValue.Times(() => counter++);
-      counter.Should().Be(0);
-
-      counter = 0;
       0.Times(() => counter++);
       counter.Should().Be(0);
 
@@ -63,13 +59,10 @@ public sealed class NumericExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => 0.Times((Action<int>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => 0.Times((Action<int>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => (-1).Times((_ => {}))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       var values = new List<int>();
-      int.MinValue.Times(values.Add);
-      values.Should().BeEmpty();
-
-      values = new List<int>();
       0.Times(values.Add);
       values.Should().BeEmpty();
 
@@ -89,6 +82,8 @@ public sealed class NumericExtensionsTest : UnitTest
   [Fact]
   public void Nulls_Method()
   {
+    AssertionExtensions.Should(() => (-1).Nulls()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
     throw new NotImplementedException();
   }
 
@@ -107,19 +102,28 @@ public sealed class NumericExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => 0.Objects((Func<object>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => (-1).Objects<object>()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      (-1).Objects(() => string.Empty).Should().BeEmpty();
-      0.Objects(() => string.Empty).Should().BeEmpty();
-      1.Objects(() => string.Empty).Should().Equal(string.Empty);
-      count.Objects(() => string.Empty).Should().HaveCount(count).And.AllBe(string.Empty);
+      0.Objects<object>().Should().BeEmpty();
+      1.Objects<Guid>().Should().Equal(Guid.Empty);
+      count.Objects<Guid>().Should().HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => 0.Objects((Func<int, object>) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => 0.Objects((Func<object>) null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("constructor");
+      AssertionExtensions.Should(() => (-1).Objects<object>(() => null).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      (-1).Objects(index => index).Should().BeEmpty();
+      0.Objects(() => new object()).Should().BeEmpty();
+      1.Objects(() => Guid.Empty).Should().Equal(Guid.Empty);
+      count.Objects(() => Guid.Empty).Should().HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => 0.Objects((Func<int, object>) null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("constructor");
+      AssertionExtensions.Should(() => (-1).Objects<object>(_ => null).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
       0.Objects(index => index).Should().BeEmpty();
       1.Objects(index => index).Should().Equal(0);
       count.Objects(index => index).Should().Equal(Enumerable.Range(0, count));

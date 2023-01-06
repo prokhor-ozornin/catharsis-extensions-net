@@ -798,7 +798,19 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="result"></param>
   /// <returns></returns>
-  public static bool ToEnum<T>(this string text, out T? result) where T : struct => (result = Enum.TryParse(text, true, out T value) ? value : null) != null;
+  public static bool ToEnum<T>(this string text, out T? result) where T : struct
+  {
+    try
+    {
+      result = text.ToEnum<T>();
+      return result is not null;
+    }
+    catch
+    {
+      result = null;
+      return false;
+    }
+  }
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="Guid"/> value.</para>

@@ -20,7 +20,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <returns></returns>
   /// <exception cref="InvalidOperationException"></exception>
-  public static bool IsAvailable(this Uri uri, TimeSpan? timeout = null) => uri.IsAvailableAsync(timeout).Result;
+  public static bool IsAvailable(this Uri uri, TimeSpan? timeout = null) => uri is not null ? uri.IsAvailableAsync(timeout).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>
@@ -31,6 +31,8 @@ public static class UriExtensions
   /// <returns></returns>
   public static async Task<bool> IsAvailableAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
     cancellation.ThrowIfCancellationRequested();
 
     if (uri.IsFile)
@@ -61,6 +63,8 @@ public static class UriExtensions
   /// <returns></returns>
   public static UriBuilder Empty(this UriBuilder builder)
   {
+    if (builder is null) throw new ArgumentNullException(nameof(builder));
+
     builder.Fragment = string.Empty;
     builder.Host = string.Empty;
     builder.Password = string.Empty;
@@ -80,7 +84,10 @@ public static class UriExtensions
   /// <returns></returns>
   public static IReadOnlyDictionary<string, string> GetQuery(this Uri uri)
   {
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
     var query = uri.Query;
+
     return query.IsEmpty() ? new Dictionary<string, string>() : HttpUtility.ParseQueryString(uri.Query).ToDictionary();
   }
 
@@ -90,7 +97,13 @@ public static class UriExtensions
   /// <param name="builder"></param>
   /// <param name="parameters"></param>
   /// <returns></returns>
-  public static UriBuilder WithQuery(this UriBuilder builder, IReadOnlyDictionary<string, object> parameters) => builder.WithQuery(parameters.ToValueTuple().AsArray());
+  public static UriBuilder WithQuery(this UriBuilder builder, IReadOnlyDictionary<string, object> parameters)
+  {
+    if (builder is null) throw new ArgumentNullException(nameof(builder));
+    if (parameters is null) throw new ArgumentNullException(nameof(parameters));
+
+    return builder.WithQuery(parameters.ToValueTuple().AsArray());
+  }
 
   /// <summary>
   ///   <para></para>
@@ -100,6 +113,9 @@ public static class UriExtensions
   /// <returns></returns>
   public static UriBuilder WithQuery(this UriBuilder builder, params (string Name, object Value)[] parameters)
   {
+    if (builder is null) throw new ArgumentNullException(nameof(builder));
+    if (parameters is null) throw new ArgumentNullException(nameof(parameters));
+
     var query = HttpUtility.ParseQueryString(builder.Query);
 
     foreach (var parameter in parameters)
@@ -117,7 +133,7 @@ public static class UriExtensions
   /// </summary>
   /// <param name="uri">URL address to use.</param>
   /// <returns><see cref="IPHostEntry"/> instance, containing information about host of source <see cref="Uri"/> address.</returns>
-  public static IPHostEntry Host(this Uri uri) => Dns.GetHostEntry(uri.DnsSafeHost);
+  public static IPHostEntry Host(this Uri uri) => uri is not null ? Dns.GetHostEntry(uri.DnsSafeHost) : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>
@@ -129,6 +145,8 @@ public static class UriExtensions
   /// <returns></returns>
   public static string[] Lines(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
     using var stream = uri.ToStream(timeout, headers);
     using var reader = stream.ToStreamReader(encoding);
 
@@ -171,6 +189,9 @@ public static class UriExtensions
   /// <returns></returns>
   public static T Print<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
     using var stream = destination.ToStream(timeout, headers);
 
     return instance.Print(stream, encoding);
@@ -189,9 +210,12 @@ public static class UriExtensions
   /// <returns></returns>
   public static async Task<T> PrintAsync<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    await using var stream = await destination.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     cancellation.ThrowIfCancellationRequested();
+
+    await using var stream = await destination.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
 
     return await instance.PrintAsync(stream, encoding, cancellation).ConfigureAwait(false);
   }
@@ -251,7 +275,13 @@ public static class UriExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte[]>> ToEnumerable(this Uri uri, int count, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false)).ToEnumerable(count);
+  public static async Task<IEnumerable<byte[]>> ToEnumerable(this Uri uri, int count, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+    if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
+    
+    return (await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false)).ToEnumerable(count);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -287,6 +317,8 @@ public static class UriExtensions
     if (uri is null) throw new ArgumentNullException(nameof(uri));
     if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
+    cancellation.ThrowIfCancellationRequested();
+
     await foreach (var element in (await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false)).ToAsyncEnumerable(count).ConfigureAwait(false))
     {
       yield return element;
@@ -298,7 +330,7 @@ public static class UriExtensions
   /// </summary>
   /// <param name="uri"></param>
   /// <returns></returns>
-  public static UriBuilder ToUriBuilder(this Uri uri) => new(uri);
+  public static UriBuilder ToUriBuilder(this Uri uri) => uri is not null ? new UriBuilder(uri) : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>
@@ -459,7 +491,13 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static Uri WriteBytes(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => destination.WriteBytesAsync(bytes, timeout, default, headers).Result;
+  public static Uri WriteBytes(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    return destination.WriteBytesAsync(bytes, timeout, default, headers).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -470,7 +508,13 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static Uri WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => destination.WriteBytes(text.AsArray().ToBytes(encoding), timeout, headers);
+  public static Uri WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    return destination.WriteTextAsync(text, encoding, timeout, default, headers).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -490,7 +534,7 @@ public static class UriExtensions
 
     if (destination.IsFile)
     {
-      await destination.LocalPath.ToFile().WriteBytesAsync(bytes).ConfigureAwait(false);
+      await destination.LocalPath.ToFile().WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
     }
     else if (destination.Scheme == Uri.UriSchemeNetTcp)
     {
@@ -516,7 +560,13 @@ public static class UriExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<Uri> WriteTextAsync(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers) => await destination.WriteBytesAsync(text.AsArray().ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
+  public static async Task<Uri> WriteTextAsync(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    return await destination.WriteBytesAsync(text.AsArray().ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
+  }
 
   /// <summary>
   ///   <para></para>

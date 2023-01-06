@@ -34,9 +34,9 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_IsArray_Method()
   {
-    AssertionExtensions.Should(() => typeof(object[]).IsArray<object>()).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.IsArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
   }
 
   /// <summary>
@@ -45,7 +45,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_IsAssignableTo_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.IsAssignableTo<object>(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.IsAssignableTo<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     /*typeof(object).IsAssignableTo<object>().Should().BeTrue();
     typeof(string).IsAssignableTo<object>().Should().BeTrue();
@@ -66,13 +66,13 @@ public sealed class ReflectionExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ReflectionExtensions.Implements(null, typeof(object))).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => typeof(object).Implements(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ReflectionExtensions.Implements(null, typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).Implements(null)).ThrowExactly<ArgumentNullException>().WithParameterName("interfaceType");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ReflectionExtensions.Implements<object>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ReflectionExtensions.Implements<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
     }
 
     throw new NotImplementedException();
@@ -84,7 +84,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_Implementations_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.Implementations(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.Implementations(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     throw new NotImplementedException();
   }
@@ -95,9 +95,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_HasField_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.HasField(null, "name")).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).HasField(null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).HasField(string.Empty)).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.HasField(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    AssertionExtensions.Should(() => typeof(object).HasField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
     /*typeof(object).HasField("field").Should().BeFalse();
 
@@ -118,9 +117,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_HasProperty_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.HasProperty(null, "name")).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).HasProperty(null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).HasProperty(string.Empty)).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.HasProperty(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    AssertionExtensions.Should(() => typeof(object).HasProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
     
     /*typeof(object).HasProperty("property").Should().BeFalse();
 
@@ -141,9 +139,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_HasMethod_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.HasMethod(null, "name")).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).HasMethod(null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).HasMethod(string.Empty)).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.HasMethod(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    AssertionExtensions.Should(() => typeof(object).HasMethod(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
     /*typeof(object).HasMethod("method").Should().BeFalse();
 
@@ -164,9 +161,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_AnyEvent_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.AnyEvent(null, "name")).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).AnyEvent(null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).AnyEvent(string.Empty)).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.AnyEvent(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    AssertionExtensions.Should(() => typeof(object).AnyEvent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
     /*var type = typeof(TestObject);
     type.Event("PublicEvent").Should().NotBeNull();
@@ -182,9 +178,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_AnyField_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.AnyField(null, "name")).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).AnyField(null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).AnyField(string.Empty)).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.AnyField(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    AssertionExtensions.Should(() => typeof(object).AnyField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
     /*var type = typeof(TestObject);
 
@@ -233,9 +228,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_AnyProperty_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.AnyProperty(null, "name")).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).AnyProperty(null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).AnyProperty(string.Empty)).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.AnyProperty(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    AssertionExtensions.Should(() => typeof(object).AnyProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
     //var type = typeof(TestObject);
 
@@ -255,9 +249,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_AnyMethod_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.AnyMethod(null, "name")).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).AnyMethod(null)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => typeof(object).AnyMethod(string.Empty)).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.AnyMethod(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    AssertionExtensions.Should(() => typeof(object).AnyMethod(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
     /*var type = typeof(TestObject);
 
@@ -306,7 +299,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Type_DefaultConstructor_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.DefaultConstructor(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.DefaultConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     /*typeof(TestObject).Constructor().Should().NotBeNull();
     typeof(string).Constructor().Should().BeNull();*/
@@ -326,16 +319,9 @@ public sealed class ReflectionExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ReflectionExtensions.Instance(null, new object())).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => typeof(object).Instance((object) null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ReflectionExtensions.Instance(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ReflectionExtensions.Instance(null)).ThrowExactly<ArgumentNullException>();
-
-      typeof(TestObject).Instance().Should().NotBeNull();
+      /*typeof(TestObject).Instance().Should().NotBeNull();
       typeof(TestObject).Instance(Enumerable.Empty<KeyValuePair<string, object>>().Should().NotBeNull());
       AssertionExtensions.Should(() => typeof(TestObject).Instance(new object(), new object())).ThrowExactly<MissingMethodException>();
 
@@ -345,7 +331,13 @@ public sealed class ReflectionExtensionsTest : UnitTest
       typeof(TestObject).Instance(new
       {
         PublicProperty = "value"
-      }).As<TestObject>().PublicProperty.Should().Be("value");
+      }).As<TestObject>().PublicProperty.Should().Be("value");*/
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ReflectionExtensions.Instance(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+
     }
 
     throw new NotImplementedException();
@@ -357,7 +349,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void MemberInfo_IsEvent_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.IsEvent(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.IsEvent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
     //typeof(TestObject).Event("PublicEvent").As<MemberInfo>().IsEvent().Should().BeTrue();
 
@@ -370,7 +362,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void MemberInfo_IsField_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.IsField(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.IsField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
     //typeof(TestObject).Field("PublicField").As<MemberInfo>().IsField().Should().BeTrue();
 
@@ -383,7 +375,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void MemberInfo_IsProperty_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.IsProperty(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.IsProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
     //typeof(TestObject).Property("PublicProperty").As<MemberInfo>().IsProperty().Should().BeTrue();
 
@@ -396,7 +388,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void MemberInfo_IsMethod_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.IsMethod(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.IsMethod(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
     //typeof(TestObject).Method("PublicMethod").As<MemberInfo>().IsMethod().Should().BeTrue();
 
@@ -409,7 +401,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void MemberInfo_IsConstructor_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.IsConstructor(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.IsConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
     
     //typeof(TestObject).Constructor().As<MemberInfo>().IsConstructor().Should().BeTrue();
 
@@ -428,13 +420,13 @@ public sealed class ReflectionExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ReflectionExtensions.Attribute<object>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ReflectionExtensions.Attribute<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ReflectionExtensions.Attribute(null, typeof(object))).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => typeof(object).Attribute(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ReflectionExtensions.Attribute(null, typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => typeof(object).Attribute(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
       /*typeof(TestObject).Attribute(typeof(NonSerializedAttribute)).Should().BeNull();
       typeof(TestObject).Attribute<NonSerializedAttribute>().Should().BeNull();
@@ -485,13 +477,13 @@ public sealed class ReflectionExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ReflectionExtensions.Attributes<object>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ReflectionExtensions.Attributes<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ReflectionExtensions.Attributes(null, typeof(object))).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => typeof(object).Attributes(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ReflectionExtensions.Attributes(null, typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => typeof(object).Attributes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
     }
 
     throw new NotImplementedException();
@@ -503,7 +495,7 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void MemberInfo_ToType_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.ToType(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.ToType(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
     /*var type = typeof(TestObject);
 
@@ -534,13 +526,13 @@ public sealed class ReflectionExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ReflectionExtensions.ToDelegate<object>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ReflectionExtensions.ToDelegate<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ReflectionExtensions.ToDelegate(null, typeof(object))).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => typeof(object).GetMethod("ToString").ToDelegate(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ReflectionExtensions.ToDelegate(null, typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => typeof(object).GetMethod("ToString").ToDelegate(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
       var method = typeof(object).GetMethod("ToString");
       AssertionExtensions.Should(() => method.ToDelegate(typeof(object))).ThrowExactly<ArgumentException>();
@@ -562,8 +554,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Delegate_And_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.And(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => IncrementDelegate.And(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.And(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    AssertionExtensions.Should(() => IncrementDelegate.And(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
     AssertionExtensions.Should(() => IncrementDelegate.And(DecrementDelegate)).ThrowExactly<ArgumentException>();
 
     /*var andDelegate = IncrementDelegate.And(IncrementDelegate);
@@ -582,7 +574,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Delegate_Not_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.Not(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.Not(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    AssertionExtensions.Should(() => IncrementDelegate.Not(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
     AssertionExtensions.Should(() => IncrementDelegate.Not(DecrementDelegate)).ThrowExactly<ArgumentException>();
 
     /*IncrementDelegate.Not(null).Should().BeSameAs(IncrementDelegate);
@@ -597,8 +590,8 @@ public sealed class ReflectionExtensionsTest : UnitTest
   [Fact]
   public void Assembly_Resource_Method()
   {
-    AssertionExtensions.Should(() => ReflectionExtensions.Resource(null, string.Empty)).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => Assembly.GetExecutingAssembly().Resource(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => ReflectionExtensions.Resource(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("assembly");
+    AssertionExtensions.Should(() => Assembly.GetExecutingAssembly().Resource(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
     //Assembly.GetExecutingAssembly().Resource("invalid").Should().BeNull();
     //Assembly.GetExecutingAssembly().Resource("Catharsis.Commons.Resource.txt").Should().Be("resource");

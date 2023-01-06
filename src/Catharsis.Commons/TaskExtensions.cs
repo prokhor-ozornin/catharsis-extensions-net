@@ -15,7 +15,15 @@ public static class TaskExtensions
   /// <param name="cancellation"></param>
   public static ValueTask Await(this ValueTask task, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
+    if (task.IsCompleted)
+    {
+      return task;
+    }
+
+    cancellation.ThrowIfCancellationRequested();
+    
     task.AsTask().Await(timeout, cancellation);
+    
     return task;
   }
 
@@ -27,7 +35,17 @@ public static class TaskExtensions
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static T Await<T>(this ValueTask<T> task, TimeSpan? timeout = null, CancellationToken cancellation = default) => task.AsTask().Await(timeout, cancellation);
+  public static T Await<T>(this ValueTask<T> task, TimeSpan? timeout = null, CancellationToken cancellation = default)
+  {
+    if (task.IsCompleted)
+    {
+      return task.Result;
+    }
+
+    cancellation.ThrowIfCancellationRequested();
+
+    return task.AsTask().Await(timeout, cancellation);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -40,7 +58,16 @@ public static class TaskExtensions
   /// <returns></returns>
   public static ValueTask<T> Await<T>(this ValueTask<T> task, out T result, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
+    if (task.IsCompleted)
+    {
+      result = task.Result;
+      return task;
+    }
+
+    cancellation.ThrowIfCancellationRequested();
+
     result = task.Await(timeout, cancellation);
+
     return task;
   }
 
@@ -53,6 +80,13 @@ public static class TaskExtensions
   public static Task Await(this Task task, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
     if (task is null) throw new ArgumentNullException(nameof(task));
+
+    if (task.IsCompleted)
+    {
+      return task;
+    }
+
+    cancellation.ThrowIfCancellationRequested();
 
     if (timeout != null)
     {
@@ -78,6 +112,13 @@ public static class TaskExtensions
   {
     if (task is null) throw new ArgumentNullException(nameof(task));
 
+    if (task.IsCompleted)
+    {
+      return task.Result;
+    }
+
+    cancellation.ThrowIfCancellationRequested();
+    
     if (timeout != null)
     {
       task.Wait((int) timeout.Value.TotalMilliseconds, cancellation);
@@ -102,6 +143,14 @@ public static class TaskExtensions
   public static Task<T> Await<T>(this Task<T> task, out T result, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
     if (task is null) throw new ArgumentNullException(nameof(task));
+
+    if (task.IsCompleted)
+    {
+      result = task.Result;
+      return task;
+    }
+
+    cancellation.ThrowIfCancellationRequested();
 
     result = task.Await(timeout, cancellation);
 
@@ -150,7 +199,7 @@ public static class TaskExtensions
   public static async ValueTask ExecuteAsync(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null)
   {
     await task.ConfigureAwait(false);
-
+      
     if (task.IsCompletedSuccessfully && success != null)
     {
       success(task);
