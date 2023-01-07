@@ -108,7 +108,7 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static T DeserializeAsBinary<T>(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.DeserializeAsBinaryAsync<T>(timeout, headers).Result;
+  public static T DeserializeAsBinary<T>(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.DeserializeAsBinaryAsync<T>(timeout, headers).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>
@@ -327,7 +327,7 @@ public static class SerializationExtensions
   /// <param name="headers"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri.DeserializeAsDataContractAsync<T>(timeout, default, types).Result;
+  public static T DeserializeAsDataContract<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsDataContractAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>
@@ -529,7 +529,7 @@ public static class SerializationExtensions
   /// <param name="headers"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsXml<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri.DeserializeAsXmlAsync<T>(timeout, headers, types).Result;
+  public static T DeserializeAsXml<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsXmlAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>
@@ -710,7 +710,7 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToXmlDocumentAsync(timeout, headers).Result; 
+  public static XmlDocument ToXmlDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToXmlDocumentAsync(timeout, headers).Result : throw new ArgumentNullException(nameof(uri)); 
   
   /// <summary>
   ///   <para></para>
@@ -873,7 +873,7 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static XDocument ToXDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToXDocumentAsync(timeout, default, headers).Result;
+  public static XDocument ToXDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToXDocumentAsync(timeout, default, headers).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para>Deserialize XML contents from a <see cref="XmlReader"/> into <see cref="XDocument"/> object.</para>

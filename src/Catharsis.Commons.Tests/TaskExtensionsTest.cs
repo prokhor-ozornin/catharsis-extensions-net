@@ -151,12 +151,12 @@ public sealed class TaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TaskExtensions.ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => TaskExtensions.ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Action<object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => ((Action<object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
 
     }
 

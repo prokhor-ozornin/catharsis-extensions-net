@@ -331,7 +331,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void TextReader_LinesAsync_Method()
   {
-    AssertionExtensions.Should(() => TextExtensions.LinesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("reader");
+    AssertionExtensions.Should(() => TextExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
     throw new NotImplementedException();
   }
@@ -556,7 +556,7 @@ public sealed class TextExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable().ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
     }
 
     using (new AssertionScope())

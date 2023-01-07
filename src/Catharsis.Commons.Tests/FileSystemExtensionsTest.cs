@@ -175,7 +175,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileSystemExtensions.LinesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => FileSystemExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
       Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);

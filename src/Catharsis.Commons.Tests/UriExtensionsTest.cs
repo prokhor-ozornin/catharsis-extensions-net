@@ -129,7 +129,7 @@ public sealed class UriExtensionsTest : UnitTest
   [Fact]
   public void Uri_LinesAsync_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.LinesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => UriExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
 
     throw new NotImplementedException();
   }
@@ -207,13 +207,13 @@ public sealed class UriExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+      AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null, 1).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
-      AssertionExtensions.Should(() => LocalHost.ToAsyncEnumerable(0).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null, 1).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+      AssertionExtensions.Should(() => LocalHost.ToAsyncEnumerable(0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
     }
 
     throw new NotImplementedException();
@@ -247,7 +247,7 @@ public sealed class UriExtensionsTest : UnitTest
   [Fact]
   public void Uri_ToStream_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.ToStream(null, null, ("name", "value"))).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => UriExtensions.ToStream(null, null, ("name", "value"))).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -302,7 +302,7 @@ public sealed class UriExtensionsTest : UnitTest
   [Fact]
   public void Uri_ToBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.ToBytesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => UriExtensions.ToBytesAsync(null).ToArrayAsync()).ThrowAsync<ArgumentNullException>().WithParameterName("uri").Await();
 
     throw new NotImplementedException();
   }

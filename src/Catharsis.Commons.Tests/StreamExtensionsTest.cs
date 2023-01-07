@@ -275,7 +275,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.LinesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => StreamExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
 
       Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
@@ -566,7 +566,7 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytes(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytes(Stream, bool)"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_ToBytes_Method()
@@ -577,14 +577,14 @@ public sealed class StreamExtensionsTest : UnitTest
   }
   
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytesAsync(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytesAsync(Stream, bool)"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_ToBytesAsync_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToBytesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => StreamExtensions.ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
 
       Stream.Null.ToBytesAsync().ToArray().Should().BeEmpty();
 
@@ -957,7 +957,7 @@ public sealed class StreamExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.ToAsyncEnumerable(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => StreamExtensions.ToAsyncEnumerable(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
     }
 
     using (new AssertionScope())

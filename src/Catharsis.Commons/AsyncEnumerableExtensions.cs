@@ -18,7 +18,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static bool IsEmpty<T>(this IAsyncEnumerable<T> sequence) => sequence.IsEmptyAsync().Result;
+  public static bool IsEmpty<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.IsEmptyAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -36,7 +36,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<T> ForEach<T>(this IAsyncEnumerable<T> sequence, Action<T> action) => sequence.ForEachAsync(action).Result;
+  public static IAsyncEnumerable<T> ForEach<T>(this IAsyncEnumerable<T> sequence, Action<T> action)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return sequence.ForEachAsync(action).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -45,7 +51,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<T> ForEach<T>(this IAsyncEnumerable<T> sequence, Action<int, T> action) => sequence.ForEachAsync(action).Result;
+  public static IAsyncEnumerable<T> ForEach<T>(this IAsyncEnumerable<T> sequence, Action<int, T> action)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return sequence.ForEachAsync(action).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -123,7 +135,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static T[] ToArray<T>(this IAsyncEnumerable<T> sequence) => sequence.ToArrayAsync().Result;
+  public static T[] ToArray<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToArrayAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -142,7 +154,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static List<T> ToList<T>(this IAsyncEnumerable<T> sequence) => sequence.ToListAsync().Result;
+  public static List<T> ToList<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToListAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -174,7 +186,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static LinkedList<T> ToLinkedList<T>(this IAsyncEnumerable<T> sequence) => sequence.ToLinkedListAsync().Result;
+  public static LinkedList<T> ToLinkedList<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToLinkedListAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -208,7 +220,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IReadOnlyList<T> ToReadOnlyList<T>(this IAsyncEnumerable<T> sequence) => sequence.ToReadOnlyListAsync().Result;
+  public static IReadOnlyList<T> ToReadOnlyList<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToReadOnlyListAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -226,7 +238,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static HashSet<T> ToHashSet<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence.ToHashSetAsync(comparer).Result;
+  public static HashSet<T> ToHashSet<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence is not null ? sequence.ToHashSetAsync(comparer).Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -262,7 +274,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static SortedSet<T> ToSortedSet<T>(this IAsyncEnumerable<T> sequence, IComparer<T> comparer = null) => sequence.ToSortedSetAsync(comparer).Result;
+  public static SortedSet<T> ToSortedSet<T>(this IAsyncEnumerable<T> sequence, IComparer<T> comparer = null) => sequence is not null ? sequence.ToSortedSetAsync(comparer).Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -297,7 +309,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IReadOnlySet<T> ToReadOnlySet<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence.ToReadOnlySetAsync(comparer).Result;
+  public static IReadOnlySet<T> ToReadOnlySet<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence is not null ? sequence.ToReadOnlySetAsync(comparer).Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -319,7 +331,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="key"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull => sequence.ToDictionaryAsync(key, comparer).Result;
+  public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return sequence.ToDictionaryAsync(key, comparer).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -357,7 +375,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="key"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull => sequence.ToReadOnlyDictionaryAsync(key, comparer).Result;
+  public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return sequence.ToReadOnlyDictionaryAsync(key, comparer).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -383,7 +407,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IEnumerable<(T item, int index)> ToValueTuple<T>(this IAsyncEnumerable<T> sequence) => sequence.ToValueTupleAsync().Result;
+  public static IEnumerable<(T item, int index)> ToValueTuple<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToValueTupleAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -394,7 +418,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="key"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> comparer = null) where TKey : notnull => sequence.ToValueTupleAsync(key, comparer).Result;
+  public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> comparer = null) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return sequence.ToValueTupleAsync(key, comparer).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -429,7 +459,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static Stack<T> ToStack<T>(this IAsyncEnumerable<T> sequence) => sequence.ToStackAsync().Result;
+  public static Stack<T> ToStack<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToStackAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -461,7 +491,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static Queue<T> ToQueue<T>(this IAsyncEnumerable<T> sequence) => sequence.ToQueueAsync().Result;
+  public static Queue<T> ToQueue<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToQueueAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -496,7 +526,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static PriorityQueue<TElement, TPriority> ToPriorityQueue<TElement, TPriority>(this IAsyncEnumerable<(TElement Element, TPriority Priority)> sequence, IComparer<TPriority> comparer = null) => sequence.ToPriorityQueueAsync(comparer).Result;
+  public static PriorityQueue<TElement, TPriority> ToPriorityQueue<TElement, TPriority>(this IAsyncEnumerable<(TElement Element, TPriority Priority)> sequence, IComparer<TPriority> comparer = null) => sequence is not null ? sequence.ToPriorityQueueAsync(comparer).Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -530,7 +560,7 @@ public static class AsyncEnumerableExtensions
   /// </summary>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static MemoryStream ToMemoryStream(this IAsyncEnumerable<byte> sequence) => sequence.ToMemoryStreamAsync().Result;
+  public static MemoryStream ToMemoryStream(this IAsyncEnumerable<byte> sequence) => sequence is not null ? sequence.ToMemoryStreamAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -559,7 +589,7 @@ public static class AsyncEnumerableExtensions
   /// </summary>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static MemoryStream ToMemoryStream(this IAsyncEnumerable<byte[]> sequence) => sequence.ToMemoryStreamAsync().Result;
+  public static MemoryStream ToMemoryStream(this IAsyncEnumerable<byte[]> sequence) => sequence is not null ? sequence.ToMemoryStreamAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -590,7 +620,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static ImmutableArray<T> ToImmutableArray<T>(this IAsyncEnumerable<T> sequence) => sequence.ToImmutableArrayAsync().Result;
+  public static ImmutableArray<T> ToImmutableArray<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToImmutableArrayAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -609,7 +639,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static ImmutableList<T> ToImmutableList<T>(this IAsyncEnumerable<T> sequence) => sequence.ToImmutableListAsync().Result;
+  public static ImmutableList<T> ToImmutableList<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToImmutableListAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -630,7 +660,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static ImmutableHashSet<T> ToImmutableHashSet<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence.ToImmutableHashSetAsync(comparer).Result;
+  public static ImmutableHashSet<T> ToImmutableHashSet<T>(this IAsyncEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence is not null ? sequence.ToImmutableHashSetAsync(comparer).Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -652,7 +682,7 @@ public static class AsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static ImmutableSortedSet<T> ToImmutableSortedSet<T>(this IAsyncEnumerable<T> sequence, IComparer<T> comparer = null) => sequence.ToImmutableSortedSetAsync(comparer).Result;
+  public static ImmutableSortedSet<T> ToImmutableSortedSet<T>(this IAsyncEnumerable<T> sequence, IComparer<T> comparer = null) => sequence is not null ? sequence.ToImmutableSortedSetAsync(comparer).Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -673,7 +703,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="key"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static ImmutableDictionary<TKey, TValue> ToImmutableDictionary<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull => sequence.ToImmutableDictionaryAsync(key, comparer).Result;
+  public static ImmutableDictionary<TKey, TValue> ToImmutableDictionary<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return sequence.ToImmutableDictionaryAsync(key, comparer).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -703,7 +739,13 @@ public static class AsyncEnumerableExtensions
   /// <param name="keyComparer"></param>
   /// <param name="valueComparer"></param>
   /// <returns></returns>
-  public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSortedDictionary<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null) where TKey : notnull => sequence.ToImmutableSortedDictionaryAsync(key, keyComparer, valueComparer).Result;
+  public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSortedDictionary<TKey, TValue>(this IAsyncEnumerable<TValue> sequence, Func<TValue, TKey> key, IComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null) where TKey : notnull
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return sequence.ToImmutableSortedDictionaryAsync(key, keyComparer, valueComparer).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -730,7 +772,7 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static ImmutableQueue<T> ToImmutableQueue<T>(this IAsyncEnumerable<T> sequence) => sequence.ToImmutableQueueAsync().Result;
+  public static ImmutableQueue<T> ToImmutableQueue<T>(this IAsyncEnumerable<T> sequence) => sequence is not null ? sequence.ToImmutableQueueAsync().Result : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>

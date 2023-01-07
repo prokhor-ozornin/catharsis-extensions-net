@@ -303,7 +303,7 @@ public sealed class XmlExtensionsTest : UnitTest
   [Fact]
   public void Uri_ToXmlReader_Method()
   {
-    AssertionExtensions.Should(() => ((Uri) null).ToXmlReader()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => ((Uri) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -514,7 +514,7 @@ public sealed class XmlExtensionsTest : UnitTest
   [Fact]
   public void Uri_ToXmlDictionaryReader_Method()
   {
-    AssertionExtensions.Should(() => ((Uri) null).ToXmlDictionaryReader()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => ((Uri) null).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }

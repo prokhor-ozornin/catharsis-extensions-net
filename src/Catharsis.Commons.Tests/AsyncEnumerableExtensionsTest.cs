@@ -23,7 +23,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).IsEmpty()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, true);
       Validate(Array.Empty<object>().ToAsyncEnumerable(), true);
@@ -72,8 +72,8 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
         collection.Should().Equal(elements);
       }
 
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).ForEach(_ => { })).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
-      AssertionExtensions.Should(() => EmptyAsyncEnumerable.ForEach((Action<object>) null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).ForEach(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => EmptyAsyncEnumerable.ForEach((Action<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -93,8 +93,8 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
         collection.Should().Equal(elements);
       }
 
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).ForEach((_, _) => { })).ThrowExactly<AggregateException>().WithInnerExceptionExactly< ArgumentNullException>().WithParameterName("sequence");
-      AssertionExtensions.Should(() => EmptyAsyncEnumerable.ForEach((Action<int, object>) null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).ForEach((_, _) => { })).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => EmptyAsyncEnumerable.ForEach((Action<int, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -202,7 +202,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToArray<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -248,7 +248,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToList<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -294,7 +294,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToLinkedList<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToLinkedList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -333,7 +333,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void IAsyncEnumerable_ToReadOnlyList_Method()
   {
-    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlyList<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlyList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -364,7 +364,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToHashSet<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToHashSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -414,7 +414,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToSortedSet<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToSortedSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -455,7 +455,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void IAsyncEnumerable_ToReadOnlySet_Method()
   {
-    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -486,8 +486,8 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToDictionary<object, object>(null, _ => new object())).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
-      AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToDictionary<object, byte>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("key");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToDictionary<object, byte>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>(), value => value);
 
@@ -529,8 +529,8 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void IAsyncEnumerable_ToReadOnlyDictionary_Method()
   {
-    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlyDictionary<object, object>(null, value => value)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
-    AssertionExtensions.Should(() => EmptyAsyncEnumerable.ToReadOnlyDictionary<object, object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("key");
+    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlyDictionary<object, object>(null, value => value)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => EmptyAsyncEnumerable.ToReadOnlyDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
     throw new NotImplementedException();
   }
@@ -559,13 +559,13 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToValueTuple<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToValueTuple<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToValueTuple<object, object>(null, value => value)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
-      AssertionExtensions.Should(() => EmptyAsyncEnumerable.ToValueTuple<object, object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("key");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToValueTuple<object, object>(null, value => value)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => EmptyAsyncEnumerable.ToValueTuple<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
     }
 
@@ -610,7 +610,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToStack<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToStack<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -656,7 +656,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToQueue<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -705,7 +705,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToPriorityQueue<object, object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToPriorityQueue<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(Enumerable.Empty<(object, object)>().ToAsyncEnumerable(), Array.Empty<(object, object)>());
 
@@ -763,7 +763,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
         stream.ToArray().Should().Equal(bytes);
       }
 
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte>) null).ToMemoryStream()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(Enumerable.Empty<byte>().ToAsyncEnumerable(), Array.Empty<byte>());
 
@@ -781,7 +781,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
         stream.ToArray().Should().Equal(bytes);
       }
 
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte[]>) null).ToMemoryStream()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte[]>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(Enumerable.Empty<byte[]>().ToAsyncEnumerable(), Array.Empty<byte>());
 
@@ -854,7 +854,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableArray<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -900,7 +900,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableList<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -948,7 +948,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableHashSet<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableHashSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 
@@ -989,7 +989,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void IAsyncEnumerable_ToImmutableSortedSet_Method()
   {
-    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableSortedSet<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableSortedSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -1021,8 +1021,8 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableDictionary<object, object>(null, _ => new object())).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
-      AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToImmutableDictionary<object, byte>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("key");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToImmutableDictionary<object, byte>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>(), value => value);
 
@@ -1075,8 +1075,8 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableSortedDictionary<object, object>(null, _ => new object())).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
-      AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToImmutableSortedDictionary<object, byte>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("key");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableSortedDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToImmutableSortedDictionary<object, byte>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>(), value => value);
 
@@ -1125,7 +1125,7 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       Validate(EmptyAsyncEnumerable, Array.Empty<object>());
 

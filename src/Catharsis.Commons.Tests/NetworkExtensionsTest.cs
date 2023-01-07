@@ -843,7 +843,7 @@ public sealed class NetworkExtensionsTest : UnitTest
     AssertionExtensions.Should(() => NetworkExtensions.ToBytesAsync(null, LocalHost).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
     AssertionExtensions.Should(() => Http.ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
 
-    //throw new NotImplementedException();
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -852,7 +852,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void HttpContent_ToBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content");
+    AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
 
     foreach (var bytes in new[] {Array.Empty<byte>(), RandomBytes})
     {
@@ -869,7 +869,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void TcpClient_ToBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => ((TcpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp");
+    AssertionExtensions.Should(() => ((TcpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
 
     throw new NotImplementedException();
   }
@@ -880,7 +880,7 @@ public sealed class NetworkExtensionsTest : UnitTest
   [Fact]
   public void UdpClient_ToBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => ((UdpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp");
+    AssertionExtensions.Should(() => ((UdpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
 
     throw new NotImplementedException();
   }

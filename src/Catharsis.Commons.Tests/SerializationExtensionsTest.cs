@@ -108,7 +108,7 @@ public sealed class SerializationExtensionsTest : UnitTest
   [Fact]
   public void Uri_DeserializeAsBinary_Method()
   {
-    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsBinary<object>()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsBinary<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -256,7 +256,7 @@ public sealed class SerializationExtensionsTest : UnitTest
   [Fact]
   public void Uri_DeserializeAsDataContract_Method()
   {
-    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsDataContract<object>()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -498,7 +498,7 @@ public sealed class SerializationExtensionsTest : UnitTest
   [Fact]
   public void Uri_DeserializeAsXml_Method()
   {
-    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsXml<object>()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => ((Uri) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -679,7 +679,7 @@ public sealed class SerializationExtensionsTest : UnitTest
   [Fact]
   public void Uri_ToXmlDocument_Method()
   {
-    AssertionExtensions.Should(() => ((Uri) null).ToXmlDocument()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => ((Uri) null).ToXmlDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -810,12 +810,12 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXDocument(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_ToXDocument_Method()
   {
-    AssertionExtensions.Should(() => ((Uri) null).ToXDocument()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => ((Uri) null).ToXDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
