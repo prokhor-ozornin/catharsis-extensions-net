@@ -1063,6 +1063,8 @@ public static class StringExtensions
   /// <returns></returns>
   public static IPHostEntry ToIpHost(this string text)
   {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
     text.ToIpAddress(out var ip);
 
     return ip != null ? new IPHostEntry { AddressList = new[] { ip } } : new IPHostEntry { HostName = text };

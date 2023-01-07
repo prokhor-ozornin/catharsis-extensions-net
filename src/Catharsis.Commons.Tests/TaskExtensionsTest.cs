@@ -92,13 +92,13 @@ public sealed class TaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Task) null).Execute()).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((Task) null).Execute()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Task<object>) null).Execute()).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((Task<object>) null).Execute()).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
     }
 
@@ -126,13 +126,13 @@ public sealed class TaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Task) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((Task) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Task<object>) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((Task<object>) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
     }
 
@@ -151,11 +151,12 @@ public sealed class TaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-
+      AssertionExtensions.Should(() => TaskExtensions.ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action");
     }
 
     using (new AssertionScope())
     {
+      AssertionExtensions.Should(() => ((Action<object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action");
 
     }
 
@@ -174,13 +175,12 @@ public sealed class TaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Func<object>) null).ToTask()).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((Func<object>) null).ToTask()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("function").Await();
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Func<object, object>) null).ToTask(new object())).ThrowExactlyAsync<ArgumentNullException>().Await();
-      AssertionExtensions.Should(() => TaskExtensions.ToTask(value => value, null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((Func<object, object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("function").Await();
 
     }
 
@@ -199,12 +199,12 @@ public sealed class TaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TaskExtensions.ToValueTask(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => TaskExtensions.ToValueTask(null)).ThrowExactly<ArgumentNullException>().WithParameterName("task");
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TaskExtensions.ToValueTask<object>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => TaskExtensions.ToValueTask<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("task");
     }
 
     throw new NotImplementedException();

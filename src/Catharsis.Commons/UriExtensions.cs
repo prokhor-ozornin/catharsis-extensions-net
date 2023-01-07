@@ -159,19 +159,16 @@ public static class UriExtensions
   /// <param name="uri"></param>
   /// <param name="encoding"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<string> LinesAsync(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, [EnumeratorCancellation] CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async IAsyncEnumerable<string> LinesAsync(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    cancellation.ThrowIfCancellationRequested();
-
-    await using var stream = await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    await using var stream = await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false);
     using var reader = stream.ToStreamReader(encoding);
 
-    await foreach (var line in reader.LinesAsync().WithEnforcedCancellation(cancellation).ConfigureAwait(false))
+    await foreach (var line in reader.LinesAsync().ConfigureAwait(false))
     {
       yield return line;
     }
@@ -215,7 +212,7 @@ public static class UriExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-    await using var stream = await destination.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    await using var stream = await destination.ToStreamAsync(timeout, headers).ConfigureAwait(false);
 
     return await instance.PrintAsync(stream, encoding, cancellation).ConfigureAwait(false);
   }
@@ -261,10 +258,9 @@ public static class UriExtensions
   /// </summary>
   /// <param name="uri"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte>> ToEnumerable(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false)).ToEnumerable();
+  public static async Task<IEnumerable<byte>> ToEnumerable(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToEnumerable();
 
   /// <summary>
   ///   <para></para>
@@ -272,15 +268,14 @@ public static class UriExtensions
   /// <param name="uri"></param>
   /// <param name="count"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<IEnumerable<byte[]>> ToEnumerable(this Uri uri, int count, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<IEnumerable<byte[]>> ToEnumerable(this Uri uri, int count, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
     if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
     
-    return (await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false)).ToEnumerable(count);
+    return (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToEnumerable(count);
   }
 
   /// <summary>
@@ -288,16 +283,13 @@ public static class UriExtensions
   /// </summary>
   /// <param name="uri"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Uri uri, TimeSpan? timeout = null, [EnumeratorCancellation] CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    cancellation.ThrowIfCancellationRequested();
-
-    await foreach (var element in (await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false)).ToAsyncEnumerable().ConfigureAwait(false))
+    await foreach (var element in (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToAsyncEnumerable().ConfigureAwait(false))
     {
       yield return element;
     }
@@ -309,17 +301,14 @@ public static class UriExtensions
   /// <param name="uri"></param>
   /// <param name="count"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Uri uri, int count, TimeSpan? timeout = null, [EnumeratorCancellation] CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Uri uri, int count, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
     if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-    cancellation.ThrowIfCancellationRequested();
-
-    await foreach (var element in (await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false)).ToAsyncEnumerable(count).ConfigureAwait(false))
+    await foreach (var element in (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToAsyncEnumerable(count).ConfigureAwait(false))
     {
       yield return element;
     }
@@ -339,21 +328,18 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static Stream ToStream(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToStreamAsync(timeout, default, headers).Result;
+  public static Stream ToStream(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToStreamAsync(timeout, headers).Result;
 
   /// <summary>
   ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
   /// </summary>
   /// <param name="uri">The URI from which to download the data.</param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
   /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
-  public static async Task<Stream> ToStreamAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<Stream> ToStreamAsync(this Uri uri, TimeSpan? timeout = null,params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-    cancellation.ThrowIfCancellationRequested();
 
     if (uri.IsFile)
     {
@@ -369,7 +355,7 @@ public static class UriExtensions
     if (uri.Scheme == Uri.UriSchemeHttp && uri.Scheme == Uri.UriSchemeHttps)
     {
       using var http = new HttpClient().WithTimeout(timeout).WithHeaders(headers);
-      return await http.ToStreamAsync(uri, cancellation).ConfigureAwait(false);
+      return await http.ToStreamAsync(uri).ConfigureAwait(false);
     }
 
     throw new InvalidOperationException($"Unsupported URI scheme: {uri.Scheme}");
@@ -415,14 +401,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
-  {
-    if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-    using var stream = uri.ToStream(timeout, headers);
-
-    return stream.ToBytes();
-  }
+  public static IEnumerable<byte> ToBytes(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToStream(timeout, headers).ToBytes(true) : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>
@@ -446,18 +425,15 @@ public static class UriExtensions
   /// </summary>
   /// <param name="uri">The URI from which to download data.</param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
   /// <returns>Response of web server in a binary format.</returns>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this Uri uri, TimeSpan? timeout = null, [EnumeratorCancellation] CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    cancellation.ThrowIfCancellationRequested();
+    await using var stream = await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false);
 
-    await using var stream = await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
-
-    await foreach (var value in stream.ToBytesAsync(cancellation).ConfigureAwait(false))
+    await foreach (var value in stream.ToBytesAsync().ConfigureAwait(false))
     {
       yield return value;
     }
@@ -469,16 +445,13 @@ public static class UriExtensions
   /// <param name="uri">The URI from which to download the data.</param>
   /// <param name="encoding"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
   /// <returns>Web server's response in a text format.</returns>
-  public static async Task<string> ToTextAsync(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<string> ToTextAsync(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    cancellation.ThrowIfCancellationRequested();
-
-    await using var stream = await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    await using var stream = await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false);
     
     return await stream.ToTextAsync(encoding).ConfigureAwait(false);
   }

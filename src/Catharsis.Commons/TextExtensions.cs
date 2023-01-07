@@ -294,33 +294,36 @@ public static class TextExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<char> ToEnumerable(this TextReader reader) => reader.ToEnumerable(4096).SelectMany(chars => chars);
+  public static IEnumerable<char> ToEnumerable(this TextReader reader, bool close = false) => reader.ToEnumerable(4096, close).SelectMany(chars => chars);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <param name="count"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<char[]> ToEnumerable(this TextReader reader, int count)
+  public static IEnumerable<char[]> ToEnumerable(this TextReader reader, int count, bool close = false)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
     if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-    return new TextReaderEnumerable(reader, count);
+    return new TextReaderEnumerable(reader, count, close);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<char> ToAsyncEnumerable(this TextReader reader)
+  public static async IAsyncEnumerable<char> ToAsyncEnumerable(this TextReader reader, bool close = false)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
 
-    await foreach (var elements in reader.ToAsyncEnumerable(4096).ConfigureAwait(false))
+    await foreach (var elements in reader.ToAsyncEnumerable(4096, close).ConfigureAwait(false))
     {
       foreach (var element in elements)
       {
@@ -334,13 +337,14 @@ public static class TextExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <param name="count"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<char[]> ToAsyncEnumerable(this TextReader reader, int count)
+  public static IAsyncEnumerable<char[]> ToAsyncEnumerable(this TextReader reader, int count, bool close = false)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
     if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-    return new TextReaderAsyncEnumerable(reader, count);
+    return new TextReaderAsyncEnumerable(reader, count, close);
   }
 
   /// <summary>
@@ -501,13 +505,15 @@ public static class TextExtensions
   {
     private readonly TextReader reader;
     private readonly int count;
+    private readonly bool close;
 
-    public TextReaderEnumerable(TextReader reader, int count)
+    public TextReaderEnumerable(TextReader reader, int count, bool close)
     {
       if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
       this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
       this.count = count;
+      this.close = close;
     }
 
     public IEnumerator<char[]> GetEnumerator() => new Enumerator(this);
@@ -541,7 +547,13 @@ public static class TextExtensions
 
       public void Reset() { throw new InvalidOperationException(); }
 
-      public void Dispose() {}
+      public void Dispose()
+      {
+        if (parent.close)
+        {
+          parent.reader.Dispose();
+        }
+      }
 
       object IEnumerator.Current => Current;
     }
@@ -551,13 +563,15 @@ public static class TextExtensions
   {
     private readonly TextReader reader;
     private readonly int count;
+    private readonly bool close;
 
-    public TextReaderAsyncEnumerable(TextReader reader, int count)
+    public TextReaderAsyncEnumerable(TextReader reader, int count, bool close)
     {
       if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
       this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
       this.count = count;
+      this.close = close;
     }
 
     public IAsyncEnumerator<char[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this);
@@ -573,7 +587,15 @@ public static class TextExtensions
         buffer = new char[parent.count];
       }
 
-      public ValueTask DisposeAsync() => default;
+      public async ValueTask DisposeAsync()
+      {
+        if (parent.close)
+        {
+          parent.reader.Dispose();
+        }
+
+        await Task.Yield();
+      }
 
       public char[] Current { get; private set; } = Array.Empty<char>();
 

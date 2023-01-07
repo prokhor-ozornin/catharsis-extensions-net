@@ -126,13 +126,12 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsBinaryAsync{T}(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsBinaryAsync{T}(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_DeserializeAsBinaryAsync_Method()
   {
     AssertionExtensions.Should(() => ((Uri) null).DeserializeAsBinaryAsync<object>()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => LocalHost.DeserializeAsBinaryAsync<object>(null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -263,13 +262,12 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsDataContractAsync{T}(Uri, TimeSpan?, CancellationToken, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsDataContractAsync{T}(Uri, TimeSpan?, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_DeserializeAsDataContractAsync_Method()
   {
     AssertionExtensions.Should(() => ((Uri) null).DeserializeAsDataContractAsync<object>()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => LocalHost.DeserializeAsDataContractAsync<object>(null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -506,13 +504,12 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsXmlAsync{T}(Uri, TimeSpan?, CancellationToken, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.DeserializeAsXmlAsync{T}(Uri, TimeSpan?, IEnumerable{(string Name, object Value)}, Type[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_DeserializeAsXmlAsync_Method()
   {
     AssertionExtensions.Should(() => ((Uri) null).DeserializeAsXmlAsync<object>()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => LocalHost.DeserializeAsXmlAsync<object>(null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -688,13 +685,12 @@ public sealed class SerializationExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXmlDocumentAsync(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="SerializationExtensions.ToXmlDocumentAsync(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_ToXmlDocumentAsync_Method()
   {
     AssertionExtensions.Should(() => ((Uri) null).ToXmlDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => LocalHost.ToXmlDocumentAsync(null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }

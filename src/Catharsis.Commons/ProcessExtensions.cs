@@ -122,9 +122,8 @@ public static class ProcessExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="process"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToBytesAsync(this Process process, CancellationToken cancellation = default) => process is not null ? process.StandardOutput.BaseStream.ToBytesAsync(cancellation) : throw new ArgumentNullException(nameof(process));
+  public static IAsyncEnumerable<byte> ToBytesAsync(this Process process) => process is not null ? process.StandardOutput.BaseStream.ToBytesAsync() : throw new ArgumentNullException(nameof(process));
 
   /// <summary>
   ///   <para></para>

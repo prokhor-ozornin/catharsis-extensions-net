@@ -197,10 +197,9 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="uri"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<XmlReader> ToXmlReaderAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false)).ToXmlReader();
+  public static async Task<XmlReader> ToXmlReaderAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToXmlReader();
 
   /// <summary>
   ///   <para></para>
@@ -285,10 +284,9 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="uri"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<XmlDictionaryReader> ToXmlDictionaryReaderAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false)).ToXmlDictionaryReader();
+  public static async Task<XmlDictionaryReader> ToXmlDictionaryReaderAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToXmlDictionaryReader();
 
   /// <summary>
   ///   <para></para>

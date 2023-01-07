@@ -46,6 +46,15 @@ public static class NumericExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static (T Min, T Max) MinMax<T>(this T left, T right) where T : IComparable => left.CompareTo(right) <= 0 ? (left, right) : (right, left);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="count"></param>
   /// <returns></returns>
   public static IEnumerable<object> Nulls(this int count)

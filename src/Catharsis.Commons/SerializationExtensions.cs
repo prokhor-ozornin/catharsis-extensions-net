@@ -108,7 +108,7 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static T DeserializeAsBinary<T>(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.DeserializeAsBinaryAsync<T>(timeout, default, headers).Result;
+  public static T DeserializeAsBinary<T>(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.DeserializeAsBinaryAsync<T>(timeout, headers).Result;
 
   /// <summary>
   ///   <para></para>
@@ -134,16 +134,13 @@ public static class SerializationExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="uri"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsBinaryAsync<T>(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<T> DeserializeAsBinaryAsync<T>(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    cancellation.ThrowIfCancellationRequested();
-
-    await using var stream = await uri.ToStreamAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    await using var stream = await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false);
 
     return stream.DeserializeAsBinary<T>();
   }
@@ -330,7 +327,7 @@ public static class SerializationExtensions
   /// <param name="headers"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsDataContract<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri.DeserializeAsDataContractAsync<T>(timeout, default, headers, types).Result;
+  public static T DeserializeAsDataContract<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri.DeserializeAsDataContractAsync<T>(timeout, default, types).Result;
 
   /// <summary>
   ///   <para></para>
@@ -339,16 +336,13 @@ public static class SerializationExtensions
   /// <param name="uri"></param>
   /// <param name="types"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsDataContractAsync<T>(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  public static async Task<T> DeserializeAsDataContractAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    cancellation.ThrowIfCancellationRequested();
-
-    using var reader = await uri.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers?.AsArray()).ConfigureAwait(false);
 
     return reader.DeserializeAsDataContract<T>(types);
   }
@@ -535,7 +529,7 @@ public static class SerializationExtensions
   /// <param name="headers"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static T DeserializeAsXml<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri.DeserializeAsXmlAsync<T>(timeout, default, headers, types).Result;
+  public static T DeserializeAsXml<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri.DeserializeAsXmlAsync<T>(timeout, headers, types).Result;
 
   /// <summary>
   ///   <para></para>
@@ -544,16 +538,13 @@ public static class SerializationExtensions
   /// <param name="uri"></param>
   /// <param name="types"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<T> DeserializeAsXmlAsync<T>(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  public static async Task<T> DeserializeAsXmlAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    cancellation.ThrowIfCancellationRequested();
-
-    using var reader = await uri.ToXmlReaderAsync(timeout, cancellation, headers?.AsArray()).ConfigureAwait(false);
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers?.AsArray()).ConfigureAwait(false);
 
     return reader.DeserializeAsXml<T>(types);
   }
@@ -719,23 +710,20 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToXmlDocumentAsync(timeout, default, headers).Result; 
+  public static XmlDocument ToXmlDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToXmlDocumentAsync(timeout, headers).Result; 
   
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="uri"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static async Task<XmlDocument> ToXmlDocumentAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<XmlDocument> ToXmlDocumentAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    cancellation.ThrowIfCancellationRequested();
-
-    using var reader = await uri.ToXmlReaderAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers).ConfigureAwait(false);
 
     return reader.ToXmlDocument();
   }
@@ -984,7 +972,7 @@ public static class SerializationExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-    using var reader = await uri.ToXmlReaderAsync(timeout, cancellation, headers).ConfigureAwait(false);
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers).ConfigureAwait(false);
     
     return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }

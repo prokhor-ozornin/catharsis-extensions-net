@@ -1316,6 +1316,8 @@ public sealed class StringExtensionsTest : UnitTest
     {
       static void Validate(IFormatProvider format)
       {
+        format ??= CultureInfo.InvariantCulture;
+
         AssertionExtensions.Should(() => string.Empty.ToSbyte(format)).ThrowExactly<FormatException>();
         AssertionExtensions.Should(() => "invalid".ToSbyte(format)).ThrowExactly<FormatException>();
 
@@ -1336,25 +1338,33 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        StringExtensions.ToSbyte(null, out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToSbyte(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        string.Empty.ToSbyte(out result, culture).Should().BeFalse();
+        string.Empty.ToSbyte(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToSbyte(out result, culture).Should().BeFalse();
+        "invalid".ToSbyte(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        sbyte.MinValue.ToString(culture).ToSbyte(out result, culture).Should().BeTrue();
+        sbyte.MinValue.ToString(format).ToSbyte(out result, format).Should().BeTrue();
         result.Should().Be(sbyte.MinValue);
 
-        sbyte.MaxValue.ToString(culture).ToSbyte(out result, culture).Should().BeTrue();
+        sbyte.MaxValue.ToString(format).ToSbyte(out result, format).Should().BeTrue();
         result.Should().Be(sbyte.MaxValue);
 
-        $" {sbyte.MinValue.ToString(culture)} ".ToSbyte(out result, culture).Should().BeTrue();
+        $" {sbyte.MinValue.ToString(format)} ".ToSbyte(out result, format).Should().BeTrue();
         result.Should().Be(sbyte.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1371,36 +1381,57 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToByte(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToByte(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        byte.MinValue.ToString(culture).ToByte(culture).Should().Be(byte.MinValue);
-        byte.MaxValue.ToString(culture).ToByte(culture).Should().Be(byte.MaxValue);
+        AssertionExtensions.Should(() => string.Empty.ToByte(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToByte(format)).ThrowExactly<FormatException>();
 
-        $" {byte.MinValue.ToString(culture)} ".ToByte(culture).Should().Be(byte.MinValue);
+        byte.MinValue.ToString(format).ToByte(format).Should().Be(byte.MinValue);
+        byte.MaxValue.ToString(format).ToByte(format).Should().Be(byte.MaxValue);
+
+        $" {byte.MinValue.ToString(format)} ".ToByte(format).Should().Be(byte.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToByte(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToByte(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToByte(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToByte(out result, culture).Should().BeFalse();
+        string.Empty.ToByte(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        byte.MinValue.ToString(culture).ToByte(out result, culture).Should().BeTrue();
+        "invalid".ToByte(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        byte.MinValue.ToString(format).ToByte(out result, format).Should().BeTrue();
         result.Should().Be(byte.MinValue);
 
-        byte.MaxValue.ToString(culture).ToByte(out result, culture).Should().BeTrue();
+        byte.MaxValue.ToString(format).ToByte(out result, format).Should().BeTrue();
         result.Should().Be(byte.MaxValue);
 
-        $" {byte.MinValue.ToString(culture)} ".ToByte(out result, culture).Should().BeTrue();
+        $" {byte.MinValue.ToString(format)} ".ToByte(out result, format).Should().BeTrue();
         result.Should().Be(byte.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1417,40 +1448,57 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToShort(null)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToShort(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToShort(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        short.MinValue.ToString(culture).ToShort(culture).Should().Be(short.MinValue);
-        short.MaxValue.ToString(culture).ToShort(culture).Should().Be(short.MaxValue);
+        AssertionExtensions.Should(() => string.Empty.ToShort(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToShort(format)).ThrowExactly<FormatException>();
 
-        $" {short.MinValue.ToString(culture)} ".ToShort(culture).Should().Be(short.MinValue);
+        short.MinValue.ToString(format).ToShort(format).Should().Be(short.MinValue);
+        short.MaxValue.ToString(format).ToShort(format).Should().Be(short.MaxValue);
+
+        $" {short.MinValue.ToString(format)} ".ToShort(format).Should().Be(short.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToShort(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToShort(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToShort(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToShort(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToShort(out result, culture).Should().BeFalse();
+        string.Empty.ToShort(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        short.MinValue.ToString(culture).ToShort(out result, culture).Should().BeTrue();
+        "invalid".ToShort(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        short.MinValue.ToString(format).ToShort(out result, format).Should().BeTrue();
         result.Should().Be(short.MinValue);
 
-        short.MaxValue.ToString(culture).ToShort(out result, culture).Should().BeTrue();
+        short.MaxValue.ToString(format).ToShort(out result, format).Should().BeTrue();
         result.Should().Be(short.MaxValue);
 
-        $" {short.MinValue.ToString(culture)} ".ToShort(out result, culture).Should().BeTrue();
+        $" {short.MinValue.ToString(format)} ".ToShort(out result, format).Should().BeTrue();
         result.Should().Be(short.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1467,40 +1515,57 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUshort(null)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToUshort(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToUshort(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        ushort.MinValue.ToString(culture).ToUshort(culture).Should().Be(ushort.MinValue);
-        ushort.MaxValue.ToString(culture).ToUshort(culture).Should().Be(ushort.MaxValue);
+        AssertionExtensions.Should(() => string.Empty.ToUshort(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToUshort(format)).ThrowExactly<FormatException>();
 
-        $" {ushort.MinValue.ToString(culture)} ".ToUshort(culture).Should().Be(ushort.MinValue);
+        ushort.MinValue.ToString(format).ToUshort(format).Should().Be(ushort.MinValue);
+        ushort.MaxValue.ToString(format).ToUshort(format).Should().Be(ushort.MaxValue);
+
+        $" {ushort.MinValue.ToString(format)} ".ToUshort(format).Should().Be(ushort.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToUshort(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUshort(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToUshort(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToUshort(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToUshort(out result, culture).Should().BeFalse();
+        string.Empty.ToUshort(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        ushort.MinValue.ToString(culture).ToUshort(out result, culture).Should().BeTrue();
+        "invalid".ToUshort(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        ushort.MinValue.ToString(format).ToUshort(out result, format).Should().BeTrue();
         result.Should().Be(ushort.MinValue);
 
-        ushort.MaxValue.ToString(culture).ToUshort(out result, culture).Should().BeTrue();
+        ushort.MaxValue.ToString(format).ToUshort(out result, format).Should().BeTrue();
         result.Should().Be(ushort.MaxValue);
 
-        $" {ushort.MinValue.ToString(culture)} ".ToUshort(out result, culture).Should().BeTrue();
+        $" {ushort.MinValue.ToString(format)} ".ToUshort(out result, format).Should().BeTrue();
         result.Should().Be(ushort.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1517,40 +1582,57 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToInt(null)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToInt(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToInt(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        int.MinValue.ToString(culture).ToInt(culture).Should().Be(int.MinValue);
-        int.MaxValue.ToString(culture).ToInt(culture).Should().Be(int.MaxValue);
+        AssertionExtensions.Should(() => string.Empty.ToInt(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToInt(format)).ThrowExactly<FormatException>();
 
-        $" {int.MinValue.ToString(culture)} ".ToInt(culture).Should().Be(int.MinValue);
+        int.MinValue.ToString(format).ToInt(format).Should().Be(int.MinValue);
+        int.MaxValue.ToString(format).ToInt(format).Should().Be(int.MaxValue);
+
+        $" {int.MinValue.ToString(format)} ".ToInt(format).Should().Be(int.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToInt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToInt(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToInt(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToInt(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToInt(out result, culture).Should().BeFalse();
+        string.Empty.ToInt(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        int.MinValue.ToString(culture).ToInt(out result, culture).Should().BeTrue();
+        "invalid".ToInt(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        int.MinValue.ToString(format).ToInt(out result, format).Should().BeTrue();
         result.Should().Be(int.MinValue);
 
-        int.MaxValue.ToString(culture).ToInt(out result, culture).Should().BeTrue();
+        int.MaxValue.ToString(format).ToInt(out result, format).Should().BeTrue();
         result.Should().Be(int.MaxValue);
 
-        $" {int.MinValue.ToString(culture)} ".ToInt(out result, culture).Should().BeTrue();
+        $" {int.MinValue.ToString(format)} ".ToInt(out result, format).Should().BeTrue();
         result.Should().Be(int.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1567,40 +1649,57 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUint(null)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToUint(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToUint(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        uint.MinValue.ToString(culture).ToUint(culture).Should().Be(uint.MinValue);
-        uint.MaxValue.ToString(culture).ToUint(culture).Should().Be(uint.MaxValue);
+        AssertionExtensions.Should(() => string.Empty.ToUint(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToUint(format)).ThrowExactly<FormatException>();
 
-        $" {uint.MinValue.ToString(culture)} ".ToUint(culture).Should().Be(uint.MinValue);
+        uint.MinValue.ToString(format).ToUint(format).Should().Be(uint.MinValue);
+        uint.MaxValue.ToString(format).ToUint(format).Should().Be(uint.MaxValue);
+
+        $" {uint.MinValue.ToString(format)} ".ToUint(format).Should().Be(uint.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToUint(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUint(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToUint(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToUint(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToUint(out result, culture).Should().BeFalse();
+        string.Empty.ToUint(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        uint.MinValue.ToString(culture).ToUint(out result, culture).Should().BeTrue();
+        "invalid".ToUint(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        uint.MinValue.ToString(format).ToUint(out result, format).Should().BeTrue();
         result.Should().Be(uint.MinValue);
 
-        uint.MaxValue.ToString(culture).ToUint(out result, culture).Should().BeTrue();
+        uint.MaxValue.ToString(format).ToUint(out result, format).Should().BeTrue();
         result.Should().Be(uint.MaxValue);
 
-        $" {uint.MinValue.ToString(culture)} ".ToUint(out result, culture).Should().BeTrue();
+        $" {uint.MinValue.ToString(format)} ".ToUint(out result, format).Should().BeTrue();
         result.Should().Be(uint.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1617,40 +1716,57 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToLong(null)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToLong(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToLong(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        long.MinValue.ToString(culture).ToLong(culture).Should().Be(long.MinValue);
-        long.MaxValue.ToString(culture).ToLong(culture).Should().Be(long.MaxValue);
+        AssertionExtensions.Should(() => string.Empty.ToLong(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToLong(format)).ThrowExactly<FormatException>();
 
-        $" {long.MinValue.ToString(culture)} ".ToLong(culture).Should().Be(long.MinValue);
+        long.MinValue.ToString(format).ToLong(format).Should().Be(long.MinValue);
+        long.MaxValue.ToString(format).ToLong(format).Should().Be(long.MaxValue);
+
+        $" {long.MinValue.ToString(format)} ".ToLong(format).Should().Be(long.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToLong(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToLong(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToLong(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToLong(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToLong(out result, culture).Should().BeFalse();
+        string.Empty.ToLong(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        long.MinValue.ToString(culture).ToLong(out result, culture).Should().BeTrue();
+        "invalid".ToLong(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        long.MinValue.ToString(format).ToLong(out result, format).Should().BeTrue();
         result.Should().Be(long.MinValue);
 
-        long.MaxValue.ToString(culture).ToLong(out result, culture).Should().BeTrue();
+        long.MaxValue.ToString(format).ToLong(out result, format).Should().BeTrue();
         result.Should().Be(long.MaxValue);
 
-        $" {long.MinValue.ToString(culture)} ".ToLong(out result, culture).Should().BeTrue();
+        $" {long.MinValue.ToString(format)} ".ToLong(out result, format).Should().BeTrue();
         result.Should().Be(long.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1667,40 +1783,57 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUlong(null)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToUlong(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToUlong(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        ulong.MinValue.ToString(culture).ToUlong(culture).Should().Be(ulong.MinValue);
-        ulong.MaxValue.ToString(culture).ToUlong(culture).Should().Be(ulong.MaxValue);
+        AssertionExtensions.Should(() => string.Empty.ToUlong(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToUlong(format)).ThrowExactly<FormatException>();
 
-        $" {ulong.MinValue.ToString(culture)} ".ToUlong(culture).Should().Be(ulong.MinValue);
+        ulong.MinValue.ToString(format).ToUlong(format).Should().Be(ulong.MinValue);
+        ulong.MaxValue.ToString(format).ToUlong(format).Should().Be(ulong.MaxValue);
+
+        $" {ulong.MinValue.ToString(format)} ".ToUlong(format).Should().Be(ulong.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToUlong(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUlong(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToUlong(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToUlong(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToUlong(out result, culture).Should().BeFalse();
+        string.Empty.ToUlong(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        ulong.MinValue.ToString(culture).ToUlong(out result, culture).Should().BeTrue();
+        "invalid".ToUlong(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        ulong.MinValue.ToString(format).ToUlong(out result, format).Should().BeTrue();
         result.Should().Be(ulong.MinValue);
 
-        ulong.MaxValue.ToString(culture).ToUlong(out result, culture).Should().BeTrue();
+        ulong.MaxValue.ToString(format).ToUlong(out result, format).Should().BeTrue();
         result.Should().Be(ulong.MaxValue);
 
-        $" {ulong.MinValue.ToString(culture)} ".ToUlong(out result, culture).Should().BeTrue();
+        $" {ulong.MinValue.ToString(format)} ".ToUlong(out result, format).Should().BeTrue();
         result.Should().Be(ulong.MinValue);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1717,56 +1850,73 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToFloat(null)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToFloat(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToFloat(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        float.MinValue.ToString(culture).ToFloat(culture).Should().Be(float.MinValue);
-        float.MaxValue.ToString(culture).ToFloat(culture).Should().Be(float.MaxValue);
-        $" {float.MinValue.ToString(culture)} ".ToFloat(culture).Should().Be(float.MinValue);
+        AssertionExtensions.Should(() => string.Empty.ToFloat(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToFloat(format)).ThrowExactly<FormatException>();
 
-        float.NaN.ToString(culture).ToFloat(culture).Should().Be(float.NaN);
-        float.Epsilon.ToString(culture).ToFloat(culture).Should().Be(float.Epsilon);
-        float.NegativeInfinity.ToString(culture).ToFloat(culture).Should().Be(float.NegativeInfinity);
-        float.PositiveInfinity.ToString(culture).ToFloat(culture).Should().Be(float.PositiveInfinity);
+        float.MinValue.ToString(format).ToFloat(format).Should().Be(float.MinValue);
+        float.MaxValue.ToString(format).ToFloat(format).Should().Be(float.MaxValue);
+        $" {float.MinValue.ToString(format)} ".ToFloat(format).Should().Be(float.MinValue);
+
+        float.NaN.ToString(format).ToFloat(format).Should().Be(float.NaN);
+        float.Epsilon.ToString(format).ToFloat(format).Should().Be(float.Epsilon);
+        float.NegativeInfinity.ToString(format).ToFloat(format).Should().Be(float.NegativeInfinity);
+        float.PositiveInfinity.ToString(format).ToFloat(format).Should().Be(float.PositiveInfinity);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToFloat(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToFloat(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToFloat(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToFloat(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToFloat(out result, culture).Should().BeFalse();
+        string.Empty.ToFloat(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        float.MinValue.ToString(culture).ToFloat(out result, culture).Should().BeTrue();
+        "invalid".ToFloat(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        float.MinValue.ToString(format).ToFloat(out result, format).Should().BeTrue();
         result.Should().Be(float.MinValue);
 
-        float.MaxValue.ToString(culture).ToFloat(out result, culture).Should().BeTrue();
+        float.MaxValue.ToString(format).ToFloat(out result, format).Should().BeTrue();
         result.Should().Be(float.MaxValue);
 
-        $" {float.MinValue.ToString(culture)} ".ToFloat(out result, culture).Should().BeTrue();
+        $" {float.MinValue.ToString(format)} ".ToFloat(out result, format).Should().BeTrue();
         result.Should().Be(float.MinValue);
 
-        float.NaN.ToString(culture).ToFloat(out result, culture).Should().BeTrue();
+        float.NaN.ToString(format).ToFloat(out result, format).Should().BeTrue();
         result.Should().Be(float.NaN);
 
-        float.Epsilon.ToString(culture).ToFloat(out result, culture).Should().BeTrue();
+        float.Epsilon.ToString(format).ToFloat(out result, format).Should().BeTrue();
         result.Should().Be(float.Epsilon);
 
-        float.NegativeInfinity.ToString(culture).ToFloat(out result, culture).Should().BeTrue();
+        float.NegativeInfinity.ToString(format).ToFloat(out result, format).Should().BeTrue();
         result.Should().Be(float.NegativeInfinity);
 
-        float.PositiveInfinity.ToString(culture).ToFloat(out result, culture).Should().BeTrue();
+        float.PositiveInfinity.ToString(format).ToFloat(out result, format).Should().BeTrue();
         result.Should().Be(float.PositiveInfinity);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1783,56 +1933,73 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDouble(null)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToDouble(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToDouble(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        double.MinValue.ToString(culture).ToDouble(culture).Should().Be(double.MinValue);
-        double.MaxValue.ToString(culture).ToDouble(culture).Should().Be(double.MaxValue);
-        $" {double.MinValue.ToString(culture)} ".ToDouble(culture).Should().Be(double.MinValue);
+        AssertionExtensions.Should(() => string.Empty.ToDouble(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToDouble(format)).ThrowExactly<FormatException>();
 
-        double.NaN.ToString(culture).ToDouble(culture).Should().Be(double.NaN);
-        double.Epsilon.ToString(culture).ToDouble(culture).Should().Be(double.Epsilon);
-        double.NegativeInfinity.ToString(culture).ToDouble(culture).Should().Be(double.NegativeInfinity);
-        double.PositiveInfinity.ToString(culture).ToDouble(culture).Should().Be(double.PositiveInfinity);
+        double.MinValue.ToString(format).ToDouble(format).Should().Be(double.MinValue);
+        double.MaxValue.ToString(format).ToDouble(format).Should().Be(double.MaxValue);
+        $" {double.MinValue.ToString(format)} ".ToDouble(format).Should().Be(double.MinValue);
+
+        double.NaN.ToString(format).ToDouble(format).Should().Be(double.NaN);
+        double.Epsilon.ToString(format).ToDouble(format).Should().Be(double.Epsilon);
+        double.NegativeInfinity.ToString(format).ToDouble(format).Should().Be(double.NegativeInfinity);
+        double.PositiveInfinity.ToString(format).ToDouble(format).Should().Be(double.PositiveInfinity);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToDouble(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDouble(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToDouble(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToDouble(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToDouble(out result, culture).Should().BeFalse();
+        string.Empty.ToDouble(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        double.MinValue.ToString(culture).ToDouble(out result, culture).Should().BeTrue();
+        "invalid".ToDouble(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        double.MinValue.ToString(format).ToDouble(out result, format).Should().BeTrue();
         result.Should().Be(double.MinValue);
 
-        double.MaxValue.ToString(culture).ToDouble(out result, culture).Should().BeTrue();
+        double.MaxValue.ToString(format).ToDouble(out result, format).Should().BeTrue();
         result.Should().Be(double.MaxValue);
 
-        $" {double.MinValue.ToString(culture)} ".ToDouble(out result, culture).Should().BeTrue();
+        $" {double.MinValue.ToString(format)} ".ToDouble(out result, format).Should().BeTrue();
         result.Should().Be(double.MinValue);
 
-        double.NaN.ToString(culture).ToDouble(out result, culture).Should().BeTrue();
+        double.NaN.ToString(format).ToDouble(out result, format).Should().BeTrue();
         result.Should().Be(double.NaN);
 
-        double.Epsilon.ToString(culture).ToDouble(out result, culture).Should().BeTrue();
+        double.Epsilon.ToString(format).ToDouble(out result, format).Should().BeTrue();
         result.Should().Be(double.Epsilon);
 
-        double.NegativeInfinity.ToString(culture).ToDouble(out result, culture).Should().BeTrue();
+        double.NegativeInfinity.ToString(format).ToDouble(out result, format).Should().BeTrue();
         result.Should().Be(double.NegativeInfinity);
 
-        double.PositiveInfinity.ToString(culture).ToDouble(out result, culture).Should().BeTrue();
+        double.PositiveInfinity.ToString(format).ToDouble(out result, format).Should().BeTrue();
         result.Should().Be(double.PositiveInfinity);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1849,52 +2016,69 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDecimal(null)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToDecimal(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToDecimal(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        decimal.MinValue.ToString(culture).ToDecimal(culture).Should().Be(decimal.MinValue);
-        decimal.MaxValue.ToString(culture).ToDecimal(culture).Should().Be(decimal.MaxValue);
-        $" {decimal.MinValue.ToString(culture)} ".ToDecimal(culture).Should().Be(decimal.MinValue);
+        AssertionExtensions.Should(() => string.Empty.ToDecimal(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToDecimal(format)).ThrowExactly<FormatException>();
 
-        decimal.MinusOne.ToString(culture).ToDecimal(culture).Should().Be(decimal.MinusOne);
-        decimal.Zero.ToString(culture).ToDecimal(culture).Should().Be(decimal.Zero);
-        decimal.One.ToString(culture).ToDecimal(culture).Should().Be(decimal.One);
+        decimal.MinValue.ToString(format).ToDecimal(format).Should().Be(decimal.MinValue);
+        decimal.MaxValue.ToString(format).ToDecimal(format).Should().Be(decimal.MaxValue);
+        $" {decimal.MinValue.ToString(format)} ".ToDecimal(format).Should().Be(decimal.MinValue);
+
+        decimal.MinusOne.ToString(format).ToDecimal(format).Should().Be(decimal.MinusOne);
+        decimal.Zero.ToString(format).ToDecimal(format).Should().Be(decimal.Zero);
+        decimal.One.ToString(format).ToDecimal(format).Should().Be(decimal.One);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToDecimal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDecimal(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(IFormatProvider format)
       {
-        string.Empty.ToDecimal(out var result, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToDecimal(null, out var result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        "invalid".ToDecimal(out result, culture).Should().BeFalse();
+        string.Empty.ToDecimal(out result, format).Should().BeFalse();
         result.Should().BeNull();
 
-        decimal.MinValue.ToString(culture).ToDecimal(out result, culture).Should().BeTrue();
+        "invalid".ToDecimal(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        decimal.MinValue.ToString(format).ToDecimal(out result, format).Should().BeTrue();
         result.Should().Be(decimal.MinValue);
 
-        decimal.MaxValue.ToString(culture).ToDecimal(out result, culture).Should().BeTrue();
+        decimal.MaxValue.ToString(format).ToDecimal(out result, format).Should().BeTrue();
         result.Should().Be(decimal.MaxValue);
 
-        $" {decimal.MinValue.ToString(culture)} ".ToDecimal(out result, culture).Should().BeTrue();
+        $" {decimal.MinValue.ToString(format)} ".ToDecimal(out result, format).Should().BeTrue();
         result.Should().Be(decimal.MinValue);
 
-        decimal.MinusOne.ToString(culture).ToDecimal(out result, culture).Should().BeTrue();
+        decimal.MinusOne.ToString(format).ToDecimal(out result, format).Should().BeTrue();
         result.Should().Be(decimal.MinusOne);
 
-        decimal.Zero.ToString(culture).ToDecimal(out result, culture).Should().BeTrue();
+        decimal.Zero.ToString(format).ToDecimal(out result, format).Should().BeTrue();
         result.Should().Be(decimal.Zero);
 
-        decimal.One.ToString(culture).ToDecimal(out result, culture).Should().BeTrue();
+        decimal.One.ToString(format).ToDecimal(out result, format).Should().BeTrue();
         result.Should().Be(decimal.One);
+      }
+
+      using (new AssertionScope())
+      {
+        Validate(null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
       }
     }
   }
@@ -1911,7 +2095,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToEnum<Guid>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StringExtensions.ToEnum<Guid>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => Guid.NewGuid().ToString().ToEnum<Guid>()).ThrowExactly<ArgumentException>();
       AssertionExtensions.Should(string.Empty.ToEnum<DayOfWeek>).ThrowExactly<ArgumentException>();
       AssertionExtensions.Should("invalid".ToEnum<DayOfWeek>).ThrowExactly<ArgumentException>();
@@ -1923,7 +2107,14 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToEnum<Guid>(null, out _)).ThrowExactly<ArgumentNullException>();
+      StringExtensions.ToEnum<DayOfWeek>(null, out var result).Should().BeFalse();
+      result.Should().BeNull();
+
+      string.Empty.ToEnum(out result).Should().BeFalse();
+      result.Should().BeNull();
+
+      "invalid".ToEnum(out result).Should().BeFalse();
+      result.Should().BeNull();
 
       Enum.GetNames<DayOfWeek>().ForEach(day =>
       {
@@ -1957,7 +2148,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToGuid(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StringExtensions.ToGuid(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(string.Empty.ToGuid).ThrowExactly<FormatException>();
       AssertionExtensions.Should("invalid".ToGuid).ThrowExactly<FormatException>();
 
@@ -1972,9 +2163,10 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToGuid(null, out _)).ThrowExactly<ArgumentNullException>();
-
       string.Empty.ToGuid(out var result).Should().BeFalse();
+      result.Should().BeNull();
+
+      string.Empty.ToGuid(out result).Should().BeFalse();
       result.Should().BeNull();
 
       "invalid".ToGuid(out result).Should().BeFalse();
@@ -2009,7 +2201,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StringExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       string.Empty.ToUri().Should().NotBeSameAs(string.Empty.ToUri());
 
@@ -2052,47 +2244,48 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUri(null, out _)).ThrowExactly<ArgumentNullException>();
+      StringExtensions.ToUri(null, out var result).Should().BeFalse();
+      result.Should().BeNull();
 
-      string.Empty.ToUri(out var uri);
-      uri.Should().NotBeNull();
-      uri.IsAbsoluteUri.Should().BeFalse();
-      uri.OriginalString.Should().BeEmpty();
-      uri.ToString().Should().BeEmpty();
+      string.Empty.ToUri(out result);
+      result.Should().NotBeNull();
+      result.IsAbsoluteUri.Should().BeFalse();
+      result.OriginalString.Should().BeEmpty();
+      result.ToString().Should().BeEmpty();
 
-      "path".ToUri(out uri);
-      uri.Should().NotBeNull();
-      uri.IsAbsoluteUri.Should().BeFalse();
-      uri.OriginalString.Should().Be("path");
-      uri.ToString().Should().Be("path");
+      "path".ToUri(out result);
+      result.Should().NotBeNull();
+      result.IsAbsoluteUri.Should().BeFalse();
+      result.OriginalString.Should().Be("path");
+      result.ToString().Should().Be("path");
 
-      "scheme:".ToUri(out uri);
-      uri.Should().NotBeNull();
-      uri.IsAbsoluteUri.Should().BeTrue();
-      uri.OriginalString.Should().Be("scheme:");
-      uri.ToString().Should().Be("scheme:");
+      "scheme:".ToUri(out result);
+      result.Should().NotBeNull();
+      result.IsAbsoluteUri.Should().BeTrue();
+      result.OriginalString.Should().Be("scheme:");
+      result.ToString().Should().Be("scheme:");
 
-      "https://user:password@localhost:8080/path?query#id".ToUri(out uri);
-      uri.Should().NotBeNull();
-      uri.IsAbsoluteUri.Should().BeTrue();
-      uri.OriginalString.Should().Be("https://user:password@localhost:8080/path?query#id");
-      uri.ToString().Should().Be("https://user:password@localhost:8080/path?query#id");
-      uri.AbsolutePath.Should().Be("/path");
-      uri.AbsoluteUri.Should().Be("https://user:password@localhost:8080/path?query#id");
-      uri.Authority.Should().Be("localhost:8080");
-      uri.Fragment.Should().Be("#id");
-      uri.Host.Should().Be("localhost");
-      uri.IsDefaultPort.Should().BeFalse();
-      uri.IsFile.Should().BeFalse();
-      uri.IsLoopback.Should().BeTrue();
-      uri.IsUnc.Should().BeFalse();
-      uri.LocalPath.Should().Be("/path");
-      uri.PathAndQuery.Should().Be("/path?query");
-      uri.Port.Should().Be(8080);
-      uri.Query.Should().Be("?query");
-      uri.Scheme.Should().Be(Uri.UriSchemeHttps);
-      uri.UserEscaped.Should().BeFalse();
-      uri.UserInfo.Should().Be("user:password");
+      "https://user:password@localhost:8080/path?query#id".ToUri(out result);
+      result.Should().NotBeNull();
+      result.IsAbsoluteUri.Should().BeTrue();
+      result.OriginalString.Should().Be("https://user:password@localhost:8080/path?query#id");
+      result.ToString().Should().Be("https://user:password@localhost:8080/path?query#id");
+      result.AbsolutePath.Should().Be("/path");
+      result.AbsoluteUri.Should().Be("https://user:password@localhost:8080/path?query#id");
+      result.Authority.Should().Be("localhost:8080");
+      result.Fragment.Should().Be("#id");
+      result.Host.Should().Be("localhost");
+      result.IsDefaultPort.Should().BeFalse();
+      result.IsFile.Should().BeFalse();
+      result.IsLoopback.Should().BeTrue();
+      result.IsUnc.Should().BeFalse();
+      result.LocalPath.Should().Be("/path");
+      result.PathAndQuery.Should().Be("/path?query");
+      result.Port.Should().Be(8080);
+      result.Query.Should().Be("?query");
+      result.Scheme.Should().Be(Uri.UriSchemeHttps);
+      result.UserEscaped.Should().BeFalse();
+      result.UserInfo.Should().Be("user:password");
     }
   }
 
@@ -2108,7 +2301,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToType(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StringExtensions.ToType(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       string.Empty.ToType().Should().BeNull();
 
@@ -2122,36 +2315,36 @@ public sealed class StringExtensionsTest : UnitTest
       {
         nameof(type).ToType().Should().BeNull();
         type.AssemblyQualifiedName.ToType().Should().Be(type);
-        type.AssemblyQualifiedName.ToType().Should().NotBeSameAs(type.AssemblyQualifiedName.ToType());
       });
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToType(null, out _)).ThrowExactly<ArgumentNullException>();
+      StringExtensions.ToType(null, out var result).Should().BeFalse();
+      result.Should().BeNull();
 
-      string.Empty.ToType(out var type).Should().BeFalse();
-      type.Should().BeNull();
+      string.Empty.ToType(out result).Should().BeFalse();
+      result.Should().BeNull();
 
-      RandomName.ToType(out type).Should().BeFalse();
-      type.Should().BeNull();
+      RandomName.ToType(out result).Should().BeFalse();
+      result.Should().BeNull();
 
-      nameof(Object).ToType(out type).Should().BeFalse();
-      type.Should().BeNull();
+      nameof(Object).ToType(out result).Should().BeFalse();
+      result.Should().BeNull();
 
-      typeof(object).FullName.ToType(out type).Should().BeTrue();
-      type.Should().Be(typeof(object));
+      typeof(object).FullName.ToType(out result).Should().BeTrue();
+      result.Should().Be(typeof(object));
 
-      typeof(object).AssemblyQualifiedName.ToType(out type).Should().BeTrue();
-      type.Should().Be(typeof(object));
+      typeof(object).AssemblyQualifiedName.ToType(out result).Should().BeTrue();
+      result.Should().Be(typeof(object));
 
       Assembly.GetExecutingAssembly().DefinedTypes.ForEach(typeInfo =>
       {
-        nameof(typeInfo).ToType(out type).Should().BeFalse();
-        type.Should().BeNull();
+        nameof(typeInfo).ToType(out result).Should().BeFalse();
+        result.Should().BeNull();
 
-        typeInfo.AssemblyQualifiedName.ToType(out type).Should().BeTrue();
-        type.Should().Be(typeInfo);
+        typeInfo.AssemblyQualifiedName.ToType(out result).Should().BeTrue();
+        result.Should().Be(typeInfo);
       });
     }
   }
@@ -2168,32 +2361,54 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDateTime(null)).ThrowExactly<ArgumentNullException>();
-
-      var now = DateTime.UtcNow;
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(DateTime date, IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToDateTime(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToDateTime(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        $" {now.ToString("o", culture)} ".ToDateTime(culture).Should().Be(now);
+        AssertionExtensions.Should(() => string.Empty.ToDateTime(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToDateTime(format)).ThrowExactly<FormatException>();
+
+        $" {date.ToUniversalTime().ToString("o", format)} ".ToDateTime(format).Should().Be(date.ToUniversalTime());
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToDateTime(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        foreach (var date in new[] {DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow})
+        {
+          Validate(date, null);
+          CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(date, culture));
+        }
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDateTime(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      var now = DateTime.UtcNow;
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(DateTime date, IFormatProvider format)
       {
-        string.Empty.ToDateTime(out _, culture).Should().BeFalse();
-        "invalid".ToDateTime(out _, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
 
-        $" {now.ToString("o", culture)} ".ToDateTime(out var result, culture).Should().BeTrue();
-        result.Should().Be(now);
+        StringExtensions.ToDateTime(null, out var result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        string.Empty.ToDateTime(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        "invalid".ToDateTime(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        $" {date.ToUniversalTime().ToString("o", format)} ".ToDateTime(out result, format).Should().BeTrue();
+        result.Should().Be(date.ToUniversalTime());
+      }
+
+      using (new AssertionScope())
+      {
+        foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
+        {
+          Validate(date, null);
+          CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(date, culture));
+        }
       }
     }
   }
@@ -2210,32 +2425,54 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDateTimeOffset(null)).ThrowExactly<ArgumentNullException>();
-
-      var now = DateTimeOffset.UtcNow;
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(DateTimeOffset date, IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToDateTimeOffset(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToDateTimeOffset(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        $" {now.ToString("o", culture)} ".ToDateTimeOffset(culture).Should().Be(now);
+        AssertionExtensions.Should(() => string.Empty.ToDateTimeOffset(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToDateTimeOffset(format)).ThrowExactly<FormatException>();
+
+        $" {date.ToString("o", format)} ".ToDateTimeOffset(format).Should().Be(date);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToDateTimeOffset(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        foreach (var date in new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow })
+        {
+          Validate(date, null);
+          CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(date, culture));
+        }
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDateTimeOffset(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      var now = DateTimeOffset.UtcNow;
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(DateTimeOffset date, IFormatProvider format)
       {
-        string.Empty.ToDateTimeOffset(out _, culture).Should().BeFalse();
-        "invalid".ToDateTimeOffset(out _, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
 
-        $" {now.ToString("o", culture)} ".ToDateTimeOffset(out var result, culture).Should().BeTrue();
-        result.Should().Be(now);
+        StringExtensions.ToDateTimeOffset(null, out var result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        string.Empty.ToDateTimeOffset(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        "invalid".ToDateTimeOffset(out result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        $" {date.ToString("o", format)} ".ToDateTimeOffset(out result, format).Should().BeTrue();
+        result.Should().Be(date);
+      }
+
+      using (new AssertionScope())
+      {
+        foreach (var date in new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow })
+        {
+          Validate(date, null);
+          CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(date, culture));
+        }
       }
     }
   }
@@ -2252,36 +2489,54 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDateOnly(null)).ThrowExactly<ArgumentNullException>();
-
-      var now = DateOnly.FromDateTime(DateTime.UtcNow);
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(DateOnly date, IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToDateOnly(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToDateOnly(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        $" {now.ToLongDateString()} ".ToDateOnly().Should().Be(now);
-        $" {now.ToShortDateString()} ".ToDateOnly().Should().Be(now);
+        AssertionExtensions.Should(() => string.Empty.ToDateOnly(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToDateOnly(format)).ThrowExactly<FormatException>();
+
+        $" {date.ToString("D", format)} ".ToDateOnly(format).Should().Be(date);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToDateOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        foreach (var date in new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() })
+        {
+          Validate(date, null);
+          Validate(date, CultureInfo.InvariantCulture);
+        }
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDateOnly(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      var now = DateOnly.FromDateTime(DateTime.UtcNow);
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(DateOnly date, IFormatProvider format)
       {
-        string.Empty.ToDateOnly(out _, culture).Should().BeFalse();
-        "invalid".ToDateOnly(out _, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
 
-        $" {now.ToLongDateString()} ".ToDateOnly(out var result).Should().BeTrue();
-        result.Should().Be(now);
+        StringExtensions.ToDateOnly(null, out var result, format).Should().BeFalse();
+        result.Should().BeNull();
 
-        $" {now.ToShortDateString()} ".ToDateOnly(out result).Should().BeTrue();
-        result.Should().Be(now);
+        string.Empty.ToDateOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+        
+        "invalid".ToDateOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        $" {date.ToString("D", format)} ".ToDateOnly(out result, format).Should().BeTrue();
+        result.Should().Be(date);
+      }
+
+      using (new AssertionScope())
+      {
+        foreach (var date in new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() })
+        {
+          Validate(date, null);
+          Validate(date, CultureInfo.InvariantCulture);
+        }
       }
     }
   }
@@ -2298,36 +2553,54 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToTimeOnly(null)).ThrowExactly<ArgumentNullException>();
-
-      var now = TimeOnly.FromDateTime(DateTime.UtcNow);
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(TimeOnly time, IFormatProvider format)
       {
-        AssertionExtensions.Should(() => string.Empty.ToTimeOnly(culture)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToTimeOnly(culture)).ThrowExactly<FormatException>();
+        format ??= CultureInfo.InvariantCulture;
 
-        $" {now.ToLongTimeString()} ".ToTimeOnly(culture).Should().Be(now.TruncateToSecondStart());
-        $" {now.ToShortTimeString()} ".ToTimeOnly(culture).Should().Be(now.TruncateToMinuteStart());
+        AssertionExtensions.Should(() => string.Empty.ToTimeOnly(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToTimeOnly(format)).ThrowExactly<FormatException>();
+
+        $" {time.ToString("T", format)} ".ToTimeOnly(format).Should().Be(time.TruncateToSecondStart());
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToTimeOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        foreach (var time in new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() })
+        {
+          Validate(time, null);
+          Validate(time, CultureInfo.InvariantCulture);
+        }
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToTimeOnly(null, out _)).ThrowExactly<ArgumentNullException>();
-
-      var now = TimeOnly.FromDateTime(DateTime.UtcNow);
-
-      foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+      static void Validate(TimeOnly time, IFormatProvider format)
       {
-        string.Empty.ToTimeOnly(out _, culture).Should().BeFalse();
-        "invalid".ToTimeOnly(out _, culture).Should().BeFalse();
+        format ??= CultureInfo.InvariantCulture;
 
-        $" {now.ToLongTimeString()} ".ToTimeOnly(out var result, culture).Should().BeTrue();
-        result.Should().Be(now.TruncateToSecondStart());
+        StringExtensions.ToTimeOnly(null, out var result, format).Should().BeFalse();
+        result.Should().BeNull();
 
-        $" {now.ToShortTimeString()} ".ToTimeOnly(out result, culture).Should().BeTrue();
-        result.Should().Be(now.TruncateToMinuteStart());
+        string.Empty.ToTimeOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        "invalid".ToTimeOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        $" {time.ToString("T", format)} ".ToTimeOnly(out result, format).Should().BeTrue();
+        result.Should().Be(time.TruncateToSecondStart());
+      }
+
+      using (new AssertionScope())
+      {
+        foreach (var date in new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() })
+        {
+          Validate(date, null);
+          Validate(date, CultureInfo.InvariantCulture);
+        }
       }
     }
   }
@@ -2344,7 +2617,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToFile(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StringExtensions.ToFile(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(string.Empty.ToFile).ThrowExactly<ArgumentException>();
 
       var name = Path.GetTempFileName();
@@ -2361,7 +2634,7 @@ public sealed class StringExtensionsTest : UnitTest
       name = RandomName;
       name.ToFile().TryFinallyDelete(file =>
       {
-        file.Exists.Should().BeFalse();
+        file.Exists.Should().BeTrue();
         file.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
         file.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
       });
@@ -2369,8 +2642,6 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToFile(null, out _)).ThrowExactly<ArgumentNullException>();
-
       var name = Path.GetTempFileName();
       name.ToFile(out var file).Should().BeTrue();
       file.TryFinallyDelete(file =>
@@ -2384,7 +2655,7 @@ public sealed class StringExtensionsTest : UnitTest
       name.ToFile(out file).Should().BeFalse();
       file.TryFinallyDelete(file =>
       {
-        file.Exists.Should().BeFalse();
+        file.Exists.Should().BeTrue();
         file.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
         file.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
       });
@@ -2403,7 +2674,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDirectory(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StringExtensions.ToDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(string.Empty.ToDirectory).ThrowExactly<ArgumentException>();
 
       var name = Environment.SystemDirectory;
@@ -2424,8 +2695,6 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDirectory(null, out _)).ThrowExactly<ArgumentNullException>();
-
       var name = Environment.SystemDirectory;
       name.ToDirectory(out var directory).Should().BeTrue();
       directory.Exists.Should().BeTrue();
@@ -2446,7 +2715,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_ToPath_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.ToPath(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StringExtensions.ToPath(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
   }
@@ -2463,7 +2732,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToIpAddress(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => StringExtensions.ToIpAddress(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(string.Empty.ToIpAddress).ThrowExactly<FormatException>();
       AssertionExtensions.Should("localhost".ToIpAddress).ThrowExactly<FormatException>();
 
@@ -2476,9 +2745,10 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToIpAddress(null, out _)).ThrowExactly<ArgumentNullException>();
+      StringExtensions.ToIpAddress(null, out var result).Should().BeFalse();
+      result.Should().BeNull();
 
-      string.Empty.ToIpAddress(out var result).Should().BeFalse();
+      string.Empty.ToIpAddress(out result).Should().BeFalse();
       result.Should().BeNull();
 
       "localhost".ToIpAddress(out result).Should().BeFalse();
@@ -2498,7 +2768,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_ToIpHost_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.ToIpHost(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StringExtensions.ToIpHost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
   }
@@ -2509,7 +2779,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_ToRegex_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.ToRegex(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StringExtensions.ToRegex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     string.Empty.ToRegex().Should().NotBeSameAs(string.Empty.ToRegex());
 
@@ -2532,7 +2802,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_ToStringBuilder_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.ToStringBuilder(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StringExtensions.ToStringBuilder(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     var builder = string.Empty.ToStringBuilder();
     builder.Should().NotBeNull().And.NotBeSameAs(string.Empty.ToStringBuilder());
@@ -2556,7 +2826,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_ToStringReader_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.ToStringReader(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StringExtensions.ToStringReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     var reader = string.Empty.ToStringReader();
     reader.Should().NotBeNull().And.NotBeSameAs(string.Empty.ToStringReader());
@@ -2575,9 +2845,9 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_ToProcess_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.ToProcess(null)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => StringExtensions.ToProcess(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    foreach (var command in new[] { string.Empty, "cmd" })
+    foreach (var command in new[] { string.Empty, ShellCommand })
     {
       var process = command.ToProcess();
 
@@ -2605,7 +2875,6 @@ public sealed class StringExtensionsTest : UnitTest
       process.StartInfo.UserName.Should().BeEmpty();
       process.StartInfo.UseShellExecute.Should().BeFalse();
       process.StartInfo.Verb.Should().BeEmpty();
-      process.StartInfo.Verbs.Should().BeEmpty();
       process.StartInfo.WindowStyle.Should().Be(ProcessWindowStyle.Normal);
       process.StartInfo.WorkingDirectory.Should().BeEmpty();
     }

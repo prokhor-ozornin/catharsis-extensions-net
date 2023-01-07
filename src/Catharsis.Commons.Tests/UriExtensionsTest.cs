@@ -130,7 +130,6 @@ public sealed class UriExtensionsTest : UnitTest
   public void Uri_LinesAsync_Method()
   {
     AssertionExtensions.Should(() => UriExtensions.LinesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
-    AssertionExtensions.Should(() => LocalHost.LinesAsync(null, null, Cancellation).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<TaskCanceledException>();
 
     throw new NotImplementedException();
   }
@@ -175,8 +174,8 @@ public sealed class UriExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="UriExtensions.ToEnumerable(Uri, CancellationToken, (string Name, object Value)[])"/></description></item>
-  ///     <item><description><see cref="UriExtensions.ToEnumerable(Uri, int, CancellationToken, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriExtensions.ToEnumerable(Uri, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriExtensions.ToEnumerable(Uri, int, (string Name, object Value)[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -191,7 +190,6 @@ public sealed class UriExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => UriExtensions.ToEnumerable(null, 1)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => LocalHost.ToEnumerable(0)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
-      AssertionExtensions.Should(() => LocalHost.ToEnumerable(1, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -200,8 +198,8 @@ public sealed class UriExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="UriExtensions.ToAsyncEnumerable(Uri, CancellationToken, (string Name, object Value)[])"/></description></item>
-  ///     <item><description><see cref="UriExtensions.ToAsyncEnumerable(Uri, int, CancellationToken, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriExtensions.ToAsyncEnumerable(Uri, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriExtensions.ToAsyncEnumerable(Uri, int, (string Name, object Value)[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -210,14 +208,12 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
-      AssertionExtensions.Should(() => LocalHost.ToAsyncEnumerable(null, Cancellation).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<TaskCanceledException>();
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null, 1).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
       AssertionExtensions.Should(() => LocalHost.ToAsyncEnumerable(0).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-      AssertionExtensions.Should(() => LocalHost.ToAsyncEnumerable(1, null, Cancellation).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<TaskCanceledException>();
     }
 
     throw new NotImplementedException();
@@ -257,13 +253,12 @@ public sealed class UriExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.ToStreamAsync(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToStreamAsync(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_ToStreamAsync_Method()
   {
     AssertionExtensions.Should(() => UriExtensions.ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => LocalHost.ToStreamAsync(null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -296,32 +291,29 @@ public sealed class UriExtensionsTest : UnitTest
   [Fact]
   public void Uri_ToText_Method()
   {
-    AssertionExtensions.Should(() => UriExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => LocalHost.ToTextAsync(null, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => UriExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.ToBytesAsync(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToBytesAsync(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_ToBytesAsync_Method()
   {
     AssertionExtensions.Should(() => UriExtensions.ToBytesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("uri");
-    AssertionExtensions.Should(() => LocalHost.ToBytesAsync(null, Cancellation).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<TaskCanceledException>();
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.ToTextAsync(Uri, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToTextAsync(Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_ToTextAsync_Method()
   {
     AssertionExtensions.Should(() => UriExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => LocalHost.ToTextAsync(null, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }

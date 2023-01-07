@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Catharsis.Commons;
@@ -116,14 +115,14 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this TcpClient tcp) => tcp.ToEnumerable().IsEmpty();
+  public static bool IsEmpty(this TcpClient tcp) => tcp is not null ? tcp.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="udp"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this UdpClient udp) => udp.ToEnumerable().IsEmpty();
+  public static bool IsEmpty(this UdpClient udp) => udp is not null ? udp.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
   ///   <para></para>
@@ -295,7 +294,13 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
-  public static HttpContent ExecuteHead(this HttpClient http, Uri uri) => http.ExecuteHeadAsync(uri).Result;
+  public static HttpContent ExecuteHead(this HttpClient http, Uri uri)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.ExecuteHeadAsync(uri).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -303,7 +308,13 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
-  public static HttpContent ExecuteGet(this HttpClient http, Uri uri) => http.ExecuteGetAsync(uri).Result;
+  public static HttpContent ExecuteGet(this HttpClient http, Uri uri)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.ExecuteGetAsync(uri).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -312,7 +323,13 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="content"></param>
   /// <returns></returns>
-  public static HttpContent ExecutePost(this HttpClient http, Uri uri, HttpContent content = null) => http.ExecutePostAsync(uri, content).Result;
+  public static HttpContent ExecutePost(this HttpClient http, Uri uri, HttpContent content = null)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.ExecutePostAsync(uri, content).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -321,7 +338,13 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="content"></param>
   /// <returns></returns>
-  public static HttpContent ExecutePut(this HttpClient http, Uri uri, HttpContent content = null) => http.ExecutePutAsync(uri, content).Result;
+  public static HttpContent ExecutePut(this HttpClient http, Uri uri, HttpContent content = null)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.ExecutePutAsync(uri, content).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -330,7 +353,13 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="content"></param>
   /// <returns></returns>
-  public static HttpContent ExecutePatch(this HttpClient http, Uri uri, HttpContent content = null) => http.ExecutePatchAsync(uri, content).Result;
+  public static HttpContent ExecutePatch(this HttpClient http, Uri uri, HttpContent content = null)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.ExecutePatchAsync(uri, content).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -338,7 +367,13 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
-  public static HttpContent ExecuteDelete(this HttpClient http, Uri uri) => http.ExecuteDeleteAsync(uri).Result;
+  public static HttpContent ExecuteDelete(this HttpClient http, Uri uri)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.ExecuteDeleteAsync(uri).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -526,46 +561,52 @@ public static class NetworkExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="tcp"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToEnumerable(this TcpClient tcp) => tcp is not null ? tcp.GetStream().ToEnumerable() : throw new ArgumentNullException(nameof(tcp));
+  public static IEnumerable<byte> ToEnumerable(this TcpClient tcp, bool close = false) => tcp is not null ? tcp.GetStream().ToEnumerable(close) : throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="tcp"></param>
   /// <param name="count"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte[]> ToEnumerable(this TcpClient tcp, int count) => tcp is not null ? tcp.GetStream().ToEnumerable(count) : throw new ArgumentNullException(nameof(tcp));
+  public static IEnumerable<byte[]> ToEnumerable(this TcpClient tcp, int count, bool close = false) => tcp is not null ? tcp.GetStream().ToEnumerable(count, close) : throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="udp"></param>
   /// <param name="endpoint"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte[]> ToEnumerable(this UdpClient udp, IPEndPoint endpoint = null) => udp is not null ? new UdpClientEnumerable(udp, endpoint) : throw new ArgumentNullException(nameof(udp));
+  public static IEnumerable<byte[]> ToEnumerable(this UdpClient udp, IPEndPoint endpoint = null, bool close = false) => udp is not null ? new UdpClientEnumerable(udp, endpoint, close) : throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="tcp"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this TcpClient tcp) => tcp is not null ? tcp.GetStream().ToAsyncEnumerable() : throw new ArgumentNullException(nameof(tcp));
+  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this TcpClient tcp, bool close = false) => tcp is not null ? tcp.GetStream().ToAsyncEnumerable(close) : throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="tcp"></param>
   /// <param name="count"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this TcpClient tcp, int count) => tcp is not null ? tcp.GetStream().ToAsyncEnumerable(count) : throw new ArgumentNullException(nameof(tcp));
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this TcpClient tcp, int count, bool close = false) => tcp is not null ? tcp.GetStream().ToAsyncEnumerable(count, close) : throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="udp"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this UdpClient udp) => udp is not null ? new UdpClientAsyncEnumerable(udp) : throw new ArgumentNullException(nameof(udp));
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this UdpClient udp, bool close = false) => udp is not null ? new UdpClientAsyncEnumerable(udp, close) : throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
   ///   <para></para>
@@ -580,7 +621,13 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
-  public static Stream ToStream(this HttpClient http, Uri uri) => http.ToStreamAsync(uri).Result;
+  public static Stream ToStream(this HttpClient http, Uri uri)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.ToStreamAsync(uri).Result;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -662,10 +709,8 @@ public static class NetworkExtensions
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-    using var stream = http.ToStream(uri);
-
-    return stream.ToBytes();
+    
+    return http.ToStream(uri).ToBytes(true);
   }
 
   /// <summary>
@@ -673,14 +718,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this HttpContent content)
-  {
-    if (content is null) throw new ArgumentNullException(nameof(content));
-
-    using var stream = content.ToStream();
-
-    return stream.ToBytes();
-  }
+  public static IEnumerable<byte> ToBytes(this HttpContent content) => content is not null ? content.ToStream().ToBytes() : throw new ArgumentNullException(nameof(content));
 
   /// <summary>
   ///   <para></para>
@@ -701,18 +739,15 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="http"></param>
   /// <param name="uri"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpClient http, Uri uri, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
     if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    cancellation.ThrowIfCancellationRequested();
+    await using var stream = await http.ToStreamAsync(uri);
 
-    await using var stream = await http.ToStreamAsync(uri, cancellation);
-
-    var result = stream.ToBytesAsync(cancellation).ConfigureAwait(false);
+    var result = stream.ToBytesAsync(true).ConfigureAwait(false);
 
     await foreach (var value in result)
     {
@@ -724,19 +759,12 @@ public static class NetworkExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="content"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpContent content, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpContent content)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
 
-    cancellation.ThrowIfCancellationRequested();
-
-#if NET6_0
-    var result = content.ReadAsByteArrayAsync(cancellation).ConfigureAwait(false);
-#else
-      var result = content.ReadAsByteArrayAsync().ConfigureAwait(false);
-#endif
+    var result = content.ReadAsByteArrayAsync().ConfigureAwait(false);
 
     foreach (var value in await result)
     {
@@ -748,15 +776,12 @@ public static class NetworkExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="tcp"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this TcpClient tcp, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this TcpClient tcp)
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
 
-    cancellation.ThrowIfCancellationRequested();
-
-    await foreach (var element in tcp.GetStream().ToBytesAsync(cancellation).ConfigureAwait(false))
+    await foreach (var element in tcp.GetStream().ToBytesAsync().ConfigureAwait(false))
     {
       yield return element;
     }
@@ -766,19 +791,12 @@ public static class NetworkExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="udp"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this UdpClient udp, [EnumeratorCancellation] CancellationToken cancellation = default)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this UdpClient udp)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
 
-    cancellation.ThrowIfCancellationRequested();
-
-#if NET6_0
-    var result = await udp.ReceiveAsync(cancellation).ConfigureAwait(false);
-#else
     var result = await udp.ReceiveAsync().ConfigureAwait(false);
-#endif
 
     foreach (var element in result.Buffer)
     {
@@ -862,18 +880,16 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> ToTextAsync(this TcpClient tcp, Encoding encoding = null, CancellationToken cancellation = default) => (await tcp.ToBytesAsync(cancellation).ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
+  public static async Task<string> ToTextAsync(this TcpClient tcp, Encoding encoding = null) => (await tcp.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="udp"></param>
   /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> ToTextAsync(this UdpClient udp, Encoding encoding = null, CancellationToken cancellation = default) => (await udp.ToBytesAsync(cancellation).ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
+  public static async Task<string> ToTextAsync(this UdpClient udp, Encoding encoding = null) => (await udp.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
 
   /// <summary>
   ///   <para></para>
@@ -1236,11 +1252,13 @@ public static class NetworkExtensions
   {
     private readonly UdpClient client;
     private IPEndPoint endpoint;
+    private readonly bool close;
 
-    public UdpClientEnumerable(UdpClient client, IPEndPoint endpoint)
+    public UdpClientEnumerable(UdpClient client, IPEndPoint endpoint, bool close)
     {
       this.client = client ?? throw new ArgumentNullException(nameof(client));
       this.endpoint = endpoint;
+      this.close = close;
     }
 
     public IEnumerator<byte[]> GetEnumerator() => new Enumerator(this);
@@ -1269,7 +1287,13 @@ public static class NetworkExtensions
 
       public void Reset() { throw new InvalidOperationException(); }
 
-      public void Dispose() {}
+      public void Dispose()
+      {
+        if (parent.close)
+        {
+          parent.client.Dispose();
+        }
+      }
 
       object IEnumerator.Current => Current;
     }
@@ -1278,8 +1302,13 @@ public static class NetworkExtensions
   private sealed class UdpClientAsyncEnumerable : IAsyncEnumerable<byte[]>
   {
     private readonly UdpClient client;
+    private readonly bool close;
 
-    public UdpClientAsyncEnumerable(UdpClient client) => this.client = client ?? throw new ArgumentNullException(nameof(client));
+    public UdpClientAsyncEnumerable(UdpClient client, bool close)
+    {
+      this.client = client ?? throw new ArgumentNullException(nameof(client));
+      this.close = close;
+    }
 
     public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this, cancellation);
 
@@ -1294,7 +1323,15 @@ public static class NetworkExtensions
         this.cancellation = cancellation;
       }
 
-      public ValueTask DisposeAsync() => default;
+      public async ValueTask DisposeAsync()
+      {
+        if (parent.close)
+        {
+          parent.client.Dispose();
+        }
+
+        await Task.Yield();
+      }
 
       public byte[] Current { get; private set; } = Array.Empty<byte>();
 

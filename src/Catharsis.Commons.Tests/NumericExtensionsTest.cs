@@ -77,6 +77,15 @@ public sealed class NumericExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NumericExtensions.MinMax{T}(T, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MinMax_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NumericExtensions.Nulls(int)"/> method.</para>
   /// </summary>
   [Fact]

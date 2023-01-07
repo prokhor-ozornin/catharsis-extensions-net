@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Text;
 
 namespace Catharsis.Commons;
 
@@ -326,34 +325,14 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this FileInfo file)
-  {
-    if (file is null) throw new ArgumentNullException(nameof(file));
-
-    using var stream = file.ToReadOnlyStream();
-
-    return stream.ToBytes();
-  }
+  public static IEnumerable<byte> ToBytes(this FileInfo file) => file is not null ? file.ToReadOnlyStream().ToBytes(true) : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
   ///  <para>Reads entire contents of file and returns it as a byte array.</para>
   /// </summary>
   /// <param name="file">File to read data from.</param>
-  /// <param name="cancellation"></param>
   /// <returns>Byte content of specified <paramref name="file"/>.</returns>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this FileInfo file, [EnumeratorCancellation] CancellationToken cancellation = default)
-  {
-    if (file is null) throw new ArgumentNullException(nameof(file));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await using var stream = file.ToReadOnlyStream();
-
-    await foreach (var element in stream.ToBytesAsync(cancellation).ConfigureAwait(false))
-    {
-      yield return element;
-    }
-  }
+  public static IAsyncEnumerable<byte> ToBytesAsync(this FileInfo file) => file is not null ? file.ToReadOnlyStream().ToBytesAsync(true) : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
   ///   <para></para>

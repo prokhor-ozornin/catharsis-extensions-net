@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Text;
 using System.IO.Compression;
-using System.Runtime.CompilerServices;
 
 namespace Catharsis.Commons;
 
@@ -309,46 +308,17 @@ public static class StreamExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="stream"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this Stream stream)
-  {
-    if (stream is null) throw new ArgumentNullException(nameof(stream));
-
-    var buffer = new byte[4096];
-
-    for (int count; (count = stream.Read(buffer, 0, buffer.Length)) > 0;)
-    {
-      for (var i = 0; i < count; i++)
-      {
-        yield return buffer[i];
-      }
-    }
-  }
+  public static IEnumerable<byte> ToBytes(this Stream stream, bool close = false) => stream is not null ? stream.ToEnumerable(close) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte"/> array. The input is closed before this method returns.</para>
   /// </summary>
   /// <param name="stream"></param>
-  /// <param name="cancellation"></param>
+  /// <param name="close"></param>
   /// <returns>The <see cref="byte"/> array from that <paramref name="stream"/></returns>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this Stream stream, [EnumeratorCancellation] CancellationToken cancellation = default)
-  {
-    if (stream is null) throw new ArgumentNullException(nameof(stream));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    var buffer = new byte[4096];
-
-    for (int count; (count = await stream.ReadAsync(buffer, 0, buffer.Length, cancellation).ConfigureAwait(false)) > 0;)
-    {
-      cancellation.ThrowIfCancellationRequested();
-
-      for (var i = 0; i < count; i++)
-      {
-        yield return buffer[i];
-      }
-    }
-  }
+  public static IAsyncEnumerable<byte> ToBytesAsync(this Stream stream, bool close = false) => stream is not null ? stream.ToAsyncEnumerable(close) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para></para>
@@ -603,33 +573,36 @@ public static class StreamExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="stream"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToEnumerable(this Stream stream) => stream is not null ? stream.ToEnumerable(4096).SelectMany(bytes => bytes) : throw new ArgumentNullException(nameof(stream));
+  public static IEnumerable<byte> ToEnumerable(this Stream stream, bool close = false) => stream is not null ? stream.ToEnumerable(4096, close).SelectMany(bytes => bytes) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="stream"></param>
   /// <param name="count"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte[]> ToEnumerable(this Stream stream, int count)
+  public static IEnumerable<byte[]> ToEnumerable(this Stream stream, int count, bool close = false)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
     if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-    return new StreamEnumerable(stream, count);
+    return new StreamEnumerable(stream, count, close);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="stream"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Stream stream)
+  public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Stream stream, bool close = false)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
 
-    await foreach (var elements in stream.ToAsyncEnumerable(4096).ConfigureAwait(false))
+    await foreach (var elements in stream.ToAsyncEnumerable(4096, close).ConfigureAwait(false))
     {
       foreach (var element in elements)
       {
@@ -643,13 +616,14 @@ public static class StreamExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <param name="count"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Stream stream, int count)
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Stream stream, int count, bool close = false)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
     if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-    return new StreamAsyncEnumerable(stream, count);
+    return new StreamAsyncEnumerable(stream, count, close);
   }
 
   /// <summary>
@@ -854,13 +828,15 @@ public static class StreamExtensions
   {
     private readonly Stream stream;
     private readonly int count;
+    private readonly bool close;
 
-    public StreamEnumerable(Stream stream, int count)
+    public StreamEnumerable(Stream stream, int count, bool close)
     {
       if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
       this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
       this.count = count;
+      this.close = close;
     }
 
     public IEnumerator<byte[]> GetEnumerator() => new Enumerator(this);
@@ -894,7 +870,13 @@ public static class StreamExtensions
 
       public void Reset() => throw new NotSupportedException();
 
-      public void Dispose() {}
+      public void Dispose()
+      {
+        if (parent.close)
+        {
+          parent.stream.Dispose();
+        }
+      }
 
       object IEnumerator.Current => Current;
     }
@@ -904,13 +886,15 @@ public static class StreamExtensions
   {
     private readonly Stream stream;
     private readonly int count;
+    private readonly bool close;
 
-    public StreamAsyncEnumerable(Stream stream, int count)
+    public StreamAsyncEnumerable(Stream stream, int count, bool close)
     {
       if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
       this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
       this.count = count;
+      this.close = close;
     }
 
     public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this, cancellation);
@@ -928,7 +912,7 @@ public static class StreamExtensions
         buffer = new byte[parent.count];
       }
 
-      public ValueTask DisposeAsync() => default;
+      public ValueTask DisposeAsync() => parent.close ? parent.stream.DisposeAsync() : default;
 
       public byte[] Current { get; private set; } = Array.Empty<byte>();
 

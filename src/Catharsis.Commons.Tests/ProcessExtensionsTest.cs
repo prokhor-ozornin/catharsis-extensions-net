@@ -109,13 +109,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.ToBytesAsync(Process, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.ToBytesAsync(Process)"/> method.</para>
   /// </summary>
   [Fact]
   public void Process_ToBytesAsync_Method()
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
-    AssertionExtensions.Should(() => ShellProcess.ToBytesAsync(Cancellation).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<TaskCanceledException>();
 
     throw new NotImplementedException();
   }

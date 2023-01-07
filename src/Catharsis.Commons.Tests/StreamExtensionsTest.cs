@@ -577,7 +577,7 @@ public sealed class StreamExtensionsTest : UnitTest
   }
   
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytesAsync(Stream, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToBytesAsync(Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void Stream_ToBytesAsync_Method()
@@ -585,7 +585,6 @@ public sealed class StreamExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => StreamExtensions.ToBytesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("stream");
-      AssertionExtensions.Should(() => Stream.Null.ToBytesAsync(Cancellation).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<TaskCanceledException>();
 
       Stream.Null.ToBytesAsync().ToArray().Should().BeEmpty();
 
@@ -925,8 +924,8 @@ public sealed class StreamExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="StreamExtensions.ToEnumerable(Stream)"/></description></item>
-  ///     <item><description><see cref="StreamExtensions.ToEnumerable(Stream, int)"/></description></item>
+  ///     <item><description><see cref="StreamExtensions.ToEnumerable(Stream, bool)"/></description></item>
+  ///     <item><description><see cref="StreamExtensions.ToEnumerable(Stream, int, bool)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -949,8 +948,8 @@ public sealed class StreamExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="StreamExtensions.ToAsyncEnumerable(Stream)"/></description></item>
-  ///     <item><description><see cref="StreamExtensions.ToAsyncEnumerable(Stream, int)"/></description></item>
+  ///     <item><description><see cref="StreamExtensions.ToAsyncEnumerable(Stream, bool)"/></description></item>
+  ///     <item><description><see cref="StreamExtensions.ToAsyncEnumerable(Stream, int, bool)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]

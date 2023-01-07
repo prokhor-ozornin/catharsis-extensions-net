@@ -213,9 +213,8 @@ public static class BinaryExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader, CancellationToken cancellation = default) => reader is not null ? reader.BaseStream.ToBytesAsync(cancellation) : throw new ArgumentNullException(nameof(reader));
+  public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToBytesAsync() : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>

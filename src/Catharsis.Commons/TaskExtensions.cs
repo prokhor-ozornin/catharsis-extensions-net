@@ -186,7 +186,7 @@ public static class TaskExtensions
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static T Execute<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
+  public static T Execute<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null) => task is not null ? task.ExecuteAsync(success, failure, cancellation).Await() : throw new ArgumentNullException(nameof(task));
 
   /// <summary>
   ///   <para></para>

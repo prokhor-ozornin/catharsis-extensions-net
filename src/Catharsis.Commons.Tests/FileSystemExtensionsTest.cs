@@ -453,13 +453,12 @@ public sealed class FileSystemExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="FileSystemExtensions.ToBytesAsync(FileInfo, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="FileSystemExtensions.ToBytesAsync(FileInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void FileInfo_ToBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => FileSystemExtensions.ToBytesAsync(null).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<ArgumentNullException>().WithParameterName("file");
-    AssertionExtensions.Should(() => RandomEmptyFile.ToBytesAsync(Cancellation).ToArray()).ThrowExactly<AggregateException>().WithInnerExceptionExactly<TaskCanceledException>();
+    AssertionExtensions.Should(() => FileSystemExtensions.ToBytesAsync(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     var bytes = RandomBytes;
 

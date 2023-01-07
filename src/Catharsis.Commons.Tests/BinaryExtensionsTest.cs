@@ -569,7 +569,7 @@ public sealed class BinaryExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryExtensions.ToBytesAsync(BinaryReader, CancellationToken)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BinaryExtensions.ToBytesAsync(BinaryReader)"/> method.</para>
   /// </summary>
   [Fact]
   public void BinaryReader_ToBytesAsync_Method()
@@ -578,8 +578,6 @@ public sealed class BinaryExtensionsTest : UnitTest
     {
       using (reader)
       {
-        AssertionExtensions.Should(() => reader.ToBytesAsync(Cancellation).ToArrayAsync()).ThrowExactlyAsync<OperationCanceledException>().Await();
-
         var bytes = reader.BaseStream.ToBytesAsync().ToArray();
         reader.BaseStream.MoveToStart();
 

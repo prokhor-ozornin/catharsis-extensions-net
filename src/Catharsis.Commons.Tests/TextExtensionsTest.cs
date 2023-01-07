@@ -523,8 +523,8 @@ public sealed class TextExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="TextExtensions.ToEnumerable(TextReader)"/></description></item>
-  ///     <item><description><see cref="TextExtensions.ToEnumerable(TextReader, int)"/></description></item>
+  ///     <item><description><see cref="TextExtensions.ToEnumerable(TextReader, bool)"/></description></item>
+  ///     <item><description><see cref="TextExtensions.ToEnumerable(TextReader, int, bool)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -547,8 +547,8 @@ public sealed class TextExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="TextExtensions.ToAsyncEnumerable(TextReader)"/></description></item>
-  ///     <item><description><see cref="TextExtensions.ToAsyncEnumerable(TextReader, int)"/></description></item>
+  ///     <item><description><see cref="TextExtensions.ToAsyncEnumerable(TextReader, bool)"/></description></item>
+  ///     <item><description><see cref="TextExtensions.ToAsyncEnumerable(TextReader, int, bool)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]

@@ -331,7 +331,7 @@ public sealed class XmlExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReaderAsync(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReaderAsync(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_ToXmlReaderAsync_Method()
@@ -520,13 +520,12 @@ public sealed class XmlExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryReaderAsync(Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlDictionaryReaderAsync(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_ToXmlDictionaryReaderAsync_Method()
   {
     AssertionExtensions.Should(() => ((Uri) null).ToXmlDictionaryReaderAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => LocalHost.ToXmlDictionaryReaderAsync(null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
