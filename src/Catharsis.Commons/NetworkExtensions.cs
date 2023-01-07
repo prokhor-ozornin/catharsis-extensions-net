@@ -810,14 +810,20 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
-  public static string ToText(this HttpClient http, Uri uri) => http.ToTextAsync(uri).Result;
+  public static string ToText(this HttpClient http, Uri uri)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.ToTextAsync(uri).Result;
+  }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
-  public static string ToText(this HttpContent content) => content.ToTextAsync().Result;
+  public static string ToText(this HttpContent content) => content is not null ? content.ToTextAsync().Result : throw new ArgumentNullException(nameof(content));
 
   /// <summary>
   ///   <para></para>
@@ -898,7 +904,14 @@ public static class NetworkExtensions
   /// <param name="bytes"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
-  public static HttpContent WriteBytes(this HttpClient http, IEnumerable<byte> bytes, Uri uri) => http.WriteBytesAsync(bytes, uri).Result;
+  public static HttpContent WriteBytes(this HttpClient http, IEnumerable<byte> bytes, Uri uri)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.WriteBytesAsync(bytes, uri).Result;
+  }
   
   /// <summary>
   ///   <para></para>
@@ -1005,7 +1018,14 @@ public static class NetworkExtensions
   /// <param name="text"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
-  public static HttpContent WriteText(this HttpClient http, string text, Uri uri) => http.WriteTextAsync(text, uri).Result;
+  public static HttpContent WriteText(this HttpClient http, string text, Uri uri)
+  {
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    return http.WriteTextAsync(text, uri).Result;
+  }
 
   /// <summary>
   ///   <para></para>

@@ -17,6 +17,9 @@ public abstract class UnitTest : IDisposable
   /// </summary>
   protected static CancellationToken Cancellation { get; } = new(true);
 
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   protected static Uri LocalHost { get; } = "https://localhost".ToUri();
 
   /// <summary>
