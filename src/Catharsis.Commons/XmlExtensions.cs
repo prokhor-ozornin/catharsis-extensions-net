@@ -172,15 +172,6 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="uri"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  public static XmlReader ToXmlReader(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToStream(timeout, headers).ToXmlReader();
-  
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
   public static XmlReader ToXmlReader(this string text) => text.ToStringReader().ToXmlReader();
@@ -191,6 +182,15 @@ public static class XmlExtensions
   /// <param name="xml"></param>
   /// <returns></returns>
   public static XmlReader ToXmlReader(this XDocument xml) => xml is not null ? xml.CreateReader() : throw new ArgumentNullException(nameof(xml));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static XmlReader ToXmlReader(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToStream(timeout, headers).ToXmlReader();
 
   /// <summary>
   ///   <para></para>
@@ -331,6 +331,14 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="reader"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async Task<byte[]> ToBytesAsync(this XmlReader reader, Encoding encoding = null) => (await reader.ToTextAsync().ConfigureAwait(false)).ToBytes(encoding);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="xml"></param>
   /// <returns></returns>
   public static byte[] ToBytes(this XmlDocument xml)
@@ -363,14 +371,6 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static async Task<byte[]> ToBytesAsync(this XmlReader reader, Encoding encoding = null) => (await reader.ToTextAsync().ConfigureAwait(false)).ToBytes(encoding);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="xml"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
@@ -393,6 +393,13 @@ public static class XmlExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   public static string ToText(this XmlReader reader) => reader is not null ? reader.ReadOuterXml() : throw new ArgumentNullException(nameof(reader));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
+  public static async Task<string> ToTextAsync(this XmlReader reader) => reader is not null ? await reader.ReadOuterXmlAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -425,14 +432,7 @@ public static class XmlExtensions
 
     return writer.ToString();
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
-  public static async Task<string> ToTextAsync(this XmlReader reader) => reader is not null ? await reader.ReadOuterXmlAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(reader));
-  
+   
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -471,6 +471,23 @@ public static class XmlExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async Task<XmlWriter> WriteBytesAsync(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
+  {
+    if (destination is null)
+      throw new ArgumentNullException(nameof(destination));
+    if (bytes is null)
+      throw new ArgumentNullException(nameof(bytes));
+
+    return await destination.WriteTextAsync(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <returns></returns>
   public static XmlWriter WriteText(this XmlWriter destination, string text)
@@ -481,21 +498,6 @@ public static class XmlExtensions
     destination.WriteRaw(text);
 
     return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="bytes"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static async Task<XmlWriter> WriteBytesAsync(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    return await destination.WriteTextAsync(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -534,6 +536,25 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, XmlWriter destination, Encoding encoding = null)
+  {
+    if (bytes is null)
+      throw new ArgumentNullException(nameof(bytes));
+    if (destination is null)
+      throw new ArgumentNullException(nameof(destination));
+
+    await destination.WriteBytesAsync(bytes, encoding).ConfigureAwait(false);
+
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="text"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
@@ -545,23 +566,6 @@ public static class XmlExtensions
     destination.WriteText(text);
 
     return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, XmlWriter destination, Encoding encoding = null)
-  {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    await destination.WriteBytesAsync(bytes, encoding).ConfigureAwait(false);
-
-    return bytes;
   }
 
   /// <summary>

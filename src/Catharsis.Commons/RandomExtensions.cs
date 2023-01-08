@@ -663,7 +663,14 @@ public static class RandomExtensions
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <returns></returns>
-  public static char Char(this Random random, char? from = null, char? to = null) => random is not null ? (char) random.Next(from ?? char.MinValue, to ?? char.MaxValue) : throw new ArgumentNullException(nameof(random));
+  public static char Char(this Random random, char? from = null, char? to = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+
+    var range = from.GetValueOrDefault(char.MinValue).MinMax(to.GetValueOrDefault(char.MaxValue));
+
+    return (char) random.Next(range.Min, range.Max);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -745,7 +752,19 @@ public static class RandomExtensions
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <returns></returns>
-  public static string String(this Random random, int count, char? from = null, char? to = null) => random is not null ? count > 0 ? random.CharSequence(count, from, to).AsArray().ToText() : string.Empty : throw new ArgumentNullException(nameof(random));
+  public static string String(this Random random, int count, char? from = null, char? to = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+    
+    if (count == 0)
+    {
+      return string.Empty;
+    }
+
+    return random.CharSequence(count, from, to).AsArray().ToText();
+  }
+
 
   /// <summary>
   ///   <para></para>
@@ -792,6 +811,7 @@ public static class RandomExtensions
   public static IEnumerable<string> StringSequence(this Random random, int size, int count, char? from = null, char? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
+    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     return count.Objects(() => random.String(size, from, to));
@@ -808,6 +828,7 @@ public static class RandomExtensions
   public static IEnumerable<string> StringSequenceInRange(this Random random, int size, int count, params Range[] ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
+    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     if (count == 0)
@@ -848,6 +869,7 @@ public static class RandomExtensions
   public static IEnumerable<string> DigitsSequence(this Random random, int size, int count)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
+    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     return count.Objects(() => random.Digits(size));
@@ -871,6 +893,7 @@ public static class RandomExtensions
   public static IEnumerable<string> LettersSequence(this Random random, int size, int count)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
+    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     return count.Objects(() => random.Letters(size));
@@ -894,6 +917,7 @@ public static class RandomExtensions
   public static IEnumerable<string> AlphaDigitsSequence(this Random random, int size, int count)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
+    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     return count.Objects(() => random.AlphaDigits(size));
@@ -972,6 +996,7 @@ public static class RandomExtensions
   public static IEnumerable<SecureString> SecureStringSequence(this Random random, int size, int count, char? from = null, char? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
+    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     return count.Objects(() => random.SecureString(size, from, to));
@@ -1060,7 +1085,13 @@ public static class RandomExtensions
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <returns></returns>
-  public static IEnumerable<DateTimeOffset> DateTimeOffsetSequence(this Random random, int count, DateTimeOffset? from = null, DateTimeOffset? to = null) => random is not null ? count.Objects(() => random.DateTimeOffset(from, to)) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<DateTimeOffset> DateTimeOffsetSequence(this Random random, int count, DateTimeOffset? from = null, DateTimeOffset? to = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.DateTimeOffset(from, to));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1079,7 +1110,13 @@ public static class RandomExtensions
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <returns></returns>
-  public static IEnumerable<DateOnly> DateOnlySequence(this Random random, int count, DateOnly? from = null, DateOnly? to = null) => random is not null ? count.Objects(() => random.DateOnly(from, to)) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<DateOnly> DateOnlySequence(this Random random, int count, DateOnly? from = null, DateOnly? to = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.DateOnly(from, to));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1098,7 +1135,13 @@ public static class RandomExtensions
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <returns></returns>
-  public static IEnumerable<TimeOnly> TimeOnlySequence(this Random random, int count, TimeOnly? from = null, TimeOnly? to = null) => random is not null ? count.Objects(() => random.TimeOnly(from, to)) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<TimeOnly> TimeOnlySequence(this Random random, int count, TimeOnly? from = null, TimeOnly? to = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.TimeOnly(from, to));
+  }
 #endif
 
   /// <summary>
@@ -1131,7 +1174,13 @@ public static class RandomExtensions
   /// <param name="random"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<Guid> GuidSequence(this Random random, int count) => random is not null ? count.Objects(random.Guid) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<Guid> GuidSequence(this Random random, int count)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(random.Guid);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1139,7 +1188,13 @@ public static class RandomExtensions
   /// <param name="random"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static object Object(this Random random, IEnumerable<Type> types) => random is not null ? types.IsEmpty() ? new object() : types.Random().Instance()! : throw new ArgumentNullException(nameof(random));
+  public static object Object(this Random random, IEnumerable<Type> types)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (types is null) throw new ArgumentNullException(nameof(types));
+
+    return types.IsEmpty() ? new object() : types.Random().Instance();
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1156,7 +1211,14 @@ public static class RandomExtensions
   /// <param name="count"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  public static IEnumerable<object> ObjectSequence(this Random random, int count, IEnumerable<Type> types) => random is not null ? count.Objects(() => random.Object(types)) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<object> ObjectSequence(this Random random, int count, IEnumerable<Type> types)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (types is null) throw new ArgumentNullException(nameof(types));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.Object(types));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1180,7 +1242,13 @@ public static class RandomExtensions
   /// <param name="random"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<string> FileNameSequence(this Random random, int count) => random is not null ? count.Objects(random.FileName) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<string> FileNameSequence(this Random random, int count)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(random.FileName);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1195,7 +1263,13 @@ public static class RandomExtensions
   /// <param name="random"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<string> DirectoryNameSequence(this Random random, int count) => random is not null ? count.Objects(random.DirectoryName) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<string> DirectoryNameSequence(this Random random, int count)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(random.DirectoryName);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1212,7 +1286,13 @@ public static class RandomExtensions
   /// <param name="count"></param>
   /// <param name="directory"></param>
   /// <returns></returns>
-  public static IEnumerable<string> FilePathSequence(this Random random, int count, DirectoryInfo directory = null) => random is not null ? count.Objects(() => random.FilePath(directory)) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<string> FilePathSequence(this Random random, int count, DirectoryInfo directory = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.FilePath(directory));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1229,7 +1309,13 @@ public static class RandomExtensions
   /// <param name="count"></param>
   /// <param name="parent"></param>
   /// <returns></returns>
-  public static IEnumerable<string> DirectoryPathSequence(this Random random, int count, DirectoryInfo parent = null) => random is not null ? count.Objects(() => random.DirectoryPath(parent)) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<string> DirectoryPathSequence(this Random random, int count, DirectoryInfo parent = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.DirectoryPath(parent));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1246,7 +1332,13 @@ public static class RandomExtensions
   /// <param name="count"></param>
   /// <param name="parent"></param>
   /// <returns></returns>
-  public static IEnumerable<DirectoryInfo> DirectorySequence(this Random random, int count, DirectoryInfo parent = null) => random is not null ? count.Objects(() => random.Directory(parent)) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<DirectoryInfo> DirectorySequence(this Random random, int count, DirectoryInfo parent = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.Directory(parent));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1263,7 +1355,13 @@ public static class RandomExtensions
   /// <param name="count"></param>
   /// <param name="directory"></param>
   /// <returns></returns>
-  public static IEnumerable<FileInfo> FileSequence(this Random random, int count, DirectoryInfo directory = null) => random is not null ? count.Objects(() => random.File(directory)) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<FileInfo> FileSequence(this Random random, int count, DirectoryInfo directory = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.File(directory));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -1389,6 +1487,57 @@ public static class RandomExtensions
   /// </summary>
   /// <param name="random"></param>
   /// <param name="size"></param>
+  /// <param name="directory"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="ranges"></param>
+  /// <returns></returns>
+  public static async Task<FileInfo> BinaryFileInRangeAsync(this Random random, int size, DirectoryInfo directory = null, CancellationToken cancellation = default, params Range[] ranges)
+  {
+    if (random is null)
+      throw new ArgumentNullException(nameof(random));
+    if (size < 0)
+      throw new ArgumentOutOfRangeException(nameof(size));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    if (size == 0)
+    {
+      return await random.BinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
+    }
+
+    switch (ranges.Length)
+    {
+      case 0:
+        return await random.BinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
+
+      case 1:
+        var range = ranges.First();
+        return await random.BinaryFileAsync(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false);
+
+      default:
+        var totalRange = ranges.ToRange();
+        var bytes = size.Objects(() => (byte) totalRange.Random());
+
+        var file = random.File(directory);
+
+        try
+        {
+          await bytes.WriteToAsync(file, cancellation).ConfigureAwait(false);
+        }
+        catch
+        {
+          file.Delete();
+        }
+
+        return file;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
   /// <param name="count"></param>
   /// <param name="from"></param>
   /// <param name="to"></param>
@@ -1403,6 +1552,34 @@ public static class RandomExtensions
     for (var i = 1; i <= count; i++)
     {
       yield return random.BinaryFile(size, from, to, directory);
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="count"></param>
+  /// <param name="from"></param>
+  /// <param name="to"></param>
+  /// <param name="directory"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async IAsyncEnumerable<FileInfo> BinaryFileSequenceAsync(this Random random, int size, int count, byte? from = null, byte? to = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
+  {
+    if (random is null)
+      throw new ArgumentNullException(nameof(random));
+    if (size < 0)
+      throw new ArgumentOutOfRangeException(nameof(size));
+    if (count < 0)
+      throw new ArgumentOutOfRangeException(nameof(count));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    for (var i = 1; i <= count; i++)
+    {
+      yield return await random.BinaryFileAsync(size, from, to, directory, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1468,80 +1645,6 @@ public static class RandomExtensions
         }
 
         break;
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="random"></param>
-  /// <param name="size"></param>
-  /// <param name="directory"></param>
-  /// <param name="cancellation"></param>
-  /// <param name="ranges"></param>
-  /// <returns></returns>
-  public static async Task<FileInfo> BinaryFileInRangeAsync(this Random random, int size, DirectoryInfo directory = null, CancellationToken cancellation = default, params Range[] ranges)
-  {
-    if (random is null) throw new ArgumentNullException(nameof(random));
-    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    if (size == 0)
-    {
-      return await random.BinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
-    }
-
-    switch (ranges.Length)
-    {
-      case 0:
-        return await random.BinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
-
-      case 1:
-        var range = ranges.First();
-        return await random.BinaryFileAsync(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false);
-
-      default:
-        var totalRange = ranges.ToRange();
-        var bytes = size.Objects(() => (byte) totalRange.Random());
-        
-        var file = random.File(directory);
-
-        try
-        {
-          await bytes.WriteToAsync(file, cancellation).ConfigureAwait(false);
-        }
-        catch
-        {
-          file.Delete();
-        }
-
-        return file;
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="random"></param>
-  /// <param name="size"></param>
-  /// <param name="count"></param>
-  /// <param name="from"></param>
-  /// <param name="to"></param>
-  /// <param name="directory"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async IAsyncEnumerable<FileInfo> BinaryFileSequenceAsync(this Random random, int size, int count, byte? from = null, byte? to = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
-  {
-    if (random is null) throw new ArgumentNullException(nameof(random));
-    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
-    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    for (var i = 1; i <= count; i++)
-    {
-      yield return await random.BinaryFileAsync(size, from, to, directory, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1644,6 +1747,36 @@ public static class RandomExtensions
   /// <param name="random"></param>
   /// <param name="size"></param>
   /// <param name="encoding"></param>
+  /// <param name="from"></param>
+  /// <param name="to"></param>
+  /// <param name="directory"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<FileInfo> TextFileAsync(this Random random, int size, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
+  {
+    if (random is null)
+      throw new ArgumentNullException(nameof(random));
+    if (size < 0)
+      throw new ArgumentOutOfRangeException(nameof(size));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    if (size == 0)
+    {
+      return random.File(directory);
+    }
+
+    var text = random.String(size, from, to);
+
+    return await random.File(directory).WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="encoding"></param>
   /// <param name="directory"></param>
   /// <param name="ranges"></param>
   /// <returns></returns>
@@ -1678,6 +1811,44 @@ public static class RandomExtensions
   /// </summary>
   /// <param name="random"></param>
   /// <param name="size"></param>
+  /// <param name="encoding"></param>
+  /// <param name="directory"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="ranges"></param>
+  /// <returns></returns>
+  public static async Task<FileInfo> TextFileInRangeAsync(this Random random, int size, Encoding encoding = null, DirectoryInfo directory = null, CancellationToken cancellation = default, params Range[] ranges)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    if (size == 0)
+    {
+      return await random.TextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
+    }
+
+    switch (ranges.Length)
+    {
+      case 0:
+        return await random.TextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
+
+      case 1:
+        var range = ranges.First();
+        return await random.TextFileAsync(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false);
+
+      default:
+        var totalRange = ranges.ToRange();
+        var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
+        return await random.File(directory).WriteTextAsync(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
   /// <param name="count"></param>
   /// <param name="encoding"></param>
   /// <param name="from"></param>
@@ -1693,6 +1864,35 @@ public static class RandomExtensions
     for (var i = 1; i <= count; i++)
     {
       yield return random.TextFile(size, encoding, from, to, directory);
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="size"></param>
+  /// <param name="count"></param>
+  /// <param name="encoding"></param>
+  /// <param name="from"></param>
+  /// <param name="to"></param>
+  /// <param name="directory"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async IAsyncEnumerable<FileInfo> TextFileSequenceAsync(this Random random, int size, int count, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
+  {
+    if (random is null)
+      throw new ArgumentNullException(nameof(random));
+    if (size < 0)
+      throw new ArgumentOutOfRangeException(nameof(size));
+    if (count < 0)
+      throw new ArgumentOutOfRangeException(nameof(count));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    for (var i = 1; i <= count; i++)
+    {
+      yield return await random.TextFileAsync(size, encoding, from, to, directory, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1747,98 +1947,6 @@ public static class RandomExtensions
         }
 
         break;
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="random"></param>
-  /// <param name="size"></param>
-  /// <param name="encoding"></param>
-  /// <param name="from"></param>
-  /// <param name="to"></param>
-  /// <param name="directory"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<FileInfo> TextFileAsync(this Random random, int size, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
-  {
-    if (random is null) throw new ArgumentNullException(nameof(random));
-    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    if (size == 0)
-    {
-      return random.File(directory);
-    }
-
-    var text = random.String(size, from, to);
-
-    return await random.File(directory).WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="random"></param>
-  /// <param name="size"></param>
-  /// <param name="encoding"></param>
-  /// <param name="directory"></param>
-  /// <param name="cancellation"></param>
-  /// <param name="ranges"></param>
-  /// <returns></returns>
-  public static async Task<FileInfo> TextFileInRangeAsync(this Random random, int size, Encoding encoding = null, DirectoryInfo directory = null, CancellationToken cancellation = default, params Range[] ranges)
-  {
-    if (random is null) throw new ArgumentNullException(nameof(random));
-    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    if (size == 0)
-    {
-      return await random.TextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
-    }
-
-    switch (ranges.Length)
-    {
-      case 0:
-        return await random.TextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
-
-      case 1:
-        var range = ranges.First();
-        return await random.TextFileAsync(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false);
-
-      default:
-        var totalRange = ranges.ToRange();
-        var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-        return await random.File(directory).WriteTextAsync(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="random"></param>
-  /// <param name="size"></param>
-  /// <param name="count"></param>
-  /// <param name="encoding"></param>
-  /// <param name="from"></param>
-  /// <param name="to"></param>
-  /// <param name="directory"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async IAsyncEnumerable<FileInfo> TextFileSequenceAsync(this Random random, int size, int count, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
-  {
-    if (random is null) throw new ArgumentNullException(nameof(random));
-    if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
-    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    for (var i = 1; i <= count; i++)
-    {
-      yield return await random.TextFileAsync(size, encoding, from, to, directory, cancellation).ConfigureAwait(false);
     }
   }
 
@@ -1941,7 +2049,13 @@ public static class RandomExtensions
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <returns></returns>
-  public static IEnumerable<IPAddress> IpAddressSequence(this Random random, int count, uint? from = null, uint? to = null) => random is not null ? count.Objects(() => random.IpAddress(from, to)) : throw new ArgumentNullException(nameof(random));
+  public static IEnumerable<IPAddress> IpAddressSequence(this Random random, int count, uint? from = null, uint? to = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.IpAddress(from, to));
+  }
 
   /// <summary>
   ///   <para></para>
@@ -2113,31 +2227,6 @@ public static class RandomExtensions
   /// </summary>
   /// <param name="random"></param>
   /// <param name="count"></param>
-  /// <param name="ranges"></param>
-  /// <returns></returns>
-  public static MemoryStream MemoryStreamInRange(this Random random, int count, params Range[] ranges)
-  {
-    if (random is null) throw new ArgumentNullException(nameof(random));
-    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    var stream = new MemoryStream();
-
-    if (count > 0)
-    {
-      var range = ranges.ToRange();
-      var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.ByteSequence(count)).AsArray();
-
-      stream.WriteBytes(bytes).MoveToStart();
-    }
-
-    return stream;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="random"></param>
-  /// <param name="count"></param>
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <param name="cancellation"></param>
@@ -2154,6 +2243,31 @@ public static class RandomExtensions
     if (count > 0)
     {
       (await stream.WriteBytesAsync(random.ByteSequence(count, from, to), cancellation).ConfigureAwait(false)).MoveToStart();
+    }
+
+    return stream;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="count"></param>
+  /// <param name="ranges"></param>
+  /// <returns></returns>
+  public static MemoryStream MemoryStreamInRange(this Random random, int count, params Range[] ranges)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    var stream = new MemoryStream();
+
+    if (count > 0)
+    {
+      var range = ranges.ToRange();
+      var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.ByteSequence(count)).AsArray();
+
+      stream.WriteBytes(bytes).MoveToStart();
     }
 
     return stream;

@@ -175,31 +175,10 @@ public static class TaskExtensions
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static Task Execute(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="task"></param>
-  /// <param name="success"></param>
-  /// <param name="failure"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static T Execute<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null) => task is not null ? task.ExecuteAsync(success, failure, cancellation).Await() : throw new ArgumentNullException(nameof(task));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="task"></param>
-  /// <param name="success"></param>
-  /// <param name="failure"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
   public static async ValueTask ExecuteAsync(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null)
   {
     await task.ConfigureAwait(false);
-      
+
     if (task.IsCompletedSuccessfully && success != null)
     {
       success(task);
@@ -213,6 +192,16 @@ public static class TaskExtensions
       cancellation(task);
     }
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="task"></param>
+  /// <param name="success"></param>
+  /// <param name="failure"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static Task Execute(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
 
   /// <summary>
   ///   <para></para>
@@ -224,7 +213,8 @@ public static class TaskExtensions
   /// <returns></returns>
   public static async Task ExecuteAsync(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null)
   {
-    if (task is null) throw new ArgumentNullException(nameof(task));
+    if (task is null)
+      throw new ArgumentNullException(nameof(task));
 
     await task.ConfigureAwait(false);
 
@@ -241,6 +231,17 @@ public static class TaskExtensions
       cancellation(task);
     }
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="task"></param>
+  /// <param name="success"></param>
+  /// <param name="failure"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static T Execute<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null) => task is not null ? task.ExecuteAsync(success, failure, cancellation).Await() : throw new ArgumentNullException(nameof(task));
 
   /// <summary>
   ///   <para></para>

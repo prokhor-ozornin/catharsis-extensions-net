@@ -50,13 +50,16 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <param name="action"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<T> ForEach<T>(this IAsyncEnumerable<T> sequence, Action<int, T> action)
+  public static async Task<IAsyncEnumerable<T>> ForEachAsync<T>(this IAsyncEnumerable<T> sequence, Action<T> action, CancellationToken cancellation = default)
   {
-    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
-    if (action is null) throw new ArgumentNullException(nameof(action));
+    if (sequence is null)
+      throw new ArgumentNullException(nameof(sequence));
+    if (action is null)
+      throw new ArgumentNullException(nameof(action));
 
-    return sequence.ForEachAsync(action).Result;
+    return await sequence.ForEachAsync((_, element) => action(element), cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -65,14 +68,13 @@ public static class AsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <param name="action"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<IAsyncEnumerable<T>> ForEachAsync<T>(this IAsyncEnumerable<T> sequence, Action<T> action, CancellationToken cancellation = default)
+  public static IAsyncEnumerable<T> ForEach<T>(this IAsyncEnumerable<T> sequence, Action<int, T> action)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return await sequence.ForEachAsync((_, element) => action(element), cancellation).ConfigureAwait(false);
+    return sequence.ForEachAsync(action).Result;
   }
 
   /// <summary>

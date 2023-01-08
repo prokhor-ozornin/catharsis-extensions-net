@@ -660,18 +660,6 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.WriteText{TStream}(TStream, string, Encoding)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Stream_WriteText_Method()
-  {
-    AssertionExtensions.Should(() => StreamExtensions.WriteText<Stream>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-    AssertionExtensions.Should(() => Stream.Null.WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="StreamExtensions.WriteBytesAsync{TStream}(TStream, IEnumerable{byte}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -680,6 +668,18 @@ public sealed class StreamExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StreamExtensions.WriteBytesAsync<Stream>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => Stream.Null.WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => Stream.Null.WriteBytesAsync(Enumerable.Empty<byte>(), Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteText{TStream}(TStream, string, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_WriteText_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.WriteText<Stream>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    AssertionExtensions.Should(() => Stream.Null.WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
   }
@@ -710,18 +710,6 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.WriteTo(string, Stream, Encoding)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void String_WriteTo_Method()
-  {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    AssertionExtensions.Should(() => StreamExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="StreamExtensions.WriteToAsync(IEnumerable{byte}, Stream, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -730,6 +718,18 @@ public sealed class StreamExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => StreamExtensions.WriteToAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Stream.Null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.WriteTo(string, Stream, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => StreamExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
   }

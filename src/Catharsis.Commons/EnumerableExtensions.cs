@@ -512,6 +512,14 @@ public static class EnumerableExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="sequence"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte> sequence, CancellationToken cancellation = default) => sequence is not null ? await sequence.Chunk(4096).ToMemoryStreamAsync(cancellation).ConfigureAwait(false) : throw new ArgumentNullException(nameof(sequence));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="sequence"></param>
   /// <returns></returns>
   public static MemoryStream ToMemoryStream(this IEnumerable<byte[]> sequence)
   {
@@ -528,14 +536,6 @@ public static class EnumerableExtensions
 
     return stream;
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="sequence"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte> sequence, CancellationToken cancellation = default) => sequence is not null ? await sequence.Chunk(4096).ToMemoryStreamAsync(cancellation).ConfigureAwait(false) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>

@@ -237,6 +237,25 @@ public static class ProcessExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="process"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Process process, CancellationToken cancellation = default)
+  {
+    if (bytes is null)
+      throw new ArgumentNullException(nameof(bytes));
+    if (process is null)
+      throw new ArgumentNullException(nameof(process));
+
+    await process.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="text"></param>
   /// <param name="process"></param>
   /// <returns></returns>
@@ -248,23 +267,6 @@ public static class ProcessExtensions
     process.WriteText(text);
 
     return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="process"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Process process, CancellationToken cancellation = default)
-  {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (process is null) throw new ArgumentNullException(nameof(process));
-
-    await process.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
-
-    return bytes;
   }
 
   /// <summary>

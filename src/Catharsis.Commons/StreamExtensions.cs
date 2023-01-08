@@ -375,6 +375,31 @@ public static class StreamExtensions
   /// </summary>
   /// <typeparam name="TStream"></typeparam>
   /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<TStream> WriteBytesAsync<TStream>(this TStream destination, IEnumerable<byte> bytes, CancellationToken cancellation = default) where TStream : Stream
+  {
+    if (destination is null)
+      throw new ArgumentNullException(nameof(destination));
+    if (bytes is null)
+      throw new ArgumentNullException(nameof(bytes));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    foreach (var chunk in bytes.Chunk(4096))
+    {
+      await destination.WriteAsync(chunk, 0, chunk.Length, cancellation).ConfigureAwait(false);
+    }
+
+    return destination;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TStream"></typeparam>
+  /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
@@ -387,29 +412,6 @@ public static class StreamExtensions
 
     writer.Write(text);
     
-    return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TStream"></typeparam>
-  /// <param name="destination"></param>
-  /// <param name="bytes"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<TStream> WriteBytesAsync<TStream>(this TStream destination, IEnumerable<byte> bytes, CancellationToken cancellation = default) where TStream : Stream
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    foreach (var chunk in bytes.Chunk(4096))
-    {
-      await destination.WriteAsync(chunk, 0, chunk.Length, cancellation).ConfigureAwait(false);
-    }
-
     return destination;
   }
 
@@ -455,6 +457,27 @@ public static class StreamExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Stream destination, CancellationToken cancellation = default)
+  {
+    if (bytes is null)
+      throw new ArgumentNullException(nameof(bytes));
+    if (destination is null)
+      throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="text"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
@@ -467,25 +490,6 @@ public static class StreamExtensions
     destination.WriteText(text, encoding);
 
     return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Stream destination, CancellationToken cancellation = default)
-  {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await destination.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
-
-    return bytes;
   }
 
   /// <summary>

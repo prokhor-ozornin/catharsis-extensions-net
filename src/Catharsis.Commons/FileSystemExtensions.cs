@@ -423,20 +423,18 @@ public static class FileSystemExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<FileInfo> WriteTextAsync(this FileInfo destination, string text, Encoding encoding = null, CancellationToken cancellation = default)
+  public static FileInfo WriteText(this FileInfo destination, string text, Encoding encoding = null)
   {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    cancellation.ThrowIfCancellationRequested();
+    if (destination is null)
+      throw new ArgumentNullException(nameof(destination));
+    if (text is null)
+      throw new ArgumentNullException(nameof(text));
 
     try
     {
-      await using var writer = destination.ToStreamWriter(encoding);
-
-      await writer.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+      using var writer = destination.ToStreamWriter(encoding);
+      writer.WriteText(text);
 
       return destination;
     }
@@ -452,16 +450,20 @@ public static class FileSystemExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static FileInfo WriteText(this FileInfo destination, string text, Encoding encoding = null)
+  public static async Task<FileInfo> WriteTextAsync(this FileInfo destination, string text, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
     if (text is null) throw new ArgumentNullException(nameof(text));
 
+    cancellation.ThrowIfCancellationRequested();
+
     try
     {
-      using var writer = destination.ToStreamWriter(encoding);
-      writer.WriteText(text);
+      await using var writer = destination.ToStreamWriter(encoding);
+
+      await writer.WriteTextAsync(text, cancellation).ConfigureAwait(false);
 
       return destination;
     }

@@ -42,6 +42,29 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.IsAvailableAsync(IPAddress, TimeSpan?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IPAddress_IsAvailableAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((IPAddress) null).IsAvailableAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("address").Await();
+
+    AssertionExtensions.Should(() => IPAddress.Any.IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+    AssertionExtensions.Should(() => IPAddress.Any.IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+    AssertionExtensions.Should(() => IPAddress.Any.IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
+
+    AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+    AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+    AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
+
+    IPAddress.Loopback.IsAvailableAsync().Await().Should().BeTrue();
+    IPAddress.Loopback.IsAvailableAsync(TimeSpan.FromMilliseconds(1)).Await().Should().BeTrue();
+
+    IPAddress.IPv6Loopback.IsAvailableAsync().Await().Should().BeTrue();
+    IPAddress.IPv6Loopback.IsAvailableAsync(TimeSpan.FromMilliseconds(1)).Await().Should().BeTrue();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.IsAvailable(IPHostEntry, TimeSpan?)"/> method.</para>
   /// </summary>
   [Fact]
@@ -65,29 +88,6 @@ public sealed class NetworkExtensionsTest : UnitTest
 
     new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() }.IsAvailable().Should().BeTrue();
     new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() }.IsAvailable(TimeSpan.FromMilliseconds(1)).Should().BeTrue();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.IsAvailableAsync(IPAddress, TimeSpan?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IPAddress_IsAvailableAsync_Method()
-  {
-    AssertionExtensions.Should(() => ((IPAddress) null).IsAvailableAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("address").Await();
-
-    AssertionExtensions.Should(() => IPAddress.Any.IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.Any.IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.Any.IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
-
-    AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
-
-    IPAddress.Loopback.IsAvailableAsync().Await().Should().BeTrue();
-    IPAddress.Loopback.IsAvailableAsync(TimeSpan.FromMilliseconds(1)).Await().Should().BeTrue();
-
-    IPAddress.IPv6Loopback.IsAvailableAsync().Await().Should().BeTrue();
-    IPAddress.IPv6Loopback.IsAvailableAsync(TimeSpan.FromMilliseconds(1)).Await().Should().BeTrue();
   }
 
   /// <summary>
@@ -449,66 +449,6 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecuteGet(HttpClient, Uri)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HttpClient_ExecuteGet_Method()
-  {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecuteGet(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecuteGet(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecutePost(HttpClient, Uri, HttpContent)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HttpClient_ExecutePost_Method()
-  {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecutePost(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecutePost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecutePut(HttpClient, Uri, HttpContent)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HttpClient_ExecutePut_Method()
-  {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecutePut(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecutePut(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecutePatch(HttpClient, Uri, HttpContent)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HttpClient_ExecutePatch_Method()
-  {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecutePatch(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecutePatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecuteDelete(HttpClient, Uri)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HttpClient_ExecuteDelete_Method()
-  {
-    AssertionExtensions.Should(() => NetworkExtensions.ExecuteDelete(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecuteDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ExecuteHeadAsync(HttpClient, Uri, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -517,6 +457,18 @@ public sealed class NetworkExtensionsTest : UnitTest
     AssertionExtensions.Should(() => NetworkExtensions.ExecuteHeadAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
     AssertionExtensions.Should(() => Http.ExecuteHeadAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
     AssertionExtensions.Should(() => Http.ExecuteHeadAsync(LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecuteGet(HttpClient, Uri)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HttpClient_ExecuteGet_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.ExecuteGet(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Http.ExecuteGet(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -535,6 +487,18 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecutePost(HttpClient, Uri, HttpContent)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HttpClient_ExecutePost_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.ExecutePost(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Http.ExecutePost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ExecutePostAsync(HttpClient, Uri, HttpContent, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -543,6 +507,18 @@ public sealed class NetworkExtensionsTest : UnitTest
     AssertionExtensions.Should(() => NetworkExtensions.ExecutePostAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
     AssertionExtensions.Should(() => Http.ExecutePostAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
     AssertionExtensions.Should(() => Http.ExecutePostAsync(LocalHost, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecutePut(HttpClient, Uri, HttpContent)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HttpClient_ExecutePut_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.ExecutePut(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Http.ExecutePut(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -561,6 +537,18 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecutePatch(HttpClient, Uri, HttpContent)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HttpClient_ExecutePatch_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.ExecutePatch(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Http.ExecutePatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ExecutePatchAsync(HttpClient, Uri, HttpContent, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -569,6 +557,18 @@ public sealed class NetworkExtensionsTest : UnitTest
     AssertionExtensions.Should(() => NetworkExtensions.ExecutePatchAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
     AssertionExtensions.Should(() => Http.ExecutePatchAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
     AssertionExtensions.Should(() => Http.ExecutePatchAsync(LocalHost, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ExecuteDelete(HttpClient, Uri)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HttpClient_ExecuteDelete_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.ExecuteDelete(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Http.ExecuteDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -585,7 +585,6 @@ public sealed class NetworkExtensionsTest : UnitTest
 
     throw new NotImplementedException();
   }
-
 
   /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.TryFinallyDisconnect(TcpClient, Action{TcpClient})"/> method.</para>
@@ -716,17 +715,6 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ToStream(HttpContent)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HttpContent_ToStream_Method()
-  {
-    AssertionExtensions.Should(() => NetworkExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("content");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ToStreamAsync(HttpClient, Uri, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -735,6 +723,17 @@ public sealed class NetworkExtensionsTest : UnitTest
     AssertionExtensions.Should(() => NetworkExtensions.ToStreamAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
     AssertionExtensions.Should(() => Http.ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
     AssertionExtensions.Should(() => Http.ToStreamAsync(LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ToStream(HttpContent)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HttpContent_ToStream_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
     throw new NotImplementedException();
   }
@@ -797,6 +796,18 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytesAsync(HttpClient, Uri)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HttpClient_ToBytesAsync_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.ToBytesAsync(null, LocalHost).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Http.ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytes(HttpContent)"/> method.</para>
   /// </summary>
   [Fact]
@@ -813,6 +824,23 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytesAsync(HttpContent)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HttpContent_ToBytesAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
+
+    foreach (var bytes in new[] { Array.Empty<byte>(), RandomBytes })
+    {
+      using var content = new ByteArrayContent(bytes);
+
+      content.ToBytesAsync().Should().NotBeNull().And.NotBeSameAs(content.ToBytesAsync());
+      content.ToBytesAsync().ToArray().Should().Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(bytes);
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytes(TcpClient)"/> method.</para>
   /// </summary>
   [Fact]
@@ -824,52 +852,23 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytes(UdpClient)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void UdpClient_ToBytes_Method()
-  {
-    AssertionExtensions.Should(() => ((UdpClient) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytesAsync(HttpClient, Uri)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HttpClient_ToBytesAsync_Method()
-  {
-    AssertionExtensions.Should(() => NetworkExtensions.ToBytesAsync(null, LocalHost).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytesAsync(HttpContent)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HttpContent_ToBytesAsync_Method()
-  {
-    AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
-
-    foreach (var bytes in new[] {Array.Empty<byte>(), RandomBytes})
-    {
-      using var content = new ByteArrayContent(bytes);
-
-      content.ToBytesAsync().Should().NotBeNull().And.NotBeSameAs(content.ToBytesAsync());
-      content.ToBytesAsync().ToArray().Should().Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(bytes);
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytesAsync(TcpClient)"/> method.</para>
   /// </summary>
   [Fact]
   public void TcpClient_ToBytesAsync_Method()
   {
     AssertionExtensions.Should(() => ((TcpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytes(UdpClient)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void UdpClient_ToBytes_Method()
+  {
+    AssertionExtensions.Should(() => ((UdpClient) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
   }
@@ -901,6 +900,19 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ToTextAsync(HttpClient, Uri, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HttpClient_ToTextAsync_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.ToTextAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Http.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Http.ToTextAsync(LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ToText(HttpContent)"/> method.</para>
   /// </summary>
   [Fact]
@@ -914,41 +926,6 @@ public sealed class NetworkExtensionsTest : UnitTest
 
       content.ToText().Should().NotBeNull().And.NotBeSameAs(content.ToText()).And.Be(content.ReadAsStringAsync().Await()).And.Be(text);
     }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ToText(TcpClient, Encoding)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TcpClient_ToText_Method()
-  {
-    AssertionExtensions.Should(() => ((TcpClient) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ToText(UdpClient, Encoding)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void UdpClient_ToText_Method()
-  {
-    AssertionExtensions.Should(() => ((UdpClient) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
-
-    throw new NotImplementedException();
-  }
-  
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NetworkExtensions.ToTextAsync(HttpClient, Uri, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HttpClient_ToTextAsync_Method()
-  {
-    AssertionExtensions.Should(() => NetworkExtensions.ToTextAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.ToTextAsync(LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -971,6 +948,17 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ToText(TcpClient, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TcpClient_ToText_Method()
+  {
+    AssertionExtensions.Should(() => ((TcpClient) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ToTextAsync(TcpClient, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
@@ -982,6 +970,17 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.ToText(UdpClient, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void UdpClient_ToText_Method()
+  {
+    AssertionExtensions.Should(() => ((UdpClient) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
+
+    throw new NotImplementedException();
+  }
+  
+  /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ToTextAsync(UdpClient, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
@@ -991,6 +990,9 @@ public sealed class NetworkExtensionsTest : UnitTest
 
     throw new NotImplementedException();
   }
+
+
+
 
   /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.WriteBytes(HttpClient, IEnumerable{byte}, Uri)"/> method.</para>

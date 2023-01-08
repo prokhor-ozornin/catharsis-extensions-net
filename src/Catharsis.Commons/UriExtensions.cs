@@ -404,6 +404,26 @@ public static class UriExtensions
   public static IEnumerable<byte> ToBytes(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToStream(timeout, headers).ToBytes(true) : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
+  ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
+  /// </summary>
+  /// <param name="uri">The URI from which to download data.</param>
+  /// <param name="timeout"></param>
+  /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
+  /// <returns>Response of web server in a binary format.</returns>
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (uri is null)
+      throw new ArgumentNullException(nameof(uri));
+
+    await using var stream = await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false);
+
+    await foreach (var value in stream.ToBytesAsync().ConfigureAwait(false))
+    {
+      yield return value;
+    }
+  }
+
+  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="uri"></param>
@@ -418,25 +438,6 @@ public static class UriExtensions
     using var stream = uri.ToStream(timeout, headers);
     
     return stream.ToText(encoding);
-  }
-
-  /// <summary>
-  ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
-  /// </summary>
-  /// <param name="uri">The URI from which to download data.</param>
-  /// <param name="timeout"></param>
-  /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
-  /// <returns>Response of web server in a binary format.</returns>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
-  {
-    if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-    await using var stream = await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false);
-
-    await foreach (var value in stream.ToBytesAsync().ConfigureAwait(false))
-    {
-      yield return value;
-    }
   }
 
   /// <summary>
@@ -476,23 +477,6 @@ public static class UriExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <param name="encoding"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  public static Uri WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    return destination.WriteTextAsync(text, encoding, timeout, default, headers).Result;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
   /// <param name="bytes"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
@@ -500,8 +484,10 @@ public static class UriExtensions
   /// <returns></returns>
   public static async Task<Uri> WriteBytesAsync(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (destination is null)
+      throw new ArgumentNullException(nameof(destination));
+    if (bytes is null)
+      throw new ArgumentNullException(nameof(bytes));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -521,6 +507,23 @@ public static class UriExtensions
     }
 
     return destination;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <param name="encoding"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static Uri WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    return destination.WriteTextAsync(text, encoding, timeout, default, headers).Result;
   }
 
   /// <summary>
@@ -562,6 +565,29 @@ public static class UriExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="destination"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Uri destination, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    if (bytes is null)
+      throw new ArgumentNullException(nameof(bytes));
+    if (destination is null)
+      throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteBytesAsync(bytes, timeout, cancellation, headers).ConfigureAwait(false);
+
+    return bytes;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="text"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
@@ -576,27 +602,6 @@ public static class UriExtensions
     destination.WriteBytes(text.ToBytes(encoding), timeout, headers);
 
     return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Uri destination, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
-  {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await destination.WriteBytesAsync(bytes, timeout, cancellation, headers).ConfigureAwait(false);
-
-    return bytes;
   }
 
   /// <summary>

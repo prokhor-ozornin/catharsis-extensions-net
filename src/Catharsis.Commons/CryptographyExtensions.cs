@@ -34,30 +34,6 @@ public static class CryptographyExtensions
   }
 
   /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="algorithm"></param>
-  /// <param name="stream"></param>
-  /// <returns></returns>
-  public static byte[] Encrypt(this SymmetricAlgorithm algorithm, Stream stream) => algorithm.Encrypt(stream.ToEnumerable());
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="algorithm"></param>
-  /// <returns></returns>
-  public static byte[] Encrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm) => algorithm.Encrypt(bytes);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="stream"></param>
-  /// <param name="algorithm"></param>
-  /// <returns></returns>
-  public static byte[] Encrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Encrypt(stream);
-
-  /// <summary>
   ///   <para>Encrypts binary data, using specified symmetric algorithm.</para>
   /// </summary>
   /// <param name="algorithm">Symmetric algorithm to be used for encryption.</param>
@@ -66,8 +42,10 @@ public static class CryptographyExtensions
   /// <returns>Encrypted binary data.</returns>
   public static async Task<byte[]> EncryptAsync(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
-    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (algorithm is null)
+      throw new ArgumentNullException(nameof(algorithm));
+    if (bytes is null)
+      throw new ArgumentNullException(nameof(bytes));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -84,6 +62,14 @@ public static class CryptographyExtensions
   }
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="algorithm"></param>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static byte[] Encrypt(this SymmetricAlgorithm algorithm, Stream stream) => algorithm.Encrypt(stream.ToEnumerable());
+
+  /// <summary>
   ///   <para>Encrypts binary data from a <see cref="Stream"/>, using specified symmetric algorithm.</para>
   /// </summary>
   /// <param name="algorithm">Symmetric algorithm to be used for encryption.</param>
@@ -97,9 +83,25 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="bytes"></param>
   /// <param name="algorithm"></param>
+  /// <returns></returns>
+  public static byte[] Encrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm) => algorithm.Encrypt(bytes);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   public static async Task<byte[]> EncryptAsync(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.EncryptAsync(bytes, cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="algorithm"></param>
+  /// <returns></returns>
+  public static byte[] Encrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Encrypt(stream);
 
   /// <summary>
   ///   <para></para>
@@ -134,30 +136,6 @@ public static class CryptographyExtensions
   }
 
   /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="algorithm"></param>
-  /// <param name="stream"></param>
-  /// <returns></returns>
-  public static byte[] Decrypt(this SymmetricAlgorithm algorithm, Stream stream) => algorithm.Decrypt(stream.ToEnumerable());
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="algorithm"></param>
-  /// <returns></returns>
-  public static byte[] Decrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm) => algorithm.Decrypt(bytes);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="stream"></param>
-  /// <param name="algorithm"></param>
-  /// <returns></returns>
-  public static byte[] Decrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Decrypt(stream);
-
-  /// <summary>
   ///   <para>Decrypts encrypted binary data, using specified symmetric algorithm.</para>
   /// </summary>
   /// <param name="algorithm">Symmetric algorithm which have been used for encryption previously and should be used for decryption now.</param>
@@ -166,8 +144,10 @@ public static class CryptographyExtensions
   /// <returns>Decrypted binary data.</returns>
   public static async Task<byte[]> DecryptAsync(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
-    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (algorithm is null)
+      throw new ArgumentNullException(nameof(algorithm));
+    if (bytes is null)
+      throw new ArgumentNullException(nameof(bytes));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -184,6 +164,14 @@ public static class CryptographyExtensions
   }
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="algorithm"></param>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static byte[] Decrypt(this SymmetricAlgorithm algorithm, Stream stream) => algorithm.Decrypt(stream.ToEnumerable());
+
+  /// <summary>
   ///   <para>Decrypts encrypted contents of a <see cref="Stream"/>, using specified symmetric algorithm.</para>
   /// </summary>
   /// <param name="algorithm">Symmetric algorithm which have been used for encryption previously and should be used for decryption now.</param>
@@ -197,9 +185,25 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="bytes"></param>
   /// <param name="algorithm"></param>
+  /// <returns></returns>
+  public static byte[] Decrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm) => algorithm.Decrypt(bytes);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   public static async Task<byte[]> DecryptAsync(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.DecryptAsync(bytes, cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="algorithm"></param>
+  /// <returns></returns>
+  public static byte[] Decrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Decrypt(stream);
   
   /// <summary>
   ///   <para></para>

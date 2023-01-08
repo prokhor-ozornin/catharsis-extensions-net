@@ -226,18 +226,6 @@ public sealed class ProcessExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.WriteTo(string, Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void String_WriteTo_Method()
-  {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(Process.GetCurrentProcess())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    AssertionExtensions.Should(() => ProcessExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="ProcessExtensions.WriteToAsync(IEnumerable{byte}, Process, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -246,6 +234,18 @@ public sealed class ProcessExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Process.GetCurrentProcess())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => ProcessExtensions.WriteToAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(ShellProcess, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.WriteTo(string, Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Process.GetCurrentProcess())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => ProcessExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
     throw new NotImplementedException();
   }

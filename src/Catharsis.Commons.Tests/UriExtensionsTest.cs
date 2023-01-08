@@ -286,23 +286,23 @@ public sealed class UriExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.ToText(Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Uri_ToText_Method()
-  {
-    AssertionExtensions.Should(() => UriExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="UriExtensions.ToBytesAsync(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
   public void Uri_ToBytesAsync_Method()
   {
     AssertionExtensions.Should(() => UriExtensions.ToBytesAsync(null).ToArrayAsync()).ThrowAsync<ArgumentNullException>().WithParameterName("uri").Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToText(Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToText_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -331,18 +331,6 @@ public sealed class UriExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.WriteText(Uri, string, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Uri_WriteText_Method()
-  {
-    AssertionExtensions.Should(() => UriExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-    AssertionExtensions.Should(() => LocalHost.WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="UriExtensions.WriteBytesAsync(Uri, IEnumerable{byte}, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
@@ -354,6 +342,19 @@ public sealed class UriExtensionsTest : UnitTest
 
     throw new NotImplementedException();
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteText(Uri, string, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_WriteText_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    AssertionExtensions.Should(() => LocalHost.WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    throw new NotImplementedException();
+  }
+
 
   /// <summary>
   ///   <para>Performs testing of <see cref="UriExtensions.WriteTextAsync(Uri, string, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
@@ -381,18 +382,6 @@ public sealed class UriExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.WriteTo(string, Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void String_WriteTo_Method()
-  {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    AssertionExtensions.Should(() => UriExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="UriExtensions.WriteToAsync(IEnumerable{byte}, Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
   /// </summary>
   [Fact]
@@ -401,6 +390,18 @@ public sealed class UriExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => UriExtensions.WriteToAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(LocalHost, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.WriteTo(string, Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => UriExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
   }

@@ -298,17 +298,6 @@ public sealed class XmlExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReader(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Uri_ToXmlReader_Method()
-  {
-    AssertionExtensions.Should(() => ((Uri) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReader(string)"/> method.</para>
   /// </summary>
   [Fact]
@@ -326,6 +315,17 @@ public sealed class XmlExtensionsTest : UnitTest
   public void XDocument_ToXmlReader_Method()
   {
     AssertionExtensions.Should(() => ((XDocument) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToXmlReader(Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uri_ToXmlReader_Method()
+  {
+    AssertionExtensions.Should(() => ((Uri) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -586,6 +586,17 @@ public sealed class XmlExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToBytesAsync(XmlReader, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlReader_ToBytesAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((XmlReader) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XmlExtensions.ToBytes(XmlDocument)"/> method.</para>
   /// </summary>
   [Fact]
@@ -595,14 +606,14 @@ public sealed class XmlExtensionsTest : UnitTest
 
     throw new NotImplementedException();
   }
-  
+
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlExtensions.ToBytesAsync(XmlReader, Encoding)"/> method.</para>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToBytes(XDocument)"/> method.</para>
   /// </summary>
   [Fact]
-  public void XmlReader_ToBytesAsync_Method()
+  public void XDocument_ToBytes_Method()
   {
-    AssertionExtensions.Should(() => ((XmlReader) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+    AssertionExtensions.Should(() => ((XDocument) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
     throw new NotImplementedException();
   }
@@ -631,6 +642,17 @@ public sealed class XmlExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.ToTextAsync(XmlReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlReader_ToTextAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((XmlReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XmlExtensions.ToText(XmlDocument)"/> method.</para>
   /// </summary>
   [Fact]
@@ -648,17 +670,6 @@ public sealed class XmlExtensionsTest : UnitTest
   public void XDocument_ToText_Method()
   {
     AssertionExtensions.Should(() => ((XDocument) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XmlExtensions.ToTextAsync(XmlReader)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void XmlReader_ToTextAsync_Method()
-  {
-    AssertionExtensions.Should(() => ((XmlReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
     throw new NotImplementedException();
   }
@@ -688,18 +699,6 @@ public sealed class XmlExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlExtensions.WriteText(XmlWriter, string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void XmlWriter_WriteText_Method()
-  {
-    AssertionExtensions.Should(() => XmlExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-    AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="XmlExtensions.WriteBytesAsync(XmlWriter, IEnumerable{byte}, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
@@ -707,6 +706,18 @@ public sealed class XmlExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => XmlExtensions.WriteBytesAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.WriteText(XmlWriter, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void XmlWriter_WriteText_Method()
+  {
+    AssertionExtensions.Should(() => XmlExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
   }
@@ -736,18 +747,6 @@ public sealed class XmlExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlExtensions.WriteTo(string, XmlWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void String_WriteTo_Method()
-  {
-    AssertionExtensions.Should(() => XmlExtensions.WriteTo(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    AssertionExtensions.Should(() => string.Empty.WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="XmlExtensions.WriteToAsync(IEnumerable{byte}, XmlWriter, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
@@ -755,6 +754,18 @@ public sealed class XmlExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => XmlExtensions.WriteToAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlExtensions.WriteTo(string, XmlWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_WriteTo_Method()
+  {
+    AssertionExtensions.Should(() => XmlExtensions.WriteTo(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
   }

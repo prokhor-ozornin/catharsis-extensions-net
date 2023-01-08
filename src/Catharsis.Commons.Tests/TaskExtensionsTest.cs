@@ -81,6 +81,15 @@ public sealed class TaskExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="TaskExtensions.ExecuteAsync(ValueTask, Action{ValueTask}, Action{ValueTask}, Action{ValueTask})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ValueTask_ExecuteAsync_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="TaskExtensions.Execute(Task, Action{Task}, Action{Task}, Action{Task})"/></description></item>
@@ -102,15 +111,6 @@ public sealed class TaskExtensionsTest : UnitTest
 
     }
 
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TaskExtensions.ExecuteAsync(ValueTask, Action{ValueTask}, Action{ValueTask}, Action{ValueTask})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ValueTask_ExecuteAsync_Method()
-  {
     throw new NotImplementedException();
   }
 
