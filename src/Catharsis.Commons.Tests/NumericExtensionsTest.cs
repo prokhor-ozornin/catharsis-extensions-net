@@ -10,6 +10,33 @@ namespace Catharsis.Commons.Tests;
 public sealed class NumericExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="NumericExtensions.IsPositive{T}(T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsPositive_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NumericExtensions.IsNegative{T}(T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsNegative_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NumericExtensions.IsDefault{T}(T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDefault_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NumericExtensions.To(int, int)"/> method.</para>
   /// </summary>
   [Fact]
@@ -77,11 +104,35 @@ public sealed class NumericExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NumericExtensions.Min{T}(T, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Min_Method()
+  {
+    AssertionExtensions.Should(() => NumericExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NumericExtensions.Max{T}(T, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Max_Method()
+  {
+    AssertionExtensions.Should(() => NumericExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NumericExtensions.MinMax{T}(T, T)"/> method.</para>
   /// </summary>
   [Fact]
   public void MinMax_Method()
   {
+    AssertionExtensions.Should(() => NumericExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+
     throw new NotImplementedException();
   }
 
