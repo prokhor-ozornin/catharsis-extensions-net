@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Catharsis.Extensions</RootNamespace>
+    <AssemblyName>Catharsis.Extensions</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>5.0</Version>
+    <Authors>Prokhor Ozornin &lt;prokhor.ozornin@yandex.ru&gt;</Authors>
+    <Company />
+    <Copyright>Copyright © 2013 - 2022</Copyright>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Nullable>disable</Nullable>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Catharsis.Extensions\ActionExtensions.cs" Link="ActionExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\ArrayExtensions.cs" Link="ArrayExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\AsyncEnumerableExtensions.cs" Link="AsyncEnumerableExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\BinaryExtensions.cs" Link="BinaryExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\CollectionsExtensions.cs" Link="CollectionsExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\CryptographyExtensions.cs" Link="CryptographyExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\EnumerableExtensions.cs" Link="EnumerableExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\FileSystemExtensions.cs" Link="FileSystemExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\NetworkExtensions.cs" Link="NetworkExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\NumericExtensions.cs" Link="NumericExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\ObjectExtensions.cs" Link="ObjectExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\ProcessExtensions.cs" Link="ProcessExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\RandomExtensions.cs" Link="RandomExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\RangeExtensions.cs" Link="RangeExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\ReflectionExtensions.cs" Link="ReflectionExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\RegexExtensions.cs" Link="RegexExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\SecureStringExtensions.cs" Link="SecureStringExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\SerializationExtensions.cs" Link="SerializationExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\StreamExtensions.cs" Link="StreamExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\StringExtensions.cs" Link="StringExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\TaskExtensions.cs" Link="TaskExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\TextExtensions.cs" Link="TextExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\UriExtensions.cs" Link="UriExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\XmlExtensions.cs" Link="XmlExtensions.cs" />
+  </ItemGroup>
+
+</Project>
