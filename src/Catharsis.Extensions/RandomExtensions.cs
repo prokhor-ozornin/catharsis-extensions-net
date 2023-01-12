@@ -452,7 +452,7 @@ public static class RandomExtensions
     }
   }
 
-  #if NET6_0
+  #if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -1042,7 +1042,7 @@ public static class RandomExtensions
     }
   }
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -2007,7 +2007,7 @@ public static class RandomExtensions
     }
   }
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>

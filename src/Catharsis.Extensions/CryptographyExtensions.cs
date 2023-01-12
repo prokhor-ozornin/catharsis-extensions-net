@@ -262,7 +262,7 @@ public static class CryptographyExtensions
     if (stream is null) throw new ArgumentNullException(nameof(stream));
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
 
-    #if NET6_0
+    #if NET7_0
       return await algorithm.ComputeHashAsync(stream, cancellation).ConfigureAwait(false);
     #else
       return algorithm.ComputeHash(stream);

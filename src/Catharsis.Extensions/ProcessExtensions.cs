@@ -52,7 +52,7 @@ public static class ProcessExtensions
     return process;
   }
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>

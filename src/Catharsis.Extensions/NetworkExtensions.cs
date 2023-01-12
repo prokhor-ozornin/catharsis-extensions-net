@@ -656,7 +656,7 @@ public static class NetworkExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET6_0
+#if NET7_0
     return await http.GetStreamAsync(uri, cancellation).ConfigureAwait(false);
 #else
     return await http.GetStreamAsync(uri).ConfigureAwait(false);
@@ -672,7 +672,7 @@ public static class NetworkExtensions
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
 
-    #if NET6_0
+    #if NET7_0
       return content.ReadAsStream();
     #else
       return content.ReadAsStreamAsync().Result;
@@ -691,7 +691,7 @@ public static class NetworkExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET6_0
+#if NET7_0
     return await content.ReadAsStreamAsync(cancellation).ConfigureAwait(false);
 #else
     return await content.ReadAsStreamAsync().ConfigureAwait(false);
@@ -851,7 +851,7 @@ public static class NetworkExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET6_0
+#if NET7_0
     return await http.GetStringAsync(uri, cancellation).ConfigureAwait(false);
 #else
       return await http.GetStringAsync(uri).ConfigureAwait(false);
@@ -878,7 +878,7 @@ public static class NetworkExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET6_0
+#if NET7_0
     return await content.ReadAsStringAsync(cancellation).ConfigureAwait(false);
 #else
       return await content.ReadAsStringAsync().ConfigureAwait(false);
@@ -1026,7 +1026,7 @@ public static class NetworkExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET6_0
+#if NET7_0
       await udp.SendAsync(bytes.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
 #else
     var datagram = bytes.AsArray();
@@ -1391,7 +1391,7 @@ public static class NetworkExtensions
 
       public async ValueTask<bool> MoveNextAsync()
       {
-#if NET6_0
+#if NET7_0
         var buffer = (await parent.client.ReceiveAsync(cancellation).ConfigureAwait(false)).Buffer;
 #else
         var buffer = (await parent.client.ReceiveAsync().ConfigureAwait(false)).Buffer;

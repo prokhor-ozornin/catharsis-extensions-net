@@ -52,7 +52,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static bool IsEmpty<T>(this Lazy<T> instance) => !instance.IsValueCreated || instance.Value == null || instance.Value.ToString().IsEmpty();
+  public static bool IsEmpty<T>(this Lazy<T> instance) => !instance.IsValueCreated || instance.Value is null || instance.Value.ToString().IsEmpty();
 
   /// <summary>
   ///   <para></para>

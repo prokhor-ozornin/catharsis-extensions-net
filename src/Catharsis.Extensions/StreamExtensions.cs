@@ -533,7 +533,7 @@ public static class StreamExtensions
   /// <returns>Back reference to the current stream.</returns>
   public static GZipStream CompressAsGzip(this Stream stream) => stream is not null ? new GZipStream(stream, CompressionMode.Compress) : throw new ArgumentNullException(nameof(stream));
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para>Writes sequence of bytes into specified stream, using Zlib compression algorithm.</para>
   /// </summary>
@@ -564,7 +564,7 @@ public static class StreamExtensions
   /// <returns>Decompressed contents of current <paramref name="stream"/>.</returns>
   public static GZipStream DecompressAsGzip(this Stream stream) => stream is not null ? new GZipStream(stream, CompressionMode.Decompress) : throw new ArgumentNullException(nameof(stream));
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para>Decompresses data from a stream, using Zlib algorithm.</para>
   /// </summary>

@@ -1,6 +1,6 @@
 using System.Text;
 
-#if NET6_0
+#if NET7_0
 using System.Collections.Immutable;
 #endif
 
@@ -305,7 +305,7 @@ public static class EnumerableExtensions
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
-#if NET6_0
+#if NET7_0
     return System.Convert.ToHexString(bytes.AsArray());
 #else
     return BitConverter.ToString(bytes.AsArray()).Replace("-", "");
@@ -353,7 +353,7 @@ public static class EnumerableExtensions
   /// <returns>Set collection which contains elements from <paramref name="sequence"/> sequence without duplicates. Order of elements in a set is not guaranteed to be the same as returned by <paramref name="sequence"/>'s enumerator.</returns>
   public static SortedSet<T> ToSortedSet<T>(this IEnumerable<T> sequence, IComparer<T> comparer = null) => sequence is not null ? new SortedSet<T>(sequence, comparer) : throw new ArgumentNullException(nameof(sequence));
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -380,7 +380,7 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static Queue<T> ToQueue<T>(this IEnumerable<T> sequence) => sequence is not null ? new Queue<T>(sequence) : throw new ArgumentNullException(nameof(sequence));
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>

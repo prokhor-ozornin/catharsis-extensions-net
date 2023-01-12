@@ -28,6 +28,28 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsUpperCased(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_IsUpperCased_Method()
+  {
+    AssertionExtensions.Should(() => StringExtensions.IsUpperCased(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsLowerCased(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_IsLowerCased_Method()
+  {
+    AssertionExtensions.Should(() => StringExtensions.IsLowerCased(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.IsBoolean(string)"/> method.</para>
   /// </summary>
   [Fact]

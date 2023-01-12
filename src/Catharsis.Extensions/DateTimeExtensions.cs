@@ -64,7 +64,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset Min(this DateTimeOffset left, DateTimeOffset right) => left <= right ? left : right;
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -98,7 +98,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset Max(this DateTimeOffset left, DateTimeOffset right) => left >= right ? left : right;
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -162,7 +162,7 @@ public static class DateTimeExtensions
     }
   }
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -289,7 +289,7 @@ public static class DateTimeExtensions
   /// <seealso cref="IsWeekday(DateTime)"/>
   public static bool IsWeekday(this DateTimeOffset date) => !date.IsWeekend();
 
-  #if NET6_0
+  #if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -314,7 +314,7 @@ public static class DateTimeExtensions
   /// <seealso cref="IsWeekend(DateTime)"/>
   public static bool IsWeekend(this DateTimeOffset date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
 
-  #if NET6_0
+  #if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -339,7 +339,7 @@ public static class DateTimeExtensions
   /// <seealso cref="TruncateToYearStart(DateTime)"/>
   public static DateTimeOffset TruncateToYearStart(this DateTimeOffset date) => new(date.Year, 1, 1, 0, 0, 0, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -364,7 +364,7 @@ public static class DateTimeExtensions
   /// <seealso cref="TruncateToMonthStart(DateTime)"/>
   public static DateTimeOffset TruncateToMonthStart(this DateTimeOffset date) => new(date.Year, date.Month, 1, 0, 0, 0, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -404,7 +404,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToHourStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -427,7 +427,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToMinuteStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -450,7 +450,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToSecondStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -475,7 +475,7 @@ public static class DateTimeExtensions
   /// <seealso cref="TruncateToYearEnd(DateTime)"/>
   public static DateTimeOffset TruncateToYearEnd(this DateTimeOffset date) => new(date.Year, 12, 31, 23, 59, 59, 999, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -500,7 +500,7 @@ public static class DateTimeExtensions
   /// <seealso cref="TruncateToMonthEnd(DateTime)"/>
   public static DateTimeOffset TruncateToMonthEnd(this DateTimeOffset date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -539,7 +539,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToHourEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -562,7 +562,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToMinuteEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -585,7 +585,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToSecondEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Offset);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -601,7 +601,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTime ToDateTime(this DateTimeOffset date) => date.UtcDateTime;
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -623,7 +623,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset ToDateTimeOffset(this DateTime date) => new(date.ToUniversalTime());
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>

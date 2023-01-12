@@ -21,6 +21,32 @@ public static class StringExtensions
   public static bool IsEmpty(this string text) => string.IsNullOrWhiteSpace(text);
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsUpperCased(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    return text.All(char.IsUpper);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsLowerCased(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    return text.All(char.IsLower);
+  }
+
+  /// <summary>
   ///   <para>Determines whether a source string represents a valid <see cref="bool"/> value.</para>
   /// </summary>
   /// <param name="text">Source string to evaluate.</param>
@@ -160,7 +186,7 @@ public static class StringExtensions
   /// <returns></returns>
   public static bool IsDateTimeOffset(this string text, IFormatProvider format = null) => text.ToDateTimeOffset(out _, format);
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -422,7 +448,7 @@ public static class StringExtensions
   /// <seealso cref="System.Convert.FromBase64String(string)"/>
   public static byte[] FromBase64(this string text) => text is not null ? text.Length > 0 ? System.Convert.FromBase64String(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
 
-  #if NET6_0
+  #if NET7_0
   /// <summary>
   ///   <para>Converts HEX-encoded string into a sequence of bytes.</para>
   /// </summary>
@@ -944,7 +970,7 @@ public static class StringExtensions
   /// <returns></returns>
   public static bool ToDateTimeOffset(this string text, out DateTimeOffset? result, IFormatProvider format = null) => (result = DateTimeOffset.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) != null;
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>

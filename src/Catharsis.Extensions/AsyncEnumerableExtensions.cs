@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Runtime.CompilerServices;
-#if NET6_0
+#if NET7_0
 using System.Collections.Immutable;
 #endif
 
@@ -303,7 +303,7 @@ public static class AsyncEnumerableExtensions
     return result;
   }
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -519,7 +519,7 @@ public static class AsyncEnumerableExtensions
     return result;
   }
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -615,7 +615,7 @@ public static class AsyncEnumerableExtensions
     return stream.MoveToStart();
   }
 
-#if NET6_0
+#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
