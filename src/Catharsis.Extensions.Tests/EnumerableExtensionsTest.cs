@@ -24,6 +24,41 @@ public sealed class EnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.IsSubset{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_IsSubset_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.IsSubset(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().IsSubset(null)).ThrowExactly<ArgumentNullException>().WithParameterName("superset");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.IsSuperset{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_IsSuperset_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.IsSuperset(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().IsSuperset(null)).ThrowExactly<ArgumentNullException>().WithParameterName("subset");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.IsOrdered{T}(IEnumerable{T}, IComparer{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_IsOrdered_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.IsOrdered<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="EnumerableExtensions.ForEach{T}(IEnumerable{T}, Action{T})"/></description></item>
@@ -114,6 +149,17 @@ public sealed class EnumerableExtensionsTest : UnitTest
 
     Enumerable.Empty<object>().Contains(new object[] { null }).Should().BeFalse();
     new object[] { null }.Contains(Enumerable.Empty<object>()).Should().BeTrue();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.ContainsUnique{T}(IEnumerable{T}, IEqualityComparer{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_ContainsUnique_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.ContainsUnique<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }

@@ -278,6 +278,34 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
+  public static bool IsPast(this DateTime date) => date.ToUniversalTime() < DateTime.UtcNow;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static bool IsPast(this DateTimeOffset date) => date < DateTimeOffset.UtcNow;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static bool IsFuture(this DateTime date) => date.ToUniversalTime() > DateTime.UtcNow;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static bool IsFuture(this DateTimeOffset date) => date > DateTimeOffset.UtcNow;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
   /// <seealso cref="IsWeekday(DateTimeOffset)"/>
   public static bool IsWeekday(this DateTime date) => !date.IsWeekend();
 

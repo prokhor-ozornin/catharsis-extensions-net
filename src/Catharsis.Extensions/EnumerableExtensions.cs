@@ -19,7 +19,50 @@ public static class EnumerableExtensions
   /// <param name="sequence"></param>
   /// <returns></returns>
   public static bool IsEmpty<T>(this IEnumerable<T> sequence) => !sequence?.Any() ?? throw new ArgumentNullException(nameof(sequence));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <param name="superset"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  public static bool IsSubset<T>(this IEnumerable<T> sequence, IEnumerable<T> superset, IEqualityComparer<T> comparer = null)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (superset is null) throw new ArgumentNullException(nameof(superset));
+
+    return !sequence.Except(superset, comparer).Any();
+  }
   
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <param name="subset"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  public static bool IsSuperset<T>(this IEnumerable<T> sequence, IEnumerable<T> subset, IEqualityComparer<T> comparer = null) => subset.IsSubset(sequence, comparer);
+
+#if NET7_0
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsOrdered<T>(this IEnumerable<T> sequence, IComparer<T> comparer = null)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    return sequence.Order(comparer).SequenceEqual(sequence);
+  }
+#endif
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -97,6 +140,16 @@ public static class EnumerableExtensions
 
     return !sequence.Except(other, comparer).Any();
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool ContainsUnique<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence is not null ? !sequence.GroupBy(sequence => sequence, comparer).Where(group => group.Count() > 1).Select(group => group.Key).Any() : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>

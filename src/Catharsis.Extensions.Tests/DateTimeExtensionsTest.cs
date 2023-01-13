@@ -607,7 +607,63 @@ public sealed class DateTimeExtensionsTest : UnitTest
     TimeSpan.FromMinutes(1).InTheFuture().Should().BeAfter(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
     TimeSpan.FromMinutes(-1).InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow).And.BeBefore(now).And.BeWithin(TimeSpan.Zero);
   }
-  
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.IsPast(DateTime)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DateTime_IsPast_Method()
+  {
+    foreach (var date in new[] {DateTime.Now, DateTime.UtcNow})
+    {
+      date.IsPast().Should().BeTrue();
+      date.AddSeconds(-1).IsPast().Should().BeTrue();
+      date.AddSeconds(1).IsPast().Should().BeFalse();
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.IsPast(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DateTimeOffset_IsPast_Method()
+  {
+    foreach (var date in new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow })
+    {
+      date.IsPast().Should().BeTrue();
+      date.AddSeconds(-1).IsPast().Should().BeTrue();
+      date.AddSeconds(1).IsPast().Should().BeFalse();
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.IsFuture(DateTime)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DateTime_IsFuture_Method()
+  {
+    foreach (var date in new[] { DateTime.Now, DateTime.UtcNow })
+    {
+      date.IsFuture().Should().BeFalse();
+      date.AddSeconds(-1).IsFuture().Should().BeFalse();
+      date.AddSeconds(1).IsFuture().Should().BeTrue();
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.IsFuture(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DateTimeOffset_IsFuture_Method()
+  {
+    foreach (var date in new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow })
+    {
+      date.IsFuture().Should().BeFalse();
+      date.AddSeconds(-1).IsFuture().Should().BeFalse();
+      date.AddSeconds(1).IsFuture().Should().BeTrue();
+    }
+  }
+
   /// <summary>
   ///   <para>Performs testing of <see cref="DateTimeExtensions.IsWeekday(DateTime)"/> method.</para>
   /// </summary>
