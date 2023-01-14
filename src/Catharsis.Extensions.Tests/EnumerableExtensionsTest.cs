@@ -48,6 +48,18 @@ public sealed class EnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.IsReversed{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_IsReversed_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.IsReversed(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().IsReversed(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reversed");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="EnumerableExtensions.IsOrdered{T}(IEnumerable{T}, IComparer{T})"/> method.</para>
   /// </summary>
   [Fact]

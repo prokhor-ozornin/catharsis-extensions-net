@@ -46,6 +46,16 @@ public static class EnumerableExtensions
   /// <returns></returns>
   public static bool IsSuperset<T>(this IEnumerable<T> sequence, IEnumerable<T> subset, IEqualityComparer<T> comparer = null) => subset.IsSubset(sequence, comparer);
 
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <param name="reversed"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  public static bool IsReversed<T>(this IEnumerable<T> sequence, IEnumerable<T> reversed, IEqualityComparer<T> comparer = null) => sequence.SequenceEqual(reversed.Reverse(), comparer);
+
 #if NET7_0
   /// <summary>
   ///   <para></para>

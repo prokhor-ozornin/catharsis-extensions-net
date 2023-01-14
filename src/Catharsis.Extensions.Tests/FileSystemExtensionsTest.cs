@@ -320,6 +320,30 @@ public sealed class FileSystemExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="FileSystemExtensions.InDirectory(DirectoryInfo, DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DirectoryInfo_InDirectory_Method()
+  {
+    AssertionExtensions.Should(() => ((DirectoryInfo) null).InDirectory(RandomFakeDirectory)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    AssertionExtensions.Should(() => RandomFakeDirectory.InDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("parent");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FileSystemExtensions.InDirectory(FileInfo, DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FileInfo_InDirectory_Method()
+  {
+    AssertionExtensions.Should(() => ((FileInfo) null).InDirectory(RandomFakeDirectory)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+    AssertionExtensions.Should(() => RandomFakeFile.InDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="FileSystemExtensions.Size(DriveInfo, string, bool)"/> method.</para>
   /// </summary>
   [Fact]

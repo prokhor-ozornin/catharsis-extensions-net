@@ -252,6 +252,36 @@ public static class FileSystemExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="directory"></param>
+  /// <param name="parent"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool InDirectory(this DirectoryInfo directory, DirectoryInfo parent)
+  {
+    if (directory is null) throw new ArgumentNullException(nameof(directory));
+    if (parent is null) throw new ArgumentNullException(nameof(parent));
+
+    return parent.Directories(null, true).Contains(directory);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <param name="directory"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool InDirectory(this FileInfo file, DirectoryInfo directory)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+    if (directory is null) throw new ArgumentNullException(nameof(directory));
+
+    return directory.Files(null, true).Contains(file);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="drive"></param>
   /// <param name="pattern"></param>
   /// <param name="recursive"></param>
