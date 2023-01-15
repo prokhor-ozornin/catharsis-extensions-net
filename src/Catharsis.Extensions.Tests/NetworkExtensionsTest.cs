@@ -218,6 +218,28 @@ public sealed class NetworkExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.IsV4"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IPAddress_Ip4_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.IsV4(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NetworkExtensions.IsV6"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IPAddress_Ip6_Method()
+  {
+    AssertionExtensions.Should(() => NetworkExtensions.IsV6(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="NetworkExtensions.WithHeaders(Http, IEnumerable{(string Name, object Value)})"/></description></item>

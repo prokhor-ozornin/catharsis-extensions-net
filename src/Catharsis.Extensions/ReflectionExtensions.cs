@@ -15,6 +15,13 @@ public static class ReflectionExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="type"></param>
+  /// <returns></returns>
+  public static bool IsStatic(this Type type) => type is not null ? type.IsAbstract && type.IsSealed : throw new ArgumentNullException(nameof(type));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="type"></param>
   /// <returns></returns>
@@ -27,6 +34,47 @@ public static class ReflectionExtensions
   /// <param name="type">Source type for assignment.</param>
   /// <returns><c>true</c> if <paramref name="type"/> can be assigned to <typeparamref name="T"/>, <c>false</c> otherwise.</returns>
   public static bool IsAssignableTo<T>(this Type type) => type is not null ? typeof(T).IsAssignableFrom(type) : throw new ArgumentNullException(nameof(type));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="type"></param>
+  /// <param name="baseType"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsDerivedFrom(this Type type, Type baseType)
+  {
+    static bool IsDerivedFromGeneric(Type type, Type definition)
+    {
+      if (type == definition)
+      {
+        return false;
+      }
+
+      for (var baseType = type; baseType is not null; baseType = baseType.BaseType)
+      {
+        if (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == definition)
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    if (type is null) throw new ArgumentNullException(nameof(type));
+    if (baseType is null) throw new ArgumentNullException(nameof(baseType));
+
+    return baseType.IsGenericTypeDefinition ? IsDerivedFromGeneric(type, baseType) : type.IsSubclassOf(baseType);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="type"></param>
+  /// <returns></returns>
+  public static bool IsDerivedFrom<T>(this Type type) => type.IsDerivedFrom(typeof(T));
 
   /// <summary>
   ///   <para>Determines whether a <see cref="ToType"/> implements specified interface.</para>
@@ -101,8 +149,18 @@ public static class ReflectionExtensions
   /// </summary>
   /// <param name="type">Type whose method is to be located.</param>
   /// <param name="name">Unique name of method.</param>
+  /// <param name="arguments"></param>
   /// <returns><c>true</c> if either instance or static method with either private or public access level is declared for <paramref name="type"/>, <c>false</c> otherwise.</returns>
-  public static bool HasMethod(this Type type, string name) => AnyMethod(type, name) != null;
+  public static bool HasMethod(this Type type, string name, IEnumerable<Type> arguments = null) => AnyMethod(type, name, arguments) != null;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="type"></param>
+  /// <param name="name"></param>
+  /// <param name="arguments"></param>
+  /// <returns></returns>
+  public static bool HasMethod(this Type type, string name, params Type[] arguments) => AnyMethod(type, name, arguments) != null;
 
   /// <summary>
   ///   <para>Searches for a named event, declared within a specified <see cref="ToType"/>.</para>
@@ -155,22 +213,57 @@ public static class ReflectionExtensions
   /// </summary>
   /// <param name="type">Type whose method is to be located.</param>
   /// <param name="name">Unique name of method.</param>
+  /// <param name="arguments"></param>
   /// <returns><see cref="MethodInfo"/> object representing the method of <paramref name="type"/>. If method cannot be found, returns <c>null</c>.</returns>
-  public static MethodInfo AnyMethod(this Type type, string name)
+  public static MethodInfo AnyMethod(this Type type, string name, IEnumerable<Type> arguments = null)
   {
     if (type is null) throw new ArgumentNullException(nameof(type));
     if (name is null) throw new ArgumentNullException(nameof(name));
 
-    return type.GetMethod(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+    const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+
+    return arguments is not null ? type.GetMethod(name, flags, null, arguments.AsArray(), null) : type.GetMethod(name, flags);
   }
 
   /// <summary>
-  ///   <para>Searches for a default no-arguments constructor, declared within a specified <see cref="ToType"/>.</para>
-  ///   <para>Returns <see cref="ConstructorInfo"/> object, representing no-arguments constructor.</para>
+  ///   <para></para>
   /// </summary>
-  /// <param name="type">Type whose constructor is to be located.</param>
-  /// <returns><see cref="ConstructorInfo"/> object representing no-arguments constructor of <paramref name="type"/>. If constructor cannot be found, returns <c>null</c>.</returns>
-  public static ConstructorInfo DefaultConstructor(this Type type) => type is not null ? type.GetConstructor(Array.Empty<Type>()) : throw new ArgumentNullException(nameof(type));
+  /// <param name="type"></param>
+  /// <param name="name"></param>
+  /// <param name="arguments"></param>
+  /// <returns></returns>
+  public static MethodInfo AnyMethod(this Type type, string name, params Type[] arguments) => type.AnyMethod(name, arguments as IEnumerable<Type>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="type"></param>
+  /// <param name="arguments"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool HasConstructor(this Type type, IEnumerable<Type> arguments)
+  {
+    if (type is null) throw new ArgumentNullException(nameof(type));
+    if (arguments is null) throw new ArgumentNullException(nameof(arguments));
+
+    return type.GetConstructor(arguments.AsArray()) != null;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="type"></param>
+  /// <param name="arguments"></param>
+  /// <returns></returns>
+  public static bool HasConstructor(this Type type, params Type[] arguments) => type.HasConstructor(arguments as IEnumerable<Type>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="type"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool HasDefaultConstructor(this Type type) => type.HasConstructor(Array.Empty<Type>());
 
   /// <summary>
   ///   <para></para>

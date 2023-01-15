@@ -159,6 +159,22 @@ public static class NetworkExtensions
 
     return left.Address >= right.Address ? left : right;
   }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsV4(this IPAddress address) => address is not null ? address.AddressFamily == AddressFamily.InterNetwork : throw new ArgumentNullException(nameof(address));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsV6(this IPAddress address) => address is not null ? address.AddressFamily == AddressFamily.InterNetworkV6 : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
   ///   <para></para>
