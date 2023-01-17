@@ -117,7 +117,7 @@ public static class ReflectionExtensions
 
     var currentTypeInfo = currentType;
 
-    while (currentTypeInfo.BaseType != null)
+    while (currentTypeInfo.BaseType is not null)
     {
       types.Add(currentType);
       currentType = currentTypeInfo.BaseType;
@@ -134,7 +134,7 @@ public static class ReflectionExtensions
   /// <param name="type">Type whose field is to be located.</param>
   /// <param name="name">Unique name of field.</param>
   /// <returns><c>true</c> if either instance or static field with either private or public access level is declared for <paramref name="type"/>, <c>false</c> otherwise.</returns>
-  public static bool HasField(this Type type, string name) => AnyField(type, name) != null;
+  public static bool HasField(this Type type, string name) => AnyField(type, name) is not null;
 
   /// <summary>
   ///   <para>Determines whether there is a named property, declared within a specified <see cref="ToType"/>.</para>
@@ -142,7 +142,7 @@ public static class ReflectionExtensions
   /// <param name="type">Type whose property is to be located.</param>
   /// <param name="name">Unique name of property.</param>
   /// <returns><c>true</c> if either instance or static property with either private or public access level is declared for <paramref name="type"/>, <c>false</c> otherwise.</returns>
-  public static bool HasProperty(this Type type, string name) => AnyProperty(type, name) != null;
+  public static bool HasProperty(this Type type, string name) => AnyProperty(type, name) is not null;
 
   /// <summary>
   ///   <para>Determines whether there is a named method, declared within a specified <see cref="ToType"/>.</para>
@@ -151,7 +151,7 @@ public static class ReflectionExtensions
   /// <param name="name">Unique name of method.</param>
   /// <param name="arguments"></param>
   /// <returns><c>true</c> if either instance or static method with either private or public access level is declared for <paramref name="type"/>, <c>false</c> otherwise.</returns>
-  public static bool HasMethod(this Type type, string name, IEnumerable<Type> arguments = null) => AnyMethod(type, name, arguments) != null;
+  public static bool HasMethod(this Type type, string name, IEnumerable<Type> arguments = null) => AnyMethod(type, name, arguments) is not null;
 
   /// <summary>
   ///   <para></para>
@@ -160,7 +160,7 @@ public static class ReflectionExtensions
   /// <param name="name"></param>
   /// <param name="arguments"></param>
   /// <returns></returns>
-  public static bool HasMethod(this Type type, string name, params Type[] arguments) => AnyMethod(type, name, arguments) != null;
+  public static bool HasMethod(this Type type, string name, params Type[] arguments) => AnyMethod(type, name, arguments) is not null;
 
   /// <summary>
   ///   <para>Searches for a named event, declared within a specified <see cref="ToType"/>.</para>
@@ -246,7 +246,7 @@ public static class ReflectionExtensions
     if (type is null) throw new ArgumentNullException(nameof(type));
     if (arguments is null) throw new ArgumentNullException(nameof(arguments));
 
-    return type.GetConstructor(arguments.AsArray()) != null;
+    return type.GetConstructor(arguments.AsArray()) is not null;
   }
 
   /// <summary>

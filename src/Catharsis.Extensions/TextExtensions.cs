@@ -20,7 +20,7 @@ public static class TextExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsStart(this StreamReader reader) => reader is not null ? reader.BaseStream.IsStart() : throw new ArgumentNullException(nameof(reader));
+  public static bool IsStart(this StreamReader reader) => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -34,14 +34,14 @@ public static class TextExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this StreamReader reader) => reader is not null ? reader.BaseStream.IsEmpty() : throw new ArgumentNullException(nameof(reader));
+  public static bool IsEmpty(this StreamReader reader) => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this StreamWriter writer) => writer is not null ? writer.BaseStream.IsEmpty() : throw new ArgumentNullException(nameof(writer));
+  public static bool IsEmpty(this StreamWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>
@@ -83,7 +83,7 @@ public static class TextExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  public static StringBuilder Empty(this StringBuilder builder) => builder is not null ? builder.Clear() : throw new ArgumentNullException(nameof(builder));
+  public static StringBuilder Empty(this StringBuilder builder) => builder?.Clear() ?? throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
   ///   <para></para>
@@ -150,7 +150,7 @@ public static class TextExtensions
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
 
-    for (string line; (line = reader.ReadLine()) != null;)
+    for (string line; (line = reader.ReadLine()) is not null;)
     {
       yield return line;
     }
@@ -165,7 +165,7 @@ public static class TextExtensions
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
 
-    for (string line; (line = await reader.ReadLineAsync()) != null;)
+    for (string line; (line = await reader.ReadLineAsync()) is not null;)
     {
       yield return line;
     }
@@ -281,7 +281,7 @@ public static class TextExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static string ToText(this TextReader reader) => reader is not null ? reader.ReadToEnd() : throw new ArgumentNullException(nameof(reader));
+  public static string ToText(this TextReader reader) => reader?.ReadToEnd() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>

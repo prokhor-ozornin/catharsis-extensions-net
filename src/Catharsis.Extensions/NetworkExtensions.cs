@@ -33,7 +33,7 @@ public static class NetworkExtensions
 
     using var ping = new Ping();
 
-    var reply = timeout != null ? ping.Send(address, (int) timeout.Value.TotalMilliseconds) : ping.Send(address);
+    var reply = timeout is not null ? ping.Send(address, (int) timeout.Value.TotalMilliseconds) : ping.Send(address);
 
     return reply.Status == IPStatus.Success;
   }
@@ -46,12 +46,11 @@ public static class NetworkExtensions
   /// <returns></returns>
   public static async Task<bool> IsAvailableAsync(this IPAddress address, TimeSpan? timeout = null)
   {
-    if (address is null)
-      throw new ArgumentNullException(nameof(address));
+    if (address is null)      throw new ArgumentNullException(nameof(address));
 
     using var ping = new Ping();
 
-    var reply = await (timeout != null ? ping.SendPingAsync(address, (int) timeout.Value.TotalMilliseconds) : ping.SendPingAsync(address)).ConfigureAwait(false);
+    var reply = await (timeout is not null ? ping.SendPingAsync(address, (int) timeout.Value.TotalMilliseconds) : ping.SendPingAsync(address)).ConfigureAwait(false);
 
     return reply.Status == IPStatus.Success;
   }
@@ -68,14 +67,14 @@ public static class NetworkExtensions
 
     var address = host.HostName.IsEmpty() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
 
-    if (address == null)
+    if (address is null)
     {
       return false;
     }
 
     using var ping = new Ping();
 
-    var reply = timeout != null ? ping.Send(address, (int) timeout.Value.TotalMilliseconds) : ping.Send(address);
+    var reply = timeout is not null ? ping.Send(address, (int) timeout.Value.TotalMilliseconds) : ping.Send(address);
 
     return reply.Status == IPStatus.Success;
   }
@@ -92,14 +91,14 @@ public static class NetworkExtensions
 
     var address = host.HostName.IsEmpty() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
 
-    if (address == null)
+    if (address is null)
     {
       return false;
     }
 
     using var ping = new Ping();
 
-    var reply = await (timeout != null ? ping.SendPingAsync(address, (int) timeout.Value.TotalMilliseconds) : ping.SendPingAsync(address)).ConfigureAwait(false);
+    var reply = await (timeout is not null ? ping.SendPingAsync(address, (int) timeout.Value.TotalMilliseconds) : ping.SendPingAsync(address)).ConfigureAwait(false);
 
     return reply.Status == IPStatus.Success;
   }
@@ -109,21 +108,21 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="host"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this IPHostEntry host) => host is not null ? host.HostName.IsEmpty() && (host.AddressList == null || host.AddressList.IsEmpty()) : throw new ArgumentNullException(nameof(host));
+  public static bool IsEmpty(this IPHostEntry host) => host is not null ? host.HostName.IsEmpty() && (host.AddressList is null || host.AddressList.IsEmpty()) : throw new ArgumentNullException(nameof(host));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this TcpClient tcp) => tcp is not null ? tcp.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(tcp));
+  public static bool IsEmpty(this TcpClient tcp) => tcp?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="udp"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this UdpClient udp) => udp is not null ? udp.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(udp));
+  public static bool IsEmpty(this UdpClient udp) => udp?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
   ///   <para></para>
@@ -226,7 +225,7 @@ public static class NetworkExtensions
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
 
-    if (timeout != null)
+    if (timeout is not null)
     {
       http.Timeout = timeout.Value;
     }
@@ -244,7 +243,7 @@ public static class NetworkExtensions
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
 
-    if (timeout != null)
+    if (timeout is not null)
     {
       tcp.ReceiveTimeout = (int) timeout.Value.TotalMilliseconds;
       tcp.SendTimeout = (int) timeout.Value.TotalMilliseconds;
@@ -278,7 +277,7 @@ public static class NetworkExtensions
   {
     if (smtp is null) throw new ArgumentNullException(nameof(smtp));
 
-    if (timeout != null)
+    if (timeout is not null)
     {
       smtp.Timeout = (int) timeout.Value.TotalMilliseconds;
     }
@@ -296,7 +295,7 @@ public static class NetworkExtensions
   {
     if (socket is null) throw new ArgumentNullException(nameof(socket));
 
-    if (timeout != null)
+    if (timeout is not null)
     {
       socket.ReceiveTimeout = (int) timeout.Value.TotalMilliseconds;
       socket.SendTimeout = (int) timeout.Value.TotalMilliseconds;
@@ -582,7 +581,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="host"></param>
   /// <returns></returns>
-  public static IEnumerable<IPAddress> ToEnumerable(this IPHostEntry host) => host is not null ? host.AddressList ?? Enumerable.Empty<IPAddress>() : throw new ArgumentNullException(nameof(host));
+  public static IEnumerable<IPAddress> ToEnumerable(this IPHostEntry host) => host?.AddressList ?? throw new ArgumentNullException(nameof(host));
 
   /// <summary>
   ///   <para></para>
@@ -590,7 +589,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToEnumerable(this TcpClient tcp, bool close = false) => tcp is not null ? tcp.GetStream().ToEnumerable(close) : throw new ArgumentNullException(nameof(tcp));
+  public static IEnumerable<byte> ToEnumerable(this TcpClient tcp, bool close = false) => tcp?.GetStream().ToEnumerable(close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
@@ -599,7 +598,7 @@ public static class NetworkExtensions
   /// <param name="count"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte[]> ToEnumerable(this TcpClient tcp, int count, bool close = false) => tcp is not null ? tcp.GetStream().ToEnumerable(count, close) : throw new ArgumentNullException(nameof(tcp));
+  public static IEnumerable<byte[]> ToEnumerable(this TcpClient tcp, int count, bool close = false) => tcp?.GetStream().ToEnumerable(count, close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
@@ -616,7 +615,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this TcpClient tcp, bool close = false) => tcp is not null ? tcp.GetStream().ToAsyncEnumerable(close) : throw new ArgumentNullException(nameof(tcp));
+  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this TcpClient tcp, bool close = false) => tcp?.GetStream().ToAsyncEnumerable(close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
@@ -625,7 +624,7 @@ public static class NetworkExtensions
   /// <param name="count"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this TcpClient tcp, int count, bool close = false) => tcp is not null ? tcp.GetStream().ToAsyncEnumerable(count, close) : throw new ArgumentNullException(nameof(tcp));
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this TcpClient tcp, int count, bool close = false) => tcp?.GetStream().ToAsyncEnumerable(count, close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
@@ -719,14 +718,14 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  public static byte[] ToBytes(this IPAddress address) => address is not null ? address.GetAddressBytes() : throw new ArgumentNullException(nameof(address));
+  public static byte[] ToBytes(this IPAddress address) => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  public static byte[] ToBytes(this PhysicalAddress address) => address is not null ? address.GetAddressBytes() : throw new ArgumentNullException(nameof(address));
+  public static byte[] ToBytes(this PhysicalAddress address) => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
 
   /// <summary>
   ///   <para></para>
@@ -770,7 +769,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this HttpContent content) => content is not null ? content.ToStream().ToBytes() : throw new ArgumentNullException(nameof(content));
+  public static IEnumerable<byte> ToBytes(this HttpContent content) => content?.ToStream().ToBytes() ?? throw new ArgumentNullException(nameof(content));
 
   /// <summary>
   ///   <para></para>
@@ -795,7 +794,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this TcpClient tcp) => tcp is not null ? tcp.GetStream().ToBytes() : throw new ArgumentNullException(nameof(tcp));
+  public static IEnumerable<byte> ToBytes(this TcpClient tcp) => tcp?.GetStream().ToBytes() ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
   ///   <para></para>
@@ -818,7 +817,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="udp"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this UdpClient udp) => udp is not null ? udp.ReceiveAsync().Result.Buffer : throw new ArgumentNullException(nameof(udp));
+  public static IEnumerable<byte> ToBytes(this UdpClient udp) => udp?.ReceiveAsync().Result.Buffer ?? throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
   ///   <para></para>
@@ -879,7 +878,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
-  public static string ToText(this HttpContent content) => content is not null ? content.ToTextAsync().Result : throw new ArgumentNullException(nameof(content));
+  public static string ToText(this HttpContent content) => content?.ToTextAsync().Result ?? throw new ArgumentNullException(nameof(content));
 
   /// <summary>
   ///   <para></para>

@@ -99,12 +99,7 @@ public static class NumericExtensions
   /// </summary>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<object> Nulls(this int count)
-  {
-    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    return count.Objects<object>(() => null);
-  }
+  public static IEnumerable<object> Nulls(this int count) => count >= 0 ? count.Objects<object>(() => null) : throw new ArgumentOutOfRangeException(nameof(count));
 
   /// <summary>
   ///   <para></para>
@@ -112,12 +107,7 @@ public static class NumericExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<T> Objects<T>(this int count) where T : new()
-  {
-    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    return count.Objects(() => new T());
-  }
+  public static IEnumerable<T> Objects<T>(this int count) where T : new() => count >= 0 ? count.Objects(() => new T()) : throw new ArgumentOutOfRangeException(nameof(count));
 
   /// <summary>
   ///   <para></para>
@@ -161,7 +151,7 @@ public static class NumericExtensions
   /// <param name="number"></param>
   /// <param name="digits"></param>
   /// <returns></returns>
-  public static float Round(this float number, int? digits = null) => (float) (digits != null ? Math.Round(number, digits.Value) : Math.Round(number));
+  public static float Round(this float number, int? digits = null) => (float) (digits is not null ? Math.Round(number, digits.Value) : Math.Round(number));
 
   /// <summary>
   ///   <para>Rounds a double-precision floating-point value to the nearest integral value.</para>
@@ -170,7 +160,7 @@ public static class NumericExtensions
   /// <param name="digits"></param>
   /// <returns>The integer nearest <paramref name="number"/>.</returns>
   /// <seealso cref="Math.Round(double)"/>
-  public static double Round(this double number, int? digits = null) => digits != null ? Math.Round(number, digits.Value) : Math.Round(number);
+  public static double Round(this double number, int? digits = null) => digits is not null ? Math.Round(number, digits.Value) : Math.Round(number);
 
   /// <summary>
   ///   <para>Rounds a decimal value to the nearest integral value.</para>
@@ -179,7 +169,7 @@ public static class NumericExtensions
   /// <param name="digits"></param>
   /// <returns>The integer nearest <paramref name="number"/>.</returns>
   /// <seealso cref="Math.Round(decimal)"/>
-  public static decimal Round(this decimal number, int? digits = null) => digits != null ? Math.Round(number, digits.Value) : Math.Round(number);
+  public static decimal Round(this decimal number, int? digits = null) => digits is not null ? Math.Round(number, digits.Value) : Math.Round(number);
 
   /// <summary>
   ///   <para></para>

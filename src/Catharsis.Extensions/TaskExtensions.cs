@@ -88,7 +88,7 @@ public static class TaskExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-    if (timeout != null)
+    if (timeout is not null)
     {
       task.Wait((int) timeout.Value.TotalMilliseconds, cancellation);
     }
@@ -119,7 +119,7 @@ public static class TaskExtensions
 
     cancellation.ThrowIfCancellationRequested();
     
-    if (timeout != null)
+    if (timeout is not null)
     {
       task.Wait((int) timeout.Value.TotalMilliseconds, cancellation);
     }
@@ -179,15 +179,15 @@ public static class TaskExtensions
   {
     await task.ConfigureAwait(false);
 
-    if (task.IsCompletedSuccessfully && success != null)
+    if (task.IsCompletedSuccessfully && success is not null)
     {
       success(task);
     }
-    else if (task.IsFaulted && failure != null)
+    else if (task.IsFaulted && failure is not null)
     {
       failure(task);
     }
-    else if (task.IsCanceled && cancellation != null)
+    else if (task.IsCanceled && cancellation is not null)
     {
       cancellation(task);
     }
@@ -213,20 +213,19 @@ public static class TaskExtensions
   /// <returns></returns>
   public static async Task ExecuteAsync(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null)
   {
-    if (task is null)
-      throw new ArgumentNullException(nameof(task));
+    if (task is null) throw new ArgumentNullException(nameof(task));
 
     await task.ConfigureAwait(false);
 
-    if (task.IsCompletedSuccessfully && success != null)
+    if (task.IsCompletedSuccessfully && success is not null)
     {
       success(task);
     }
-    else if (task.IsFaulted && failure != null)
+    else if (task.IsFaulted && failure is not null)
     {
       failure(task);
     }
-    else if (task.IsCanceled && cancellation != null)
+    else if (task.IsCanceled && cancellation is not null)
     {
       cancellation(task);
     }
@@ -258,15 +257,15 @@ public static class TaskExtensions
 
     await task.ConfigureAwait(false);
 
-    if (task.IsCompletedSuccessfully && success != null)
+    if (task.IsCompletedSuccessfully && success is not null)
     {
       success(task);
     }
-    else if (task.IsFaulted && failure != null)
+    else if (task.IsFaulted && failure is not null)
     {
       failure(task);
     }
-    else if (task.IsCanceled && cancellation != null)
+    else if (task.IsCanceled && cancellation is not null)
     {
       cancellation(task);
     }

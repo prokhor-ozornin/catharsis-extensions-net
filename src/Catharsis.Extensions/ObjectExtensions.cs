@@ -33,8 +33,8 @@ public static class ObjectExtensions
   {
     return instance switch
     {
-      WeakReference reference => !reference.IsAlive || reference.Target == null,
-      _ => instance == null
+      WeakReference reference => !reference.IsAlive || reference.Target is null,
+      _ => instance is null
     };
   }
 
@@ -60,7 +60,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static T As<T>(this object instance) => instance is not null ? instance is T s ? s : default : throw new ArgumentNullException(nameof(instance));
+  public static T As<T>(this object instance) where T : class => instance as T;
 
   /// <summary>
   ///   <para>Tries to convert given object to specified type and throws exception on failure.</para>
@@ -70,7 +70,7 @@ public static class ObjectExtensions
   /// <returns>Object, converted to the specified type.</returns>
   /// <exception cref="InvalidCastException">If conversion to specified type cannot be performed.</exception>
   /// <remarks>If specified object instance is a <c>null</c> reference, a <c>null</c> reference will be returned as a result.</remarks>
-  public static T To<T>(this object instance) => instance is not null ? (T) instance : throw new ArgumentNullException(nameof(instance));
+  public static T To<T>(this object instance) => (T) instance;
 
   /// <summary>
   ///   <para></para>
@@ -85,7 +85,7 @@ public static class ObjectExtensions
     if (instance is null) throw new ArgumentNullException(nameof(instance));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    if (condition != null)
+    if (condition is not null)
     {
       action.Execute(condition, instance);
     }
@@ -135,12 +135,12 @@ public static class ObjectExtensions
   /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are considered equal, <c>false</c> otherwise.</returns>
   public static bool Equality<T>(this T left, T right, IEnumerable<string> properties)
   {
-    if (left == null && right == null)
+    if (left is null && right is null)
     {
       return true;
     }
 
-    if (left == null || right == null)
+    if (left is null || right is null)
     {
       return false;
     }
@@ -158,8 +158,8 @@ public static class ObjectExtensions
     }
 
     var type = left.GetType();
-    var typeProperties = propertiesArray.Select(property => type.AnyProperty(property)).Where(property => property != null).AsArray();
-    var typeFields = propertiesArray.Select(field => type.AnyField(field)).Where(field => field != null).AsArray();
+    var typeProperties = propertiesArray.Select(property => type.AnyProperty(property)).Where(property => property is not null).AsArray();
+    var typeFields = propertiesArray.Select(field => type.AnyField(field)).Where(field => field is not null).AsArray();
 
     if (typeProperties.Length == 0 && typeFields.Length == 0)
     {
@@ -224,12 +224,12 @@ public static class ObjectExtensions
   /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are considered equal, <c>false</c> otherwise.</returns>
   public static bool Equality<T>(this T left, T right, IEnumerable<Expression<Func<T, object>>> properties)
   {
-    if (left == null && right == null)
+    if (left is null && right is null)
     {
       return true;
     }
 
-    if (left == null || right == null)
+    if (left is null || right is null)
     {
       return false;
     }
@@ -276,7 +276,7 @@ public static class ObjectExtensions
   {
     if (properties is null) throw new ArgumentNullException(nameof(properties));
 
-    if (instance == null)
+    if (instance is null)
     {
       return 0;
     }
@@ -291,9 +291,9 @@ public static class ObjectExtensions
     var hash = 0;
 
     properties.Select(name => instance.GetType().AnyProperty(name))
-              .Where(property => property != null)
+              .Where(property => property is not null)
               .Select(property => property.GetValue(instance, null))
-              .Where(property => property != null)
+              .Where(property => property is not null)
               .ForEach(value => hash += value.GetHashCode());
 
     return hash;
@@ -325,7 +325,7 @@ public static class ObjectExtensions
   {
     if (properties is null) throw new ArgumentNullException(nameof(properties));
 
-    if (instance == null)
+    if (instance is null)
     {
       return 0;
     }
@@ -547,7 +547,12 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
-  public static IEnumerable<(string Name, object Value)> GetState<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null) => properties == null ? instance.GetState(Enumerable.Empty<string>()) : properties.Select(property => (property.Body.To<UnaryExpression>().Operand.To<MemberExpression>().Member.Name, property.Compile()(instance)));
+  public static IEnumerable<(string Name, object Value)> GetState<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
+    return properties is null ? instance.GetState(Enumerable.Empty<string>()) : properties.Select(property => (property.Body.To<UnaryExpression>().Operand.To<MemberExpression>().Member.Name, property.Compile()(instance)));
+  }
 
   /// <summary>
   ///   <para>Sets values of several properties on specified target object.</para>
@@ -627,7 +632,7 @@ public static class ObjectExtensions
 
     var propertyInfo = instance.GetType().AnyProperty(name);
 
-    return propertyInfo != null && propertyInfo.CanRead ? (T) propertyInfo.GetValue(instance, null) : default;
+    return propertyInfo is not null && propertyInfo.CanRead ? (T) propertyInfo.GetValue(instance, null) : default;
   }
 
   /// <summary>
@@ -645,7 +650,7 @@ public static class ObjectExtensions
 
     var propertyInfo = instance.GetType().AnyProperty(name);
 
-    if (propertyInfo != null && propertyInfo.CanWrite)
+    if (propertyInfo is not null && propertyInfo.CanWrite)
     {
       propertyInfo.SetValue(instance, value, null);
     }
@@ -685,7 +690,12 @@ public static class ObjectExtensions
   /// <param name="provider"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static string ToFormattedString(this object instance, IFormatProvider provider = null, string format = null) => instance is not null ? provider == null ? FormattableString.Invariant($"{instance}") : string.Format(provider, format == null ? "{0}" : $"{{0:{format}}}", instance) : throw new ArgumentNullException(nameof(instance));
+  public static string ToFormattedString(this object instance, IFormatProvider provider = null, string format = null)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
+    return provider is null ? FormattableString.Invariant($"{instance}") : string.Format(provider, format is null ? "{0}" : $"{{0:{format}}}", instance);
+  }
 
   /// <summary>
   ///   <para></para>

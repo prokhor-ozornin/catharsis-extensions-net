@@ -106,7 +106,7 @@ public static class CollectionsExtensions
 
     for (var i = offset; i < offset + (count ?? from.Count - offset); i++)
     {
-      if (condition == null || condition(from[i]))
+      if (condition is null || condition(from[i]))
       {
         from.RemoveAt(i);
       }
@@ -182,7 +182,7 @@ public static class CollectionsExtensions
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IList<T> Fill<T>(this IList<T> list, Func<T> filler, int? offset = null, int? count = null) => filler is not null ? list.Fill(_ => filler(), offset, count) : throw new ArgumentNullException(nameof(filler));
+  public static IList<T> Fill<T>(this IList<T> list, Func<T> filler, int? offset = null, int? count = null) => list?.Fill(_ => filler(), offset, count) ?? throw new ArgumentNullException(nameof(filler));
 
   /// <summary>
   ///   <para></para>
@@ -201,7 +201,7 @@ public static class CollectionsExtensions
     if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
     
     var fromIndex = offset ?? 0;
-    var toIndex = Min(list.Count, count != null ? fromIndex + count.Value : list.Count - fromIndex);
+    var toIndex = Min(list.Count, count is not null ? fromIndex + count.Value : list.Count - fromIndex);
 
     for (var index = fromIndex; index < toIndex; index++)
     {
@@ -332,7 +332,7 @@ public static class CollectionsExtensions
     {
       var key = collection.GetKey(i);
 
-      if (key != null)
+      if (key is not null)
       {
         result.Add(key, collection.Get(i));
       }
@@ -363,7 +363,7 @@ public static class CollectionsExtensions
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
-    return comparer != null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
+    return comparer is not null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
   }
 
   /// <summary>
@@ -379,7 +379,7 @@ public static class CollectionsExtensions
     {
       var key = collection.GetKey(i);
 
-      if (key != null)
+      if (key is not null)
       {
         yield return (key, collection.Get(i));
       }

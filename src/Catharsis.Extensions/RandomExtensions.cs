@@ -475,7 +475,7 @@ public static class RandomExtensions
   /// <param name="random"></param>
   /// <param name="ranges"></param>
   /// <returns></returns>
-  public static uint UintInRange(this Random random, params Range[] ranges) => random is not null ? (uint) random.LongInRange(ranges) : throw new ArgumentNullException(nameof(random));
+  public static uint UintInRange(this Random random, params Range[] ranges) => (uint?) random?.LongInRange(ranges) ?? throw new ArgumentNullException(nameof(random));
 
   /// <summary>
   ///   <para></para>

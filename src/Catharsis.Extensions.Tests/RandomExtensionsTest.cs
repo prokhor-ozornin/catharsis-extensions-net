@@ -411,6 +411,79 @@ public sealed class RandomExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.Uint(Random, uint?, uint?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_Uint_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.Uint(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+
+    Randomizer.Uint(0, 0).Should().Be(0);
+    Randomizer.Uint(uint.MinValue, uint.MinValue).Should().Be(uint.MinValue);
+    Randomizer.Uint(uint.MaxValue, uint.MaxValue).Should().Be(uint.MaxValue);
+    Randomizer.Uint(uint.MinValue, uint.MaxValue).Should().BeInRange(uint.MinValue, uint.MaxValue);
+    Randomizer.Uint(uint.MaxValue, uint.MinValue).Should().BeInRange(uint.MinValue, uint.MaxValue);
+    Randomizer.Uint().Should().BeInRange(uint.MinValue, uint.MaxValue);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.UintInRange(Random, Range[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_UintInRange_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.UintInRange(null, Range.All)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+
+    Randomizer.UintInRange(Range.All).Should().Be(0);
+    Randomizer.UintInRange(..0).Should().Be(0);
+    Randomizer.UintInRange().Should().BeInRange(uint.MinValue, uint.MaxValue);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.UintSequence(Random, int, uint?, uint?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_UintSequence_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.UintSequence(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => Randomizer.UintSequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+    const int count = 1000;
+
+    Randomizer.UintSequence(0).Should().NotBeNull().And.NotBeSameAs(Randomizer.UintSequence(0)).And.BeEmpty();
+
+    Randomizer.UintSequence(count, 0, 0).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(0);
+    Randomizer.UintSequence(count, uint.MinValue, uint.MinValue).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(uint.MinValue);
+    Randomizer.UintSequence(count, uint.MaxValue, uint.MaxValue).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(uint.MaxValue);
+    Randomizer.UintSequence(count, uint.MinValue, uint.MaxValue).Should().NotBeNull().And.NotBeSameAs(Randomizer.UintSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(uint.MinValue, uint.MaxValue));
+    Randomizer.UintSequence(count, uint.MaxValue, uint.MinValue).Should().NotBeNull().And.NotBeSameAs(Randomizer.UintSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(uint.MinValue, uint.MaxValue));
+    Randomizer.UintSequence(count).Should().NotBeNull().And.NotBeSameAs(Randomizer.UintSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(uint.MinValue, uint.MaxValue));
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.UintSequenceInRange(Random, int, Range[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Random_UintSequenceInRange_Method()
+  {
+    AssertionExtensions.Should(() => RandomExtensions.UintSequenceInRange(null, 0, ..1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => Randomizer.UintSequenceInRange(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+    const int count = 1000;
+
+    Randomizer.UintSequenceInRange(0).Should().BeSameAs(Randomizer.UintSequenceInRange(0));
+    Randomizer.UintSequenceInRange(count).Should().NotBeSameAs(Randomizer.UintSequenceInRange(count));
+
+    Randomizer.UintSequenceInRange(0, Range.All).Should().BeEmpty();
+
+    Randomizer.UintSequenceInRange(count, ..0).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(0);
+    Randomizer.UintSequenceInRange(count, Range.All).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(0);
+
+    Randomizer.UintSequenceInRange(count, ..0, Range.All).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(0);
+    Randomizer.UintSequenceInRange(count, ..0, 1..2).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(1);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="RandomExtensions.Long(Random, long?, long?)"/> method.</para>
   /// </summary>
   [Fact]

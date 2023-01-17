@@ -418,81 +418,81 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  public static XmlDocument Serialize(this XmlDocument xml, XmlWriter destination)
+  public static XmlDocument Serialize(this XmlDocument document, XmlWriter destination)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
-    xml.Save(destination);
+    document.Save(destination);
 
-    return xml;
+    return document;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  public static XmlDocument Serialize(this XmlDocument xml, TextWriter destination)
+  public static XmlDocument Serialize(this XmlDocument document, TextWriter destination)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     using var writer = destination.ToXmlWriter(false);
 
-    return xml.Serialize(writer);
+    return document.Serialize(writer);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static XmlDocument Serialize(this XmlDocument xml, Stream destination, Encoding encoding = null)
+  public static XmlDocument Serialize(this XmlDocument document, Stream destination, Encoding encoding = null)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     using var writer = destination.ToXmlWriter(encoding, false);
 
-    return xml.Serialize(writer);
+    return document.Serialize(writer);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static XmlDocument Serialize(this XmlDocument xml, FileInfo destination, Encoding encoding = null)
+  public static XmlDocument Serialize(this XmlDocument document, FileInfo destination, Encoding encoding = null)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     using var writer = destination.ToXmlWriter(encoding);
     
-    return xml.Serialize(writer);
+    return document.Serialize(writer);
   }
   
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static string Serialize(this XmlDocument xml)
+  public static string Serialize(this XmlDocument document)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
     using var destination = new StringWriter();
 
-    xml.Serialize(destination);
+    document.Serialize(destination);
 
     return destination.ToString();
   }
@@ -597,81 +597,81 @@ public static class SerializationExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  public static XDocument Serialize(this XDocument xml, XmlWriter destination)
+  public static XDocument Serialize(this XDocument document, XmlWriter destination)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
-    xml.Save(destination);
+    document.Save(destination);
 
-    return xml;
+    return document;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  public static XDocument Serialize(this XDocument xml, TextWriter destination)
+  public static XDocument Serialize(this XDocument document, TextWriter destination)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     using var writer = destination.ToXmlWriter(false);
 
-    return xml.Serialize(writer);
+    return document.Serialize(writer);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static XDocument Serialize(this XDocument xml, Stream destination, Encoding encoding = null)
+  public static XDocument Serialize(this XDocument document, Stream destination, Encoding encoding = null)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     using var writer = destination.ToXmlWriter(encoding, false);
 
-    return xml.Serialize(writer);
+    return document.Serialize(writer);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  public static XDocument Serialize(this XDocument xml, FileInfo destination, Encoding encoding = null)
+  public static XDocument Serialize(this XDocument document, FileInfo destination, Encoding encoding = null)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     using var writer = destination.ToXmlWriter(encoding);
 
-    return xml.Serialize(writer);
+    return document.Serialize(writer);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static string Serialize(this XDocument xml)
+  public static string Serialize(this XDocument document)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
     using var destination = new StringWriter();
 
-    xml.Serialize(destination);
+    document.Serialize(destination);
 
     return destination.ToString();
   }
@@ -721,8 +721,7 @@ public static class SerializationExtensions
   /// <returns></returns>
   public static async Task<XDocument> ToXDocumentAsync(this TextReader reader, CancellationToken cancellation = default)
   {
-    if (reader is null)
-      throw new ArgumentNullException(nameof(reader));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -753,8 +752,7 @@ public static class SerializationExtensions
   /// <returns></returns>
   public static async Task<XDocument> ToXDocumentAsync(this Stream stream, CancellationToken cancellation = default)
   {
-    if (stream is null)
-      throw new ArgumentNullException(nameof(stream));
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -785,8 +783,7 @@ public static class SerializationExtensions
   /// <returns></returns>
   public static async Task<XDocument> ToXDocumentAsync(this FileInfo file, CancellationToken cancellation = default)
   {
-    if (file is null)
-      throw new ArgumentNullException(nameof(file));
+    if (file is null) throw new ArgumentNullException(nameof(file));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -810,8 +807,7 @@ public static class SerializationExtensions
   /// <returns></returns>
   public static async Task<XDocument> ToXDocumentAsync(this string text, CancellationToken cancellation = default)
   {
-    if (text is null)
-      throw new ArgumentNullException(nameof(text));
+    if (text is null) throw new ArgumentNullException(nameof(text));
 
     cancellation.ThrowIfCancellationRequested();
 

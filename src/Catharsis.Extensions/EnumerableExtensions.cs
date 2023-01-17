@@ -54,7 +54,13 @@ public static class EnumerableExtensions
   /// <param name="reversed"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static bool IsReversed<T>(this IEnumerable<T> sequence, IEnumerable<T> reversed, IEqualityComparer<T> comparer = null) => sequence.SequenceEqual(reversed.Reverse(), comparer);
+  public static bool IsReversed<T>(this IEnumerable<T> sequence, IEnumerable<T> reversed, IEqualityComparer<T> comparer = null)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (reversed is null) throw new ArgumentNullException(nameof(reversed));
+    
+    return sequence.SequenceEqual(reversed.Reverse(), comparer);
+  }
 
 #if NET7_0
   /// <summary>
@@ -65,12 +71,7 @@ public static class EnumerableExtensions
   /// <param name="comparer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static bool IsOrdered<T>(this IEnumerable<T> sequence, IComparer<T> comparer = null)
-  {
-    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
-
-    return sequence.Order(comparer).SequenceEqual(sequence);
-  }
+  public static bool IsOrdered<T>(this IEnumerable<T> sequence, IComparer<T> comparer = null) => sequence?.Order(comparer).SequenceEqual(sequence) ?? throw new ArgumentNullException(nameof(sequence));
 #endif
 
   /// <summary>
@@ -159,7 +160,7 @@ public static class EnumerableExtensions
   /// <param name="comparer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static bool ContainsUnique<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence is not null ? !sequence.GroupBy(sequence => sequence, comparer).Where(group => group.Count() > 1).Select(group => group.Key).Any() : throw new ArgumentNullException(nameof(sequence));
+  public static bool ContainsUnique<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => !sequence?.GroupBy(sequence => sequence, comparer).Where(group => group.Count() > 1).Select(group => group.Key).Any() ?? throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -175,12 +176,12 @@ public static class EnumerableExtensions
     if (offset is < 0) throw new ArgumentOutOfRangeException(nameof(offset));
     if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-    if (offset != null)
+    if (offset is not null)
     {
       sequence = sequence.Skip(offset.Value);
     }
 
-    if (count != null)
+    if (count is not null)
     {
       sequence = sequence.Take(count.Value);
     }
@@ -350,14 +351,14 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IEnumerable<T> AsNotNullable<T>(this IEnumerable<T> sequence) => sequence is not null ? sequence.Where(element => element != null) : throw new ArgumentNullException(nameof(sequence));
+  public static IEnumerable<T> AsNotNullable<T>(this IEnumerable<T> sequence) => sequence?.Where(element => element is not null) ?? throw new ArgumentNullException(nameof(sequence));
   
   /// <summary>
   ///   <para>Returns BASE64-encoded representation of a bytes sequence.</para>
   /// </summary>
   /// <param name="bytes">Bytes to convert to BASE64 encoding.</param>
   /// <returns>BASE64 string representation of <paramref name="bytes"/> array.</returns>
-  public static string ToBase64(this IEnumerable<byte> bytes) => bytes is not null ? System.Convert.ToBase64String(bytes.AsArray()) : throw new ArgumentNullException(nameof(bytes));
+  public static string ToBase64(this IEnumerable<byte> bytes) => bytes is not null ? Convert.ToBase64String(bytes.AsArray()) : throw new ArgumentNullException(nameof(bytes));
 
   /// <summary>
   ///   <para></para>
@@ -405,7 +406,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> sequence) => sequence is not null ? sequence.ToList() : throw new ArgumentNullException(nameof(sequence));
+  public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> sequence) => sequence?.ToList() ?? throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para>Converts sequence of elements into a set collection type.</para>
@@ -424,7 +425,7 @@ public static class EnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IReadOnlySet<T> ToReadOnlySet<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence is not null ? sequence.ToHashSet(comparer) : throw new ArgumentNullException(nameof(sequence));
+  public static IReadOnlySet<T> ToReadOnlySet<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence?.ToHashSet(comparer) ?? throw new ArgumentNullException(nameof(sequence));
 #endif
 
   /// <summary>
@@ -508,7 +509,7 @@ public static class EnumerableExtensions
   /// </summary>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IEnumerable<int> ToRange(this IEnumerable<Range> sequence) => sequence is not null ? sequence.SelectMany(range => range.ToEnumerable()).ToHashSet() : throw new ArgumentNullException(nameof(sequence));
+  public static IEnumerable<int> ToRange(this IEnumerable<Range> sequence) => sequence?.SelectMany(range => range.ToEnumerable()).ToHashSet() ?? throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -516,7 +517,7 @@ public static class EnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static IEnumerable<(T item, int index)> ToValueTuple<T>(this IEnumerable<T> sequence) => sequence is not null ? sequence.Select((item, index) => (item, index)) : throw new ArgumentNullException(nameof(sequence));
+  public static IEnumerable<(T item, int index)> ToValueTuple<T>(this IEnumerable<T> sequence) => sequence?.Select((item, index) => (item, index)) ?? throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
@@ -532,7 +533,7 @@ public static class EnumerableExtensions
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
     if (key is null) throw new ArgumentNullException(nameof(key));
 
-    return comparer != null ? sequence.OrderBy(key, comparer).Select(tuple => (Key: key(tuple), Value: tuple)) : sequence.Select(tuple => (Key: key(tuple), Value: tuple));
+    return comparer is not null ? sequence.OrderBy(key, comparer).Select(tuple => (Key: key(tuple), Value: tuple)) : sequence.Select(tuple => (Key: key(tuple), Value: tuple));
   }
 
   /// <summary>
@@ -562,14 +563,14 @@ public static class EnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> sequence, IEqualityComparer<TKey> comparer = null) where TKey : notnull => sequence.ToDictionary(comparer) ;
+  public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> sequence, IEqualityComparer<TKey> comparer = null) where TKey : notnull => sequence.ToDictionary(comparer);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="sequence"></param>
   /// <returns></returns>
-  public static MemoryStream ToMemoryStream(this IEnumerable<byte> sequence) => sequence is not null ? sequence.Chunk(4096).ToMemoryStream() : throw new ArgumentNullException(nameof(sequence));
+  public static MemoryStream ToMemoryStream(this IEnumerable<byte> sequence) => sequence?.Chunk(4096).ToMemoryStream() ?? throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>

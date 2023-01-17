@@ -15,7 +15,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="drive"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this DriveInfo drive) => drive is not null ? drive.RootDirectory.IsEmpty() : throw new ArgumentNullException(nameof(drive));
+  public static bool IsEmpty(this DriveInfo drive) => drive?.RootDirectory.IsEmpty() ?? throw new ArgumentNullException(nameof(drive));
 
   /// <summary>
   ///   <para></para>
@@ -69,7 +69,7 @@ public static class FileSystemExtensions
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
 
-    if (file.DirectoryName != null)
+    if (file.DirectoryName is not null)
     {
       Directory.CreateDirectory(file.DirectoryName);
     }
@@ -238,7 +238,7 @@ public static class FileSystemExtensions
   /// <param name="pattern"></param>
   /// <param name="recursive"></param>
   /// <returns></returns>
-  public static IEnumerable<DirectoryInfo> Directories(this DriveInfo drive, string pattern = null, bool recursive = false) => drive is not null ? drive.RootDirectory.Directories(pattern, recursive) : throw new ArgumentNullException(nameof(drive));
+  public static IEnumerable<DirectoryInfo> Directories(this DriveInfo drive, string pattern = null, bool recursive = false) => drive?.RootDirectory.Directories(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
 
   /// <summary>
   ///   <para></para>
@@ -286,7 +286,7 @@ public static class FileSystemExtensions
   /// <param name="pattern"></param>
   /// <param name="recursive"></param>
   /// <returns></returns>
-  public static long Size(this DriveInfo drive, string pattern = null, bool recursive = true) => drive is not null ? drive.RootDirectory.Size(pattern, recursive) : throw new ArgumentNullException(nameof(drive));
+  public static long Size(this DriveInfo drive, string pattern = null, bool recursive = true) => drive?.RootDirectory.Size(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
 
   /// <summary>
   ///   <para></para>
@@ -318,21 +318,21 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
-  public static FileStream ToStream(this FileInfo file) => file is not null ? file.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None) : throw new ArgumentNullException(nameof(file));
+  public static FileStream ToStream(this FileInfo file) => file?.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
-  public static FileStream ToReadOnlyStream(this FileInfo file) => file is not null ? file.Open(FileMode.Open, FileAccess.Read, FileShare.Read) : throw new ArgumentNullException(nameof(file));
+  public static FileStream ToReadOnlyStream(this FileInfo file) => file?.Open(FileMode.Open, FileAccess.Read, FileShare.Read);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
-  public static FileStream ToWriteOnlyStream(this FileInfo file) => file is not null ? file.Open(FileMode.Append, FileAccess.Write, FileShare.None) : throw new ArgumentNullException(nameof(file));
+  public static FileStream ToWriteOnlyStream(this FileInfo file) => file?.Open(FileMode.Append, FileAccess.Write, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
   ///   <para></para>
@@ -355,14 +355,14 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this FileInfo file) => file is not null ? file.ToReadOnlyStream().ToBytes(true) : throw new ArgumentNullException(nameof(file));
+  public static IEnumerable<byte> ToBytes(this FileInfo file) => file?.ToReadOnlyStream().ToBytes(true) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
   ///  <para>Reads entire contents of file and returns it as a byte array.</para>
   /// </summary>
   /// <param name="file">File to read data from.</param>
   /// <returns>Byte content of specified <paramref name="file"/>.</returns>
-  public static IAsyncEnumerable<byte> ToBytesAsync(this FileInfo file) => file is not null ? file.ToReadOnlyStream().ToBytesAsync(true) : throw new ArgumentNullException(nameof(file));
+  public static IAsyncEnumerable<byte> ToBytesAsync(this FileInfo file) => file?.ToReadOnlyStream().ToBytesAsync(true) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
   ///   <para></para>

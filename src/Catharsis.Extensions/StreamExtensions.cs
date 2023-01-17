@@ -310,7 +310,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this Stream stream, bool close = false) => stream is not null ? stream.ToEnumerable(close) : throw new ArgumentNullException(nameof(stream));
+  public static IEnumerable<byte> ToBytes(this Stream stream, bool close = false) => stream?.ToEnumerable(close) ?? throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte"/> array. The input is closed before this method returns.</para>
@@ -318,7 +318,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <param name="close"></param>
   /// <returns>The <see cref="byte"/> array from that <paramref name="stream"/></returns>
-  public static IAsyncEnumerable<byte> ToBytesAsync(this Stream stream, bool close = false) => stream is not null ? stream.ToAsyncEnumerable(close) : throw new ArgumentNullException(nameof(stream));
+  public static IAsyncEnumerable<byte> ToBytesAsync(this Stream stream, bool close = false) => stream?.ToAsyncEnumerable(close) ?? throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para></para>
@@ -579,7 +579,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToEnumerable(this Stream stream, bool close = false) => stream is not null ? stream.ToEnumerable(4096, close).SelectMany(bytes => bytes) : throw new ArgumentNullException(nameof(stream));
+  public static IEnumerable<byte> ToEnumerable(this Stream stream, bool close = false) => stream?.ToEnumerable(4096, close).SelectMany(bytes => bytes) ?? throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
   ///   <para></para>
@@ -641,7 +641,7 @@ public static class StreamExtensions
     if (stream is null) throw new ArgumentNullException(nameof(stream));
     if (bufferSize is <= 0) throw new ArgumentOutOfRangeException(nameof(bufferSize));
 
-    return bufferSize != null ? new BufferedStream(stream, bufferSize.Value) : new BufferedStream(stream);
+    return bufferSize is not null ? new BufferedStream(stream, bufferSize.Value) : new BufferedStream(stream);
   }
 
   /// <summary>

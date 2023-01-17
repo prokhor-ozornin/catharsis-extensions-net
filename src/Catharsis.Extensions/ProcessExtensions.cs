@@ -37,7 +37,7 @@ public static class ProcessExtensions
   {
     if (process is null) throw new ArgumentNullException(nameof(process));
 
-    if (timeout != null)
+    if (timeout is not null)
     {
       if (!process.WaitForExit((int) timeout.Value.TotalMilliseconds))
       {
@@ -116,21 +116,21 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this Process process) => process is not null ? process.StandardOutput.BaseStream.ToBytes() : throw new ArgumentNullException(nameof(process));
+  public static IEnumerable<byte> ToBytes(this Process process) => process?.StandardOutput.BaseStream.ToBytes() ?? throw new ArgumentNullException(nameof(process));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToBytesAsync(this Process process) => process is not null ? process.StandardOutput.BaseStream.ToBytesAsync() : throw new ArgumentNullException(nameof(process));
+  public static IAsyncEnumerable<byte> ToBytesAsync(this Process process) => process?.StandardOutput.BaseStream.ToBytesAsync() ?? throw new ArgumentNullException(nameof(process));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  public static string ToText(this Process process) => process is not null ? process.StandardOutput.ToText() : throw new ArgumentNullException(nameof(process));
+  public static string ToText(this Process process) => process?.StandardOutput.ToText() ?? throw new ArgumentNullException(nameof(process));
 
   /// <summary>
   ///   <para></para>
@@ -144,7 +144,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  public static string ToErrorText(this Process process) => process is not null ? process.StandardError.ToText() : throw new ArgumentNullException(nameof(process));
+  public static string ToErrorText(this Process process) => process?.StandardError.ToText() ?? throw new ArgumentNullException(nameof(process));
 
   /// <summary>
   ///   <para></para>
@@ -243,10 +243,8 @@ public static class ProcessExtensions
   /// <returns></returns>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Process process, CancellationToken cancellation = default)
   {
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
-    if (process is null)
-      throw new ArgumentNullException(nameof(process));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (process is null) throw new ArgumentNullException(nameof(process));
 
     await process.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
 

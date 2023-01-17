@@ -12,42 +12,42 @@ public static class BinaryExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsStart(this BinaryReader reader) => reader is not null ? reader.BaseStream.IsStart() : throw new ArgumentNullException(nameof(reader));
+  public static bool IsStart(this BinaryReader reader) => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  public static bool IsStart(this BinaryWriter writer) => writer is not null ? writer.BaseStream.IsStart() : throw new ArgumentNullException(nameof(writer));
+  public static bool IsStart(this BinaryWriter writer) => writer?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsEnd(this BinaryReader reader) => reader is not null ? reader.BaseStream.IsEnd() : throw new ArgumentNullException(nameof(reader));
+  public static bool IsEnd(this BinaryReader reader) => reader?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  public static bool IsEnd(this BinaryWriter writer) => writer is not null ? writer.BaseStream.IsEnd() : throw new ArgumentNullException(nameof(writer));
+  public static bool IsEnd(this BinaryWriter writer) => writer?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this BinaryReader reader) => reader is not null ? reader.BaseStream.IsEmpty() : throw new ArgumentNullException(nameof(reader));
+  public static bool IsEmpty(this BinaryReader reader) => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this BinaryWriter writer) => writer is not null ? writer.BaseStream.IsEmpty() : throw new ArgumentNullException(nameof(writer));
+  public static bool IsEmpty(this BinaryWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>
@@ -177,7 +177,7 @@ public static class BinaryExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToEnumerable(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToEnumerable() : throw new ArgumentNullException(nameof(reader));
+  public static IEnumerable<byte> ToEnumerable(this BinaryReader reader) => reader?.BaseStream.ToEnumerable() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -185,14 +185,14 @@ public static class BinaryExtensions
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IEnumerable<byte[]> ToEnumerable(this BinaryReader reader, int count) => reader is not null ? reader.BaseStream.ToEnumerable(count) : throw new ArgumentNullException(nameof(reader));
+  public static IEnumerable<byte[]> ToEnumerable(this BinaryReader reader, int count) => reader?.BaseStream.ToEnumerable(count) ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToAsyncEnumerable() : throw new ArgumentNullException(nameof(reader));
+  public static IAsyncEnumerable<byte> ToAsyncEnumerable(this BinaryReader reader) => reader?.BaseStream.ToAsyncEnumerable() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -200,21 +200,21 @@ public static class BinaryExtensions
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this BinaryReader reader, int count) => reader is not null ? reader.BaseStream.ToAsyncEnumerable(count) : throw new ArgumentNullException(nameof(reader));
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this BinaryReader reader, int count) => reader?.BaseStream.ToAsyncEnumerable(count) ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToBytes() : throw new ArgumentNullException(nameof(reader));
+  public static IEnumerable<byte> ToBytes(this BinaryReader reader) => reader?.BaseStream.ToBytes() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader) => reader is not null ? reader.BaseStream.ToBytesAsync() : throw new ArgumentNullException(nameof(reader));
+  public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader) => reader?.BaseStream.ToBytesAsync() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>

@@ -22,7 +22,7 @@ public static class RegexExtensions
     if (text is null) throw new ArgumentNullException(nameof(text));
     if (pattern is null) throw new ArgumentNullException(nameof(pattern));
 
-    return options != null ? Regex.IsMatch(text, pattern, options.Value) : Regex.IsMatch(text, pattern);
+    return options is not null ? Regex.IsMatch(text, pattern, options.Value) : Regex.IsMatch(text, pattern);
   }
 
   /// <summary>
@@ -37,7 +37,7 @@ public static class RegexExtensions
     if (text is null) throw new ArgumentNullException(nameof(text));
     if (pattern is null) throw new ArgumentNullException(nameof(pattern));
 
-    return options != null ? Regex.Matches(text, pattern, options.Value) : Regex.Matches(text, pattern);
+    return options is not null ? Regex.Matches(text, pattern, options.Value) : Regex.Matches(text, pattern);
   }
 
   /// <summary>
@@ -59,5 +59,5 @@ public static class RegexExtensions
   /// </summary>
   /// <param name="match"></param>
   /// <returns></returns>
-  public static IEnumerable<Capture> ToEnumerable(this Match match) => match is not null ? match.Captures : throw new ArgumentNullException(nameof(match));
+  public static IEnumerable<Capture> ToEnumerable(this Match match) => match?.Captures ?? throw new ArgumentNullException(nameof(match));
 }

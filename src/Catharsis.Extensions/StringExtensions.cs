@@ -271,7 +271,7 @@ public static class StringExtensions
   /// <param name="right"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static int CompareAsNumber(this string left, string right, IFormatProvider format = null) => left != null && right != null ? left.ToDouble(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDouble(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
+  public static int CompareAsNumber(this string left, string right, IFormatProvider format = null) => left is not null && right is not null ? left.ToDouble(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDouble(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
 
   /// <summary>
   ///   <para></para>
@@ -280,7 +280,7 @@ public static class StringExtensions
   /// <param name="right"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static int CompareAsDate(this string left, string right, IFormatProvider format = null) => left != null && right != null ? left.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
+  public static int CompareAsDate(this string left, string right, IFormatProvider format = null) => left is not null && right is not null ? left.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
 
   /// <summary>
   ///   <para></para>
@@ -312,7 +312,7 @@ public static class StringExtensions
     if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
     if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-    return condition != null ? text.Skip(offset).Where(character => condition(character)).AsArray().ToText() : count != null ? text.Remove(offset, count.Value) : text.Remove(offset);
+    return condition is not null ? text.Skip(offset).Where(character => condition(character)).AsArray().ToText() : count is not null ? text.Remove(offset, count.Value) : text.Remove(offset);
   }
 
   /// <summary>
@@ -373,7 +373,7 @@ public static class StringExtensions
 
     foreach (var character in text)
     {
-      result.Append(char.IsUpper(character) ? culture != null ? char.ToLower(character, culture) : char.ToLower(character) : culture != null ? char.ToUpper(character, culture) : char.ToUpper(character));
+      result.Append(char.IsUpper(character) ? culture is not null ? char.ToLower(character, culture) : char.ToLower(character) : culture is not null ? char.ToUpper(character, culture) : char.ToUpper(character));
     }
 
     return result.ToString();
@@ -396,7 +396,7 @@ public static class StringExtensions
 
     var chars = text.ToCharArray();
 
-    chars[0] = culture != null ? char.ToUpper(chars[0], culture) : char.ToUpper(chars[0]);
+    chars[0] = culture is not null ? char.ToUpper(chars[0], culture) : char.ToUpper(chars[0]);
 
     return chars.ToText();
   }
@@ -446,7 +446,7 @@ public static class StringExtensions
   /// <param name="text">BASE64-encoded string to be converted to binary form.</param>
   /// <returns>An array of 8-bit unsigned integers that is equivalent to <paramref name="text"/>.</returns>
   /// <seealso cref="System.Convert.FromBase64String(string)"/>
-  public static byte[] FromBase64(this string text) => text is not null ? text.Length > 0 ? System.Convert.FromBase64String(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
+  public static byte[] FromBase64(this string text) => text is not null ? text.Length > 0 ? Convert.FromBase64String(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
 
   #if NET7_0
   /// <summary>
@@ -454,7 +454,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text">HEX-encoded string to be converted to byte sequence.</param>
   /// <returns>Decoded data from HEX-encoded <paramref name="text"/> string.</returns>
-  public static byte[] FromHex(this string text) => text is not null ? text.Length > 0 ? System.Convert.FromHexString(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
+  public static byte[] FromHex(this string text) => text is not null ? text.Length > 0 ? Convert.FromHexString(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
 #endif
 
   /// <summary>
@@ -596,7 +596,7 @@ public static class StringExtensions
 
     var process = command.ToProcess();
 
-    if (arguments != null)
+    if (arguments is not null)
     {
       process.StartInfo.ArgumentList.AddRange(arguments);
     }
@@ -643,7 +643,7 @@ public static class StringExtensions
   /// <param name="result"><c>true</c> if <paramref name="text"/> is equivalent to <see cref="bool.TrueString"/>, <c>false otherwise</c>.</param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="bool.TryParse(string, out bool)"/>
-  public static bool ToBoolean(this string text, out bool? result) => (result = bool.TryParse(text, out var value) ? value : null) != null;
+  public static bool ToBoolean(this string text, out bool? result) => (result = bool.TryParse(text, out var value) ? value : null) is not null;
   
   /// <summary>
   ///   <para></para>
@@ -660,7 +660,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static bool ToSbyte(this string text, out sbyte? result, IFormatProvider format = null) => (result = sbyte.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToSbyte(this string text, out sbyte? result, IFormatProvider format = null) => (result = sbyte.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="byte"/> value.</para>
@@ -679,7 +679,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="byte.TryParse(string, out byte)"/>
-  public static bool ToByte(this string text, out byte? result, IFormatProvider format = null) => (result = byte.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToByte(this string text, out byte? result, IFormatProvider format = null) => (result = byte.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="short"/> value.</para>
@@ -698,7 +698,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="short.TryParse(string, out short)"/>
-  public static bool ToShort(this string text, out short? result, IFormatProvider format = null) => (result = short.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToShort(this string text, out short? result, IFormatProvider format = null) => (result = short.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para></para>
@@ -715,7 +715,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static bool ToUshort(this string text, out ushort? result, IFormatProvider format = null) => (result = ushort.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToUshort(this string text, out ushort? result, IFormatProvider format = null) => (result = ushort.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="int"/> value.</para>
@@ -734,7 +734,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="int.TryParse(string, out int)"/>
-  public static bool ToInt(this string text, out int? result, IFormatProvider format = null) => (result = int.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToInt(this string text, out int? result, IFormatProvider format = null) => (result = int.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para></para>
@@ -751,7 +751,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static bool ToUint(this string text, out uint? result, IFormatProvider format = null) => (result = uint.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToUint(this string text, out uint? result, IFormatProvider format = null) => (result = uint.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="long"/> value.</para>
@@ -770,7 +770,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="long.TryParse(string, out long)"/>
-  public static bool ToLong(this string text, out long? result, IFormatProvider format = null) => (result = long.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToLong(this string text, out long? result, IFormatProvider format = null) => (result = long.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para></para>
@@ -787,7 +787,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static bool ToUlong(this string text, out ulong? result, IFormatProvider format = null) => (result = ulong.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToUlong(this string text, out ulong? result, IFormatProvider format = null) => (result = ulong.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="float"/> value.</para>
@@ -806,7 +806,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="float.TryParse(string, out float)"/>
-  public static bool ToFloat(this string text, out float? result, IFormatProvider format = null) => (result = float.TryParse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToFloat(this string text, out float? result, IFormatProvider format = null) => (result = float.TryParse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="double"/> value.</para>
@@ -825,7 +825,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="double.TryParse(string, out double)"/>
-  public static bool ToDouble(this string text, out double? result, IFormatProvider format = null) => (result = double.TryParse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToDouble(this string text, out double? result, IFormatProvider format = null) => (result = double.TryParse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="decimal"/> value.</para>
@@ -844,7 +844,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="decimal.TryParse(string, out decimal)"/>
-  public static bool ToDecimal(this string text, out decimal? result, IFormatProvider format = null) => (result = decimal.TryParse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) != null;
+  public static bool ToDecimal(this string text, out decimal? result, IFormatProvider format = null) => (result = decimal.TryParse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para>Converts specified string into enumeration of specified type.</para>
@@ -888,7 +888,7 @@ public static class StringExtensions
   /// <param name="text">String to be converted.</param>
   /// <param name="result">The <see cref="Guid"/> value to which string <paramref name="text"/> was converted.</param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
-  public static bool ToGuid(this string text, out Guid? result) => (result = Guid.TryParse(text, out var value) ? value : null) != null;
+  public static bool ToGuid(this string text, out Guid? result) => (result = Guid.TryParse(text, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="Uri"/> value.</para>
@@ -951,7 +951,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="DateTime.TryParse(string, out DateTime)"/>
-  public static bool ToDateTime(this string text, out DateTime? result, IFormatProvider format = null) => (result = DateTime.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) != null;
+  public static bool ToDateTime(this string text, out DateTime? result, IFormatProvider format = null) => (result = DateTime.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para></para>
@@ -968,7 +968,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static bool ToDateTimeOffset(this string text, out DateTimeOffset? result, IFormatProvider format = null) => (result = DateTimeOffset.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) != null;
+  public static bool ToDateTimeOffset(this string text, out DateTimeOffset? result, IFormatProvider format = null) => (result = DateTimeOffset.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) is not null;
 
 #if NET7_0
   /// <summary>
@@ -986,7 +986,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static bool ToDateOnly(this string text, out DateOnly? result, IFormatProvider format = null) => (result = DateOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) != null;
+  public static bool ToDateOnly(this string text, out DateOnly? result, IFormatProvider format = null) => (result = DateOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
 
   /// <summary>
   ///   <para></para>
@@ -1003,7 +1003,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  public static bool ToTimeOnly(this string text, out TimeOnly? result, IFormatProvider format = null) => (result = TimeOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) != null;
+  public static bool ToTimeOnly(this string text, out TimeOnly? result, IFormatProvider format = null) => (result = TimeOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
 #endif
 
   /// <summary>
@@ -1093,7 +1093,7 @@ public static class StringExtensions
 
     text.ToIpAddress(out var ip);
 
-    return ip != null ? new IPHostEntry { AddressList = new[] { ip } } : new IPHostEntry { HostName = text };
+    return ip is not null ? new IPHostEntry { AddressList = new[] { ip } } : new IPHostEntry { HostName = text };
   }
 
   /// <summary>
@@ -1130,7 +1130,7 @@ public static class StringExtensions
 
     var process = new Process();
 
-    if (info != null)
+    if (info is not null)
     {
       process.StartInfo = info;
     }

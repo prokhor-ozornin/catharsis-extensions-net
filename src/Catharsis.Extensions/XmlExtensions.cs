@@ -16,43 +16,43 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this XmlDocument xml) => xml is not null ? xml.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(xml));
+  public static bool IsEmpty(this XmlDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static bool IsEmpty(this XDocument xml) => xml is not null ? xml.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(xml));
+  public static bool IsEmpty(this XDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static XmlDocument Empty(this XmlDocument xml)
+  public static XmlDocument Empty(this XmlDocument document)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
-    xml.RemoveAll();
+    document.RemoveAll();
 
-    return xml;
+    return document;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static XDocument Empty(this XDocument xml)
+  public static XDocument Empty(this XDocument document)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
-    xml.RemoveNodes();
+    document.RemoveNodes();
 
-    return xml;
+    return document;
   }
 
   /// <summary>
@@ -107,44 +107,44 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static XmlDocument TryFinallyClear(this XmlDocument xml, Action<XmlDocument> action)
+  public static XmlDocument TryFinallyClear(this XmlDocument document, Action<XmlDocument> action)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return xml.TryFinally(action, xml => xml.Empty());
+    return document.TryFinally(action, document => document.Empty());
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  public static XDocument TryFinallyClear(this XDocument xml, Action<XDocument> action)
+  public static XDocument TryFinallyClear(this XDocument document, Action<XDocument> action)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return xml.TryFinally(action, xml => xml.Empty());
+    return document.TryFinally(action, document => document.Empty());
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static IEnumerable<XmlNode> ToEnumerable(this XmlDocument xml) => xml is not null ? xml.ChildNodes.Cast<XmlNode>() : throw new ArgumentNullException(nameof(xml));
+  public static IEnumerable<XmlNode> ToEnumerable(this XmlDocument document) => document?.ChildNodes.Cast<XmlNode>() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static IEnumerable<XNode> ToEnumerable(this XDocument xml) => xml is not null ? xml.Nodes() : throw new ArgumentNullException(nameof(xml));
+  public static IEnumerable<XNode> ToEnumerable(this XDocument document) => document?.Nodes() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
   ///   <para></para>
@@ -179,9 +179,9 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static XmlReader ToXmlReader(this XDocument xml) => xml is not null ? xml.CreateReader() : throw new ArgumentNullException(nameof(xml));
+  public static XmlReader ToXmlReader(this XDocument document) => document?.CreateReader() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
   ///   <para></para>
@@ -229,9 +229,9 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static XmlWriter ToXmlWriter(this XDocument xml) => xml is not null ? xml.CreateWriter() : throw new ArgumentNullException(nameof(xml));
+  public static XmlWriter ToXmlWriter(this XDocument document) => document?.CreateWriter() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
   ///   <para></para>
@@ -339,15 +339,15 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static byte[] ToBytes(this XmlDocument xml)
+  public static byte[] ToBytes(this XmlDocument document)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
     using var stream = new MemoryStream();
 
-    xml.Save(stream);
+    document.Save(stream);
 
     return stream.ToArray();
   }
@@ -355,15 +355,15 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static byte[] ToBytes(this XDocument xml)
+  public static byte[] ToBytes(this XDocument document)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
     using var stream = new MemoryStream();
 
-    xml.Save(stream, SaveOptions.None);
+    document.Save(stream, SaveOptions.None);
 
     return stream.ToArray();
   }
@@ -371,18 +371,18 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<byte[]> ToBytesAsync(this XDocument xml, CancellationToken cancellation = default)
+  public static async Task<byte[]> ToBytesAsync(this XDocument document, CancellationToken cancellation = default)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
     cancellation.ThrowIfCancellationRequested();
 
     using var stream = new MemoryStream();
 
-    await xml.SaveAsync(stream, SaveOptions.None, cancellation).ConfigureAwait(false);
+    await document.SaveAsync(stream, SaveOptions.None, cancellation).ConfigureAwait(false);
 
     return stream.ToArray();
   }
@@ -392,7 +392,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
-  public static string ToText(this XmlReader reader) => reader is not null ? reader.ReadOuterXml() : throw new ArgumentNullException(nameof(reader));
+  public static string ToText(this XmlReader reader) => reader?.ReadOuterXml() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para></para>
@@ -404,15 +404,15 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static string ToText(this XmlDocument xml)
+  public static string ToText(this XmlDocument document)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
     using var writer = new StringWriter();
 
-    xml.Save(writer);
+    document.Save(writer);
 
     return writer.ToString();
   }
@@ -420,15 +420,15 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <returns></returns>
-  public static string ToText(this XDocument xml)
+  public static string ToText(this XDocument document)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
     using var writer = new StringWriter();
 
-    xml.Save(writer, SaveOptions.None);
+    document.Save(writer, SaveOptions.None);
 
     return writer.ToString();
   }
@@ -436,18 +436,18 @@ public static class XmlExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="xml"></param>
+  /// <param name="document"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  public static async Task<string> ToTextAsync(this XDocument xml, CancellationToken cancellation = default)
+  public static async Task<string> ToTextAsync(this XDocument document, CancellationToken cancellation = default)
   {
-    if (xml is null) throw new ArgumentNullException(nameof(xml));
+    if (document is null) throw new ArgumentNullException(nameof(document));
 
     cancellation.ThrowIfCancellationRequested();
 
     await using var writer = new StringWriter();
 
-    await xml.SaveAsync(writer, SaveOptions.None, cancellation).ConfigureAwait(false);
+    await document.SaveAsync(writer, SaveOptions.None, cancellation).ConfigureAwait(false);
 
     return writer.ToString();
   }
@@ -542,10 +542,8 @@ public static class XmlExtensions
   /// <returns></returns>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, XmlWriter destination, Encoding encoding = null)
   {
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
-    if (destination is null)
-      throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     await destination.WriteBytesAsync(bytes, encoding).ConfigureAwait(false);
 

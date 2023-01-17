@@ -380,12 +380,12 @@ public static class UriExtensions
 
     var result = new MailMessage(from, to!, subject, body);
 
-    if (cc != null)
+    if (cc is not null)
     {
       result.CC.Add(cc);
     }
 
-    if (bcc != null)
+    if (bcc is not null)
     {
       result.Bcc.Add(bcc);
     }
@@ -400,7 +400,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static IEnumerable<byte> ToBytes(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToStream(timeout, headers).ToBytes(true) : throw new ArgumentNullException(nameof(uri));
+  public static IEnumerable<byte> ToBytes(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri?.ToStream(timeout, headers).ToBytes(true) ?? throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
