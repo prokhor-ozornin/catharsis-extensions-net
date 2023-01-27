@@ -186,24 +186,6 @@ public static class StringExtensions
   /// <returns></returns>
   public static bool IsDateTimeOffset(this string text, IFormatProvider format = null) => text.ToDateTimeOffset(out _, format);
 
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static bool IsDateOnly(this string text, IFormatProvider format = null) => text.ToDateOnly(out _, format);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static bool IsTimeOnly(this string text, IFormatProvider format = null) => text.ToTimeOnly(out _, format);
-#endif
-
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -231,6 +213,7 @@ public static class StringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Min(this string left, string right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -245,6 +228,7 @@ public static class StringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Max(this string left, string right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -288,6 +272,7 @@ public static class StringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Append(this string left, string right) => left + right;
 
   /// <summary>
@@ -296,6 +281,7 @@ public static class StringExtensions
   /// <param name="left">Source string.</param>
   /// <param name="right">String to prepend.</param>
   /// <returns>Concatenated result of <paramref name="right"/> and <paramref name="left"/> string.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Prepend(this string left, string right) => right + left;
 
   /// <summary>
@@ -306,6 +292,8 @@ public static class StringExtensions
   /// <param name="count">Number of characters to drop.</param>
   /// <param name="condition"></param>
   /// <returns>Resulting string with removed characters.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static string RemoveRange(this string text, int offset, int? count = null, Predicate<char> condition = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -320,6 +308,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Reverse(this string text) => text is not null ? text.Length > 0 ? text.Reverse<char>().ToArray().ToText() : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -328,6 +317,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="replacements"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Replace(this string text, IEnumerable<(string Name, object Value)> replacements)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -351,6 +341,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="replacements"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Replace(this string text, params (string Name, object Value)[] replacements) => text.Replace(replacements as IEnumerable<(string Name, object Value)>);
 
   /// <summary>
@@ -360,6 +351,7 @@ public static class StringExtensions
   /// <param name="text">Source string to be converted.</param>
   /// <param name="culture"></param>
   /// <returns>Result string with swapped case of characters from <paramref name="text"/> string.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string SwapCase(this string text, CultureInfo culture = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -385,6 +377,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="culture"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Capitalize(this string text, CultureInfo culture = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -406,6 +399,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string CapitalizeAll(this string text) => text is not null ? text.Length > 0 ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -414,6 +408,8 @@ public static class StringExtensions
   /// <param name="text">String to repeat.</param>
   /// <param name="count">Number of repeats.</param>
   /// <returns>Resulting string, consisting of <paramref name="text"/>'s data that has been repeated <paramref name="count"/> times.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static string Repeat(this string text, int count)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -438,6 +434,7 @@ public static class StringExtensions
   /// <param name="text">Source string to be split.</param>
   /// <param name="separator"></param>
   /// <returns>Target array of strings, which are part of <paramref name="text"/> string.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string[] Lines(this string text, string separator = null) => text is not null ? text.Length > 0 ? text.Split(separator ?? Environment.NewLine) : Array.Empty<string>() : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -446,22 +443,15 @@ public static class StringExtensions
   /// <param name="text">BASE64-encoded string to be converted to binary form.</param>
   /// <returns>An array of 8-bit unsigned integers that is equivalent to <paramref name="text"/>.</returns>
   /// <seealso cref="System.Convert.FromBase64String(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] FromBase64(this string text) => text is not null ? text.Length > 0 ? Convert.FromBase64String(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
-
-  #if NET7_0
-  /// <summary>
-  ///   <para>Converts HEX-encoded string into a sequence of bytes.</para>
-  /// </summary>
-  /// <param name="text">HEX-encoded string to be converted to byte sequence.</param>
-  /// <returns>Decoded data from HEX-encoded <paramref name="text"/> string.</returns>
-  public static byte[] FromHex(this string text) => text is not null ? text.Length > 0 ? Convert.FromHexString(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
-#endif
 
   /// <summary>
   ///   <para>URL-encodes string.</para>
   /// </summary>
   /// <param name="text">String to encode.</param>
   /// <returns>Encoded string.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string UrlEncode(this string text) => text is not null ? text.Length > 0 ? Uri.EscapeDataString(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -469,6 +459,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text">String to decode.</param>
   /// <returns>Decoded string.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string UrlDecode(this string text) => text is not null ? text.Length > 0 ? Uri.UnescapeDataString(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -477,6 +468,7 @@ public static class StringExtensions
   /// <param name="text">String to convert to HTML-encoded version.</param>
   /// <returns>HTML-encoded version of <paramref name="text"/>.</returns>
   /// <seealso cref="WebUtility.HtmlEncode(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string HtmlEncode(this string text) => text is not null ? text.Length > 0 ? WebUtility.HtmlEncode(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -485,6 +477,7 @@ public static class StringExtensions
   /// <param name="text">HTML-encoded version of string.</param>
   /// <returns>HTML-decoded version of <paramref name="text"/>.</returns>
   /// <seealso cref="WebUtility.HtmlDecode(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string HtmlDecode(this string text) => text is not null ? text.Length > 0 ? WebUtility.HtmlDecode(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -494,6 +487,8 @@ public static class StringExtensions
   /// <param name="value"></param>
   /// <param name="count"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static string Indent(this string text, char value, int count = 1)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -535,6 +530,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="value"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Unindent(this string text, char value)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -560,6 +556,8 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="count"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static string Spacify(this string text, int count = 1) => text.Indent(' ', count);
 
   /// <summary>
@@ -567,6 +565,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Unspacify(this string text) => text.Unindent(' ');
 
   /// <summary>
@@ -575,6 +574,8 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="count"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static string Tabify(this string text, int count = 1) => text.Indent('\t', count);
 
   /// <summary>
@@ -590,6 +591,7 @@ public static class StringExtensions
   /// <param name="command"></param>
   /// <param name="arguments"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Process Execute(this string command, IEnumerable<string> arguments = null)
   {
     if (command is null) throw new ArgumentNullException(nameof(command));
@@ -617,6 +619,7 @@ public static class StringExtensions
   /// <param name="command"></param>
   /// <param name="arguments"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Process Execute(this string command, params string[] arguments) => command.Execute(arguments as IEnumerable<string>);
 
   /// <summary>
@@ -626,14 +629,16 @@ public static class StringExtensions
   /// <param name="encoding">Encoding to be used for transformation between characters of <paramref name="text"/> and their bytes equivalents. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
   /// <returns>Sequence of bytes that form <paramref name="text"/> string in given <paramref name="encoding"/>.</returns>
   /// <seealso cref="Encoding.GetBytes(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] ToBytes(this string text, Encoding encoding = null) => text is not null ? text.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
 
-    /// <summary>
+  /// <summary>
   ///   <para>Converts specified string into <see cref="bool"/> value.</para>
   /// </summary>
   /// <param name="text">String to be converted.</param>
   /// <returns><c>true</c> if <paramref name="text"/> is equivalent to <see cref="bool.TrueString"/>, <c>false otherwise</c>.</returns>
   /// <seealso cref="bool.Parse(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool ToBoolean(this string text) => text is not null ? bool.Parse(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -644,13 +649,14 @@ public static class StringExtensions
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="bool.TryParse(string, out bool)"/>
   public static bool ToBoolean(this string text, out bool? result) => (result = bool.TryParse(text, out var value) ? value : null) is not null;
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static sbyte ToSbyte(this string text, IFormatProvider format = null) => text is not null ? sbyte.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -669,6 +675,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns>The <see cref="byte"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="byte.Parse(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte ToByte(this string text, IFormatProvider format = null) => text is not null ? byte.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -688,6 +695,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns>The <see cref="short"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="short.Parse(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static short ToShort(this string text, IFormatProvider format = null) => text is not null ? short.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -706,6 +714,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static ushort ToUshort(this string text, IFormatProvider format = null) => text is not null ? ushort.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -724,6 +733,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns>The <see cref="int"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="int.Parse(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static int ToInt(this string text, IFormatProvider format = null) => text is not null ? int.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -742,6 +752,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static uint ToUint(this string text, IFormatProvider format = null) => text is not null ? uint.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -760,6 +771,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns>The <see cref="long"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="long.Parse(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static long ToLong(this string text, IFormatProvider format = null) => text is not null ? long.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -778,6 +790,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static ulong ToUlong(this string text, IFormatProvider format = null) => text is not null ? ulong.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -796,6 +809,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns>The <see cref="float"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="float.Parse(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static float ToFloat(this string text, IFormatProvider format = null) => text is not null ? float.Parse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -815,6 +829,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns>The <see cref="double"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="double.Parse(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static double ToDouble(this string text, IFormatProvider format = null) => text is not null ? double.Parse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -834,6 +849,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns>The <see cref="decimal"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="decimal.Parse(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static decimal ToDecimal(this string text, IFormatProvider format = null) => text is not null ? decimal.Parse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -852,6 +868,7 @@ public static class StringExtensions
   /// <typeparam name="T">Type of enumeration.</typeparam>
   /// <param name="text">String to be converted.</param>
   /// <returns>Element of enumeration of <typeparamref name="T"/> type, to which string <paramref name="text"/> was converted.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T ToEnum<T>(this string text) where T : struct => text is not null ? Enum.Parse<T>(text, true) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -880,6 +897,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text">String to be converted.</param>
   /// <returns>The <see cref="Guid"/> value to which string <paramref name="text"/> was converted.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Guid ToGuid(this string text) => text is not null ? Guid.Parse(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -896,6 +914,7 @@ public static class StringExtensions
   /// <param name="text">String to be converted.</param>
   /// <returns>The <see cref="Uri"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="ToUri(string, out Uri)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Uri ToUri(this string text) => text is not null ? new Uri(text, UriKind.RelativeOrAbsolute) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -912,6 +931,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Type ToType(this string text) => text is not null ? Type.GetType(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -941,6 +961,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns>The <see cref="DateTime"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="DateTime.Parse(string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static DateTime ToDateTime(this string text, IFormatProvider format = null) => text is not null ? DateTime.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -959,6 +980,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static DateTimeOffset ToDateTimeOffset(this string text, IFormatProvider format = null) => text is not null ? DateTimeOffset.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -970,47 +992,12 @@ public static class StringExtensions
   /// <returns></returns>
   public static bool ToDateTimeOffset(this string text, out DateTimeOffset? result, IFormatProvider format = null) => (result = DateTimeOffset.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) is not null;
 
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static DateOnly ToDateOnly(this string text, IFormatProvider format = null) => text is not null ? DateOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="result"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static bool ToDateOnly(this string text, out DateOnly? result, IFormatProvider format = null) => (result = DateOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static TimeOnly ToTimeOnly(this string text, IFormatProvider format = null) => text is not null ? TimeOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="result"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static bool ToTimeOnly(this string text, out TimeOnly? result, IFormatProvider format = null) => (result = TimeOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
-#endif
-
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileInfo ToFile(this string text) => text is not null ? new FileInfo(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1038,6 +1025,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static DirectoryInfo ToDirectory(this string text) => text is not null ? new DirectoryInfo(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1065,6 +1053,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToPath(this string text) => text is not null ? Path.GetFullPath(text.ToUri().LocalPath).Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1072,6 +1061,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IPAddress ToIpAddress(this string text) => text is not null ? IPAddress.Parse(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1087,6 +1077,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IPHostEntry ToIpHost(this string text)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1102,6 +1093,7 @@ public static class StringExtensions
   /// <param name="text">String to be converted.</param>
   /// <param name="options"></param>
   /// <returns>The <see cref="Regex"/> value to which string <paramref name="text"/> was converted.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Regex ToRegex(this string text, RegexOptions options = RegexOptions.None) => text is not null ? new Regex(text, options) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1109,6 +1101,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static StringBuilder ToStringBuilder(this string text) => text is not null ? new StringBuilder(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1116,6 +1109,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static StringReader ToStringReader(this string text) => text is not null ? new StringReader(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1124,6 +1118,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="info"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Process ToProcess(this string text, ProcessStartInfo info = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1139,4 +1134,66 @@ public static class StringExtensions
 
     return process;
   }
+
+  #if NET7_0_OR_GREATER
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static bool IsDateOnly(this string text, IFormatProvider format = null) => text.ToDateOnly(out _, format);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static bool IsTimeOnly(this string text, IFormatProvider format = null) => text.ToTimeOnly(out _, format);
+
+  /// <summary>
+  ///   <para>Converts HEX-encoded string into a sequence of bytes.</para>
+  /// </summary>
+  /// <param name="text">HEX-encoded string to be converted to byte sequence.</param>
+  /// <returns>Decoded data from HEX-encoded <paramref name="text"/> string.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static byte[] FromHex(this string text) => text is not null ? text.Length > 0 ? Convert.FromHexString(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static DateOnly ToDateOnly(this string text, IFormatProvider format = null) => text is not null ? DateOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="result"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static bool ToDateOnly(this string text, out DateOnly? result, IFormatProvider format = null) => (result = DateOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static TimeOnly ToTimeOnly(this string text, IFormatProvider format = null) => text is not null ? TimeOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="result"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static bool ToTimeOnly(this string text, out TimeOnly? result, IFormatProvider format = null) => (result = TimeOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
+  #endif
 }

@@ -43,18 +43,6 @@ public sealed class ProcessExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.FinishAsync(Process, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Process_FinishAsync_Method()
-  {
-    AssertionExtensions.Should(() => ProcessExtensions.FinishAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
-    AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="ProcessExtensions.Print{T}(T, Process)"/> method.</para>
   /// </summary>
   [Fact]
@@ -269,5 +257,17 @@ public sealed class ProcessExtensionsTest : UnitTest
   public override void Dispose()
   {
     ShellProcess.Kill();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.FinishAsync(Process, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Process_FinishAsync_Method()
+  {
+    AssertionExtensions.Should(() => ProcessExtensions.FinishAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
+    AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
   }
 }

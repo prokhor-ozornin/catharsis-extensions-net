@@ -18,6 +18,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this XmlDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
@@ -25,6 +26,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this XDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
@@ -32,6 +34,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument Empty(this XmlDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -46,6 +49,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument Empty(this XDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -61,6 +65,8 @@ public static class XmlExtensions
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static XmlReader Skip(this XmlReader reader, int count)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -78,6 +84,7 @@ public static class XmlExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T Print<T>(this T instance, XmlWriter destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -94,6 +101,7 @@ public static class XmlExtensions
   /// <param name="destination"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<T> PrintAsync<T>(this T instance, XmlWriter destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -110,6 +118,7 @@ public static class XmlExtensions
   /// <param name="document"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument TryFinallyClear(this XmlDocument document, Action<XmlDocument> action)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -124,6 +133,7 @@ public static class XmlExtensions
   /// <param name="document"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument TryFinallyClear(this XDocument document, Action<XDocument> action)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -137,6 +147,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<XmlNode> ToEnumerable(this XmlDocument document) => document?.ChildNodes.Cast<XmlNode>() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
@@ -144,6 +155,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<XNode> ToEnumerable(this XDocument document) => document?.Nodes() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
@@ -152,6 +164,7 @@ public static class XmlExtensions
   /// <param name="reader"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlReader ToXmlReader(this TextReader reader, bool close = true) => reader is not null ? XmlReader.Create(reader, new XmlReaderSettings { CloseInput = close, IgnoreComments = true, IgnoreWhitespace = true }) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -160,6 +173,7 @@ public static class XmlExtensions
   /// <param name="stream"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlReader ToXmlReader(this Stream stream, bool close = true) => stream is not null ? XmlReader.Create(stream, new XmlReaderSettings { CloseInput = close, IgnoreComments = true, IgnoreWhitespace = true }) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -167,13 +181,15 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlReader ToXmlReader(this FileInfo file) => file.ToReadOnlyStream().ToXmlReader();
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlReader ToXmlReader(this string text) => text.ToStringReader().ToXmlReader();
 
   /// <summary>
@@ -181,6 +197,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlReader ToXmlReader(this XDocument document) => document?.CreateReader() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
@@ -190,6 +207,7 @@ public static class XmlExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlReader ToXmlReader(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToStream(timeout, headers).ToXmlReader();
 
   /// <summary>
@@ -199,6 +217,7 @@ public static class XmlExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XmlReader> ToXmlReaderAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToXmlReader();
 
   /// <summary>
@@ -207,6 +226,7 @@ public static class XmlExtensions
   /// <param name="writer"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlWriter ToXmlWriter(this TextWriter writer, bool close = true) => writer is not null ? XmlWriter.Create(writer, new XmlWriterSettings { CloseOutput = close, Indent = true }) : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -216,6 +236,7 @@ public static class XmlExtensions
   /// <param name="encoding">Text encoding to use by <see cref="XmlWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
   /// <returns>XML writer instance that wraps <see cref="stream"/> stream.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlWriter ToXmlWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = close, Indent = true, Encoding = encoding ?? Encoding.Default }) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -224,6 +245,7 @@ public static class XmlExtensions
   /// <param name="file"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlWriter ToXmlWriter(this FileInfo file, Encoding encoding = null) => file.ToWriteOnlyStream().ToXmlWriter(encoding);
 
   /// <summary>
@@ -231,6 +253,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlWriter ToXmlWriter(this XDocument document) => document?.CreateWriter() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
@@ -238,6 +261,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryReader ToXmlDictionaryReader(this XmlReader reader) => reader is not null ? XmlDictionaryReader.CreateDictionaryReader(reader) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -246,6 +270,7 @@ public static class XmlExtensions
   /// <param name="reader"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryReader ToXmlDictionaryReader(this TextReader reader, bool close = true) => reader.ToXmlReader(close).ToXmlDictionaryReader();
 
   /// <summary>
@@ -254,6 +279,7 @@ public static class XmlExtensions
   /// <param name="stream"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryReader ToXmlDictionaryReader(this Stream stream, bool close = true) => stream.ToXmlReader(close).ToXmlDictionaryReader();
 
   /// <summary>
@@ -261,6 +287,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryReader ToXmlDictionaryReader(this FileInfo file) => file.ToReadOnlyStream().ToXmlDictionaryReader();
 
   /// <summary>
@@ -268,6 +295,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryReader ToXmlDictionaryReader(this string text) => text.ToStringReader().ToXmlDictionaryReader();
 
   /// <summary>
@@ -277,6 +305,7 @@ public static class XmlExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryReader ToXmlDictionaryReader(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToStream(timeout, headers).ToXmlDictionaryReader();
 
   /// <summary>
@@ -286,6 +315,7 @@ public static class XmlExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XmlDictionaryReader> ToXmlDictionaryReaderAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToXmlDictionaryReader();
 
   /// <summary>
@@ -293,6 +323,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryWriter ToXmlDictionaryWriter(this XmlWriter writer) => writer is not null ? XmlDictionaryWriter.CreateDictionaryWriter(writer) : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -301,6 +332,7 @@ public static class XmlExtensions
   /// <param name="writer"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryWriter ToXmlDictionaryWriter(this TextWriter writer, bool close = true) => writer.ToXmlWriter(close).ToXmlDictionaryWriter();
 
   /// <summary>
@@ -310,6 +342,7 @@ public static class XmlExtensions
   /// <param name="encoding"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryWriter ToXmlDictionaryWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream.ToXmlWriter(encoding, close).ToXmlDictionaryWriter();
 
   /// <summary>
@@ -318,6 +351,7 @@ public static class XmlExtensions
   /// <param name="file"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDictionaryWriter ToXmlDictionaryWriter(this FileInfo file, Encoding encoding = null) => file.ToStream().ToXmlDictionaryWriter(encoding);
 
   /// <summary>
@@ -326,6 +360,7 @@ public static class XmlExtensions
   /// <param name="reader"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] ToBytes(this XmlReader reader, Encoding encoding = null) => reader.ToText().ToBytes(encoding);
 
   /// <summary>
@@ -334,6 +369,7 @@ public static class XmlExtensions
   /// <param name="reader"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> ToBytesAsync(this XmlReader reader, Encoding encoding = null) => (await reader.ToTextAsync().ConfigureAwait(false)).ToBytes(encoding);
 
   /// <summary>
@@ -341,6 +377,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] ToBytes(this XmlDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -357,6 +394,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] ToBytes(this XDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -374,6 +412,7 @@ public static class XmlExtensions
   /// <param name="document"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> ToBytesAsync(this XDocument document, CancellationToken cancellation = default)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -392,6 +431,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this XmlReader reader) => reader?.ReadOuterXml() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -399,6 +439,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> ToTextAsync(this XmlReader reader) => reader is not null ? await reader.ReadOuterXmlAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -406,6 +447,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this XmlDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -422,6 +464,7 @@ public static class XmlExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this XDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -432,13 +475,14 @@ public static class XmlExtensions
 
     return writer.ToString();
   }
-   
+
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="document"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> ToTextAsync(this XDocument document, CancellationToken cancellation = default)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -459,6 +503,7 @@ public static class XmlExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlWriter WriteBytes(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -474,12 +519,11 @@ public static class XmlExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XmlWriter> WriteBytesAsync(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
   {
-    if (destination is null)
-      throw new ArgumentNullException(nameof(destination));
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
     return await destination.WriteTextAsync(bytes.AsArray().ToText(encoding)).ConfigureAwait(false);
   }
@@ -490,6 +534,7 @@ public static class XmlExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlWriter WriteText(this XmlWriter destination, string text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -506,6 +551,7 @@ public static class XmlExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XmlWriter> WriteTextAsync(this XmlWriter destination, string text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -523,6 +569,7 @@ public static class XmlExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, XmlWriter destination, Encoding encoding = null)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -540,6 +587,7 @@ public static class XmlExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, XmlWriter destination, Encoding encoding = null)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -556,6 +604,7 @@ public static class XmlExtensions
   /// <param name="text"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string WriteTo(this string text, XmlWriter destination)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -572,6 +621,7 @@ public static class XmlExtensions
   /// <param name="text"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> WriteToAsync(this string text, XmlWriter destination)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));

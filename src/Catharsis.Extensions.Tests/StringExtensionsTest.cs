@@ -399,7 +399,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsDateTime_Method()
   {
-    static void Validate(IFormatProvider format)
+    void Validate(IFormatProvider format)
     {
       StringExtensions.IsDateTime(null, format).Should().BeFalse();
 
@@ -426,7 +426,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_IsDateTimeOffset_Method()
   {
-    static void Validate(IFormatProvider format)
+    void Validate(IFormatProvider format)
     {
       format ??= CultureInfo.InvariantCulture;
 
@@ -440,62 +440,6 @@ public sealed class StringExtensionsTest : UnitTest
       $" {DateTimeOffset.MaxValue.ToString("o", format)} ".IsDateTimeOffset(format).Should().BeTrue();
       $" {DateTimeOffset.UtcNow.ToString("o", format)} ".IsDateTimeOffset(format).Should().BeTrue();
       $" {DateTimeOffset.Now.ToString("o", format)} ".IsDateTimeOffset(format).Should().BeTrue();
-    }
-
-    using (new AssertionScope())
-    {
-      Validate(null);
-      Validate(CultureInfo.InvariantCulture);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDateOnly(string, IFormatProvider)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void String_IsDateOnly_Method()
-  {
-    static void Validate(IFormatProvider format)
-    {
-      format ??= CultureInfo.InvariantCulture;
-
-      StringExtensions.IsDateOnly(null, format).Should().BeFalse();
-
-      string.Empty.IsDateOnly(format).Should().BeFalse();
-
-      "invalid".IsDateOnly(format).Should().BeFalse();
-
-      $" {DateOnly.MinValue.ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
-      $" {DateOnly.MaxValue.ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
-      $" {DateOnly.FromDateTime(DateTime.UtcNow).ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
-      $" {DateOnly.FromDateTime(DateTime.Now).ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
-    }
-
-    using (new AssertionScope())
-    {
-      Validate(null);
-      Validate(CultureInfo.InvariantCulture);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsTimeOnly(string, IFormatProvider)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void String_IsTimeOnly_Method()
-  {
-    static void Validate(IFormatProvider format)
-    {
-      StringExtensions.IsTimeOnly(null, format).Should().BeFalse();
-
-      string.Empty.IsTimeOnly(format).Should().BeFalse();
-
-      "invalid".IsTimeOnly(format).Should().BeFalse();
-
-      $" {TimeOnly.MinValue.ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
-      $" {TimeOnly.MaxValue.ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
-      $" {TimeOnly.FromDateTime(DateTime.UtcNow).ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
-      $" {TimeOnly.FromDateTime(DateTime.Now).ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
     }
 
     using (new AssertionScope())
@@ -616,7 +560,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_Compare_Method()
   {
-    static void Validate(CultureInfo culture)
+    void Validate(CultureInfo culture)
     {
       string.Empty.Compare(string.Empty, culture).Should().Be(0);
       string.Empty.Compare(char.MinValue.ToString(culture), culture).Should().Be(0);
@@ -642,7 +586,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_CompareAsNumber_Method()
   {
-    static void Validate(IFormatProvider format)
+    void Validate(IFormatProvider format)
     {
       format = format ??= CultureInfo.InvariantCulture;
 
@@ -718,7 +662,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_CompareAsDate_Method()
   {
-    static void Validate(DateTimeOffset date, IFormatProvider format)
+    void Validate(DateTimeOffset date, IFormatProvider format)
     {
       AssertionExtensions.Should(() => string.Empty.CompareAsDate(date.ToString(format), format)).ThrowExactly<FormatException>();
       AssertionExtensions.Should(() => date.ToString(format).CompareAsDate(string.Empty, format)).ThrowExactly<FormatException>();
@@ -998,20 +942,6 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.FromHex(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void String_FromHex_Method()
-  {
-    AssertionExtensions.Should(() => StringExtensions.FromHex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-    string.Empty.FromHex().Should().NotBeNull().And.BeSameAs(string.Empty.FromHex()).And.BeEmpty();
-
-    var bytes = RandomBytes;
-    bytes.ToHex().Should().NotBeNull().And.NotBeSameAs(bytes.ToHex()).And.Be(System.Convert.ToHexString(bytes));
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.UrlEncode(string)"/> method.</para>
   /// </summary>
   [Fact]
@@ -1231,7 +1161,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void String_ToBytes_Method()
   {
-    static void Validate(Encoding encoding)
+    void Validate(Encoding encoding)
     {
       var text = RandomString;
 
@@ -1336,7 +1266,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1360,7 +1290,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1403,7 +1333,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1427,7 +1357,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1470,7 +1400,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1494,7 +1424,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1537,7 +1467,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1561,7 +1491,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1604,7 +1534,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1628,7 +1558,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1671,7 +1601,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1695,7 +1625,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1738,7 +1668,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1762,7 +1692,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1805,7 +1735,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1829,7 +1759,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1872,7 +1802,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1900,7 +1830,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1955,7 +1885,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -1983,7 +1913,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2038,7 +1968,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2065,7 +1995,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(IFormatProvider format)
+      void Validate(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2383,7 +2313,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(DateTime date, IFormatProvider format)
+      void Validate(DateTime date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2407,7 +2337,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(DateTime date, IFormatProvider format)
+      void Validate(DateTime date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2447,7 +2377,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(DateTimeOffset date, IFormatProvider format)
+      void Validate(DateTimeOffset date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2471,7 +2401,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      static void Validate(DateTimeOffset date, IFormatProvider format)
+      void Validate(DateTimeOffset date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2494,134 +2424,6 @@ public sealed class StringExtensionsTest : UnitTest
         {
           Validate(date, null);
           CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(date, culture));
-        }
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="StringExtensions.ToDateOnly(string, IFormatProvider)"/></description></item>
-  ///     <item><description><see cref="StringExtensions.ToDateOnly(string, out DateOnly?, IFormatProvider)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void String_ToDateOnly_Methods()
-  {
-    using (new AssertionScope())
-    {
-      static void Validate(DateOnly date, IFormatProvider format)
-      {
-        format ??= CultureInfo.InvariantCulture;
-
-        AssertionExtensions.Should(() => string.Empty.ToDateOnly(format)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToDateOnly(format)).ThrowExactly<FormatException>();
-
-        $" {date.ToString("D", format)} ".ToDateOnly(format).Should().Be(date);
-      }
-
-      using (new AssertionScope())
-      {
-        AssertionExtensions.Should(() => StringExtensions.ToDateOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-        foreach (var date in new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() })
-        {
-          Validate(date, null);
-          Validate(date, CultureInfo.InvariantCulture);
-        }
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      static void Validate(DateOnly date, IFormatProvider format)
-      {
-        format ??= CultureInfo.InvariantCulture;
-
-        StringExtensions.ToDateOnly(null, out var result, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        string.Empty.ToDateOnly(out _, format).Should().BeFalse();
-        result.Should().BeNull();
-        
-        "invalid".ToDateOnly(out _, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        $" {date.ToString("D", format)} ".ToDateOnly(out result, format).Should().BeTrue();
-        result.Should().Be(date);
-      }
-
-      using (new AssertionScope())
-      {
-        foreach (var date in new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() })
-        {
-          Validate(date, null);
-          Validate(date, CultureInfo.InvariantCulture);
-        }
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="StringExtensions.ToTimeOnly(string, IFormatProvider)"/></description></item>
-  ///     <item><description><see cref="StringExtensions.ToTimeOnly(string, out TimeOnly?, IFormatProvider)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void String_ToTimeOnly_Methods()
-  {
-    using (new AssertionScope())
-    {
-      static void Validate(TimeOnly time, IFormatProvider format)
-      {
-        format ??= CultureInfo.InvariantCulture;
-
-        AssertionExtensions.Should(() => string.Empty.ToTimeOnly(format)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToTimeOnly(format)).ThrowExactly<FormatException>();
-
-        $" {time.ToString("T", format)} ".ToTimeOnly(format).Should().Be(time.TruncateToSecondStart());
-      }
-
-      using (new AssertionScope())
-      {
-        AssertionExtensions.Should(() => StringExtensions.ToTimeOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-        foreach (var time in new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() })
-        {
-          Validate(time, null);
-          Validate(time, CultureInfo.InvariantCulture);
-        }
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      static void Validate(TimeOnly time, IFormatProvider format)
-      {
-        format ??= CultureInfo.InvariantCulture;
-
-        StringExtensions.ToTimeOnly(null, out var result, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        string.Empty.ToTimeOnly(out _, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        "invalid".ToTimeOnly(out _, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        $" {time.ToString("T", format)} ".ToTimeOnly(out result, format).Should().BeTrue();
-        result.Should().Be(time.TruncateToSecondStart());
-      }
-
-      using (new AssertionScope())
-      {
-        foreach (var date in new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() })
-        {
-          Validate(date, null);
-          Validate(date, CultureInfo.InvariantCulture);
         }
       }
     }
@@ -2899,6 +2701,204 @@ public sealed class StringExtensionsTest : UnitTest
       process.StartInfo.Verb.Should().BeEmpty();
       process.StartInfo.WindowStyle.Should().Be(ProcessWindowStyle.Normal);
       process.StartInfo.WorkingDirectory.Should().BeEmpty();
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDateOnly(string, IFormatProvider)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_IsDateOnly_Method()
+  {
+    void Validate(IFormatProvider format)
+    {
+      format ??= CultureInfo.InvariantCulture;
+
+      StringExtensions.IsDateOnly(null, format).Should().BeFalse();
+
+      string.Empty.IsDateOnly(format).Should().BeFalse();
+
+      "invalid".IsDateOnly(format).Should().BeFalse();
+
+      $" {DateOnly.MinValue.ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
+      $" {DateOnly.MaxValue.ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
+      $" {DateOnly.FromDateTime(DateTime.UtcNow).ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
+      $" {DateOnly.FromDateTime(DateTime.Now).ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
+    }
+
+    using (new AssertionScope())
+    {
+      Validate(null);
+      Validate(CultureInfo.InvariantCulture);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsTimeOnly(string, IFormatProvider)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_IsTimeOnly_Method()
+  {
+    void Validate(IFormatProvider format)
+    {
+      StringExtensions.IsTimeOnly(null, format).Should().BeFalse();
+
+      string.Empty.IsTimeOnly(format).Should().BeFalse();
+
+      "invalid".IsTimeOnly(format).Should().BeFalse();
+
+      $" {TimeOnly.MinValue.ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
+      $" {TimeOnly.MaxValue.ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
+      $" {TimeOnly.FromDateTime(DateTime.UtcNow).ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
+      $" {TimeOnly.FromDateTime(DateTime.Now).ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
+    }
+
+    using (new AssertionScope())
+    {
+      Validate(null);
+      Validate(CultureInfo.InvariantCulture);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.FromHex(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void String_FromHex_Method()
+  {
+    AssertionExtensions.Should(() => StringExtensions.FromHex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    string.Empty.FromHex().Should().NotBeNull().And.BeSameAs(string.Empty.FromHex()).And.BeEmpty();
+
+    var bytes = RandomBytes;
+    bytes.ToHex().Should().NotBeNull().And.NotBeSameAs(bytes.ToHex()).And.Be(System.Convert.ToHexString(bytes));
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StringExtensions.ToDateOnly(string, IFormatProvider)"/></description></item>
+  ///     <item><description><see cref="StringExtensions.ToDateOnly(string, out DateOnly?, IFormatProvider)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void String_ToDateOnly_Methods()
+  {
+    using (new AssertionScope())
+    {
+      void Validate(DateOnly date, IFormatProvider format)
+      {
+        format ??= CultureInfo.InvariantCulture;
+
+        AssertionExtensions.Should(() => string.Empty.ToDateOnly(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToDateOnly(format)).ThrowExactly<FormatException>();
+
+        $" {date.ToString("D", format)} ".ToDateOnly(format).Should().Be(date);
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToDateOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        foreach (var date in new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() })
+        {
+          Validate(date, null);
+          Validate(date, CultureInfo.InvariantCulture);
+        }
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      void Validate(DateOnly date, IFormatProvider format)
+      {
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToDateOnly(null, out var result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        string.Empty.ToDateOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        "invalid".ToDateOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        $" {date.ToString("D", format)} ".ToDateOnly(out result, format).Should().BeTrue();
+        result.Should().Be(date);
+      }
+
+      using (new AssertionScope())
+      {
+        foreach (var date in new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() })
+        {
+          Validate(date, null);
+          Validate(date, CultureInfo.InvariantCulture);
+        }
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StringExtensions.ToTimeOnly(string, IFormatProvider)"/></description></item>
+  ///     <item><description><see cref="StringExtensions.ToTimeOnly(string, out TimeOnly?, IFormatProvider)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void String_ToTimeOnly_Methods()
+  {
+    using (new AssertionScope())
+    {
+      void Validate(TimeOnly time, IFormatProvider format)
+      {
+        format ??= CultureInfo.InvariantCulture;
+
+        AssertionExtensions.Should(() => string.Empty.ToTimeOnly(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToTimeOnly(format)).ThrowExactly<FormatException>();
+
+        $" {time.ToString("T", format)} ".ToTimeOnly(format).Should().Be(time.TruncateToSecondStart());
+      }
+
+      using (new AssertionScope())
+      {
+        AssertionExtensions.Should(() => StringExtensions.ToTimeOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+        foreach (var time in new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() })
+        {
+          Validate(time, null);
+          Validate(time, CultureInfo.InvariantCulture);
+        }
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      void Validate(TimeOnly time, IFormatProvider format)
+      {
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToTimeOnly(null, out var result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        string.Empty.ToTimeOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        "invalid".ToTimeOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        $" {time.ToString("T", format)} ".ToTimeOnly(out result, format).Should().BeTrue();
+        result.Should().Be(time.TruncateToSecondStart());
+      }
+
+      using (new AssertionScope())
+      {
+        foreach (var date in new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() })
+        {
+          Validate(date, null);
+          Validate(date, CultureInfo.InvariantCulture);
+        }
+      }
     }
   }
 }

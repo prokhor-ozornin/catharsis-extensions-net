@@ -40,7 +40,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void SecureString_Empty_Method()
   {
-    static void Validate(SecureString secure)
+    void Validate(SecureString secure)
     {
       using (secure)
       {
@@ -64,7 +64,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void SecureString_Min_Method()
   {
-    static void Validate(SecureString min, SecureString max)
+    void Validate(SecureString min, SecureString max)
     {
       using (min)
       {
@@ -93,7 +93,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void SecureString_Max_Method()
   {
-    static void Validate(SecureString min, SecureString max)
+    void Validate(SecureString min, SecureString max)
     {
       using (min)
       {
@@ -122,7 +122,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void SecureString_TryFinallyClear_Method()
   {
-    static void Validate(SecureString secure)
+    void Validate(SecureString secure)
     {
       using (secure)
       {
@@ -155,7 +155,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void SecureString_ToBytes_Method()
   {
-    static void Validate(Encoding encoding)
+    void Validate(Encoding encoding)
     {
       using (var secure = EmptySecureString)
       {

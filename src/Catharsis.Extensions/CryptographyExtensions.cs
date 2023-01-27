@@ -16,6 +16,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="bytes"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Encrypt(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes)
   {
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
@@ -40,12 +41,11 @@ public static class CryptographyExtensions
   /// <param name="bytes">Binary data to be encrypted.</param>
   /// <param name="cancellation"></param>
   /// <returns>Encrypted binary data.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> EncryptAsync(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
-    if (algorithm is null)
-      throw new ArgumentNullException(nameof(algorithm));
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -67,6 +67,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="stream"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Encrypt(this SymmetricAlgorithm algorithm, Stream stream) => algorithm.Encrypt(stream.ToEnumerable());
 
   /// <summary>
@@ -76,6 +77,7 @@ public static class CryptographyExtensions
   /// <param name="stream">Stream of binary data to be encrypted.</param>
   /// <param name="cancellation"></param>
   /// <returns>Encrypted binary data.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> EncryptAsync(this SymmetricAlgorithm algorithm, Stream stream, CancellationToken cancellation = default) => await algorithm.EncryptAsync(stream.ToEnumerable(), cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -84,6 +86,7 @@ public static class CryptographyExtensions
   /// <param name="bytes"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Encrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm) => algorithm.Encrypt(bytes);
 
   /// <summary>
@@ -93,6 +96,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> EncryptAsync(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.EncryptAsync(bytes, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -101,6 +105,7 @@ public static class CryptographyExtensions
   /// <param name="stream"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Encrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Encrypt(stream);
 
   /// <summary>
@@ -110,6 +115,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> EncryptAsync(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.EncryptAsync(stream, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -118,6 +124,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="bytes"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Decrypt(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes)
   {
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
@@ -142,12 +149,11 @@ public static class CryptographyExtensions
   /// <param name="bytes">Binary data to be decrypted.</param>
   /// <param name="cancellation"></param>
   /// <returns>Decrypted binary data.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> DecryptAsync(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
-    if (algorithm is null)
-      throw new ArgumentNullException(nameof(algorithm));
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -169,6 +175,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="stream"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Decrypt(this SymmetricAlgorithm algorithm, Stream stream) => algorithm.Decrypt(stream.ToEnumerable());
 
   /// <summary>
@@ -178,6 +185,7 @@ public static class CryptographyExtensions
   /// <param name="stream">Stream of binary data to be decrypted.</param>
   /// <param name="cancellation"></param>
   /// <returns>Decrypted binary data.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> DecryptAsync(this SymmetricAlgorithm algorithm, Stream stream, CancellationToken cancellation = default) => await algorithm.DecryptAsync(stream.ToEnumerable(), cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -186,6 +194,7 @@ public static class CryptographyExtensions
   /// <param name="bytes"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Decrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm) => algorithm.Decrypt(bytes);
 
   /// <summary>
@@ -195,6 +204,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> DecryptAsync(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.DecryptAsync(bytes, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -203,8 +213,9 @@ public static class CryptographyExtensions
   /// <param name="stream"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Decrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Decrypt(stream);
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -212,6 +223,7 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> DecryptAsync(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.DecryptAsync(stream, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -220,6 +232,7 @@ public static class CryptographyExtensions
   /// <param name="bytes"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Hash(this IEnumerable<byte> bytes, HashAlgorithm algorithm)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -234,6 +247,7 @@ public static class CryptographyExtensions
   /// <param name="text"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Hash(this string text, HashAlgorithm algorithm) => text.ToBytes(Encoding.UTF8).Hash(algorithm).ToHex();
 
   /// <summary>
@@ -242,6 +256,7 @@ public static class CryptographyExtensions
   /// <param name="stream"></param>
   /// <param name="algorithm"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] Hash(this Stream stream, HashAlgorithm algorithm)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -257,12 +272,13 @@ public static class CryptographyExtensions
   /// <param name="algorithm"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<byte[]> HashAsync(this Stream stream, HashAlgorithm algorithm, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
 
-    #if NET7_0
+    #if NET7_0_OR_GREATER
       return await algorithm.ComputeHashAsync(stream, cancellation).ConfigureAwait(false);
     #else
       return algorithm.ComputeHash(stream);
@@ -274,6 +290,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="bytes">Source bytes sequence.</param>
   /// <returns>Hash digest value.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashMd5(this IEnumerable<byte> bytes)
   {
@@ -289,6 +306,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashMd5(this string text)
   {
@@ -304,6 +322,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashMd5(this Stream stream)
   {
@@ -313,13 +332,14 @@ public static class CryptographyExtensions
 
     return stream.Hash(algorithm);
   }
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="stream"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashMd5Async(this Stream stream, CancellationToken cancellation = default)
   {
@@ -337,6 +357,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="bytes">Source bytes sequence.</param>
   /// <returns>Hash digest value.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha1(this IEnumerable<byte> bytes)
   {
@@ -352,6 +373,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashSha1(this string text)
   {
@@ -367,6 +389,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha1(this Stream stream)
   {
@@ -383,6 +406,7 @@ public static class CryptographyExtensions
   /// <param name="stream"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashSha1Async(this Stream stream, CancellationToken cancellation = default)
   {
@@ -400,6 +424,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="bytes">Source bytes sequence.</param>
   /// <returns>Hash digest value.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha256(this IEnumerable<byte> bytes)
   {
@@ -415,6 +440,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashSha256(this string text)
   {
@@ -430,6 +456,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha256(this Stream stream)
   {
@@ -446,6 +473,7 @@ public static class CryptographyExtensions
   /// <param name="stream"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashSha256Async(this Stream stream, CancellationToken cancellation = default)
   {
@@ -457,12 +485,13 @@ public static class CryptographyExtensions
     
     return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
   }
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="bytes"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha384(this IEnumerable<byte> bytes)
   {
@@ -478,6 +507,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashSha384(this string text)
   {
@@ -493,6 +523,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha384(this Stream stream)
   {
@@ -509,6 +540,7 @@ public static class CryptographyExtensions
   /// <param name="stream"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashSha384Async(this Stream stream, CancellationToken cancellation = default)
   {
@@ -520,12 +552,13 @@ public static class CryptographyExtensions
     
     return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
   }
-  
+
   /// <summary>
   ///   <para>Computes hash digest for the given array of bytes, using <c>SHA512</c> algorithm.</para>
   /// </summary>
   /// <param name="bytes">Source bytes sequence.</param>
   /// <returns>Hash digest value.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha512(this IEnumerable<byte> bytes)
   {
@@ -541,6 +574,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static string HashSha512(this string text)
   {
@@ -556,6 +590,7 @@ public static class CryptographyExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static byte[] HashSha512(this Stream stream)
   {
@@ -572,6 +607,7 @@ public static class CryptographyExtensions
   /// <param name="stream"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static async Task<byte[]> HashSha512Async(this Stream stream, CancellationToken cancellation = default)
   {

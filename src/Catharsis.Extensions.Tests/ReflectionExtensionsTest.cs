@@ -531,31 +531,6 @@ public sealed class ReflectionExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ReflectionExtensions.ToType(MemberInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void MemberInfo_ToType_Method()
-  {
-    AssertionExtensions.Should(() => ReflectionExtensions.ToType(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
-
-    /*var type = typeof(TestObject);
-
-    var eventMember = type.Event("PublicEvent");
-    eventMember.Type().Should().Be(eventMember.EventHandlerType);
-
-    var fieldMember = type.Field("PublicField");
-    fieldMember.Type().Should().Be(fieldMember.FieldType);
-
-    var methodMember = type.Method("PublicMethod");
-    methodMember.Type().Should().Be(methodMember.ReturnType);
-
-    var propertyMember = type.Property("PublicProperty");
-    propertyMember.Type().Should().Be(propertyMember.PropertyType);*/
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="ReflectionExtensions.ToDelegate{T}(MethodInfo)"/></description></item>

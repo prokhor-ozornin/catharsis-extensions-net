@@ -15,118 +15,118 @@ public abstract class UnitTest : IDisposable
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static CancellationToken Cancellation { get; } = new(true);
+  protected CancellationToken Cancellation { get; } = new(true);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static Uri LocalHost { get; } = "https://localhost".ToUri();
+  protected Uri LocalHost { get; } = "https://localhost".ToUri();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static IAsyncEnumerable<object> EmptyAsyncEnumerable { get; } = Enumerable.Empty<object>().ToAsyncEnumerable();
+  protected IAsyncEnumerable<object> EmptyAsyncEnumerable { get; } = Enumerable.Empty<object>().ToAsyncEnumerable();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static Random Randomizer { get; } = new();
+  protected Random Randomizer { get; } = new();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static byte[] RandomBytes => new Random().ByteSequence(short.MaxValue).AsArray();
+  protected byte[] RandomBytes => new Random().ByteSequence(short.MaxValue).AsArray();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static char[] RandomChars => new Random().Letters(short.MaxValue).AsArray();
+  protected char[] RandomChars => new Random().Letters(short.MaxValue).AsArray();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static string RandomString => new Random().Letters(short.MaxValue);
+  protected string RandomString => new Random().Letters(short.MaxValue);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static SecureString EmptySecureString => new();
+  protected SecureString EmptySecureString => new();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <returns></returns>
-  protected static TextReader EmptyTextReader => string.Empty.ToStringReader();
+  protected TextReader EmptyTextReader => string.Empty.ToStringReader();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static SecureString RandomSecureString => new Random().SecureString(short.MaxValue);
+  protected SecureString RandomSecureString => new Random().SecureString(short.MaxValue);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static object[] RandomObjects => new Random().ObjectSequence(short.MaxValue).AsArray();
+  protected object[] RandomObjects => new Random().ObjectSequence(short.MaxValue).AsArray();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static Stream EmptyStream => new MemoryStream();
+  protected Stream EmptyStream => new MemoryStream();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static MemoryStream RandomStream => new Random().MemoryStreamAsync(short.MaxValue).Await();
+  protected MemoryStream RandomStream => new Random().MemoryStreamAsync(short.MaxValue).Await();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static Stream RandomReadOnlyStream => new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnly();
+  protected Stream RandomReadOnlyStream => new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnly();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static Stream RandomReadOnlyForwardStream => new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnlyForward();
+  protected Stream RandomReadOnlyForwardStream => new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnlyForward();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static Stream WriteOnlyStream => new MemoryStream().AsWriteOnly();
+  protected Stream WriteOnlyStream => new MemoryStream().AsWriteOnly();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static Stream WriteOnlyForwardStream => new MemoryStream().AsWriteOnlyForward();
+  protected Stream WriteOnlyForwardStream => new MemoryStream().AsWriteOnlyForward();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static string RandomName => new Random().Letters(25);
+  protected string RandomName => new Random().Letters(25);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static FileInfo RandomFakeFile => new Random().FilePath().ToFile();
+  protected FileInfo RandomFakeFile => new Random().FilePath().ToFile();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static FileInfo RandomEmptyFile => new Random().File();
+  protected FileInfo RandomEmptyFile => new Random().File();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static FileInfo RandomNonEmptyFile => new Random().TextFileAsync(short.MaxValue).Await();
+  protected FileInfo RandomNonEmptyFile => new Random().TextFileAsync(short.MaxValue).Await();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static DirectoryInfo RandomDirectory => new Random().Directory();
+  protected DirectoryInfo RandomDirectory => new Random().Directory();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected static DirectoryInfo RandomFakeDirectory => new Random().DirectoryPath().ToDirectory();
+  protected DirectoryInfo RandomFakeDirectory => new Random().DirectoryPath().ToDirectory();
 
   /// <summary>
   ///   <para></para>

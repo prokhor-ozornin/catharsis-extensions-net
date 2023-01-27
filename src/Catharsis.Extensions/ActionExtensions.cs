@@ -13,6 +13,7 @@ public static class ActionExtensions
   /// <param name="action"></param>
   /// <param name="condition"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Action Execute(this Action action, Func<bool> condition)
   {
     if (action is null) throw new ArgumentNullException(nameof(action));
@@ -34,6 +35,7 @@ public static class ActionExtensions
   /// <param name="condition"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Action<T> Execute<T>(this Action<T> action, Predicate<T> condition, T instance)
   {
     if (action is null) throw new ArgumentNullException(nameof(action));

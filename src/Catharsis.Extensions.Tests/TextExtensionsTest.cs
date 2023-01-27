@@ -18,7 +18,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StreamReader_IsStart_Method()
   {
-    static void Validate(StreamReader reader)
+    void Validate(StreamReader reader)
     {
       using (reader)
       {
@@ -47,7 +47,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void TextReader_IsEnd_Method()
   {
-    static void Validate(StreamReader reader)
+    void Validate(StreamReader reader)
     {
       using (reader)
       {
@@ -76,7 +76,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StreamReader_IsEmpty_Method()
   {
-    static void Validate(StreamReader reader, bool empty)
+    void Validate(StreamReader reader, bool empty)
     {
       using (reader)
       {
@@ -102,7 +102,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StreamWriter_IsEmpty_Method()
   {
-    static void Validate(StreamWriter writer)
+    void Validate(StreamWriter writer)
     {
       using (writer)
       {
@@ -147,7 +147,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StreamReader_Empty_Method()
   {
-    static void Validate(StreamReader reader)
+    void Validate(StreamReader reader)
     {
       using (reader)
       {
@@ -172,7 +172,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StreamWriter_Empty_Method()
   {
-    static void Validate(StreamWriter writer)
+    void Validate(StreamWriter writer)
     {
       using (writer)
       {
@@ -196,7 +196,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StringBuilder_Empty_Method()
   {
-    static void Validate(StringBuilder builder)
+    void Validate(StringBuilder builder)
     {
       builder.Empty().Should().NotBeNull().And.BeSameAs(builder);
       builder.Length.Should().Be(0);
@@ -269,7 +269,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StreamReader_Rewind_Method()
   {
-    static void Validate(StreamReader reader)
+    void Validate(StreamReader reader)
     {
       using (reader)
       {
@@ -294,7 +294,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StreamWriter_Rewind_Method()
   {
-    static void Validate(StreamWriter writer)
+    void Validate(StreamWriter writer)
     {
       using (writer)
       {
@@ -574,7 +574,7 @@ public sealed class TextExtensionsTest : UnitTest
   [Fact]
   public void StringBuilder_ToStringWriter_Method()
   {
-    static void Validate(IFormatProvider format)
+    void Validate(IFormatProvider format)
     {
       var value = RandomString;
       var builder = new StringBuilder();

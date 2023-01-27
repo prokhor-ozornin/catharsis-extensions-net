@@ -19,6 +19,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <returns></returns>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsAvailable(this Uri uri, TimeSpan? timeout = null) => uri is not null ? uri.IsAvailableAsync(timeout).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
@@ -28,6 +29,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<bool> IsAvailableAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -60,6 +62,7 @@ public static class UriExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static UriBuilder Empty(this UriBuilder builder)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));
@@ -75,12 +78,13 @@ public static class UriExtensions
 
     return builder;
   }
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IReadOnlyDictionary<string, string> GetQuery(this Uri uri)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -96,6 +100,7 @@ public static class UriExtensions
   /// <param name="builder"></param>
   /// <param name="parameters"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static UriBuilder WithQuery(this UriBuilder builder, IReadOnlyDictionary<string, object> parameters)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));
@@ -110,6 +115,7 @@ public static class UriExtensions
   /// <param name="builder"></param>
   /// <param name="parameters"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static UriBuilder WithQuery(this UriBuilder builder, params (string Name, object Value)[] parameters)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));
@@ -132,6 +138,7 @@ public static class UriExtensions
   /// </summary>
   /// <param name="uri">URL address to use.</param>
   /// <returns><see cref="IPHostEntry"/> instance, containing information about host of source <see cref="Uri"/> address.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IPHostEntry Host(this Uri uri) => uri is not null ? Dns.GetHostEntry(uri.DnsSafeHost) : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
@@ -142,6 +149,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string[] Lines(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -160,6 +168,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async IAsyncEnumerable<string> LinesAsync(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -183,6 +192,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T Print<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -204,6 +214,7 @@ public static class UriExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<T> PrintAsync<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -225,6 +236,7 @@ public static class UriExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Uri TryFinallyDelete(this Uri uri, Action<Uri> action, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -259,6 +271,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<IEnumerable<byte>> ToEnumerable(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToEnumerable();
 
   /// <summary>
@@ -269,6 +282,8 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static async Task<IEnumerable<byte[]>> ToEnumerable(this Uri uri, int count, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -284,6 +299,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -302,6 +318,8 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static async IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Uri uri, int count, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -318,6 +336,7 @@ public static class UriExtensions
   /// </summary>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static UriBuilder ToUriBuilder(this Uri uri) => uri is not null ? new UriBuilder(uri) : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
@@ -327,6 +346,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Stream ToStream(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToStreamAsync(timeout, headers).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
@@ -336,6 +356,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
   /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<Stream> ToStreamAsync(this Uri uri, TimeSpan? timeout = null,params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -365,6 +386,7 @@ public static class UriExtensions
   /// </summary>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static MailMessage ToMailMessage(this Uri uri)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -400,6 +422,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> ToBytes(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri?.ToStream(timeout, headers).ToBytes(true) ?? throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
@@ -409,10 +432,10 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers">Optional set of additional headers to send alongside with request (names and values of object's public properties).</param>
   /// <returns>Response of web server in a binary format.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async IAsyncEnumerable<byte> ToBytesAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     await using var stream = await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false);
 
@@ -430,6 +453,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -447,6 +471,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
   /// <returns>Web server's response in a text format.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> ToTextAsync(this Uri uri, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -464,6 +489,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Uri WriteBytes(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -481,12 +507,11 @@ public static class UriExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<Uri> WriteBytesAsync(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    if (destination is null)
-      throw new ArgumentNullException(nameof(destination));
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -517,6 +542,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Uri WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -535,6 +561,7 @@ public static class UriExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<Uri> WriteTextAsync(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -551,6 +578,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, Uri destination, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -570,12 +598,11 @@ public static class UriExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Uri destination, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
-    if (destination is null)
-      throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -593,6 +620,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string WriteTo(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -613,6 +641,7 @@ public static class UriExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> WriteToAsync(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));

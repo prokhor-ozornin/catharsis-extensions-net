@@ -15,6 +15,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this SecureString secure) => secure is not null ? secure.Length == 0 : throw new ArgumentNullException(nameof(secure));
 
   /// <summary>
@@ -22,6 +23,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static SecureString Empty(this SecureString secure)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -37,6 +39,7 @@ public static class SecureStringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static SecureString Min(this SecureString left, SecureString right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -51,6 +54,7 @@ public static class SecureStringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static SecureString Max(this SecureString left, SecureString right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -65,6 +69,7 @@ public static class SecureStringExtensions
   /// <param name="secure"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static SecureString TryFinallyClear(this SecureString secure, Action<SecureString> action)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -78,6 +83,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static SecureString AsReadOnly(this SecureString secure)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -93,6 +99,7 @@ public static class SecureStringExtensions
   /// <param name="secure"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] ToBytes(this SecureString secure, Encoding encoding = null) => secure.ToText().ToBytes(encoding);
 
   /// <summary>
@@ -100,6 +107,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this SecureString secure)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -132,6 +140,7 @@ public static class SecureStringExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static SecureString WriteText(this SecureString destination, IEnumerable<char> text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -148,6 +157,7 @@ public static class SecureStringExtensions
   /// <param name="text"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<char> WriteTo(this IEnumerable<char> text, SecureString destination)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));

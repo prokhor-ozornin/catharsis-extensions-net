@@ -772,6 +772,7 @@ public sealed class NetworkExtensionsTest : UnitTest
     throw new NotImplementedException();
   }
 
+
   /// <summary>
   ///   <para>Performs testing of <see cref="NetworkExtensions.ToBytes(IPAddress)"/> method.</para>
   /// </summary>

@@ -178,7 +178,7 @@ public sealed class CollectionsExtensionsTest : UnitTest
   [Fact]
   public void NameValueCollection_Empty_Method()
   {
-    static void Validate(NameValueCollection collection)
+    void Validate(NameValueCollection collection)
     {
       collection.Empty().Should().NotBeNull().And.BeSameAs(collection);
       collection.Count.Should().Be(0);

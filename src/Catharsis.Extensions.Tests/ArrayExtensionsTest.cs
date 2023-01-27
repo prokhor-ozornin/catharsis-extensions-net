@@ -45,7 +45,7 @@ public sealed class ArrayExtensionsTest : UnitTest
   [Fact]
   public void CharArray_ToBytes_Method()
   {
-    static void Validate(char[] chars, Encoding encoding)
+    void Validate(char[] chars, Encoding encoding)
     {
       Array.Empty<char>().ToBytes(encoding).Should().NotBeNull().And.BeSameAs(Array.Empty<char>().ToBytes(encoding)).And.BeEmpty();
 
@@ -83,7 +83,7 @@ public sealed class ArrayExtensionsTest : UnitTest
   [Fact]
   public void ByteArray_ToText_Method()
   {
-    static void Validate(byte[] bytes, Encoding encoding)
+    void Validate(byte[] bytes, Encoding encoding)
     {
       Array.Empty<byte>().ToText(encoding).Should().NotBeNull().And.BeSameAs(Array.Empty<byte>().ToText(encoding)).And.BeEmpty();
       bytes.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(bytes.ToText(encoding)).And.HaveLength((encoding ?? Encoding.Default).GetCharCount(bytes)).And.Be((encoding ?? Encoding.Default).GetString(bytes));

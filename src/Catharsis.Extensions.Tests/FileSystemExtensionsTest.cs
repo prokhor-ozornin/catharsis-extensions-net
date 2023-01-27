@@ -125,7 +125,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
   [Fact]
   public void FileInfo_Lines_Method()
   {
-    static void Validate(Encoding encoding)
+    void Validate(Encoding encoding)
     {
       RandomEmptyFile.TryFinallyDelete(file =>
       {
@@ -156,7 +156,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
   [Fact]
   public void FileInfo_LinesAsync_Method()
   {
-    static void Validate(Encoding encoding)
+    void Validate(Encoding encoding)
     {
       RandomEmptyFile.TryFinallyDelete(file =>
       {
@@ -237,7 +237,7 @@ public sealed class FileSystemExtensionsTest : UnitTest
   [Fact]
   public void FileInfo_TryFinallyDelete_Method()
   {
-    static void Validate(FileInfo file)
+    void Validate(FileInfo file)
     {
       var bytes = RandomBytes;
 
@@ -284,6 +284,17 @@ public sealed class FileSystemExtensionsTest : UnitTest
     });
     directory.Exists.Should().BeTrue();
     directory.IsEmpty().Should().BeTrue();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FileSystemExtensions.AsReadOnly(FileInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FileInfo_AsReadOnly_Method()
+  {
+    AssertionExtensions.Should(() => FileSystemExtensions.AsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+
+    throw new NotImplementedException();
   }
 
   /// <summary>

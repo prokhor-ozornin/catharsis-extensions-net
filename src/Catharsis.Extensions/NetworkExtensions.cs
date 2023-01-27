@@ -27,6 +27,7 @@ public static class NetworkExtensions
   /// <param name="address"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsAvailable(this IPAddress address, TimeSpan? timeout = null)
   {
     if (address is null) throw new ArgumentNullException(nameof(address));
@@ -44,9 +45,10 @@ public static class NetworkExtensions
   /// <param name="address"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<bool> IsAvailableAsync(this IPAddress address, TimeSpan? timeout = null)
   {
-    if (address is null)      throw new ArgumentNullException(nameof(address));
+    if (address is null) throw new ArgumentNullException(nameof(address));
 
     using var ping = new Ping();
 
@@ -61,6 +63,7 @@ public static class NetworkExtensions
   /// <param name="host"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsAvailable(this IPHostEntry host, TimeSpan? timeout = null)
   {
     if (host is null) throw new ArgumentNullException(nameof(host));
@@ -85,6 +88,7 @@ public static class NetworkExtensions
   /// <param name="host"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<bool> IsAvailableAsync(this IPHostEntry host, TimeSpan? timeout = null)
   {
     if (host is null) throw new ArgumentNullException(nameof(host));
@@ -108,6 +112,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="host"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this IPHostEntry host) => host is not null ? host.HostName.IsEmpty() && (host.AddressList is null || host.AddressList.IsEmpty()) : throw new ArgumentNullException(nameof(host));
 
   /// <summary>
@@ -115,6 +120,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this TcpClient tcp) => tcp?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -122,6 +128,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="udp"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this UdpClient udp) => udp?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
@@ -129,6 +136,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="cookie"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this Cookie cookie) => cookie is not null ? cookie.Name.IsEmpty() || cookie.Value.IsEmpty() : throw new ArgumentNullException(nameof(cookie));
 
   /// <summary>
@@ -137,6 +145,7 @@ public static class NetworkExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IPAddress Min(this IPAddress left, IPAddress right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -151,6 +160,7 @@ public static class NetworkExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IPAddress Max(this IPAddress left, IPAddress right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -181,6 +191,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpClient WithHeaders(this HttpClient http, IEnumerable<(string Name, object Value)> headers)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -197,6 +208,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpClient WithHeaders(this HttpClient http, params (string Name, object Value)[] headers) => http.WithHeaders(headers as IEnumerable<(string Name, object Value)>);
 
   /// <summary>
@@ -205,6 +217,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpClient WithHeaders(this HttpClient http, IReadOnlyDictionary<string, object> headers)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -221,6 +234,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpClient WithTimeout(this HttpClient http, TimeSpan? timeout)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -239,6 +253,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static TcpClient WithTimeout(this TcpClient tcp, TimeSpan? timeout)
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
@@ -258,6 +273,7 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static UdpClient WithTimeout(this UdpClient udp, TimeSpan? timeout)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
@@ -273,6 +289,7 @@ public static class NetworkExtensions
   /// <param name="smtp"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static SmtpClient WithTimeout(this SmtpClient smtp, TimeSpan? timeout)
   {
     if (smtp is null) throw new ArgumentNullException(nameof(smtp));
@@ -291,6 +308,7 @@ public static class NetworkExtensions
   /// <param name="socket"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Socket WithTimeout(this Socket socket, TimeSpan? timeout)
   {
     if (socket is null) throw new ArgumentNullException(nameof(socket));
@@ -310,6 +328,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent ExecuteHead(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -325,12 +344,11 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> ExecuteHeadAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -347,6 +365,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent ExecuteGet(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -362,12 +381,11 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> ExecuteGetAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -385,6 +403,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="content"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent ExecutePost(this HttpClient http, Uri uri, HttpContent content = null)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -401,12 +420,11 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> ExecutePostAsync(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -424,6 +442,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="content"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent ExecutePut(this HttpClient http, Uri uri, HttpContent content = null)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -440,12 +459,11 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> ExecutePutAsync(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -463,6 +481,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="content"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent ExecutePatch(this HttpClient http, Uri uri, HttpContent content = null)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -479,12 +498,11 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> ExecutePatchAsync(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -501,6 +519,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent ExecuteDelete(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -516,6 +535,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> ExecuteDeleteAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -536,6 +556,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static TcpClient TryFinallyDisconnect(this TcpClient tcp, Action<TcpClient> action)
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
@@ -552,6 +573,7 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static UdpClient TryFinallyDisconnect(this UdpClient udp, Action<UdpClient> action)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
@@ -568,6 +590,7 @@ public static class NetworkExtensions
   /// <param name="socket"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Socket TryFinallyDisconnect(this Socket socket, Action<Socket> action)
   {
     if (socket is null) throw new ArgumentNullException(nameof(socket));
@@ -581,6 +604,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="host"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<IPAddress> ToEnumerable(this IPHostEntry host) => host?.AddressList ?? throw new ArgumentNullException(nameof(host));
 
   /// <summary>
@@ -589,6 +613,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> ToEnumerable(this TcpClient tcp, bool close = false) => tcp?.GetStream().ToEnumerable(close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -598,6 +623,7 @@ public static class NetworkExtensions
   /// <param name="count"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte[]> ToEnumerable(this TcpClient tcp, int count, bool close = false) => tcp?.GetStream().ToEnumerable(count, close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -607,6 +633,7 @@ public static class NetworkExtensions
   /// <param name="endpoint"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte[]> ToEnumerable(this UdpClient udp, IPEndPoint endpoint = null, bool close = false) => udp is not null ? new UdpClientEnumerable(udp, endpoint, close) : throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
@@ -615,6 +642,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IAsyncEnumerable<byte> ToAsyncEnumerable(this TcpClient tcp, bool close = false) => tcp?.GetStream().ToAsyncEnumerable(close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -624,6 +652,7 @@ public static class NetworkExtensions
   /// <param name="count"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this TcpClient tcp, int count, bool close = false) => tcp?.GetStream().ToAsyncEnumerable(count, close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -632,6 +661,7 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="close"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this UdpClient udp, bool close = false) => udp is not null ? new UdpClientAsyncEnumerable(udp, close) : throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
@@ -639,6 +669,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IPHostEntry ToIpHost(this IPAddress address) => address is not null ? new IPHostEntry { AddressList = new[] { address }, Aliases = Array.Empty<string>() } : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
@@ -647,6 +678,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Stream ToStream(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -662,20 +694,19 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<Stream> ToStreamAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET7_0
-    return await http.GetStreamAsync(uri, cancellation).ConfigureAwait(false);
-#else
-    return await http.GetStreamAsync(uri).ConfigureAwait(false);
-#endif
+    #if NET7_0_OR_GREATER
+      return await http.GetStreamAsync(uri, cancellation).ConfigureAwait(false);
+    #else
+      return await http.GetStreamAsync(uri).ConfigureAwait(false);
+    #endif
   }
 
   /// <summary>
@@ -683,11 +714,12 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Stream ToStream(this HttpContent content)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
 
-    #if NET7_0
+    #if NET7_0_OR_GREATER
       return content.ReadAsStream();
     #else
       return content.ReadAsStreamAsync().Result;
@@ -700,17 +732,18 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<Stream> ToStreamAsync(this HttpContent content, CancellationToken cancellation = default)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET7_0
-    return await content.ReadAsStreamAsync(cancellation).ConfigureAwait(false);
-#else
-    return await content.ReadAsStreamAsync().ConfigureAwait(false);
-#endif
+    #if NET7_0_OR_GREATER
+      return await content.ReadAsStreamAsync(cancellation).ConfigureAwait(false);
+    #else
+      return await content.ReadAsStreamAsync().ConfigureAwait(false);
+    #endif
   }
 
   /// <summary>
@@ -718,6 +751,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] ToBytes(this IPAddress address) => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
 
   /// <summary>
@@ -725,6 +759,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] ToBytes(this PhysicalAddress address) => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
 
   /// <summary>
@@ -733,6 +768,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> ToBytes(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -747,12 +783,11 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpClient http, Uri uri)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     await using var stream = await http.ToStreamAsync(uri);
 
@@ -769,6 +804,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> ToBytes(this HttpContent content) => content?.ToStream().ToBytes() ?? throw new ArgumentNullException(nameof(content));
 
   /// <summary>
@@ -776,10 +812,10 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpContent content)
   {
-    if (content is null)
-      throw new ArgumentNullException(nameof(content));
+    if (content is null) throw new ArgumentNullException(nameof(content));
 
     var result = content.ReadAsByteArrayAsync().ConfigureAwait(false);
 
@@ -794,6 +830,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> ToBytes(this TcpClient tcp) => tcp?.GetStream().ToBytes() ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -801,10 +838,10 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async IAsyncEnumerable<byte> ToBytesAsync(this TcpClient tcp)
   {
-    if (tcp is null)
-      throw new ArgumentNullException(nameof(tcp));
+    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
 
     await foreach (var element in tcp.GetStream().ToBytesAsync().ConfigureAwait(false))
     {
@@ -817,6 +854,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="udp"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> ToBytes(this UdpClient udp) => udp?.ReceiveAsync().Result.Buffer ?? throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
@@ -824,6 +862,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="udp"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async IAsyncEnumerable<byte> ToBytesAsync(this UdpClient udp)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
@@ -842,6 +881,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -857,20 +897,19 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> ToTextAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET7_0
+    #if NET7_0_OR_GREATER
     return await http.GetStringAsync(uri, cancellation).ConfigureAwait(false);
-#else
+    #else
       return await http.GetStringAsync(uri).ConfigureAwait(false);
-#endif
+    #endif
   }
 
   /// <summary>
@@ -878,6 +917,7 @@ public static class NetworkExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this HttpContent content) => content?.ToTextAsync().Result ?? throw new ArgumentNullException(nameof(content));
 
   /// <summary>
@@ -886,18 +926,18 @@ public static class NetworkExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> ToTextAsync(this HttpContent content, CancellationToken cancellation = default)
   {
-    if (content is null)
-      throw new ArgumentNullException(nameof(content));
+    if (content is null) throw new ArgumentNullException(nameof(content));
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET7_0
+    #if NET7_0_OR_GREATER
     return await content.ReadAsStringAsync(cancellation).ConfigureAwait(false);
-#else
+    #else
       return await content.ReadAsStringAsync().ConfigureAwait(false);
-#endif
+    #endif
   }
 
   /// <summary>
@@ -906,6 +946,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this TcpClient tcp, Encoding encoding = null) => tcp.ToBytes().AsArray().ToText(encoding);
 
   /// <summary>
@@ -914,6 +955,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> ToTextAsync(this TcpClient tcp, Encoding encoding = null) => (await tcp.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
 
   /// <summary>
@@ -922,6 +964,7 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this UdpClient udp, Encoding encoding = null) => udp.ToBytes().AsArray().ToText(encoding);
 
   /// <summary>
@@ -930,6 +973,7 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> ToTextAsync(this UdpClient udp, Encoding encoding = null) => (await udp.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
 
   /// <summary>
@@ -939,6 +983,7 @@ public static class NetworkExtensions
   /// <param name="bytes"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent WriteBytes(this HttpClient http, IEnumerable<byte> bytes, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -956,14 +1001,12 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> WriteBytesAsync(this HttpClient http, IEnumerable<byte> bytes, Uri uri, CancellationToken cancellation = default)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -978,6 +1021,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="bytes"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static TcpClient WriteBytes(this TcpClient tcp, IEnumerable<byte> bytes)
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
@@ -995,12 +1039,11 @@ public static class NetworkExtensions
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<TcpClient> WriteBytesAsync(this TcpClient tcp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
-    if (tcp is null)
-      throw new ArgumentNullException(nameof(tcp));
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
+    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -1015,6 +1058,7 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="bytes"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static UdpClient WriteBytes(this UdpClient udp, IEnumerable<byte> bytes)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
@@ -1034,6 +1078,7 @@ public static class NetworkExtensions
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<UdpClient> WriteBytesAsync(this UdpClient udp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
@@ -1041,12 +1086,12 @@ public static class NetworkExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET7_0
+    #if NET7_0_OR_GREATER
       await udp.SendAsync(bytes.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
-#else
-    var datagram = bytes.AsArray();
-    await udp.SendAsync(datagram, datagram.Length).ConfigureAwait(false);
-#endif
+    #else
+      var datagram = bytes.AsArray();
+      await udp.SendAsync(datagram, datagram.Length).ConfigureAwait(false);
+    #endif
 
     return udp;
   }
@@ -1058,6 +1103,7 @@ public static class NetworkExtensions
   /// <param name="text"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent WriteText(this HttpClient http, string text, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -1075,14 +1121,12 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> WriteTextAsync(this HttpClient http, string text, Uri uri, CancellationToken cancellation = default)
   {
-    if (http is null)
-      throw new ArgumentNullException(nameof(http));
-    if (text is null)
-      throw new ArgumentNullException(nameof(text));
-    if (uri is null)
-      throw new ArgumentNullException(nameof(uri));
+    if (http is null) throw new ArgumentNullException(nameof(http));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -1098,6 +1142,7 @@ public static class NetworkExtensions
   /// <param name="text"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static TcpClient WriteText(this TcpClient tcp, string text, Encoding encoding = null) => tcp.WriteBytes(text.ToBytes(encoding));
 
   /// <summary>
@@ -1108,6 +1153,7 @@ public static class NetworkExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<TcpClient> WriteTextAsync(this TcpClient tcp, string text, Encoding encoding = null, CancellationToken cancellation = default) => await tcp.WriteBytesAsync(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -1117,8 +1163,9 @@ public static class NetworkExtensions
   /// <param name="text"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static UdpClient WriteText(this UdpClient udp, string text, Encoding encoding = null) => udp.WriteBytes(text.ToBytes(encoding));
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -1127,6 +1174,7 @@ public static class NetworkExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<UdpClient> WriteTextAsync(this UdpClient udp, string text, Encoding encoding = null, CancellationToken cancellation = default) => await udp.WriteBytesAsync(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -1136,6 +1184,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent WriteTo(this IEnumerable<byte> bytes, HttpClient http, Uri uri) => http.WriteBytes(bytes, uri);
 
   /// <summary>
@@ -1146,6 +1195,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> WriteToAsync(this IEnumerable<byte> bytes, HttpClient http, Uri uri, CancellationToken cancellation = default) => await http.WriteBytesAsync(bytes, uri, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -1154,6 +1204,7 @@ public static class NetworkExtensions
   /// <param name="bytes"></param>
   /// <param name="tcp"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, TcpClient tcp)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -1171,12 +1222,11 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, TcpClient tcp, CancellationToken cancellation = default)
   {
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
-    if (tcp is null)
-      throw new ArgumentNullException(nameof(tcp));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -1191,6 +1241,7 @@ public static class NetworkExtensions
   /// <param name="bytes"></param>
   /// <param name="udp"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, UdpClient udp)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -1208,12 +1259,11 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, UdpClient udp, CancellationToken cancellation = default)
   {
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
-    if (udp is null)
-      throw new ArgumentNullException(nameof(udp));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (udp is null) throw new ArgumentNullException(nameof(udp));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -1229,6 +1279,7 @@ public static class NetworkExtensions
   /// <param name="http"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static HttpContent WriteTo(this string text, HttpClient http, Uri uri) => http.WriteText(text, uri);
 
   /// <summary>
@@ -1239,6 +1290,7 @@ public static class NetworkExtensions
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<HttpContent> WriteToAsync(this string text, HttpClient http, Uri uri, CancellationToken cancellation = default) => await http.WriteTextAsync(text, uri, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -1248,6 +1300,7 @@ public static class NetworkExtensions
   /// <param name="tcp"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string WriteTo(this string text, TcpClient tcp, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1266,12 +1319,11 @@ public static class NetworkExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> WriteToAsync(this string text, TcpClient tcp, Encoding encoding = null, CancellationToken cancellation = default)
   {
-    if (text is null)
-      throw new ArgumentNullException(nameof(text));
-    if (tcp is null)
-      throw new ArgumentNullException(nameof(tcp));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -1287,6 +1339,7 @@ public static class NetworkExtensions
   /// <param name="udp"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string WriteTo(this string text, UdpClient udp, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1305,6 +1358,7 @@ public static class NetworkExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> WriteToAsync(this string text, UdpClient udp, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1406,11 +1460,11 @@ public static class NetworkExtensions
 
       public async ValueTask<bool> MoveNextAsync()
       {
-#if NET7_0
-        var buffer = (await parent.client.ReceiveAsync(cancellation).ConfigureAwait(false)).Buffer;
-#else
-        var buffer = (await parent.client.ReceiveAsync().ConfigureAwait(false)).Buffer;
-#endif
+        #if NET7_0_OR_GREATER
+          var buffer = (await parent.client.ReceiveAsync(cancellation).ConfigureAwait(false)).Buffer;
+        #else
+          var buffer = (await parent.client.ReceiveAsync().ConfigureAwait(false)).Buffer;
+        #endif
 
         if (buffer.Length > 0)
         {

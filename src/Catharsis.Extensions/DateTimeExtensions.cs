@@ -64,24 +64,6 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset Min(this DateTimeOffset left, DateTimeOffset right) => left <= right ? left : right;
 
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static DateOnly Min(this DateOnly left, DateOnly right) => left <= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static TimeOnly Min(this TimeOnly left, TimeOnly right) => left <= right ? left : right;
-#endif
-
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -97,24 +79,6 @@ public static class DateTimeExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   public static DateTimeOffset Max(this DateTimeOffset left, DateTimeOffset right) => left >= right ? left : right;
-
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static DateOnly Max(this DateOnly left, DateOnly right) => left >= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static TimeOnly Max(this TimeOnly left, TimeOnly right) => left >= right ? left : right;
-#endif
 
   /// <summary>
   ///   <para></para>
@@ -161,54 +125,6 @@ public static class DateTimeExtensions
       yield return date;
     }
   }
-
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="from"></param>
-  /// <param name="to"></param>
-  /// <param name="offset"></param>
-  /// <returns></returns>
-  public static IEnumerable<DateOnly> Range(this DateOnly from, DateOnly to, TimeSpan offset)
-  {
-    if (from == to || offset == TimeSpan.Zero)
-    {
-      yield break;
-    }
-
-    var dateFrom = offset > TimeSpan.Zero ? from.Min(to) : from.Max(to);
-    var dateTo = offset > TimeSpan.Zero ? from.Max(to) : from.Min(to);
-
-    for (var date = dateFrom; date < dateTo; date = date.AddDays((int) offset.TotalDays))
-    {
-      yield return date;
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="from"></param>
-  /// <param name="to"></param>
-  /// <param name="offset"></param>
-  /// <returns></returns>
-  public static IEnumerable<TimeOnly> Range(this TimeOnly from, TimeOnly to, TimeSpan offset)
-  {
-    if (from == to || offset == TimeSpan.Zero)
-    {
-      yield break;
-    }
-
-    var dateFrom = offset > TimeSpan.Zero ? from.Min(to) : from.Max(to);
-    var dateTo = offset > TimeSpan.Zero ? from.Max(to) : from.Min(to);
-
-    for (var date = dateFrom; date < dateTo; date = date.Add(offset))
-    {
-      yield return date;
-    }
-  }
-#endif
 
   /// <summary>
   ///   <para>Creates a time span object, representing a given number of days.</para>
@@ -317,15 +233,6 @@ public static class DateTimeExtensions
   /// <seealso cref="IsWeekday(DateTime)"/>
   public static bool IsWeekday(this DateTimeOffset date) => !date.IsWeekend();
 
-  #if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  public static bool IsWeekday(this DateOnly date) => !date.IsWeekend();
-  #endif
-
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -341,15 +248,6 @@ public static class DateTimeExtensions
   /// <returns></returns>
   /// <seealso cref="IsWeekend(DateTime)"/>
   public static bool IsWeekend(this DateTimeOffset date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
-
-  #if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  public static bool IsWeekend(this DateOnly date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
-#endif
 
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the start of year.</para>
@@ -367,15 +265,6 @@ public static class DateTimeExtensions
   /// <seealso cref="TruncateToYearStart(DateTime)"/>
   public static DateTimeOffset TruncateToYearStart(this DateTimeOffset date) => new(date.Year, 1, 1, 0, 0, 0, date.Offset);
 
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  public static DateOnly TruncateToYearStart(this DateOnly date) => new(date.Year, 1, 1);
-#endif
-
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the start of month.</para>
   /// </summary>
@@ -391,15 +280,6 @@ public static class DateTimeExtensions
   /// <returns></returns>
   /// <seealso cref="TruncateToMonthStart(DateTime)"/>
   public static DateTimeOffset TruncateToMonthStart(this DateTimeOffset date) => new(date.Year, date.Month, 1, 0, 0, 0, date.Offset);
-
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  public static DateOnly TruncateToMonthStart(this DateOnly date) => new(date.Year, date.Month, 1);
-#endif
 
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the start of day.</para>
@@ -432,15 +312,6 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToHourStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Offset);
 
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  public static TimeOnly TruncateToHourStart(this TimeOnly time) => new(time.Hour, 0, 0, 0);
-#endif
-
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -455,15 +326,6 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToMinuteStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Offset);
 
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  public static TimeOnly TruncateToMinuteStart(this TimeOnly time) => new(time.Hour, time.Minute, 0, 0);
-#endif
-
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -477,15 +339,6 @@ public static class DateTimeExtensions
   /// <param name="date"></param>
   /// <returns></returns>
   public static DateTimeOffset TruncateToSecondStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Offset);
-
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  public static TimeOnly TruncateToSecondStart(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 0);
-#endif
 
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the end of current year.</para>
@@ -503,15 +356,6 @@ public static class DateTimeExtensions
   /// <seealso cref="TruncateToYearEnd(DateTime)"/>
   public static DateTimeOffset TruncateToYearEnd(this DateTimeOffset date) => new(date.Year, 12, 31, 23, 59, 59, 999, date.Offset);
 
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  public static DateOnly TruncateToYearEnd(this DateOnly date) => new(date.Year, 12, DateTime.DaysInMonth(date.Year, date.Month));
-#endif
-
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the end of current month.</para>
   /// </summary>
@@ -527,15 +371,6 @@ public static class DateTimeExtensions
   /// <returns></returns>
   /// <seealso cref="TruncateToMonthEnd(DateTime)"/>
   public static DateTimeOffset TruncateToMonthEnd(this DateTimeOffset date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Offset);
-
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  public static DateOnly TruncateToMonthEnd(this DateOnly date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
-#endif
 
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the end of current day.</para>
@@ -567,15 +402,6 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToHourEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Offset);
 
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  public static TimeOnly TruncateToHourEnd(this TimeOnly time) => new(time.Hour, 59, 59, 999);
-#endif
-
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -589,15 +415,6 @@ public static class DateTimeExtensions
   /// <param name="date"></param>
   /// <returns></returns>
   public static DateTimeOffset TruncateToMinuteEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Offset);
-
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  public static TimeOnly TruncateToMinuteEnd(this TimeOnly time) => new(time.Hour, time.Minute, 59, 999);
-#endif
 
   /// <summary>
   ///   <para></para>
@@ -613,15 +430,6 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset TruncateToSecondEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Offset);
 
-#if NET7_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  public static TimeOnly TruncateToSecondEnd(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 999);
-#endif
-
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -629,7 +437,203 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTime ToDateTime(this DateTimeOffset date) => date.UtcDateTime;
 
-#if NET7_0
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static DateTimeOffset ToDateTimeOffset(this DateTime date) => new(date.ToUniversalTime());
+
+  /// <summary>
+  ///   <para>Formats given date/time instance according to ISO 8601 specification and returns formatted date as a string.</para>
+  /// </summary>
+  /// <param name="date">Date/time object instance.</param>
+  /// <returns>Formatted date/time value as a string.</returns>
+  public static string ToIsoString(this DateTime date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static string ToIsoString(this DateTimeOffset date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
+
+  /// <summary>
+  ///   <para>Formats given date/time instance according to RFC 1123 specification and returns formatted date as a string.</para>
+  /// </summary>
+  /// <param name="date">Date/time object instance.</param>
+  /// <returns>Formatted date/time value as a string.</returns>
+  public static string ToRfcString(this DateTime date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  public static string ToRfcString(this DateTimeOffset date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
+
+  #if NET7_0_OR_GREATER
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static DateOnly Min(this DateOnly left, DateOnly right) => left <= right ? left : right;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static TimeOnly Min(this TimeOnly left, TimeOnly right) => left <= right ? left : right;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static DateOnly Max(this DateOnly left, DateOnly right) => left >= right ? left : right;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static TimeOnly Max(this TimeOnly left, TimeOnly right) => left >= right ? left : right;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="from"></param>
+  /// <param name="to"></param>
+  /// <param name="offset"></param>
+  /// <returns></returns>
+  public static IEnumerable<DateOnly> Range(this DateOnly from, DateOnly to, TimeSpan offset)
+  {
+    if (from == to || offset == TimeSpan.Zero)
+    {
+      yield break;
+    }
+
+    var dateFrom = offset > TimeSpan.Zero ? from.Min(to) : from.Max(to);
+    var dateTo = offset > TimeSpan.Zero ? from.Max(to) : from.Min(to);
+
+    for (var date = dateFrom; date < dateTo; date = date.AddDays((int) offset.TotalDays))
+    {
+      yield return date;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="from"></param>
+  /// <param name="to"></param>
+  /// <param name="offset"></param>
+  /// <returns></returns>
+  public static IEnumerable<TimeOnly> Range(this TimeOnly from, TimeOnly to, TimeSpan offset)
+  {
+    if (from == to || offset == TimeSpan.Zero)
+    {
+      yield break;
+    }
+
+    var dateFrom = offset > TimeSpan.Zero ? from.Min(to) : from.Max(to);
+    var dateTo = offset > TimeSpan.Zero ? from.Max(to) : from.Min(to);
+
+    for (var date = dateFrom; date < dateTo; date = date.Add(offset))
+    {
+      yield return date;
+    }
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static bool IsWeekday(this DateOnly date) => !date.IsWeekend();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static bool IsWeekend(this DateOnly date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static DateOnly TruncateToYearStart(this DateOnly date) => new(date.Year, 1, 1);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static DateOnly TruncateToMonthStart(this DateOnly date) => new(date.Year, date.Month, 1);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="time"></param>
+  /// <returns></returns>
+  public static TimeOnly TruncateToHourStart(this TimeOnly time) => new(time.Hour, 0, 0, 0);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="time"></param>
+  /// <returns></returns>
+  public static TimeOnly TruncateToMinuteStart(this TimeOnly time) => new(time.Hour, time.Minute, 0, 0);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="time"></param>
+  /// <returns></returns>
+  public static TimeOnly TruncateToSecondStart(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 0);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static DateOnly TruncateToYearEnd(this DateOnly date) => new(date.Year, 12, DateTime.DaysInMonth(date.Year, date.Month));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  public static DateOnly TruncateToMonthEnd(this DateOnly date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="time"></param>
+  /// <returns></returns>
+  public static TimeOnly TruncateToHourEnd(this TimeOnly time) => new(time.Hour, 59, 59, 999);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="time"></param>
+  /// <returns></returns>
+  public static TimeOnly TruncateToMinuteEnd(this TimeOnly time) => new(time.Hour, time.Minute, 59, 999);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="time"></param>
+  /// <returns></returns>
+  public static TimeOnly TruncateToSecondEnd(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 999);
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -643,15 +647,7 @@ public static class DateTimeExtensions
   /// <param name="time"></param>
   /// <returns></returns>
   public static DateTime ToDateTime(this TimeOnly time) => DateTime.UtcNow.TruncateToDayStart().Add(time.ToTimeSpan());
-#endif
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  public static DateTimeOffset ToDateTimeOffset(this DateTime date) => new(date.ToUniversalTime());
 
-#if NET7_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -697,32 +693,5 @@ public static class DateTimeExtensions
   /// <returns></returns>
   /// <see cref="ToTimeOnly(DateTime)"/>
   public static TimeOnly ToTimeOnly(this DateTimeOffset date) => TimeOnly.FromDateTime(date.DateTime);
-#endif
-
-  /// <summary>
-  ///   <para>Formats given date/time instance according to ISO 8601 specification and returns formatted date as a string.</para>
-  /// </summary>
-  /// <param name="date">Date/time object instance.</param>
-  /// <returns>Formatted date/time value as a string.</returns>
-  public static string ToIsoString(this DateTime date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  public static string ToIsoString(this DateTimeOffset date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
-
-  /// <summary>
-  ///   <para>Formats given date/time instance according to RFC 1123 specification and returns formatted date as a string.</para>
-  /// </summary>
-  /// <param name="date">Date/time object instance.</param>
-  /// <returns>Formatted date/time value as a string.</returns>
-  public static string ToRfcString(this DateTime date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <returns></returns>
-  public static string ToRfcString(this DateTimeOffset date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
+  #endif
 }

@@ -18,7 +18,9 @@ public sealed class RegexExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RegexExtensions.IsMatch(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => string.Empty.IsMatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
 
-    /*string.Empty.IsMatch("anything").Should().BeFalse();
+    /*
+    string.Empty.IsMatch(string.Empty).Should().BeTrue();
+    string.Empty.IsMatch("anything").Should().BeFalse();
     "ab4Zg95kf".IsMatch("[a-zA-z0-9]").Should().BeTrue();
     "~#$%".IsMatch("[a-zA-z0-9]").Should().BeFalse();*/
 

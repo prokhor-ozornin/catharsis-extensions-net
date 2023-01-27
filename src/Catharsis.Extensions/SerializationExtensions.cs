@@ -19,6 +19,7 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T SerializeAsDataContract<T>(this T instance, XmlWriter destination, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -39,6 +40,7 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T SerializeAsDataContract<T>(this T instance, TextWriter destination, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -58,6 +60,7 @@ public static class SerializationExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T SerializeAsDataContract<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -77,6 +80,7 @@ public static class SerializationExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T SerializeAsDataContract<T>(this T instance, FileInfo destination, Encoding encoding = null, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -93,6 +97,7 @@ public static class SerializationExtensions
   /// <param name="instance"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string SerializeAsDataContract(this object instance, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -111,6 +116,7 @@ public static class SerializationExtensions
   /// <param name="reader"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsDataContract<T>(this XmlReader reader, params Type[] types)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -127,6 +133,7 @@ public static class SerializationExtensions
   /// <param name="reader"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsDataContract<T>(this TextReader reader, params Type[] types)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -143,6 +150,7 @@ public static class SerializationExtensions
   /// <param name="stream"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsDataContract<T>(this Stream stream, params Type[] types)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -159,6 +167,7 @@ public static class SerializationExtensions
   /// <param name="file"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsDataContract<T>(this FileInfo file, params Type[] types)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -175,6 +184,7 @@ public static class SerializationExtensions
   /// <param name="text"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsDataContract<T>(this string text, params Type[] types)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -193,6 +203,7 @@ public static class SerializationExtensions
   /// <param name="headers"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsDataContract<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsDataContractAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
@@ -204,6 +215,7 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<T> DeserializeAsDataContractAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -221,6 +233,7 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T SerializeAsXml<T>(this T instance, XmlWriter destination, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -241,6 +254,7 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T SerializeAsXml<T>(this T instance, TextWriter destination, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -260,6 +274,7 @@ public static class SerializationExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T SerializeAsXml<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -279,6 +294,7 @@ public static class SerializationExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T SerializeAsXml<T>(this T instance, FileInfo destination, Encoding encoding = null, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -295,6 +311,7 @@ public static class SerializationExtensions
   /// <param name="instance"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string SerializeAsXml(this object instance, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -313,6 +330,7 @@ public static class SerializationExtensions
   /// <param name="reader"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsXml<T>(this XmlReader reader, params Type[] types)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -329,6 +347,7 @@ public static class SerializationExtensions
   /// <param name="reader"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsXml<T>(this TextReader reader, params Type[] types)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -345,6 +364,7 @@ public static class SerializationExtensions
   /// <param name="stream">Stream of XML data for deserialization.</param>
   /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
   /// <returns>Deserialized XML contents of source <paramref name="stream"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsXml<T>(this Stream stream, params Type[] types)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -361,6 +381,7 @@ public static class SerializationExtensions
   /// <param name="file"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsXml<T>(this FileInfo file, params Type[] types)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -377,6 +398,7 @@ public static class SerializationExtensions
   /// <param name="text"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsXml<T>(this string text, params Type[] types)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -395,6 +417,7 @@ public static class SerializationExtensions
   /// <param name="headers"></param>
   /// <param name="types"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T DeserializeAsXml<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsXmlAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
@@ -406,6 +429,7 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<T> DeserializeAsXmlAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -421,6 +445,7 @@ public static class SerializationExtensions
   /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument Serialize(this XmlDocument document, XmlWriter destination)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -437,6 +462,7 @@ public static class SerializationExtensions
   /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument Serialize(this XmlDocument document, TextWriter destination)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -454,6 +480,7 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument Serialize(this XmlDocument document, Stream destination, Encoding encoding = null)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -471,6 +498,7 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument Serialize(this XmlDocument document, FileInfo destination, Encoding encoding = null)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -480,12 +508,13 @@ public static class SerializationExtensions
     
     return document.Serialize(writer);
   }
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Serialize(this XmlDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -502,6 +531,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="reader">Stream of XML data for deserialization.</param>
   /// <returns>Deserialized XML contents of source <paramref name="reader"/> as instance of <see cref="XmlDocument"/> class.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument ToXmlDocument(this XmlReader reader)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -518,6 +548,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument ToXmlDocument(this TextReader reader)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -532,6 +563,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument ToXmlDocument(this Stream stream)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -546,6 +578,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument ToXmlDocument(this FileInfo file)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -560,6 +593,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XmlDocument ToXmlDocument(this string text)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -576,8 +610,9 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  public static XmlDocument ToXmlDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToXmlDocumentAsync(timeout, headers).Result : throw new ArgumentNullException(nameof(uri)); 
-  
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDocument ToXmlDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToXmlDocumentAsync(timeout, headers).Result : throw new ArgumentNullException(nameof(uri));
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -585,6 +620,7 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XmlDocument> ToXmlDocumentAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -600,6 +636,7 @@ public static class SerializationExtensions
   /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument Serialize(this XDocument document, XmlWriter destination)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -616,6 +653,7 @@ public static class SerializationExtensions
   /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument Serialize(this XDocument document, TextWriter destination)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -633,6 +671,7 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument Serialize(this XDocument document, Stream destination, Encoding encoding = null)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -650,6 +689,7 @@ public static class SerializationExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument Serialize(this XDocument document, FileInfo destination, Encoding encoding = null)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -665,6 +705,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string Serialize(this XDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -681,6 +722,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument ToXDocument(this XmlReader reader) => reader is not null ? XDocument.Load(reader, LoadOptions.None) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -689,10 +731,10 @@ public static class SerializationExtensions
   /// <param name="reader"><see cref="XmlReader"/> which is used to read XML text content from its underlying source.</param>
   /// <param name="cancellation"></param>
   /// <returns><see cref="XDocument"/> instance, constructed from XML contents which have been read through a <paramref name="reader"/>.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XDocument> ToXDocumentAsync(this XmlReader reader, CancellationToken cancellation = default)
   {
-    if (reader is null)
-      throw new ArgumentNullException(nameof(reader));
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
 
     cancellation.ThrowIfCancellationRequested();
 
@@ -704,6 +746,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument ToXDocument(this TextReader reader)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -719,6 +762,7 @@ public static class SerializationExtensions
   /// <param name="reader"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XDocument> ToXDocumentAsync(this TextReader reader, CancellationToken cancellation = default)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -735,6 +779,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument ToXDocument(this Stream stream)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -750,6 +795,7 @@ public static class SerializationExtensions
   /// <param name="stream"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XDocument> ToXDocumentAsync(this Stream stream, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -766,6 +812,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument ToXDocument(this FileInfo file)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -781,6 +828,7 @@ public static class SerializationExtensions
   /// <param name="file"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XDocument> ToXDocumentAsync(this FileInfo file, CancellationToken cancellation = default)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -797,6 +845,7 @@ public static class SerializationExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument ToXDocument(this string text) => text is not null ? XDocument.Parse(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -805,6 +854,7 @@ public static class SerializationExtensions
   /// <param name="text"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XDocument> ToXDocumentAsync(this string text, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -823,6 +873,7 @@ public static class SerializationExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static XDocument ToXDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToXDocumentAsync(timeout, default, headers).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
@@ -833,6 +884,7 @@ public static class SerializationExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<XDocument> ToXDocumentAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (uri is null) throw new ArgumentNullException(nameof(uri));

@@ -60,17 +60,6 @@ public sealed class EnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="EnumerableExtensions.IsOrdered{T}(IEnumerable{T}, IComparer{T})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IEnumerable_IsOrdered_Method()
-  {
-    AssertionExtensions.Should(() => EnumerableExtensions.IsOrdered<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="EnumerableExtensions.ForEach{T}(IEnumerable{T}, Action{T})"/></description></item>
@@ -423,17 +412,6 @@ public sealed class EnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="EnumerableExtensions.ToReadOnlySet{T}(IEnumerable{T}, IEqualityComparer{T})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IEnumerable_ToReadOnlySet_Method()
-  {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="EnumerableExtensions.ToStack{T}(IEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]
@@ -454,28 +432,6 @@ public sealed class EnumerableExtensionsTest : UnitTest
   public void IEnumerable_ToQueue_Method()
   {
     AssertionExtensions.Should(() => EnumerableExtensions.ToQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="EnumerableExtensions.ToPriorityQueue{TElement, TPriority}(IEnumerable{(TElement Element, TPriority Priority)}, IComparer{TPriority})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IEnumerable_ToPriorityQueue_Method()
-  {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToPriorityQueue<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="EnumerableExtensions.ToImmutableQueue{T}(IEnumerable{T})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IEnumerable_ToImmutableQueue_Method()
-  {
-    AssertionExtensions.Should(() => EnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }
@@ -672,6 +628,50 @@ public sealed class EnumerableExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.IsOrdered{T}(IEnumerable{T}, IComparer{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_IsOrdered_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.IsOrdered<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.ToReadOnlySet{T}(IEnumerable{T}, IEqualityComparer{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_ToReadOnlySet_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.ToPriorityQueue{TElement, TPriority}(IEnumerable{(TElement Element, TPriority Priority)}, IComparer{TPriority})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_ToPriorityQueue_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.ToPriorityQueue<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="EnumerableExtensions.ToImmutableQueue{T}(IEnumerable{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IEnumerable_ToImmutableQueue_Method()
+  {
+    AssertionExtensions.Should(() => EnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
   }

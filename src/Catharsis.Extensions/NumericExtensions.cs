@@ -43,6 +43,8 @@ public static class NumericExtensions
   /// </summary>
   /// <param name="count"></param>
   /// <param name="action"></param>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static void Times(this int count, Action action)
   {
     if (action is null) throw new ArgumentNullException(nameof(action));
@@ -56,6 +58,8 @@ public static class NumericExtensions
   /// </summary>
   /// <param name="count">Number of times to call a delegate.</param>
   /// <param name="action">Delegate that represents a method to be called.</param>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static void Times(this int count, Action<int> action)
   {
     if (action is null) throw new ArgumentNullException(nameof(action));
@@ -74,6 +78,7 @@ public static class NumericExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T Min<T>(this T left, T right) where T : IComparable => left is not null ? left.CompareTo(right) <= 0 ? left : right : throw new ArgumentNullException(nameof(left));
 
   /// <summary>
@@ -83,6 +88,7 @@ public static class NumericExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T Max<T>(this T left, T right) where T : IComparable => left is not null ? left.CompareTo(right) >= 0 ? left : right : throw new ArgumentNullException(nameof(left));
 
   /// <summary>
@@ -92,6 +98,7 @@ public static class NumericExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static (T Min, T Max) MinMax<T>(this T left, T right) where T : IComparable => left is not null ? left.CompareTo(right) <= 0 ? (left, right) : (right, left) : throw new ArgumentNullException(nameof(left));
 
   /// <summary>
@@ -99,6 +106,7 @@ public static class NumericExtensions
   /// </summary>
   /// <param name="count"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IEnumerable<object> Nulls(this int count) => count >= 0 ? count.Objects<object>(() => null) : throw new ArgumentOutOfRangeException(nameof(count));
 
   /// <summary>
@@ -107,6 +115,7 @@ public static class NumericExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="count"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IEnumerable<T> Objects<T>(this int count) where T : new() => count >= 0 ? count.Objects(() => new T()) : throw new ArgumentOutOfRangeException(nameof(count));
 
   /// <summary>
@@ -116,6 +125,8 @@ public static class NumericExtensions
   /// <param name="count"></param>
   /// <param name="constructor"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IEnumerable<T> Objects<T>(this int count, Func<T> constructor)
   {
     if (constructor is null) throw new ArgumentNullException(nameof(constructor));
@@ -134,6 +145,8 @@ public static class NumericExtensions
   /// <param name="count"></param>
   /// <param name="constructor"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IEnumerable<T> Objects<T>(this int count, Func<int, T> constructor)
   {
     if (constructor is null) throw new ArgumentNullException(nameof(constructor));

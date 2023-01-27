@@ -39,7 +39,7 @@ public sealed class UriExtensionsTest : UnitTest
   [Fact]
   public void UriBuilder_Empty_Method()
   {
-    static void Validate(UriBuilder builder)
+    void Validate(UriBuilder builder)
     {
       builder.Empty().Should().NotBeNull().And.BeSameAs(builder);
       builder.Fragment.Should().BeEmpty();

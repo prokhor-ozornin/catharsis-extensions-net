@@ -20,6 +20,7 @@ public static class CollectionsExtensions
   /// <param name="to">Collection to which elements are added.</param>
   /// <param name="from">Elements enumerator that provide elements for addition to the collection <paramref name="to"/>.</param>
   /// <returns>Reference to the supplied collection <paramref name="to"/>.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static ICollection<T> AddRange<T>(this ICollection<T> to, IEnumerable<T> from)
   {
     if (to is null) throw new ArgumentNullException(nameof(to));
@@ -37,6 +38,7 @@ public static class CollectionsExtensions
   /// <param name="to"></param>
   /// <param name="from"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static ICollection<T> AddRange<T>(this ICollection<T> to, params T[] from) => to.AddRange(from as IEnumerable<T>);
 
   /// <summary>
@@ -45,6 +47,7 @@ public static class CollectionsExtensions
   /// <param name="to"></param>
   /// <param name="from"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static NameValueCollection AddRange(this NameValueCollection to, IEnumerable<(string Name, object Value)> from)
   {
     if (to is null) throw new ArgumentNullException(nameof(to));
@@ -61,6 +64,7 @@ public static class CollectionsExtensions
   /// <param name="to"></param>
   /// <param name="from"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static NameValueCollection AddRange(this NameValueCollection to, params (string Name, object Value)[] from) => to.AddRange(from as IEnumerable<(string Name, object Value)>);
 
   /// <summary>
@@ -70,6 +74,7 @@ public static class CollectionsExtensions
   /// <param name="from">Collection from which elements are removed.</param>
   /// <param name="sequence">Elements enumerator that provider elements for removal from the collection <see cref="from"/>.</param>
   /// <seealso cref="ICollection{T}.Remove(T)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static ICollection<T> RemoveRange<T>(this ICollection<T> from, IEnumerable<T> sequence)
   {
     if (from is null) throw new ArgumentNullException(nameof(from));
@@ -87,6 +92,8 @@ public static class CollectionsExtensions
   /// <param name="from"></param>
   /// <param name="sequence"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException"></exception>
   public static ICollection<T> RemoveRange<T>(this ICollection<T> from, params T[] sequence) => from.RemoveRange(sequence as IEnumerable<T>);
 
   /// <summary>
@@ -98,6 +105,8 @@ public static class CollectionsExtensions
   /// <param name="count"></param>
   /// <param name="condition"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> RemoveRange<T>(this IList<T> from, int offset, int? count = null, Predicate<T> condition = null)
   {
     if (from is null) throw new ArgumentNullException(nameof(from));
@@ -123,6 +132,8 @@ public static class CollectionsExtensions
   /// <param name="offset"></param>
   /// <param name="from"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> InsertRange<T>(this IList<T> to, int offset, IEnumerable<T> from)
   {
     if (to is null) throw new ArgumentNullException(nameof(to));
@@ -142,6 +153,8 @@ public static class CollectionsExtensions
   /// <param name="offset"></param>
   /// <param name="from"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> InsertRange<T>(this IList<T> to, int offset, params T[] from) => to.InsertRange(offset, from as IEnumerable<T>);
 
   /// <summary>
@@ -150,6 +163,7 @@ public static class CollectionsExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="collection"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static ICollection<T> Empty<T>(this ICollection<T> collection)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -164,6 +178,7 @@ public static class CollectionsExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static NameValueCollection Empty(this NameValueCollection collection)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -182,6 +197,8 @@ public static class CollectionsExtensions
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> Fill<T>(this IList<T> list, Func<T> filler, int? offset = null, int? count = null) => list?.Fill(_ => filler(), offset, count) ?? throw new ArgumentNullException(nameof(filler));
 
   /// <summary>
@@ -193,6 +210,8 @@ public static class CollectionsExtensions
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> Fill<T>(this IList<T> list, Func<int, T> filler, int? offset = null, int? count = null)
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
@@ -218,6 +237,8 @@ public static class CollectionsExtensions
   /// <param name="firstIndex"></param>
   /// <param name="secondIndex"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> Swap<T>(this IList<T> list, int firstIndex, int secondIndex)
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
@@ -236,6 +257,7 @@ public static class CollectionsExtensions
   /// <param name="list"></param>
   /// <param name="random"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IList<T> Randomize<T>(this IList<T> list, Random random = null)
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
@@ -266,6 +288,7 @@ public static class CollectionsExtensions
   /// <param name="collection"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static ICollection<T> TryFinallyClear<T>(this ICollection<T> collection, Action<ICollection<T>> action)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -280,6 +303,7 @@ public static class CollectionsExtensions
   /// <param name="collection"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static NameValueCollection TryFinallyClear(this NameValueCollection collection, Action<NameValueCollection> action)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -295,6 +319,7 @@ public static class CollectionsExtensions
   /// <param name="list"></param>
   /// <returns></returns>
   /// <seealso cref="AsReadOnly{TKey,TValue}"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IReadOnlyList<T> AsReadOnly<T>(this IList<T> list) => list is not null ? new ReadOnlyCollection<T>(list) : throw new ArgumentNullException(nameof(list));
 
   /// <summary>
@@ -305,6 +330,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <returns></returns>
   /// <seealso cref="AsReadOnly{T}"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) where TKey : notnull => dictionary is not null ? new ReadOnlyDictionary<TKey, TValue>(dictionary) : throw new ArgumentNullException(nameof(dictionary));
 
   /// <summary>
@@ -315,6 +341,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static SortedList<TKey, TValue> ToSortedList<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull => dictionary is not null ? new SortedList<TKey, TValue>(dictionary, comparer) : throw new ArgumentNullException(nameof(dictionary));
 
   /// <summary>
@@ -322,6 +349,7 @@ public static class CollectionsExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Dictionary<string, string> ToDictionary(this NameValueCollection collection)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -340,7 +368,7 @@ public static class CollectionsExtensions
 
     return result;
   }
-  
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -349,6 +377,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull => dictionary is not null ? new SortedDictionary<TKey, TValue>(dictionary, comparer) : throw new ArgumentNullException(nameof(dictionary));
 
   /// <summary>
@@ -359,6 +388,7 @@ public static class CollectionsExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
@@ -371,6 +401,7 @@ public static class CollectionsExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<(string Name, string Value)> ToValueTuple(this NameValueCollection collection)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));

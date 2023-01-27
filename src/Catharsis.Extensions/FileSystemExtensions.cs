@@ -15,6 +15,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="drive"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this DriveInfo drive) => drive?.RootDirectory.IsEmpty() ?? throw new ArgumentNullException(nameof(drive));
 
   /// <summary>
@@ -22,6 +23,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this DirectoryInfo directory) => directory.ToEnumerable().IsEmpty();
 
   /// <summary>
@@ -29,6 +31,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this FileInfo file) => file is not null ? !file.Exists || file.Length == 0 : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -36,6 +39,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static DirectoryInfo Empty(this DirectoryInfo directory)
   {
     if (directory is null) throw new ArgumentNullException(nameof(directory));
@@ -51,6 +55,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file">File to truncate.</param>
   /// <returns>Back reference to the current file.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileInfo Empty(this FileInfo file)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -65,6 +70,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileInfo CreateWithPath(this FileInfo file)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -85,6 +91,7 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string[] Lines(this FileInfo file, Encoding encoding = null)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -100,6 +107,7 @@ public static class FileSystemExtensions
   /// <param name="file">File to read text from.</param>
   /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
   /// <returns>List of strings which have been read from a <paramref name="file"/>.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async IAsyncEnumerable<string> LinesAsync(this FileInfo file, Encoding encoding = null)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -120,6 +128,7 @@ public static class FileSystemExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static T Print<T>(this T instance, FileInfo destination, Encoding encoding = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -138,6 +147,7 @@ public static class FileSystemExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<T> PrintAsync<T>(this T instance, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -156,6 +166,7 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileInfo TryFinallyClear(this FileInfo file, Action<FileInfo> action)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -174,6 +185,7 @@ public static class FileSystemExtensions
   /// <param name="directory"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static DirectoryInfo TryFinallyClear(this DirectoryInfo directory, Action<DirectoryInfo> action)
   {
     if (directory is null) throw new ArgumentNullException(nameof(directory));
@@ -192,6 +204,7 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileInfo TryFinallyDelete(this FileInfo file, Action<FileInfo> action)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -210,6 +223,7 @@ public static class FileSystemExtensions
   /// <param name="directory"></param>
   /// <param name="action"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static DirectoryInfo TryFinallyDelete(this DirectoryInfo directory, Action<DirectoryInfo> action)
   {
     if (directory is null) throw new ArgumentNullException(nameof(directory));
@@ -225,10 +239,23 @@ public static class FileSystemExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="file"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static FileInfo AsReadOnly(this FileInfo file)
+  {
+    file.IsReadOnly = true;
+    return file;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="directory"></param>
   /// <param name="pattern"></param>
   /// <param name="recursive"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<FileInfo> Files(this DirectoryInfo directory, string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateFiles(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : Enumerable.Empty<FileInfo>() : throw new ArgumentNullException(nameof(directory));
 
   /// <summary>
@@ -238,6 +265,7 @@ public static class FileSystemExtensions
   /// <param name="pattern"></param>
   /// <param name="recursive"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<DirectoryInfo> Directories(this DriveInfo drive, string pattern = null, bool recursive = false) => drive?.RootDirectory.Directories(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
 
   /// <summary>
@@ -247,6 +275,7 @@ public static class FileSystemExtensions
   /// <param name="pattern"></param>
   /// <param name="recursive"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<DirectoryInfo> Directories(this DirectoryInfo directory, string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateDirectories(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : Enumerable.Empty<DirectoryInfo>() : throw new ArgumentNullException(nameof(directory));
 
   /// <summary>
@@ -255,6 +284,7 @@ public static class FileSystemExtensions
   /// <param name="directory"></param>
   /// <param name="parent"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool InDirectory(this DirectoryInfo directory, DirectoryInfo parent)
   {
@@ -271,6 +301,7 @@ public static class FileSystemExtensions
   /// <param name="directory"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool InDirectory(this FileInfo file, DirectoryInfo directory)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -286,6 +317,7 @@ public static class FileSystemExtensions
   /// <param name="pattern"></param>
   /// <param name="recursive"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static long Size(this DriveInfo drive, string pattern = null, bool recursive = true) => drive?.RootDirectory.Size(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
 
   /// <summary>
@@ -295,6 +327,7 @@ public static class FileSystemExtensions
   /// <param name="pattern"></param>
   /// <param name="recursive"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static long Size(this DirectoryInfo directory, string pattern = null, bool recursive = true) => directory.Files(pattern, recursive).Sum(file => file.Length);
 
   /// <summary>
@@ -302,6 +335,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="entry"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Uri ToUri(this FileSystemInfo entry) => entry is not null ? new Uri(entry.FullName) : throw new ArgumentNullException(nameof(entry));
 
   /// <summary>
@@ -311,6 +345,7 @@ public static class FileSystemExtensions
   /// <param name="pattern"></param>
   /// <param name="recursive"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<FileSystemInfo> ToEnumerable(this DirectoryInfo directory, string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateFileSystemInfos(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : Enumerable.Empty<FileSystemInfo>() : throw new ArgumentNullException(nameof(directory));
 
   /// <summary>
@@ -318,6 +353,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileStream ToStream(this FileInfo file) => file?.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -325,6 +361,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileStream ToReadOnlyStream(this FileInfo file) => file?.Open(FileMode.Open, FileAccess.Read, FileShare.Read);
 
   /// <summary>
@@ -332,6 +369,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileStream ToWriteOnlyStream(this FileInfo file) => file?.Open(FileMode.Append, FileAccess.Write, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -340,6 +378,7 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static StreamReader ToStreamReader(this FileInfo file, Encoding encoding = null) => file is not null ? new StreamReader(file.FullName, encoding ?? Encoding.Default) : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -348,6 +387,7 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static StreamWriter ToStreamWriter(this FileInfo file, Encoding encoding = null) => file is not null ? new StreamWriter(file.FullName, true, encoding ?? Encoding.Default, 1024) : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -355,6 +395,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> ToBytes(this FileInfo file) => file?.ToReadOnlyStream().ToBytes(true) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -362,6 +403,7 @@ public static class FileSystemExtensions
   /// </summary>
   /// <param name="file">File to read data from.</param>
   /// <returns>Byte content of specified <paramref name="file"/>.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IAsyncEnumerable<byte> ToBytesAsync(this FileInfo file) => file?.ToReadOnlyStream().ToBytesAsync(true) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -370,6 +412,7 @@ public static class FileSystemExtensions
   /// <param name="file"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this FileInfo file, Encoding encoding = null)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -385,6 +428,7 @@ public static class FileSystemExtensions
   /// <param name="file">File to read text from.</param>
   /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
   /// <returns>Text contents of a <paramref name="file"/>.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> ToTextAsync(this FileInfo file, Encoding encoding = null)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -400,6 +444,7 @@ public static class FileSystemExtensions
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileInfo WriteBytes(this FileInfo destination, IEnumerable<byte> bytes)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -426,6 +471,7 @@ public static class FileSystemExtensions
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<FileInfo> WriteBytesAsync(this FileInfo destination, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -454,12 +500,11 @@ public static class FileSystemExtensions
   /// <param name="text"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static FileInfo WriteText(this FileInfo destination, string text, Encoding encoding = null)
   {
-    if (destination is null)
-      throw new ArgumentNullException(nameof(destination));
-    if (text is null)
-      throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
 
     try
     {
@@ -482,6 +527,7 @@ public static class FileSystemExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<FileInfo> WriteTextAsync(this FileInfo destination, string text, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -509,6 +555,7 @@ public static class FileSystemExtensions
   /// <param name="bytes"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, FileInfo destination)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -526,6 +573,7 @@ public static class FileSystemExtensions
   /// <param name="destination"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, FileInfo destination, CancellationToken cancellation = default)
   {
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -545,6 +593,7 @@ public static class FileSystemExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static string WriteTo(this string text, FileInfo destination, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -563,6 +612,7 @@ public static class FileSystemExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static async Task<string> WriteToAsync(this string text, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));

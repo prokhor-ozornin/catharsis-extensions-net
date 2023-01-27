@@ -450,28 +450,6 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="AsyncEnumerableExtensions.ToReadOnlySet{T}(IAsyncEnumerable{T}, IEqualityComparer{T})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IAsyncEnumerable_ToReadOnlySet_Method()
-  {
-    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="AsyncEnumerableExtensions.ToReadOnlySetAsync{T}(IAsyncEnumerable{T}, IEqualityComparer{T}, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IAsyncEnumerable_ToReadOnlySetAsync_Method()
-  {
-    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlySetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
-    
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="AsyncEnumerableExtensions.ToDictionary{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IEqualityComparer{TKey})"/> method.</para>
   /// </summary>
   [Fact]
@@ -690,6 +668,126 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="AsyncEnumerableExtensions.ToMemoryStream(IAsyncEnumerable{byte})"/></description></item>
+  ///     <item><description><see cref="AsyncEnumerableExtensions.ToMemoryStream(IAsyncEnumerable{byte[]})"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void IAsyncEnumerable_ToMemoryStream_Methods()
+  {
+    using (new AssertionScope())
+    {
+      void Validate(IAsyncEnumerable<byte> sequence, byte[] bytes)
+      {
+        using var stream = sequence.ToMemoryStream();
+
+        stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
+        stream.ToArray().Should().Equal(bytes);
+      }
+
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+      Validate(Enumerable.Empty<byte>().ToAsyncEnumerable(), Array.Empty<byte>());
+
+      var bytes = RandomBytes;
+      Validate(bytes.ToAsyncEnumerable(), bytes);
+    }
+
+    using (new AssertionScope())
+    {
+      void Validate(IAsyncEnumerable<byte[]> sequence, byte[] bytes)
+      {
+        using var stream = sequence.ToMemoryStream();
+
+        stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
+        stream.ToArray().Should().Equal(bytes);
+      }
+
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte[]>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+      Validate(Enumerable.Empty<byte[]>().ToAsyncEnumerable(), Array.Empty<byte>());
+
+      var bytes = RandomBytes;
+      Validate(bytes.Chunk(byte.MaxValue).ToAsyncEnumerable(), bytes);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="AsyncEnumerableExtensions.ToMemoryStreamAsync(IAsyncEnumerable{byte}, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="AsyncEnumerableExtensions.ToMemoryStreamAsync(IAsyncEnumerable{byte[]}, CancellationToken)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void IAsyncEnumerable_ToMemoryStreamAsync_Methods()
+  {
+    using (new AssertionScope())
+    {
+      void Validate(IAsyncEnumerable<byte> sequence, byte[] bytes)
+      {
+        var task = sequence.ToMemoryStreamAsync();
+        using var stream = task.Await();
+
+        stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
+        stream.ToArray().Should().Equal(bytes);
+      }
+
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToAsyncEnumerable().ToMemoryStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+      Validate(Enumerable.Empty<byte>().ToAsyncEnumerable(), Array.Empty<byte>());
+
+      var bytes = RandomBytes;
+      Validate(bytes.ToAsyncEnumerable(), bytes);
+    }
+
+    using (new AssertionScope())
+    {
+      void Validate(IAsyncEnumerable<byte[]> sequence, byte[] bytes)
+      {
+        var task = sequence.ToMemoryStreamAsync();
+        using var stream = task.Await();
+
+        stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
+        stream.ToArray().Should().Equal(bytes);
+      }
+
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte[]>().ToAsyncEnumerable().ToMemoryStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+      Validate(Enumerable.Empty<byte[]>().ToAsyncEnumerable(), Array.Empty<byte>());
+
+      var bytes = RandomBytes;
+      Validate(bytes.Chunk(byte.MaxValue).ToAsyncEnumerable(), bytes);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="AsyncEnumerableExtensions.ToReadOnlySet{T}(IAsyncEnumerable{T}, IEqualityComparer{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IAsyncEnumerable_ToReadOnlySet_Method()
+  {
+    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="AsyncEnumerableExtensions.ToReadOnlySetAsync{T}(IAsyncEnumerable{T}, IEqualityComparer{T}, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IAsyncEnumerable_ToReadOnlySetAsync_Method()
+  {
+    AssertionExtensions.Should(() => AsyncEnumerableExtensions.ToReadOnlySetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="AsyncEnumerableExtensions.ToPriorityQueue{TElement, TPriority}(IAsyncEnumerable{(TElement Element, TPriority Priority)}, IComparer{TPriority})"/> method.</para>
   /// </summary>
   [Fact]
@@ -740,104 +838,6 @@ public sealed class AsyncEnumerableExtensionsTest : UnitTest
       var objects = Randomizer.GuidSequence(100).ToArray();
       var elements = objects.Select((index, value) => (value, index));
       Validate(elements.ToAsyncEnumerable(), elements);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="AsyncEnumerableExtensions.ToMemoryStream(IAsyncEnumerable{byte})"/></description></item>
-  ///     <item><description><see cref="AsyncEnumerableExtensions.ToMemoryStream(IAsyncEnumerable{byte[]})"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void IAsyncEnumerable_ToMemoryStream_Methods()
-  {
-    using (new AssertionScope())
-    {
-      static void Validate(IAsyncEnumerable<byte> sequence, byte[] bytes)
-      {
-        using var stream = sequence.ToMemoryStream();
-
-        stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
-        stream.ToArray().Should().Equal(bytes);
-      }
-
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
-
-      Validate(Enumerable.Empty<byte>().ToAsyncEnumerable(), Array.Empty<byte>());
-
-      var bytes = RandomBytes;
-      Validate(bytes.ToAsyncEnumerable(), bytes);
-    }
-
-    using (new AssertionScope())
-    {
-      static void Validate(IAsyncEnumerable<byte[]> sequence, byte[] bytes)
-      {
-        using var stream = sequence.ToMemoryStream();
-
-        stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
-        stream.ToArray().Should().Equal(bytes);
-      }
-
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte[]>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
-
-      Validate(Enumerable.Empty<byte[]>().ToAsyncEnumerable(), Array.Empty<byte>());
-
-      var bytes = RandomBytes;
-      Validate(bytes.Chunk(byte.MaxValue).ToAsyncEnumerable(), bytes);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="AsyncEnumerableExtensions.ToMemoryStreamAsync(IAsyncEnumerable{byte}, CancellationToken)"/></description></item>
-  ///     <item><description><see cref="AsyncEnumerableExtensions.ToMemoryStreamAsync(IAsyncEnumerable{byte[]}, CancellationToken)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void IAsyncEnumerable_ToMemoryStreamAsync_Methods()
-  {
-    using (new AssertionScope())
-    {
-      static void Validate(IAsyncEnumerable<byte> sequence, byte[] bytes)
-      {
-        var task = sequence.ToMemoryStreamAsync();
-        using var stream = task.Await();
-
-        stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
-        stream.ToArray().Should().Equal(bytes);
-      }
-
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToAsyncEnumerable().ToMemoryStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-      Validate(Enumerable.Empty<byte>().ToAsyncEnumerable(), Array.Empty<byte>());
-
-      var bytes = RandomBytes;
-      Validate(bytes.ToAsyncEnumerable(), bytes);
-    }
-
-    using (new AssertionScope())
-    {
-      static void Validate(IAsyncEnumerable<byte[]> sequence, byte[] bytes)
-      {
-        var task = sequence.ToMemoryStreamAsync();
-        using var stream = task.Await();
-
-        stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
-        stream.ToArray().Should().Equal(bytes);
-      }
-
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte[]>().ToAsyncEnumerable().ToMemoryStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-      Validate(Enumerable.Empty<byte[]>().ToAsyncEnumerable(), Array.Empty<byte>());
-
-      var bytes = RandomBytes;
-      Validate(bytes.Chunk(byte.MaxValue).ToAsyncEnumerable(), bytes);
     }
   }
 

@@ -16,7 +16,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_IsStart_Method()
   {
-    static void Validate(Stream stream)
+    void Validate(Stream stream)
     {
       using (stream)
       {
@@ -47,7 +47,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_IsEnd_Method()
   {
-    static void Validate(Stream stream)
+    void Validate(Stream stream)
     {
       using (stream)
       {
@@ -77,7 +77,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_IsEmpty_Method()
   {
-    static void Validate(Stream stream, bool empty)
+    void Validate(Stream stream, bool empty)
     {
       using (stream)
       {
@@ -105,7 +105,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_Empty_Method()
   {
-    static void Validate(Stream stream)
+    void Validate(Stream stream)
     {
       using (stream)
       {
@@ -133,7 +133,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_Min_Method()
   {
-    static void Validate(Stream min, Stream max)
+    void Validate(Stream min, Stream max)
     {
       using (min)
       {
@@ -167,7 +167,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_Max_Method()
   {
-    static void Validate(Stream min, Stream max)
+    void Validate(Stream min, Stream max)
     {
       using (min)
       {
@@ -268,7 +268,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_LinesAsync_Method()
   {
-    static void Validate(Encoding encoding)
+    void Validate(Encoding encoding)
     {
 
     }
@@ -339,7 +339,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsSynchronized_Method()
   {
-    static void Validate(Stream stream)
+    void Validate(Stream stream)
     {
       using (var synchronized = stream.AsSynchronized())
       {
@@ -389,7 +389,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsReadOnly_Method()
   {
-    static void Validate(Stream stream)
+    void Validate(Stream stream)
     {
       using (var readOnly = stream.AsReadOnly())
       {
@@ -439,7 +439,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsReadOnlyForward_Method()
   {
-    static void Validate(Stream stream)
+    void Validate(Stream stream)
     {
       using (var readOnly = stream.AsReadOnlyForward())
       {
@@ -481,7 +481,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsWriteOnly_Method()
   {
-    static void Validate(Stream stream)
+    void Validate(Stream stream)
     {
       using (var writeOnly = stream.AsWriteOnly())
       {
@@ -531,7 +531,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_AsWriteOnlyForward_Method()
   {
-    static void Validate(Stream stream)
+    void Validate(Stream stream)
     {
       using (var writeOnly = stream.AsWriteOnlyForward())
       {
@@ -623,7 +623,7 @@ public sealed class StreamExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      static void Validate(Encoding encoding)
+      void Validate(Encoding encoding)
       {
         //var bytes = RandomBytes;
 
@@ -867,17 +867,6 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsZlib(Stream)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Stream_CompressAsZlib_Method()
-  {
-    AssertionExtensions.Should(() => StreamExtensions.CompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsBrotli(Stream)"/> method.</para>
   /// </summary>
   [Fact]
@@ -906,17 +895,6 @@ public sealed class StreamExtensionsTest : UnitTest
   public void Stream_DecompressAsGzip_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.DecompressAsGzip(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsZlib(Stream)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Stream_DecompressAsZlib_Method()
-  {
-    AssertionExtensions.Should(() => StreamExtensions.DecompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -975,7 +953,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToBufferedStream_Method()
   {
-    static void Validate(Stream stream, int? size)
+    void Validate(Stream stream, int? size)
     {
       using (var buffered = stream.ToBufferedStream(size))
       {
@@ -1031,7 +1009,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToBinaryReader_Method()
   {
-    static void Validate(Encoding encoding)
+    void Validate(Encoding encoding)
     {
       using var stream = RandomStream;
 
@@ -1063,7 +1041,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToBinaryWriter_Method()
   {
-    static void Validate(Encoding encoding)
+    void Validate(Encoding encoding)
     {
       var bytes = RandomBytes;
 
@@ -1097,7 +1075,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToStreamReader_Method()
   {
-    static void Validate(Encoding encoding)
+    void Validate(Encoding encoding)
     {
       using var stream = RandomStream;
       var bytes = stream.ToArray();
@@ -1124,7 +1102,7 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Stream_ToStreamWriter_Method()
   {
-    static void Validate(Encoding encoding)
+    void Validate(Encoding encoding)
     {
       var text = RandomString;
 
@@ -1147,6 +1125,28 @@ public sealed class StreamExtensionsTest : UnitTest
       Validate(null);
       Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsZlib(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_CompressAsZlib_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.CompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsZlib(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_DecompressAsZlib_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }

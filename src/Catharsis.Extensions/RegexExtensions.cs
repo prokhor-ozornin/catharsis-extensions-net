@@ -17,6 +17,7 @@ public static class RegexExtensions
   /// <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
   /// <returns><c>true</c> if <paramref name="text"/> matches <paramref name="pattern"/> regular expression, <c>false</c> if not.</returns>
   /// <seealso cref="Regex.IsMatch(string, string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsMatch(this string text, string pattern, RegexOptions? options = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -32,6 +33,7 @@ public static class RegexExtensions
   /// <param name="pattern">The regular expression pattern to match.</param>
   /// <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
   /// <returns>A collection of the <see cref="Match"/> objects found by the search. If no matches are found, the method returns an empty collection object.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<Match> Matches(this string text, string pattern, RegexOptions? options = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -46,6 +48,7 @@ public static class RegexExtensions
   /// <param name="regex"></param>
   /// <param name="text"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<Match> ToEnumerable(this Regex regex, string text)
   {
     if (regex is null) throw new ArgumentNullException(nameof(regex));
@@ -59,5 +62,6 @@ public static class RegexExtensions
   /// </summary>
   /// <param name="match"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static IEnumerable<Capture> ToEnumerable(this Match match) => match?.Captures ?? throw new ArgumentNullException(nameof(match));
 }
