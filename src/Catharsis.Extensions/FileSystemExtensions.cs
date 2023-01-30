@@ -60,7 +60,9 @@ public static class FileSystemExtensions
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
 
-    file.CreateWithPath().Refresh();
+    using var stream = file.Create();
+
+    file.Refresh();
 
     return file;
   }
@@ -74,6 +76,11 @@ public static class FileSystemExtensions
   public static FileInfo CreateWithPath(this FileInfo file)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
+
+    if (file.Exists)
+    {
+      return file;
+    }
 
     if (file.DirectoryName is not null)
     {
@@ -214,7 +221,13 @@ public static class FileSystemExtensions
     {
       file.CreateWithPath();
       action(file);
-    }, file => file.Delete());
+    }, file =>
+    {
+      if (file.Exists)
+      {
+        file.Delete();
+      }
+    });
   }
 
   /// <summary>
@@ -233,7 +246,13 @@ public static class FileSystemExtensions
     {
       directory.Create();
       action(directory);
-    }, directory => directory.Delete(true));
+    }, directory =>
+    {
+      if (directory.Exists)
+      {
+        directory.Delete(true);
+      }
+    });
   }
 
   /// <summary>
