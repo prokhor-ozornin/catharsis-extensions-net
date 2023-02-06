@@ -709,6 +709,22 @@ public static class ObjectExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="elements"></param>
+  /// <returns></returns>
+  public static IEnumerable<T> ToSequence<T>(this T instance, params T[] elements)
+  {
+    var collection = new List<T>(elements.Length + 1) {instance};
+
+    collection.AddRange(elements);
+
+    return collection;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="instance"></param>
   /// <param name="provider"></param>
   /// <param name="format"></param>

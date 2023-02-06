@@ -617,6 +617,15 @@ public sealed class ObjectExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.ToSequence{T}(T, T[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Object_ToSequence_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="ObjectExtensions.ToFormattedString(object, IFormatProvider, string)"/> method.</para>
   /// </summary>
   [Fact]
