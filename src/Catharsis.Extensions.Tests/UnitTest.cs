@@ -1,4 +1,6 @@
-﻿using System.Security;
+﻿using System.Net.Sockets;
+using System.Security;
+using System.Security.Cryptography;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -131,7 +133,34 @@ public abstract class UnitTest : IDisposable
   /// <summary>
   ///   <para></para>
   /// </summary>
+  protected HttpClient Http { get; } = new();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  protected TcpClient Tcp { get; } = new();
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  protected UdpClient Udp { get; } = new();
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  protected SymmetricAlgorithm Algorithm { get; } = Aes.Create();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   public virtual void Dispose()
   {
+    Http.Dispose();
+    Tcp.Dispose();
+    Udp.Dispose();
+    Algorithm.Dispose();
+
+    RandomEmptyFile.TryFinallyDelete(file => file.IsReadOnly = false);
+    RandomDirectory.TryFinallyDelete(_ => {});
   }
 }

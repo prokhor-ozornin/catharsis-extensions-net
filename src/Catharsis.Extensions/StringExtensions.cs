@@ -1,8 +1,12 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using System.Net;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Catharsis.Extensions;
 
@@ -436,6 +440,39 @@ public static class StringExtensions
   /// <returns>Target array of strings, which are part of <paramref name="text"/> string.</returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static string[] Lines(this string text, string separator = null) => text is not null ? text.Length > 0 ? text.Split(separator ?? Environment.NewLine) : Array.Empty<string>() : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para>Determines whether a string matches specified regular expression.</para>
+  /// </summary>
+  /// <param name="text">The string to search for a match.</param>
+  /// <param name="pattern">The regular expression pattern to match.</param>
+  /// <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
+  /// <returns><c>true</c> if <paramref name="text"/> matches <paramref name="pattern"/> regular expression, <c>false</c> if not.</returns>
+  /// <seealso cref="Regex.IsMatch(string, string)"/>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsMatch(this string text, string pattern, RegexOptions? options = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (pattern is null) throw new ArgumentNullException(nameof(pattern));
+
+    return options is not null ? Regex.IsMatch(text, pattern, options.Value) : Regex.IsMatch(text, pattern);
+  }
+
+  /// <summary>
+  ///   <para>Searches source input string for all occurrences of a specified regular expression, using the specified matching options.</para>
+  /// </summary>
+  /// <param name="text">The string to search for a match.</param>
+  /// <param name="pattern">The regular expression pattern to match.</param>
+  /// <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
+  /// <returns>A collection of the <see cref="Match"/> objects found by the search. If no matches are found, the method returns an empty collection object.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IEnumerable<Match> Matches(this string text, string pattern, RegexOptions? options = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (pattern is null) throw new ArgumentNullException(nameof(pattern));
+
+    return options is not null ? Regex.Matches(text, pattern, options.Value) : Regex.Matches(text, pattern);
+  }
 
   /// <summary>
   ///   <para>Converts a BASE64-encoded string to an equivalent 8-bit unsigned integer array.</para>
@@ -1116,6 +1153,63 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlReader ToXmlReader(this string text) => text.ToStringReader().ToXmlReader();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDictionaryReader ToXmlDictionaryReader(this string text) => text.ToStringReader().ToXmlDictionaryReader();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDocument ToXmlDocument(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var reader = text.ToXmlReader();
+
+    return reader.ToXmlDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XDocument ToXDocument(this string text) => text is not null ? XDocument.Parse(text) : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<XDocument> ToXDocumentAsync(this string text, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var reader = text.ToXmlReader();
+
+    return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
   /// <param name="info"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
@@ -1135,7 +1229,434 @@ public static class StringExtensions
     return process;
   }
 
-  #if NET7_0_OR_GREATER
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string WriteTo(this string text, TextWriter destination)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<string> WriteToAsync(this string text, TextWriter destination, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string WriteTo(this string text, BinaryWriter destination)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string WriteTo(this string text, XmlWriter destination)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<string> WriteToAsync(this string text, XmlWriter destination)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    await destination.WriteTextAsync(text).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string WriteTo(this string text, FileInfo destination, Encoding encoding = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text, encoding);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<string> WriteToAsync(this string text, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="process"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string WriteTo(this string text, Process process)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (process is null) throw new ArgumentNullException(nameof(process));
+
+    process.WriteText(text);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="process"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<string> WriteToAsync(this string text, Process process, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (process is null) throw new ArgumentNullException(nameof(process));
+
+    await process.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string WriteTo(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteBytes(text.ToBytes(encoding), timeout, headers);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<string> WriteToAsync(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteBytesAsync(text.ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static HttpContent WriteTo(this string text, HttpClient http, Uri uri) => http.WriteText(text, uri);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="http"></param>
+  /// <param name="uri"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<HttpContent> WriteToAsync(this string text, HttpClient http, Uri uri, CancellationToken cancellation = default) => await http.WriteTextAsync(text, uri, cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="tcp"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string WriteTo(this string text, TcpClient tcp, Encoding encoding = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
+
+    tcp.WriteText(text, encoding);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="tcp"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<string> WriteToAsync(this string text, TcpClient tcp, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await tcp.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="udp"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string WriteTo(this string text, UdpClient udp, Encoding encoding = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (udp is null) throw new ArgumentNullException(nameof(udp));
+
+    udp.WriteText(text, encoding);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="udp"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<string> WriteToAsync(this string text, UdpClient udp, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (udp is null) throw new ArgumentNullException(nameof(udp));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await udp.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="text"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T DeserializeAsDataContract<T>(this string text, params Type[] types)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var reader = text.ToXmlReader();
+
+    return reader.DeserializeAsDataContract<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="text"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T DeserializeAsXml<T>(this string text, params Type[] types)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var reader = text.ToXmlReader();
+
+    return reader.DeserializeAsXml<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="algorithm"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string Hash(this string text, HashAlgorithm algorithm) => text.ToBytes(Encoding.UTF8).Hash(algorithm).ToHex();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashMd5(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = MD5.Create();
+
+    return text.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashSha1(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = SHA1.Create();
+
+    return text.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashSha256(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = SHA256.Create();
+
+    return text.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashSha384(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = SHA384.Create();
+
+    return text.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashSha512(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = SHA512.Create();
+
+    return text.Hash(algorithm);
+  }
+
+#if NET7_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>

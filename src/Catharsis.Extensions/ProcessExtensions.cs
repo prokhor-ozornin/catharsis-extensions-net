@@ -57,32 +57,6 @@ public static class ProcessExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <param name="destination"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static T Print<T>(this T instance, Process destination)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    return instance.Print(destination.StandardInput);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="instance"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<T> PrintAsync<T>(this T instance, Process destination, CancellationToken cancellation = default) => await instance.PrintAsync(destination.StandardInput, cancellation).ConfigureAwait(false);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="process"></param>
   /// <param name="action"></param>
   /// <returns></returns>
@@ -210,76 +184,6 @@ public static class ProcessExtensions
     await destination.StandardInput.WriteTextAsync(text, cancellation).ConfigureAwait(false);
 
     return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="process"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, Process process)
-  {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (process is null) throw new ArgumentNullException(nameof(process));
-
-    process.WriteBytes(bytes);
-
-    return bytes;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="process"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Process process, CancellationToken cancellation = default)
-  {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (process is null) throw new ArgumentNullException(nameof(process));
-
-    await process.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
-
-    return bytes;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="process"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, Process process)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (process is null) throw new ArgumentNullException(nameof(process));
-
-    process.WriteText(text);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="process"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, Process process, CancellationToken cancellation = default)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (process is null) throw new ArgumentNullException(nameof(process));
-
-    await process.WriteTextAsync(text, cancellation).ConfigureAwait(false);
-
-    return text;
   }
 
   #if NET7_0_OR_GREATER

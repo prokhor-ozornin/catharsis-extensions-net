@@ -150,21 +150,4 @@ public static class SecureStringExtensions
 
     return destination;
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="destination"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<char> WriteTo(this IEnumerable<char> text, SecureString destination)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    destination.WriteText(text);
-
-    return text;
-  }
 }

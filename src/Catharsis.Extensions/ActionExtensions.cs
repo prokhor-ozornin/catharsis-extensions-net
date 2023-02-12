@@ -48,4 +48,25 @@ public static class ActionExtensions
 
     return action;
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="action"></param>
+  /// <param name="options"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static Task ToTask(this Action action, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => action is not null ? new Task(action, cancellation, options) : throw new ArgumentNullException(nameof(action));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="action"></param>
+  /// <param name="state"></param>
+  /// <param name="options"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static Task ToTask(this Action<object> action, object state, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => action is not null ? new Task(action, state, cancellation, options) : throw new ArgumentNullException(nameof(action));
 }

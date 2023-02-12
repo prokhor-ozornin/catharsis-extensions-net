@@ -2,11 +2,15 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
+using Microsoft.VisualStudio.TestPlatform.Common.ExtensionFramework.Utilities;
+using System.Xml;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -19,7 +23,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsEmpty(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsEmpty_Method()
+  public void IsEmpty_Method()
   {
     StringExtensions.IsEmpty(null).Should().BeTrue();
     string.Empty.IsEmpty().Should().BeTrue();
@@ -31,7 +35,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsUpperCased(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsUpperCased_Method()
+  public void IsUpperCased_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.IsUpperCased(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -42,7 +46,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsLowerCased(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsLowerCased_Method()
+  public void IsLowerCased_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.IsLowerCased(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -53,7 +57,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsBoolean(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsBoolean_Method()
+  public void IsBoolean_Method()
   {
     StringExtensions.IsBoolean(null).Should().BeFalse();
 
@@ -74,7 +78,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsSbyte(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsSbyte_Method()
+  public void IsSbyte_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -95,7 +99,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsByte(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsByte_Method()
+  public void IsByte_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -116,7 +120,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsShort(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsShort_Method()
+  public void IsShort_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -137,7 +141,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsUshort(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsUshort_Method()
+  public void IsUshort_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -158,7 +162,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsInt(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsInt_Method()
+  public void IsInt_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -179,7 +183,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsUint(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsUint_Method()
+  public void IsUint_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -200,7 +204,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsLong(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsLong_Method()
+  public void IsLong_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -221,7 +225,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsUlong(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsUlong_Method()
+  public void IsUlong_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -242,7 +246,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsFloat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsFloat_Method()
+  public void IsFloat_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -268,7 +272,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsDouble(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsDouble_Method()
+  public void IsDouble_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -294,7 +298,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsDecimal(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsDecimal_Method()
+  public void IsDecimal_Method()
   {
     foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
     {
@@ -319,7 +323,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsEnum{T}(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsEnum_Method()
+  public void IsEnum_Method()
   {
     StringExtensions.IsEnum<DayOfWeek>(null).Should().BeFalse();
 
@@ -336,7 +340,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsGuid(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsGuid_Method()
+  public void IsGuid_Method()
   {
     StringExtensions.IsGuid(null).Should().BeFalse();
 
@@ -357,7 +361,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsUri(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsUri_Method()
+  public void IsUri_Method()
   {
     StringExtensions.IsUri(null).Should().BeFalse();
 
@@ -374,7 +378,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsType(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsType_Method()
+  public void IsType_Method()
   {
     StringExtensions.IsType(null).Should().BeFalse();
 
@@ -397,7 +401,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsDateTime(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsDateTime_Method()
+  public void IsDateTime_Method()
   {
     void Validate(IFormatProvider format)
     {
@@ -424,7 +428,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsDateTimeOffset(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsDateTimeOffset_Method()
+  public void IsDateTimeOffset_Method()
   {
     void Validate(IFormatProvider format)
     {
@@ -453,7 +457,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsFile(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsFile_Method()
+  public void IsFile_Method()
   {
     StringExtensions.IsFile(null).Should().BeFalse();
 
@@ -473,7 +477,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsDirectory(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsDirectory_Method()
+  public void IsDirectory_Method()
   {
     StringExtensions.IsDirectory(null).Should().BeFalse();
 
@@ -488,7 +492,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsIpAddress(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsIpAddress_Method()
+  public void IsIpAddress_Method()
   {
     StringExtensions.IsIpAddress(null).Should().BeFalse();
 
@@ -506,7 +510,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Min(string, string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Min_Method()
+  public void Min_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
     AssertionExtensions.Should(() => string.Empty.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
@@ -532,7 +536,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Max(string, string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Max_Method()
+  public void Max_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
     AssertionExtensions.Should(() => string.Empty.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
@@ -558,7 +562,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Compare(string, string, CultureInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Compare_Method()
+  public void Compare_Method()
   {
     void Validate(CultureInfo culture)
     {
@@ -584,7 +588,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.CompareAsNumber(string, string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_CompareAsNumber_Method()
+  public void CompareAsNumber_Method()
   {
     void Validate(IFormatProvider format)
     {
@@ -660,7 +664,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.CompareAsDate(string, string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_CompareAsDate_Method()
+  public void CompareAsDate_Method()
   {
     void Validate(DateTimeOffset date, IFormatProvider format)
     {
@@ -704,7 +708,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Append(string, string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Append_Method()
+  public void Append_Method()
   {
     StringExtensions.Append(null, null).Should().NotBeNull().And.BeEmpty();
     string.Empty.Append(null).Should().NotBeNull().And.BeEmpty();
@@ -719,7 +723,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Prepend(string, string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Prepend_Method()
+  public void Prepend_Method()
   {
     StringExtensions.Prepend(null, null).Should().NotBeNull().And.BeEmpty();
     string.Empty.Prepend(null).Should().NotBeNull().And.BeEmpty();
@@ -734,7 +738,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.RemoveRange(string, int, int?, Predicate{char})"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_RemoveRange_Method()
+  public void RemoveRange_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.RemoveRange(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => string.Empty.RemoveRange(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
@@ -754,7 +758,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Reverse(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Reverse_Method()
+  public void Reverse_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Reverse(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -773,7 +777,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_Replace_Methods()
+  public void Replace_Methods()
   {
     using (new AssertionScope())
     {
@@ -815,7 +819,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.SwapCase(string, CultureInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_SwapCase_Method()
+  public void SwapCase_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.SwapCase(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -843,7 +847,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Capitalize(string, CultureInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Capitalize_Method()
+  public void Capitalize_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Capitalize(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -865,7 +869,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.CapitalizeAll(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_CapitalizeAll_Method()
+  public void CapitalizeAll_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.CapitalizeAll(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -884,7 +888,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Repeat(string, int)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Repeat_Method()
+  public void Repeat_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Repeat(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => string.Empty.Repeat(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
@@ -911,7 +915,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Lines(string, string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Lines_Method()
+  public void Lines_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -928,10 +932,47 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsMatch(string, string, RegexOptions?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsMatch_Method()
+  {
+    AssertionExtensions.Should(() => StringExtensions.IsMatch(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.IsMatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
+
+    /*
+    string.Empty.IsMatch(string.Empty).Should().BeTrue();
+    string.Empty.IsMatch("anything").Should().BeFalse();
+    "ab4Zg95kf".IsMatch("[a-zA-z0-9]").Should().BeTrue();
+    "~#$%".IsMatch("[a-zA-z0-9]").Should().BeFalse();*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Matches(string, string, RegexOptions?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Matches_Method()
+  {
+    AssertionExtensions.Should(() => StringExtensions.Matches(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.Matches(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
+
+    /*string.Empty.Matches("anything").Should().BeEmpty();
+    var matches = "ab#1".Matches("[a-zA-z0-9]");
+    matches.Should().HaveCount(3);
+    matches.ElementAt(0).Value.Should().Be("a");
+    matches.ElementAt(1).Value.Should().Be("b");
+    matches.ElementAt(2).Value.Should().Be("1");*/
+
+    throw new NotImplementedException();
+  }
+  
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.FromBase64(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Base64_Method()
+  public void Base64_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -945,7 +986,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.UrlEncode(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_UrlEncode_Method()
+  public void UrlEncode_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.UrlEncode(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -960,7 +1001,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.UrlDecode(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_UrlDecode_Method()
+  public void UrlDecode_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.UrlDecode(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -975,7 +1016,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.HtmlEncode(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_HtmlEncode_Method()
+  public void HtmlEncode_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.HtmlEncode(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -991,7 +1032,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.HtmlDecode(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_HtmlDecode_Method()
+  public void HtmlDecode_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.HtmlDecode(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -1007,7 +1048,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Indent(string, char, int)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Indent_Method()
+  public void Indent_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Indent(null, char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => string.Empty.Indent(char.MinValue, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
@@ -1026,7 +1067,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Unindent(string, char)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Unindent_Method()
+  public void Unindent_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Unindent(null, char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -1037,7 +1078,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Spacify(string, int)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Spacify_Method()
+  public void Spacify_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Spacify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => string.Empty.Spacify(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
@@ -1056,7 +1097,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Unspacify(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Unspacify_Method()
+  public void Unspacify_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Unspacify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -1067,7 +1108,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Tabify(string, int)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Tabify_Method()
+  public void Tabify_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Tabify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => string.Empty.Tabify(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
@@ -1086,7 +1127,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.Untabify(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_Untabify_Method()
+  public void Untabify_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.Untabify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -1101,7 +1142,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_Execute_Methods()
+  public void Execute_Methods()
   {
     using (new AssertionScope())
     {
@@ -1159,7 +1200,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.ToBytes(string, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_ToBytes_Method()
+  public void ToBytes_Method()
   {
     void Validate(Encoding encoding)
     {
@@ -1189,7 +1230,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToBoolean_Methods()
+  public void ToBoolean_Methods()
   {
     using (new AssertionScope())
     {
@@ -1262,7 +1303,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToSbyte_Methods()
+  public void ToSbyte_Methods()
   {
     using (new AssertionScope())
     {
@@ -1329,7 +1370,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToByte_Methods()
+  public void ToByte_Methods()
   {
     using (new AssertionScope())
     {
@@ -1396,7 +1437,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToShort_Methods()
+  public void ToShort_Methods()
   {
     using (new AssertionScope())
     {
@@ -1463,7 +1504,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToUshort_Methods()
+  public void ToUshort_Methods()
   {
     using (new AssertionScope())
     {
@@ -1530,7 +1571,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToInt_Methods()
+  public void ToInt_Methods()
   {
     using (new AssertionScope())
     {
@@ -1597,7 +1638,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToUint_Methods()
+  public void ToUint_Methods()
   {
     using (new AssertionScope())
     {
@@ -1664,7 +1705,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToLong_Methods()
+  public void ToLong_Methods()
   {
     using (new AssertionScope())
     {
@@ -1731,7 +1772,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToUlong_Methods()
+  public void ToUlong_Methods()
   {
     using (new AssertionScope())
     {
@@ -1798,7 +1839,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToFloat_Methods()
+  public void ToFloat_Methods()
   {
     using (new AssertionScope())
     {
@@ -1881,7 +1922,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToDouble_Methods()
+  public void ToDouble_Methods()
   {
     using (new AssertionScope())
     {
@@ -1964,7 +2005,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToDecimal_Methods()
+  public void ToDecimal_Methods()
   {
     using (new AssertionScope())
     {
@@ -2043,7 +2084,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToEnum_Methods()
+  public void ToEnum_Methods()
   {
     using (new AssertionScope())
     {
@@ -2096,7 +2137,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToGuid_Methods()
+  public void ToGuid_Methods()
   {
     using (new AssertionScope())
     {
@@ -2149,7 +2190,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToUri_Methods()
+  public void ToUri_Methods()
   {
     using (new AssertionScope())
     {
@@ -2249,7 +2290,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToType_Methods()
+  public void ToType_Methods()
   {
     using (new AssertionScope())
     {
@@ -2309,7 +2350,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToDateTime_Methods()
+  public void ToDateTime_Methods()
   {
     using (new AssertionScope())
     {
@@ -2373,7 +2414,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToDateTimeOffset_Methods()
+  public void ToDateTimeOffset_Methods()
   {
     using (new AssertionScope())
     {
@@ -2437,7 +2478,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToFile_Methods()
+  public void ToFile_Methods()
   {
     using (new AssertionScope())
     {
@@ -2494,7 +2535,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToDirectory_Methods()
+  public void ToDirectory_Methods()
   {
     using (new AssertionScope())
     {
@@ -2537,7 +2578,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.ToPath(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_ToPath_Method()
+  public void ToPath_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.ToPath(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -2552,7 +2593,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToIpAddress_Methods()
+  public void ToIpAddress_Methods()
   {
     using (new AssertionScope())
     {
@@ -2590,7 +2631,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.ToIpHost(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_ToIpHost_Method()
+  public void ToIpHost_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.ToIpHost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -2601,7 +2642,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.ToRegex(string, RegexOptions)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_ToRegex_Method()
+  public void ToRegex_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.ToRegex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -2624,7 +2665,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.ToStringBuilder(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_ToStringBuilder_Method()
+  public void ToStringBuilder_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.ToStringBuilder(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -2648,7 +2689,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.ToStringReader(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_ToStringReader_Method()
+  public void ToStringReader_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.ToStringReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -2664,10 +2705,75 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToXmlReader(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXmlReader_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToXmlDictionaryReader(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXmlDictionaryReader_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToXmlDocument(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXmlDocument_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).ToXmlDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    /*new XmlDocument().Text().Should().BeEmpty();
+
+    var document = new XmlDocument();
+    var element = document.CreateElement("article");
+    element.SetAttribute("id", "1");
+    element.InnerText = "Text";
+    document.AppendChild(element);
+    document.Text().Should().Be("<?xml version=\"1.0\" encoding=\"utf-16\"?><article id=\"1\">Text</article>");*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToXDocument(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXDocument_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).ToXDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToXDocumentAsync(string, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXDocumentAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.ToXDocumentAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.ToProcess(string, ProcessStartInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_ToProcess_Method()
+  public void ToProcess_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.ToProcess(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -2705,10 +2811,382 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, TextWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_TextWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, TextWriter, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_TextWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync((TextWriter) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter(), Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_BinaryWriter_Method()
+  {
+    void Validate(BinaryWriter writer, string text)
+    {
+      using (writer)
+      {
+        text.WriteTo(writer).Should().NotBeNull().And.BeSameAs(text);
+
+        using (var reader = writer.BaseStream.MoveToStart().ToBinaryReader())
+        {
+          reader.ToText().Should().Be(text);
+        }
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+
+      Validate(Stream.Null.ToBinaryWriter(), string.Empty);
+      Validate(EmptyStream.ToBinaryWriter(), RandomString);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, XmlWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_XmlWriter_Method()
+  {
+    AssertionExtensions.Should(() => StringExtensions.WriteTo(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, XmlWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_XmlWriter_Method()
+  {
+    AssertionExtensions.Should(() => StringExtensions.WriteToAsync(null, Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, FileInfo, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_FileInfo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(RandomFakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, FileInfo, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_FileInfo_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(RandomFakeFile)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(RandomFakeFile, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_Process_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Process.GetCurrentProcess())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo((Process) null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, Process, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_Process_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Process.GetCurrentProcess())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync((Process) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
+    //AssertionExtensions.Should(() => string.Empty.WriteToAsync(ShellProcess)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, Uri, Encoding, TimeSpan?, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_Uri_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, Uri, Encoding, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_Uri_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync((Uri) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(LocalHost, null, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, HttpClient, Uri)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_HttpClient_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Http, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => string.Empty.WriteTo(Http, null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, HttpClient, Uri, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_HttpClient_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Http, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Http, null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Http, LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, TcpClient, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_TcpClient_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Tcp)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo(Tcp)).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, TcpClient, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_TcpClient_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Tcp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Tcp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Tcp, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, UdpClient, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_UdpClient_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Udp)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo(Udp)).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, UdpClient, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_UdpClient_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Udp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Udp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Udp, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.DeserializeAsDataContract{T}(string, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsDataContract_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.DeserializeAsXml{T}(string, IEnumerable{Type})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsXml_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    /*var subject = Guid.Empty;
+    subject.AsXml().AsXml<Guid>().Should().Be(subject);*/
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Hash(string, HashAlgorithm)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Hash_Method()
+  {
+    AssertionExtensions.Should(() => string.Empty.Hash(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
+
+    using var algorithm = MD5.Create();
+
+    AssertionExtensions.Should(() => ((string) null).Hash(algorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    
+    algorithm.Should().NotBeNull();
+
+    var texts = new[] { string.Empty, RandomString };
+
+    foreach (var text in texts)
+    {
+      text.Hash(algorithm).Should().NotBeNull().And.NotBeSameAs(text.Hash(algorithm)).And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashMd5(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HashMd5_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    using var algorithm = MD5.Create();
+    algorithm.Should().NotBeNull();
+
+    var texts = new[] { string.Empty, RandomString };
+
+    foreach (var text in texts)
+    {
+      text.HashMd5().Should().NotBeNull().And.NotBeSameAs(text.HashMd5()).And.HaveLength(32).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashSha1(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HashSha1_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    using var algorithm = SHA1.Create();
+    algorithm.Should().NotBeNull();
+
+    var texts = new[] { string.Empty, RandomString };
+
+    foreach (var text in texts)
+    {
+      text.HashSha1().Should().NotBeNull().And.NotBeSameAs(text.HashSha1()).And.HaveLength(40).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashSha256(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HashSha256_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    using var algorithm = SHA256.Create();
+    algorithm.Should().NotBeNull();
+
+    var texts = new[] { string.Empty, RandomString };
+
+    foreach (var text in texts)
+    {
+      text.HashSha256().Should().NotBeNull().And.NotBeSameAs(text.HashSha256()).And.HaveLength(64).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashSha384(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HashSha384_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    using var algorithm = SHA384.Create();
+    algorithm.Should().NotBeNull();
+
+    var texts = new[] { string.Empty, RandomString };
+
+    foreach (var text in texts)
+    {
+      text.HashSha384().Should().NotBeNull().And.NotBeSameAs(text.HashSha384()).And.HaveLength(96).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashSha512(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HashSha512_Method()
+  {
+    AssertionExtensions.Should(() => ((string) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    using var algorithm = SHA512.Create();
+    algorithm.Should().NotBeNull();
+
+    var texts = new[] { string.Empty, RandomString };
+
+    foreach (var text in texts)
+    {
+      text.HashSha512().Should().NotBeNull().And.NotBeSameAs(text.HashSha512()).And.HaveLength(128).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.IsDateOnly(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsDateOnly_Method()
+  public void IsDateOnly_Method()
   {
     void Validate(IFormatProvider format)
     {
@@ -2737,7 +3215,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.IsTimeOnly(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_IsTimeOnly_Method()
+  public void IsTimeOnly_Method()
   {
     void Validate(IFormatProvider format)
     {
@@ -2764,7 +3242,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StringExtensions.FromHex(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void String_FromHex_Method()
+  public void FromHex_Method()
   {
     AssertionExtensions.Should(() => StringExtensions.FromHex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
@@ -2782,7 +3260,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToDateOnly_Methods()
+  public void ToDateOnly_Methods()
   {
     using (new AssertionScope())
     {
@@ -2846,7 +3324,7 @@ public sealed class StringExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_ToTimeOnly_Methods()
+  public void ToTimeOnly_Methods()
   {
     using (new AssertionScope())
     {

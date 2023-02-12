@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Text;
 using System.IO.Compression;
+using System.Security.Cryptography;
+using System.Xml.Serialization;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Catharsis.Extensions;
 
@@ -229,46 +233,6 @@ public static class StreamExtensions
     }
 
     return stream;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static T Print<T>(this T instance, Stream destination, Encoding encoding = null)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    using var writer = destination.ToStreamWriter(encoding, false);
-
-    return instance.Print(writer);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="instance"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<T> PrintAsync<T>(this T instance, Stream destination, Encoding encoding = null, CancellationToken cancellation = default)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await using var writer = destination.ToStreamWriter(encoding, false);
-
-    return await instance.PrintAsync(writer, cancellation).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -710,6 +674,374 @@ public static class StreamExtensions
   /// <returns>Text writer instance that wraps <see cref="stream"/> stream.</returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static StreamWriter ToStreamWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new StreamWriter(stream, encoding ?? Encoding.Default, -1, !close) : throw new ArgumentNullException(nameof(stream));
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="close"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlReader ToXmlReader(this Stream stream, bool close = true) => stream is not null ? XmlReader.Create(stream, new XmlReaderSettings { CloseInput = close, IgnoreComments = true, IgnoreWhitespace = true }) : throw new ArgumentNullException(nameof(stream));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="close"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDictionaryReader ToXmlDictionaryReader(this Stream stream, bool close = true) => stream.ToXmlReader(close).ToXmlDictionaryReader();
+
+  /// <summary>
+  ///   <para>Returns a <see cref="XmlWriter"/> for writing XML data to specified <see cref="Stream"/>.</para>
+  /// </summary>
+  /// <param name="stream">Target stream to write to.</param>
+  /// <param name="encoding">Text encoding to use by <see cref="XmlWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
+  /// <param name="close"></param>
+  /// <returns>XML writer instance that wraps <see cref="stream"/> stream.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlWriter ToXmlWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = close, Indent = true, Encoding = encoding ?? Encoding.Default }) : throw new ArgumentNullException(nameof(stream));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="encoding"></param>
+  /// <param name="close"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDictionaryWriter ToXmlDictionaryWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream.ToXmlWriter(encoding, close).ToXmlDictionaryWriter();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDocument ToXmlDocument(this Stream stream)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var reader = stream.ToXmlReader(false);
+
+    return reader.ToXmlDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XDocument ToXDocument(this Stream stream)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var reader = stream.ToXmlReader(false);
+
+    return reader.ToXDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<XDocument> ToXDocumentAsync(this Stream stream, CancellationToken cancellation = default)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var reader = stream.ToXmlReader(false);
+
+    return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
+  }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="stream"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T DeserializeAsDataContract<T>(this Stream stream, params Type[] types)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var reader = stream.ToXmlReader(false);
+
+    return reader.DeserializeAsDataContract<T>(types);
+  }
+
+  /// <summary>
+  ///   <para>Deserializes XML contents of stream into object of specified type.</para>
+  /// </summary>
+  /// <typeparam name="T">Type of object which is to be the result of deserialization process.</typeparam>
+  /// <param name="stream">Stream of XML data for deserialization.</param>
+  /// <param name="types">Additional types to be used by <see cref="XmlSerializer"/> for deserialization purposes.</param>
+  /// <returns>Deserialized XML contents of source <paramref name="stream"/> as the object (or objects graph with a root element) of type <typeparamref name="T"/>.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T DeserializeAsXml<T>(this Stream stream, params Type[] types)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var reader = stream.ToXmlReader(false);
+
+    return reader.DeserializeAsXml<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="algorithm"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static byte[] Encrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Encrypt(stream);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="algorithm"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<byte[]> EncryptAsync(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.EncryptAsync(stream, cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="algorithm"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static byte[] Decrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Decrypt(stream);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="algorithm"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<byte[]> DecryptAsync(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.DecryptAsync(stream, cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="algorithm"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static byte[] Hash(this Stream stream, HashAlgorithm algorithm)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+
+    return algorithm.ComputeHash(stream);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="algorithm"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<byte[]> HashAsync(this Stream stream, HashAlgorithm algorithm, CancellationToken cancellation = default)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+
+    #if NET7_0_OR_GREATER
+    return await algorithm.ComputeHashAsync(stream, cancellation).ConfigureAwait(false);
+    #else
+      return algorithm.ComputeHash(stream);
+    #endif
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static byte[] HashMd5(this Stream stream)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var algorithm = MD5.Create();
+
+    return stream.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static async Task<byte[]> HashMd5Async(this Stream stream, CancellationToken cancellation = default)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var algorithm = MD5.Create();
+
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static byte[] HashSha1(this Stream stream)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var algorithm = SHA1.Create();
+
+    return stream.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static async Task<byte[]> HashSha1Async(this Stream stream, CancellationToken cancellation = default)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var algorithm = SHA1.Create();
+
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static byte[] HashSha256(this Stream stream)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var algorithm = SHA256.Create();
+
+    return stream.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static async Task<byte[]> HashSha256Async(this Stream stream, CancellationToken cancellation = default)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var algorithm = SHA256.Create();
+
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static byte[] HashSha384(this Stream stream)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var algorithm = SHA384.Create();
+
+    return stream.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static async Task<byte[]> HashSha384Async(this Stream stream, CancellationToken cancellation = default)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var algorithm = SHA384.Create();
+
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static byte[] HashSha512(this Stream stream)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    using var algorithm = SHA512.Create();
+
+    return stream.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static async Task<byte[]> HashSha512Async(this Stream stream, CancellationToken cancellation = default)
+  {
+    if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var algorithm = SHA512.Create();
+
+    return await stream.HashAsync(algorithm, cancellation).ConfigureAwait(false);
+  }
 
   #if NET7_0_OR_GREATER
   /// <summary>

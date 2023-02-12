@@ -30,29 +30,66 @@
   <ItemGroup>
     <Compile Include="..\Catharsis.Extensions\ActionExtensions.cs" Link="ActionExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\ArrayExtensions.cs" Link="ArrayExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\AsyncEnumerableExtensions.cs" Link="AsyncEnumerableExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\BinaryExtensions.cs" Link="BinaryExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\CollectionsExtensions.cs" Link="CollectionsExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\CryptographyExtensions.cs" Link="CryptographyExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\AssemblyExtensions.cs" Link="AssemblyExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\BasicTypesExtensions.cs" Link="BasicTypesExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\BinaryReaderExtensions.cs" Link="BinaryReaderExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\BinaryWriterExtensions.cs" Link="BinaryWriterExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\CookieExtensions.cs" Link="CookieExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\DateOnlyExtensions.cs" Link="DateOnlyExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\DateTimeExtensions.cs" Link="DateTimeExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\EnumerableExtensions.cs" Link="EnumerableExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\FileSystemExtensions.cs" Link="FileSystemExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\NetworkExtensions.cs" Link="NetworkExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\NumericExtensions.cs" Link="NumericExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\DateTimeOffsetExtensions.cs" Link="DateTimeOffsetExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\DelegateExtensions.cs" Link="DelegateExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\DirectoryInfoExtensions.cs" Link="DirectoryInfoExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\DriveInfoExtensions.cs" Link="DriveInfoExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\FieldInfoExtensions.cs" Link="FieldInfoExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\FileInfoExtensions.cs" Link="FileInfoExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\FileSystemInfoExtensions.cs" Link="FileSystemInfoExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\FuncExtensions.cs" Link="FuncExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\HttpClientExtensions.cs" Link="HttpClientExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\HttpContentExtensions.cs" Link="HttpContentExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\IAsyncEnumerableExtensions.cs" Link="IAsyncEnumerableExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\ICollectionExtensions.cs" Link="ICollectionExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\IComparableExtensions.cs" Link="IComparableExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\IDictionaryExtensions.cs" Link="IDictionaryExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\IEnumerableExtensions.cs" Link="IEnumerableExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\IListExtensions.cs" Link="IListExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\IPAddressExtensions.cs" Link="IPAddressExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\IPHostEntryExtensions.cs" Link="IPHostEntryExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\IReadOnlyDictionaryExtensions.cs" Link="IReadOnlyDictionaryExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\MatchExtensions.cs" Link="MatchExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\MemberInfoExtensions.cs" Link="MemberInfoExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\MethodInfoExtensions.cs" Link="MethodInfoExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\NameValueCollectionExtensions.cs" Link="NameValueCollectionExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\ObjectExtensions.cs" Link="ObjectExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\PhysicalAddressExtensions.cs" Link="PhysicalAddressExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\ProcessExtensions.cs" Link="ProcessExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\RandomExtensions.cs" Link="RandomExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\RangeExtensions.cs" Link="RangeExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\ReflectionExtensions.cs" Link="ReflectionExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\RegexExtensions.cs" Link="RegexExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\SecureStringExtensions.cs" Link="SecureStringExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\SerializationExtensions.cs" Link="SerializationExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\SmtpClientExtensions.cs" Link="SmtpClientExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\SocketExtensions.cs" Link="SocketExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\StreamExtensions.cs" Link="StreamExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\StreamReaderExtensions.cs" Link="StreamReaderExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\StreamWriterExtensions.cs" Link="StreamWriterExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\StringBuilderExtensions.cs" Link="StringBuilderExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\StringExtensions.cs" Link="StringExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\SymmetricAlgorithmExtensions.cs" Link="SymmetricAlgorithmExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\TaskExtensions.cs" Link="TaskExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\TextExtensions.cs" Link="TextExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\TcpClientExtensions.cs" Link="TcpClientExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\TextReaderExtensions.cs" Link="TextReaderExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\TextWriterExtensions.cs" Link="TextWriterExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\TimeOnlyExtensions.cs" Link="TimeOnlyExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\TimeSpanExtensions.cs" Link="TimeSpanExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\TypeExtensions.cs" Link="TypeExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\UdpClientExtensions.cs" Link="UdpClientExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\UriBuilderExtensions.cs" Link="UriBuilderExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\UriExtensions.cs" Link="UriExtensions.cs" />
-    <Compile Include="..\Catharsis.Extensions\XmlExtensions.cs" Link="XmlExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\ValueTaskExtensions.cs" Link="ValueTaskExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\XDocumentExtensions.cs" Link="XDocumentExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\XmlDocumentExtensions.cs" Link="XmlDocumentExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\XmlReaderExtensions.cs" Link="XmlReaderExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\XmlWriterExtensions.cs" Link="XmlWriterExtensions.cs" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,9 @@
+using System.Diagnostics;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Catharsis.Extensions;
 
@@ -538,6 +543,248 @@ public static class ObjectExtensions
   }
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T Print<T>(this T instance, Stream destination, Encoding encoding = null)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    using var writer = destination.ToStreamWriter(encoding, false);
+
+    return instance.Print(writer);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<T> PrintAsync<T>(this T instance, Stream destination, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await using var writer = destination.ToStreamWriter(encoding, false);
+
+    return await instance.PrintAsync(writer, cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T Print<T>(this T instance, TextWriter destination)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.Write(instance.ToStateString());
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<T> PrintAsync<T>(this T instance, TextWriter destination, CancellationToken cancellation = default)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteAsync(instance.ToStateString().ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T Print<T>(this T instance, XmlWriter destination)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(instance.ToStateString());
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<T> PrintAsync<T>(this T instance, XmlWriter destination)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    await destination.WriteTextAsync(instance.ToStateString()).ConfigureAwait(false);
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T Print<T>(this T instance, BinaryWriter destination)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(instance.ToStateString());
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T Print<T>(this T instance, FileInfo destination, Encoding encoding = null)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    using var writer = destination.ToStreamWriter(encoding);
+
+    return instance.Print(writer);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<T> PrintAsync<T>(this T instance, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await using var writer = destination.ToStreamWriter(encoding);
+
+    return await instance.PrintAsync(writer, cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T Print<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    using var stream = destination.ToStream(timeout, headers);
+
+    return instance.Print(stream, encoding);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<T> PrintAsync<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await using var stream = await destination.ToStreamAsync(timeout, headers).ConfigureAwait(false);
+
+    return await instance.PrintAsync(stream, encoding, cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T Print<T>(this T instance, Process destination)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    return instance.Print(destination.StandardInput);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="instance"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<T> PrintAsync<T>(this T instance, Process destination, CancellationToken cancellation = default) => await instance.PrintAsync(destination.StandardInput, cancellation).ConfigureAwait(false);
+
+  /// <summary>
   ///   <para>Creates and returns a dictionary from the values of public properties of target object.</para>
   /// </summary>
   /// <param name="instance">Target object whose properties values are returned.</param>
@@ -807,4 +1054,200 @@ public static class ObjectExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static string ToStateString<T>(this T instance, params Expression<Func<T, object>>[] properties) => instance.ToStateString(properties as IEnumerable<Expression<Func<T, object>>>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T SerializeAsDataContract<T>(this T instance, XmlWriter destination, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    var serializer = new DataContractSerializer(typeof(T), types);
+
+    serializer.WriteObject(destination, instance);
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T SerializeAsDataContract<T>(this T instance, TextWriter destination, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    using var writer = destination.ToXmlWriter(false);
+
+    return instance.SerializeAsDataContract(writer, types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T SerializeAsDataContract<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    using var writer = destination.ToXmlWriter(encoding, false);
+
+    return instance.SerializeAsDataContract(writer, types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T SerializeAsDataContract<T>(this T instance, FileInfo destination, Encoding encoding = null, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    using var writer = destination.ToXmlWriter(encoding);
+
+    return instance.SerializeAsDataContract(writer, types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string SerializeAsDataContract(this object instance, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
+    using var destination = new StringWriter();
+
+    instance.SerializeAsDataContract(destination, types);
+
+    return destination.ToString();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T SerializeAsXml<T>(this T instance, XmlWriter destination, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    var serializer = new XmlSerializer(typeof(T), types);
+
+    serializer.Serialize(destination, instance);
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T SerializeAsXml<T>(this T instance, TextWriter destination, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    using var writer = destination.ToXmlWriter(false);
+
+    return instance.SerializeAsXml(writer, types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T SerializeAsXml<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    using var writer = destination.ToXmlWriter(encoding, false);
+
+    return instance.SerializeAsXml(writer, types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T SerializeAsXml<T>(this T instance, FileInfo destination, Encoding encoding = null, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    using var writer = destination.ToXmlWriter(encoding);
+
+    return instance.SerializeAsXml(writer, types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string SerializeAsXml(this object instance, params Type[] types)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
+    using var destination = new StringWriter();
+
+    instance.SerializeAsXml(destination, types);
+
+    return destination.ToString();
+  }
 }

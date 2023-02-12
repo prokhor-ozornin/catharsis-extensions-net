@@ -17,7 +17,7 @@ public sealed class ActionExtensionsTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void Action_Execute_Methods()
+  public void Execute_Methods()
   {
     using (new AssertionScope())
     {
@@ -63,5 +63,29 @@ public sealed class ActionExtensionsTest
       action.Execute(collection => collection?.Count < count, null).Should().NotBeNull().And.BeSameAs(action);
       collection.Should().BeEmpty();
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ActionExtensions.ToTask(Action, TaskCreationOptions, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="ActionExtensions.ToTask(Action{object}, object, TaskCreationOptions, CancellationToken)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void ToTask_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ActionExtensions.ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Action<object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
+
+    }
+
+    throw new NotImplementedException();
   }
 }

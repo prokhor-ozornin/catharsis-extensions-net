@@ -3,6 +3,8 @@ using System.Net.Mail;
 using System.Net.Sockets;
 using System.Text;
 using System.Web;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Catharsis.Extensions;
 
@@ -60,28 +62,6 @@ public static class UriExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="builder"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static UriBuilder Empty(this UriBuilder builder)
-  {
-    if (builder is null) throw new ArgumentNullException(nameof(builder));
-
-    builder.Fragment = string.Empty;
-    builder.Host = string.Empty;
-    builder.Password = string.Empty;
-    builder.Path = string.Empty;
-    builder.Port = -1;
-    builder.Query = string.Empty;
-    builder.Scheme = string.Empty;
-    builder.UserName = string.Empty;
-
-    return builder;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
@@ -95,51 +75,12 @@ public static class UriExtensions
   }
 
   /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <param name="parameters"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static UriBuilder WithQuery(this UriBuilder builder, IReadOnlyDictionary<string, object> parameters)
-  {
-    if (builder is null) throw new ArgumentNullException(nameof(builder));
-    if (parameters is null) throw new ArgumentNullException(nameof(parameters));
-
-    return builder.WithQuery(parameters.ToValueTuple().AsArray());
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <param name="parameters"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static UriBuilder WithQuery(this UriBuilder builder, params (string Name, object Value)[] parameters)
-  {
-    if (builder is null) throw new ArgumentNullException(nameof(builder));
-    if (parameters is null) throw new ArgumentNullException(nameof(parameters));
-
-    var query = HttpUtility.ParseQueryString(builder.Query);
-
-    foreach (var parameter in parameters)
-    {
-      query.Add(parameter.Name, parameter.Value?.ToInvariantString());
-    }
-
-    builder.Query = query.ToString() ?? string.Empty;
-
-    return builder;
-  }
-
-  /// <summary>
   ///   <para>Resolves a host name or IP address part of target URL to <see cref="IPHostEntry"/> instance.</para>
   /// </summary>
   /// <param name="uri">URL address to use.</param>
   /// <returns><see cref="IPHostEntry"/> instance, containing information about host of source <see cref="Uri"/> address.</returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IPHostEntry Host(this Uri uri) => uri is not null ? Dns.GetHostEntry(uri.DnsSafeHost) : throw new ArgumentNullException(nameof(uri));
+  public static IPHostEntry GetHost(this Uri uri) => uri is not null ? Dns.GetHostEntry(uri.DnsSafeHost) : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>
@@ -181,52 +122,7 @@ public static class UriExtensions
       yield return line;
     }
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static T Print<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    using var stream = destination.ToStream(timeout, headers);
-
-    return instance.Print(stream, encoding);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<T> PrintAsync<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await using var stream = await destination.ToStreamAsync(timeout, headers).ConfigureAwait(false);
-
-    return await instance.PrintAsync(stream, encoding, cancellation).ConfigureAwait(false);
-  }
-
+  
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -484,6 +380,103 @@ public static class UriExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlReader ToXmlReader(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToStream(timeout, headers).ToXmlReader();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<XmlReader> ToXmlReaderAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToXmlReader();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDictionaryReader ToXmlDictionaryReader(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToStream(timeout, headers).ToXmlDictionaryReader();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<XmlDictionaryReader> ToXmlDictionaryReaderAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => (await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false)).ToXmlDictionaryReader();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDocument ToXmlDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToXmlDocumentAsync(timeout, headers).Result : throw new ArgumentNullException(nameof(uri));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<XmlDocument> ToXmlDocumentAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers).ConfigureAwait(false);
+
+    return reader.ToXmlDocument();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XDocument ToXDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToXDocumentAsync(timeout, default, headers).Result : throw new ArgumentNullException(nameof(uri));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static async Task<XDocument> ToXDocumentAsync(this Uri uri, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers).ConfigureAwait(false);
+
+    return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
   /// <param name="timeout"></param>
@@ -573,84 +566,62 @@ public static class UriExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static T DeserializeAsDataContract<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsDataContractAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="uri"></param>
+  /// <param name="types"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, Uri destination, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  public static async Task<T> DeserializeAsDataContractAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    destination.WriteBytes(bytes, timeout, headers);
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers?.AsArray()).ConfigureAwait(false);
 
-    return bytes;
+    return reader.DeserializeAsDataContract<T>(types);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
   /// <param name="headers"></param>
+  /// <param name="types"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Uri destination, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
-  {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await destination.WriteBytesAsync(bytes, timeout, cancellation, headers).ConfigureAwait(false);
-
-    return bytes;
-  }
+  public static T DeserializeAsXml<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsXmlAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="text"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="uri"></param>
+  /// <param name="types"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  public static async Task<T> DeserializeAsXmlAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
   {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
 
-    destination.WriteBytes(text.ToBytes(encoding), timeout, headers);
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers?.AsArray()).ConfigureAwait(false);
 
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await destination.WriteBytesAsync(text.ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
-
-    return text;
+    return reader.DeserializeAsXml<T>(types);
   }
 }

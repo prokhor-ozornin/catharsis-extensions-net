@@ -14,7 +14,7 @@ public sealed class ArrayExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="ArrayExtensions.Range{T}(T[], int?, int?)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Array_Range_Method()
+  public void Range_Method()
   {
     AssertionExtensions.Should(() => ArrayExtensions.Range<object>(null)).ThrowExactly<ArgumentNullException>();
     AssertionExtensions.Should(() => Array.Empty<object>().Range(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");

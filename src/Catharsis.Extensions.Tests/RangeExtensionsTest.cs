@@ -12,7 +12,7 @@ public sealed class RangeExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="RangeExtensions.ToEnumerable(Range)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Range_ToEnumerable_Method()
+  public void ToEnumerable_Method()
   {
     foreach (var range in new[] {Range.All, .., ..0, ^0..0, ^0.., 1..1, ^1..^1, int.MaxValue..int.MaxValue})
     {

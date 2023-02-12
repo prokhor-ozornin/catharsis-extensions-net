@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Cryptography;
+using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -14,7 +15,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.IsStart(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_IsStart_Method()
+  public void IsStart_Method()
   {
     void Validate(Stream stream)
     {
@@ -45,7 +46,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.IsEnd(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_IsEnd_Method()
+  public void IsEnd_Method()
   {
     void Validate(Stream stream)
     {
@@ -75,7 +76,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.IsEmpty(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_IsEmpty_Method()
+  public void IsEmpty_Method()
   {
     void Validate(Stream stream, bool empty)
     {
@@ -103,7 +104,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.Empty{TStream}(TStream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_Empty_Method()
+  public void Empty_Method()
   {
     void Validate(Stream stream)
     {
@@ -131,7 +132,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.Min(Stream, Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_Min_Method()
+  public void Min_Method()
   {
     void Validate(Stream min, Stream max)
     {
@@ -165,7 +166,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.Max(Stream, Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_Max_Method()
+  public void Max_Method()
   {
     void Validate(Stream min, Stream max)
     {
@@ -199,7 +200,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.MoveBy{TStream}(TStream, long)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_MoveBy_Method()
+  public void MoveBy_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.MoveBy<Stream>(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -210,7 +211,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.MoveTo{TStream}(TStream, long)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_MoveTo_Method()
+  public void MoveTo_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.MoveTo<Stream>(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -221,7 +222,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.MoveToStart{TStream}(TStream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_MoveToStart_Method()
+  public void MoveToStart_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -244,7 +245,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.MoveToEnd{TStream}(TStream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_MoveToEnd_Method()
+  public void MoveToEnd_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -255,7 +256,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.Lines(Stream, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_Lines_Method()
+  public void Lines_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -266,7 +267,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.LinesAsync(Stream, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_LinesAsync_Method()
+  public void LinesAsync_Method()
   {
     void Validate(Encoding encoding)
     {
@@ -288,35 +289,10 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.Skip{TStream}(TStream, int)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_Skip_Method()
+  public void Skip_Method()
   {
     AssertionExtensions.Should(() => ((Stream) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
     AssertionExtensions.Should(() => Stream.Null.Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.Print{T}(T, Stream, Encoding)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Object_Print_Method()
-  {
-    AssertionExtensions.Should(() => StreamExtensions.Print<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => StreamExtensions.Print(new object(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.PrintAsync{T}(T, Stream, Encoding, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Object_PrintAsync_Method()
-  {
-    AssertionExtensions.Should(() => StreamExtensions.PrintAsync<object>(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
-    AssertionExtensions.Should(() => StreamExtensions.PrintAsync(new object(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -337,7 +313,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.AsSynchronized(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_AsSynchronized_Method()
+  public void AsSynchronized_Method()
   {
     void Validate(Stream stream)
     {
@@ -387,7 +363,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.AsReadOnly(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_AsReadOnly_Method()
+  public void AsReadOnly_Method()
   {
     void Validate(Stream stream)
     {
@@ -437,7 +413,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.AsReadOnlyForward(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_AsReadOnlyForward_Method()
+  public void AsReadOnlyForward_Method()
   {
     void Validate(Stream stream)
     {
@@ -479,7 +455,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.AsWriteOnly(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_AsWriteOnly_Method()
+  public void AsWriteOnly_Method()
   {
     void Validate(Stream stream)
     {
@@ -529,7 +505,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.AsWriteOnlyForward(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_AsWriteOnlyForward_Method()
+  public void AsWriteOnlyForward_Method()
   {
     void Validate(Stream stream)
     {
@@ -569,7 +545,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.ToBytes(Stream, bool)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToBytes_Method()
+  public void ToBytes_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.ToBytes(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -580,7 +556,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.ToBytesAsync(Stream, bool)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToBytesAsync_Method()
+  public void ToBytesAsync_Method()
   {
     using (new AssertionScope())
     {
@@ -608,7 +584,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.ToText(Stream, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToText_Method()
+  public void ToText_Method()
   {
     AssertionExtensions.Should(() => ((Stream) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -619,7 +595,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.ToTextAsync(Stream, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToTextAsync_Method()
+  public void ToTextAsync_Method()
   {
     using (new AssertionScope())
     {
@@ -651,7 +627,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.WriteBytes{TStream}(TStream, IEnumerable{byte})"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_WriteBytes_Method()
+  public void WriteBytes_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.WriteBytes<Stream>(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     AssertionExtensions.Should(() => Stream.Null.WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
@@ -663,7 +639,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.WriteBytesAsync{TStream}(TStream, IEnumerable{byte}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_WriteBytesAsync_Method()
+  public void WriteBytesAsync_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.WriteBytesAsync<Stream>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => Stream.Null.WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
@@ -676,7 +652,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.WriteText{TStream}(TStream, string, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_WriteText_Method()
+  public void WriteText_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.WriteText<Stream>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     AssertionExtensions.Should(() => Stream.Null.WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
@@ -688,7 +664,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.WriteTextAsync{TStream}(TStream, string, Encoding, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_WriteTextAsync_Method()
+  public void WriteTextAsync_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.WriteTextAsync<Stream>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => Stream.Null.WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
@@ -751,7 +727,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsBrotli(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_CompressAsBrotli_Method()
+  public void CompressAsBrotli_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.CompressAsBrotli(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -762,7 +738,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsDeflate(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_CompressAsDeflate_Method()
+  public void CompressAsDeflate_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.CompressAsDeflate(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -816,7 +792,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsGzip(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_CompressAsGzip_Method()
+  public void CompressAsGzip_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.CompressAsGzip(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -867,10 +843,21 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsZlib(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void CompressAsZlib_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.CompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsBrotli(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_DecompressAsBrotli_Method()
+  public void DecompressAsBrotli_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.DecompressAsBrotli(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -881,7 +868,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsDeflate(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_DecompressAsDeflate_Method()
+  public void DecompressAsDeflate_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.DecompressAsDeflate(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
@@ -892,9 +879,20 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsGzip(Stream)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_DecompressAsGzip_Method()
+  public void DecompressAsGzip_Method()
   {
     AssertionExtensions.Should(() => StreamExtensions.DecompressAsGzip(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsZlib(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DecompressAsZlib_Method()
+  {
+    AssertionExtensions.Should(() => StreamExtensions.DecompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
   }
@@ -907,7 +905,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void Stream_ToEnumerable_Methods()
+  public void ToEnumerable_Methods()
   {
     using (new AssertionScope())
     {
@@ -931,7 +929,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void Stream_ToAsyncEnumerable_Methods()
+  public void ToAsyncEnumerable_Methods()
   {
     using (new AssertionScope())
     {
@@ -951,7 +949,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.ToBufferedStream(Stream, int?)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToBufferedStream_Method()
+  public void ToBufferedStream_Method()
   {
     void Validate(Stream stream, int? size)
     {
@@ -1007,7 +1005,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.ToBinaryReader(Stream, Encoding, bool)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToBinaryReader_Method()
+  public void ToBinaryReader_Method()
   {
     void Validate(Encoding encoding)
     {
@@ -1039,7 +1037,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.ToBinaryWriter(Stream, Encoding, bool)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToBinaryWriter_Method()
+  public void ToBinaryWriter_Method()
   {
     void Validate(Encoding encoding)
     {
@@ -1073,7 +1071,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.ToStreamReader(Stream, Encoding, bool)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToStreamReader_Method()
+  public void ToStreamReader_Method()
   {
     void Validate(Encoding encoding)
     {
@@ -1100,7 +1098,7 @@ public sealed class StreamExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="StreamExtensions.ToStreamWriter(Stream, Encoding, bool)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_ToStreamWriter_Method()
+  public void ToStreamWriter_Method()
   {
     void Validate(Encoding encoding)
     {
@@ -1130,24 +1128,520 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.CompressAsZlib(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToXmlReader(Stream, bool)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_CompressAsZlib_Method()
+  public void ToXmlReader_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.CompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+    AssertionExtensions.Should(() => ((Stream) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    /*const string Xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
+
+    using (var stream = new MemoryStream(Xml.Bytes()))
+    {
+      var reader = stream.ToXmlReader();
+      reader.Settings.CloseInput.Should().BeFalse();
+      reader.Settings.IgnoreComments.Should().BeTrue();
+      reader.Settings.IgnoreWhitespace.Should().BeTrue();
+      reader.ReadStartElement("article");
+      reader.ReadString().Should().Be("text");
+      reader.ReadEndElement();
+      reader.Close();
+      stream.Bytes().Should().BeEmpty();
+      stream.ReadByte().Should().Be(-1);
+    }
+
+    using (var stream = new MemoryStream(Xml.Bytes()))
+    {
+      stream.ToXmlReader(true).Close();
+      //True(reader.Settings.CloseInput);
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }*/
+
+    // TODO Encoding support
 
     throw new NotImplementedException();
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.DecompressAsZlib(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToXmlDictionaryReader(Stream, bool)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Stream_DecompressAsZlib_Method()
+  public void ToXmlDictionaryReader_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.DecompressAsZlib(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+    AssertionExtensions.Should(() => ((Stream) null).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToXmlWriter(Stream, Encoding, bool)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXmlWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).ToXmlWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    /*var xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><article>text</article>";
+    using (var stream = new MemoryStream())
+    {
+      using (var writer = stream.ToXmlWriter())
+      {
+        writer.Settings.CloseOutput.Should().BeFalse();
+        writer.Settings.Encoding.ToString().Should().Be(Encoding.UTF8.ToString());
+        writer.Settings.Indent.Should().BeFalse();
+        writer.WriteElementString("article", "text");
+      }
+      stream.ToArray().Should().Equal(xml.Bytes(Encoding.UTF8));
+      stream.Bytes().Should().BeEmpty();
+      stream.ReadByte().Should().Be(-1);
+
+      using (var writer = stream.Rewind().ToXmlWriter(true))
+      {
+        writer.Settings.CloseOutput.Should().BeTrue();
+        writer.Settings.Encoding.ToString().Should().Be(Encoding.UTF8.ToString());
+      }
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }
+
+    xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+    using (var stream = new MemoryStream())
+    {
+      using (var writer = stream.ToXmlWriter(encoding: Encoding.Unicode))
+      {
+        writer.Settings.CloseOutput.Should().BeFalse();
+        writer.Settings.Encoding.ToString().Should().Be(Encoding.Unicode.ToString());
+        writer.WriteElementString("article", "text");
+      }
+      stream.ToArray().Should().Equal(xml.Bytes(Encoding.Unicode));
+      stream.Bytes().Should().BeEmpty();
+      stream.ReadByte().Should().Be(-1);
+
+      using (var writer = stream.ToXmlWriter(true, Encoding.Unicode))
+      {
+        writer.Settings.CloseOutput.Should().BeTrue();
+        writer.Settings.Encoding.ToString().Should().Be(Encoding.Unicode.ToString());
+      }
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }*/
+
+    // TODO Encoding support
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToXmlDictionaryWriter(Stream, Encoding, bool)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXmlDictionaryWriter_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToXmlDocument(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXmlDocument_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).ToXmlDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    /*const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+
+    using (var stream = new MemoryStream(Xml.ToBytes(Encoding.UTF32)))
+    {
+      AssertionExtensions.Should(() => stream.ToXmlDocument()).ThrowExactly<XmlException>();
+    }
+
+    using (var stream = new MemoryStream(Xml.ToBytes(Encoding.Unicode)))
+    {
+      stream.ToXmlDocument().ToText().Should().Be(Xml);
+      stream.ToArray().Should().BeEmpty();
+      stream.ReadByte().Should().Be(-1);
+    }
+
+    using (var stream = new MemoryStream(Xml.ToBytes(Encoding.Unicode)))
+    {
+      stream.ToXmlDocument().ToText().Should().Be(Xml);
+      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+    }*/
+
+    // TODO Encoding support
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToXDocument(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXDocument_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).ToXDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToXDocumentAsync(Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXDocumentAsync_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
+    AssertionExtensions.Should(() => Stream.Null.ToXDocumentAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    /*const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+
+    using (var stream = new MemoryStream(Xml.ToBytes(Encoding.UTF32)))
+    {
+      AssertionExtensions.Should(() => stream.ToXDocumentAsync()).ThrowExactlyAsync<XmlException>().Await();
+    }
+
+    using (var stream = new MemoryStream(Xml.ToBytes(Encoding.Unicode)))
+    {
+      stream.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
+      stream.ToArray().Should().BeEmpty();
+      stream.ReadByte().Should().Be(-1);
+    }
+
+    using (var stream = new MemoryStream(Xml.ToBytes(Encoding.Unicode)))
+    {
+      stream.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
+      stream.ReadByte().Should().Be(-1);
+    }*/
+
+    // TODO Encoding support
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.DeserializeAsDataContract{T}(Stream, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsDataContract_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.DeserializeAsXml{T}(Stream, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsXml_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    /*var subject = Guid.Empty;
+
+    using (var stream = new MemoryStream())
+    {
+      subject.AsXml(stream, Encoding.Unicode);
+      stream.Rewind().AsXml<Guid>().Should().Be(subject);
+      stream.CanWrite.Should().BeTrue();
+    }
+
+    using (var stream = new MemoryStream())
+    {
+      subject.AsXml(stream, Encoding.Unicode);
+      stream.Rewind().AsXml<Guid>(true).Should().Be(subject);
+      stream.CanWrite.Should().BeFalse();
+    }*/
+
+    // TODO Encoding support
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.Hash(Stream, HashAlgorithm)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Hash_Method()
+  {
+    AssertionExtensions.Should(() => Stream.Null.Hash(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
+
+    using var algorithm = MD5.Create();
+
+    AssertionExtensions.Should(() => ((Stream) null).Hash(algorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+    
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        var hash = stream.Hash(algorithm);
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().Hash(algorithm)).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashAsync(Stream, HashAlgorithm, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashAsync_Method()
+  {
+    AssertionExtensions.Should(() => Stream.Null.HashAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
+
+    using var algorithm = MD5.Create();
+
+    AssertionExtensions.Should(() => ((Stream) null).HashAsync(algorithm)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        AssertionExtensions.Should(() => stream.HashAsync(algorithm, Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
+
+        var hash = stream.HashAsync(algorithm);
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashAsync(algorithm));
+        hash.Await().Should().HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashMd5(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashMd5_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    using var algorithm = MD5.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        var hash = stream.HashMd5();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashMd5()).And.HaveCount(16).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashMd5Async(Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashMd5Async_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashMd5Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
+
+    using var algorithm = MD5.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        AssertionExtensions.Should(() => stream.HashMd5Async(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+        var hash = stream.HashMd5Async();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashMd5Async());
+        hash.Await().Should().HaveCount(16).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashSha1(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashSha1_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    using var algorithm = SHA1.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        var hash = stream.HashSha1();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha1()).And.HaveCount(20).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashSha1Async(Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashSha1Async_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashSha1Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
+
+    using var algorithm = SHA1.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        AssertionExtensions.Should(() => stream.HashSha1Async(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+        var hash = stream.HashSha1Async();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha1Async());
+        hash.Await().Should().HaveCount(20).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashSha256(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashSha256_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    using var algorithm = SHA256.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        var hash = stream.HashSha256();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha256()).And.HaveCount(32).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashSha256Async(Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashSha256Async_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashSha256Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
+
+    using var algorithm = SHA256.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        AssertionExtensions.Should(() => stream.HashSha256Async(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+        var hash = stream.HashSha256Async();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha256Async());
+        hash.Await().Should().HaveCount(32).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashSha384(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashSha384_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    using var algorithm = SHA384.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        var hash = stream.HashSha384();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha384()).And.HaveCount(48).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashSha384Async(Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashSha384Async_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashSha384Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
+
+    using var algorithm = SHA384.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        AssertionExtensions.Should(() => stream.HashSha384Async(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+        var hash = stream.HashSha384Async();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha384Async());
+        hash.Await().Should().HaveCount(48).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashSha512(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashSha512_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+    using var algorithm = SHA512.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        var hash = stream.HashSha512();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha512()).And.HaveCount(64).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.HashSha512Async(Stream, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_HashSha512Async_Method()
+  {
+    AssertionExtensions.Should(() => ((Stream) null).HashSha512Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
+
+    using var algorithm = SHA512.Create();
+
+    algorithm.Should().NotBeNull();
+
+    foreach (var stream in new[] { Stream.Null, RandomStream })
+    {
+      using (stream)
+      {
+        AssertionExtensions.Should(() => stream.HashSha512Async(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+        var hash = stream.HashSha512Async();
+        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha512Async());
+        hash.Await().Should().HaveCount(64).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+      }
+    }
   }
 }
