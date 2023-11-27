@@ -1,7 +1,7 @@
 ﻿namespace Catharsis.Extensions;
 
 /// <summary>
-///   <para>Extension methods for actions and predicates.</para>
+///   <para>Extension methods for <see cref="Action"/> classes.</para>
 /// </summary>
 /// <seealso cref="Action{T}"/>
 /// <seealso cref="Predicate{T}"/>

@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 namespace Catharsis.Extensions;
 
 /// <summary>
@@ -8,17 +6,6 @@ namespace Catharsis.Extensions;
 /// <seealso cref="IDictionary{TKey, TValue}"/>
 public static class IDictionaryExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TKey"></typeparam>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="dictionary"></param>
-  /// <returns></returns>
-  /// <seealso cref="AsReadOnly{T}"/>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static IReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) where TKey : notnull => dictionary is not null ? new ReadOnlyDictionary<TKey, TValue>(dictionary) : throw new ArgumentNullException(nameof(dictionary));
-
   /// <summary>
   ///   <para></para>
   /// </summary>

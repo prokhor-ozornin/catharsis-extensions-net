@@ -813,7 +813,7 @@ public static class ObjectExtensions
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
 
-    return properties is null ? instance.GetState(Enumerable.Empty<string>()) : properties.Select(property => (property.Body.To<UnaryExpression>().Operand.To<MemberExpression>().Member.Name, property.Compile()(instance)));
+    return properties is null ? instance.GetState((IEnumerable<string>) null) : properties.Select(property => (property.Body.To<UnaryExpression>().Operand.To<MemberExpression>().Member.Name, property.Compile()(instance)));
   }
 
   /// <summary>
@@ -876,12 +876,20 @@ public static class ObjectExtensions
   /// <param name="name">Name of field of <paramref name="instance"/>'s type.</param>
   /// <returns>Value of <paramref name="instance"/>'s field with a given <paramref name="name"/>.</returns>
   /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
   public static T GetFieldValue<T>(this object instance, string name)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
     if (name is null) throw new ArgumentNullException(nameof(name));
 
-    return (T) instance.GetType().AnyField(name)?.GetValue(instance);
+    var field = instance.GetType().AnyField(name);
+    
+    if (field is null)
+    {
+      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no field named \"{name}\"");
+    }
+
+    return (T) field.GetValue(instance);
   }
 
   /// <summary>
@@ -892,14 +900,20 @@ public static class ObjectExtensions
   /// <param name="name">Name of property to inspect.</param>
   /// <returns>Value of property <paramref name="name"/> for <paramref name="instance"/> instance, or a <c>null</c> reference in case this property does not exists for <paramref name="instance"/>'s type.</returns>
   /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="InvalidOperationException"></exception>
   public static T GetPropertyValue<T>(this object instance, string name)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
     if (name is null) throw new ArgumentNullException(nameof(name));
 
-    var propertyInfo = instance.GetType().AnyProperty(name);
+    var property = instance.GetType().AnyProperty(name);
 
-    return propertyInfo is not null && propertyInfo.CanRead ? (T) propertyInfo.GetValue(instance, null) : default;
+    if (property is null)
+    {
+      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no property named \"{name}\"");
+    }
+
+    return property.CanRead ? (T) property.GetValue(instance, null) : default;
   }
 
   /// <summary>
@@ -916,11 +930,16 @@ public static class ObjectExtensions
     if (instance is null) throw new ArgumentNullException(nameof(instance));
     if (name is null) throw new ArgumentNullException(nameof(name));
 
-    var propertyInfo = instance.GetType().AnyProperty(name);
+    var property = instance.GetType().AnyProperty(name);
 
-    if (propertyInfo is not null && propertyInfo.CanWrite)
+    if (property is null)
     {
-      propertyInfo.SetValue(instance, value, null);
+      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no property named \"{name}\"");
+    }
+
+    if (property.CanWrite)
+    {
+      property.SetValue(instance, value, null);
     }
 
     return instance;
@@ -939,7 +958,14 @@ public static class ObjectExtensions
     if (instance is null) throw new ArgumentNullException(nameof(instance));
     if (name is null) throw new ArgumentNullException(nameof(name));
 
-    return (T) instance.GetType().AnyMethod(name)?.Invoke(instance, parameters?.AsArray());
+    var method = instance.GetType().AnyMethod(name);
+
+    if (method is null)
+    {
+      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no method named \"{name}\"");
+    }
+
+    return (T) method.Invoke(instance, parameters?.AsArray());
   }
 
   /// <summary>
