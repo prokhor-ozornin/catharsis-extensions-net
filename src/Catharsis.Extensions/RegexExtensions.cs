@@ -9,6 +9,13 @@ namespace Catharsis.Extensions;
 /// <seealso cref="Match"/>
 public static class RegexExtensions
 {
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="regex"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static Regex Clone(this Regex regex) => regex is not null ? new Regex(regex.ToString(), regex.Options, regex.MatchTimeout) : throw new ArgumentNullException(nameof(regex));
 
   /// <summary>
   ///   <para></para>

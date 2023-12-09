@@ -10,6 +10,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class CookieExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="CookieExtensions.Clone(Cookie)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => CookieExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="CookieExtensions.IsEmpty(Cookie)"/> method.</para>
   /// </summary>
   [Fact]

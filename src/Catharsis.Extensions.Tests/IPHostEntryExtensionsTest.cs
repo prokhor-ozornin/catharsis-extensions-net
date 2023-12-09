@@ -10,6 +10,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IPHostEntryExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.Clone(IPHostEntry)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => IPHostEntryExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("host");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsAvailable(IPHostEntry, TimeSpan?)"/> method.</para>
   /// </summary>
   [Fact]

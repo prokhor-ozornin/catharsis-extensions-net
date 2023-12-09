@@ -172,6 +172,28 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ContainsNull{T}(IEnumerable{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ContainsNull_Method()
+  {
+    AssertionExtensions.Should(() => IEnumerableExtensions.ContainsNull<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ContainsDefault{T}(IEnumerable{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ContainsDefault_Method()
+  {
+    AssertionExtensions.Should(() => IEnumerableExtensions.ContainsDefault<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IEnumerableExtensions.Range{T}(IEnumerable{T}, int?, int?)"/> method.</para>
   /// </summary>
   [Fact]

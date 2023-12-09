@@ -12,6 +12,14 @@ public static class DriveInfoExtensions
   /// <param name="drive"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static DriveInfo Clone(this DriveInfo drive) => drive is not null ? new DriveInfo(drive.Name) : throw new ArgumentNullException(nameof(drive));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="drive"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this DriveInfo drive) => drive?.RootDirectory.IsEmpty() ?? throw new ArgumentNullException(nameof(drive));
 
   /// <summary>

@@ -14,5 +14,13 @@ public static class PhysicalAddressExtensions
   /// <param name="address"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static PhysicalAddress Clone(this PhysicalAddress address) => address is not null ? new PhysicalAddress(address.GetAddressBytes()) : throw new ArgumentNullException(nameof(address));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static byte[] ToBytes(this PhysicalAddress address) => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
 }

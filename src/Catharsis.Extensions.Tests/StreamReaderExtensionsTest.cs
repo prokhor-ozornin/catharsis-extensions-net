@@ -10,6 +10,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StreamReaderExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="StreamReaderExtensions.Clone(StreamReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => StreamReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StreamReaderExtensions.IsStart(StreamReader)"/> method.</para>
   /// </summary>
   [Fact]

@@ -13,12 +13,23 @@ namespace Catharsis.Extensions.Tests;
 public sealed class XDocumentExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.Clone(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => XDocumentExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XDocumentExtensions.IsEmpty(XDocument)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsEmpty_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     var xml = new XDocument();
     xml.IsEmpty().Should().BeTrue();
@@ -53,7 +64,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
       Validate(new XDocument());
       Validate(new XDocument(new XElement("root")));
@@ -66,7 +77,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void TryFinallyClear_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     AssertionExtensions.Should(() => new XDocument().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     var xml = new XDocument();
@@ -80,7 +91,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void ToEnumerable_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
   }
@@ -91,7 +102,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void ToXmlReader_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
   }
@@ -102,7 +113,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void ToXmlWriter_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).ToXmlWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).ToXmlWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
   }
@@ -113,7 +124,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void ToBytes_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
   }
@@ -124,7 +135,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void ToBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("xml").Await();
+    AssertionExtensions.Should(() => ((XDocument) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
     AssertionExtensions.Should(() => new XDocument().ToBytesAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
@@ -136,7 +147,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void ToText_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
   }
@@ -147,7 +158,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void ToTextAsync_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("xml").Await();
+    AssertionExtensions.Should(() => ((XDocument) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
     AssertionExtensions.Should(() => new XDocument().ToTextAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
@@ -159,7 +170,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void Serialize_XmlWriter_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).Serialize(Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).Serialize(Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     AssertionExtensions.Should(() => new XDocument().Serialize((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
@@ -171,7 +182,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void Serialize_TextWriter_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).Serialize(Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).Serialize(Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     AssertionExtensions.Should(() => new XDocument().Serialize((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
@@ -183,7 +194,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void Serialize_Stream_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).Serialize(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).Serialize(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     AssertionExtensions.Should(() => new XDocument().Serialize((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
@@ -195,7 +206,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void Serialize_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).Serialize(RandomFakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).Serialize(RandomFakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     AssertionExtensions.Should(() => new XDocument().Serialize((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
@@ -207,7 +218,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void Serialize_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).Serialize()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XDocument) null).Serialize()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
   }

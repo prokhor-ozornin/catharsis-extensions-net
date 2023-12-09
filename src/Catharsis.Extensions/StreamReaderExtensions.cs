@@ -12,6 +12,14 @@ public static class StreamReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static StreamReader Clone(this StreamReader reader) => reader is not null ? new StreamReader(reader.BaseStream, reader.CurrentEncoding) : throw new ArgumentNullException(nameof(reader));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsStart(this StreamReader reader) => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>

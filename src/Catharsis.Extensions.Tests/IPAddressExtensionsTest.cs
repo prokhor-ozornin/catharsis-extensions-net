@@ -11,6 +11,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IPAddressExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.Clone(IPAddress)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => IPAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IPAddressExtensions.IsAvailable(IPAddress, TimeSpan?)"/> method.</para>
   /// </summary>
   [Fact]

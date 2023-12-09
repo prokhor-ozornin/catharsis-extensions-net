@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Catharsis.Extensions.Tests</RootNamespace>
+    <AssemblyName>Catharsis.Extensions.Tests</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
@@ -10,8 +12,6 @@
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
-    <RootNamespace>Catharsis.Extensions.Tests</RootNamespace>
-    <AssemblyName>Catharsis.Extensions.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -16,6 +16,14 @@ public static class StringBuilderExtensions
   /// <param name="builder"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static StringBuilder Clone(this StringBuilder builder) => builder is not null ? new StringBuilder(builder.ToString(), builder.Capacity) : throw new ArgumentNullException(nameof(builder));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this StringBuilder builder) => builder is not null ? builder.Length == 0 : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>

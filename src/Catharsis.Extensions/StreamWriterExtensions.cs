@@ -12,6 +12,14 @@ public static class StreamWriterExtensions
   /// <param name="writer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static StreamWriter Clone(this StreamWriter writer) => writer is not null ? new StreamWriter(writer.BaseStream, writer.Encoding) : throw new ArgumentNullException(nameof(writer));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="writer"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this StreamWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>

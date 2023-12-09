@@ -14,6 +14,14 @@ public static class IPAddressExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="address"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IPAddress Clone(this IPAddress address) => address is not null ? new IPAddress(address.GetAddressBytes()) : throw new ArgumentNullException(nameof(address));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>

@@ -12,6 +12,14 @@ public static class BinaryWriterExtensions
   /// <param name="writer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static BinaryWriter Clone(this BinaryWriter writer) => writer is not null ? new BinaryWriter(writer.BaseStream) : throw new ArgumentNullException(nameof(writer));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="writer"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsStart(this BinaryWriter writer) => writer?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>

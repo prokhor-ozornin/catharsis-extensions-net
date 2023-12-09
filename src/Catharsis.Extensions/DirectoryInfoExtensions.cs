@@ -12,6 +12,14 @@ public static class DirectoryInfoExtensions
   /// <param name="directory"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static DirectoryInfo Clone(this DirectoryInfo directory) => directory is not null ? new DirectoryInfo(directory.ToString()) : throw new ArgumentNullException(nameof(directory));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="directory"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this DirectoryInfo directory) => directory.ToEnumerable().IsEmpty();
 
   /// <summary>

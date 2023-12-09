@@ -10,6 +10,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class PhysicalAddressExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="PhysicalAddressExtensions.Clone(PhysicalAddress)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => PhysicalAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="PhysicalAddressExtensions.ToBytes(PhysicalAddress)"/> method.</para>
   /// </summary>
   [Fact]

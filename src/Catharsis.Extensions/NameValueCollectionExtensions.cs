@@ -11,6 +11,14 @@ public static class NameValueCollectionExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="collection"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static NameValueCollection Clone(this NameValueCollection collection) => collection is not null ? new NameValueCollection(collection) : throw new ArgumentNullException(nameof(collection));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="to"></param>
   /// <param name="from"></param>
   /// <returns></returns>

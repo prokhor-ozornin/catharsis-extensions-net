@@ -11,6 +11,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class BinaryReaderExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.Clone(BinaryReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => BinaryReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="BinaryReaderExtensions.IsStart(BinaryReader)"/> method.</para>
   /// </summary>
   [Fact]

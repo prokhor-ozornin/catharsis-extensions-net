@@ -13,6 +13,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StringBuilderExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.Clone(StringBuilder)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => StringBuilderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsEmpty(StringBuilder)"/> method.</para>
   /// </summary>
   [Fact]

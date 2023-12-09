@@ -10,6 +10,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class BinaryWriterExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.Clone(BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => BinaryWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsStart(BinaryWriter)"/> method.</para>
   /// </summary>
   [Fact]

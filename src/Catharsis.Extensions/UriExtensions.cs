@@ -18,6 +18,14 @@ public static class UriExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="uri"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static Uri Clone(this Uri uri) => uri is not null ? new Uri(uri.OriginalString) : throw new ArgumentNullException(nameof(uri));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
   /// <exception cref="InvalidOperationException"></exception>

@@ -16,6 +16,14 @@ public static class XDocumentExtensions
   /// <param name="document"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static XDocument Clone(this XDocument document) => document is not null ? document.CreateReader().TryFinallyDispose(XDocument.Load) : throw new ArgumentNullException(nameof(document));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this XDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>

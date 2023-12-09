@@ -13,6 +13,19 @@ public static class IPHostEntryExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="host"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IPHostEntry Clone(this IPHostEntry host) => host is not null ? new IPHostEntry 
+  {
+    HostName = host.HostName, 
+    AddressList = host.AddressList,
+    Aliases = host.Aliases
+  } : throw new ArgumentNullException(nameof(host));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="host"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>

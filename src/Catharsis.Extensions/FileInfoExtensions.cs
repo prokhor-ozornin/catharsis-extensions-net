@@ -16,6 +16,14 @@ public static class FileInfoExtensions
   /// <param name="file"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static FileInfo Clone(this FileInfo file) => file is not null ? new FileInfo(file.ToString()) : throw new ArgumentNullException(nameof(file));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this FileInfo file) => file is not null ? !file.Exists || file.Length == 0 : throw new ArgumentNullException(nameof(file));
 
   /// <summary>

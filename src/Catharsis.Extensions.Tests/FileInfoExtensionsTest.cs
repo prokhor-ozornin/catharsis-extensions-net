@@ -11,6 +11,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class FileInfoExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.Clone(FileInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => FileInfoExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="FileInfoExtensions.IsEmpty(FileInfo)"/> method.</para>
   /// </summary>
   [Fact]

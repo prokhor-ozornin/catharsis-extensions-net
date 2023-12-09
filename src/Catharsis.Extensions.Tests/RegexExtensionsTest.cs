@@ -10,6 +10,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class RegexExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="RegexExtensions.Clone(Regex)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => RegexExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="RegexExtensions.ToEnumerable(Regex, string)"/> method.</para>
   /// </summary>
   [Fact]

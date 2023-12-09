@@ -12,6 +12,14 @@ public static class BinaryReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static BinaryReader Clone(this BinaryReader reader) => reader is not null ? new BinaryReader(reader.BaseStream) : throw new ArgumentNullException(nameof(reader));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsStart(this BinaryReader reader) => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>

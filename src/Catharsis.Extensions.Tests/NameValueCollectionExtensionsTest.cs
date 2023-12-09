@@ -11,6 +11,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class NameValueCollectionExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="NameValueCollectionExtensions.Clone(NameValueCollection)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => NameValueCollectionExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="NameValueCollectionExtensions.AddRange(NameValueCollection, IEnumerable{(string Name, object Value)})"/></description></item>

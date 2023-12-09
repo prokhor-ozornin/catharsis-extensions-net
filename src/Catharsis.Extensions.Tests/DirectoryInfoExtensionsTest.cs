@@ -8,6 +8,16 @@ namespace Catharsis.Extensions.Tests;
 /// </summary>
 public sealed class DirectoryInfoExtensionsTest : UnitTest
 {
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.Clone(DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => ((DirectoryInfo) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+
+    throw new NotImplementedException();
+  }
 
   /// <summary>
   ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.IsEmpty(DirectoryInfo)"/> method.</para>

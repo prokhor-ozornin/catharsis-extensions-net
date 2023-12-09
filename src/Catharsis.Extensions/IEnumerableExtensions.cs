@@ -170,6 +170,34 @@ public static class IEnumerableExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool ContainsNull<T>(this IEnumerable<T> sequence)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    return sequence.Any(element => element is null);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool ContainsDefault<T>(this IEnumerable<T> sequence)
+  {
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+
+    return sequence.Any(element => element.Equals(default(T)));
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <returns></returns>

@@ -11,6 +11,17 @@ namespace Catharsis.Extensions.Tests;
 public sealed class UriExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="UriExtensions.Clone(Uri)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    AssertionExtensions.Should(() => UriExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="UriExtensions.IsAvailable(Uri, TimeSpan?)"/> method.</para>
   /// </summary>
   [Fact]
