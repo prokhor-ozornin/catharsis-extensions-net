@@ -939,7 +939,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.Object(null, Array.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => RandomExtensions.Object(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().Object(null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
 
     }
@@ -968,9 +968,9 @@ public sealed class RandomExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ObjectSequence(null, 0, Array.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => RandomExtensions.ObjectSequence(null, 0, [])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => Randomizer.ObjectSequence(0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
-      AssertionExtensions.Should(() => Randomizer.ObjectSequence(-1, Array.Empty<Type>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => Randomizer.ObjectSequence(-1, [])).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     }
 

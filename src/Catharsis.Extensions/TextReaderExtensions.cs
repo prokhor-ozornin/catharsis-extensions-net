@@ -305,7 +305,7 @@ public static class TextReaderExtensions
         buffer = new char[parent.count];
       }
 
-      public char[] Current { get; private set; } = Array.Empty<char>();
+      public char[] Current { get; private set; } = [];
 
       public bool MoveNext()
       {
@@ -371,7 +371,7 @@ public static class TextReaderExtensions
         await Task.Yield();
       }
 
-      public char[] Current { get; private set; } = Array.Empty<char>();
+      public char[] Current { get; private set; } = [];
 
       public async ValueTask<bool> MoveNextAsync()
       {

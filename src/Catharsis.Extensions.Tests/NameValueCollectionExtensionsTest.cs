@@ -40,7 +40,7 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((NameValueCollection) null).AddRange(Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).AddRange([])).ThrowExactly<ArgumentNullException>().WithParameterName("to");
       AssertionExtensions.Should(() => new NameValueCollection().AddRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
     }

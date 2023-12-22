@@ -439,7 +439,7 @@ public static class StringExtensions
   /// <param name="separator"></param>
   /// <returns>Target array of strings, which are part of <paramref name="text"/> string.</returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string[] Lines(this string text, string separator = null) => text is not null ? text.Length > 0 ? text.Split(separator ?? Environment.NewLine) : Array.Empty<string>() : throw new ArgumentNullException(nameof(text));
+  public static string[] Lines(this string text, string separator = null) => text is not null ? text.Length > 0 ? text.Split(separator ?? Environment.NewLine) : [] : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para>Determines whether a string matches specified regular expression.</para>
@@ -481,7 +481,7 @@ public static class StringExtensions
   /// <returns>An array of 8-bit unsigned integers that is equivalent to <paramref name="text"/>.</returns>
   /// <seealso cref="System.Convert.FromBase64String(string)"/>
   /// <exception cref="ArgumentNullException"></exception>
-  public static byte[] FromBase64(this string text) => text is not null ? text.Length > 0 ? Convert.FromBase64String(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
+  public static byte[] FromBase64(this string text) => text is not null ? text.Length > 0 ? Convert.FromBase64String(text) : [] : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para>URL-encodes string.</para>
@@ -667,7 +667,7 @@ public static class StringExtensions
   /// <returns>Sequence of bytes that form <paramref name="text"/> string in given <paramref name="encoding"/>.</returns>
   /// <seealso cref="Encoding.GetBytes(string)"/>
   /// <exception cref="ArgumentNullException"></exception>
-  public static byte[] ToBytes(this string text, Encoding encoding = null) => text is not null ? text.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
+  public static byte[] ToBytes(this string text, Encoding encoding = null) => text is not null ? text.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(text) : [] : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para>Converts specified string into <see cref="bool"/> value.</para>
@@ -1679,7 +1679,7 @@ public static class StringExtensions
   /// <param name="text">HEX-encoded string to be converted to byte sequence.</param>
   /// <returns>Decoded data from HEX-encoded <paramref name="text"/> string.</returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static byte[] FromHex(this string text) => text is not null ? text.Length > 0 ? Convert.FromHexString(text) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(text));
+  public static byte[] FromHex(this string text) => text is not null ? text.Length > 0 ? Convert.FromHexString(text) : [] : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para></para>

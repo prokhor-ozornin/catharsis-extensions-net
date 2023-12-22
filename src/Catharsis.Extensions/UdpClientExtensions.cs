@@ -203,7 +203,7 @@ public static class UdpClientExtensions
 
       public Enumerator(UdpClientEnumerable parent) => this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
 
-      public byte[] Current { get; private set; } = Array.Empty<byte>();
+      public byte[] Current { get; private set; } = [];
 
       public bool MoveNext()
       {
@@ -265,7 +265,7 @@ public static class UdpClientExtensions
         await Task.Yield();
       }
 
-      public byte[] Current { get; private set; } = Array.Empty<byte>();
+      public byte[] Current { get; private set; } = [];
 
       public async ValueTask<bool> MoveNextAsync()
       {

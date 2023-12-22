@@ -106,7 +106,7 @@ public static class IPAddressExtensions
   /// <param name="address"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IPHostEntry ToIpHost(this IPAddress address) => address is not null ? new IPHostEntry { AddressList = new[] { address }, Aliases = Array.Empty<string>() } : throw new ArgumentNullException(nameof(address));
+  public static IPHostEntry ToIpHost(this IPAddress address) => address is not null ? new IPHostEntry { AddressList = [address], Aliases = [] } : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
   ///   <para></para>

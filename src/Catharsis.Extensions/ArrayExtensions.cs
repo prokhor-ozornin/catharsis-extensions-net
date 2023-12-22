@@ -50,7 +50,7 @@ public static class ArrayExtensions
   /// <param name="encoding">Encoding to be used for transforming between <see cref="char"/> at its <see cref="byte"/> equivalent. If not specified, uses <see cref="Encoding.Default"/> encoding.</param>
   /// <returns>Array of bytes which represents <paramref name="chars"/> array in <paramref name="encoding"/>.</returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static byte[] ToBytes(this char[] chars, Encoding encoding = null) => chars is not null ? chars.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(chars) : Array.Empty<byte>() : throw new ArgumentNullException(nameof(chars));
+  public static byte[] ToBytes(this char[] chars, Encoding encoding = null) => chars is not null ? chars.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(chars) : [] : throw new ArgumentNullException(nameof(chars));
 
   /// <summary>
   ///   <para>Returns string representation of specified array of characters.</para>

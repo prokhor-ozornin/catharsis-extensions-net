@@ -44,7 +44,7 @@ public sealed class IListExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IListExtensions.InsertRange(null, 0, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
       AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
-      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(-1, Array.Empty<object>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(-1, [])).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
 
     }
 

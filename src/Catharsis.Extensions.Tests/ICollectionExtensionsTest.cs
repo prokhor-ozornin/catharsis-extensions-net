@@ -36,7 +36,7 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ICollectionExtensions.AddRange<object>(null, Array.Empty<object>)).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => ICollectionExtensions.AddRange<object>(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("to");
       AssertionExtensions.Should(() => Array.Empty<object>().AddRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
     }
@@ -73,7 +73,7 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((ICollection<object>) null).RemoveRange(Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => ((ICollection<object>) null).RemoveRange([])).ThrowExactly<ArgumentNullException>().WithParameterName("from");
       AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     }

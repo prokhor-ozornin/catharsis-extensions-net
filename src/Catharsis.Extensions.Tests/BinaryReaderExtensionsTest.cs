@@ -245,8 +245,8 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       {
         AssertionExtensions.Should(() => BinaryReaderExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-        Validate(Stream.Null.ToBinaryReader(), Array.Empty<byte>());
-        Validate(EmptyStream.ToBinaryReader(), Array.Empty<byte>());
+        Validate(Stream.Null.ToBinaryReader(), []);
+        Validate(EmptyStream.ToBinaryReader(), []);
 
         var bytes = RandomBytes;
         using (var stream = new MemoryStream(bytes))
@@ -275,8 +275,8 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       {
         AssertionExtensions.Should(() => BinaryReaderExtensions.ToEnumerable(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-        Validate(Stream.Null.ToBinaryReader(), Array.Empty<byte>());
-        Validate(EmptyStream.ToBinaryReader(), Array.Empty<byte>());
+        Validate(Stream.Null.ToBinaryReader(), []);
+        Validate(EmptyStream.ToBinaryReader(), []);
 
         var bytes = RandomBytes;
         using (var stream = new MemoryStream(bytes))
@@ -313,8 +313,8 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       {
         AssertionExtensions.Should(() => BinaryReaderExtensions.ToAsyncEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-        Validate(Stream.Null.ToBinaryReader(), Array.Empty<byte>());
-        Validate(EmptyStream.ToBinaryReader(), Array.Empty<byte>());
+        Validate(Stream.Null.ToBinaryReader(), []);
+        Validate(EmptyStream.ToBinaryReader(), []);
 
         var bytes = RandomBytes;
         using (var stream = new MemoryStream(bytes))
@@ -343,8 +343,8 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       {
         AssertionExtensions.Should(() => BinaryReaderExtensions.ToAsyncEnumerable(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-        Validate(Stream.Null.ToBinaryReader(), Array.Empty<byte>());
-        Validate(EmptyStream.ToBinaryReader(), Array.Empty<byte>());
+        Validate(Stream.Null.ToBinaryReader(), []);
+        Validate(EmptyStream.ToBinaryReader(), []);
 
         var bytes = RandomBytes;
         using (var stream = new MemoryStream(bytes))

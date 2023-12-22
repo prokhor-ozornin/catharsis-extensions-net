@@ -293,7 +293,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IEnumerableExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    IEnumerable<object> collection = Array.Empty<object>();
+    IEnumerable<object> collection = [];
     collection.Randomize().Should().NotBeSameAs(collection).And.BeEmpty();
 
     collection = new object[] { string.Empty };
@@ -326,7 +326,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     Enumerable.Empty<object>().AsArray().Should().BeEmpty().And.BeSameAs(Enumerable.Empty<object>().AsArray());
 
-    var array = Array.Empty<object>();
+    object[] array = [];
     array.AsArray().Should().BeSameAs(array);
 
     var list = new List<object> {null, 1, 55.5, string.Empty, Guid.Empty, null};
@@ -973,7 +973,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     algorithm.Should().NotBeNull();
 
-    Enumerable.Empty<byte>().Hash(algorithm).Should().NotBeNull().And.NotBeSameAs(Enumerable.Empty<byte>().Hash(algorithm)).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(Array.Empty<byte>()));
+    Enumerable.Empty<byte>().Hash(algorithm).Should().NotBeNull().And.NotBeSameAs(Enumerable.Empty<byte>().Hash(algorithm)).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash([]));
 
     var bytes = RandomBytes;
     bytes.Hash(algorithm).Should().NotBeNull().And.NotBeSameAs(bytes.Hash(algorithm)).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(bytes));

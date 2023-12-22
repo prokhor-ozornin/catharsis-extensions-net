@@ -745,7 +745,7 @@ public sealed class StreamExtensionsTest : UnitTest
     /*var bytes = RandomBytes;
 
     var stream = new MemoryStream();
-    var compressed = Array.Empty<byte>();
+    byte[] compressed = [];
     using (var deflate = stream.Deflate(CompressionMode.Compress))
     {
       deflate.BaseStream.Should().BeSameAs(stream);
@@ -757,7 +757,7 @@ public sealed class StreamExtensionsTest : UnitTest
     AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
 
     stream = new MemoryStream(compressed);
-    var decompressed = Array.Empty<byte>();
+    byte[] decompressed = [];
     using (var deflate = stream.Deflate(CompressionMode.Decompress))
     {
       deflate.BaseStream.Should().BeSameAs(stream);
@@ -799,7 +799,7 @@ public sealed class StreamExtensionsTest : UnitTest
     /*var bytes = RandomBytes;
 
     var stream = new MemoryStream();
-    var compressed = Array.Empty<byte>();
+    byte[] compressed = [];
     using (var gzip = stream.Gzip(CompressionMode.Compress))
     {
       gzip.BaseStream.Should().BeSameAs(stream);
@@ -811,7 +811,7 @@ public sealed class StreamExtensionsTest : UnitTest
     AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
 
     stream = new MemoryStream(compressed);
-    var decompressed = Array.Empty<byte>();
+    byte[] decompressed = [];
     using (var gzip = stream.Gzip(CompressionMode.Decompress))
     {
       gzip.BaseStream.Should().BeSameAs(stream);

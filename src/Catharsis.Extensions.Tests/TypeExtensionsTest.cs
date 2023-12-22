@@ -201,8 +201,8 @@ public sealed class TypeExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.HasMethod(null, "name", Array.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-      AssertionExtensions.Should(() => typeof(object).HasMethod(null, Array.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+      AssertionExtensions.Should(() => TypeExtensions.HasMethod(null, "name", [])).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).HasMethod(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
     }
 
@@ -315,8 +315,8 @@ public sealed class TypeExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.AnyMethod(null, "name", Array.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-      AssertionExtensions.Should(() => typeof(object).AnyMethod(null, Array.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+      AssertionExtensions.Should(() => TypeExtensions.AnyMethod(null, "name", [])).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).AnyMethod(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("name");
     }
     
     throw new NotImplementedException();
@@ -340,7 +340,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.HasConstructor(null, Array.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => TypeExtensions.HasConstructor(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("type");
       AssertionExtensions.Should(() => typeof(object).HasConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("arguments");
     }
 
@@ -390,7 +390,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.Instance(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => TypeExtensions.Instance(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     }
 

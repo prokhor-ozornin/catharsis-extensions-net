@@ -801,7 +801,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Replace(null, Array.Empty<(string, object)>()!)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => StringExtensions.Replace(null, []!)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.Replace(null)).ThrowExactly<ArgumentNullException>().WithParameterName("replacements");
 
       /*string.Empty.Replace().Should().BeEmpty();
@@ -1189,8 +1189,8 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Execute(null, (string[]) Array.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("command");
-      AssertionExtensions.Should(() => string.Empty.Execute(Array.Empty<string>())).ThrowExactly<InvalidOperationException>();
+      AssertionExtensions.Should(() => StringExtensions.Execute(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("command");
+      AssertionExtensions.Should(() => string.Empty.Execute([])).ThrowExactly<InvalidOperationException>();
     }
 
     throw new NotImplementedException();

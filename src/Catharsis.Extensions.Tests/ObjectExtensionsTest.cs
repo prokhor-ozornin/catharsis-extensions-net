@@ -786,8 +786,8 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.CallMethod<object>(null, string.Empty, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-      AssertionExtensions.Should(() => new object().CallMethod<object>(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+      AssertionExtensions.Should(() => ObjectExtensions.CallMethod<object>(null, string.Empty, [])).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().CallMethod<object>(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
       /*new object().Method("method").Should().BeNull();
       ((bool) string.Empty.Method("Contains", string.Empty)).Should().BeTrue();*/
@@ -846,7 +846,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.ToStateString(null, Array.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.ToStateString(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
       /*new object().ToStringState("property").Should().Be("[]");
       new object().ToStringState((string[]) null).Should().Be("[]");

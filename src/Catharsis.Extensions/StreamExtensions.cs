@@ -1239,7 +1239,7 @@ public static class StreamExtensions
         buffer = new byte[parent.count];
       }
 
-      public byte[] Current { get; private set; } = Array.Empty<byte>();
+      public byte[] Current { get; private set; } = [];
 
       public bool MoveNext()
       {
@@ -1299,7 +1299,7 @@ public static class StreamExtensions
 
       public ValueTask DisposeAsync() => parent.close ? parent.stream.DisposeAsync() : default;
 
-      public byte[] Current { get; private set; } = Array.Empty<byte>();
+      public byte[] Current { get; private set; } = [];
 
       public async ValueTask<bool> MoveNextAsync()
       {

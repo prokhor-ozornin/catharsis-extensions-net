@@ -294,7 +294,7 @@ public static class TypeExtensions
   /// <param name="type"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static bool HasDefaultConstructor(this Type type) => type.HasConstructor(Array.Empty<Type>());
+  public static bool HasDefaultConstructor(this Type type) => type.HasConstructor([]);
 
   /// <summary>
   ///   <para></para>
