@@ -15,7 +15,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void EqualsByDate_Method()
   {
-    var dates = new[] { DateTime.MinValue, DateTime.Now, DateTime.UtcNow };
+    DateTime[] dates = [DateTime.MinValue, DateTime.Now, DateTime.UtcNow];
 
     foreach (var date in dates)
     {
@@ -40,7 +40,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void EqualsByTime_Method()
   {
-    var dates = new[] { DateTime.Now, DateTime.UtcNow };
+    DateTime[] dates = [DateTime.Now, DateTime.UtcNow];
 
     foreach (var date in dates)
     {

@@ -279,7 +279,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     var element = new object();
     new[] { element }.Random().Should().BeSameAs(element);
 
-    var elements = new[] { "first", "second" };
+    string[] elements = ["first", "second"];
     elements.Should().Contain(elements.Random());
 
     throw new NotImplementedException();
@@ -990,7 +990,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = MD5.Create();
     algorithm.Should().NotBeNull();
 
-    var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
 
     foreach (var sequence in sequences)
     {
@@ -1009,7 +1009,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = SHA1.Create();
     algorithm.Should().NotBeNull();
 
-    var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
 
     foreach (var sequence in sequences)
     {
@@ -1028,7 +1028,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = SHA256.Create();
     algorithm.Should().NotBeNull();
 
-    var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
 
     foreach (var sequence in sequences)
     {
@@ -1047,7 +1047,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = SHA384.Create();
     algorithm.Should().NotBeNull();
 
-    var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
 
     foreach (var sequence in sequences)
     {
@@ -1066,21 +1066,13 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = SHA512.Create();
     algorithm.Should().NotBeNull();
 
-    var sequences = new[] { Enumerable.Empty<byte>().ToArray(), RandomBytes };
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
 
     foreach (var sequence in sequences)
     {
       sequence.HashSha512().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha512()).And.HaveCount(64).And.Equal(algorithm.ComputeHash(sequence));
     }
   }
-
-
-
-
-
-
-
-
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IEnumerableExtensions.IsOrdered{T}(IEnumerable{T}, IComparer{T})"/> method.</para>

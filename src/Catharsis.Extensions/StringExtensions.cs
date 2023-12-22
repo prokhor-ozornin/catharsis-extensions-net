@@ -1121,7 +1121,7 @@ public static class StringExtensions
 
     text.ToIpAddress(out var ip);
 
-    return ip is not null ? new IPHostEntry { AddressList = new[] { ip } } : new IPHostEntry { HostName = text };
+    return ip is not null ? new IPHostEntry { AddressList = [ip]} : new IPHostEntry { HostName = text };
   }
 
   /// <summary>

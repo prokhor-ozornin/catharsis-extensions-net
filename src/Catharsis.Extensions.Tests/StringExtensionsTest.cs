@@ -1149,7 +1149,7 @@ public sealed class StringExtensionsTest : UnitTest
       AssertionExtensions.Should(() => StringExtensions.Execute(null)).ThrowExactly<ArgumentNullException>().WithParameterName("command");
       AssertionExtensions.Should(() => string.Empty.Execute()).ThrowExactly<InvalidOperationException>();
 
-      var arguments = new[] { "dir" };
+      string[] arguments = ["dir"];
 
       var process = ShellCommand.Execute(arguments);
 
@@ -3079,7 +3079,7 @@ public sealed class StringExtensionsTest : UnitTest
     
     algorithm.Should().NotBeNull();
 
-    var texts = new[] { string.Empty, RandomString };
+    string[] texts = [string.Empty, RandomString];
 
     foreach (var text in texts)
     {
@@ -3098,7 +3098,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = MD5.Create();
     algorithm.Should().NotBeNull();
 
-    var texts = new[] { string.Empty, RandomString };
+    string[] texts = [string.Empty, RandomString];
 
     foreach (var text in texts)
     {
@@ -3117,7 +3117,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = SHA1.Create();
     algorithm.Should().NotBeNull();
 
-    var texts = new[] { string.Empty, RandomString };
+    string[] texts = [string.Empty, RandomString];
 
     foreach (var text in texts)
     {
@@ -3136,7 +3136,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = SHA256.Create();
     algorithm.Should().NotBeNull();
 
-    var texts = new[] { string.Empty, RandomString };
+    string[] texts = [string.Empty, RandomString];
 
     foreach (var text in texts)
     {
@@ -3155,7 +3155,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = SHA384.Create();
     algorithm.Should().NotBeNull();
 
-    var texts = new[] { string.Empty, RandomString };
+    string[] texts = [string.Empty, RandomString];
 
     foreach (var text in texts)
     {
@@ -3174,7 +3174,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = SHA512.Create();
     algorithm.Should().NotBeNull();
 
-    var texts = new[] { string.Empty, RandomString };
+    string[] texts = [string.Empty, RandomString];
 
     foreach (var text in texts)
     {
