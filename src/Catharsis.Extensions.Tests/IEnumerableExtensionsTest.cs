@@ -691,6 +691,17 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_BinaryWriter_Method()
   {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+
+      Validate(EmptyStream.ToBinaryWriter());
+      Validate(RandomStream.ToBinaryWriter());
+    }
+
+    return;
+
     void Validate(BinaryWriter writer)
     {
       using (writer)
@@ -709,15 +720,6 @@ public sealed class IEnumerableExtensionsTest : UnitTest
         writer.BaseStream.Position.Should().Be(position + count);
         writer.BaseStream.MoveBy(-count).ToBytesAsync().ToArray().Should().Equal(bytes);
       }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-
-      Validate(EmptyStream.ToBinaryWriter());
-      Validate(RandomStream.ToBinaryWriter());
     }
   }
 

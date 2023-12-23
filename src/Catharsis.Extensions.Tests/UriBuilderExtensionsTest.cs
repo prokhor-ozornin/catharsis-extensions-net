@@ -15,7 +15,17 @@ public sealed class UriBuilderExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    void Validate(UriBuilder builder)
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => UriBuilderExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+
+      Validate(new UriBuilder());
+      Validate(new UriBuilder("https://user:password@192.168.0.1/path?query#id"));
+    }
+
+    return;
+
+    static void Validate(UriBuilder builder)
     {
       builder.Empty().Should().NotBeNull().And.BeSameAs(builder);
       builder.Fragment.Should().BeEmpty();
@@ -28,14 +38,6 @@ public sealed class UriBuilderExtensionsTest : UnitTest
       builder.UserName.Should().BeEmpty();
 
       AssertionExtensions.Should(() => builder.Uri).ThrowExactly<UriFormatException>();
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => UriBuilderExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
-
-      Validate(new UriBuilder());
-      Validate(new UriBuilder("https://user:password@192.168.0.1/path?query#id"));
     }
   }
 

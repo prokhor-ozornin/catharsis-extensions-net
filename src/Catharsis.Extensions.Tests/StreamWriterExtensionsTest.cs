@@ -26,16 +26,6 @@ public sealed class StreamWriterExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    void Validate(StreamWriter writer)
-    {
-      using (writer)
-      {
-        writer.Empty().IsEmpty().Should().BeTrue();
-        writer.BaseStream.WriteByte(byte.MinValue);
-        writer.IsEmpty().Should().BeFalse();
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
@@ -45,6 +35,18 @@ public sealed class StreamWriterExtensionsTest : UnitTest
       Validate(RandomStream.ToStreamWriter());
       Validate(WriteOnlyStream.ToStreamWriter());
     }
+
+    return;
+
+    static void Validate(StreamWriter writer)
+    {
+      using (writer)
+      {
+        writer.Empty().IsEmpty().Should().BeTrue();
+        writer.BaseStream.WriteByte(byte.MinValue);
+        writer.IsEmpty().Should().BeFalse();
+      }
+    }
   }
 
   /// <summary>
@@ -53,21 +55,23 @@ public sealed class StreamWriterExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    void Validate(StreamWriter writer)
-    {
-      using (writer)
-      {
-        writer.Empty().Should().NotBeNull().And.BeSameAs(writer);
-        writer.BaseStream.Should().HaveLength(0).And.HavePosition(0);
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((StreamWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
       Validate(Stream.Null.ToStreamWriter());
       Validate(RandomStream.ToStreamWriter());
+    }
+
+    return;
+
+    static void Validate(StreamWriter writer)
+    {
+      using (writer)
+      {
+        writer.Empty().Should().NotBeNull().And.BeSameAs(writer);
+        writer.BaseStream.Should().HaveLength(0).And.HavePosition(0);
+      }
     }
   }
 
@@ -77,6 +81,16 @@ public sealed class StreamWriterExtensionsTest : UnitTest
   [Fact]
   public void Rewind_Method()
   {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+
+      Validate(Stream.Null.ToStreamWriter());
+      Validate(RandomStream.ToStreamWriter());
+    }
+
+    return;
+
     void Validate(StreamWriter writer)
     {
       using (writer)
@@ -86,14 +100,6 @@ public sealed class StreamWriterExtensionsTest : UnitTest
         writer.Rewind().Should().NotBeNull().And.BeSameAs(writer);
         writer.BaseStream.Should().HavePosition(0);
       }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-
-      Validate(Stream.Null.ToStreamWriter());
-      Validate(RandomStream.ToStreamWriter());
     }
   }
 }

@@ -26,17 +26,6 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
   [Fact]
   public void IsStart_Method()
   {
-    void Validate(BinaryWriter writer)
-    {
-      using (writer)
-      {
-        writer.BaseStream.MoveToStart();
-        writer.IsStart().Should().BeTrue();
-        writer.BaseStream.MoveToEnd();
-        writer.IsStart().Should().Be(writer.BaseStream.Length == 0);
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
@@ -47,6 +36,19 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       Validate(RandomStream.ToBinaryWriter());
       Validate(WriteOnlyStream.ToBinaryWriter());
     }
+
+    return;
+
+    static void Validate(BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.BaseStream.MoveToStart();
+        writer.IsStart().Should().BeTrue();
+        writer.BaseStream.MoveToEnd();
+        writer.IsStart().Should().Be(writer.BaseStream.Length == 0);
+      }
+    }
   }
 
   /// <summary>
@@ -55,17 +57,6 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
   [Fact]
   public void IsEnd_Method()
   {
-    void Validate(BinaryWriter writer)
-    {
-      using (writer)
-      {
-        writer.BaseStream.MoveToStart();
-        writer.IsEnd().Should().Be(writer.BaseStream.Length == 0);
-        writer.BaseStream.MoveToEnd();
-        writer.IsEnd().Should().BeTrue();
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
@@ -76,6 +67,19 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       Validate(RandomStream.ToBinaryWriter());
       Validate(WriteOnlyStream.ToBinaryWriter());
     }
+
+    return;
+
+    static void Validate(BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.BaseStream.MoveToStart();
+        writer.IsEnd().Should().Be(writer.BaseStream.Length == 0);
+        writer.BaseStream.MoveToEnd();
+        writer.IsEnd().Should().BeTrue();
+      }
+    }
   }
 
   /// <summary>
@@ -84,14 +88,6 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    void Validate(BinaryWriter writer, bool empty)
-    {
-      using (writer)
-      {
-        writer.IsEmpty().Should().Be(empty);
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
@@ -102,6 +98,16 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       Validate(RandomStream.ToBinaryWriter(), false);
       Validate(WriteOnlyStream.ToBinaryWriter(), true);
     }
+
+    return;
+
+    static void Validate(BinaryWriter writer, bool empty)
+    {
+      using (writer)
+      {
+        writer.IsEmpty().Should().Be(empty);
+      }
+    }
   }
 
   /// <summary>
@@ -110,15 +116,6 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    void Validate(BinaryWriter writer)
-    {
-      using (writer)
-      {
-        writer.Empty().Should().NotBeNull().And.BeSameAs(writer);
-        writer.BaseStream.Should().HaveLength(0).And.HavePosition(0);
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
@@ -128,6 +125,17 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       Validate(RandomStream.ToBinaryWriter());
       Validate(WriteOnlyStream.ToBinaryWriter());
     }
+
+    return;
+
+    static void Validate(BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.Empty().Should().NotBeNull().And.BeSameAs(writer);
+        writer.BaseStream.Should().HaveLength(0).And.HavePosition(0);
+      }
+    }
   }
 
   /// <summary>
@@ -136,16 +144,6 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
   [Fact]
   public void Rewind_Method()
   {
-    void Validate(BinaryWriter writer)
-    {
-      using (writer)
-      {
-        writer.BaseStream.MoveToEnd();
-        writer.Rewind().Should().NotBeNull().And.BeSameAs(writer);
-        writer.BaseStream.Should().HavePosition(0);
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
@@ -155,6 +153,18 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       Validate(RandomStream.ToBinaryWriter());
       Validate(WriteOnlyStream.ToBinaryWriter());
     }
+
+    return;
+
+    static void Validate(BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.BaseStream.MoveToEnd();
+        writer.Rewind().Should().NotBeNull().And.BeSameAs(writer);
+        writer.BaseStream.Should().HavePosition(0);
+      }
+    }
   }
 
   /// <summary>
@@ -163,14 +173,6 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
   [Fact]
   public void TryFinallyClear_Method()
   {
-    void Validate(Stream stream)
-    {
-      using var writer = stream.ToBinaryWriter();
-
-      writer.TryFinallyClear(_ => { }).Should().NotBeNull().And.BeSameAs(writer);
-      writer.BaseStream.Should().HavePosition(0).And.HaveLength(0);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
@@ -181,6 +183,16 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       Validate(EmptyStream);
       Validate(RandomStream);
       Validate(WriteOnlyStream);
+    }
+
+    return;
+
+    static void Validate(Stream stream)
+    {
+      using var writer = stream.ToBinaryWriter();
+
+      writer.TryFinallyClear(_ => { }).Should().NotBeNull().And.BeSameAs(writer);
+      writer.BaseStream.Should().HavePosition(0).And.HaveLength(0);
     }
   }
 

@@ -64,12 +64,6 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    void Validate(XmlDocument xml)
-    {
-      xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
-      xml.HasChildNodes.Should().BeFalse();
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
@@ -79,6 +73,14 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
       var xml = new XmlDocument();
       xml.AppendChild(xml.CreateElement("root"));
       Validate(xml);
+    }
+
+    return;
+
+    static void Validate(XmlDocument xml)
+    {
+      xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
+      xml.HasChildNodes.Should().BeFalse();
     }
   }
 

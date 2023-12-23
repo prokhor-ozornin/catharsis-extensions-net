@@ -54,18 +54,20 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    void Validate(NameValueCollection collection)
-    {
-      collection.Empty().Should().NotBeNull().And.BeSameAs(collection);
-      collection.Count.Should().Be(0);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
       Validate(new NameValueCollection());
       Validate(new NameValueCollection().AddRange(RandomObjects.Select(element => (element.GetType().FullName, element))));
+    }
+
+    return;
+
+    static void Validate(NameValueCollection collection)
+    {
+      collection.Empty().Should().NotBeNull().And.BeSameAs(collection);
+      collection.Count.Should().Be(0);
     }
   }
 

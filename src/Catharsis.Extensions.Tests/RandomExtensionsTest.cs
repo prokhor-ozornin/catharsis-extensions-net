@@ -872,14 +872,6 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void RangeSequence_Method()
   {
-    void Validate(Range range, int? max)
-    {
-      range.Start.IsFromEnd.Should().BeFalse();
-      range.Start.Value.Should().Be(0);
-      range.End.IsFromEnd.Should().BeFalse();
-      range.End.Value.Should().BeInRange(0, max ?? int.MaxValue);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RandomExtensions.RangeSequence(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
@@ -890,6 +882,16 @@ public sealed class RandomExtensionsTest : UnitTest
       Randomizer.RangeSequence(0).Should().NotBeSameAs(Randomizer.RangeSequence(0)).And.BeEmpty();
       Randomizer.RangeSequence(count, 0).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => Validate(element, 0));
       Randomizer.RangeSequence(count).Should().NotBeNull().And.NotBeSameAs(Randomizer.RangeSequence(count)).And.HaveCount(count).And.AllSatisfy(element => Validate(element, null));
+    }
+
+    return;
+
+    static void Validate(Range range, int? max)
+    {
+      range.Start.IsFromEnd.Should().BeFalse();
+      range.Start.Value.Should().Be(0);
+      range.End.IsFromEnd.Should().BeFalse();
+      range.End.Value.Should().BeInRange(0, max ?? int.MaxValue);
     }
   }
 
@@ -1055,13 +1057,6 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void FilePathSequence_Method()
   {
-    void Validate(string path, string directory)
-    {
-      var file = Path.GetFileName(path);
-      path.Should().NotBeNullOrWhiteSpace().And.NotBe(Randomizer.FilePath()).And.Be(Path.Combine(directory, file));
-      file.Should().MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RandomExtensions.FilePathSequence(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
@@ -1074,6 +1069,15 @@ public sealed class RandomExtensionsTest : UnitTest
 
       var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
       Randomizer.FilePathSequence(count, currentDirectory).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(path, currentDirectory.FullName));
+    }
+
+    return;
+
+    void Validate(string path, string directory)
+    {
+      var file = Path.GetFileName(path);
+      path.Should().NotBeNullOrWhiteSpace().And.NotBe(Randomizer.FilePath()).And.Be(Path.Combine(directory, file));
+      file.Should().MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
     }
   }
 
@@ -1103,13 +1107,6 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void DirectoryPathSequence_Method()
   {
-    void Validate(string directory, string path)
-    {
-      var file = Path.GetFileName(path);
-      path.Should().NotBeNullOrWhiteSpace().And.NotBe(Randomizer.DirectoryPath()).And.Be(Path.Combine(directory, file));
-      file.Should().HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RandomExtensions.DirectoryPathSequence(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
@@ -1124,6 +1121,15 @@ public sealed class RandomExtensionsTest : UnitTest
       var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
       Randomizer.DirectoryPathSequence(count, currentDirectory).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(currentDirectory.FullName, path));
     }
+
+    return;
+
+    void Validate(string directory, string path)
+    {
+      var file = Path.GetFileName(path);
+      path.Should().NotBeNullOrWhiteSpace().And.NotBe(Randomizer.DirectoryPath()).And.Be(Path.Combine(directory, file));
+      file.Should().HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
+    }
   }
 
   /// <summary>
@@ -1132,21 +1138,6 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Directory_Method()
   {
-    void Validate(DirectoryInfo directory, string path)
-    {
-      directory.TryFinallyDelete(directory =>
-      {
-        directory.Should().NotBeNull();
-        directory.Exists.Should().BeTrue();
-        directory.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
-        directory.LastAccessTime.Should().BeOnOrAfter(DateTime.UtcNow);
-        directory.LinkTarget.Should().BeNull();
-        directory.FullName.Should().Be(Path.Combine(path, directory.Name));
-        directory.Name.Should().HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
-        (directory.Attributes & FileAttributes.Directory).Should().Be(FileAttributes.Directory);
-      });
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RandomExtensions.Directory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
@@ -1156,15 +1147,10 @@ public sealed class RandomExtensionsTest : UnitTest
       var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
       Validate(currentDirectory, currentDirectory.FullName);
     }
-  }
 
-  /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.DirectorySequence(Random, int, DirectoryInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DirectorySequence_Method()
-  {
-    void Validate(DirectoryInfo directory, string path)
+    return;
+
+    static void Validate(DirectoryInfo directory, string path)
     {
       directory.TryFinallyDelete(directory =>
       {
@@ -1178,7 +1164,14 @@ public sealed class RandomExtensionsTest : UnitTest
         (directory.Attributes & FileAttributes.Directory).Should().Be(FileAttributes.Directory);
       });
     }
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.DirectorySequence(Random, int, DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DirectorySequence_Method()
+  {
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RandomExtensions.DirectorySequence(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
@@ -1193,6 +1186,23 @@ public sealed class RandomExtensionsTest : UnitTest
       var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
       Randomizer.DirectorySequence(count, currentDirectory).Should().NotBeNull().And.NotBeSameAs(Randomizer.DirectorySequence(count, currentDirectory)).And.HaveCount(count).And.AllSatisfy(directory => Validate(directory, currentDirectory.FullName));
     }
+
+    return;
+
+    static void Validate(DirectoryInfo directory, string path)
+    {
+      directory.TryFinallyDelete(directory =>
+      {
+        directory.Should().NotBeNull();
+        directory.Exists.Should().BeTrue();
+        directory.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
+        directory.LastAccessTime.Should().BeOnOrAfter(DateTime.UtcNow);
+        directory.LinkTarget.Should().BeNull();
+        directory.FullName.Should().Be(Path.Combine(path, directory.Name));
+        directory.Name.Should().HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
+        (directory.Attributes & FileAttributes.Directory).Should().Be(FileAttributes.Directory);
+      });
+    }
   }
 
   /// <summary>
@@ -1201,22 +1211,6 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void File_Method()
   {
-    void Validate(FileInfo file, string path)
-    {
-      file.TryFinallyDelete(file =>
-      {
-        file.Should().NotBeNull();
-        file.Exists.Should().BeTrue();
-        file.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
-        file.LastAccessTime.Should().BeOnOrAfter(DateTime.UtcNow);
-        file.LinkTarget.Should().BeNull();
-        file.FullName.Should().Be(Path.Combine(path, file.FullName));
-        file.Name.Should().MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
-        file.Length.Should().Be(0);
-        file.IsReadOnly.Should().BeFalse();
-      });
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RandomExtensions.File(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
@@ -1226,15 +1220,10 @@ public sealed class RandomExtensionsTest : UnitTest
       var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
       Validate(Randomizer.File(currentDirectory), currentDirectory.FullName);
     }
-  }
 
-  /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.FileSequence(Random, int, DirectoryInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void FileSequence_Method()
-  {
-    void Validate(FileInfo file, string path)
+    return;
+
+    static void Validate(FileInfo file, string path)
     {
       file.TryFinallyDelete(file =>
       {
@@ -1249,7 +1238,14 @@ public sealed class RandomExtensionsTest : UnitTest
         file.IsReadOnly.Should().BeFalse();
       });
     }
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.FileSequence(Random, int, DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FileSequence_Method()
+  {
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RandomExtensions.FileSequence(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
@@ -1263,6 +1259,24 @@ public sealed class RandomExtensionsTest : UnitTest
 
       var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
       Randomizer.FileSequence(count, currentDirectory).Should().NotBeNull().And.NotBeSameAs(Randomizer.FileSequence(count, currentDirectory)).And.HaveCount(count).And.AllSatisfy(file => Validate(file, currentDirectory.FullName));
+    }
+
+    return;
+
+    static void Validate(FileInfo file, string path)
+    {
+      file.TryFinallyDelete(file =>
+      {
+        file.Should().NotBeNull();
+        file.Exists.Should().BeTrue();
+        file.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
+        file.LastAccessTime.Should().BeOnOrAfter(DateTime.UtcNow);
+        file.LinkTarget.Should().BeNull();
+        file.FullName.Should().Be(Path.Combine(path, file.FullName));
+        file.Name.Should().MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
+        file.Length.Should().Be(0);
+        file.IsReadOnly.Should().BeFalse();
+      });
     }
   }
 
@@ -1284,6 +1298,30 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void BinaryFileAsync_Method()
   {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+      AssertionExtensions.Should(() => Randomizer.BinaryFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
+
+      /*const int size = 4096;
+
+      var tempPath = Path.GetTempPath();
+
+      Validate(Randomizer.BinaryFile(int.MinValue), tempPath
+
+                                     //int.MinValue, null);
+
+
+      Validate( int.MinValue);
+      Validate(0);
+      Validate(size);
+      Validate(size, 0, 0);
+      Validate(size, byte.MinValue, byte.MinValue);
+      Validate(size, byte.MaxValue, byte.MaxValue);*/
+    }
+
+    return;
+
     void Validate(FileInfo file, string path, int size, byte? min, byte? max)
     {
       AssertionExtensions.Should(() => Randomizer.BinaryFileAsync(0, min, max, path.ToDirectory(), Cancellation)).ThrowExactlyAsync<TaskCanceledException>().Await();
@@ -1318,28 +1356,6 @@ public sealed class RandomExtensionsTest : UnitTest
       });
     }
 
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
-      AssertionExtensions.Should(() => Randomizer.BinaryFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
-
-      /*const int size = 4096;
-
-      var tempPath = Path.GetTempPath();
-
-      Validate(Randomizer.BinaryFile(int.MinValue), tempPath
-
-                                     //int.MinValue, null);
-
-
-      Validate( int.MinValue);
-      Validate(0);
-      Validate(size);
-      Validate(size, 0, 0);
-      Validate(size, byte.MinValue, byte.MinValue);
-      Validate(size, byte.MaxValue, byte.MaxValue);*/
-    }
-
     throw new NotImplementedException();
   }
 
@@ -1361,6 +1377,29 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void BinaryFileInRangeAsync_Method()
   {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => RandomExtensions.BinaryFileInRangeAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+      AssertionExtensions.Should(() => Randomizer.BinaryFileInRangeAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
+
+      const int size = 4096;
+
+      Validate(0);
+      Validate(size);
+
+      //Validate(size, Range.All);
+      //Validate(size, ..int.MaxValue);
+      Validate(size, ..0);
+      Validate(size, ..byte.MinValue);
+      Validate(size, byte.MaxValue..byte.MaxValue);
+
+      //Validate(size, ..0, Range.All);
+      //Validate(size, ..0, ..byte.MaxValue);
+      Validate(size, ..0, 1..2);
+    }
+
+    return;
+
     void Validate(int size, params Range[] ranges)
     {
       AssertionExtensions.Should(() => Randomizer.BinaryFileInRangeAsync(0, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
@@ -1390,27 +1429,6 @@ public sealed class RandomExtensionsTest : UnitTest
           bytes.Should().BeSubsetOf(range);
         }
       });
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.BinaryFileInRangeAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
-      AssertionExtensions.Should(() => Randomizer.BinaryFileInRangeAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
-
-      const int size = 4096;
-
-      Validate(0);
-      Validate(size);
-
-      //Validate(size, Range.All);
-      //Validate(size, ..int.MaxValue);
-      Validate(size, ..0);
-      Validate(size, ..byte.MinValue);
-      Validate(size, byte.MaxValue..byte.MaxValue);
-
-      //Validate(size, ..0, Range.All);
-      //Validate(size, ..0, ..byte.MaxValue);
-      Validate(size, ..0, 1..2);
     }
 
     throw new NotImplementedException();
@@ -1676,17 +1694,6 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void MemoryStreamAsync_Method()
   {
-    void Validate(MemoryStream stream, int count)
-    {
-      stream.Length.Should().Be(count);
-      stream.Position.Should().Be(0);
-      stream.CanRead.Should().BeTrue();
-      stream.CanWrite.Should().BeTrue();
-      stream.CanSeek.Should().BeTrue();
-      stream.CanTimeout.Should().BeFalse();
-      stream.Capacity.Should().Be(count);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RandomExtensions.MemoryStreamAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
@@ -1724,6 +1731,19 @@ public sealed class RandomExtensionsTest : UnitTest
         stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
       }
     }
+
+    return;
+
+    static void Validate(MemoryStream stream, int count)
+    {
+      stream.Length.Should().Be(count);
+      stream.Position.Should().Be(0);
+      stream.CanRead.Should().BeTrue();
+      stream.CanWrite.Should().BeTrue();
+      stream.CanSeek.Should().BeTrue();
+      stream.CanTimeout.Should().BeFalse();
+      stream.Capacity.Should().Be(count);
+    }
   }
 
   /// <summary>
@@ -1744,17 +1764,6 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void MemoryStreamInRangeAsync_Method()
   {
-    void Validate(MemoryStream stream, int count)
-    {
-      stream.Length.Should().Be(count);
-      stream.Position.Should().Be(0);
-      stream.CanRead.Should().BeTrue();
-      stream.CanWrite.Should().BeTrue();
-      stream.CanSeek.Should().BeTrue();
-      stream.CanTimeout.Should().BeFalse();
-      stream.Capacity.Should().Be(count);
-    }
-
     using (new AssertionScope())
     {
       const int count = 1000;
@@ -1790,6 +1799,19 @@ public sealed class RandomExtensionsTest : UnitTest
 
         stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
       }
+    }
+
+    return;
+
+    static void Validate(MemoryStream stream, int count)
+    {
+      stream.Length.Should().Be(count);
+      stream.Position.Should().Be(0);
+      stream.CanRead.Should().BeTrue();
+      stream.CanWrite.Should().BeTrue();
+      stream.CanSeek.Should().BeTrue();
+      stream.CanTimeout.Should().BeFalse();
+      stream.Capacity.Should().Be(count);
     }
   }
 

@@ -511,6 +511,16 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Print_BinaryWriter_Method()
   {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().Print((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+
+      Validate(EmptyStream.ToBinaryWriter());
+    }
+
+    return;
+
     void Validate(BinaryWriter writer)
     {
       using (writer)
@@ -523,14 +533,6 @@ public sealed class ObjectExtensionsTest : UnitTest
 
         reader.ToText().Should().Be(instance.ToStateString());
       }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-      AssertionExtensions.Should(() => new object().Print((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-
-      Validate(EmptyStream.ToBinaryWriter());
     }
   }
 

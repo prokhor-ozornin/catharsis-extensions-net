@@ -89,6 +89,16 @@ public sealed class FileInfoExtensionsTest : UnitTest
   [Fact]
   public void Lines_Method()
   {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => FileInfoExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+
+      Validate(null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
+    }
+
+    return;
+
     void Validate(Encoding encoding)
     {
       RandomEmptyFile.TryFinallyDelete(file =>
@@ -104,14 +114,6 @@ public sealed class FileInfoExtensionsTest : UnitTest
         file.Lines(encoding).Should().NotBeNull().And.NotBeSameAs(file.Lines(encoding)).And.Equal(lines);
       });
     }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => FileInfoExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
-
-      Validate(null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
-    }
   }
 
   /// <summary>
@@ -120,6 +122,16 @@ public sealed class FileInfoExtensionsTest : UnitTest
   [Fact]
   public void LinesAsync_Method()
   {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
+
+      Validate(null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
+    }
+
+    return;
+
     void Validate(Encoding encoding)
     {
       RandomEmptyFile.TryFinallyDelete(file =>
@@ -135,14 +147,6 @@ public sealed class FileInfoExtensionsTest : UnitTest
         lines.Join(Environment.NewLine).WriteToAsync(file, encoding).Await();
         file.LinesAsync(encoding).ToArray().Should().NotBeNull().And.Equal(lines);
       });
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
-
-      Validate(null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
     }
   }
 
@@ -164,15 +168,6 @@ public sealed class FileInfoExtensionsTest : UnitTest
   [Fact]
   public void TryFinallyDelete_Method()
   {
-    void Validate(FileInfo file)
-    {
-      var bytes = RandomBytes;
-
-      file.Exists.Should().BeFalse();
-      file.TryFinallyDelete(file => bytes.WriteToAsync(file).Await()).Should().NotBeNull().And.BeSameAs(file);
-      file.Exists.Should().BeFalse();
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((FileInfo) null).TryFinallyDelete(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("file");
@@ -181,6 +176,17 @@ public sealed class FileInfoExtensionsTest : UnitTest
       Validate(RandomFakeFile);
       Validate(RandomEmptyFile);
       Validate(RandomNonEmptyFile);
+    }
+
+    return;
+
+    void Validate(FileInfo file)
+    {
+      var bytes = RandomBytes;
+
+      file.Exists.Should().BeFalse();
+      file.TryFinallyDelete(file => bytes.WriteToAsync(file).Await()).Should().NotBeNull().And.BeSameAs(file);
+      file.Exists.Should().BeFalse();
     }
   }
 

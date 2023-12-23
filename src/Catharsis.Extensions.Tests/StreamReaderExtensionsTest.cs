@@ -26,17 +26,6 @@ public sealed class StreamReaderExtensionsTest : UnitTest
   [Fact]
   public void IsStart_Method()
   {
-    void Validate(StreamReader reader)
-    {
-      using (reader)
-      {
-        reader.BaseStream.MoveToStart();
-        reader.IsStart().Should().BeTrue();
-        reader.BaseStream.MoveToEnd();
-        reader.IsStart().Should().Be(reader.BaseStream.Length == 0);
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((StreamReader) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
@@ -47,6 +36,19 @@ public sealed class StreamReaderExtensionsTest : UnitTest
       Validate(RandomStream.ToStreamReader());
       Validate(RandomReadOnlyStream.ToStreamReader());
     }
+
+    return;
+
+    static void Validate(StreamReader reader)
+    {
+      using (reader)
+      {
+        reader.BaseStream.MoveToStart();
+        reader.IsStart().Should().BeTrue();
+        reader.BaseStream.MoveToEnd();
+        reader.IsStart().Should().Be(reader.BaseStream.Length == 0);
+      }
+    }
   }
 
   /// <summary>
@@ -55,14 +57,6 @@ public sealed class StreamReaderExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    void Validate(StreamReader reader, bool empty)
-    {
-      using (reader)
-      {
-        reader.IsEmpty().Should().Be(empty);
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((StreamReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
@@ -73,6 +67,16 @@ public sealed class StreamReaderExtensionsTest : UnitTest
       Validate(RandomReadOnlyStream.ToStreamReader(), false);
       Validate(RandomReadOnlyForwardStream.ToStreamReader(), false);
     }
+
+    return;
+
+    static void Validate(StreamReader reader, bool empty)
+    {
+      using (reader)
+      {
+        reader.IsEmpty().Should().Be(empty);
+      }
+    }
   }
 
   /// <summary>
@@ -81,7 +85,17 @@ public sealed class StreamReaderExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    void Validate(StreamReader reader)
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((StreamReader) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      Validate(Stream.Null.ToStreamReader());
+      Validate(RandomStream.ToStreamReader());
+    }
+
+    return;
+
+    static void Validate(StreamReader reader)
     {
       using (reader)
       {
@@ -89,14 +103,6 @@ public sealed class StreamReaderExtensionsTest : UnitTest
         reader.BaseStream.Should().HaveLength(0).And.HavePosition(0);
         reader.Peek().Should().Be(-1);
       }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StreamReader) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-      Validate(Stream.Null.ToStreamReader());
-      Validate(RandomStream.ToStreamReader());
     }
   }
 
@@ -106,7 +112,17 @@ public sealed class StreamReaderExtensionsTest : UnitTest
   [Fact]
   public void Rewind_Method()
   {
-    void Validate(StreamReader reader)
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((StreamReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      Validate(Stream.Null.ToStreamReader());
+      Validate(RandomStream.ToStreamReader());
+    }
+
+    return;
+
+    static void Validate(StreamReader reader)
     {
       using (reader)
       {
@@ -114,14 +130,6 @@ public sealed class StreamReaderExtensionsTest : UnitTest
         reader.Rewind().Should().NotBeNull().And.BeSameAs(reader);
         reader.BaseStream.Should().HavePosition(0);
       }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StreamReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-      Validate(Stream.Null.ToStreamReader());
-      Validate(RandomStream.ToStreamReader());
     }
   }
 }

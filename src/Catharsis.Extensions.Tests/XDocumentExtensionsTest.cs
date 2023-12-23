@@ -56,18 +56,20 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    void Validate(XDocument xml)
-    {
-      xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
-      xml.Nodes().Should().BeEmpty();
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
       Validate(new XDocument());
       Validate(new XDocument(new XElement("root")));
+    }
+
+    return;
+
+    static void Validate(XDocument xml)
+    {
+      xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
+      xml.Nodes().Should().BeEmpty();
     }
   }
 

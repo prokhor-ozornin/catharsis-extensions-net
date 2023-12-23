@@ -16,17 +16,6 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void IsEnd_Method()
   {
-    void Validate(StreamReader reader)
-    {
-      using (reader)
-      {
-        reader.BaseStream.MoveToStart();
-        reader.IsEnd().Should().Be(reader.BaseStream.Length == 0);
-        reader.ToBytesAsync().Await();
-        reader.IsEnd().Should().BeTrue();
-      }
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
@@ -36,6 +25,19 @@ public sealed class TextReaderExtensionsTest : UnitTest
       Validate(EmptyStream.ToStreamReader());
       Validate(RandomStream.ToStreamReader());
       Validate(RandomReadOnlyStream.ToStreamReader());
+    }
+
+    return;
+
+    static void Validate(StreamReader reader)
+    {
+      using (reader)
+      {
+        reader.BaseStream.MoveToStart();
+        reader.IsEnd().Should().Be(reader.BaseStream.Length == 0);
+        reader.ToBytesAsync().Await();
+        reader.IsEnd().Should().BeTrue();
+      }
     }
   }
 

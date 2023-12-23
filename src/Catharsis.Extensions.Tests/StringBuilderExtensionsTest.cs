@@ -47,18 +47,20 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    void Validate(StringBuilder builder)
-    {
-      builder.Empty().Should().NotBeNull().And.BeSameAs(builder);
-      builder.Length.Should().Be(0);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((StringBuilder) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
       Validate(new StringBuilder());
       Validate(RandomString.ToStringBuilder());
+    }
+
+    return;
+
+    static void Validate(StringBuilder builder)
+    {
+      builder.Empty().Should().NotBeNull().And.BeSameAs(builder);
+      builder.Length.Should().Be(0);
     }
   }
 
@@ -134,6 +136,16 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   [Fact]
   public void ToStringWriter_Method()
   {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringBuilderExtensions.ToStringWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+
+      Validate(null);
+      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
+    }
+
+    return;
+
     void Validate(IFormatProvider format)
     {
       var value = RandomString;
@@ -146,14 +158,6 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       writer.FormatProvider.Should().Be(format);
       writer.Write(value);
       builder.ToString().Should().Be(writer.ToString()).And.Be(value);
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringBuilderExtensions.ToStringWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
-
-      Validate(null);
-      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
     }
   }
 
