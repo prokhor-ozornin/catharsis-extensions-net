@@ -211,7 +211,7 @@ public static class DateTimeExtensions
   /// <returns>Formatted date/time value as a string.</returns>
   public static string ToRfcString(this DateTime date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
 
-#if NET7_0_OR_GREATER
+#if NET8_0
   /// <summary>
   ///   <para></para>
   /// </summary>

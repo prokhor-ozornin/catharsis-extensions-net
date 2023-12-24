@@ -1099,6 +1099,17 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToFrozenSet{T}(IEnumerable{T}, IEqualityComparer{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToFrozenSet_Method()
+  {
+    AssertionExtensions.Should(() => IEnumerableExtensions.ToFrozenSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToPriorityQueue{TElement, TPriority}(IEnumerable{(TElement Element, TPriority Priority)}, IComparer{TPriority})"/> method.</para>
   /// </summary>
   [Fact]

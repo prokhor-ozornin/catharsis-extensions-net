@@ -205,7 +205,7 @@ public static class DateTimeOffsetExtensions
   /// <returns></returns>
   public static string ToRfcString(this DateTimeOffset date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
 
-#if NET7_0_OR_GREATER
+#if NET8_0
   /// <summary>
   ///   <para></para>
   /// </summary>

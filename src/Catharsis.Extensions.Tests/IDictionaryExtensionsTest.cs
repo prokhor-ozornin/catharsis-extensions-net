@@ -29,4 +29,15 @@ public sealed class IDictionaryExtensionsTest : UnitTest
 
     throw new NotImplementedException();
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.ToFrozenDictionary{TKey, TValue}(IDictionary{TKey, TValue}, IEqualityComparer{TKey})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToFrozenDictionary_Method()
+  {
+    AssertionExtensions.Should(() => IDictionaryExtensions.ToFrozenDictionary<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+
+    throw new NotImplementedException();
+  }
 }

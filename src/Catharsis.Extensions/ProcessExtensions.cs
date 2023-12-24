@@ -186,7 +186,7 @@ public static class ProcessExtensions
     return destination;
   }
 
-  #if NET7_0_OR_GREATER
+  #if NET8_0
   /// <summary>
   ///   <para></para>
   /// </summary>

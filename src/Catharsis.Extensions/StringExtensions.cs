@@ -1656,7 +1656,7 @@ public static class StringExtensions
     return text.Hash(algorithm);
   }
 
-#if NET7_0_OR_GREATER
+#if NET8_0
   /// <summary>
   ///   <para></para>
   /// </summary>

@@ -2088,7 +2088,7 @@ public static class RandomExtensions
   /// <exception cref="ArgumentNullException"></exception>
   public static Stream StreamInRange(this Random random, params Range[] ranges) => random is not null ? new RandomRangeStream(ranges) : throw new ArgumentNullException(nameof(random));
 
-#if NET7_0_OR_GREATER
+#if NET8_0
   /// <summary>
   ///   <para></para>
   /// </summary>

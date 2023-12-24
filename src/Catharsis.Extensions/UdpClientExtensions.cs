@@ -149,7 +149,7 @@ public static class UdpClientExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-    #if NET7_0_OR_GREATER
+    #if NET8_0
       await udp.SendAsync(bytes.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
     #else
       var datagram = bytes.AsArray();
@@ -269,7 +269,7 @@ public static class UdpClientExtensions
 
       public async ValueTask<bool> MoveNextAsync()
       {
-        #if NET7_0_OR_GREATER
+        #if NET8_0
           var buffer = (await parent.client.ReceiveAsync(cancellation).ConfigureAwait(false)).Buffer;
         #else
           var buffer = (await parent.client.ReceiveAsync().ConfigureAwait(false)).Buffer;

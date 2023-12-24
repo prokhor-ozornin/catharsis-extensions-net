@@ -5,8 +5,9 @@ using System.Xml;
 using System.Diagnostics;
 using System.Security;
 
-#if NET7_0_OR_GREATER
+#if NET8_0
 using System.Collections.Immutable;
+using System.Collections.Frozen;
 #endif
 
 namespace Catharsis.Extensions;
@@ -653,7 +654,7 @@ public static class IEnumerableExtensions
     if (bytes is null)
       throw new ArgumentNullException(nameof(bytes));
 
-    #if NET7_0_OR_GREATER
+    #if NET8_0
     return Convert.ToHexString(bytes.AsArray());
     #else
       return BitConverter.ToString(bytes.AsArray()).Replace("-", "");
@@ -1107,7 +1108,7 @@ public static class IEnumerableExtensions
     return bytes.Hash(algorithm);
   }
 
-#if NET7_0_OR_GREATER
+#if NET8_0
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -1128,6 +1129,15 @@ public static class IEnumerableExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static IReadOnlySet<T> ToReadOnlySet<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence?.ToHashSet(comparer) ?? throw new ArgumentNullException(nameof(sequence));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  public static FrozenSet<T> ToFrozenSet<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence is not null ? FrozenSet.ToFrozenSet(sequence, comparer) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
