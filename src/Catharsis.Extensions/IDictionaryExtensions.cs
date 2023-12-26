@@ -16,6 +16,30 @@ public static class IDictionaryExtensions
   /// <typeparam name="TKey"></typeparam>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="dictionary"></param>
+  /// <param name="key"></param>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static TValue GetOrSet<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
+  {
+    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+
+    if (dictionary.TryGetValue(key, out var result))
+    {
+      return result;
+    }
+
+    dictionary[key] = value;
+
+    return value;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
