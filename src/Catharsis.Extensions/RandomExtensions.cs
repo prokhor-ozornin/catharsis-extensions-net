@@ -980,7 +980,7 @@ public static class RandomExtensions
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (types is null) throw new ArgumentNullException(nameof(types));
 
-    return types.IsEmpty() ? new object() : types.Random().Instance();
+    return types.IsEmpty() ? new object() : types.Random().Instance<object>();
   }
 
   /// <summary>

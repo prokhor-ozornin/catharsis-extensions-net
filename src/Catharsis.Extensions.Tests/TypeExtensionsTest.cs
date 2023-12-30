@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Reflection;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -124,6 +125,17 @@ public sealed class TypeExtensionsTest : UnitTest
   public void Implementations_Method()
   {
     AssertionExtensions.Should(() => TypeExtensions.Implementations(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TypeExtensions.Implementors(Type, Assembly)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Implementors_Method()
+  {
+    AssertionExtensions.Should(() => TypeExtensions.Implementors(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     throw new NotImplementedException();
   }
@@ -364,8 +376,8 @@ public sealed class TypeExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="TypeExtensions.Instance(Type, IEnumerable{object})"/></description></item>
-  ///     <item><description><see cref="TypeExtensions.Instance(Type, object[])"/></description></item>
+  ///     <item><description><see cref="TypeExtensions.Instance{T}(Type, IEnumerable{object})"/></description></item>
+  ///     <item><description><see cref="TypeExtensions.Instance{T}(Type, object[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -373,7 +385,7 @@ public sealed class TypeExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.Instance(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => TypeExtensions.Instance<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
       /*typeof(TestObject).Instance().Should().NotBeNull();
       typeof(TestObject).Instance(Enumerable.Empty<KeyValuePair<string, object>>().Should().NotBeNull());
@@ -390,7 +402,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.Instance(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => TypeExtensions.Instance<object>(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     }
 

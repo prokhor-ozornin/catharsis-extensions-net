@@ -95,7 +95,7 @@ public static class TypeExtensions
   public static bool IsDerivedFrom<T>(this Type type) => type.IsDerivedFrom(typeof(T));
 
   /// <summary>
-  ///   <para>Determines whether a <see cref="ToType"/> implements specified interface.</para>
+  ///   <para>Determines whether a <paramref name="type"/> implements specified interface.</para>
   /// </summary>
   /// <param name="type">The type to evaluate.</param>
   /// <param name="interfaceType">Interface that must be implemented by <paramref name="type"/>.</param>
@@ -112,7 +112,7 @@ public static class TypeExtensions
   }
 
   /// <summary>
-  ///   <para>Determines whether a <see cref="ToType"/> implements specified interface.</para>
+  ///   <para>Determines whether a <paramref name="type"/> implements specified interface.</para>
   /// </summary>
   /// <typeparam name="T">Interface that must be implemented by <paramref name="type"/>.</typeparam>
   /// <param name="type">The type to evaluate.</param>
@@ -122,7 +122,7 @@ public static class TypeExtensions
   public static bool Implements<T>(this Type type) => type?.Implements(typeof(T)) ?? throw new ArgumentNullException(nameof(type));
 
   /// <summary>
-  ///   <para>Returns enumerator to iterate over the set of specified <see cref="ToType"/>'s base types and implemented interfaces.</para>
+  ///   <para>Returns enumerator to iterate over the set of specified <paramref name="type"/>'s base types and implemented interfaces.</para>
   /// </summary>
   /// <param name="type">Type, whose ancestors (base types up the inheritance hierarchy) and implemented interfaces are returned.</param>
   /// <returns>Enumerator to iterate through <paramref name="type"/>'s base types and interfaces, which it implements.</returns>
@@ -150,7 +150,21 @@ public static class TypeExtensions
   }
 
   /// <summary>
-  ///   <para>Determines whether there is a named field, declared within a specified <see cref="ToType"/>.</para>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="type"></param>
+  /// <param name="assembly"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IEnumerable<Type> Implementors(this Type type, Assembly assembly = null)
+  {
+    if (type is null) throw new ArgumentNullException(nameof(type));
+
+    return assembly is not null ? assembly.GetTypes().Where(type.IsAssignableFrom) : AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(type.IsAssignableFrom);
+  }
+
+  /// <summary>
+  ///   <para>Determines whether there is a named field, declared within a specified <paramref name="type"/>.</para>
   /// </summary>
   /// <param name="type">Type whose field is to be located.</param>
   /// <param name="name">Unique name of field.</param>
@@ -159,7 +173,7 @@ public static class TypeExtensions
   public static bool HasField(this Type type, string name) => AnyField(type, name) is not null;
 
   /// <summary>
-  ///   <para>Determines whether there is a named property, declared within a specified <see cref="ToType"/>.</para>
+  ///   <para>Determines whether there is a named property, declared within a specified <paramref name="type"/>.</para>
   /// </summary>
   /// <param name="type">Type whose property is to be located.</param>
   /// <param name="name">Unique name of property.</param>
@@ -168,7 +182,7 @@ public static class TypeExtensions
   public static bool HasProperty(this Type type, string name) => AnyProperty(type, name) is not null;
 
   /// <summary>
-  ///   <para>Determines whether there is a named method, declared within a specified <see cref="ToType"/>.</para>
+  ///   <para>Determines whether there is a named method, declared within a specified <paramref name="type"/>.</para>
   /// </summary>
   /// <param name="type">Type whose method is to be located.</param>
   /// <param name="name">Unique name of method.</param>
@@ -188,7 +202,7 @@ public static class TypeExtensions
   public static bool HasMethod(this Type type, string name, params Type[] arguments) => AnyMethod(type, name, arguments) is not null;
 
   /// <summary>
-  ///   <para>Searches for a named event, declared within a specified <see cref="ToType"/>.</para>
+  ///   <para>Searches for a named event, declared within a specified <paramref name="type"/>.</para>
   ///   <para>Returns <see cref="EventInfo"/> object, representing either instance or static event with either private or public access level.</para>
   /// </summary>
   /// <param name="type">Type whose event is to be located.</param>
@@ -204,7 +218,7 @@ public static class TypeExtensions
   }
 
   /// <summary>
-  ///   <para>Searches for a named field, declared within a specified <see cref="ToType"/>.</para>
+  ///   <para>Searches for a named field, declared within a specified <paramref name="type"/>.</para>
   ///   <para>Returns <see cref="FieldInfo"/> object, representing either instance or static field with either private or public access level.</para>
   /// </summary>
   /// <param name="type">Type whose field is to be located.</param>
@@ -220,7 +234,7 @@ public static class TypeExtensions
   }
 
   /// <summary>
-  ///   <para>Searches for a named property, declared within a specified <see cref="ToType"/>.</para>
+  ///   <para>Searches for a named property, declared within a specified <paramref name="type"/>.</para>
   ///   <para>Returns <see cref="PropertyInfo"/> object, representing either instance or static property with either private or public access level.</para>
   /// </summary>
   /// <param name="type">Type whose property is to be located.</param>
@@ -236,7 +250,7 @@ public static class TypeExtensions
   }
 
   /// <summary>
-  ///   <para>Searches for a named method, declared within a specified <see cref="ToType"/>.</para>
+  ///   <para>Searches for a named method, declared within a specified <paramref name="type"/>.</para>
   ///   <para>Returns <see cref="MethodInfo"/> object, representing either instance or static method with either private or public access level.</para>
   /// </summary>
   /// <param name="type">Type whose method is to be located.</param>
@@ -303,7 +317,7 @@ public static class TypeExtensions
   /// <param name="arguments"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static object Instance(this Type type, IEnumerable<object> arguments = null) => type is not null ? Activator.CreateInstance(type, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, arguments?.AsArray(), null) : throw new ArgumentNullException(nameof(type));
+  public static T Instance<T>(this Type type, IEnumerable<object> arguments = null) => type is not null ? (T) Activator.CreateInstance(type, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance, null, arguments?.AsArray(), null) : throw new ArgumentNullException(nameof(type));
 
   /// <summary>
   ///   <para></para>
@@ -312,5 +326,5 @@ public static class TypeExtensions
   /// <param name="arguments"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static object Instance(this Type type, params object[] arguments) => type.Instance(arguments as IEnumerable<object>);
+  public static T Instance<T>(this Type type, params object[] arguments) => type.Instance<T>(arguments as IEnumerable<object>);
 }
