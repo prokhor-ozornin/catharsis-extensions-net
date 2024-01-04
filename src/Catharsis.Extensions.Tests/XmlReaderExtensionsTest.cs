@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Xml;
+using Catharsis.Commons;
 using FluentAssertions;
 using Xunit;
 
@@ -106,7 +107,7 @@ public sealed class XmlReaderExtensionsTest : UnitTest
   public void ToXDocumentAsync_Method()
   {
     AssertionExtensions.Should(() => ((XmlReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
-    AssertionExtensions.Should(() => Stream.Null.ToXmlReader().ToXDocumentAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToXmlReader().ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -130,7 +131,7 @@ public sealed class XmlReaderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((XmlReader) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-    /*var serialized = RandomString;
+    /*var serialized = Attributes.RandomString();
 
     var xml = new StringWriter().Use(writer =>
     {

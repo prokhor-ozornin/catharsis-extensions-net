@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -138,7 +139,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   public void ToBytesAsync_Method()
   {
     AssertionExtensions.Should(() => ((XDocument) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
-    AssertionExtensions.Should(() => new XDocument().ToBytesAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => new XDocument().ToBytesAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -161,7 +162,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   public void ToTextAsync_Method()
   {
     AssertionExtensions.Should(() => ((XDocument) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
-    AssertionExtensions.Should(() => new XDocument().ToTextAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => new XDocument().ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -208,7 +209,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void Serialize_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ((XDocument) null).Serialize(RandomFakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    AssertionExtensions.Should(() => ((XDocument) null).Serialize(Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     AssertionExtensions.Should(() => new XDocument().Serialize((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();

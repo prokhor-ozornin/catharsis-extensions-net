@@ -1,4 +1,5 @@
 using System.Collections.Specialized;
+using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -59,7 +60,7 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
       Validate(new NameValueCollection());
-      Validate(new NameValueCollection().AddRange(RandomObjects.Select(element => (element.GetType().FullName, element))));
+      Validate(new NameValueCollection().AddRange(Attributes.RandomObjects().Select(element => (element.GetType().FullName, element))));
     }
 
     return;

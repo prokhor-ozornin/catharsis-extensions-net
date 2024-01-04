@@ -1,4 +1,5 @@
-﻿using FluentAssertions.Execution;
+﻿using Catharsis.Commons;
+using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
 
@@ -29,12 +30,12 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsStart()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().IsStart()).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null.ToBinaryWriter());
-      Validate(EmptyStream.ToBinaryWriter());
-      Validate(RandomStream.ToBinaryWriter());
-      Validate(WriteOnlyStream.ToBinaryWriter());
+      Validate(Attributes.EmptyStream().ToBinaryWriter());
+      Validate(Attributes.RandomStream().ToBinaryWriter());
+      Validate(Attributes.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
@@ -60,12 +61,12 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEnd()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().IsEnd()).ThrowExactly<ArgumentException>();
 
       Validate(Stream.Null.ToBinaryWriter());
-      Validate(EmptyStream.ToBinaryWriter());
-      Validate(RandomStream.ToBinaryWriter());
-      Validate(WriteOnlyStream.ToBinaryWriter());
+      Validate(Attributes.EmptyStream().ToBinaryWriter());
+      Validate(Attributes.RandomStream().ToBinaryWriter());
+      Validate(Attributes.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
@@ -91,12 +92,12 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().IsEmpty()).ThrowExactly<ArgumentException>();
 
       Validate(Stream.Null.ToBinaryWriter(), true);
-      Validate(EmptyStream.ToBinaryWriter(), true);
-      Validate(RandomStream.ToBinaryWriter(), false);
-      Validate(WriteOnlyStream.ToBinaryWriter(), true);
+      Validate(Attributes.EmptyStream().ToBinaryWriter(), true);
+      Validate(Attributes.RandomStream().ToBinaryWriter(), false);
+      Validate(Attributes.WriteOnlyStream().ToBinaryWriter(), true);
     }
 
     return;
@@ -119,11 +120,11 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().Empty()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().Empty()).ThrowExactly<NotSupportedException>();
 
-      Validate(EmptyStream.ToBinaryWriter());
-      Validate(RandomStream.ToBinaryWriter());
-      Validate(WriteOnlyStream.ToBinaryWriter());
+      Validate(Attributes.EmptyStream().ToBinaryWriter());
+      Validate(Attributes.RandomStream().ToBinaryWriter());
+      Validate(Attributes.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
@@ -147,11 +148,11 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().Rewind()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().Rewind()).ThrowExactly<NotSupportedException>();
 
-      Validate(EmptyStream.ToBinaryWriter());
-      Validate(RandomStream.ToBinaryWriter());
-      Validate(WriteOnlyStream.ToBinaryWriter());
+      Validate(Attributes.EmptyStream().ToBinaryWriter());
+      Validate(Attributes.RandomStream().ToBinaryWriter());
+      Validate(Attributes.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
@@ -177,12 +178,12 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((BinaryWriter) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null);
-      Validate(EmptyStream);
-      Validate(RandomStream);
-      Validate(WriteOnlyStream);
+      Validate(Attributes.EmptyStream());
+      Validate(Attributes.RandomStream());
+      Validate(Attributes.WriteOnlyStream());
     }
 
     return;

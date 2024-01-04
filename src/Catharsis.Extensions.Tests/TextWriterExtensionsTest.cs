@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Catharsis.Commons;
 using FluentAssertions;
 using Xunit;
 
@@ -19,7 +20,7 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
     using var writer = new StringWriter();
 
-    var value = RandomString;
+    var value = Attributes.RandomString();
 
     var synchronized = writer.AsSynchronized();
 
@@ -98,7 +99,7 @@ public sealed class TextWriterExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => TextWriterExtensions.WriteBytesAsync<TextWriter>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>(Enumerable.Empty<byte>(), null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>(Enumerable.Empty<byte>(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -123,7 +124,7 @@ public sealed class TextWriterExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => TextWriterExtensions.WriteTextAsync<TextWriter>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(string.Empty, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(string.Empty, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }

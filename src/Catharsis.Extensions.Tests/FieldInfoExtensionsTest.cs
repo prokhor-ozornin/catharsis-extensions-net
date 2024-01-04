@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Catharsis.Commons;
 using FluentAssertions;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="FieldInfoExtensions"/>.</para>
 /// </summary>
-public sealed class FieldInfoExtensionsTest
+public sealed class FieldInfoExtensionsTest : UnitTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="FieldInfoExtensions.IsOfType{T}(FieldInfo)"/> method.</para>

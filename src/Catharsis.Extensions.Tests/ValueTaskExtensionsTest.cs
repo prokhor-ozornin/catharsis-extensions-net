@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Catharsis.Commons;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -22,8 +23,8 @@ public sealed class ValueTaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ValueTask.CompletedTask.Await(null, Cancellation)).NotThrow<OperationCanceledException>();
-      AssertionExtensions.Should(() => ValueTask.FromCanceled(Cancellation).Await()).NotThrow<OperationCanceledException>();
+      AssertionExtensions.Should(() => ValueTask.CompletedTask.Await(null, Attributes.CancellationToken())).NotThrow<OperationCanceledException>();
+      AssertionExtensions.Should(() => ValueTask.FromCanceled(Attributes.CancellationToken()).Await()).NotThrow<OperationCanceledException>();
     }
 
     using (new AssertionScope())

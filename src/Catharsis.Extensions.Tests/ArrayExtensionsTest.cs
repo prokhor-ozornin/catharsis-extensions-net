@@ -1,7 +1,9 @@
 ﻿using System.Text;
+using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
+using Convert = System.Convert;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -31,7 +33,7 @@ public sealed class ArrayExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ArrayExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
 
-    var bytes = RandomBytes;
+    var bytes = Attributes.RandomBytes();
 
     Enumerable.Empty<byte>().ToBase64().Should().BeEmpty();
     bytes.ToBase64().Should().Be(Convert.ToBase64String(bytes));
@@ -49,8 +51,8 @@ public sealed class ArrayExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
 
-      Validate(RandomChars, null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(RandomChars, encoding));
+      Validate(Attributes.RandomChars(), null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(Attributes.RandomChars(), encoding));
     }
 
     return;
@@ -74,7 +76,7 @@ public sealed class ArrayExtensionsTest : UnitTest
 
     Array.Empty<char>().ToText().Should().NotBeNull().And.BeSameAs(Array.Empty<char>().ToText()).And.BeEmpty();
 
-    var text = RandomString;
+    var text = Attributes.RandomString();
     var chars = text.ToCharArray();
     chars.ToText().Should().NotBeNull().And.NotBeSameAs(chars.ToText()).And.Be(text);
   }
@@ -89,8 +91,8 @@ public sealed class ArrayExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      Validate(RandomBytes, null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(RandomBytes, encoding));
+      Validate(Attributes.RandomBytes(), null);
+      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(Attributes.RandomBytes(), encoding));
     }
 
     return;

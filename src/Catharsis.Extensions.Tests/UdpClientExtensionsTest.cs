@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Catharsis.Commons;
 using FluentAssertions;
 using Xunit;
 
@@ -40,17 +41,17 @@ public sealed class UdpClientExtensionsTest : UnitTest
     receiveTimeout.Should().Be(udp.Client.ReceiveTimeout).And.Be(0);
     sendTimeout.Should().Be(udp.Client.SendTimeout).And.Be(0);
 
-    udp.WithTimeout(null).Should().NotBeNull().And.BeSameAs(udp);
+    udp.WithTimeout(null).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
     udp.Client.ReceiveTimeout.Should().Be(receiveTimeout);
     udp.Client.SendTimeout.Should().Be(sendTimeout);
 
     var timespan = TimeSpan.FromMilliseconds(-1);
-    udp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(udp);
+    udp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
     udp.Client.ReceiveTimeout.Should().Be(0);
     udp.Client.SendTimeout.Should().Be(0);
 
     timespan = TimeSpan.Zero;
-    udp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(udp);
+    udp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
     udp.Client.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
     udp.Client.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
   }
@@ -62,7 +63,7 @@ public sealed class UdpClientExtensionsTest : UnitTest
   public void TryFinallyDisconnect_Method()
   {
     AssertionExtensions.Should(() => ((UdpClient) null).TryFinallyDisconnect(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
-    AssertionExtensions.Should(() => Udp.TryFinallyDisconnect(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    AssertionExtensions.Should(() => Attributes.Udp().TryFinallyDisconnect(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     throw new NotImplementedException();
   }
@@ -140,7 +141,7 @@ public sealed class UdpClientExtensionsTest : UnitTest
   public void WriteBytes_Method()
   {
     AssertionExtensions.Should(() => ((UdpClient) null).WriteBytes(Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
-    AssertionExtensions.Should(() => Udp.WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => Attributes.Udp().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
   }
@@ -152,8 +153,8 @@ public sealed class UdpClientExtensionsTest : UnitTest
   public void WriteBytesAsync_Method()
   {
     AssertionExtensions.Should(() => ((UdpClient) null).WriteBytesAsync(Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
-    AssertionExtensions.Should(() => Udp.WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-    AssertionExtensions.Should(() => Udp.WriteBytesAsync(Enumerable.Empty<byte>(), Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Attributes.Udp().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => Attributes.Udp().WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -165,7 +166,7 @@ public sealed class UdpClientExtensionsTest : UnitTest
   public void WriteText_Method()
   {
     AssertionExtensions.Should(() => ((UdpClient) null).WriteText(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
-    AssertionExtensions.Should(() => Udp.WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => Attributes.Udp().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
   }
@@ -177,8 +178,8 @@ public sealed class UdpClientExtensionsTest : UnitTest
   public void WriteTextAsync_Method()
   {
     AssertionExtensions.Should(() => ((UdpClient) null).WriteTextAsync(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
-    AssertionExtensions.Should(() => Udp.WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-    AssertionExtensions.Should(() => Udp.WriteTextAsync(string.Empty, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Attributes.Udp().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => Attributes.Udp().WriteTextAsync(string.Empty, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }

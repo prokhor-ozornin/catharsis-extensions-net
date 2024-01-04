@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Catharsis.Commons;
+using FluentAssertions;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -27,7 +28,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((DirectoryInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
 
-    var directory = RandomFakeDirectory;
+    var directory = Attributes.RandomFakeDirectory();
     directory.Exists.Should().BeFalse();
     directory.IsEmpty().Should().BeTrue();
 
@@ -35,12 +36,12 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
     directory.Exists.Should().BeTrue();
     directory.IsEmpty().Should().BeFalse();
 
-    RandomDirectory.TryFinallyDelete(directory =>
+    Attributes.RandomDirectory().TryFinallyDelete(directory =>
     {
       directory.Exists.Should().BeTrue();
       directory.IsEmpty().Should().BeTrue();
-      Randomizer.File(Randomizer.Directory(directory));
-      Randomizer.File(directory);
+      new Random().File(new Random().Directory(directory));
+      new Random().File(directory);
       directory.IsEmpty().Should().BeFalse();
     });
   }
@@ -63,7 +64,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   public void TryFinallyClear_Method()
   {
     AssertionExtensions.Should(() => ((DirectoryInfo) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
-    AssertionExtensions.Should(() => RandomFakeDirectory.TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    AssertionExtensions.Should(() => Attributes.RandomFakeDirectory().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     throw new NotImplementedException();
   }
@@ -75,23 +76,23 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   public void TryFinallyDelete_Method()
   {
     AssertionExtensions.Should(() => ((DirectoryInfo) null).TryFinallyDelete(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
-    AssertionExtensions.Should(() => RandomFakeDirectory.TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    AssertionExtensions.Should(() => Attributes.RandomFakeDirectory().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-    var directory = RandomFakeDirectory;
+    var directory = Attributes.RandomFakeDirectory();
     directory.Exists.Should().BeFalse();
     directory.TryFinallyDelete(directory =>
     {
-      Randomizer.File(directory);
-      Randomizer.File(Randomizer.Directory(directory));
+      new Random().File(directory);
+      new Random().File(new Random().Directory(directory));
     });
     directory.Exists.Should().BeFalse();
 
-    directory = RandomDirectory;
+    directory = Attributes.RandomDirectory();
     directory.Exists.Should().BeTrue();
     directory.TryFinallyDelete(directory =>
     {
-      Randomizer.File(directory);
-      Randomizer.File(Randomizer.Directory(directory));
+      new Random().File(directory);
+      new Random().File(new Random().Directory(directory));
     });
     directory.Exists.Should().BeTrue();
     directory.IsEmpty().Should().BeTrue();
@@ -125,8 +126,8 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void InDirectory_Method()
   {
-    AssertionExtensions.Should(() => ((DirectoryInfo) null).InDirectory(RandomFakeDirectory)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
-    AssertionExtensions.Should(() => RandomFakeDirectory.InDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("parent");
+    AssertionExtensions.Should(() => ((DirectoryInfo) null).InDirectory(Attributes.RandomFakeDirectory())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    AssertionExtensions.Should(() => Attributes.RandomFakeDirectory().InDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("parent");
 
     throw new NotImplementedException();
   }

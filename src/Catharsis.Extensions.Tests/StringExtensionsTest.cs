@@ -9,8 +9,8 @@ using System.Text.RegularExpressions;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
-using Microsoft.VisualStudio.TestPlatform.Common.ExtensionFramework.Utilities;
 using System.Xml;
+using Catharsis.Commons;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -384,7 +384,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     string.Empty.IsType().Should().BeFalse();
 
-    RandomName.IsType().Should().BeFalse();
+    Attributes.RandomName().IsType().Should().BeFalse();
 
     nameof(Object).IsType().Should().BeFalse();
     typeof(object).FullName.IsType().Should().BeTrue();
@@ -467,11 +467,11 @@ public sealed class StringExtensionsTest : UnitTest
 
     string.Empty.IsFile().Should().BeFalse();
 
-    RandomName.IsFile().Should().BeFalse();
+    Attributes.RandomName().IsFile().Should().BeFalse();
 
     Environment.SystemDirectory.IsFile().Should().BeFalse();
 
-    RandomEmptyFile.TryFinallyDelete(file =>
+    Attributes.RandomEmptyFile().TryFinallyDelete(file =>
     {
       file.FullName.IsFile().Should().BeTrue();
     });
@@ -487,7 +487,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     string.Empty.IsDirectory().Should().BeFalse();
 
-    RandomName.IsDirectory().Should().BeFalse();
+    Attributes.RandomName().IsDirectory().Should().BeFalse();
 
     Environment.SystemDirectory.IsDirectory().Should().BeTrue();
   }
@@ -774,7 +774,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     string.Empty.Reverse().Should().NotBeNull().And.BeSameAs(string.Empty.Reverse()).And.BeEmpty();
 
-    var text = RandomString;
+    var text = Attributes.RandomString();
     var reversed = text.Reverse();
     reversed.Should().NotBeNull().And.NotBeSameAs(text.Reverse()).And.Be(reversed.ToCharArray().ToText());
   }
@@ -932,10 +932,10 @@ public sealed class StringExtensionsTest : UnitTest
     string.Empty.Lines().Should().NotBeNull().And.BeSameAs(string.Empty.Lines()).And.BeEmpty();
     string.Empty.Lines("\t").Should().NotBeNull().And.BeSameAs(string.Empty.Lines("\t")).And.BeEmpty();
 
-    var text = RandomString;
+    var text = Attributes.RandomString();
     text.Lines().Should().NotBeNull().And.NotBeSameAs(text.Lines()).And.HaveCount(1).And.HaveElementAt(0, text);
 
-    var strings = 10.Objects(() => RandomString).AsArray();
+    var strings = 10.Objects(() => Attributes.RandomString()).AsArray();
     text = strings.Join(Environment.NewLine);
     var lines = text.Lines();
     lines.Should().NotBeNull().And.NotBeSameAs(text.Lines()).And.HaveCount(strings.Length).And.Equal(strings);
@@ -988,7 +988,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     string.Empty.FromBase64().Should().NotBeNull().And.BeSameAs(string.Empty.FromBase64()).And.BeEmpty();
 
-    var bytes = RandomBytes;
+    var bytes = Attributes.RandomBytes();
     bytes.ToBase64().Should().NotBeNull().And.NotBeSameAs(bytes.ToBase64()).And.Be(System.Convert.ToBase64String(bytes));
   }
 
@@ -1161,7 +1161,7 @@ public sealed class StringExtensionsTest : UnitTest
 
       string[] arguments = ["dir"];
 
-      var process = ShellCommand.Execute(arguments);
+      var process = Attributes.ShellCommand().Execute(arguments);
 
       process.Finish(TimeSpan.FromSeconds(5));
 
@@ -1173,7 +1173,7 @@ public sealed class StringExtensionsTest : UnitTest
       process.StartTime.Should().BeBefore(DateTime.Now);
       process.ExitTime.Should().BeBefore(DateTime.Now);
 
-      process.StartInfo.FileName.Should().Be(ShellCommand);
+      process.StartInfo.FileName.Should().Be(Attributes.ShellCommand());
       process.StartInfo.ArgumentList.Should().Equal(arguments);
       process.StartInfo.Arguments.Should().BeEmpty();
       process.StartInfo.CreateNoWindow.Should().BeTrue();
@@ -1224,7 +1224,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     void Validate(Encoding encoding)
     {
-      var text = RandomString;
+      var text = Attributes.RandomString();
 
       string.Empty.ToBytes(encoding).Should().NotBeNull().And.BeSameAs(string.Empty.ToBytes(encoding)).And.BeEmpty();
 
@@ -2310,7 +2310,7 @@ public sealed class StringExtensionsTest : UnitTest
 
       string.Empty.ToType().Should().BeNull();
 
-      RandomName.ToType().Should().BeNull();
+      Attributes.RandomName().ToType().Should().BeNull();
 
       nameof(Object).ToType().Should().BeNull();
       typeof(object).FullName.ToType().Should().Be(typeof(object));
@@ -2331,7 +2331,7 @@ public sealed class StringExtensionsTest : UnitTest
       string.Empty.ToType(out result).Should().BeFalse();
       result.Should().BeNull();
 
-      RandomName.ToType(out result).Should().BeFalse();
+      Attributes.RandomName().ToType(out result).Should().BeFalse();
       result.Should().BeNull();
 
       nameof(Object).ToType(out result).Should().BeFalse();
@@ -2508,7 +2508,7 @@ public sealed class StringExtensionsTest : UnitTest
         file.FullName.Should().Be(name);
       });
 
-      name = RandomName;
+      name = Attributes.RandomName();
       name.ToFile().TryFinallyDelete(file =>
       {
         file.Exists.Should().BeTrue();
@@ -2528,7 +2528,7 @@ public sealed class StringExtensionsTest : UnitTest
         file.FullName.Should().Be(name);
       });
 
-      name = RandomName;
+      name = Attributes.RandomName();
       name.ToFile(out file).Should().BeFalse();
       file.TryFinallyDelete(file =>
       {
@@ -2563,7 +2563,7 @@ public sealed class StringExtensionsTest : UnitTest
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
       directory.FullName.Should().Be(name);
 
-      name = RandomName;
+      name = Attributes.RandomName();
       directory = name.ToDirectory();
       directory.Exists.Should().BeFalse();
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
@@ -2578,7 +2578,7 @@ public sealed class StringExtensionsTest : UnitTest
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
       directory.FullName.Should().Be(name);
 
-      name = RandomName;
+      name = Attributes.RandomName();
       name.ToDirectory(out directory).Should().BeFalse();
       directory.Exists.Should().BeFalse();
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
@@ -2688,7 +2688,7 @@ public sealed class StringExtensionsTest : UnitTest
     builder.MaxCapacity.Should().Be(int.MaxValue);
     builder.Length.Should().Be(0);
 
-    var value = RandomString;
+    var value = Attributes.RandomString();
     builder = value.ToStringBuilder();
     builder.Should().NotBeNull().And.NotBeSameAs(value.ToStringBuilder());
     builder.ToString().Should().Be(value);
@@ -2710,7 +2710,7 @@ public sealed class StringExtensionsTest : UnitTest
     reader.Peek().Should().Be(-1);
     reader.ReadToEnd().Should().BeEmpty();
 
-    var value = RandomString;
+    var value = Attributes.RandomString();
     reader = value.ToStringReader();
     reader.Should().NotBeNull().And.NotBeSameAs(value.ToStringReader());
     reader.ReadToEnd().Should().Be(value);
@@ -2776,7 +2776,7 @@ public sealed class StringExtensionsTest : UnitTest
   public void ToXDocumentAsync_Method()
   {
     AssertionExtensions.Should(() => ((string) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-    AssertionExtensions.Should(() => string.Empty.ToXDocumentAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => string.Empty.ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -2789,7 +2789,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.ToProcess(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    foreach (var command in new[] { string.Empty, ShellCommand })
+    foreach (var command in new[] { string.Empty, Attributes.ShellCommand() })
     {
       var process = command.ToProcess();
 
@@ -2842,7 +2842,7 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
     AssertionExtensions.Should(() => string.Empty.WriteToAsync((TextWriter) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter(), Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -2859,7 +2859,7 @@ public sealed class StringExtensionsTest : UnitTest
       AssertionExtensions.Should(() => string.Empty.WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
       Validate(Stream.Null.ToBinaryWriter(), string.Empty);
-      Validate(EmptyStream.ToBinaryWriter(), RandomString);
+      Validate(Attributes.EmptyStream().ToBinaryWriter(), Attributes.RandomString());
     }
 
     return;
@@ -2908,7 +2908,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(RandomFakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => string.Empty.WriteTo((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
@@ -2920,9 +2920,9 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteToAsync(RandomFakeFile)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.RandomFakeFile())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(RandomFakeFile, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.RandomFakeFile(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -2958,7 +2958,7 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_Uri_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => string.Empty.WriteTo((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
@@ -2970,9 +2970,9 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_Uri_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteToAsync(LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
     AssertionExtensions.Should(() => string.Empty.WriteToAsync((Uri) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(LocalHost, null, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.LocalHost(), null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -2983,9 +2983,9 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_HttpClient_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(Http, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    AssertionExtensions.Should(() => string.Empty.WriteTo(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => string.Empty.WriteTo(Http, null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.Http(), Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Http(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -2996,10 +2996,10 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_HttpClient_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Http, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Http, null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Http, LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.Http(), Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Http(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Http(), Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -3010,8 +3010,8 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_TcpClient_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(Tcp)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    AssertionExtensions.Should(() => string.Empty.WriteTo(Tcp)).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
     throw new NotImplementedException();
   }
@@ -3022,9 +3022,9 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_TcpClient_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Tcp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Tcp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Tcp, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Tcp(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -3035,8 +3035,8 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_UdpClient_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteTo(Udp)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    AssertionExtensions.Should(() => string.Empty.WriteTo(Udp)).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
+    AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
   }
@@ -3047,9 +3047,9 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_UdpClient_Method()
   {
-    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Udp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Udp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Udp, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Udp(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -3089,15 +3089,15 @@ public sealed class StringExtensionsTest : UnitTest
 
     using var algorithm = MD5.Create();
 
-    AssertionExtensions.Should(() => ((string) null).Hash(algorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => ((string) null).Hash(Attributes.HashAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     
     algorithm.Should().NotBeNull();
 
-    string[] texts = [string.Empty, RandomString];
+    string[] texts = [string.Empty, Attributes.RandomString()];
 
     foreach (var text in texts)
     {
-      text.Hash(algorithm).Should().NotBeNull().And.NotBeSameAs(text.Hash(algorithm)).And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.Hash(Attributes.HashAlgorithm()).Should().NotBeNull().And.NotBeSameAs(text.Hash(Attributes.HashAlgorithm())).And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -3112,7 +3112,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = MD5.Create();
     algorithm.Should().NotBeNull();
 
-    string[] texts = [string.Empty, RandomString];
+    string[] texts = [string.Empty, Attributes.RandomString()];
 
     foreach (var text in texts)
     {
@@ -3131,7 +3131,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = SHA1.Create();
     algorithm.Should().NotBeNull();
 
-    string[] texts = [string.Empty, RandomString];
+    string[] texts = [string.Empty, Attributes.RandomString()];
 
     foreach (var text in texts)
     {
@@ -3150,7 +3150,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = SHA256.Create();
     algorithm.Should().NotBeNull();
 
-    string[] texts = [string.Empty, RandomString];
+    string[] texts = [string.Empty, Attributes.RandomString()];
 
     foreach (var text in texts)
     {
@@ -3169,7 +3169,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = SHA384.Create();
     algorithm.Should().NotBeNull();
 
-    string[] texts = [string.Empty, RandomString];
+    string[] texts = [string.Empty, Attributes.RandomString()];
 
     foreach (var text in texts)
     {
@@ -3188,7 +3188,7 @@ public sealed class StringExtensionsTest : UnitTest
     using var algorithm = SHA512.Create();
     algorithm.Should().NotBeNull();
 
-    string[] texts = [string.Empty, RandomString];
+    string[] texts = [string.Empty, Attributes.RandomString()];
 
     foreach (var text in texts)
     {
@@ -3266,7 +3266,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     string.Empty.FromHex().Should().NotBeNull().And.BeSameAs(string.Empty.FromHex()).And.BeEmpty();
 
-    var bytes = RandomBytes;
+    var bytes = Attributes.RandomBytes();
     bytes.ToHex().Should().NotBeNull().And.NotBeSameAs(bytes.ToHex()).And.Be(System.Convert.ToHexString(bytes));
   }
 

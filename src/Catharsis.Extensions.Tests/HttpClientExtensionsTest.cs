@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Catharsis.Commons;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -26,7 +27,7 @@ public sealed class HttpClientExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => HttpClientExtensions.WithHeaders(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-      AssertionExtensions.Should(() => Http.WithHeaders((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("headers");
+      AssertionExtensions.Should(() => Attributes.Http().WithHeaders((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("headers");
 
       using (var http = new HttpClient())
       {
@@ -48,7 +49,7 @@ public sealed class HttpClientExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => HttpClientExtensions.WithHeaders(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-      AssertionExtensions.Should(() => Http.WithHeaders(((string Name, object Value)[]) null)).ThrowExactly<ArgumentNullException>().WithParameterName("headers");
+      AssertionExtensions.Should(() => Attributes.Http().WithHeaders(((string Name, object Value)[]) null)).ThrowExactly<ArgumentNullException>().WithParameterName("headers");
 
       using (var http = new HttpClient())
       {
@@ -70,7 +71,7 @@ public sealed class HttpClientExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => HttpClientExtensions.WithHeaders(null, new Dictionary<string, object>())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-      AssertionExtensions.Should(() => Http.WithHeaders((IReadOnlyDictionary<string, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("headers");
+      AssertionExtensions.Should(() => Attributes.Http().WithHeaders((IReadOnlyDictionary<string, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("headers");
 
       using (var http = new HttpClient())
       {
@@ -120,8 +121,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecuteHead_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteHead(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecuteHead(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteHead(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().ExecuteHead(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -132,9 +133,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecuteHeadAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteHeadAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ExecuteHeadAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.ExecuteHeadAsync(LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteHeadAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecuteHeadAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecuteHeadAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -145,8 +146,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecuteGet_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteGet(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecuteGet(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteGet(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().ExecuteGet(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -157,9 +158,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecuteGetAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteGetAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ExecuteGetAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.ExecuteGetAsync(LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteGetAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecuteGetAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecuteGetAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -170,8 +171,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecutePost_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePost(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecutePost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePost(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().ExecutePost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -182,9 +183,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecutePostAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePostAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ExecutePostAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.ExecutePostAsync(LocalHost, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePostAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecutePostAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecutePostAsync(Attributes.LocalHost(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -195,8 +196,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecutePut_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePut(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecutePut(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePut(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().ExecutePut(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -207,9 +208,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecutePutAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePutAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ExecutePutAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.ExecutePutAsync(LocalHost, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePutAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecutePutAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecutePutAsync(Attributes.LocalHost(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -220,8 +221,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecutePatch_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePatch(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecutePatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePatch(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().ExecutePatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -232,9 +233,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecutePatchAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePatchAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ExecutePatchAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.ExecutePatchAsync(LocalHost, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecutePatchAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecutePatchAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecutePatchAsync(Attributes.LocalHost(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -245,8 +246,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecuteDelete_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteDelete(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ExecuteDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteDelete(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().ExecuteDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -257,9 +258,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ExecuteDeleteAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteDeleteAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ExecuteDeleteAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.ExecuteDeleteAsync(LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.ExecuteDeleteAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecuteDeleteAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ExecuteDeleteAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -270,8 +271,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ToStream_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ToStream(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.ToStream(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -282,9 +283,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ToStreamAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ToStreamAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.ToStreamAsync(LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.ToStreamAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ToStreamAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -295,8 +296,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ToBytes_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ToBytes(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.ToBytes(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -307,8 +308,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ToBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ToBytesAsync(null, LocalHost).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.ToBytesAsync(null, Attributes.LocalHost()).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
 
     throw new NotImplementedException();
   }
@@ -321,8 +322,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ToText(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-      AssertionExtensions.Should(() => Http.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+      AssertionExtensions.Should(() => HttpClientExtensions.ToText(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+      AssertionExtensions.Should(() => Attributes.Http().ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
     }
 
     throw new NotImplementedException();
@@ -334,9 +335,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void ToTextAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.ToTextAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.ToTextAsync(LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.ToTextAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().ToTextAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -347,9 +348,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void WriteBytes_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.WriteBytes(null, Enumerable.Empty<byte>(), LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.WriteBytes(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-    AssertionExtensions.Should(() => Http.WriteBytes(Enumerable.Empty<byte>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.WriteBytes(null, Enumerable.Empty<byte>(), Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().WriteBytes(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => Attributes.Http().WriteBytes(Enumerable.Empty<byte>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -360,10 +361,10 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void WriteBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.WriteBytesAsync(null, Enumerable.Empty<byte>(), LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.WriteBytesAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-    AssertionExtensions.Should(() => Http.WriteBytesAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.WriteBytesAsync(Enumerable.Empty<byte>(), LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.WriteBytesAsync(null, Enumerable.Empty<byte>(), Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().WriteBytesAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => Attributes.Http().WriteBytesAsync(Enumerable.Empty<byte>(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -374,9 +375,9 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void WriteText_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.WriteText(null, string.Empty, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Http.WriteText(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    AssertionExtensions.Should(() => Http.WriteText(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => HttpClientExtensions.WriteText(null, string.Empty, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Attributes.Http().WriteText(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => Attributes.Http().WriteText(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -387,10 +388,10 @@ public sealed class HttpClientExtensionsTest : UnitTest
   [Fact]
   public void WriteTextAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpClientExtensions.WriteTextAsync(null, string.Empty, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Http.WriteTextAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-    AssertionExtensions.Should(() => Http.WriteTextAsync(string.Empty, null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Http.WriteTextAsync(string.Empty, LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => HttpClientExtensions.WriteTextAsync(null, string.Empty, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Attributes.Http().WriteTextAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+    AssertionExtensions.Should(() => Attributes.Http().WriteTextAsync(string.Empty, null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Attributes.Http().WriteTextAsync(string.Empty, Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }

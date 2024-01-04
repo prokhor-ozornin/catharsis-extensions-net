@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Catharsis.Commons;
+using FluentAssertions;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -26,7 +27,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
   public void ToStreamAsync_Method()
   {
     AssertionExtensions.Should(() => HttpContentExtensions.ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
-    AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -39,7 +40,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((HttpContent) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
-    foreach (var bytes in new[] { [], RandomBytes })
+    foreach (var bytes in new[] { [], Attributes.RandomBytes() })
     {
       using var content = new ByteArrayContent(bytes);
 
@@ -55,7 +56,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
 
-    foreach (var bytes in new[] { [], RandomBytes })
+    foreach (var bytes in new[] { [], Attributes.RandomBytes() })
     {
       using var content = new ByteArrayContent(bytes);
 
@@ -72,7 +73,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((HttpContent) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
-    foreach (var text in new[] { string.Empty, RandomString })
+    foreach (var text in new[] { string.Empty, Attributes.RandomString() })
     {
       using var content = new StringContent(text);
 
@@ -88,11 +89,11 @@ public sealed class HttpContentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((HttpContent) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
 
-    foreach (var text in new[] { string.Empty, RandomString })
+    foreach (var text in new[] { string.Empty, Attributes.RandomString() })
     {
       using var content = new StringContent(text);
 
-      AssertionExtensions.Should(() => content.ToTextAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => content.ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       content.ToTextAsync().Should().NotBeNull().And.NotBeSameAs(content.ToTextAsync());
       content.ToTextAsync().Await().Should().Be(content.ReadAsStringAsync().Await()).And.Be(text);

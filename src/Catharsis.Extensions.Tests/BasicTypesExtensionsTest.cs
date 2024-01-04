@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Catharsis.Commons;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Extensions;
 using Xunit;

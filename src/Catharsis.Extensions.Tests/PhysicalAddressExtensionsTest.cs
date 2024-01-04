@@ -1,4 +1,5 @@
 ﻿using System.Net.NetworkInformation;
+using Catharsis.Commons;
 using FluentAssertions;
 using Xunit;
 
@@ -28,7 +29,7 @@ public sealed class PhysicalAddressExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((PhysicalAddress) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-    foreach (var address in new[] {PhysicalAddress.None, new PhysicalAddress(RandomBytes)})
+    foreach (var address in new[] {PhysicalAddress.None, new PhysicalAddress(Attributes.RandomBytes())})
     {
       address.ToBytes().Should().NotBeNull().And.NotBeSameAs(address.ToBytes()).And.Equal(address.GetAddressBytes());
     }

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
@@ -19,12 +20,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => RandomReadOnlyForwardStream.ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => Attributes.RandomReadOnlyForwardStream().ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null.ToStreamReader());
-      Validate(EmptyStream.ToStreamReader());
-      Validate(RandomStream.ToStreamReader());
-      Validate(RandomReadOnlyStream.ToStreamReader());
+      Validate(Attributes.EmptyStream().ToStreamReader());
+      Validate(Attributes.RandomStream().ToStreamReader());
+      Validate(Attributes.RandomReadOnlyStream().ToStreamReader());
     }
 
     return;
@@ -83,7 +84,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((TextReader) null).AsSynchronized()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-    using (var reader = EmptyTextReader)
+    using (var reader = Attributes.EmptyTextReader())
     {
       using (var synchronized = reader.AsSynchronized())
       {
@@ -92,7 +93,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
       }
     }
 
-    var value = RandomString;
+    var value = Attributes.RandomString();
     using (var reader = value.ToStringReader())
     {
       using (var synchronized = reader.AsSynchronized())
@@ -144,18 +145,18 @@ public sealed class TextReaderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
-    using (var reader = EmptyTextReader)
+    using (var reader = Attributes.EmptyTextReader())
     {
       reader.ToTextAsync().Should().NotBeNull().And.NotBeSameAs(reader.ToTextAsync());
     }
 
-    using (var reader = EmptyTextReader)
+    using (var reader = Attributes.EmptyTextReader())
     {
       reader.ToTextAsync().Await().Should().BeEmpty();
       reader.Read().Should().Be(-1);
     }
 
-    var text = RandomString;
+    var text = Attributes.RandomString();
 
     using (var reader = text.ToStringReader())
     {
@@ -299,7 +300,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
   public void ToXDocumentAsync_Method()
   {
     AssertionExtensions.Should(() => ((TextReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
-    AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToXDocumentAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     /*const string Xml = "<?xml version=\"1.0\"?><article>text</article>";
 

@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Catharsis.Commons;
+using FluentAssertions;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;

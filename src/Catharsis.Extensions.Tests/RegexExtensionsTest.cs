@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Catharsis.Commons;
 using FluentAssertions;
 using Xunit;
 

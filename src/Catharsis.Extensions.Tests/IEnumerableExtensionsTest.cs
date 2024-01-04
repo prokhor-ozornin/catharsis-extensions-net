@@ -4,6 +4,7 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
+using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -311,7 +312,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   public void WithCancellation_Method()
   {
     AssertionExtensions.Should(() => IEnumerableExtensions.WithCancellation<object>(null, default)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
-    AssertionExtensions.Should(() => IEnumerableExtensions.WithCancellation<object>(null, Cancellation)).ThrowExactly<OperationCanceledException>();
+    AssertionExtensions.Should(() => IEnumerableExtensions.WithCancellation<object>(null, Attributes.CancellationToken())).ThrowExactly<OperationCanceledException>();
 
     throw new NotImplementedException();
   }
@@ -367,7 +368,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
       Validate(Enumerable.Empty<object>());
       Validate(Array.Empty<object>());
-      Validate(Randomizer.ObjectSequence(1000).ToArray());
+      Validate(new Random().ObjectSequence(1000).ToArray());
     }
   }
 
@@ -619,14 +620,14 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -651,7 +652,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IEnumerableExtensions.ToHex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-    var bytes = RandomBytes;
+    var bytes = Attributes.RandomBytes();
 
     Enumerable.Empty<byte>().ToHex().Should().BeEmpty();
     bytes.ToHex().Should().HaveLength(bytes.Length * 2);
@@ -680,7 +681,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => string.Empty.WriteToAsync((TextWriter) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter(), Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -696,8 +697,8 @@ public sealed class IEnumerableExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Validate(EmptyStream.ToBinaryWriter());
-      Validate(RandomStream.ToBinaryWriter());
+      Validate(Attributes.EmptyStream().ToBinaryWriter());
+      Validate(Attributes.RandomStream().ToBinaryWriter());
     }
 
     return;
@@ -706,7 +707,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     {
       using (writer)
       {
-        var bytes = RandomBytes;
+        var bytes = Attributes.RandomBytes();
 
         writer.BaseStream.MoveToEnd();
 
@@ -753,7 +754,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(RandomFakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
@@ -765,9 +766,9 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(RandomFakeFile)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Attributes.RandomFakeFile())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync((FileInfo) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(RandomFakeFile, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.RandomFakeFile(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -778,7 +779,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_Uri_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
@@ -790,9 +791,9 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_Uri_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync((Uri) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(LocalHost, null, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.LocalHost(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -817,7 +818,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Process.GetCurrentProcess())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync((Process) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
-    //AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(ShellProcess, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    //AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(ShellProcess, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -828,9 +829,9 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_HttpClient_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Http, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(null, LocalHost)).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Http, null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Attributes.Http(), Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Attributes.Http(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
   }
@@ -841,10 +842,10 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_HttpClient_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Http, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(null, LocalHost)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Http, null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Http, LocalHost, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Attributes.Http(), Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.Http(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.Http(), Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -855,8 +856,8 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_TcpClient_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Tcp)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Tcp)).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
     throw new NotImplementedException();
   }
@@ -867,9 +868,9 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_TcpClient_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Tcp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Tcp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Tcp, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Attributes.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.Tcp(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -880,8 +881,8 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_UdpClient_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Udp)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Udp)).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
   }
@@ -892,9 +893,9 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteToAsync_UdpClient_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Udp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Udp)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Udp, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Attributes.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.Udp(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -905,7 +906,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void WriteTo_Method()
   {
-    AssertionExtensions.Should(() => IEnumerableExtensions.WriteTo(null, EmptySecureString)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    AssertionExtensions.Should(() => IEnumerableExtensions.WriteTo(null, Attributes.EmptySecureString())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => IEnumerableExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
@@ -917,7 +918,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void Encrypt_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Encrypt(Algorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Encrypt(Attributes.SymmetricAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().Encrypt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
 
     throw new NotImplementedException();
@@ -929,9 +930,9 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void EncryptAsync_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).EncryptAsync(Algorithm)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).EncryptAsync(Attributes.SymmetricAlgorithm())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().EncryptAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
-    AssertionExtensions.Should(() => Enumerable.Empty<byte>().EncryptAsync(Algorithm, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Enumerable.Empty<byte>().EncryptAsync(Attributes.SymmetricAlgorithm(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -942,7 +943,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void Decrypt_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Decrypt(Algorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Decrypt(Attributes.SymmetricAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().Decrypt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
 
     throw new NotImplementedException();
@@ -954,9 +955,9 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void DecryptAsync_Method()
   {
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).DecryptAsync(Algorithm)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).DecryptAsync(Attributes.SymmetricAlgorithm())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => Stream.Null.DecryptAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
-    AssertionExtensions.Should(() => Stream.Null.DecryptAsync(Algorithm, Cancellation)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => Stream.Null.DecryptAsync(Attributes.SymmetricAlgorithm(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
   }
@@ -971,14 +972,14 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     using var algorithm = MD5.Create();
 
-    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Hash(algorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Hash(Attributes.HashAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     algorithm.Should().NotBeNull();
 
-    Enumerable.Empty<byte>().Hash(algorithm).Should().NotBeNull().And.NotBeSameAs(Enumerable.Empty<byte>().Hash(algorithm)).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash([]));
+    Enumerable.Empty<byte>().Hash(Attributes.HashAlgorithm()).Should().NotBeNull().And.NotBeSameAs(Enumerable.Empty<byte>().Hash(Attributes.HashAlgorithm())).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash([]));
 
-    var bytes = RandomBytes;
-    bytes.Hash(algorithm).Should().NotBeNull().And.NotBeSameAs(bytes.Hash(algorithm)).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(bytes));
+    var bytes = Attributes.RandomBytes();
+    bytes.Hash(Attributes.HashAlgorithm()).Should().NotBeNull().And.NotBeSameAs(bytes.Hash(Attributes.HashAlgorithm())).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(bytes));
   }
 
   /// <summary>
@@ -992,7 +993,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = MD5.Create();
     algorithm.Should().NotBeNull();
 
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
 
     foreach (var sequence in sequences)
     {
@@ -1011,7 +1012,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = SHA1.Create();
     algorithm.Should().NotBeNull();
 
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
 
     foreach (var sequence in sequences)
     {
@@ -1030,7 +1031,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = SHA256.Create();
     algorithm.Should().NotBeNull();
 
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
 
     foreach (var sequence in sequences)
     {
@@ -1049,7 +1050,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = SHA384.Create();
     algorithm.Should().NotBeNull();
 
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
 
     foreach (var sequence in sequences)
     {
@@ -1068,7 +1069,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     using var algorithm = SHA512.Create();
     algorithm.Should().NotBeNull();
 
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), RandomBytes];
+    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
 
     foreach (var sequence in sequences)
     {

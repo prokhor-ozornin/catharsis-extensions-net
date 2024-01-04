@@ -1,3 +1,4 @@
+using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -98,7 +99,7 @@ public sealed class ICollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
 
       Validate(Array.Empty<object>().ToList());
-      Validate(RandomObjects.ToList());
+      Validate(Attributes.RandomObjects().ToList());
     }
   }
 

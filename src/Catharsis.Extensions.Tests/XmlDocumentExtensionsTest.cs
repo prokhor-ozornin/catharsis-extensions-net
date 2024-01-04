@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Xml;
+using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -173,7 +174,7 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
   [Fact]
   public void Serialize_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(RandomFakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
     AssertionExtensions.Should(() => new XmlDocument().Serialize((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();

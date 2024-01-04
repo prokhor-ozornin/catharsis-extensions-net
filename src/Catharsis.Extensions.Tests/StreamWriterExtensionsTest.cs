@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Catharsis.Commons;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -29,11 +30,11 @@ public sealed class StreamWriterExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
 
-      Validate(EmptyStream.ToStreamWriter());
-      Validate(RandomStream.ToStreamWriter());
-      Validate(WriteOnlyStream.ToStreamWriter());
+      Validate(Attributes.EmptyStream().ToStreamWriter());
+      Validate(Attributes.RandomStream().ToStreamWriter());
+      Validate(Attributes.WriteOnlyStream().ToStreamWriter());
     }
 
     return;
@@ -60,7 +61,7 @@ public sealed class StreamWriterExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((StreamWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
       Validate(Stream.Null.ToStreamWriter());
-      Validate(RandomStream.ToStreamWriter());
+      Validate(Attributes.RandomStream().ToStreamWriter());
     }
 
     return;
@@ -86,7 +87,7 @@ public sealed class StreamWriterExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
       Validate(Stream.Null.ToStreamWriter());
-      Validate(RandomStream.ToStreamWriter());
+      Validate(Attributes.RandomStream().ToStreamWriter());
     }
 
     return;
@@ -95,7 +96,7 @@ public sealed class StreamWriterExtensionsTest : UnitTest
     {
       using (writer)
       {
-        RandomBytes.WriteToAsync(writer).Await();
+        Attributes.RandomBytes().WriteToAsync(writer).Await();
         writer.Flush();
         writer.Rewind().Should().NotBeNull().And.BeSameAs(writer);
         writer.BaseStream.Should().HavePosition(0);

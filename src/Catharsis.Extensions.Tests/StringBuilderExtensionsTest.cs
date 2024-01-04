@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Xml;
+using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -52,7 +53,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((StringBuilder) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
       Validate(new StringBuilder());
-      Validate(RandomString.ToStringBuilder());
+      Validate(Attributes.RandomString().ToStringBuilder());
     }
 
     return;
@@ -126,7 +127,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new StringBuilder().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     var builder = new StringBuilder();
-    builder.TryFinallyClear(builder => builder.Append(RandomString)).Should().NotBeNull().And.BeSameAs(builder);
+    builder.TryFinallyClear(builder => builder.Append(Attributes.RandomString())).Should().NotBeNull().And.BeSameAs(builder);
     builder.Length.Should().Be(0);
   }
 
@@ -148,7 +149,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     void Validate(IFormatProvider format)
     {
-      var value = RandomString;
+      var value = Attributes.RandomString();
       var builder = new StringBuilder();
 
       using var writer = builder.ToStringWriter(format);
@@ -169,7 +170,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringBuilderExtensions.ToXmlWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
-    var value = RandomName;
+    var value = Attributes.RandomName();
 
     var builder = new StringBuilder();
 

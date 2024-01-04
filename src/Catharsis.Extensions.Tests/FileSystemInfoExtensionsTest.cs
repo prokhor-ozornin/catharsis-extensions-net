@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Catharsis.Commons;
+using FluentAssertions;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,7 +17,7 @@ public sealed class FileSystemInfoExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => FileSystemInfoExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entry");
 
-    foreach (var info in new FileSystemInfo[] { RandomFakeFile, RandomFakeDirectory })
+    foreach (var info in new FileSystemInfo[] { Attributes.RandomFakeFile(), Attributes.RandomFakeDirectory() })
     {
       var uri = info.ToUri();
       uri.Should().NotBeNull().And.NotBeSameAs(info.ToUri());
