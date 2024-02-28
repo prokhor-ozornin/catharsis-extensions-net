@@ -169,7 +169,6 @@ public static class IListExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="list"></param>
   /// <returns></returns>
-  /// <seealso cref="AsReadOnly{TKey,TValue}"/>
   /// <exception cref="ArgumentNullException"></exception>
   public static IReadOnlyList<T> AsReadOnly<T>(this IList<T> list) => list is not null ? new ReadOnlyCollection<T>(list) : throw new ArgumentNullException(nameof(list));
 }

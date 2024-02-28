@@ -214,7 +214,7 @@ public static class TypeExtensions
     if (type is null) throw new ArgumentNullException(nameof(type));
     if (name is null) throw new ArgumentNullException(nameof(name));
 
-    return type.GetEvent(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+    return type.GetEvent(name, BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
   }
 
   /// <summary>
@@ -230,7 +230,7 @@ public static class TypeExtensions
     if (type is null) throw new ArgumentNullException(nameof(type));
     if (name is null) throw new ArgumentNullException(nameof(name));
 
-    return type.GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+    return type.GetField(name, BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
   }
 
   /// <summary>
@@ -246,7 +246,7 @@ public static class TypeExtensions
     if (type is null) throw new ArgumentNullException(nameof(type));
     if (name is null) throw new ArgumentNullException(nameof(name));
 
-    return type.GetProperty(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+    return type.GetProperty(name, BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
   }
 
   /// <summary>
@@ -263,7 +263,7 @@ public static class TypeExtensions
     if (type is null) throw new ArgumentNullException(nameof(type));
     if (name is null) throw new ArgumentNullException(nameof(name));
 
-    const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+    const BindingFlags flags = BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
 
     return arguments is not null ? type.GetMethod(name, flags, null, arguments.AsArray(), null) : type.GetMethod(name, flags);
   }
