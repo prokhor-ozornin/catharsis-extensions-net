@@ -11,6 +11,30 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IListExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="IListExtensions.With{T}(IList{T}, int, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void With_Method()
+  {
+    AssertionExtensions.Should(() => IListExtensions.With<object>(null, default, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+    AssertionExtensions.Should(() => Array.Empty<object>().With(-1, null)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IListExtensions.Without{T}(IList{T}, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Without_Method()
+  {
+    AssertionExtensions.Should(() => IListExtensions.Without<object>(null, default)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+    AssertionExtensions.Should(() => Array.Empty<object>().Without(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IListExtensions.RemoveRange{T}(IList{T}, int, int?, Predicate{T})"/> method.</para>
   /// </summary>
   [Fact]

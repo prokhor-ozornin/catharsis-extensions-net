@@ -80,7 +80,7 @@ public static class BinaryWriterExtensions
     if (writer is null) throw new ArgumentNullException(nameof(writer));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return writer.TryFinally(action, writer => writer.Empty());
+    return writer.TryFinally(action, x => x.Empty());
   }
 
   /// <summary>

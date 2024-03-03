@@ -13,6 +13,43 @@ public static class IListExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="position"></param>
+  /// <param name="element"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IList<T> With<T>(this IList<T> list, int position, T element)
+  {
+    if (list is null) throw new ArgumentNullException(nameof(list));
+    if (position < 0) throw new ArgumentOutOfRangeException(nameof(position));
+
+    list[position] = element;
+
+    return list;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="position"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IList<T> Without<T>(this IList<T> list, int position)
+  {
+    if (list is null) throw new ArgumentNullException(nameof(list));
+    if (position < 0) throw new ArgumentOutOfRangeException(nameof(position));
+
+    list.RemoveAt(position);
+
+    return list;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
   /// <param name="from"></param>
   /// <param name="offset"></param>
   /// <param name="count"></param>

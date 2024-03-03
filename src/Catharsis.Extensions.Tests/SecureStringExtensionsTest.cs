@@ -212,13 +212,26 @@ public sealed class SecureStringExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SecureStringExtensions.WriteText(SecureString, IEnumerable{char})"/> method.</para>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="SecureStringExtensions.WriteText(SecureString, IEnumerable{char})"/></description></item>
+  ///     <item><description><see cref="SecureStringExtensions.WriteText(SecureString, char[])"/></description></item>
+  ///   </list>
   /// </summary>
   [Fact]
-  public void WriteText_Method()
+  public void WriteText_Methods()
   {
-    AssertionExtensions.Should(() => SecureStringExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-    AssertionExtensions.Should(() => Attributes.EmptySecureString().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => Attributes.EmptySecureString().WriteText((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.WriteText(null, Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => Attributes.EmptySecureString().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    }
 
     throw new NotImplementedException();
   }

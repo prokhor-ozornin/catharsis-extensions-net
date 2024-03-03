@@ -66,7 +66,7 @@ public static class ProcessExtensions
     if (process is null) throw new ArgumentNullException(nameof(process));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return process.TryFinally(action, process => process.Kill());
+    return process.TryFinally(action, x => x.Kill());
   }
 
   /// <summary>

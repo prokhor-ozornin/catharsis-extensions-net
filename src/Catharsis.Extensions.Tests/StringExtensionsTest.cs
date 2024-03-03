@@ -606,7 +606,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     static void Validate(IFormatProvider format)
     {
-      format = format ??= CultureInfo.InvariantCulture;
+      format = format ?? CultureInfo.InvariantCulture;
 
       AssertionExtensions.Should(() => string.Empty.CompareAsNumber(byte.MinValue.ToString(format), format)).ThrowExactly<FormatException>();
       AssertionExtensions.Should(() => byte.MinValue.ToString(format).CompareAsNumber(string.Empty, format)).ThrowExactly<FormatException>();
@@ -839,7 +839,7 @@ public sealed class StringExtensionsTest : UnitTest
     {
       builder.Append(i);
     }
-    for (var i = 'а'; i <= 'я'; i++)
+    for (var i = 'пїЅ'; i <= 'пїЅ'; i++)
     {
       builder.Append(i);
     }
@@ -869,9 +869,9 @@ public sealed class StringExtensionsTest : UnitTest
       "word & deed".Capitalize(culture).Should().Be("Word & deed");
       "wORD & deed".Capitalize(culture).Should().Be("WORD & deed");
 
-      "Слово & Дело".Capitalize(culture).Should().Be("Слово & Дело");
-      "слово & дело".Capitalize(culture).Should().Be("Слово & дело");
-      "сЛОВО & дело".Capitalize(culture).Should().Be("СЛОВО & дело");
+      "пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ".Capitalize(culture).Should().Be("пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ");
+      "пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ".Capitalize(culture).Should().Be("пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ");
+      "пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ".Capitalize(culture).Should().Be("пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ");
     }
   }
 
@@ -889,9 +889,9 @@ public sealed class StringExtensionsTest : UnitTest
     "word & deed".CapitalizeAll().Should().Be("Word & Deed");
     "wORD & deed".CapitalizeAll().Should().Be("Word & Deed");
 
-    "Слово & Дело".CapitalizeAll().Should().Be("Слово & Дело");
-    "слово & дело".CapitalizeAll().Should().Be("Слово & Дело");
-    "сЛОВО & дело".CapitalizeAll().Should().Be("Слово & Дело");
+    "пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ".CapitalizeAll().Should().Be("пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ");
+    "пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ".CapitalizeAll().Should().Be("пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ");
+    "пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ".CapitalizeAll().Should().Be("пїЅпїЅпїЅпїЅпїЅ & пїЅпїЅпїЅпїЅ");
   }
 
   /// <summary>
@@ -2521,20 +2521,20 @@ public sealed class StringExtensionsTest : UnitTest
     {
       var name = Path.GetTempFileName();
       name.ToFile(out var file).Should().BeTrue();
-      file.TryFinallyDelete(file =>
+      file.TryFinallyDelete(info =>
       {
-        file.Exists.Should().BeTrue();
-        file.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
-        file.FullName.Should().Be(name);
+        info.Exists.Should().BeTrue();
+        info.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
+        info.FullName.Should().Be(name);
       });
 
       name = Attributes.RandomName();
       name.ToFile(out file).Should().BeFalse();
-      file.TryFinallyDelete(file =>
+      file.TryFinallyDelete(info =>
       {
-        file.Exists.Should().BeTrue();
-        file.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
-        file.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
+        info.Exists.Should().BeTrue();
+        info.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
+        info.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
       });
     }
   }

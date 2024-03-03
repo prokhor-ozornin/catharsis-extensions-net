@@ -43,7 +43,7 @@ public static class MethodInfoExtensions
   /// <summary>
   ///   <para>Creates a delegate of the specified type to represent a specified static method.</para>
   /// </summary>
-  /// <typeparam name="T">The <see cref="ToType"/> of delegate to create.</typeparam>
+  /// <typeparam name="T">The type of delegate to create.</typeparam>
   /// <param name="method">The <see cref="MethodInfo"/> describing the static or instance method the delegate is to represent.</param>
   /// <returns>A delegate of the specified type to represent the specified static method.</returns>
   /// <exception cref="ArgumentNullException"></exception>
@@ -53,7 +53,7 @@ public static class MethodInfoExtensions
   ///   <para>Creates a delegate of the specified type to represent a specified static method.</para>
   /// </summary>
   /// <param name="method">The <see cref="MethodInfo"/> describing the static or instance method the delegate is to represent.</param>
-  /// <param name="type">The <see cref="ToType"/> of delegate to create.</param>
+  /// <param name="type">The type of delegate to create.</param>
   /// <returns>A delegate of the specified type to represent the specified static method.</returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static Delegate ToDelegate(this MethodInfo method, Type type)

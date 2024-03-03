@@ -115,11 +115,11 @@ public static class FileInfoExtensions
     if (file is null) throw new ArgumentNullException(nameof(file));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return file.TryFinally(file =>
+    return file.TryFinally(info =>
     {
-      file.CreateWithPath();
-      action(file);
-    }, file => file.Empty());
+      info.CreateWithPath();
+      action(info);
+    }, info => info.Empty());
   }
 
   /// <summary>
@@ -134,15 +134,15 @@ public static class FileInfoExtensions
     if (file is null) throw new ArgumentNullException(nameof(file));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return file.TryFinally(file =>
+    return file.TryFinally(info =>
     {
-      file.CreateWithPath();
-      action(file);
-    }, file =>
+      info.CreateWithPath();
+      action(info);
+    }, info =>
     {
-      if (file.Exists)
+      if (info.Exists)
       {
-        file.Delete();
+        info.Delete();
       }
     });
   }

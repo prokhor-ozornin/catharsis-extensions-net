@@ -83,9 +83,9 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XDocument) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     AssertionExtensions.Should(() => new XDocument().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-    var xml = new XDocument();
-    xml.TryFinallyClear(xml => xml.Add(new XElement("root"))).Should().NotBeNull().And.BeSameAs(xml);
-    xml.Nodes().Should().BeEmpty();
+    var document = new XDocument();
+    document.TryFinallyClear(xml => xml.Add(new XElement("root"))).Should().NotBeNull().And.BeSameAs(document);
+    document.Nodes().Should().BeEmpty();
   }
 
   /// <summary>

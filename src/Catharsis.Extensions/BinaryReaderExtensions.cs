@@ -104,7 +104,7 @@ public static class BinaryReaderExtensions
     if (reader is null) throw new ArgumentNullException(nameof(reader));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return reader.TryFinally(action, reader => reader.Empty());
+    return reader.TryFinally(action, x => x.Empty());
   }
 
   /// <summary>

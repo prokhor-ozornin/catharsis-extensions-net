@@ -19,11 +19,13 @@ public static class SocketExtensions
   {
     if (socket is null) throw new ArgumentNullException(nameof(socket));
 
-    if (timeout is not null)
+    if (timeout is null)
     {
-      socket.ReceiveTimeout = (int) timeout.Value.TotalMilliseconds;
-      socket.SendTimeout = (int) timeout.Value.TotalMilliseconds;
+      return socket;
     }
+
+    socket.ReceiveTimeout = (int) timeout.Value.TotalMilliseconds;
+    socket.SendTimeout = (int) timeout.Value.TotalMilliseconds;
 
     return socket;
   }
@@ -40,6 +42,6 @@ public static class SocketExtensions
     if (socket is null) throw new ArgumentNullException(nameof(socket));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return socket.TryFinally(action, socket => socket.Disconnect(true));
+    return socket.TryFinally(action, x => x.Disconnect(true));
   }
 }

@@ -127,7 +127,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new StringBuilder().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     var builder = new StringBuilder();
-    builder.TryFinallyClear(builder => builder.Append(Attributes.RandomString())).Should().NotBeNull().And.BeSameAs(builder);
+    builder.TryFinallyClear(x => x.Append(Attributes.RandomString())).Should().NotBeNull().And.BeSameAs(builder);
     builder.Length.Should().Be(0);
   }
 

@@ -164,7 +164,7 @@ public static class IEnumerableExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="ArgumentNullException"></exception>
-  public static bool ContainsUnique<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => !sequence?.GroupBy(sequence => sequence, comparer).Where(group => group.Count() > 1).Select(group => group.Key).Any() ?? throw new ArgumentNullException(nameof(sequence));
+  public static bool ContainsUnique<T>(this IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => !sequence?.GroupBy(x => x, comparer).Where(group => group.Count() > 1).Select(group => group.Key).Any() ?? throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>

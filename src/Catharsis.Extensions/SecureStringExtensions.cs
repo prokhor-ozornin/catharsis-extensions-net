@@ -75,7 +75,7 @@ public static class SecureStringExtensions
     if (secure is null) throw new ArgumentNullException(nameof(secure));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return secure.TryFinally(action, secure => secure.Empty());
+    return secure.TryFinally(action, x => x.Empty());
   }
 
   /// <summary>
@@ -150,4 +150,12 @@ public static class SecureStringExtensions
 
     return destination;
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  public static SecureString WriteText(this SecureString destination, params char[] text) => destination.WriteText(text as IEnumerable<char>);
 }

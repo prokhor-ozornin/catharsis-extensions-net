@@ -44,7 +44,7 @@ public static class XmlDocumentExtensions
     if (document is null) throw new ArgumentNullException(nameof(document));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return document.TryFinally(action, document => document.Empty());
+    return document.TryFinally(action, x => x.Empty());
   }
 
   /// <summary>

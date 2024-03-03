@@ -247,7 +247,7 @@ public static class StreamExtensions
     if (stream is null) throw new ArgumentNullException(nameof(stream));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return stream.TryFinally(action, stream => stream.Empty());
+    return stream.TryFinally(action, x => x.Empty());
   }
 
   /// <summary>

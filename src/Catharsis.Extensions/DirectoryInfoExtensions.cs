@@ -32,7 +32,7 @@ public static class DirectoryInfoExtensions
   {
     if (directory is null) throw new ArgumentNullException(nameof(directory));
 
-    directory.Directories().ForEach(directory => directory.Delete(true));
+    directory.Directories().ForEach(info => info.Delete(true));
     directory.Files().ForEach(file => file.Delete());
 
     return directory;
@@ -50,11 +50,11 @@ public static class DirectoryInfoExtensions
     if (directory is null) throw new ArgumentNullException(nameof(directory));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return directory.TryFinally(directory =>
+    return directory.TryFinally(info =>
     {
-      directory.Create();
-      action(directory);
-    }, directory => directory.Empty());
+      info.Create();
+      action(info);
+    }, info => info.Empty());
   }
 
   /// <summary>
@@ -69,15 +69,15 @@ public static class DirectoryInfoExtensions
     if (directory is null) throw new ArgumentNullException(nameof(directory));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return directory.TryFinally(directory =>
+    return directory.TryFinally(info =>
     {
-      directory.Create();
-      action(directory);
-    }, directory =>
+      info.Create();
+      action(info);
+    }, info =>
     {
-      if (directory.Exists)
+      if (info.Exists)
       {
-        directory.Delete(true);
+        info.Delete(true);
       }
     });
   }

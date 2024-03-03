@@ -44,7 +44,7 @@ public static class IPHostEntryExtensions
 
     var reply = timeout is not null ? ping.Send(address, (int) timeout.Value.TotalMilliseconds) : ping.Send(address);
 
-    return reply.Status == IPStatus.Success;
+    return reply?.Status == IPStatus.Success;
   }
 
   /// <summary>

@@ -18,7 +18,6 @@ public static class DateTimeExtensions
   /// <param name="left">Current date to compare with the second.</param>
   /// <param name="right">Second date to compare with the current.</param>
   /// <returns><c>true</c> if both <paramref name="left"/> and <paramref name="right"/> have equals date component.</returns>
-  /// <seealso cref="EqualsByDate(DateTimeOffset, DateTimeOffset)"/>
   public static bool EqualsByDate(this DateTime left, DateTime right) => left.Year == right.Year && left.Month == right.Month && left.Day == right.Day;
 
   /// <summary>
@@ -27,7 +26,6 @@ public static class DateTimeExtensions
   /// <param name="left">Current date to compare with the second.</param>
   /// <param name="right">Second date to compare with the current.</param>
   /// <returns><c>true</c> if both <paramref name="left"/> and <paramref name="right"/> have equal time component.</returns>
-  /// <seealso cref="EqualsByTime(DateTimeOffset, DateTimeOffset)"/>
   public static bool EqualsByTime(this DateTime left, DateTime right) => left.Hour == right.Hour && left.Minute == right.Minute && left.Second == right.Second && left.Millisecond == right.Millisecond;
 
   /// <summary>
@@ -88,7 +86,6 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  /// <seealso cref="IsWeekday(DateTimeOffset)"/>
   public static bool IsWeekday(this DateTime date) => !date.IsWeekend();
 
   /// <summary>
@@ -96,7 +93,6 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  /// <seealso cref="IsWeekend(DateTimeOffset)"/>
   public static bool IsWeekend(this DateTime date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
 
   /// <summary>
@@ -104,7 +100,6 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the start of year of the specified <paramref name="date"/>.</returns>
-  /// <seealso cref="TruncateToYearStart(DateTimeOffset)"/>
   public static DateTime TruncateToYearStart(this DateTime date) => new(date.Year, 1, 1, 0, 0, 0, date.Kind);
 
   /// <summary>
@@ -112,7 +107,6 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the start of month of the specified <paramref name="date"/>.</returns>
-  /// <seealso cref="TruncateToMonthStart(DateTimeOffset)"/>
   public static DateTime TruncateToMonthStart(this DateTime date) => new(date.Year, date.Month, 1, 0, 0, 0, date.Kind);
 
   /// <summary>
@@ -121,7 +115,6 @@ public static class DateTimeExtensions
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represent the start of day of the specified <paramref name="date"/>.</returns>
   /// <remarks>Date component (year, month, day) remains the same, while time component (hour/minute/second) is changed to represent the beginning of the day (hour : 0, minute : 0, second : 0).</remarks>
-  /// <seealso cref="TruncateToDayStart(DateTimeOffset)"/>
   public static DateTime TruncateToDayStart(this DateTime date) => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Kind);
 
   /// <summary>
@@ -150,7 +143,6 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the end of year of the specified <paramref name="date"/>.</returns>
-  /// <seealso cref="TruncateToYearEnd(DateTimeOffset)"/>
   public static DateTime TruncateToYearEnd(this DateTime date) => new(date.Year, 12, 31, 23, 59, 59, 999, date.Kind);
 
   /// <summary>
@@ -158,7 +150,6 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the end of month of the specified <paramref name="date"/>.</returns>
-  /// <seealso cref="TruncateToMonthEnd(DateTimeOffset)"/>
   public static DateTime TruncateToMonthEnd(this DateTime date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Kind);
 
   /// <summary>
@@ -166,7 +157,6 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the end of day of the specified <paramref name="date"/>.</returns>
-  /// <seealso cref="TruncateToDayEnd(DateTimeOffset)"/>
   public static DateTime TruncateToDayEnd(this DateTime date) => new(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Kind);
 
   /// <summary>
@@ -217,7 +207,6 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  /// <seealso cref="ToDateOnly(DateTimeOffset)"/>
   public static DateOnly ToDateOnly(this DateTime date) => DateOnly.FromDateTime(date);
 
   /// <summary>
@@ -225,7 +214,6 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  /// <seealso cref="ToTimeOnly(DateTimeOffset)"/>
   public static TimeOnly ToTimeOnly(this DateTime date) => TimeOnly.FromDateTime(date);
 #endif
 }

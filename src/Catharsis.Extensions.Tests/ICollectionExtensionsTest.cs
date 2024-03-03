@@ -11,6 +11,34 @@ namespace Catharsis.Extensions.Tests;
 public sealed class ICollectionExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="ICollectionExtensions.With{T}(ICollection{T}, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void With_Method()
+  {
+    using (new AssertionScope())
+    {
+
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ICollectionExtensions.Without{T}(ICollection{T}, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Without_Method()
+  {
+    using (new AssertionScope())
+    {
+
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="ICollectionExtensions.AddRange{T}(ICollection{T}, IEnumerable{T})"/></description></item>
@@ -65,10 +93,10 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
       var elements = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
 
-      collection = new List<object>(elements);
+      collection = [..elements];
       collection.RemoveRange(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
 
-      collection = new List<object>(elements);
+      collection = [..elements];
       collection.RemoveRange(elements).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
     }
 
@@ -114,6 +142,6 @@ public sealed class ICollectionExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
     var collection = new List<object>();
-    collection.TryFinallyClear(collection => collection.Add(new object())).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+    collection.TryFinallyClear(x => x.Add(new object())).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
   }
 }

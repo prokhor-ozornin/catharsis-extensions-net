@@ -36,13 +36,13 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
     directory.Exists.Should().BeTrue();
     directory.IsEmpty().Should().BeFalse();
 
-    Attributes.RandomDirectory().TryFinallyDelete(directory =>
+    Attributes.RandomDirectory().TryFinallyDelete(info =>
     {
-      directory.Exists.Should().BeTrue();
-      directory.IsEmpty().Should().BeTrue();
-      new Random().File(new Random().Directory(directory));
-      new Random().File(directory);
-      directory.IsEmpty().Should().BeFalse();
+      info.Exists.Should().BeTrue();
+      info.IsEmpty().Should().BeTrue();
+      new Random().File(new Random().Directory(info));
+      new Random().File(info);
+      info.IsEmpty().Should().BeFalse();
     });
   }
 
@@ -80,19 +80,19 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
 
     var directory = Attributes.RandomFakeDirectory();
     directory.Exists.Should().BeFalse();
-    directory.TryFinallyDelete(directory =>
+    directory.TryFinallyDelete(info =>
     {
-      new Random().File(directory);
-      new Random().File(new Random().Directory(directory));
+      new Random().File(info);
+      new Random().File(new Random().Directory(info));
     });
     directory.Exists.Should().BeFalse();
 
     directory = Attributes.RandomDirectory();
     directory.Exists.Should().BeTrue();
-    directory.TryFinallyDelete(directory =>
+    directory.TryFinallyDelete(info =>
     {
-      new Random().File(directory);
-      new Random().File(new Random().Directory(directory));
+      new Random().File(info);
+      new Random().File(new Random().Directory(info));
     });
     directory.Exists.Should().BeTrue();
     directory.IsEmpty().Should().BeTrue();

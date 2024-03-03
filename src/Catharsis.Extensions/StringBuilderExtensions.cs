@@ -76,7 +76,7 @@ public static class StringBuilderExtensions
     if (builder is null) throw new ArgumentNullException(nameof(builder));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return builder.TryFinally(action, builder => builder.Empty());
+    return builder.TryFinally(action, x => x.Empty());
   }
 
   /// <summary>

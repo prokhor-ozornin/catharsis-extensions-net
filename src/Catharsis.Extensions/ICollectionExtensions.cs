@@ -7,6 +7,39 @@ namespace Catharsis.Extensions;
 public static class ICollectionExtensions
 {
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="collection"></param>
+  /// <param name="element"></param>
+  /// <returns></returns>
+  public static ICollection<T> With<T>(this ICollection<T> collection, T element)
+  {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+
+    collection.Add(element);
+
+    return collection;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="collection"></param>
+  /// <param name="element"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static ICollection<T> Without<T>(this ICollection<T> collection, T element)
+  {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+
+    collection.Remove(element);
+
+    return collection;
+  }
+
+  /// <summary>
   ///   <para>Sequentially adds all elements, returned by the enumerator, to the specified collection.</para>
   /// </summary>
   /// <typeparam name="T">Type of collection's elements.</typeparam>

@@ -10,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IDictionaryExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="IDictionaryExtensions.GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
   /// </summary>
   [Fact]
   public void GetValueOrDefault_Method()
@@ -21,12 +21,12 @@ public sealed class IDictionaryExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IDictionaryExtensions.GetOrSet{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.SetValueOrDefault{TKey,TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
   /// </summary>
   [Fact]
-  public void GetOrSet_Method()
+  public void SetValueOrDefault_Method()
   {
-    AssertionExtensions.Should(() => IDictionaryExtensions.GetOrSet<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    AssertionExtensions.Should(() => IDictionaryExtensions.SetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
 
     throw new NotImplementedException();
   }

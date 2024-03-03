@@ -152,14 +152,14 @@ public static class UriExtensions
 
     if (uri.IsFile)
     {
-      finalizer = uri => uri.LocalPath.ToFile().TryFinallyDelete(_ => action(uri));
+      finalizer = link => link.LocalPath.ToFile().TryFinallyDelete(_ => action(link));
     }
     else if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
     {
-      async void Finalizer(Uri uri)
+      async void Finalizer(Uri link)
       {
         using var http = new HttpClient().WithTimeout(timeout).WithHeaders(headers);
-        await http.ExecuteDeleteAsync(uri, cancellation).ConfigureAwait(false);
+        await http.ExecuteDeleteAsync(link, cancellation).ConfigureAwait(false);
       }
 
       finalizer = Finalizer;

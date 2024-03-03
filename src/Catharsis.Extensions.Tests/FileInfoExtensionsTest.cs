@@ -36,14 +36,14 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     var bytes = new Random().ByteSequence(1).ToArray();
 
-    Attributes.RandomEmptyFile().TryFinallyDelete(file =>
+    Attributes.RandomEmptyFile().TryFinallyDelete(info =>
     {
-      file.Exists.Should().BeTrue();
-      file.Length.Should().Be(0);
-      file.IsEmpty().Should().BeTrue();
-      bytes.WriteToAsync(file).Await();
-      file.Length.Should().Be(bytes.Length);
-      file.IsEmpty().Should().BeFalse();
+      info.Exists.Should().BeTrue();
+      info.Length.Should().Be(0);
+      info.IsEmpty().Should().BeTrue();
+      bytes.WriteToAsync(info).Await();
+      info.Length.Should().Be(bytes.Length);
+      info.IsEmpty().Should().BeFalse();
     });
   }
 
@@ -62,14 +62,14 @@ public sealed class FileInfoExtensionsTest : UnitTest
     file.Length.Should().Be(0);
     file.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
 
-    Attributes.RandomNonEmptyFile().TryFinallyDelete(file =>
+    Attributes.RandomNonEmptyFile().TryFinallyDelete(info =>
     {
-      file.Length.Should().BePositive();
-      file.Empty().Should().NotBeNull().And.BeSameAs(file);
+      info.Length.Should().BePositive();
+      info.Empty().Should().NotBeNull().And.BeSameAs(info);
 
-      file.Exists.Should().BeTrue();
-      file.Length.Should().Be(0);
-      file.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
+      info.Exists.Should().BeTrue();
+      info.Length.Should().Be(0);
+      info.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
     });
   }
 
@@ -186,7 +186,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
       var bytes = Attributes.RandomBytes();
 
       file.Exists.Should().BeFalse();
-      file.TryFinallyDelete(file => bytes.WriteToAsync(file).Await()).Should().NotBeNull().And.BeSameAs(file);
+      file.TryFinallyDelete(info => bytes.WriteToAsync(info).Await()).Should().NotBeNull().And.BeSameAs(file);
       file.Exists.Should().BeFalse();
     }
   }

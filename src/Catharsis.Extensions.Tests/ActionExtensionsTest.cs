@@ -52,16 +52,16 @@ public sealed class ActionExtensionsTest : UnitTest
       action.Execute(_ => false, collection).Should().NotBeNull().And.BeSameAs(action);
       collection.Should().BeEmpty();
 
-      collection = new List<int>();
+      collection = [];
       action.Execute(_ => false, null).Should().NotBeNull().And.BeSameAs(action);
       collection.Should().BeEmpty();
 
-      collection = new List<int>();
-      action.Execute(collection => collection?.Count < count, collection).Should().NotBeNull().And.BeSameAs(action);
+      collection = [];
+      action.Execute(x => x?.Count < count, collection).Should().NotBeNull().And.BeSameAs(action);
       collection.Should().HaveCount(count).And.AllBeEquivalentTo(int.MaxValue);
 
-      collection = new List<int>();
-      action.Execute(collection => collection?.Count < count, null).Should().NotBeNull().And.BeSameAs(action);
+      collection = [];
+      action.Execute(x => x?.Count < count, null).Should().NotBeNull().And.BeSameAs(action);
       collection.Should().BeEmpty();
     }
   }
