@@ -20,6 +20,10 @@ public sealed class TypeExtensionsTest : UnitTest
     AssertionExtensions.Should(() => TypeExtensions.IsSealed(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type) => type.IsSealed().Should().Be(result);
   }
 
   /// <summary>
@@ -31,6 +35,10 @@ public sealed class TypeExtensionsTest : UnitTest
     AssertionExtensions.Should(() => TypeExtensions.IsStatic(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type) => type.IsStatic().Should().Be(result);
   }
 
   /// <summary>
@@ -42,6 +50,10 @@ public sealed class TypeExtensionsTest : UnitTest
     AssertionExtensions.Should(() => TypeExtensions.IsAssignableFrom<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, Type from) => type.IsAssignableFrom(from).Should().Be(result);
   }
 
   /// <summary>
@@ -52,11 +64,15 @@ public sealed class TypeExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => TypeExtensions.IsAssignableTo<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
-    /*typeof(object).IsAssignableTo<object>().Should().BeTrue();
-    typeof(string).IsAssignableTo<object>().Should().BeTrue();
-    typeof(object).IsAssignableTo<string>().Should().BeFalse();*/
+    Validate<object>(true, typeof(object));
+    Validate<object>(true, typeof(string));
+    Validate<string>(false, typeof(object));
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(bool result, Type type) => type.IsAssignableTo<T>().Should().Be(result);
   }
 
   /// <summary>
@@ -68,6 +84,10 @@ public sealed class TypeExtensionsTest : UnitTest
     AssertionExtensions.Should(() => TypeExtensions.IsArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(bool result, Type type) => type.IsArray<T>().Should().Be(result);
   }
 
   /// <summary>
@@ -93,6 +113,10 @@ public sealed class TypeExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, Type baseType) => type.IsDerivedFrom(baseType).Should().Be(result);
   }
 
   /// <summary>
@@ -117,6 +141,10 @@ public sealed class TypeExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, Type interfaceType) => type.Implements(interfaceType).Should().Be(result);
   }
 
   /// <summary>
@@ -128,6 +156,10 @@ public sealed class TypeExtensionsTest : UnitTest
     AssertionExtensions.Should(() => TypeExtensions.Implementations(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(Type type, params Type[] implementations) => type.Implementations().Should().NotBeNull().And.NotBeSameAs(type.Implementations()).And.Equal(implementations);
   }
 
   /// <summary>
@@ -139,6 +171,10 @@ public sealed class TypeExtensionsTest : UnitTest
     AssertionExtensions.Should(() => TypeExtensions.Implementors(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(Type type, params Type[] implementors) => type.Implementors().Should().NotBeNull().And.NotBeSameAs(type.Implementors()).And.Equal(implementors);
   }
 
   /// <summary>
@@ -150,6 +186,8 @@ public sealed class TypeExtensionsTest : UnitTest
     AssertionExtensions.Should(() => TypeExtensions.HasField(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
     AssertionExtensions.Should(() => typeof(object).HasField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
+    Validate(false, typeof(object), "field");
+    
     /*typeof(object).HasField("field").Should().BeFalse();
 
     var subject = typeof(TestObject);
@@ -158,9 +196,11 @@ public sealed class TypeExtensionsTest : UnitTest
     subject.HasField("PrivateStaticField").Should().BeTrue();
     subject.HasField("PublicField").Should().BeTrue();
     subject.HasField("ProtectedField").Should().BeTrue();
-    subject.HasField("PrivateField").Should().BeTrue();*/
+    subject.HasField("PrivateField").Should().BeTrue()*/
 
-    throw new NotImplementedException();
+    return;
+
+    static void Validate(bool result, Type type, string name) => type.HasField(name).Should().Be(result);
   }
 
   /// <summary>
@@ -171,6 +211,8 @@ public sealed class TypeExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => TypeExtensions.HasProperty(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
     AssertionExtensions.Should(() => typeof(object).HasProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+
+    Validate(false, typeof(object), "property");
 
     /*typeof(object).HasProperty("property").Should().BeFalse();
 
@@ -183,6 +225,10 @@ public sealed class TypeExtensionsTest : UnitTest
     subject.HasProperty("PrivateProperty").Should().BeTrue();*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, string name) => type.HasProperty(name).Should().Be(result);
   }
 
   /// <summary>
@@ -200,6 +246,7 @@ public sealed class TypeExtensionsTest : UnitTest
       AssertionExtensions.Should(() => TypeExtensions.HasMethod(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
       AssertionExtensions.Should(() => typeof(object).HasMethod(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
+      Validate(false, typeof(object), "method");
       /*typeof(object).HasMethod("method").Should().BeFalse();
 
       var subject = typeof(TestObject);
@@ -220,6 +267,10 @@ public sealed class TypeExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, string name) => type.HasMethod(name).Should().Be(result);
   }
 
   /// <summary>
@@ -237,6 +288,22 @@ public sealed class TypeExtensionsTest : UnitTest
     type.Event("PrivateEvent").Should().NotBeNull();*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, string name)
+    {
+      var info = type.AnyEvent(name);
+
+      if (result)
+      {
+        info.Should().NotBeNull();
+      }
+      else
+      {
+        info.Should().BeNull();
+      }
+    }
   }
 
   /// <summary>
@@ -287,6 +354,22 @@ public sealed class TypeExtensionsTest : UnitTest
     });*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, string name)
+    {
+      var info = type.AnyField(name);
+
+      if (result)
+      {
+        info.Should().NotBeNull();
+      }
+      else
+      {
+        info.Should().BeNull();
+      }
+    }
   }
 
   /// <summary>
@@ -308,6 +391,22 @@ public sealed class TypeExtensionsTest : UnitTest
     //ReflectionExtensions.AnyProperty(type, "PrivateProperty").With(property => property.IsPublic().Should().BeFalse());
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, string name)
+    {
+      var info = type.AnyProperty(name);
+
+      if (result)
+      {
+        info.Should().NotBeNull();
+      }
+      else
+      {
+        info.Should().BeNull();
+      }
+    }
   }
 
   /// <summary>
@@ -331,8 +430,24 @@ public sealed class TypeExtensionsTest : UnitTest
       AssertionExtensions.Should(() => TypeExtensions.AnyMethod(null, "name", [])).ThrowExactly<ArgumentNullException>().WithParameterName("type");
       AssertionExtensions.Should(() => typeof(object).AnyMethod(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("name");
     }
-    
+
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, string name, params Type[] arguments)
+    {
+      var info = type.AnyMethod(name, arguments);
+
+      if (result)
+      {
+        info.Should().NotBeNull();
+      }
+      else
+      {
+        info.Should().BeNull();
+      }
+    }
   }
 
   /// <summary>
@@ -358,6 +473,10 @@ public sealed class TypeExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type, params Type[] arguments) => type.HasConstructor(arguments).Should().Be(result);
   }
 
   /// <summary>
@@ -372,6 +491,10 @@ public sealed class TypeExtensionsTest : UnitTest
     typeof(string).Constructor().Should().BeNull();*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type) => type.HasDefaultConstructor().Should().Be(result);
   }
 
   /// <summary>
@@ -408,5 +531,11 @@ public sealed class TypeExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(Type type, object instance, params object[] arguments)
+    {
+    }
   }
 }

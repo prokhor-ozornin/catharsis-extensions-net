@@ -19,28 +19,59 @@ public static class NameValueCollectionExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="to"></param>
-  /// <param name="from"></param>
+  /// <param name="collection"></param>
+  /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static NameValueCollection AddRange(this NameValueCollection to, IEnumerable<(string Name, object Value)> from)
+  public static NameValueCollection With(this NameValueCollection collection, IEnumerable<(string Name, object Value)> elements)
   {
-    if (to is null) throw new ArgumentNullException(nameof(to));
-    if (from is null) throw new ArgumentNullException(nameof(from));
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+    if (elements is null) throw new ArgumentNullException(nameof(elements));
 
-    from.ForEach(tuple => to.Add(tuple.Name, tuple.Value?.ToInvariantString()));
-    
-    return to;
+    foreach (var element in elements)
+    {
+      collection.Add(element.Name, element.Value?.ToInvariantString());
+    }
+
+    return collection;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="to"></param>
-  /// <param name="from"></param>
+  /// <param name="collection"></param>
+  /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static NameValueCollection AddRange(this NameValueCollection to, params (string Name, object Value)[] from) => to.AddRange(from as IEnumerable<(string Name, object Value)>);
+  public static NameValueCollection With(this NameValueCollection collection, params (string Name, object Value)[] elements) => collection.With(elements as IEnumerable<(string Name, object Value)>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="collection"></param>
+  /// <param name="elements"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static NameValueCollection Without(this NameValueCollection collection, IEnumerable<string> elements)
+  {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+    if (elements is null) throw new ArgumentNullException(nameof(elements));
+
+    foreach (var element in elements)
+    {
+      collection.Remove(element);
+    }
+
+    return collection;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="collection"></param>
+  /// <param name="elements"></param>
+  /// <returns></returns>
+  public static NameValueCollection Without(this NameValueCollection collection, params string[] elements) => collection.Without(elements as IEnumerable<string>);
 
   /// <summary>
   ///   <para></para>

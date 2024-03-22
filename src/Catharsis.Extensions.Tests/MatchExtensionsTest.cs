@@ -19,5 +19,11 @@ public sealed class MatchExtensionsTest : UnitTest
     AssertionExtensions.Should(() => MatchExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("match");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

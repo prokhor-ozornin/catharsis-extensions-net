@@ -21,6 +21,10 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((UdpClient) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, UdpClient client) => client.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -31,29 +35,39 @@ public sealed class UdpClientExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((UdpClient) null).WithTimeout(null)).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
-    using var udp = new UdpClient();
+    using var client = new UdpClient();
 
-    AssertionExtensions.Should(() => udp.WithTimeout(TimeSpan.MinValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
-    AssertionExtensions.Should(() => udp.WithTimeout(TimeSpan.MaxValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
+    AssertionExtensions.Should(() => client.WithTimeout(TimeSpan.MinValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
+    AssertionExtensions.Should(() => client.WithTimeout(TimeSpan.MaxValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
 
-    var receiveTimeout = udp.Client.ReceiveTimeout;
-    var sendTimeout = udp.Client.SendTimeout;
-    receiveTimeout.Should().Be(udp.Client.ReceiveTimeout).And.Be(0);
-    sendTimeout.Should().Be(udp.Client.SendTimeout).And.Be(0);
+    var receiveTimeout = client.Client.ReceiveTimeout;
+    var sendTimeout = client.Client.SendTimeout;
+    receiveTimeout.Should().Be(client.Client.ReceiveTimeout).And.Be(0);
+    sendTimeout.Should().Be(client.Client.SendTimeout).And.Be(0);
 
-    udp.WithTimeout(null).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
-    udp.Client.ReceiveTimeout.Should().Be(receiveTimeout);
-    udp.Client.SendTimeout.Should().Be(sendTimeout);
+    client.WithTimeout(null).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
+    client.Client.ReceiveTimeout.Should().Be(receiveTimeout);
+    client.Client.SendTimeout.Should().Be(sendTimeout);
 
     var timespan = TimeSpan.FromMilliseconds(-1);
-    udp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
-    udp.Client.ReceiveTimeout.Should().Be(0);
-    udp.Client.SendTimeout.Should().Be(0);
+    client.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
+    client.Client.ReceiveTimeout.Should().Be(0);
+    client.Client.SendTimeout.Should().Be(0);
 
     timespan = TimeSpan.Zero;
-    udp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
-    udp.Client.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
-    udp.Client.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
+    client.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
+    client.Client.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
+    client.Client.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
+
+    return;
+
+    static void Validate(UdpClient client, TimeSpan? timespan, TimeSpan? timeout)
+    {
+      using (client)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -66,6 +80,16 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Udp().TryFinallyDisconnect(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(UdpClient client)
+    {
+      using (client)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -77,6 +101,16 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((UdpClient) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(UdpClient client)
+    {
+      using (client)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -88,6 +122,16 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((UdpClient) null).ToAsyncEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(UdpClient client)
+    {
+      using (client)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -99,6 +143,16 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((UdpClient) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(byte[] result, UdpClient client)
+    {
+      using (client)
+      {
+        client.ToBytes().Should().NotBeNull().And.NotBeSameAs(client.ToBytes()).And.Equal(result);
+      }
+    }
   }
 
   /// <summary>
@@ -110,6 +164,16 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((UdpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(byte[] result, UdpClient client)
+    {
+      using (client)
+      {
+        client.ToBytesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(client.ToBytesAsync().ToArray()).And.Equal(result);
+      }
+    }
   }
 
   /// <summary>
@@ -121,6 +185,16 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((UdpClient) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, UdpClient client, Encoding encoding = null)
+    {
+      using (client)
+      {
+        client.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(client.ToText(encoding)).And.Be(result);
+      }
+    }
   }
 
   /// <summary>
@@ -132,6 +206,10 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((UdpClient) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, UdpClient client, Encoding encoding = null) => client.ToTextAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(client.ToTextAsync(encoding).Await()).And.Be(result);
   }
 
   /// <summary>
@@ -144,6 +222,12 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Udp().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(UdpClient client, byte[] bytes)
+    {
+    }
   }
 
   /// <summary>
@@ -157,6 +241,12 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Udp().WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(UdpClient client, byte[] bytes)
+    {
+    }
   }
 
   /// <summary>
@@ -169,6 +259,12 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Udp().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(UdpClient client, string text, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -182,5 +278,11 @@ public sealed class UdpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Udp().WriteTextAsync(string.Empty, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(UdpClient client, string text, Encoding encoding = null)
+    {
+    }
   }
 }

@@ -47,6 +47,12 @@ public sealed class ValueTaskExtensionsTest : UnitTest
   public void Execute_Method()
   {
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -56,5 +62,12 @@ public sealed class ValueTaskExtensionsTest : UnitTest
   public void ExecuteAsync_Method()
   {
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+   
   }
 }

@@ -64,6 +64,12 @@ public sealed class ActionExtensionsTest : UnitTest
       action.Execute(x => x?.Count < count, null).Should().NotBeNull().And.BeSameAs(action);
       collection.Should().BeEmpty();
     }
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -88,5 +94,11 @@ public sealed class ActionExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

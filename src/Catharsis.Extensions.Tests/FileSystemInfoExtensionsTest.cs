@@ -41,5 +41,11 @@ public sealed class FileSystemInfoExtensionsTest : UnitTest
       uri.UserInfo.Should().BeEmpty();
       uri.ToString().ToPath().Should().Be(info.FullName);
     }
+
+    return;
+
+    static void Validate(FileSystemInfo fileSystem)
+    {
+    }
   }
 }

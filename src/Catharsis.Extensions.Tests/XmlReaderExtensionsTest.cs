@@ -21,6 +21,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToXmlReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -32,6 +42,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlReader) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader, Encoding encoding = null)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -43,6 +63,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlReader) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader, Encoding encoding = null)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -54,6 +84,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlReader) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader, string text)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -65,6 +105,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader, string text)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -76,6 +126,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlReader) null).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -87,6 +147,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlReader) null).ToXmlDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -98,6 +168,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlReader) null).ToXDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -110,6 +190,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToXmlReader().ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -121,6 +211,16 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlReader) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader, params Type[] types)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -166,5 +266,15 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     xml.ToStringReader().ToXmlReader().AsXml<string>().Should().Be(serialized);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader, params Type[] types)
+    {
+      using (reader)
+      {
+
+      }
+    }
   }
 }

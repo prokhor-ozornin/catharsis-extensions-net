@@ -13,6 +13,72 @@ namespace Catharsis.Extensions.Tests;
 public sealed class SecureStringExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="SecureStringExtensions.With(SecureString, IEnumerable{char})"/></description></item>
+  ///     <item><description><see cref="SecureStringExtensions.With(SecureString, char[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void With_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.With(null, Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+      AssertionExtensions.Should(() => Attributes.EmptySecureString().With((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
+
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.With(null, Array.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => Attributes.EmptySecureString().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
+
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="SecureStringExtensions.Without(SecureString, IEnumerable{int})"/></description></item>
+  ///     <item><description><see cref="SecureStringExtensions.Without(SecureString, int[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Without_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.Without(null, Enumerable.Empty<int>())).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+      AssertionExtensions.Should(() => Attributes.EmptySecureString().Without((IEnumerable<int>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
+
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.Without(null, Array.Empty<int>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => Attributes.EmptySecureString().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
+
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="SecureStringExtensions.IsEmpty(SecureString)"/> method.</para>
   /// </summary>
   [Fact]
@@ -20,19 +86,18 @@ public sealed class SecureStringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => SecureStringExtensions.IsEmpty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
 
-    using var secure = Attributes.EmptySecureString();
+    Validate(true, new SecureString());
+    Validate(false, new SecureString().With(char.MinValue));
 
-    secure.IsEmpty().Should().BeTrue();
+    return;
 
-    secure.AppendChar(char.MinValue);
-    secure.IsEmpty().Should().BeFalse();
-
-    secure.RemoveAt(0);
-    secure.IsEmpty().Should().BeTrue();
-
-    secure.AppendChar(char.MinValue);
-    secure.Clear();
-    secure.IsEmpty().Should().BeTrue();
+    static void Validate(bool result, SecureString secure)
+    {
+      using (secure)
+      {
+        secure.IsEmpty().Should().Be(result);
+      }
+    }
   }
 
   /// <summary>
@@ -55,7 +120,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
     {
       using (secure)
       {
-        secure.Empty().Should().NotBeNull().And.BeSameAs(secure);
+        secure.Empty().Should().BeSameAs(secure);
         secure.Length.Should().Be(0);
       }
     }
@@ -141,7 +206,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
     {
       using (secure)
       {
-        secure.TryFinallyClear(_ => { }).Should().NotBeNull().And.BeSameAs(secure);
+        secure.TryFinallyClear(secure => secure.With(char.MinValue)).Should().BeSameAs(secure);
         secure.Length.Should().Be(0);
       }
     }
@@ -154,6 +219,12 @@ public sealed class SecureStringExtensionsTest : UnitTest
   public void AsReadOnly_Method()
   {
     AssertionExtensions.Should(() => SecureStringExtensions.AsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+
+    return;
+
+    static void Validate()
+    {
+    }
 
     throw new NotImplementedException();
   }
@@ -168,23 +239,21 @@ public sealed class SecureStringExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => SecureStringExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
 
-      Validate(null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
+      Validate(Attributes.EmptySecureString());
+      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomSecureString(), encoding.GetEncoding()));
     }
 
     return;
 
-    void Validate(Encoding encoding)
+    static void Validate(SecureString secure, Encoding encoding = null)
     {
-      using (var secure = Attributes.EmptySecureString())
-      {
-        secure.ToBytes(encoding).Should().BeSameAs(secure.ToBytes(encoding)).And.BeEmpty();
-      }
-
-      using (var secure = Attributes.RandomSecureString())
+      using (secure)
       {
         var text = secure.ToText();
         secure.ToBytes(encoding).Should().NotBeNull().And.NotBeSameAs(secure.ToBytes(encoding)).And.Equal(text.ToBytes(encoding));
+
+        secure.Clear();
+        secure.ToBytes(encoding).Should().BeSameAs(secure.ToBytes(encoding)).And.BeEmpty();
       }
     }
   }
@@ -208,6 +277,13 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
       text.ForEach(secure.AppendChar);
       secure.ToText().Should().NotBeNull().And.NotBeSameAs(secure.ToText()).And.Be(text);
+    }
+
+    return;
+
+    static void Validate(SecureString secure)
+    {
+
     }
   }
 
@@ -234,5 +310,11 @@ public sealed class SecureStringExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

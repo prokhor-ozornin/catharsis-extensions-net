@@ -13,6 +13,62 @@ public static class XmlDocumentExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="document"></param>
+  /// <param name="nodes"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDocument With(this XmlDocument document, IEnumerable<XmlNode> nodes)
+  {
+    if (document is null) throw new ArgumentNullException(nameof(document));
+    if (nodes is null) throw new ArgumentNullException(nameof(nodes));
+
+    foreach (var node in nodes)
+    {
+      document.AppendChild(node);
+    }
+
+    return document;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <param name="nodes"></param>
+  /// <returns></returns>
+  public static XmlDocument With(this XmlDocument document, params XmlNode[] nodes) => document.With(nodes as IEnumerable<XmlNode>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <param name="nodes"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XmlDocument Without(this XmlDocument document, IEnumerable<XmlNode> nodes)
+  {
+    if (document is null) throw new ArgumentNullException(nameof(document));
+    if (nodes is null) throw new ArgumentNullException(nameof(nodes));
+
+    foreach (var node in nodes)
+    {
+      document.RemoveChild(node);
+    }
+
+    return document;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <param name="nodes"></param>
+  /// <returns></returns>
+  public static XmlDocument Without(this XmlDocument document, params XmlNode[] nodes) => document.Without(nodes as IEnumerable<XmlNode>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this XmlDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));

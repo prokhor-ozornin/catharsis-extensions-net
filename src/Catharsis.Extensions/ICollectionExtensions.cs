@@ -7,54 +7,24 @@ namespace Catharsis.Extensions;
 public static class ICollectionExtensions
 {
   /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="collection"></param>
-  /// <param name="element"></param>
-  /// <returns></returns>
-  public static ICollection<T> With<T>(this ICollection<T> collection, T element)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-
-    collection.Add(element);
-
-    return collection;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="collection"></param>
-  /// <param name="element"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static ICollection<T> Without<T>(this ICollection<T> collection, T element)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-
-    collection.Remove(element);
-
-    return collection;
-  }
-
-  /// <summary>
   ///   <para>Sequentially adds all elements, returned by the enumerator, to the specified collection.</para>
   /// </summary>
   /// <typeparam name="T">Type of collection's elements.</typeparam>
-  /// <param name="to">Collection to which elements are added.</param>
-  /// <param name="from">Elements enumerator that provide elements for addition to the collection <paramref name="to"/>.</param>
-  /// <returns>Reference to the supplied collection <paramref name="to"/>.</returns>
+  /// <param name="collection">Collection to which elements are added.</param>
+  /// <param name="elements">Elements enumerator that provide elements for addition to the collection <paramref name="collection"/>.</param>
+  /// <returns>Reference to the supplied collection <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static ICollection<T> AddRange<T>(this ICollection<T> to, IEnumerable<T> from)
+  public static ICollection<T> With<T>(this ICollection<T> collection, IEnumerable<T> elements)
   {
-    if (to is null) throw new ArgumentNullException(nameof(to));
-    if (from is null) throw new ArgumentNullException(nameof(from));
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+    if (elements is null) throw new ArgumentNullException(nameof(elements));
 
-    from.ForEach(to.Add);
+    foreach (var element in elements)
+    {
+      collection.Add(element);
+    }
     
-    return to;
+    return collection;
   }
 
   /// <summary>
@@ -65,24 +35,27 @@ public static class ICollectionExtensions
   /// <param name="from"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static ICollection<T> AddRange<T>(this ICollection<T> to, params T[] from) => to.AddRange(from as IEnumerable<T>);
+  public static ICollection<T> With<T>(this ICollection<T> to, params T[] from) => to.With(from as IEnumerable<T>);
 
   /// <summary>
   ///   <para>Sequentially removes all elements, returned by the enumerator, from the specified collection, if it has it.</para>
   /// </summary>
   /// <typeparam name="T">Type of collection's elements.</typeparam>
-  /// <param name="from">Collection from which elements are removed.</param>
-  /// <param name="sequence">Elements enumerator that provider elements for removal from the collection <see cref="from"/>.</param>
+  /// <param name="collection">Collection from which elements are removed.</param>
+  /// <param name="elements">Elements enumerator that provider elements for removal from the collection <see cref="collection"/>.</param>
   /// <seealso cref="ICollection{T}.Remove(T)"/>
   /// <exception cref="ArgumentNullException"></exception>
-  public static ICollection<T> RemoveRange<T>(this ICollection<T> from, IEnumerable<T> sequence)
+  public static ICollection<T> Without<T>(this ICollection<T> collection, IEnumerable<T> elements)
   {
-    if (from is null) throw new ArgumentNullException(nameof(from));
-    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+    if (elements is null) throw new ArgumentNullException(nameof(elements));
 
-    sequence.ForEach(element => from.Remove(element));
+    foreach (var element in elements)
+    {
+      collection.Add(element);
+    }
     
-    return from;
+    return collection;
   }
 
   /// <summary>
@@ -94,7 +67,7 @@ public static class ICollectionExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="ArgumentNullException"></exception>
-  public static ICollection<T> RemoveRange<T>(this ICollection<T> from, params T[] sequence) => from.RemoveRange(sequence as IEnumerable<T>);
+  public static ICollection<T> Without<T>(this ICollection<T> from, params T[] sequence) => from.Without(sequence as IEnumerable<T>);
 
   /// <summary>
   ///   <para></para>

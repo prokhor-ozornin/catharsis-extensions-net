@@ -1,3 +1,4 @@
+using System;
 using Catharsis.Commons;
 using FluentAssertions;
 using Xunit;
@@ -33,6 +34,10 @@ public sealed class DateOnlyExtensionsTest : UnitTest
       dateOnly.AddMonths(1).Min(dateOnly).Should().Be(dateOnly);
       dateOnly.AddDays(1).Min(dateOnly).Should().Be(dateOnly);
     }
+
+    return;
+
+    static void Validate(DateOnly min, DateOnly max) => min.Min(max).Should().Be(min);
   }
 
   /// <summary>
@@ -58,6 +63,10 @@ public sealed class DateOnlyExtensionsTest : UnitTest
       dateOnly.AddMonths(1).Max(dateOnly).Should().Be(dateOnly.AddMonths(1));
       dateOnly.AddDays(1).Max(dateOnly).Should().Be(dateOnly.AddDays(1));
     }
+
+    return;
+
+    static void Validate(DateOnly min, DateOnly max) => min.Max(max).Should().Be(max);
   }
 
   /// <summary>
@@ -86,6 +95,12 @@ public sealed class DateOnlyExtensionsTest : UnitTest
       dateOnly.Range(dateOnly.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(2));
       dateOnly.Range(dateOnly.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly.AddDays(-3), dateOnly.AddDays(-1));
     }
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -94,17 +109,19 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void IsWeekday_Method()
   {
-    var now = DateTime.UtcNow.ToDateOnly();
-    var dates = new DateOnly[7].Fill(now.AddDays);
+    var dates = new DateOnly[7].Fill(DateTime.UtcNow.ToDateOnly().AddDays);
 
-    dates.Count(date => date.IsWeekday()).Should().Be(5);
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Monday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Friday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday).IsWeekday().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday).IsWeekday().Should().BeFalse();
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Monday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Friday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday));
+
+    return;
+
+    static void Validate(bool isWeekday, DateOnly date) => date.IsWeekday().Should().Be(isWeekday);
   }
 
   /// <summary>
@@ -113,17 +130,19 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void IsWeekend_Method()
   {
-    var now = DateTime.UtcNow.ToDateOnly();
-    var dates = new DateOnly[7].Fill(now.AddDays);
+    var dates = new DateOnly[7].Fill(DateTime.UtcNow.ToDateOnly().AddDays);
 
-    dates.Count(date => date.IsWeekend()).Should().Be(2);
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Monday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Friday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday).IsWeekend().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday).IsWeekend().Should().BeTrue();
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Monday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Friday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday));
+
+    return;
+
+    static void Validate(bool isWeekend, DateOnly date) => date.IsWeekend().Should().Be(isWeekend);
   }
 
   /// <summary>
@@ -132,8 +151,14 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void TruncateToYearStart_Method()
   {
-    var now = DateTime.UtcNow.ToDateOnly();
-    now.TruncateToYearStart().Should().BeOnOrBefore(now).And.HaveYear(now.Year).And.HaveMonth(1).And.HaveDay(1);
+    Validate(DateOnly.MinValue);
+    Validate(DateOnly.MaxValue);
+    Validate(DateTime.Now.ToDateOnly());
+    Validate(DateTime.UtcNow.ToDateOnly());
+
+    return;
+
+    static void Validate(DateOnly date) => date.TruncateToYearStart().Should().BeOnOrBefore(date).And.HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1);
   }
 
   /// <summary>
@@ -142,8 +167,14 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void TruncateToMonthStart_Method()
   {
-    var now = DateTime.UtcNow.ToDateOnly();
-    now.TruncateToMonthStart().Should().BeOnOrBefore(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(1);
+    Validate(DateOnly.MinValue);
+    Validate(DateOnly.MaxValue);
+    Validate(DateTime.Now.ToDateOnly());
+    Validate(DateTime.UtcNow.ToDateOnly());
+
+    return;
+
+    static void Validate(DateOnly date) => date.TruncateToMonthStart().Should().BeOnOrBefore(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
   }
 
   /// <summary>
@@ -152,8 +183,14 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void TruncateToYearEnd_Method()
   {
-    var now = DateTime.UtcNow.ToDateOnly();
-    now.TruncateToYearEnd().Should().BeOnOrAfter(now).And.HaveYear(now.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(now.Year, now.Month));
+    Validate(DateOnly.MinValue);
+    Validate(DateOnly.MaxValue);
+    Validate(DateTime.Now.ToDateOnly());
+    Validate(DateTime.UtcNow.ToDateOnly());
+
+    return;
+
+    static void Validate(DateOnly date) => date.TruncateToYearEnd().Should().BeOnOrAfter(date).And.HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
   }
 
   /// <summary>
@@ -162,8 +199,14 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void TruncateToMonthEnd_Method()
   {
-    var now = DateTime.UtcNow.ToDateOnly();
-    now.TruncateToMonthEnd().Should().BeOnOrAfter(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(DateTime.DaysInMonth(now.Year, now.Month));
+    Validate(DateOnly.MinValue);
+    Validate(DateOnly.MaxValue);
+    Validate(DateTime.Now.ToDateOnly());
+    Validate(DateTime.UtcNow.ToDateOnly());
+
+    return;
+
+    static void Validate(DateOnly date) => date.TruncateToMonthEnd().Should().BeOnOrAfter(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
   }
 
   /// <summary>
@@ -172,27 +215,14 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void ToDateTime_Method()
   {
-    foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
-    {
-      var dateOnly = DateOnly.FromDateTime(date);
+    Validate(DateOnly.MinValue);
+    Validate(DateOnly.MaxValue);
+    Validate(DateTime.Now.ToDateOnly());
+    Validate(DateTime.UtcNow.ToDateOnly());
 
-      dateOnly.ToDateTime().Should()
-              .BeSameDateAs(dateOnly.ToDateTime())
-              .And
-              .BeIn(DateTimeKind.Unspecified)
-              .And
-              .HaveYear(dateOnly.Year)
-              .And
-              .HaveMonth(dateOnly.Month)
-              .And
-              .HaveDay(dateOnly.Day)
-              .And
-              .HaveHour(0)
-              .And
-              .HaveMinute(0)
-              .And
-              .HaveSecond(0);
-    }
+    return;
+    
+    static void Validate(DateOnly date) => date.ToDateTime().Should().BeSameDateAs(date.ToDateTime()).And.BeIn(DateTimeKind.Unspecified).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
@@ -201,26 +231,13 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void ToDateTimeOffset_Method()
   {
-    foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
-    {
-      var dateOnly = DateOnly.FromDateTime(date);
+    Validate(DateOnly.MinValue);
+    Validate(DateOnly.MaxValue);
+    Validate(DateTime.Now.ToDateOnly());
+    Validate(DateTime.UtcNow.ToDateOnly());
 
-      dateOnly.ToDateTimeOffset().Should()
-              .BeSameDateAs(dateOnly.ToDateTimeOffset())
-              .And
-              .HaveYear(dateOnly.Year)
-              .And
-              .HaveMonth(dateOnly.Month)
-              .And
-              .HaveDay(dateOnly.Day)
-              .And
-              .HaveHour(0)
-              .And
-              .HaveMinute(0)
-              .And
-              .HaveSecond(0)
-              .And
-              .BeWithin(TimeSpan.Zero);
-    }
+    return;
+
+    static void Validate(DateOnly date) => date.ToDateTimeOffset().Should().BeSameDateAs(date.ToDateTimeOffset()).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(TimeSpan.Zero);
   }
 }

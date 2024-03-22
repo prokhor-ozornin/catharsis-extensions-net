@@ -28,6 +28,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     Array.Empty<object>().IsEmpty().Should().BeTrue();
 
     new object[] { null }.IsEmpty().Should().BeFalse();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -40,6 +46,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<object>().IsSubset(null)).ThrowExactly<ArgumentNullException>().WithParameterName("superset");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -52,6 +64,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<object>().IsSuperset(null)).ThrowExactly<ArgumentNullException>().WithParameterName("subset");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -64,6 +82,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<object>().IsReversed(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reversed");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -90,6 +114,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -116,6 +146,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     first = new object[] { string.Empty };
     second = new object[] { null, string.Empty };
     first.Min(second).Should().BeSameAs(first);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -142,6 +178,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     first = new object[] { string.Empty };
     second = new object[] { null, string.Empty };
     first.Max(second).Should().BeSameAs(second);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -159,6 +201,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     new object[] { null }.Contains(Enumerable.Empty<object>()).Should().BeTrue();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -170,6 +218,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ContainsUnique<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -181,6 +235,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ContainsNull<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -192,6 +252,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ContainsDefault<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -205,6 +271,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<object>().Range(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -217,6 +289,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<object>().StartsWith(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -229,6 +307,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<object>().EndsWith(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -245,6 +329,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     new object[] { null, string.Empty, "*", null }.Join().Should().Be("*");
     new object[] { null, string.Empty, "*", null }.Join(",").Should().Be("*");
     new object[] { null, string.Empty, "*", 100, null, "#" }.Join(",").Should().Be("*,100,#");
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -265,6 +355,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     sequence.Repeat(1).Should().BeSameAs(sequence).And.Equal(sequence);
     sequence.Repeat(2).Should().NotBeSameAs(sequence).And.Equal(sequence.Concat(sequence));
     sequence.Repeat(3).Should().NotBeSameAs(sequence).And.Equal(sequence.Concat(sequence).Concat(sequence));
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -284,6 +380,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     elements.Should().Contain(elements.Random());
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -303,6 +405,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     var sequence = new object[] { 1, 2, 3, 4, 5 };
     collection = new List<object>(sequence);
     collection.Randomize().Should().NotBeSameAs(collection).And.Contain(sequence);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -315,6 +423,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.WithCancellation<object>(null, Attributes.CancellationToken())).ThrowExactly<OperationCanceledException>();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -332,8 +446,13 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     var list = new List<object> {null, 1, 55.5, string.Empty, Guid.Empty, null};
     list.AsArray().Should().NotBeSameAs(list.AsArray()).And.NotBeSameAs(list).And.Equal(list);
-  }
 
+    return;
+
+    static void Validate()
+    {
+    }
+  }
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IEnumerableExtensions.AsNotNullable{T}(IEnumerable{T})"/> method.</para>
@@ -347,6 +466,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     var sequence = new object[] {null, 1, 55.5, string.Empty, Guid.Empty, null};
     sequence.AsNotNullable().Should().NotBeSameAs(sequence.AsNotNullable()).And.Equal(sequence.Where(element => element != null));
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -355,13 +480,6 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToAsyncEnumerable_Method()
   {
-    void Validate<T>(IEnumerable<T> sequence)
-    {
-      var result = sequence.ToAsyncEnumerable();
-      result.Should().NotBeNull().And.NotBeSameAs(sequence.ToAsyncEnumerable());
-      result.ToArray().Should().Equal(sequence.ToArray());
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IEnumerableExtensions.ToAsyncEnumerable<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -369,6 +487,15 @@ public sealed class IEnumerableExtensionsTest : UnitTest
       Validate(Enumerable.Empty<object>());
       Validate(Array.Empty<object>());
       Validate(new Random().ObjectSequence(1000).ToArray());
+    }
+
+    return;
+
+    static void Validate<T>(IEnumerable<T> sequence)
+    {
+      var result = sequence.ToAsyncEnumerable();
+      result.Should().NotBeNull().And.NotBeSameAs(sequence.ToAsyncEnumerable());
+      result.ToArray().Should().Equal(sequence.ToArray());
     }
   }
 
@@ -384,6 +511,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     IEnumerable<int?> sequence = new int?[] {1, null, 2, null, 3};
     sequence.ToLinkedList().Should().NotBeSameAs(sequence.ToLinkedList()).And.Equal(sequence);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -395,6 +528,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ToReadOnlyList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -410,6 +549,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     IEnumerable<int?> sequence = new int?[] {1, null, 2, null, 3, null, 3, 2, 1};
     sequence.ToSortedSet().Should().NotBeSameAs(sequence.ToSortedSet()).And.Equal(null, 1, 2, 3);
     sequence.ToSortedSet(Comparer<int?>.Create((x, y) => x.GetValueOrDefault() < y.GetValueOrDefault() ? 1 : x.GetValueOrDefault() > y.GetValueOrDefault() ? -1 : 0)).Should().Equal(3, 2, 1, null);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -424,6 +569,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     IEnumerable<int?> sequence = new int?[] {null, 1, null, 2, null, 3, null};
     sequence.ToStack().Should().NotBeSameAs(sequence.ToStack()).And.Equal(sequence.Reverse());
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -435,6 +586,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ToQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -452,6 +609,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     result.Should().NotBeNull().And.NotBeSameAs(sequence.ToArraySegment()).And.Equal(sequence);
     result.Array.Should().BeSameAs(sequence);
     result.Offset.Should().Be(0);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -471,6 +634,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     result.Should().NotBeNull().And.NotBeSameAs(sequence.ToMemory());
     result.Length.Should().Be(sequence.Length);
     result.ToArray().Should().Equal(sequence);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -490,6 +659,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     result.Should().NotBeNull().And.NotBeSameAs(sequence.ToReadOnlyMemory());
     result.Length.Should().Be(sequence.Length);
     result.ToArray().Should().Equal(sequence);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -506,6 +681,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     var result = sequence.ToSpan();
     result.Length.Should().Be(sequence.Length);
     result.ToArray().Should().Equal(sequence);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -522,6 +703,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     var result = sequence.ToReadOnlySpan();
     result.Length.Should().Be(sequence.Length);
     result.ToArray().Should().Equal(sequence);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -533,6 +720,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ToRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -559,6 +752,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -570,6 +769,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ToDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -581,6 +786,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ToReadOnlyDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -605,6 +816,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -631,6 +848,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -642,6 +865,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToBase64()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -659,6 +888,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     bytes.ToHex().IsMatch("[0-9A-Z]").Should().BeTrue();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -671,6 +906,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -684,6 +925,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -697,18 +944,16 @@ public sealed class IEnumerableExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Validate(Attributes.EmptyStream().ToBinaryWriter());
-      Validate(Attributes.RandomStream().ToBinaryWriter());
+      Validate(Attributes.EmptyStream().ToBinaryWriter(), Attributes.RandomBytes());
+      Validate(Attributes.RandomStream().ToBinaryWriter(), Attributes.RandomBytes());
     }
 
     return;
 
-    void Validate(BinaryWriter writer)
+    static void Validate(BinaryWriter writer, byte[] bytes)
     {
       using (writer)
       {
-        var bytes = Attributes.RandomBytes();
-
         writer.BaseStream.MoveToEnd();
 
         var count = bytes.Length;
@@ -734,6 +979,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -746,6 +997,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync((XmlWriter) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -758,6 +1015,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -771,10 +1034,16 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.RandomFakeFile(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.WriteTo(IEnumerable{byte}, Uri, TimeSpan?, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.WriteTo(IEnumerable{byte}, Uri, TimeSpan?, ValueTuple{string, object}[])"/> method.</para>
   /// </summary>
   [Fact]
   public void WriteTo_Uri_Method()
@@ -783,10 +1052,16 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.WriteToAsync(IEnumerable{byte}, Uri, TimeSpan?, CancellationToken, (string Name, object Value)[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.WriteToAsync(IEnumerable{byte}, Uri, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/> method.</para>
   /// </summary>
   [Fact]
   public void WriteToAsync_Uri_Method()
@@ -796,6 +1071,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.LocalHost(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -808,6 +1089,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((Process) null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -821,6 +1108,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     //AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(ShellProcess, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -834,6 +1127,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Attributes.Http(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -848,6 +1147,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.Http(), Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -860,6 +1165,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -873,6 +1184,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.Tcp(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -885,6 +1202,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -898,6 +1221,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Attributes.Udp(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -910,6 +1239,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -922,6 +1257,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().Encrypt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -935,6 +1276,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().EncryptAsync(Attributes.SymmetricAlgorithm(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -947,6 +1294,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Enumerable.Empty<byte>().Decrypt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -960,6 +1313,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.DecryptAsync(Attributes.SymmetricAlgorithm(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -980,6 +1339,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     var bytes = Attributes.RandomBytes();
     bytes.Hash(Attributes.HashAlgorithm()).Should().NotBeNull().And.NotBeSameAs(bytes.Hash(Attributes.HashAlgorithm())).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(bytes));
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -998,6 +1363,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     foreach (var sequence in sequences)
     {
       sequence.HashMd5().Should().NotBeNull().And.NotBeSameAs(sequence.HashMd5()).And.HaveCount(16).And.Equal(algorithm.ComputeHash(sequence));
+    }
+
+    return;
+
+    static void Validate()
+    {
     }
   }
 
@@ -1018,6 +1389,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     {
       sequence.HashSha1().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha1()).And.HaveCount(20).And.Equal(algorithm.ComputeHash(sequence));
     }
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -1036,6 +1413,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     foreach (var sequence in sequences)
     {
       sequence.HashSha256().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha256()).And.HaveCount(32).And.Equal(algorithm.ComputeHash(sequence));
+    }
+
+    return;
+
+    static void Validate()
+    {
     }
   }
 
@@ -1056,6 +1439,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     {
       sequence.HashSha384().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha384()).And.HaveCount(48).And.Equal(algorithm.ComputeHash(sequence));
     }
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -1075,6 +1464,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     {
       sequence.HashSha512().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha512()).And.HaveCount(64).And.Equal(algorithm.ComputeHash(sequence));
     }
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -1086,6 +1481,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.IsOrdered<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -1097,6 +1498,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -1108,6 +1515,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ToFrozenSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -1119,6 +1532,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ToPriorityQueue<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -1130,5 +1549,11 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

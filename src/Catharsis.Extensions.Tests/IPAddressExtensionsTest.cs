@@ -19,7 +19,30 @@ public sealed class IPAddressExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IPAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-    throw new NotImplementedException();
+    Validate(IPAddress.Any);
+    Validate(IPAddress.Loopback);
+    Validate(IPAddress.Broadcast);
+    Validate(IPAddress.None);
+    Validate(IPAddress.IPv6Any);
+    Validate(IPAddress.IPv6Loopback);
+    Validate(IPAddress.IPv6None);
+
+    return;
+
+    static void Validate(IPAddress original)
+    {
+      var clone = original.Clone();
+
+      clone.Should().NotBeSameAs(original).And.Be(original);
+      clone.ToString().Should().Be(original.ToString());
+      clone.AddressFamily.Should().Be(original.AddressFamily);
+      clone.IsIPv4MappedToIPv6.Should().Be(original.IsIPv4MappedToIPv6);
+      clone.IsIPv6LinkLocal.Should().Be(original.IsIPv6LinkLocal);
+      clone.IsIPv6SiteLocal.Should().Be(original.IsIPv6SiteLocal);
+      clone.IsIPv6UniqueLocal.Should().Be(original.IsIPv6UniqueLocal);
+      clone.IsIPv6Multicast.Should().Be(original.IsIPv6Multicast);
+      clone.IsIPv6Teredo.Should().Be(original.IsIPv6Teredo);
+    }
   }
 
   /// <summary>
@@ -38,11 +61,15 @@ public sealed class IPAddressExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailable(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
     AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailable(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
-    IPAddress.Loopback.IsAvailable().Should().BeTrue();
-    IPAddress.Loopback.IsAvailable(TimeSpan.FromMilliseconds(1)).Should().BeTrue();
+    Validate(true, IPAddress.Loopback);
+    Validate(true, IPAddress.Loopback, TimeSpan.FromMilliseconds(1));
 
-    IPAddress.IPv6Loopback.IsAvailable().Should().BeTrue();
-    IPAddress.IPv6Loopback.IsAvailable(TimeSpan.FromMilliseconds(1)).Should().BeTrue();
+    Validate(true, IPAddress.IPv6Loopback);
+    Validate(true, IPAddress.IPv6Loopback, TimeSpan.FromMilliseconds(1));
+
+    return;
+
+    static void Validate(bool isAvailable, IPAddress address, TimeSpan? timeout = null) => address.IsAvailable(timeout).Should().Be(isAvailable);
   }
 
   /// <summary>
@@ -61,11 +88,15 @@ public sealed class IPAddressExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
     AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
-    IPAddress.Loopback.IsAvailableAsync().Await().Should().BeTrue();
-    IPAddress.Loopback.IsAvailableAsync(TimeSpan.FromMilliseconds(1)).Await().Should().BeTrue();
+    Validate(true, IPAddress.Loopback);
+    Validate(true, IPAddress.Loopback, TimeSpan.FromMilliseconds(1));
 
-    IPAddress.IPv6Loopback.IsAvailableAsync().Await().Should().BeTrue();
-    IPAddress.IPv6Loopback.IsAvailableAsync(TimeSpan.FromMilliseconds(1)).Await().Should().BeTrue();
+    Validate(true, IPAddress.IPv6Loopback);
+    Validate(true, IPAddress.IPv6Loopback, TimeSpan.FromMilliseconds(1));
+
+    return;
+
+    static void Validate(bool isAvailable, IPAddress address, TimeSpan? timeout = null) => address.IsAvailableAsync(timeout).Await().Should().Be(isAvailable);
   }
 
   /// <summary>
@@ -91,6 +122,12 @@ public sealed class IPAddressExtensionsTest : UnitTest
     first = IPAddress.Parse("10.0.0.1");
     second = IPAddress.Parse("10.0.0.2");
     first.Min(second).Should().BeSameAs(first);
+
+    return;
+
+    static void Validate(IPAddress min, IPAddress max)
+    {
+    }
   }
 
   /// <summary>
@@ -116,6 +153,12 @@ public sealed class IPAddressExtensionsTest : UnitTest
     first = IPAddress.Parse("10.0.0.1");
     second = IPAddress.Parse("10.0.0.2");
     first.Max(second).Should().BeSameAs(second);
+
+    return;
+
+    static void Validate(IPAddress min, IPAddress max)
+    {
+    }
   }
 
   /// <summary>
@@ -127,6 +170,10 @@ public sealed class IPAddressExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IPAddressExtensions.IsV4(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(IPAddress address, bool isV4) => address.IsV4();
   }
 
   /// <summary>
@@ -138,8 +185,11 @@ public sealed class IPAddressExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IPAddressExtensions.IsV6(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
     throw new NotImplementedException();
-  }
 
+    return;
+
+    static void Validate(IPAddress address, bool isV6) => address.IsV6();
+  }
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IPAddressExtensions.ToIpHost(IPAddress)"/> method.</para>
@@ -149,9 +199,14 @@ public sealed class IPAddressExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IPAddressExtensions.ToIpHost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-    foreach (var address in new[] { IPAddress.Any, IPAddress.Broadcast, IPAddress.Loopback, IPAddress.None, IPAddress.IPv6Any, IPAddress.IPv6Loopback, IPAddress.None })
+    new[] { IPAddress.Any, IPAddress.Broadcast, IPAddress.Loopback, IPAddress.None, IPAddress.IPv6Any, IPAddress.IPv6Loopback, IPAddress.None }.ForEach(Validate);
+
+    return;
+
+    static void Validate(IPAddress address)
     {
       var host = address.ToIpHost();
+
       host.Should().NotBeNull().And.NotBeSameAs(address.ToIpHost());
       host.AddressList.Should().Equal(address);
       host.Aliases.Should().BeEmpty();
@@ -167,14 +222,11 @@ public sealed class IPAddressExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IPAddress) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-    foreach (var address in new[] {IPAddress.Any, IPAddress.Broadcast, IPAddress.Loopback, IPAddress.None})
-    {
-      address.ToBytes().Should().NotBeNull().And.NotBeSameAs(address.ToBytes()).And.HaveCount(4).And.Equal(address.GetAddressBytes());
-    }
+    new[] {IPAddress.Any, IPAddress.Broadcast, IPAddress.Loopback, IPAddress.None}.ForEach(address => Validate(address, 4));
+    new[] { IPAddress.IPv6Any, IPAddress.IPv6Loopback, IPAddress.IPv6None }.ForEach(address => Validate(address, 16));
 
-    foreach (var address in new[] { IPAddress.IPv6Any, IPAddress.IPv6Loopback, IPAddress.IPv6None })
-    {
-      address.ToBytes().Should().NotBeNull().And.NotBeSameAs(address.ToBytes()).And.HaveCount(16).And.Equal(address.GetAddressBytes());
-    }
+    return;
+
+    static void Validate(IPAddress address, int count) => address.ToBytes().Should().NotBeNull().And.NotBeSameAs(address.ToBytes()).And.HaveCount(count).And.Equal(address.GetAddressBytes());
   }
 }

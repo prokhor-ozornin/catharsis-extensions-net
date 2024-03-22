@@ -25,5 +25,11 @@ public sealed class AssemblyExtensionsTest : UnitTest
     // TODO Encoding support
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(Assembly assembly, string name)
+    {
+    }
   }
 }

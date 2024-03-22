@@ -38,6 +38,12 @@ public sealed class SocketExtensionsTest : UnitTest
     socket.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(socket);
     socket.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
     socket.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -53,6 +59,12 @@ public sealed class SocketExtensionsTest : UnitTest
     //{
     //  socket.Connect(new DnsEndPoint())
     //}
+
+    return;
+
+    static void Validate()
+    {
+    }
     throw new NotImplementedException();
   }
 }

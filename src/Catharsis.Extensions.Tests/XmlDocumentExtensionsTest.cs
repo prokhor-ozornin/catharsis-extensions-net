@@ -13,6 +13,72 @@ namespace Catharsis.Extensions.Tests;
 public sealed class XmlDocumentExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="XmlDocumentExtensions.With(XmlDocument, IEnumerable{XmlNode})"/></description></item>
+  ///     <item><description><see cref="XmlDocumentExtensions.With(XmlDocument, XmlNode[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void With_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => XmlDocumentExtensions.With(null, Enumerable.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => new XmlDocument().With((IEnumerable<XmlNode>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
+
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => XmlDocumentExtensions.With(null, Array.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => new XmlDocument().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
+
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="XmlDocumentExtensions.Without(XmlDocument, IEnumerable{XmlNode})"/></description></item>
+  ///     <item><description><see cref="XmlDocumentExtensions.Without(XmlDocument, XmlNode[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Without_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => XmlDocumentExtensions.Without(null, Enumerable.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => new XmlDocument().Without((IEnumerable<XmlNode>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => XmlDocumentExtensions.Without(null, Array.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => new XmlDocument().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XmlDocumentExtensions.IsEmpty(XmlDocument)"/> method.</para>
   /// </summary>
   [Fact]
@@ -20,43 +86,19 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
-    var xml = new XmlDocument();
-    xml.IsEmpty().Should().BeTrue();
+    Validate(true, new XmlDocument());
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateComment(null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateDocumentType("name", null, null, null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateElement("element"))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateProcessingInstruction("target", "data"))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateSignificantWhitespace(null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateWhitespace(null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateXmlDeclaration("1.0", null, null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateDocumentFragment())));
 
-    xml.RemoveAll();
-    xml.AppendChild(xml.CreateComment(null));
-    xml.IsEmpty().Should().BeFalse();
+    return;
 
-    xml.RemoveAll();
-    xml.AppendChild(xml.CreateDocumentType("name", null, null, null));
-    xml.IsEmpty().Should().BeFalse();
-
-    xml.RemoveAll();
-    xml.AppendChild(xml.CreateElement("element"));
-    xml.IsEmpty().Should().BeFalse();
-
-    xml.RemoveAll();
-    xml.AppendChild(xml.CreateProcessingInstruction("target", "data"));
-    xml.IsEmpty().Should().BeFalse();
-
-    xml.RemoveAll();
-    xml.AppendChild(xml.CreateSignificantWhitespace(null));
-    xml.IsEmpty().Should().BeFalse();
-
-    xml.RemoveAll();
-    xml.AppendChild(xml.CreateWhitespace(null));
-    xml.IsEmpty().Should().BeFalse();
-
-    xml.RemoveAll();
-    xml.AppendChild(xml.CreateXmlDeclaration("1.0", null, null));
-    xml.IsEmpty().Should().BeFalse();
-
-    xml.RemoveAll();
-    xml.AppendChild(xml.CreateDocumentFragment());
-    xml.IsEmpty().Should().BeTrue();
-
-    xml.RemoveAll();
-    xml.IsEmpty().Should().BeTrue();
+    static void Validate(bool result, XmlDocument document) => document.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -65,23 +107,17 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+    AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
-      Validate(new XmlDocument());
-
-      var xml = new XmlDocument();
-      xml.AppendChild(xml.CreateElement("root"));
-      Validate(xml);
-    }
+    Validate(new XmlDocument());
+    Validate(new XmlDocument().With(document => document.With(document.CreateElement("root"))));
 
     return;
 
-    static void Validate(XmlDocument xml)
+    static void Validate(XmlDocument document)
     {
-      xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
-      xml.HasChildNodes.Should().BeFalse();
+      document.Empty().Should().BeSameAs(document);
+      document.HasChildNodes.Should().BeFalse();
     }
   }
 
@@ -94,9 +130,15 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlDocument) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
     AssertionExtensions.Should(() => new XmlDocument().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-    var document = new XmlDocument();
-    document.TryFinallyClear(xml => xml.AppendChild(xml.CreateElement("root"))).Should().NotBeNull().And.BeSameAs(document);
-    document.ChildNodes.Count.Should().Be(0);
+    new XmlDocument().With(document => Validate(document, document.CreateElement("root")));
+
+    return;
+
+    static void Validate(XmlDocument document, params XmlNode[] nodes)
+    {
+      document.TryFinallyClear(xml => xml.With(nodes)).Should().BeSameAs(document);
+      document.ChildNodes.Count.Should().Be(0);
+    }
   }
 
   /// <summary>
@@ -108,6 +150,12 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlDocument document)
+    {
+    }
   }
 
   /// <summary>
@@ -119,6 +167,10 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlDocument) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(byte[] result, XmlDocument document) => document.ToBytes().Should().NotBeNull().And.NotBeSameAs(document.ToBytes()).And.Equal(result);
   }
 
   /// <summary>
@@ -130,6 +182,10 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlDocument) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, XmlDocument document) => document.ToText().Should().NotBeNull().And.NotBeSameAs(document.ToText()).And.Be(result);
   }
 
   /// <summary>
@@ -142,6 +198,12 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XmlDocument().Serialize((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlDocument document, XmlWriter writer)
+    {
+    }
   }
 
   /// <summary>
@@ -154,6 +216,12 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XmlDocument().Serialize((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlDocument document, TextWriter writer)
+    {
+    }
   }
 
   /// <summary>
@@ -166,6 +234,12 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XmlDocument().Serialize((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlDocument document, Stream stream, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -178,6 +252,12 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XmlDocument().Serialize((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlDocument document, FileInfo file, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -189,5 +269,11 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlDocument) null).Serialize()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlDocument document)
+    {
+    }
   }
 }

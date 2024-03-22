@@ -19,7 +19,31 @@ public sealed class FileInfoExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => FileInfoExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-    throw new NotImplementedException();
+    Validate(Attributes.RandomEmptyFile());
+    Validate(Attributes.RandomNonEmptyFile());
+
+    return;
+
+    static void Validate(FileInfo original)
+    {
+      var clone = original.Clone();
+
+      clone.Should().NotBeSameAs(original).And.NotBe(original);
+      clone.ToString().Should().Be(original.ToString());
+      clone.FullName.Should().Be(original.FullName);
+      clone.Name.Should().Be(original.Name);
+      clone.DirectoryName.Should().Be(original.DirectoryName);
+      clone.Extension.Should().Be(original.Extension);
+      clone.Length.Should().Be(original.Length);
+      clone.Exists.Should().Be(original.Exists);
+      clone.IsReadOnly.Should().Be(original.IsReadOnly);
+      clone.Attributes.Should().Be(original.Attributes);
+      clone.LinkTarget.Should().Be(original.LinkTarget);
+      clone.UnixFileMode.Should().Be(original.UnixFileMode);
+      clone.CreationTimeUtc.Should().Be(original.CreationTimeUtc);
+      clone.LastAccessTimeUtc.Should().Be(original.LastAccessTimeUtc);
+      clone.LastWriteTimeUtc.Should().Be(original.LastWriteTimeUtc);
+    }
   }
 
   /// <summary>
@@ -45,6 +69,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
       info.Length.Should().Be(bytes.Length);
       info.IsEmpty().Should().BeFalse();
     });
+
+    return;
+
+    static void Validate(FileInfo file, bool isEmpty)
+    {
+    }
   }
 
   /// <summary>
@@ -71,6 +101,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
       info.Length.Should().Be(0);
       info.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
     });
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -82,6 +118,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FileInfoExtensions.CreateWithPath(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -94,23 +136,20 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      Validate(null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
+      Validate(Attributes.RandomEmptyFile(), null);
+      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
     }
 
     return;
 
-    void Validate(Encoding encoding)
+    static void Validate(FileInfo file, Encoding encoding)
     {
-      Attributes.RandomEmptyFile().TryFinallyDelete(file =>
+      file.TryFinallyDelete(file =>
       {
         var lines = file.Lines(encoding);
         lines.Should().NotBeNull().And.BeSameAs(file.Lines(encoding)).And.BeEmpty();
-      });
 
-      Attributes.RandomEmptyFile().TryFinallyDelete(file =>
-      {
-        var lines = new Random().LettersSequence(80, 1000).ToArray();
+        lines = new Random().LettersSequence(80, 1000).ToArray();
         lines.Join(Environment.NewLine).WriteToAsync(file, encoding).Await();
         file.Lines(encoding).Should().NotBeNull().And.NotBeSameAs(file.Lines(encoding)).And.Equal(lines);
       });
@@ -127,26 +166,23 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
-      Validate(null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(Validate);
+      Validate(Attributes.RandomEmptyFile(), null);
+      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
     }
 
     return;
 
-    void Validate(Encoding encoding)
+    static void Validate(FileInfo file, Encoding encoding)
     {
-      Attributes.RandomEmptyFile().TryFinallyDelete(file =>
-      {
-        var lines = file.LinesAsync(encoding);
-        lines.Should().NotBeNull().And.NotBeSameAs(file.LinesAsync(encoding));
-        lines.ToArray().Should().BeEmpty();
-      });
-
-      Attributes.RandomEmptyFile().TryFinallyDelete(file =>
+      file.TryFinallyDelete(file =>
       {
         var lines = new Random().LettersSequence(80, 1000).ToArray();
         lines.Join(Environment.NewLine).WriteToAsync(file, encoding).Await();
         file.LinesAsync(encoding).ToArray().Should().NotBeNull().And.Equal(lines);
+
+        var linesAsync = file.LinesAsync(encoding);
+        linesAsync.Should().NotBeNull().And.NotBeSameAs(file.LinesAsync(encoding));
+        linesAsync.ToArray().Should().BeEmpty();
       });
     }
   }
@@ -161,6 +197,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.RandomFakeFile().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -174,17 +216,15 @@ public sealed class FileInfoExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((FileInfo) null).TryFinallyDelete(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("file");
       AssertionExtensions.Should(() => Attributes.RandomFakeFile().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      Validate(Attributes.RandomFakeFile());
-      Validate(Attributes.RandomEmptyFile());
-      Validate(Attributes.RandomNonEmptyFile());
+      Validate(Attributes.RandomFakeFile(), Attributes.RandomBytes());
+      Validate(Attributes.RandomEmptyFile(), Attributes.RandomBytes());
+      Validate(Attributes.RandomNonEmptyFile(), Attributes.RandomBytes());
     }
 
     return;
 
-    void Validate(FileInfo file)
+    static void Validate(FileInfo file, byte[] bytes)
     {
-      var bytes = Attributes.RandomBytes();
-
       file.Exists.Should().BeFalse();
       file.TryFinallyDelete(info => bytes.WriteToAsync(info).Await()).Should().NotBeNull().And.BeSameAs(file);
       file.Exists.Should().BeFalse();
@@ -200,6 +240,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FileInfoExtensions.AsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -212,6 +258,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.RandomFakeFile().InDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, DirectoryInfo directory, bool isPresent)
+    {
+    }
   }
 
   /// <summary>
@@ -223,6 +275,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FileInfoExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -234,6 +292,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FileInfoExtensions.ToReadOnlyStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -245,6 +309,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FileInfoExtensions.ToWriteOnlyStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -256,6 +326,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FileInfoExtensions.ToStreamReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, Encoding encoding)
+    {
+    }
   }
 
   /// <summary>
@@ -267,6 +343,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FileInfoExtensions.ToStreamWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, Encoding encoding)
+    {
+    }
   }
 
   /// <summary>
@@ -278,6 +360,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FileInfoExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -299,6 +387,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     // Attributes.CancellationToken() & offset
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -310,6 +404,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FileInfoExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, Encoding encoding)
+    {
+    }
   }
 
   /// <summary>
@@ -318,28 +418,26 @@ public sealed class FileInfoExtensionsTest : UnitTest
   [Fact]
   public void ToTextAsync_Method()
   {
-    void ValidateFile(Encoding encoding)
+    using (new AssertionScope())
     {
-      var text = Attributes.RandomString();
+      AssertionExtensions.Should(() => FileInfoExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
-      Attributes.RandomEmptyFile().TryFinallyDelete(file =>
+      ValidateFile(Attributes.RandomEmptyFile(), Attributes.RandomString(), null);
+      Encoding.GetEncodings().ForEach(encoding => ValidateFile(Attributes.RandomEmptyFile(), Attributes.RandomString(), encoding.GetEncoding()));
+
+      // Attributes.CancellationToken() & offset
+    }
+
+    return;
+
+    static void ValidateFile(FileInfo file, string text, Encoding encoding)
+    {
+      file.TryFinallyDelete(file =>
       {
         text.WriteToAsync(file, encoding).Await();
         file.ToTextAsync(encoding).Await().Should().Be(text);
       });
     }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
-
-      ValidateFile(null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(ValidateFile);
-
-      // Attributes.CancellationToken() & offset
-    }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -351,6 +449,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((FileInfo) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -362,6 +466,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((FileInfo) null).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -373,6 +483,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((FileInfo) null).ToXmlWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, Encoding encoding)
+    {
+    }
   }
 
   /// <summary>
@@ -384,6 +500,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((FileInfo) null).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, Encoding encoding)
+    {
+    }
   }
 
   /// <summary>
@@ -395,6 +517,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((FileInfo) null).ToXmlDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -406,6 +534,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((FileInfo) null).ToXDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file)
+    {
+    }
   }
 
   /// <summary>
@@ -418,6 +552,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.RandomFakeFile().ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, CancellationToken token)
+    {
+    }
   }
 
   /// <summary>
@@ -430,6 +570,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, byte[] bytes)
+    {
+    }
   }
 
   /// <summary>
@@ -443,6 +589,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, byte[] bytes, CancellationToken token)
+    {
+    }
   }
 
   /// <summary>
@@ -455,6 +607,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, string text, Encoding encoding)
+    {
+    }
   }
 
   /// <summary>
@@ -468,6 +626,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteTextAsync(string.Empty, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, string text, Encoding encoding, CancellationToken token)
+    {
+    }
   }
 
   /// <summary>
@@ -479,6 +643,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((FileInfo) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, Type[] types)
+    {
+    }
   }
 
   /// <summary>
@@ -490,5 +660,11 @@ public sealed class FileInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((FileInfo) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FileInfo file, Type[] types)
+    {
+    }
   }
 }

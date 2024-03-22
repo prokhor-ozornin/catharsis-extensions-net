@@ -46,7 +46,7 @@ public sealed class UriBuilderExtensionsTest : UnitTest
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="UriBuilderExtensions.WithQuery(UriBuilder, IReadOnlyDictionary{string, object})"/></description></item>
-  ///     <item><description><see cref="UriBuilderExtensions.WithQuery(UriBuilder, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="UriBuilderExtensions.WithQuery(UriBuilder, ValueTuple{string, object}[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -67,5 +67,11 @@ public sealed class UriBuilderExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

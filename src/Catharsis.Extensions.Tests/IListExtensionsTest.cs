@@ -20,6 +20,12 @@ public sealed class IListExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Array.Empty<object>().With(-1, null)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -32,6 +38,12 @@ public sealed class IListExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Array.Empty<object>().Without(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -45,6 +57,12 @@ public sealed class IListExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -74,6 +92,12 @@ public sealed class IListExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -103,6 +127,12 @@ public sealed class IListExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -118,6 +148,12 @@ public sealed class IListExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -137,6 +173,12 @@ public sealed class IListExtensionsTest : UnitTest
     var sequence = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
     collection = new List<object>(sequence);
     collection.Randomize().Should().BeSameAs(collection).And.Contain(sequence);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -161,5 +203,11 @@ public sealed class IListExtensionsTest : UnitTest
     AssertionExtensions.Should(() => readOnly.RemoveAt(0)).ThrowExactly<NotSupportedException>();*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

@@ -13,8 +13,8 @@ public sealed class HttpClientExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="HttpClientExtensions.WithHeaders(HttpClient, IEnumerable{(string Name, object Value)})"/></description></item>
-  ///     <item><description><see cref="HttpClientExtensions.WithHeaders(HttpClient, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="HttpClientExtensions.WithHeaders(HttpClient, IEnumerable{ValueTuple{string, object}})"/></description></item>
+  ///     <item><description><see cref="HttpClientExtensions.WithHeaders(HttpClient, ValueTuple{string, object}[])"/></description></item>
   ///     <item><description><see cref="HttpClientExtensions.WithHeaders(HttpClient, IReadOnlyDictionary{string,object})"/></description></item>
   ///   </list>
   /// </summary>
@@ -113,6 +113,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     var timespan = TimeSpan.FromTicks(1);
     http.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(http);
     http.Timeout.Should().Be(timespan);
+
+    return;
+
+    static void Validate(TimeSpan? timeout)
+    {
+    }
   }
 
   /// <summary>
@@ -125,6 +131,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecuteHead(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(Uri uri)
+    {
+    }
   }
 
   /// <summary>
@@ -138,6 +150,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecuteHeadAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -150,6 +168,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecuteGet(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -163,6 +187,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecuteGetAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -175,6 +205,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecutePost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -188,6 +224,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecutePostAsync(Attributes.LocalHost(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -200,6 +242,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecutePut(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -213,6 +261,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecutePutAsync(Attributes.LocalHost(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -225,6 +279,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecutePatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -238,6 +298,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecutePatchAsync(Attributes.LocalHost(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -250,6 +316,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecuteDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -263,6 +335,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ExecuteDeleteAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -275,6 +353,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -288,6 +372,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ToStreamAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -300,6 +390,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -312,6 +408,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -327,6 +429,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -340,6 +448,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().ToTextAsync(Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -353,6 +467,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().WriteBytes(Enumerable.Empty<byte>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -367,6 +487,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -380,6 +506,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().WriteText(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -394,5 +526,11 @@ public sealed class HttpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Http().WriteTextAsync(string.Empty, Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

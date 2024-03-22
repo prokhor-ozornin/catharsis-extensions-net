@@ -22,6 +22,12 @@ public sealed class MethodInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => MethodInfoExtensions.IsOverridable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -33,6 +39,12 @@ public sealed class MethodInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => MethodInfoExtensions.IsProtected(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -44,6 +56,12 @@ public sealed class MethodInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => MethodInfoExtensions.IsInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -55,6 +73,12 @@ public sealed class MethodInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => MethodInfoExtensions.IsProtectedInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -89,5 +113,11 @@ public sealed class MethodInfoExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

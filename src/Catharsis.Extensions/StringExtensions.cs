@@ -637,7 +637,7 @@ public static class StringExtensions
 
     if (arguments is not null)
     {
-      process.StartInfo.ArgumentList.AddRange(arguments);
+      process.StartInfo.ArgumentList.With(arguments);
     }
     process.StartInfo.CreateNoWindow = true;
     process.StartInfo.RedirectStandardError = true;

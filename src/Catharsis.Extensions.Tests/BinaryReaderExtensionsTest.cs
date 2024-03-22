@@ -20,6 +20,12 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => BinaryReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(BinaryReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -102,11 +108,11 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(BinaryReader reader, bool empty)
+    static void Validate(BinaryReader reader, bool isEmpty)
     {
       using (reader)
       {
-        reader.IsEmpty().Should().Be(empty);
+        reader.IsEmpty().Should().Be(isEmpty);
       }
     }
   }
@@ -450,7 +456,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       Validate(Attributes.EmptyStream().ToBinaryReader(), string.Empty);
 
       var text = Attributes.RandomString();
-      foreach (var encoding in Encoding.GetEncodings().Select(info => info.GetEncoding()))
+      foreach (var encoding in Encoding.GetEncodings().Select(encoding => encoding.GetEncoding()))
       {
         using var stream = new MemoryStream();
 

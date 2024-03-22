@@ -16,6 +16,10 @@ public sealed class IComparableExtensionsTest : UnitTest
   public void IsPositive_Method()
   {
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(bool isPositive, T instance) where T : struct, IComparable<T> => instance.IsPositive().Should().Be(isPositive);
   }
 
   /// <summary>
@@ -25,6 +29,10 @@ public sealed class IComparableExtensionsTest : UnitTest
   public void IsNegative_Method()
   {
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(bool isNegative, T instance) where T : struct, IComparable<T> => instance.IsNegative().Should().Be(isNegative);
   }
 
   /// <summary>
@@ -34,6 +42,10 @@ public sealed class IComparableExtensionsTest : UnitTest
   public void IsDefault_Method()
   {
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(bool isDefault, T instance) where T : struct, IComparable<T> => instance.IsDefault().Should().Be(isDefault);
   }
 
   /// <summary>
@@ -45,6 +57,10 @@ public sealed class IComparableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IComparableExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(T min, T max) where T : IComparable => min.Min(max).Should().BeSameAs(min);
   }
 
   /// <summary>
@@ -56,6 +72,10 @@ public sealed class IComparableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IComparableExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(T min, T max) where T : IComparable => min.Max(max).Should().BeSameAs(max);
   }
 
   /// <summary>
@@ -67,5 +87,9 @@ public sealed class IComparableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IComparableExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(T min, T max) where T : IComparable => min.MinMax(max).Should().Be((min, max));
   }
 }

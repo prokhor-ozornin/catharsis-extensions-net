@@ -19,6 +19,12 @@ public sealed class StreamReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StreamReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(StreamReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -62,20 +68,20 @@ public sealed class StreamReaderExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((StreamReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Validate(Stream.Null.ToStreamReader(), true);
-      Validate(Attributes.EmptyStream().ToStreamReader(), true);
-      Validate(Attributes.RandomStream().ToStreamReader(), false);
-      Validate(Attributes.RandomReadOnlyStream().ToStreamReader(), false);
-      Validate(Attributes.RandomReadOnlyForwardStream().ToStreamReader(), false);
+      Validate(true, Stream.Null.ToStreamReader());
+      Validate(true, Attributes.EmptyStream().ToStreamReader());
+      Validate(false, Attributes.RandomStream().ToStreamReader());
+      Validate(false, Attributes.RandomReadOnlyStream().ToStreamReader());
+      Validate(false, Attributes.RandomReadOnlyForwardStream().ToStreamReader());
     }
 
     return;
 
-    static void Validate(StreamReader reader, bool empty)
+    static void Validate(bool isEmpty, StreamReader reader)
     {
       using (reader)
       {
-        reader.IsEmpty().Should().Be(empty);
+        reader.IsEmpty().Should().Be(isEmpty);
       }
     }
   }
@@ -100,7 +106,7 @@ public sealed class StreamReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.Empty().Should().NotBeNull().And.BeSameAs(reader);
+        reader.Empty().Should().BeSameAs(reader);
         reader.BaseStream.Should().HaveLength(0).And.HavePosition(0);
         reader.Peek().Should().Be(-1);
       }
@@ -128,7 +134,7 @@ public sealed class StreamReaderExtensionsTest : UnitTest
       using (reader)
       {
         reader.ToBytesAsync().Await();
-        reader.Rewind().Should().NotBeNull().And.BeSameAs(reader);
+        reader.Rewind().Should().BeSameAs(reader);
         reader.BaseStream.Should().HavePosition(0);
       }
     }

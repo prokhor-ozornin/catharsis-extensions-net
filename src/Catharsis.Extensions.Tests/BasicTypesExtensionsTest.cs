@@ -29,6 +29,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       text.Should().NotBeNull().And.NotBeSameAs(character.Repeat(count)).And.HaveLength(count);
       text.ToCharArray().Should().AllBeEquivalentTo(character);
     }
+
+    return;
+
+    static void Validate(char character)
+    {
+    }
   }
 
   /// <summary>
@@ -47,6 +53,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     0.To(1).Should().NotBeNull().And.NotBeSameAs(0.To(1)).And.Equal(0);
     0.To(2).Should().NotBeNull().And.NotBeSameAs(0.To(2)).And.Equal(0, 1);
     0.To(short.MaxValue).Should().NotBeNull().And.NotBeSameAs(0.To(short.MaxValue)).And.HaveCount(short.MaxValue);
+
+    return;
+
+    static void Validate(int from, int to)
+    {
+    }
   }
 
   /// <summary>
@@ -82,19 +94,25 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => 0.Times((Action<int>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
-      AssertionExtensions.Should(() => (-1).Times((_ => {}))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => (-1).Times(_ => {})).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       var values = new List<int>();
       0.Times(values.Add);
       values.Should().BeEmpty();
 
-      values = new List<int>();
+      values = [];
       1.Times(values.Add);
       values.Should().Equal(0);
 
-      values = new List<int>();
+      values = [];
       count.Times(values.Add);
       values.Should().HaveCount(count).And.Equal(Enumerable.Range(0, count));
+    }
+
+    return;
+
+    static void Validate()
+    {
     }
   }
 
@@ -107,6 +125,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     AssertionExtensions.Should(() => (-1).Nulls()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(int count)
+    {
+    }
   }
 
   /// <summary>
@@ -152,6 +176,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(int count)
+    {
+    }
   }
 
   /// <summary>
@@ -163,7 +193,11 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     AssertionExtensions.Should(() => int.MinValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
     AssertionExtensions.Should(() => int.MaxValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
 
-    foreach (var count in new[] { -1, 0, 1 })
+    new[] { -1, 0, 1 }.ForEach(Validate);
+
+    return;
+
+    static void Validate(int count)
     {
       var days = count.Days();
 
@@ -190,7 +224,11 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     AssertionExtensions.Should(() => int.MinValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
     AssertionExtensions.Should(() => int.MaxValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
 
-    foreach (var count in new[] { -1, 0, 1 })
+    new[] { -1, 0, 1 }.ForEach(Validate);
+
+    return;
+
+    static void Validate(int count)
     {
       var hours = count.Hours();
 
@@ -214,7 +252,11 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Minutes_Method()
   {
-    foreach (var count in new[] { -1, 0, 1 })
+    new[] { -1, 0, 1 }.ForEach(Validate);
+
+    return;
+
+    static void Validate(int count)
     {
       var hours = count.Minutes();
 
@@ -238,7 +280,11 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Seconds_Method()
   {
-    foreach (var count in new[] { -1, 0, 1 })
+    new[] { -1, 0, 1 }.ForEach(Validate);
+
+    return;
+
+    static void Validate(int count)
     {
       var seconds = count.Seconds();
 
@@ -262,7 +308,11 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Milliseconds_Method()
   {
-    foreach (var count in new[] { -1, 0, 1 })
+    new[] { -1, 0, 1 }.ForEach(Validate);
+
+    return;
+
+    static void Validate(int count)
     {
       var milliseconds = count.Milliseconds();
 
@@ -286,7 +336,11 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Ticks_Method()
   {
-    foreach (var count in new[] { -1, 0, 1 })
+    new long[] { -1, 0, 1 }.ForEach(Validate);
+
+    return;
+
+    static void Validate(long count)
     {
       var ticks = count.Ticks();
 
@@ -294,14 +348,14 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       ticks.Hours.Should().Be(0);
       ticks.Minutes.Should().Be(0);
       ticks.Seconds.Should().Be(0);
-      ticks.Milliseconds.Should().Be(count / (int) TimeSpan.TicksPerMillisecond);
+      ticks.Milliseconds.Should().Be((int) (count / (int) TimeSpan.TicksPerMillisecond));
       ticks.TotalDays.Should().Be(count / (double) TimeSpan.TicksPerDay);
       ticks.TotalHours.Should().Be(count / (double) TimeSpan.TicksPerHour);
       ticks.TotalMinutes.Should().Be(count / (double) TimeSpan.TicksPerMinute);
       ticks.TotalSeconds.Should().Be(count / (double) TimeSpan.TicksPerSecond);
       ticks.TotalMilliseconds.Should().Be(count / (double) TimeSpan.TicksPerMillisecond);
       ticks.Ticks.Should().Be(count);
-    }
+      }
   }
 
   /// <summary>
@@ -322,6 +376,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     ((float) 0).Round().Should().Be(0);
     ((float) 1.4).Round().Should().Be(1);
     ((float) 1.5).Round().Should().Be(2);
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
   }
 
   /// <summary>
@@ -345,6 +405,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       ((double) 1.4).Round().Should().Be(1);
       ((double) 1.5).Round().Should().Be(2);
     }
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
   }
 
   /// <summary>
@@ -364,6 +430,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     ((decimal) 0).Round().Should().Be(0);
     ((decimal) 1.4).Round().Should().Be(1);
     ((decimal) 1.5).Round().Should().Be(2);
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
   }
 
   /// <summary>
@@ -380,6 +452,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
   }
 
   /// <summary>
@@ -396,6 +474,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
   }
 
   /// <summary>
@@ -412,6 +496,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
   }
 
   /// <summary>
@@ -427,6 +517,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(sbyte original, short result)
+    {
+    }
   }
 
   /// <summary>
@@ -442,6 +538,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(short original, short result)
+    {
+    }
   }
 
   /// <summary>
@@ -457,6 +559,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(int original, int result)
+    {
+    }
   }
 
   /// <summary>
@@ -472,6 +580,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(long original, long result)
+    {
+    }
   }
 
   /// <summary>
@@ -487,6 +601,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
   }
 
   /// <summary>
@@ -502,6 +622,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
   }
 
   /// <summary>
@@ -517,6 +643,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     */
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
   }
 
   /// <summary>
@@ -534,6 +666,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     1.6.Ceil().Should().Be(2);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
   }
 
   /// <summary>
@@ -551,6 +689,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     1.6.Ceil().Should().Be(2);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
   }
 
   /// <summary>
@@ -568,6 +712,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     1.6.Ceil().Should().Be(2);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
   }
 
   /// <summary>
@@ -585,6 +735,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     1.6.Floor().Should().Be(1);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
   }
 
   /// <summary>
@@ -602,6 +758,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     1.6.Floor().Should().Be(1);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
   }
 
   /// <summary>
@@ -619,5 +781,11 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     1.6.Floor().Should().Be(1);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
   }
 }

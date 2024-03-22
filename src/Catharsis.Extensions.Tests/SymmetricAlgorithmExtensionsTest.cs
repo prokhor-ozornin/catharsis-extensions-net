@@ -20,6 +20,12 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Encrypt((IEnumerable<byte>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
+    {
+    }
   }
 
   /// <summary>
@@ -32,6 +38,12 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Encrypt((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(SymmetricAlgorithm algorithm, Stream stream)
+    {
+    }
   }
 
   /// <summary>
@@ -44,7 +56,30 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync(Attributes.RandomBytes(), Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
 
-    throw new NotImplementedException();
+    Validate(Attributes.SymmetricAlgorithm(), Attributes.RandomBytes());
+
+    return;
+
+    static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
+    {
+      using (algorithm)
+      {
+        var encrypted = algorithm.EncryptAsync(bytes).Await();
+        encrypted.Should().NotBeNull().And.NotBeSameAs(bytes).And.NotEqual(bytes);
+
+        algorithm.Key = algorithm.Key;
+        algorithm.IV = algorithm.IV;
+        algorithm.EncryptAsync(bytes).Await().Should().Equal(encrypted);
+
+        algorithm.Key = algorithm.Key;
+        algorithm.EncryptAsync(bytes).Await().Should().NotEqual(encrypted);
+
+        algorithm.IV = algorithm.IV;
+        algorithm.EncryptAsync(bytes).Await().Should().NotEqual(encrypted);
+
+        algorithm.EncryptAsync(bytes).Await().Should().NotEqual(encrypted);
+      }
+    }
   }
 
   /// <summary>
@@ -57,74 +92,47 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync((Stream) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync(Attributes.RandomStream(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-    /*var bytes = Attributes.RandomBytes();
-    var algorithm = Algorithm;
-
-    var encrypted = algorithm.EncryptAsync(bytes).Await();
-    encrypted.Should().NotEqual(bytes);
-
-    using (var encryptor = Algorithm)
-    {
-      encryptor.Key = algorithm.Key;
-      encryptor.IV = algorithm.IV;
-      encryptor.EncryptAsync(bytes).Await().Should().Equal(encrypted);
-    }
-
-    using (var encryptor = Algorithm)
-    {
-      encryptor.Key = algorithm.Key;
-      encryptor.EncryptAsync(bytes).Await().Should().NotEqual(encrypted);
-    }
-
-    using (var encryptor = Algorithm)
-    {
-      encryptor.IV = algorithm.IV;
-      encryptor.EncryptAsync(bytes).Await().Should().NotEqual(encrypted);
-    }
-
-    using (var encryptor = Algorithm)
-    {
-      encryptor.EncryptAsync(bytes).Await().Should().NotEqual(encrypted);
-    }
-
-    using (var stream = new MemoryStream(bytes))
-    {
-      algorithm.EncryptAsync(stream).Await().Should().Equal(encrypted);
-      stream.ReadByte().Should().Be(-1);
-    }
-
-    using (var stream = new MemoryStream(bytes))
-    {
-      algorithm.EncryptAsync(stream).Await().Should().Equal(encrypted);
-      AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
-    }
-
-    using (var stream = new MemoryStream(bytes))
-    {
-      algorithm.EncryptAsync(stream).Await().Should().Equal(encrypted);
-      stream.ReadByte().Should().Be(-1);
-    }
-
-    using (var encryptor = Algorithm)
-    {
-      encryptor.Key = algorithm.Key;
-      encryptor.EncryptAsync(new MemoryStream(bytes)).Await().Should().NotEqual(encrypted);
-    }
-
-    using (var encryptor = Algorithm)
-    {
-      encryptor.IV = algorithm.IV;
-      encryptor.EncryptAsync(new MemoryStream(bytes)).Await().Should().NotEqual(encrypted);
-    }
-
-    using (var encryptor = Algorithm)
-    {
-      encryptor.EncryptAsync(new MemoryStream(bytes)).Await().Should().NotEqual(encrypted);
-    }
-
-    algorithm.Clear();*/
-
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(SymmetricAlgorithm algorithm, Stream stream)
+    {
+      using (var stream = new MemoryStream(bytes))
+      {
+        algorithm.EncryptAsync(stream).Await().Should().Equal(encrypted);
+        stream.ReadByte().Should().Be(-1);
+      }
+
+      using (var stream = new MemoryStream(bytes))
+      {
+        algorithm.EncryptAsync(stream).Await().Should().Equal(encrypted);
+        AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
+      }
+
+      using (var stream = new MemoryStream(bytes))
+      {
+        algorithm.EncryptAsync(stream).Await().Should().Equal(encrypted);
+        stream.ReadByte().Should().Be(-1);
+      }
+
+      using (var encryptor = Algorithm)
+      {
+        encryptor.Key = algorithm.Key;
+        encryptor.EncryptAsync(new MemoryStream(bytes)).Await().Should().NotEqual(encrypted);
+      }
+
+      using (var encryptor = Algorithm)
+      {
+        encryptor.IV = algorithm.IV;
+        encryptor.EncryptAsync(new MemoryStream(bytes)).Await().Should().NotEqual(encrypted);
+      }
+
+      using (var encryptor = Algorithm)
+      {
+        encryptor.EncryptAsync(new MemoryStream(bytes)).Await().Should().NotEqual(encrypted);
+      }
+    }
   }
 
 
@@ -138,6 +146,12 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Decrypt((IEnumerable<byte>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
+    {
+    }
   }
 
   /// <summary>
@@ -150,6 +164,12 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Decrypt((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(SymmetricAlgorithm algorithm, Stream stream)
+    {
+    }
   }
 
   /// <summary>
@@ -163,6 +183,12 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync(Attributes.RandomBytes(), Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
+    {
+    }
   }
 
   /// <summary>
@@ -175,5 +201,11 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync((Stream) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(SymmetricAlgorithm algorithm, Stream stream)
+    {
+    }
   }
 }

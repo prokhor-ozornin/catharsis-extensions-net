@@ -19,6 +19,12 @@ public sealed class StreamWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StreamWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(StreamWriter writer)
+    {
+    }
   }
 
   /// <summary>
@@ -70,7 +76,7 @@ public sealed class StreamWriterExtensionsTest : UnitTest
     {
       using (writer)
       {
-        writer.Empty().Should().NotBeNull().And.BeSameAs(writer);
+        writer.Empty().Should().BeSameAs(writer);
         writer.BaseStream.Should().HaveLength(0).And.HavePosition(0);
       }
     }
@@ -86,19 +92,19 @@ public sealed class StreamWriterExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
-      Validate(Stream.Null.ToStreamWriter());
-      Validate(Attributes.RandomStream().ToStreamWriter());
+      Validate(Stream.Null.ToStreamWriter(), Attributes.RandomBytes());
+      Validate(Attributes.RandomStream().ToStreamWriter(), Attributes.RandomBytes());
     }
 
     return;
 
-    void Validate(StreamWriter writer)
+    static void Validate(StreamWriter writer, byte[] bytes)
     {
       using (writer)
       {
-        Attributes.RandomBytes().WriteToAsync(writer).Await();
+        bytes.WriteToAsync(writer).Await();
         writer.Flush();
-        writer.Rewind().Should().NotBeNull().And.BeSameAs(writer);
+        writer.Rewind().Should().BeSameAs(writer);
         writer.BaseStream.Should().HavePosition(0);
       }
     }

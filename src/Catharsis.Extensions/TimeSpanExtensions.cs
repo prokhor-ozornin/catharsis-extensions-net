@@ -10,6 +10,22 @@ public static class TimeSpanExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="timespan"></param>
+  /// <param name="add"></param>
+  /// <returns></returns>
+  public static TimeSpan With(this TimeSpan timespan, TimeSpan add) => timespan.Add(add);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="timespan"></param>
+  /// <param name="subtract"></param>
+  /// <returns></returns>
+  public static TimeSpan Without(this TimeSpan timespan, TimeSpan subtract) => timespan.Subtract(subtract);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="timespan"></param>
   /// <returns></returns>
   public static bool IsEmpty(this TimeSpan timespan) => timespan == TimeSpan.Zero;
 

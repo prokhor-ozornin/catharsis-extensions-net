@@ -1,6 +1,8 @@
 using System.Globalization;
+using System.Runtime.InteropServices;
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Extensions;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,9 +18,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void EqualsByDate_Method()
   {
-    DateTimeOffset[] dates = [DateTimeOffset.MinValue, DateTimeOffset.Now, DateTimeOffset.UtcNow];
+    Validate(DateTimeOffset.MinValue);
+    Validate(DateTimeOffset.MaxValue);
+    Validate(DateTimeOffset.Now);
+    Validate(DateTimeOffset.UtcNow);
+    
+    return;
 
-    foreach (var date in dates)
+    static void Validate(DateTimeOffset date)
     {
       var startOfDay = date.TruncateToDayStart();
 
@@ -41,9 +48,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void EqualsByTime_Method()
   {
-    DateTimeOffset[] dates = [DateTimeOffset.Now, DateTimeOffset.UtcNow];
+    Validate(DateTimeOffset.MinValue);
+    Validate(DateTimeOffset.MaxValue);
+    Validate(DateTimeOffset.Now);
+    Validate(DateTimeOffset.UtcNow);
 
-    foreach (var date in dates)
+    return;
+
+    static void Validate(DateTimeOffset date)
     {
       var startOfDay = date.TruncateToDayStart();
 
@@ -66,13 +78,11 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void Min_Method()
   {
-    DateTimeOffset.MinValue.Min(DateTimeOffset.MinValue).Should().Be(DateTimeOffset.MinValue);
-    DateTimeOffset.MinValue.Min(DateTimeOffset.MaxValue).Should().Be(DateTimeOffset.MinValue);
+    Validate(DateTimeOffset.MinValue, DateTimeOffset.MinValue);
+    Validate(DateTimeOffset.MaxValue, DateTimeOffset.MaxValue);
+    Validate(DateTimeOffset.MinValue, DateTimeOffset.MaxValue);
 
-    DateTimeOffset.MaxValue.Min(DateTimeOffset.MaxValue).Should().Be(DateTimeOffset.MaxValue);
-    DateTimeOffset.MaxValue.Min(DateTimeOffset.MinValue).Should().Be(DateTimeOffset.MinValue);
-
-    foreach (var date in new[] {DateTimeOffset.Now, DateTimeOffset.UtcNow})
+    new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
     {
       date.Min(date).Should().Be(date);
       date.Add(TimeSpan.Zero).Min(date).Should().Be(date);
@@ -82,7 +92,11 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
       date.Add(TimeSpan.FromSeconds(1)).Min(date).Should().Be(date);
       date.Add(TimeSpan.FromMilliseconds(1)).Min(date).Should().Be(date);
       date.Add(TimeSpan.FromTicks(1)).Min(date).Should().Be(date);
-    }
+    });
+
+    return;
+
+    static void Validate(DateTimeOffset min, DateTimeOffset max) => min.Min(max).Should().Be(min);
   }
 
   /// <summary>
@@ -108,6 +122,10 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
       date.Add(TimeSpan.FromMilliseconds(1)).Max(date).Should().Be(date.Add(TimeSpan.FromMilliseconds(1)));
       date.Add(TimeSpan.FromTicks(1)).Max(date).Should().Be(date.Add(TimeSpan.FromTicks(1)));
     }
+
+    return;
+
+    static void Validate(DateTimeOffset min, DateTimeOffset max) => min.Max(max).Should().Be(max);
   }
 
   /// <summary>
@@ -134,6 +152,12 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
       date.Range(date.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(2));
       date.Range(date.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
     }
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -142,12 +166,16 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void IsPast_Method()
   {
-    foreach (var date in new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow })
+    new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
     {
-      date.IsPast().Should().BeTrue();
-      date.AddSeconds(-1).IsPast().Should().BeTrue();
-      date.AddSeconds(1).IsPast().Should().BeFalse();
-    }
+      Validate(true, date);
+      Validate(true, date.AddSeconds(-1));
+      Validate(false, date.AddSeconds(1));
+    });
+
+    return;
+
+    static void Validate(bool isPast, DateTimeOffset date) => date.IsPast().Should().Be(isPast);
   }
 
   /// <summary>
@@ -156,12 +184,16 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void IsFuture_Method()
   {
-    foreach (var date in new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow })
+    new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
     {
-      date.IsFuture().Should().BeFalse();
-      date.AddSeconds(-1).IsFuture().Should().BeFalse();
-      date.AddSeconds(1).IsFuture().Should().BeTrue();
-    }
+      Validate(false, date);
+      Validate(false, date.AddSeconds(-1));
+      Validate(true, date.AddSeconds(1));
+    });
+
+    return;
+
+    static void Validate(bool isFuture, DateTimeOffset date) => date.IsFuture().Should().Be(isFuture);
   }
 
   /// <summary>
@@ -173,14 +205,17 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
     var now = DateTimeOffset.UtcNow;
     var dates = new DateTimeOffset[7].Fill(index => now.AddDays(index));
 
-    dates.Count(date => date.IsWeekday()).Should().Be(5);
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Monday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Friday).IsWeekday().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday).IsWeekday().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday).IsWeekday().Should().BeFalse();
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Monday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Friday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday));
+
+    return;
+
+    static void Validate(bool isWeekday, DateTimeOffset date) => date.IsWeekday().Should().Be(isWeekday);
   }
 
   /// <summary>
@@ -192,14 +227,17 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
     var now = DateTimeOffset.UtcNow;
     var dates = new DateTimeOffset[7].Fill(index => now.AddDays(index));
 
-    dates.Count(date => date.IsWeekend()).Should().Be(2);
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Monday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Friday).IsWeekend().Should().BeFalse();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday).IsWeekend().Should().BeTrue();
-    dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday).IsWeekend().Should().BeTrue();
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Monday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday));
+    Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Friday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday));
+    Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday));
+
+    return;
+
+    static void Validate(bool isWeekend, DateTimeOffset date) => date.IsWeekend().Should().Be(isWeekend);
   }
 
   /// <summary>
@@ -208,8 +246,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToYearStart_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToYearStart().Should().BeOnOrBefore(now).And.HaveYear(now.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToYearStart().Should().BeOnOrBefore(date).And.HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -218,8 +262,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToMonthStart_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToMonthStart().Should().BeOnOrBefore(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToMonthStart().Should().BeOnOrBefore(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -228,8 +278,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToDayStart_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToDayStart().Should().BeOnOrBefore(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToDayStart().Should().BeOnOrBefore(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -238,8 +294,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToHourStart_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToHourStart().Should().BeOnOrBefore(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(now.Hour).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToHourStart().Should().BeOnOrBefore(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -248,8 +310,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToMinuteStart_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToMinuteStart().Should().BeOnOrBefore(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(now.Hour).And.HaveMinute(now.Minute).And.HaveSecond(0).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToMinuteStart().Should().BeOnOrBefore(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(0).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -258,8 +326,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToSecondStart_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToSecondStart().Should().BeOnOrBefore(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(now.Hour).And.HaveMinute(now.Minute).And.HaveSecond(now.Second).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToSecondStart().Should().BeOnOrBefore(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -268,8 +342,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToYearEnd_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToYearEnd().Should().BeOnOrAfter(now).And.HaveYear(now.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToYearEnd().Should().BeOnOrAfter(date).And.HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -278,8 +358,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToMonthEnd_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToMonthEnd().Should().BeOnOrAfter(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(DateTime.DaysInMonth(now.Year, now.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToMonthEnd().Should().BeOnOrAfter(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -288,8 +374,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToDayEnd_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToDayEnd().Should().BeOnOrAfter(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToDayEnd().Should().BeOnOrAfter(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -298,8 +390,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToHourEnd_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToHourEnd().Should().BeOnOrAfter(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(now.Hour).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToHourEnd().Should().BeOnOrAfter(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -308,8 +406,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToMinuteEnd_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToMinuteEnd().Should().BeOnOrAfter(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(now.Hour).And.HaveMinute(now.Minute).And.HaveSecond(59).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToMinuteEnd().Should().BeOnOrAfter(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(59).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -318,8 +422,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void TruncateToSecondEnd_Method()
   {
-    var now = DateTimeOffset.UtcNow;
-    now.TruncateToSecondEnd().Should().BeOnOrAfter(now).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(now.Hour).And.HaveMinute(now.Minute).And.HaveSecond(now.Second).And.BeWithin(now.Offset);
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.TruncateToSecondEnd().Should().BeOnOrAfter(date).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -328,10 +438,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void ToDateTime_Method()
   {
-    foreach (var date in new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow })
-    {
-      date.ToDateTime().Should().BeSameDateAs(date.ToDateTime()).And.BeSameDateAs(date.UtcDateTime).And.BeIn(DateTimeKind.Utc);
-    }
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.ToDateTime().Should().BeSameDateAs(date.ToDateTime()).And.BeSameDateAs(date.UtcDateTime).And.BeIn(DateTimeKind.Utc);
   }
 
   /// <summary>
@@ -347,6 +461,12 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
     now = DateTimeOffset.UtcNow;
     now.ToIsoString().Should().Be(now.ToString("o"));
     DateTimeOffset.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -362,6 +482,12 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
     now = DateTimeOffset.UtcNow;
     now.ToRfcString().Should().Be(now.ToString("r"));
     DateTimeOffset.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.TruncateToSecondStart());
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -370,10 +496,14 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void ToDateOnly_Method()
   {
-    foreach (var date in new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow })
-    {
-      date.ToDateOnly().Should().Be(date.ToDateOnly()).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day);
-    }
+    Validate(DateTime.MinValue);
+    Validate(DateTime.MaxValue);
+    Validate(DateTime.Now);
+    Validate(DateTime.UtcNow);
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.ToDateOnly().Should().Be(date.ToDateOnly()).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day);
   }
 
   /// <summary>
@@ -386,5 +516,9 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
     {
       date.ToTimeOnly().Should().Be(date.ToTimeOnly()).And.HaveHours(date.Hour).And.HaveMinutes(date.Minute).And.HaveSeconds(date.Second).And.HaveMilliseconds(date.Millisecond);
     }
+
+    return;
+
+    static void Validate(DateTimeOffset date) => date.ToTimeOnly().Should().Be(date.ToTimeOnly()).And.HaveHours(date.Hour).And.HaveMinutes(date.Minute).And.HaveSeconds(date.Second).And.HaveMilliseconds(date.Millisecond);
   }
 }

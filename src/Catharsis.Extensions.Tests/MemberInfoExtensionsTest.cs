@@ -23,6 +23,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
     //typeof(TestObject).Event("PublicEvent").As<MemberInfo>().IsEvent().Should().BeTrue();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -36,6 +42,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
     //typeof(TestObject).Field("PublicField").As<MemberInfo>().IsField().Should().BeTrue();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -49,6 +61,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
     //typeof(TestObject).Property("PublicProperty").As<MemberInfo>().IsProperty().Should().BeTrue();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -62,6 +80,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
     //typeof(TestObject).Method("PublicMethod").As<MemberInfo>().IsMethod().Should().BeTrue();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -75,6 +99,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
     //typeof(TestObject).Constructor().As<MemberInfo>().IsConstructor().Should().BeTrue();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -132,6 +162,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -156,8 +192,14 @@ public sealed class MemberInfoExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
-  
+
   [Serializable]
   private class TestObject : IDisposable, IEquatable<TestObject>
   {

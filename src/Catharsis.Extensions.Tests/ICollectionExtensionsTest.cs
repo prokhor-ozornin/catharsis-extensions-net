@@ -11,103 +11,87 @@ namespace Catharsis.Extensions.Tests;
 public sealed class ICollectionExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="ICollectionExtensions.With{T}(ICollection{T}, T)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void With_Method()
-  {
-    using (new AssertionScope())
-    {
-
-    }
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ICollectionExtensions.Without{T}(ICollection{T}, T)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Without_Method()
-  {
-    using (new AssertionScope())
-    {
-
-    }
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="ICollectionExtensions.AddRange{T}(ICollection{T}, IEnumerable{T})"/></description></item>
-  ///     <item><description><see cref="ICollectionExtensions.AddRange{T}(ICollection{T}, T[])"/></description></item>
+  ///     <item><description><see cref="ICollectionExtensions.With{T}(ICollection{T}, IEnumerable{T})"/></description></item>
+  ///     <item><description><see cref="ICollectionExtensions.With{T}(ICollection{T}, IEnumerable{T})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void AddRange_Methods()
+  public void With_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ICollectionExtensions.AddRange<object>(null, Enumerable.Empty<object>)).ThrowExactly<ArgumentNullException>().WithParameterName("to");
-      AssertionExtensions.Should(() => Array.Empty<object>().AddRange((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => ICollectionExtensions.With<object>(null, Enumerable.Empty<object>)).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => Array.Empty<object>().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
       var collection = new List<object>();
 
-      ICollectionExtensions.AddRange(collection, Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+      collection.With(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
 
       IEnumerable<object> elements = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
 
-      ICollectionExtensions.AddRange(collection, elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
-      ICollectionExtensions.AddRange(collection, elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements.Concat(elements));
+      collection.With(elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
+      collection.With(elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements.Concat(elements));
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ICollectionExtensions.AddRange<object>(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("to");
-      AssertionExtensions.Should(() => Array.Empty<object>().AddRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => ICollectionExtensions.With<object>(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => ICollectionExtensions.With(Array.Empty<object>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="ICollectionExtensions.RemoveRange{T}(ICollection{T}, IEnumerable{T})"/></description></item>
-  ///     <item><description><see cref="ICollectionExtensions.RemoveRange{T}(ICollection{T}, T[])"/></description></item>
+  ///     <item><description><see cref="ICollectionExtensions.Without{T}(ICollection{T}, IEnumerable{T})"/></description></item>
+  ///     <item><description><see cref="ICollectionExtensions.Without{T}(ICollection{T}, T[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void RemoveRange_Methods()
+  public void Without_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((ICollection<object>) null).RemoveRange(Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("from");
-      AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => ((ICollection<object>) null).Without(Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => Array.Empty<object>().Without((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       var collection = new List<object>();
-      collection.RemoveRange(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(collection);
+      collection.Without(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(collection);
 
       var elements = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
 
       collection = [..elements];
-      collection.RemoveRange(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
+      collection.Without(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
 
       collection = [..elements];
-      collection.RemoveRange(elements).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+      collection.Without(elements).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((ICollection<object>) null).RemoveRange([])).ThrowExactly<ArgumentNullException>().WithParameterName("from");
-      AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => ((ICollection<object>) null).Without([])).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => Array.Empty<object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -116,11 +100,6 @@ public sealed class ICollectionExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    void Validate<T>(ICollection<T> collection)
-    {
-      collection.Empty().Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ICollectionExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
@@ -129,6 +108,10 @@ public sealed class ICollectionExtensionsTest : UnitTest
       Validate(Array.Empty<object>().ToList());
       Validate(Attributes.RandomObjects().ToList());
     }
+
+    return;
+
+    static void Validate<T>(ICollection<T> collection) => collection.Empty().Should().BeSameAs(collection).And.BeEmpty();
   }
 
   /// <summary>
@@ -141,7 +124,10 @@ public sealed class ICollectionExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
-    var collection = new List<object>();
-    collection.TryFinallyClear(x => x.Add(new object())).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+    Validate(new List<object>(), new object());
+
+    return;
+
+    static void Validate<T>(ICollection<T> collection, params T[] elements) => collection.TryFinallyClear(collection => collection.With(elements)).Should().BeSameAs(collection).And.BeEmpty();
   }
 }

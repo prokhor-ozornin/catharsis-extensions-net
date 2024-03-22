@@ -19,8 +19,14 @@ public sealed class FieldInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FieldInfoExtensions.IsOfType<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FieldInfo field, Type type)
+    {
+    }
   }
-  
+
   /// <summary>
   ///   <para>Performs testing of <see cref="FieldInfoExtensions.IsProtected(FieldInfo)"/> method.</para>
   /// </summary>
@@ -30,8 +36,14 @@ public sealed class FieldInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FieldInfoExtensions.IsProtected(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FieldInfo field, bool isProtected)
+    {
+    }
   }
-  
+
   /// <summary>
   ///   <para>Performs testing of <see cref="FieldInfoExtensions.IsInternal(FieldInfo)"/> method.</para>
   /// </summary>
@@ -41,6 +53,12 @@ public sealed class FieldInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FieldInfoExtensions.IsInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FieldInfo field, bool isInternal)
+    {
+    }
   }
 
   /// <summary>
@@ -52,5 +70,11 @@ public sealed class FieldInfoExtensionsTest : UnitTest
     AssertionExtensions.Should(() => FieldInfoExtensions.IsProtectedInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(FieldInfo field, bool isProtectedInternal)
+    {
+    }
   }
 }

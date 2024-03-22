@@ -14,6 +14,60 @@ public static class SecureStringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="secure"></param>
+  /// <param name="characters"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static SecureString With(this SecureString secure, IEnumerable<char> characters)
+  {
+    if (secure is null) throw new ArgumentNullException(nameof(secure));
+
+    foreach (var character in characters)
+    {
+      secure.AppendChar(character);
+    }
+
+    return secure;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="secure"></param>
+  /// <param name="characters"></param>
+  /// <returns></returns>
+  public static SecureString With(this SecureString secure, params char[] characters) => secure.With(characters as IEnumerable<char>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="secure"></param>
+  /// <param name="positions"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static SecureString Without(this SecureString secure, IEnumerable<int> positions)
+  {
+    if (secure is null) throw new ArgumentNullException(nameof(secure));
+
+    foreach (var position in positions)
+    {
+      secure.RemoveAt(position);
+    }
+
+    return secure;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="secure"></param>
+  /// <param name="positions"></param>
+  /// <returns></returns>
+  public static SecureString Without(this SecureString secure, params int[] positions) => secure.Without(positions as IEnumerable<int>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="secure"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this SecureString secure) => secure is not null ? secure.Length == 0 : throw new ArgumentNullException(nameof(secure));

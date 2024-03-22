@@ -10,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IReadOnlyDictionaryExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="IDictionaryExtensions.ToValueTuple{TKey, TValue}(IReadOnlyDictionary{TKey, TValue}, IComparer{TKey})"/> method.</para>
+  ///   <para>Performs testing of <see cref="IReadOnlyDictionaryExtensions.ToValueTuple{TKey, TValue}(IReadOnlyDictionary{TKey, TValue}, IComparer{TKey})"/> method.</para>
   /// </summary>
   [Fact]
   public void ToValueTuple_Method()
@@ -18,5 +18,11 @@ public sealed class IReadOnlyDictionaryExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((IReadOnlyDictionary<object, object>) null).ToValueTuple()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
     
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

@@ -18,6 +18,62 @@ public static class DirectoryInfoExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="directory"></param>
+  /// <param name="entries"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static DirectoryInfo With(this DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
+  {
+    if (directory is null) throw new ArgumentNullException(nameof(directory));
+    if (entries is null) throw new ArgumentNullException(nameof(entries));
+
+    foreach (var entry in entries)
+    {
+      File.Create(Path.Combine(directory.FullName, entry.Name));
+    }
+
+    return directory;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="directory"></param>
+  /// <param name="entries"></param>
+  /// <returns></returns>
+  public static DirectoryInfo With(this DirectoryInfo directory, params FileSystemInfo[] entries) => directory.With(entries as IEnumerable<FileSystemInfo>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="directory"></param>
+  /// <param name="entries"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static DirectoryInfo Without(this DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
+  {
+    if (directory is null) throw new ArgumentNullException(nameof(directory));
+    if (entries is null) throw new ArgumentNullException(nameof(entries));
+
+    foreach (var entry in entries)
+    {
+      File.Delete(Path.Combine(directory.FullName, entry.Name));
+    }
+
+    return directory;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="directory"></param>
+  /// <param name="entries"></param>
+  /// <returns></returns>
+  public static DirectoryInfo Without(this DirectoryInfo directory, params FileSystemInfo[] entries) => directory.Without(entries as IEnumerable<FileSystemInfo>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="directory"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this DirectoryInfo directory) => directory.ToEnumerable().IsEmpty();

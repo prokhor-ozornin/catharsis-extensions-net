@@ -23,6 +23,12 @@ public sealed class ArrayExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Array.Empty<object>().Range(null, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -39,6 +45,12 @@ public sealed class ArrayExtensionsTest : UnitTest
     bytes.ToBase64().Should().Be(Convert.ToBase64String(bytes));
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(char[] chars)
+    {
+    }
   }
 
   /// <summary>
@@ -52,7 +64,7 @@ public sealed class ArrayExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
 
       Validate(Attributes.RandomChars(), null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(Attributes.RandomChars(), encoding));
+      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomChars(), encoding.GetEncoding()));
     }
 
     return;
@@ -79,6 +91,12 @@ public sealed class ArrayExtensionsTest : UnitTest
     var text = Attributes.RandomString();
     var chars = text.ToCharArray();
     chars.ToText().Should().NotBeNull().And.NotBeSameAs(chars.ToText()).And.Be(text);
+
+    return;
+
+    static void Validate(char[] chars)
+    {
+    }
   }
 
   /// <summary>
@@ -92,7 +110,7 @@ public sealed class ArrayExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
       Validate(Attributes.RandomBytes(), null);
-      Encoding.GetEncodings().Select(info => info.GetEncoding()).ForEach(encoding => Validate(Attributes.RandomBytes(), encoding));
+      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomBytes(), encoding.GetEncoding()));
     }
 
     return;

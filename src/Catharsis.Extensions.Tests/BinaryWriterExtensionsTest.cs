@@ -1,6 +1,7 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
+using Microsoft.VisualBasic;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -19,6 +20,12 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => BinaryWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(BinaryWriter writer)
+    {
+    }
   }
 
   /// <summary>
@@ -102,11 +109,11 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(BinaryWriter writer, bool empty)
+    static void Validate(BinaryWriter writer, bool isEmpty)
     {
       using (writer)
       {
-        writer.IsEmpty().Should().Be(empty);
+        writer.IsEmpty().Should().Be(isEmpty);
       }
     }
   }
@@ -206,7 +213,19 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => BinaryWriterExtensions.WriteBytes(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     
-    throw new NotImplementedException();
+    Validate(Array.Empty<byte>());
+    Validate(Attributes.RandomBytes());
+
+    return;
+
+    static void Validate(byte[] bytes)
+    {
+      using var stream = new MemoryStream();
+      using var writer = new BinaryWriter(stream);
+      
+      writer.WriteBytes(bytes).Should().BeSameAs(writer);
+      stream.ToArray().Should().Equal(bytes);
+    }
   }
 
   /// <summary>
@@ -218,6 +237,20 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => BinaryWriterExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
+    Validate(string.Empty);
+    Validate(Attributes.RandomString());
+
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text)
+    {
+      using var stream = new MemoryStream();
+      using var writer = new BinaryWriter(stream);
+
+      writer.WriteText(text).Should().BeSameAs(writer);
+      //stream.ToArray().Should().Equal(bytes);
+    }
   }
 }

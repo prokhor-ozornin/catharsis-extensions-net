@@ -27,5 +27,11 @@ public sealed class RangeExtensionsTest : UnitTest
 
     var totalRange = ..int.MaxValue;
     totalRange.ToEnumerable().Should().NotBeNull().And.NotBeSameAs(totalRange.ToEnumerable()).And.HaveCount(int.MaxValue);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

@@ -16,15 +16,18 @@ public static class IDictionaryExtensions
   /// <typeparam name="TKey"></typeparam>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="dictionary"></param>
-  /// <param name="key"></param>
-  /// <param name="value"></param>
+  /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IDictionary<TKey, TValue> With<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) where TKey : notnull
+  public static IDictionary<TKey, TValue> With<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+    if (elements is null) throw new ArgumentNullException(nameof(elements));
 
-    dictionary[key] = value;
+    foreach (var element in elements)
+    {
+      dictionary[element.key] = element.value;
+    }
 
     return dictionary;
   }
@@ -35,17 +38,40 @@ public static class IDictionaryExtensions
   /// <typeparam name="TKey"></typeparam>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="dictionary"></param>
-  /// <param name="key"></param>
+  /// <param name="elements"></param>
+  /// <returns></returns>
+  public static IDictionary<TKey, TValue> With<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, params (TKey key, TValue value)[] elements) where TKey : notnull => dictionary.With(elements as IEnumerable<(TKey key, TValue value)>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IDictionary<TKey, TValue> Without<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) where TKey : notnull
+  public static IDictionary<TKey, TValue> Without<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IEnumerable<TKey> elements) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
-    dictionary.Remove(key);
+    foreach (var element in elements)
+    {
+      dictionary.Remove(element);
+    }
 
     return dictionary;
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="elements"></param>
+  /// <returns></returns>
+  public static IDictionary<TKey, TValue> Without<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, params TKey[] elements) where TKey : notnull => dictionary.Without(elements as IEnumerable<TKey>);
 
   /// <summary>
   ///   <para></para>

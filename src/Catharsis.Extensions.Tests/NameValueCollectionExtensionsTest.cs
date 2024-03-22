@@ -20,33 +20,83 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
     AssertionExtensions.Should(() => NameValueCollectionExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(NameValueCollection original)
+    {
+      var clone = original.Clone();
+
+      clone.Should().NotBeSameAs(original);
+      clone.AllKeys.Should().Equal(original.AllKeys);
+      clone.Count.Should().Be(original.Count);
+    }
   }
 
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="NameValueCollectionExtensions.AddRange(NameValueCollection, IEnumerable{(string Name, object Value)})"/></description></item>
-  ///     <item><description><see cref="NameValueCollectionExtensions.AddRange(NameValueCollection, (string Name, object Value)[])"/></description></item>
+  ///     <item><description><see cref="NameValueCollectionExtensions.With(NameValueCollection, IEnumerable{ValueTuple{string, object}})"/></description></item>
+  ///     <item><description><see cref="NameValueCollectionExtensions.With(NameValueCollection, ValueTuple{string, object}[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void AddRange_Methods()
+  public void With_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((NameValueCollection) null).AddRange(Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
-      AssertionExtensions.Should(() => new NameValueCollection().AddRange((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => NameValueCollectionExtensions.With(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => new NameValueCollection().With((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((NameValueCollection) null).AddRange([])).ThrowExactly<ArgumentNullException>().WithParameterName("to");
-      AssertionExtensions.Should(() => new NameValueCollection().AddRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => NameValueCollectionExtensions.With(null, Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => new NameValueCollection().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="NameValueCollectionExtensions.Without(NameValueCollection, IEnumerable{string})"/></description></item>
+  ///     <item><description><see cref="NameValueCollectionExtensions.Without(NameValueCollection, string[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Without_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => NameValueCollectionExtensions.Without(null, Enumerable.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => new NameValueCollection().Without((IEnumerable<string>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
+
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => NameValueCollectionExtensions.Without(null, Array.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => new NameValueCollection().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
+
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -59,16 +109,17 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
-      Validate(new NameValueCollection());
-      Validate(new NameValueCollection().AddRange(Attributes.RandomObjects().Select(element => (element.GetType().FullName, element))));
+      Validate([]);
+      Validate(new NameValueCollection().With(Attributes.RandomObjects().Select(element => (element.GetType().FullName, element))));
     }
 
     return;
 
     static void Validate(NameValueCollection collection)
     {
-      collection.Empty().Should().NotBeNull().And.BeSameAs(collection);
+      collection.Empty().Should().BeSameAs(collection);
       collection.Count.Should().Be(0);
+      collection.AllKeys.Should().BeEmpty();
     }
   }
 
@@ -84,6 +135,12 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
     var collection = new NameValueCollection();
     collection.TryFinallyClear(collection => collection.Add("key", "value")).Should().NotBeNull().And.BeSameAs(collection);
     collection.Count.Should().Be(0);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -95,6 +152,12 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
     AssertionExtensions.Should(() => NameValueCollectionExtensions.ToDictionary(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -106,5 +169,11 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
     AssertionExtensions.Should(() => NameValueCollectionExtensions.ToValueTuple(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

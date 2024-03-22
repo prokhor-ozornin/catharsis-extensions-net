@@ -42,6 +42,12 @@ public sealed class DelegateExtensionsTest : UnitTest
     andDelegate.DynamicInvoke(0).As<int>().Should().Be(1);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -58,5 +64,11 @@ public sealed class DelegateExtensionsTest : UnitTest
     IncrementDelegate.Not(IncrementDelegate).Should().BeNull();*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

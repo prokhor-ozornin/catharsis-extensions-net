@@ -51,6 +51,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => TextReaderExtensions.Lines(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader, string[] result) => reader.Lines().Should().NotBeNull().And.NotBeSameAs(reader.Lines()).And.Equal(result);
   }
 
   /// <summary>
@@ -62,6 +66,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => TextReaderExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader, string[] result) => reader.LinesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(reader.LinesAsync().ToArray()).And.Equal(result);
   }
 
   /// <summary>
@@ -74,6 +82,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToStreamReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader, int count)
+    {
+    }
   }
 
   /// <summary>
@@ -84,23 +98,17 @@ public sealed class TextReaderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((TextReader) null).AsSynchronized()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-    using (var reader = Attributes.EmptyTextReader())
-    {
-      using (var synchronized = reader.AsSynchronized())
-      {
-        synchronized.Should().NotBeNull().And.NotBeSameAs(reader).And.NotBeSameAs(reader.AsSynchronized());
-        synchronized.Peek().Should().Be(reader.Peek());
-      }
-    }
+    Validate(Attributes.EmptyTextReader());
+    Validate(Attributes.RandomString().ToStringReader());
 
-    var value = Attributes.RandomString();
-    using (var reader = value.ToStringReader())
+    return;
+
+    static void Validate(TextReader reader)
     {
-      using (var synchronized = reader.AsSynchronized())
-      {
-        synchronized.Should().NotBeNull().And.NotBeSameAs(reader).And.NotBeSameAs(reader.AsSynchronized());
-        synchronized.Peek().Should().Be(reader.Peek());
-      }
+      using var synchronized = reader.AsSynchronized();
+
+      synchronized.Should().NotBeNull().And.NotBeSameAs(reader);
+      synchronized.Peek().Should().Be(reader.Peek());
     }
   }
 
@@ -113,6 +121,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TextReader) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader, byte[] result, Encoding encoding = null) => reader.ToBytes(encoding).Should().NotBeNull().And.NotBeSameAs(reader.ToBytes(encoding)).And.Equal(result);
   }
 
   /// <summary>
@@ -124,6 +136,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TextReader) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader, byte[] result, Encoding encoding) => reader.ToBytesAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(reader.ToBytesAsync(encoding).Await()).And.Equal(result);
   }
 
   /// <summary>
@@ -135,6 +151,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TextReader) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader, string result) => reader.ToText().Should().NotBeNull().And.NotBeSameAs(reader.ToText()).And.Be(result);
   }
 
   /// <summary>
@@ -145,23 +165,18 @@ public sealed class TextReaderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
-    using (var reader = Attributes.EmptyTextReader())
-    {
-      reader.ToTextAsync().Should().NotBeNull().And.NotBeSameAs(reader.ToTextAsync());
-    }
+    Validate(Attributes.EmptyTextReader(), string.Empty);
+    Attributes.RandomString().With(text => Validate(text.ToStringReader(), text));
 
-    using (var reader = Attributes.EmptyTextReader())
-    {
-      reader.ToTextAsync().Await().Should().BeEmpty();
-      reader.Read().Should().Be(-1);
-    }
+    return;
 
-    var text = Attributes.RandomString();
-
-    using (var reader = text.ToStringReader())
+    static void Validate(TextReader reader, string text)
     {
-      reader.ToTextAsync().Await().Should().Be(text);
-      reader.Read().Should().Be(-1);
+      using (reader)
+      {
+        reader.ToTextAsync().Await().Should().Be(text);
+        reader.Read().Should().Be(-1);
+      }
     }
   }
 
@@ -187,6 +202,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -211,6 +232,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -244,6 +271,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => textReader.Read()).ThrowExactly<ObjectDisposedException>();*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -255,6 +288,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TextReader) null).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -280,6 +319,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     }*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -291,6 +336,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TextReader) null).ToXDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -317,6 +368,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     }*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -328,6 +385,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TextReader) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+    }
   }
 
   /// <summary>
@@ -353,5 +416,11 @@ public sealed class TextReaderExtensionsTest : UnitTest
     }*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+    }
   }
 }

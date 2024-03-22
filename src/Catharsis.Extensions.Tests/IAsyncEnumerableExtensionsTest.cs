@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Reflection.Metadata.Ecma335;
 using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
@@ -17,11 +18,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, bool empty)
-    {
-      sequence.IsEmpty().Should().Be(empty);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -30,6 +26,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       Validate(Array.Empty<object>().ToAsyncEnumerable(), true);
       Validate(new Random().GuidSequence(1).ToAsyncEnumerable(), false);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, bool empty) => sequence.IsEmpty().Should().Be(empty);
   }
 
   /// <summary>
@@ -38,8 +38,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void IsEmptyAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, bool empty) { sequence.IsEmptyAsync().Await().Should().Be(empty); }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).IsEmptyAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -49,6 +47,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       Validate(Array.Empty<object>().ToAsyncEnumerable(), true);
       Validate(new Random().GuidSequence(1).ToAsyncEnumerable(), false);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, bool empty) => sequence.IsEmptyAsync().Await().Should().Be(empty);
   }
 
   /// <summary>
@@ -177,8 +179,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToEnumerable_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements) { sequence.ToEnumerable().Should().NotBeNull().And.NotBeSameAs(sequence.ToEnumerable()).And.Equal(elements); }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToEnumerable<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -188,6 +188,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements) { sequence.ToEnumerable().Should().NotBeNull().And.NotBeSameAs(sequence.ToEnumerable()).And.Equal(elements); }
   }
 
   /// <summary>
@@ -196,11 +200,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToArray_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      sequence.ToArray().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -210,6 +209,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements) => sequence.ToArray().Should().NotBeNull().And.Equal(elements);
   }
 
   /// <summary>
@@ -218,12 +221,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToArrayAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      var task = sequence.ToArrayAsync();
-      task.Await().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToArrayAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -234,6 +231,14 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      var task = sequence.ToArrayAsync();
+      task.Await().Should().NotBeNull().And.Equal(elements);
+    }
   }
 
   /// <summary>
@@ -242,11 +247,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToList_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      sequence.ToList().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -256,6 +256,13 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      sequence.ToList().Should().NotBeNull().And.Equal(elements);
+    }
   }
 
   /// <summary>
@@ -264,12 +271,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToListAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      var task = sequence.ToListAsync();
-      task.Await().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToListAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -280,6 +281,14 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      var task = sequence.ToListAsync();
+      task.Await().Should().NotBeNull().And.Equal(elements);
+    }
   }
 
   /// <summary>
@@ -288,11 +297,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToLinkedList_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      sequence.ToLinkedList().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToLinkedList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -302,6 +306,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements) => sequence.ToLinkedList().Should().NotBeNull().And.Equal(elements);
   }
 
   /// <summary>
@@ -310,12 +318,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToLinkedListAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      var task = sequence.ToLinkedListAsync();
-      task.Await().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToLinkedListAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -325,6 +327,14 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
+    }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      var task = sequence.ToLinkedListAsync();
+      task.Await().Should().NotBeNull().And.Equal(elements);
     }
   }
 
@@ -337,6 +347,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToReadOnlyList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -348,6 +364,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToReadOnlyListAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -356,13 +378,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToHashSet_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements, IEqualityComparer<T> comparer = null)
-    {
-      var result = sequence.ToHashSet(comparer);
-      result.Should().NotBeNull().And.Equal(elements);
-      result.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToHashSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -372,6 +387,15 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements, IEqualityComparer<T> comparer = null)
+    {
+      var result = sequence.ToHashSet(comparer);
+      result.Should().NotBeNull().And.Equal(elements);
+      result.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
+    }
   }
 
   /// <summary>
@@ -380,14 +404,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToHashSetAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements, IEqualityComparer<T> comparer = null)
-    {
-      var task = sequence.ToHashSetAsync(comparer);
-      var result = task.Await();
-      result.Should().NotBeNull().And.Equal(elements);
-      result.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToHashSetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -398,6 +414,16 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements, IEqualityComparer<T> comparer = null)
+    {
+      var task = sequence.ToHashSetAsync(comparer);
+      var result = task.Await();
+      result.Should().NotBeNull().And.Equal(elements);
+      result.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
+    }
   }
 
   /// <summary>
@@ -406,13 +432,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToSortedSet_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements, IComparer<T> comparer = null)
-    {
-      var result = sequence.ToSortedSet();
-      result.Should().NotBeNull().And.Equal(elements.ToSortedSet(comparer));
-      result.Comparer.Should().BeSameAs(comparer ?? Comparer<T>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToSortedSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -422,6 +441,15 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements, IComparer<T> comparer = null)
+    {
+      var result = sequence.ToSortedSet();
+      result.Should().NotBeNull().And.Equal(elements.ToSortedSet(comparer));
+      result.Comparer.Should().BeSameAs(comparer ?? Comparer<T>.Default);
+    }
   }
 
   /// <summary>
@@ -430,14 +458,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToSortedSetAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements, IComparer<T> comparer = null)
-    {
-      var task = sequence.ToSortedSetAsync();
-      var result = task.Await();
-      result.Should().NotBeNull().And.Equal(elements.ToSortedSet(comparer));
-      result.Comparer.Should().BeSameAs(comparer ?? Comparer<T>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToSortedSetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -448,6 +468,16 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements, IComparer<T> comparer = null)
+    {
+      var task = sequence.ToSortedSetAsync();
+      var result = task.Await();
+      result.Should().NotBeNull().And.Equal(elements.ToSortedSet(comparer));
+      result.Comparer.Should().BeSameAs(comparer ?? Comparer<T>.Default);
+    }
   }
 
   /// <summary>
@@ -456,13 +486,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToDictionary_Method()
   {
-    void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
-    {
-      var result = sequence.ToDictionary(key, comparer);
-      result.Should().NotBeNull().And.Equal(elements.ToDictionary(key, comparer));
-      result.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -473,6 +496,15 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects, value => value);
     }
+
+    return;
+
+    static void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
+    {
+      var result = sequence.ToDictionary(key, comparer);
+      result.Should().NotBeNull().And.Equal(elements.ToDictionary(key, comparer));
+      result.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
+    }
   }
 
   /// <summary>
@@ -481,14 +513,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToDictionaryAsync_Method()
   {
-    void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
-    {
-      var task = sequence.ToDictionaryAsync(key, comparer);
-      var result = task.Await();
-      result.Should().NotBeNull().And.Equal(elements.ToDictionary(key, comparer));
-      result.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToDictionaryAsync<object, object>(null, _ => new object())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -499,6 +523,16 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects, value => value);
+    }
+
+    return;
+
+    static void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
+    {
+      var task = sequence.ToDictionaryAsync(key, comparer);
+      var result = task.Await();
+      result.Should().NotBeNull().And.Equal(elements.ToDictionary(key, comparer));
+      result.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
     }
   }
 
@@ -512,6 +546,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToReadOnlyDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -524,6 +564,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToReadOnlyDictionaryAsync<object, object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("key").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -549,6 +595,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -574,6 +626,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -582,11 +640,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToStack_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements)
-    {
-      sequence.ToStack().Should().NotBeNull().And.Equal(elements.Reverse());
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToStack<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -596,6 +649,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements) => sequence.ToStack().Should().NotBeNull().And.Equal(elements.Reverse());
   }
 
   /// <summary>
@@ -604,12 +661,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToStackAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements)
-    {
-      var task = sequence.ToStackAsync();
-      task.Await().Should().NotBeNull().And.Equal(elements.Reverse());
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToStackAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -620,6 +671,14 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements)
+    {
+      var task = sequence.ToStackAsync();
+      task.Await().Should().NotBeNull().And.Equal(elements.Reverse());
+    }
   }
 
   /// <summary>
@@ -628,11 +687,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToQueue_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      sequence.ToQueue().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -642,6 +696,13 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      sequence.ToQueue().Should().NotBeNull().And.Equal(elements);
+    }
   }
 
   /// <summary>
@@ -650,12 +711,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToQueueAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      var task = sequence.ToQueueAsync();
-      task.Await().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToQueueAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -665,6 +720,14 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
+    }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      var task = sequence.ToQueueAsync();
+      task.Await().Should().NotBeNull().And.Equal(elements);
     }
   }
 
@@ -781,6 +844,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToReadOnlySet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -792,6 +861,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToReadOnlySetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -800,14 +875,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToPriorityQueue_Method()
   {
-    void Validate<TElement, TPriority>(IAsyncEnumerable<(TElement Element, TPriority Priority)> sequence, IEnumerable<(TElement, TPriority)> elements, IComparer<TPriority> comparer = null)
-    {
-      var result = sequence.ToPriorityQueue(comparer);
-      result.Should().NotBeNull();
-      result.Comparer.Should().BeSameAs(comparer ?? Comparer<TPriority>.Default);
-      result.UnorderedItems.Should().BeEquivalentTo(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToPriorityQueue<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -818,6 +885,16 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var elements = objects.Select((index, value) => (value, index));
       Validate(elements.ToAsyncEnumerable(), elements);
     }
+
+    return;
+
+    static void Validate<TElement, TPriority>(IAsyncEnumerable<(TElement Element, TPriority Priority)> sequence, IEnumerable<(TElement, TPriority)> elements, IComparer<TPriority> comparer = null)
+    {
+      var result = sequence.ToPriorityQueue(comparer);
+      result.Should().NotBeNull();
+      result.Comparer.Should().BeSameAs(comparer ?? Comparer<TPriority>.Default);
+      result.UnorderedItems.Should().BeEquivalentTo(elements);
+    }
   }
 
   /// <summary>
@@ -826,15 +903,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToPriorityQueueAsync_Method()
   {
-    void Validate<TElement, TPriority>(IAsyncEnumerable<(TElement Element, TPriority Priority)> sequence, IEnumerable<(TElement, TPriority)> elements, IComparer<TPriority> comparer = null)
-    {
-      var task = sequence.ToPriorityQueueAsync(comparer);
-      var result = task.Await();
-      result.Should().NotBeNull();
-      result.Comparer.Should().BeSameAs(comparer ?? Comparer<TPriority>.Default);
-      result.UnorderedItems.Should().BeEquivalentTo(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToPriorityQueueAsync<object, object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -846,6 +914,17 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var elements = objects.Select((index, value) => (value, index));
       Validate(elements.ToAsyncEnumerable(), elements);
     }
+
+    return;
+
+    static void Validate<TElement, TPriority>(IAsyncEnumerable<(TElement Element, TPriority Priority)> sequence, IEnumerable<(TElement, TPriority)> elements, IComparer<TPriority> comparer = null)
+    {
+      var task = sequence.ToPriorityQueueAsync(comparer);
+      var result = task.Await();
+      result.Should().NotBeNull();
+      result.Comparer.Should().BeSameAs(comparer ?? Comparer<TPriority>.Default);
+      result.UnorderedItems.Should().BeEquivalentTo(elements);
+    }
   }
 
   /// <summary>
@@ -854,11 +933,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableArray_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      sequence.ToImmutableArray().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -868,6 +942,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements) => sequence.ToImmutableArray().Should().NotBeNull().And.Equal(elements);
   }
 
   /// <summary>
@@ -876,12 +954,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableArrayAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      var task = sequence.ToImmutableArrayAsync();
-      task.Await().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableArrayAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -892,6 +964,14 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      var task = sequence.ToImmutableArrayAsync();
+      task.Await().Should().NotBeNull().And.Equal(elements);
+    }
   }
 
   /// <summary>
@@ -900,11 +980,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableList_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      sequence.ToImmutableList().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -914,6 +989,13 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      sequence.ToImmutableList().Should().NotBeNull().And.Equal(elements);
+    }
   }
 
   /// <summary>
@@ -922,12 +1004,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableListAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      var task = sequence.ToImmutableListAsync();
-      task.Await().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableListAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -938,6 +1014,14 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      var task = sequence.ToImmutableListAsync();
+      task.Await().Should().NotBeNull().And.Equal(elements);
+    }
   }
 
   /// <summary>
@@ -946,13 +1030,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableHashSet_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements, IEqualityComparer<T> comparer = null)
-    {
-      var result = sequence.ToImmutableHashSet(comparer);
-      result.Should().NotBeNull().And.Equal(elements.ToImmutableHashSet(comparer));
-      result.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableHashSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -962,6 +1039,15 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements, IEqualityComparer<T> comparer = null)
+    {
+      var result = sequence.ToImmutableHashSet(comparer);
+      result.Should().NotBeNull().And.Equal(elements.ToImmutableHashSet(comparer));
+      result.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
+    }
   }
 
   /// <summary>
@@ -970,14 +1056,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableHashSetAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements, IEqualityComparer<T> comparer = null)
-    {
-      var task = sequence.ToImmutableHashSetAsync(comparer);
-      var result = task.Await();
-      result.Should().NotBeNull().And.Equal(elements.ToImmutableHashSet(comparer));
-      result.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableHashSetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -987,6 +1065,16 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
+    }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, IEnumerable<T> elements, IEqualityComparer<T> comparer = null)
+    {
+      var task = sequence.ToImmutableHashSetAsync(comparer);
+      var result = task.Await();
+      result.Should().NotBeNull().And.Equal(elements.ToImmutableHashSet(comparer));
+      result.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
     }
   }
 
@@ -999,6 +1087,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableSortedSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -1010,6 +1104,12 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableSortedSetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -1018,14 +1118,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableDictionary_Method()
   {
-    void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
-    {
-      var result = sequence.ToImmutableDictionary(key, comparer);
-      result.Should().NotBeNull().And.Equal(elements.ToImmutableDictionary(key, comparer));
-      result.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
-      result.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -1036,6 +1128,16 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects, value => value);
     }
+
+    return;
+
+    static void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
+    {
+      var result = sequence.ToImmutableDictionary(key, comparer);
+      result.Should().NotBeNull().And.Equal(elements.ToImmutableDictionary(key, comparer));
+      result.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
+      result.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
+    }
   }
 
   /// <summary>
@@ -1044,15 +1146,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableDictionaryAsync_Method()
   {
-    void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
-    {
-      var task = sequence.ToImmutableDictionaryAsync(key, comparer);
-      var result = task.Await();
-      result.Should().NotBeNull().And.Equal(elements.ToImmutableDictionary(key, comparer));
-      result.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
-      result.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableDictionaryAsync<object, object>(null, _ => new object())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -1064,6 +1157,17 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects, value => value);
     }
+
+    return;
+
+    static void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null) where TKey : notnull
+    {
+      var task = sequence.ToImmutableDictionaryAsync(key, comparer);
+      var result = task.Await();
+      result.Should().NotBeNull().And.Equal(elements.ToImmutableDictionary(key, comparer));
+      result.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
+      result.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
+    }
   }
 
   /// <summary>
@@ -1072,14 +1176,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableSortedDictionary_Method()
   {
-    void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null) where TKey : notnull
-    {
-      var result = sequence.ToImmutableSortedDictionary(key, keyComparer, valueComparer);
-      result.Should().NotBeNull().And.Equal(elements.ToDictionary(key).ToImmutableSortedDictionary(keyComparer, valueComparer));
-      result.KeyComparer.Should().BeSameAs(keyComparer ?? Comparer<TKey>.Default);
-      result.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableSortedDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -1090,22 +1186,24 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects, value => value);
     }
+
+    return;
+
+    static void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null) where TKey : notnull
+    {
+      var result = sequence.ToImmutableSortedDictionary(key, keyComparer, valueComparer);
+      result.Should().NotBeNull().And.Equal(elements.ToDictionary(key).ToImmutableSortedDictionary(keyComparer, valueComparer));
+      result.KeyComparer.Should().BeSameAs(keyComparer ?? Comparer<TKey>.Default);
+      result.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
+    }
   }
+
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableSortedDictionaryAsync{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IComparer{TKey}, IEqualityComparer{TValue}, System.Threading.CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
   public void ToImmutableSortedDictionaryAsync_Method()
   {
-    void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null) where TKey : notnull
-    {
-      var task = sequence.ToImmutableSortedDictionaryAsync(key, keyComparer, valueComparer);
-      var result = task.Await();
-      result.Should().NotBeNull().And.Equal(elements.ToDictionary(key).ToImmutableSortedDictionary(keyComparer, valueComparer));
-      result.KeyComparer.Should().BeSameAs(keyComparer ?? Comparer<TKey>.Default);
-      result.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableSortedDictionaryAsync<object, object>(null, _ => new object())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -1117,6 +1215,17 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects, value => value);
     }
+
+    return;
+
+    static void Validate<TKey, TValue>(IAsyncEnumerable<TValue> sequence, IEnumerable<TValue> elements, Func<TValue, TKey> key, IComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null) where TKey : notnull
+    {
+      var task = sequence.ToImmutableSortedDictionaryAsync(key, keyComparer, valueComparer);
+      var result = task.Await();
+      result.Should().NotBeNull().And.Equal(elements.ToDictionary(key).ToImmutableSortedDictionary(keyComparer, valueComparer));
+      result.KeyComparer.Should().BeSameAs(keyComparer ?? Comparer<TKey>.Default);
+      result.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
+    }
   }
 
   /// <summary>
@@ -1125,11 +1234,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableQueue_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      sequence.ToImmutableQueue().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -1139,6 +1243,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
     }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements) => sequence.ToImmutableQueue().Should().NotBeNull().And.Equal(elements);
   }
 
   /// <summary>
@@ -1147,12 +1255,6 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToImmutableQueueAsync_Method()
   {
-    void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
-    {
-      var task = sequence.ToImmutableQueueAsync();
-      task.Await().Should().NotBeNull().And.Equal(elements);
-    }
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableQueueAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("sequence").Await();
@@ -1162,6 +1264,14 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
+    }
+
+    return;
+
+    static void Validate<T>(IAsyncEnumerable<T> sequence, T[] elements)
+    {
+      var task = sequence.ToImmutableQueueAsync();
+      task.Await().Should().NotBeNull().And.Equal(elements);
     }
   }
 }

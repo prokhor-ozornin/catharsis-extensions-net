@@ -19,6 +19,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     ShellProcess = Attributes.ShellCommand().ToProcess(new ProcessStartInfo { RedirectStandardError = true, RedirectStandardInput = true, RedirectStandardOutput = true });
     ShellProcess.Start();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -28,6 +34,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   public void Restart_Method()
   {
     AssertionExtensions.Should(() => ProcessExtensions.Restart(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+
+    return;
+
+    static void Validate()
+    {
+    }
 
     throw new NotImplementedException();
   }
@@ -39,6 +51,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   public void Finish_Method()
   {
     AssertionExtensions.Should(() => ProcessExtensions.Finish(null, TimeSpan.Zero)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+
+    return;
+
+    static void Validate()
+    {
+    }
 
     throw new NotImplementedException();
   }
@@ -59,6 +77,12 @@ public sealed class ProcessExtensionsTest : UnitTest
     AssertionExtensions.Should(() => process.TryFinallyKill(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     process.TryFinallyKill(_ => { }).Should().NotBeNull().And.BeSameAs(process);
     process.HasExited.Should().BeTrue();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -68,6 +92,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   public void ToBytes_Method()
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+
+    return;
+
+    static void Validate()
+    {
+    }
 
     throw new NotImplementedException();
   }
@@ -80,6 +110,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
+    return;
+
+    static void Validate()
+    {
+    }
+
     throw new NotImplementedException();
   }
 
@@ -90,6 +126,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   public void ToText_Method()
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+
+    return;
+
+    static void Validate()
+    {
+    }
 
     throw new NotImplementedException();
   }
@@ -102,6 +144,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
 
+    return;
+
+    static void Validate()
+    {
+    }
+
     throw new NotImplementedException();
   }
 
@@ -112,6 +160,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   public void ToErrorText_Method()
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToErrorText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+
+    return;
+
+    static void Validate()
+    {
+    }
 
     throw new NotImplementedException();
   }
@@ -124,6 +178,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToErrorTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
 
+    return;
+
+    static void Validate()
+    {
+    }
+
     throw new NotImplementedException();
   }
 
@@ -135,6 +195,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.WriteBytes(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+
+    return;
+
+    static void Validate()
+    {
+    }
 
     throw new NotImplementedException();
   }
@@ -149,6 +215,12 @@ public sealed class ProcessExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => ShellProcess.WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    return;
+
+    static void Validate()
+    {
+    }
+
     throw new NotImplementedException();
   }
 
@@ -160,6 +232,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+    return;
+
+    static void Validate()
+    {
+    }
 
     throw new NotImplementedException();
   }
@@ -174,6 +252,12 @@ public sealed class ProcessExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => ShellProcess.WriteTextAsync(string.Empty, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    return;
+
+    static void Validate()
+    {
+    }
+
     throw new NotImplementedException();
   }
 
@@ -185,6 +269,12 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.FinishAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
     AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+    return;
+
+    static void Validate()
+    {
+    }
 
     throw new NotImplementedException();
   }

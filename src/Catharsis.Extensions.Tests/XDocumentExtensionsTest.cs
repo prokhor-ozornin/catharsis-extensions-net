@@ -14,6 +14,39 @@ namespace Catharsis.Extensions.Tests;
 public sealed class XDocumentExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="XDocumentExtensions.With(XDocument, IEnumerable{object})"/></description></item>
+  ///     <item><description><see cref="XDocumentExtensions.With(XDocument, object[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void With_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => XDocumentExtensions.With(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => new XDocument().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
+
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => XDocumentExtensions.With(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => new XDocument().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
+
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XDocumentExtensions.Clone(XDocument)"/> method.</para>
   /// </summary>
   [Fact]
@@ -22,6 +55,20 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => XDocumentExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument original)
+    {
+      var clone = original.Clone();
+
+      clone.Should().NotBeSameAs(original).And.NotBe(original);
+      clone.ToString().Should().Be(original.ToString());
+      clone.Root.Should().Be(original.Root);
+      clone.Declaration.Should().Be(original.Declaration);
+      clone.DocumentType.Should().Be(original.DocumentType);
+      clone.NodeType.Should().Be(original.NodeType);
+    }
   }
 
   /// <summary>
@@ -32,23 +79,14 @@ public sealed class XDocumentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
-    var xml = new XDocument();
-    xml.IsEmpty().Should().BeTrue();
+    Validate(true, new XDocument());
+    Validate(false, new XDocument(new XComment("comment")));
+    Validate(false, new XDocument(new XProcessingInstruction("target", "data")));
+    Validate(false, new XDocument(new XElement("element")));
 
-    xml.RemoveNodes();
-    xml.Add(new XComment("comment"));
-    xml.IsEmpty().Should().BeFalse();
+    return;
 
-    xml.RemoveNodes();
-    xml.Add(new XProcessingInstruction("target", "data"));
-    xml.IsEmpty().Should().BeFalse();
-
-    xml.RemoveNodes();
-    xml.Add(new XElement("element"));
-    xml.IsEmpty().Should().BeFalse();
-
-    xml.RemoveNodes();
-    xml.IsEmpty().Should().BeTrue();
+    static void Validate(bool result, XDocument document) => document.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -67,10 +105,10 @@ public sealed class XDocumentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(XDocument xml)
+    static void Validate(XDocument document)
     {
-      xml.Empty().Should().NotBeNull().And.BeSameAs(xml);
-      xml.Nodes().Should().BeEmpty();
+      document.Empty().Should().BeSameAs(document);
+      document.Nodes().Should().BeEmpty();
     }
   }
 
@@ -83,9 +121,15 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XDocument) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     AssertionExtensions.Should(() => new XDocument().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-    var document = new XDocument();
-    document.TryFinallyClear(xml => xml.Add(new XElement("root"))).Should().NotBeNull().And.BeSameAs(document);
-    document.Nodes().Should().BeEmpty();
+    Validate(new XDocument(), new XElement("root"));
+
+    return;
+
+    static void Validate(XDocument document, params object[] nodes)
+    {
+      document.TryFinallyClear(document => document.With(nodes)).Should().BeSameAs(document);
+      document.Nodes().Should().BeEmpty();
+    }
   }
 
   /// <summary>
@@ -97,6 +141,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document)
+    {
+    }
   }
 
   /// <summary>
@@ -108,6 +158,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XDocument) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document)
+    {
+    }
   }
 
   /// <summary>
@@ -119,6 +175,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XDocument) null).ToXmlWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document)
+    {
+    }
   }
 
   /// <summary>
@@ -130,6 +192,10 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XDocument) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(byte[] result, XDocument document) => document.ToBytes().Should().NotBeNull().And.NotBeSameAs(document.ToBytes()).And.Equal(result);
   }
 
   /// <summary>
@@ -142,6 +208,10 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XDocument().ToBytesAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(byte[] result, XDocument document) => document.ToBytesAsync().Await().Should().NotBeNull().And.NotBeSameAs(document.ToBytesAsync().Await()).And.Equal(result);
   }
 
   /// <summary>
@@ -153,6 +223,10 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XDocument) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, XDocument document) => document.ToText().Should().NotBeNull().And.NotBeSameAs(document.ToText()).And.Be(result);
   }
 
   /// <summary>
@@ -165,6 +239,10 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XDocument().ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, XDocument document) => document.ToTextAsync().Await().Should().NotBeNull().And.NotBeSameAs(document.ToTextAsync().Await()).And.Be(result);
   }
 
   /// <summary>
@@ -177,6 +255,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XDocument().Serialize((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document)
+    {
+    }
   }
 
   /// <summary>
@@ -189,6 +273,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XDocument().Serialize((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document)
+    {
+    }
   }
 
   /// <summary>
@@ -201,6 +291,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XDocument().Serialize((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document, Stream stream, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -213,6 +309,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new XDocument().Serialize((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document, FileInfo file, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -224,5 +326,11 @@ public sealed class XDocumentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XDocument) null).Serialize()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document)
+    {
+    }
   }
 }

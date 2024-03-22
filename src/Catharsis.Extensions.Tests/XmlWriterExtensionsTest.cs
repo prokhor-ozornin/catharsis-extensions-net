@@ -20,6 +20,16 @@ public sealed class XmlWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((XmlWriter) null).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlWriter writer)
+    {
+      using (writer)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -32,6 +42,16 @@ public sealed class XmlWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlWriter writer, byte[] bytes, Encoding encoding = null)
+    {
+      using (writer)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -44,6 +64,16 @@ public sealed class XmlWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlWriter writer, byte[] bytes, Encoding encoding = null)
+    {
+      using (writer)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -56,6 +86,16 @@ public sealed class XmlWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlWriter writer, string text)
+    {
+      using (writer)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -68,5 +108,15 @@ public sealed class XmlWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlWriter writer, string text)
+    {
+      using (writer)
+      {
+
+      }
+    }
   }
 }

@@ -32,5 +32,11 @@ public sealed class SmtpClientExtensionsTest : UnitTest
     var timespan = TimeSpan.Zero;
     smtp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(smtp);
     smtp.Timeout.Should().Be((int) timespan.TotalMilliseconds);
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 }

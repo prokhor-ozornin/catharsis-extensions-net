@@ -21,6 +21,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TcpClient) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client, bool result) => client.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -48,6 +52,12 @@ public sealed class TcpClientExtensionsTest : UnitTest
       tcp.ReceiveTimeout.Should().Be(tcp.Client.ReceiveTimeout).And.Be((int) timespan.TotalMilliseconds);
       tcp.SendTimeout.Should().Be(tcp.Client.SendTimeout).And.Be((int) timespan.TotalMilliseconds);
     }
+
+    return;
+
+    static void Validate(TcpClient client, TimeSpan? timeout)
+    {
+    }
   }
 
   /// <summary>
@@ -60,6 +70,12 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Tcp().TryFinallyDisconnect(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client)
+    {
+    }
   }
 
   /// <summary>
@@ -85,6 +101,12 @@ public sealed class TcpClientExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client)
+    {
+    }
   }
 
   /// <summary>
@@ -110,6 +132,12 @@ public sealed class TcpClientExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client)
+    {
+    }
   }
 
   /// <summary>
@@ -121,6 +149,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TcpClient) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client, byte[] result) => client.ToBytes().Should().NotBeNull().And.NotBeSameAs(client.ToBytes()).And.Equal(result);
   }
 
   /// <summary>
@@ -132,6 +164,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TcpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client, byte[] result) => client.ToBytesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(client.ToBytesAsync().ToArray()).And.Equal(result);
   }
 
   /// <summary>
@@ -143,6 +179,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TcpClient) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client, string result, Encoding encoding = null) => client.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(client.ToText(encoding)).And.Be(result);
   }
 
   /// <summary>
@@ -154,6 +194,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TcpClient) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client, string result, Encoding encoding = null) => client.ToTextAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(client.ToTextAsync(encoding).Await()).And.Be(result);
   }
 
   /// <summary>
@@ -166,6 +210,12 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Tcp().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client, byte[] bytes)
+    {
+    }
   }
 
   /// <summary>
@@ -179,6 +229,12 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Tcp().WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client, byte[] bytes)
+    {
+    }
   }
 
   /// <summary>
@@ -191,6 +247,12 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Tcp().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client, string text, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -204,5 +266,11 @@ public sealed class TcpClientExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Attributes.Tcp().WriteTextAsync(string.Empty, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TcpClient client, string text, Encoding encoding = null)
+    {
+    }
   }
 }

@@ -18,6 +18,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => HttpContentExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -30,6 +36,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -45,6 +57,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
       using var content = new ByteArrayContent(bytes);
 
       content.ToBytes().Should().NotBeNull().And.NotBeSameAs(content.ToBytes()).And.Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(bytes);
+    }
+
+    return;
+
+    static void Validate()
+    {
     }
   }
 
@@ -63,6 +81,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
       content.ToBytesAsync().Should().NotBeNull().And.NotBeSameAs(content.ToBytesAsync());
       content.ToBytesAsync().ToArray().Should().Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(bytes);
     }
+
+    return;
+
+    static void Validate()
+    {
+    }
   }
 
   /// <summary>
@@ -78,6 +102,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
       using var content = new StringContent(text);
 
       content.ToText().Should().NotBeNull().And.NotBeSameAs(content.ToText()).And.Be(content.ReadAsStringAsync().Await()).And.Be(text);
+    }
+
+    return;
+
+    static void Validate()
+    {
     }
   }
 
@@ -97,6 +127,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
       content.ToTextAsync().Should().NotBeNull().And.NotBeSameAs(content.ToTextAsync());
       content.ToTextAsync().Await().Should().Be(content.ReadAsStringAsync().Await()).And.Be(text);
+    }
+
+    return;
+
+    static void Validate()
+    {
     }
   }
 }

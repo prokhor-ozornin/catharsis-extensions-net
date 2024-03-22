@@ -32,6 +32,14 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
     synchronized.Write(value);
     writer.ToString().Should().Be(value);
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer)
+    {
+    }
   }
 
   /// <summary>
@@ -66,6 +74,12 @@ public sealed class TextWriterExtensionsTest : UnitTest
     textWriter.Write(string.Empty);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer)
+    {
+    }
   }
 
   /// <summary>
@@ -77,6 +91,12 @@ public sealed class TextWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((TextWriter) null).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer)
+    {
+    }
   }
 
   /// <summary>
@@ -89,6 +109,12 @@ public sealed class TextWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytes<TextWriter>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -102,6 +128,12 @@ public sealed class TextWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>(Enumerable.Empty<byte>(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -114,6 +146,16 @@ public sealed class TextWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteText<TextWriter>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer, string text)
+    {
+      using (writer)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -127,5 +169,11 @@ public sealed class TextWriterExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(string.Empty, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer, string text)
+    {
+    }
   }
 }

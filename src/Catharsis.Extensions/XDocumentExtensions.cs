@@ -14,6 +14,31 @@ public static class XDocumentExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="document"></param>
+  /// <param name="nodes"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static XDocument With(this XDocument document, IEnumerable<object> nodes)
+  {
+    if (document is null) throw new ArgumentNullException(nameof(document));
+    if (nodes is null) throw new ArgumentNullException(nameof(nodes));
+
+    document.Add(nodes.AsArray());
+
+    return document;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <param name="nodes"></param>
+  /// <returns></returns>
+  public static XDocument With(this XDocument document, params object[] nodes) => document.With(nodes as IEnumerable<object>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static XDocument Clone(this XDocument document) => document is not null ? document.CreateReader().TryFinallyDispose(XDocument.Load) : throw new ArgumentNullException(nameof(document));

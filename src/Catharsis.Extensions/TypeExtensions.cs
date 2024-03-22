@@ -285,12 +285,11 @@ public static class TypeExtensions
   /// <param name="arguments"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static bool HasConstructor(this Type type, IEnumerable<Type> arguments)
+  public static bool HasConstructor(this Type type, IEnumerable<Type> arguments = null)
   {
     if (type is null) throw new ArgumentNullException(nameof(type));
-    if (arguments is null) throw new ArgumentNullException(nameof(arguments));
 
-    return type.GetConstructor(arguments.AsArray()) is not null;
+    return type.GetConstructor(arguments?.AsArray() ?? Array.Empty<Type>()) is not null;
   }
 
   /// <summary>
@@ -308,7 +307,7 @@ public static class TypeExtensions
   /// <param name="type"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static bool HasDefaultConstructor(this Type type) => type.HasConstructor([]);
+  public static bool HasDefaultConstructor(this Type type) => type.HasConstructor();
 
   /// <summary>
   ///   <para></para>
