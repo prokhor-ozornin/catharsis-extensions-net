@@ -24,6 +24,10 @@ public sealed class StreamReaderExtensionsTest : UnitTest
 
     static void Validate(StreamReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -77,11 +81,11 @@ public sealed class StreamReaderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isEmpty, StreamReader reader)
+    static void Validate(bool result, StreamReader reader)
     {
       using (reader)
       {
-        reader.IsEmpty().Should().Be(isEmpty);
+        reader.IsEmpty().Should().Be(result);
       }
     }
   }

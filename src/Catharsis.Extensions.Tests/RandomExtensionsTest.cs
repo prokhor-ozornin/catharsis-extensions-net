@@ -24,7 +24,7 @@ public sealed class RandomExtensionsTest : UnitTest
     Validate(sbyte.MaxValue, sbyte.MaxValue, sbyte.MaxValue, sbyte.MaxValue);
     Validate(sbyte.MinValue, sbyte.MaxValue, sbyte.MinValue, sbyte.MaxValue);
     Validate(sbyte.MaxValue, sbyte.MinValue, sbyte.MinValue, sbyte.MaxValue);
-    Validate();
+    //Validate();
 
     //new Random().Sbyte(0, 0).Should().Be(0);
     //new Random().Sbyte(sbyte.MinValue, sbyte.MinValue).Should().Be(sbyte.MinValue);

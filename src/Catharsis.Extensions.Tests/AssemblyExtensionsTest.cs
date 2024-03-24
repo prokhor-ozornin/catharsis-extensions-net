@@ -28,7 +28,7 @@ public sealed class AssemblyExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(Assembly assembly, string name)
+    static void Validate(byte[] result, Assembly assembly, string name)
     {
     }
   }

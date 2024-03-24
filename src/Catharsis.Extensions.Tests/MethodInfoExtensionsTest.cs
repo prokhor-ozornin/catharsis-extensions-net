@@ -25,9 +25,7 @@ public sealed class MethodInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, MethodInfo method) => method.IsOverridable().Should().Be(result);
   }
 
   /// <summary>
@@ -42,9 +40,7 @@ public sealed class MethodInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, MethodInfo method) => method.IsProtected().Should().Be(result);
   }
 
   /// <summary>
@@ -59,9 +55,7 @@ public sealed class MethodInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, MethodInfo method) => method.IsInternal().Should().Be(result);
   }
 
   /// <summary>
@@ -76,9 +70,7 @@ public sealed class MethodInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, MethodInfo method) => method.IsProtectedInternal().Should().Be(result);
   }
 
   /// <summary>

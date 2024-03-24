@@ -59,7 +59,7 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isAvailable, IPHostEntry host, TimeSpan? timeout = null) => host.IsAvailable(timeout).Should().Be(isAvailable);
+    static void Validate(bool result, IPHostEntry host, TimeSpan? timeout = null) => host.IsAvailable(timeout).Should().Be(result);
   }
 
   /// <summary>
@@ -89,7 +89,7 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
     
     return;
 
-    static void Validate(bool isAvailable, IPHostEntry host, TimeSpan? timeout = null) => host.IsAvailableAsync(timeout).Await().Should().Be(isAvailable);
+    static void Validate(bool result, IPHostEntry host, TimeSpan? timeout = null) => host.IsAvailableAsync(timeout).Await().Should().Be(result);
   }
 
   /// <summary>
@@ -107,7 +107,7 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isEmpty, IPHostEntry host) => host.IsEmpty().Should().Be(isEmpty);
+    static void Validate(bool result, IPHostEntry host) => host.IsEmpty().Should().Be(result);
   }
 
   /// <summary>

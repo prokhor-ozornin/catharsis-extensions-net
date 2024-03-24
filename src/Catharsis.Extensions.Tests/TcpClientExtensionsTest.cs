@@ -24,7 +24,13 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TcpClient client, bool result) => client.IsEmpty().Should().Be(result);
+    static void Validate(bool result, TcpClient client)
+    {
+      using (client)
+      {
+        client.IsEmpty().Should().Be(result);
+      }
+    }
   }
 
   /// <summary>
@@ -57,6 +63,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     static void Validate(TcpClient client, TimeSpan? timeout)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -75,6 +85,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     static void Validate(TcpClient client)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -106,6 +120,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     static void Validate(TcpClient client)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -137,6 +155,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     static void Validate(TcpClient client)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -152,7 +174,13 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TcpClient client, byte[] result) => client.ToBytes().Should().NotBeNull().And.NotBeSameAs(client.ToBytes()).And.Equal(result);
+    static void Validate(byte[] result, TcpClient client)
+    {
+      using (client)
+      {
+        client.ToBytes().Should().NotBeNull().And.NotBeSameAs(client.ToBytes()).And.Equal(result);
+      }
+    }
   }
 
   /// <summary>
@@ -167,7 +195,13 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TcpClient client, byte[] result) => client.ToBytesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(client.ToBytesAsync().ToArray()).And.Equal(result);
+    static void Validate(byte[] result, TcpClient client)
+    {
+      using (client)
+      {
+        client.ToBytesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(client.ToBytesAsync().ToArray()).And.Equal(result);
+      }
+    }
   }
 
   /// <summary>
@@ -182,7 +216,13 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TcpClient client, string result, Encoding encoding = null) => client.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(client.ToText(encoding)).And.Be(result);
+    static void Validate(string result, TcpClient client, Encoding encoding = null)
+    {
+      using (client)
+      {
+        client.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(client.ToText(encoding)).And.Be(result);
+      }
+    }
   }
 
   /// <summary>
@@ -197,7 +237,13 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TcpClient client, string result, Encoding encoding = null) => client.ToTextAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(client.ToTextAsync(encoding).Await()).And.Be(result);
+    static void Validate(string result, TcpClient client, Encoding encoding = null)
+    {
+      using (client)
+      {
+        client.ToTextAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(client.ToTextAsync(encoding).Await()).And.Be(result);
+      }
+    }
   }
 
   /// <summary>
@@ -215,6 +261,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     static void Validate(TcpClient client, byte[] bytes)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -234,6 +284,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     static void Validate(TcpClient client, byte[] bytes)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -252,6 +306,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     static void Validate(TcpClient client, string text, Encoding encoding = null)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -271,6 +329,10 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     static void Validate(TcpClient client, string text, Encoding encoding = null)
     {
+      using (client)
+      {
+
+      }
     }
   }
 }

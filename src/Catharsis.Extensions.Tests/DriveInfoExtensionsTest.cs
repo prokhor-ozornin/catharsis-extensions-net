@@ -51,9 +51,7 @@ public sealed class DriveInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DriveInfo drive, bool isEmpty)
-    {
-    }
+    static void Validate(bool result, DriveInfo drive) => drive.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -68,9 +66,7 @@ public sealed class DriveInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DriveInfo drive)
-    {
-    }
+    static void Validate(DirectoryInfo[] result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.Directories(pattern, recursive).Should().Equal(result);
   }
 
   /// <summary>
@@ -85,8 +81,6 @@ public sealed class DriveInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DriveInfo drive)
-    {
-    }
+    static void Validate(long result, DriveInfo drive, string pattern = null, bool recursive = true) => drive.Size(pattern, recursive).Should().Be(result);
   }
 }

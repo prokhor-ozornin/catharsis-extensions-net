@@ -433,54 +433,54 @@ public static class StreamExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, Stream destination)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, Stream to)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteBytes(bytes);
+    to.WriteBytes(sequence);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Stream destination, CancellationToken cancellation = default)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, Stream to, CancellationToken cancellation = default)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await destination.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+    await to.WriteBytesAsync(sequence, cancellation).ConfigureAwait(false);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, Stream destination, Encoding encoding = null)
+  public static string WriteTo(this string text, Stream to, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteText(text, encoding);
+    to.WriteText(text, encoding);
 
     return text;
   }
@@ -489,19 +489,19 @@ public static class StreamExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, Stream destination, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, Stream to, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
     
     cancellation.ThrowIfCancellationRequested();
 
-    await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+    await to.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
 
     return text;
   }

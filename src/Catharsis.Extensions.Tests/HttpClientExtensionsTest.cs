@@ -88,6 +88,16 @@ public sealed class HttpClientExtensionsTest : UnitTest
         http.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
       }
     }
+
+    return;
+
+    static void Validate(HttpClient client)
+    {
+      using (client)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -116,8 +126,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TimeSpan? timeout)
+    static void Validate(HttpClient client, TimeSpan? timeout)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -134,8 +148,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -153,8 +171,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -171,8 +193,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -190,8 +216,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -208,8 +238,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -227,8 +261,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -245,8 +283,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -264,8 +306,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri, HttpContent content)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -282,8 +328,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -301,8 +351,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -338,8 +392,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -356,8 +414,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -375,8 +437,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -393,8 +459,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -411,8 +481,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -432,8 +506,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -451,8 +529,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -470,8 +552,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, byte[] bytes, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -490,8 +576,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, byte[] bytes, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -509,8 +599,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, string text, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -529,8 +623,12 @@ public sealed class HttpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpClient client, string text, Uri uri)
     {
+      using (client)
+      {
+
+      }
     }
   }
 }

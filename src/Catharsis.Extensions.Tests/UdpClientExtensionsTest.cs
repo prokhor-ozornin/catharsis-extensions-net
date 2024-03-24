@@ -209,7 +209,13 @@ public sealed class UdpClientExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, UdpClient client, Encoding encoding = null) => client.ToTextAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(client.ToTextAsync(encoding).Await()).And.Be(result);
+    static void Validate(string result, UdpClient client, Encoding encoding = null)
+    {
+      using (client)
+      {
+        client.ToTextAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(client.ToTextAsync(encoding).Await()).And.Be(result);
+      }
+    }
   }
 
   /// <summary>
@@ -227,6 +233,10 @@ public sealed class UdpClientExtensionsTest : UnitTest
 
     static void Validate(UdpClient client, byte[] bytes)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -246,6 +256,10 @@ public sealed class UdpClientExtensionsTest : UnitTest
 
     static void Validate(UdpClient client, byte[] bytes)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -264,6 +278,10 @@ public sealed class UdpClientExtensionsTest : UnitTest
 
     static void Validate(UdpClient client, string text, Encoding encoding = null)
     {
+      using (client)
+      {
+
+      }
     }
   }
 
@@ -283,6 +301,10 @@ public sealed class UdpClientExtensionsTest : UnitTest
 
     static void Validate(UdpClient client, string text, Encoding encoding = null)
     {
+      using (client)
+      {
+
+      }
     }
   }
 }

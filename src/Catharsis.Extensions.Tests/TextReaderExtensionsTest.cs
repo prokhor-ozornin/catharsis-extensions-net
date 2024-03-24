@@ -54,7 +54,13 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TextReader reader, string[] result) => reader.Lines().Should().NotBeNull().And.NotBeSameAs(reader.Lines()).And.Equal(result);
+    static void Validate(string[] result, TextReader reader)
+    {
+      using (reader)
+      {
+        reader.Lines().Should().NotBeNull().And.NotBeSameAs(reader.Lines()).And.Equal(result);
+      }
+    }
   }
 
   /// <summary>
@@ -69,7 +75,13 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TextReader reader, string[] result) => reader.LinesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(reader.LinesAsync().ToArray()).And.Equal(result);
+    static void Validate(string[] result, TextReader reader)
+    {
+      using (reader)
+      {
+        reader.LinesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(reader.LinesAsync().ToArray()).And.Equal(result);
+      }
+    }
   }
 
   /// <summary>
@@ -87,6 +99,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader, int count)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -124,7 +140,13 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TextReader reader, byte[] result, Encoding encoding = null) => reader.ToBytes(encoding).Should().NotBeNull().And.NotBeSameAs(reader.ToBytes(encoding)).And.Equal(result);
+    static void Validate(byte[] result, TextReader reader, Encoding encoding = null)
+    {
+      using (reader)
+      {
+        reader.ToBytes(encoding).Should().NotBeNull().And.NotBeSameAs(reader.ToBytes(encoding)).And.Equal(result);
+      }
+    }
   }
 
   /// <summary>
@@ -139,7 +161,13 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TextReader reader, byte[] result, Encoding encoding) => reader.ToBytesAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(reader.ToBytesAsync(encoding).Await()).And.Equal(result);
+    static void Validate(byte[] result, TextReader reader, Encoding encoding = null)
+    {
+      using (reader)
+      {
+        reader.ToBytesAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(reader.ToBytesAsync(encoding).Await()).And.Equal(result);
+      }
+    }
   }
 
   /// <summary>
@@ -154,7 +182,13 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(TextReader reader, string result) => reader.ToText().Should().NotBeNull().And.NotBeSameAs(reader.ToText()).And.Be(result);
+    static void Validate(string result, TextReader reader)
+    {
+      using (reader)
+      {
+        reader.ToText().Should().NotBeNull().And.NotBeSameAs(reader.ToText()).And.Be(result);
+      }
+    }
   }
 
   /// <summary>
@@ -165,16 +199,16 @@ public sealed class TextReaderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
-    Validate(Attributes.EmptyTextReader(), string.Empty);
-    Attributes.RandomString().With(text => Validate(text.ToStringReader(), text));
+    Validate(string.Empty, Attributes.EmptyTextReader());
+    Attributes.RandomString().With(text => Validate(text, text.ToStringReader()));
 
     return;
 
-    static void Validate(TextReader reader, string text)
+    static void Validate(string result, TextReader reader)
     {
       using (reader)
       {
-        reader.ToTextAsync().Await().Should().Be(text);
+        reader.ToTextAsync().Await().Should().Be(result);
         reader.Read().Should().Be(-1);
       }
     }
@@ -207,6 +241,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -237,6 +275,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -276,6 +318,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -293,6 +339,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -324,6 +374,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -341,6 +395,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -373,6 +431,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -390,6 +452,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 
@@ -421,6 +487,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
     static void Validate(TextReader reader)
     {
+      using (reader)
+      {
+
+      }
     }
   }
 }

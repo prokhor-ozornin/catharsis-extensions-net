@@ -32,7 +32,7 @@ public sealed class BasicTypesExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(char character)
+    static void Validate(char character, int count)
     {
     }
   }

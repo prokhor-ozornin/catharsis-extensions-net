@@ -40,8 +40,12 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(SecureString secure)
     {
+      using (secure)
+      {
+
+      }
     }
   }
 
@@ -73,8 +77,12 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(SecureString secure)
     {
+      using (secure)
+      {
+
+      }
     }
   }
 
@@ -137,21 +145,19 @@ public sealed class SecureStringExtensionsTest : UnitTest
       AssertionExtensions.Should(() => SecureStringExtensions.Min(null, new SecureString())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
       AssertionExtensions.Should(() => new SecureString().Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-      Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString());
-      Validate(Attributes.EmptySecureString(), Attributes.RandomSecureString());
+      Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString(), Attributes.EmptySecureString());
+      Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString(), Attributes.RandomSecureString());
     }
 
     return;
 
-    static void Validate(SecureString min, SecureString max)
+    static void Validate(SecureString result, SecureString left, SecureString right)
     {
-      using (min)
+      using (left)
       {
-        using (max)
+        using (right)
         {
-          min.Min(min).Should().NotBeNull().And.BeSameAs(min);
-          max.Min(max).Should().NotBeNull().And.BeSameAs(max);
-          min.Min(max).Should().NotBeNull().And.BeSameAs(min);
+          left.Min(right).Should().BeSameAs(result);
         }
       }
     }
@@ -168,21 +174,19 @@ public sealed class SecureStringExtensionsTest : UnitTest
       AssertionExtensions.Should(() => SecureStringExtensions.Max(null, new SecureString())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
       AssertionExtensions.Should(() => new SecureString().Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-      Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString());
-      Validate(Attributes.EmptySecureString(), Attributes.RandomSecureString());
+      Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString(), Attributes.EmptySecureString());
+      Validate(Attributes.RandomSecureString(), Attributes.EmptySecureString(), Attributes.RandomSecureString());
     }
 
     return;
 
-    static void Validate(SecureString min, SecureString max)
+    static void Validate(SecureString result, SecureString left, SecureString right)
     {
-      using (min)
+      using (left)
       {
-        using (max)
+        using (right)
         {
-          min.Max(min).Should().NotBeNull().And.BeSameAs(min);
-          max.Max(max).Should().NotBeNull().And.BeSameAs(max);
-          max.Max(min).Should().NotBeNull().And.BeSameAs(max);
+          left.Max(right).Should().BeSameAs(result);
         }
       }
     }
@@ -220,13 +224,17 @@ public sealed class SecureStringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => SecureStringExtensions.AsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(SecureString secure)
     {
-    }
+      using (secure)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -279,11 +287,16 @@ public sealed class SecureStringExtensionsTest : UnitTest
       secure.ToText().Should().NotBeNull().And.NotBeSameAs(secure.ToText()).And.Be(text);
     }
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate(SecureString secure)
     {
+      using (secure)
+      {
 
+      }
     }
   }
 
@@ -313,8 +326,12 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(SecureString secure, char[] chars)
     {
+      using (secure)
+      {
+
+      }
     }
   }
 }

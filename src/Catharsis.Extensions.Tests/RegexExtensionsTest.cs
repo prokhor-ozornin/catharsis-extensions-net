@@ -43,12 +43,12 @@ public sealed class RegexExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RegexExtensions.ToEnumerable(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
     AssertionExtensions.Should(() => new Regex(".*").ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(IEnumerable<Match> result, Regex regex, string text)
     {
     }
-
-    throw new NotImplementedException();
   }
 }

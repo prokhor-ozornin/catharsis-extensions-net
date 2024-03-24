@@ -30,7 +30,7 @@ public sealed class RangeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(Range range)
     {
     }
   }

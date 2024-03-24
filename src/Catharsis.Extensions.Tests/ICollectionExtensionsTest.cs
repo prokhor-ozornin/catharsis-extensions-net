@@ -46,7 +46,7 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
     {
     }
   }
@@ -89,7 +89,7 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
     {
     }
   }

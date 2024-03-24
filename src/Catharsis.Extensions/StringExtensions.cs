@@ -1233,15 +1233,15 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, TextWriter destination)
+  public static string WriteTo(this string text, TextWriter to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteText(text);
+    to.WriteText(text);
 
     return text;
   }
@@ -1250,18 +1250,18 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, TextWriter destination, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, TextWriter to, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await destination.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+    await to.WriteTextAsync(text, cancellation).ConfigureAwait(false);
 
     return text;
   }
@@ -1270,15 +1270,15 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, BinaryWriter destination)
+  public static string WriteTo(this string text, BinaryWriter to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteText(text);
+    to.WriteText(text);
 
     return text;
   }
@@ -1287,15 +1287,15 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, XmlWriter destination)
+  public static string WriteTo(this string text, XmlWriter to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteText(text);
+    to.WriteText(text);
 
     return text;
   }
@@ -1304,15 +1304,15 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, XmlWriter destination)
+  public static async Task<string> WriteToAsync(this string text, XmlWriter to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    await destination.WriteTextAsync(text).ConfigureAwait(false);
+    await to.WriteTextAsync(text).ConfigureAwait(false);
 
     return text;
   }
@@ -1321,16 +1321,16 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, FileInfo destination, Encoding encoding = null)
+  public static string WriteTo(this string text, FileInfo to, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteText(text, encoding);
+    to.WriteText(text, encoding);
 
     return text;
   }
@@ -1339,19 +1339,19 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, FileInfo to, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+    await to.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
 
     return text;
   }
@@ -1360,15 +1360,15 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="process"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, Process process)
+  public static string WriteTo(this string text, Process to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (process is null) throw new ArgumentNullException(nameof(process));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    process.WriteText(text);
+    to.WriteText(text);
 
     return text;
   }
@@ -1377,16 +1377,16 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="process"></param>
+  /// <param name="to"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, Process process, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, Process to, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (process is null) throw new ArgumentNullException(nameof(process));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    await process.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+    await to.WriteTextAsync(text, cancellation).ConfigureAwait(false);
 
     return text;
   }
@@ -1395,18 +1395,18 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  public static string WriteTo(this string text, Uri to, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteBytes(text.ToBytes(encoding), timeout, headers);
+    to.WriteBytes(text.ToBytes(encoding), timeout, headers);
 
     return text;
   }
@@ -1415,21 +1415,21 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<string> WriteToAsync(this string text, Uri to, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await destination.WriteBytesAsync(text.ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
+    await to.WriteBytesAsync(text.ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
 
     return text;
   }
@@ -1438,37 +1438,37 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="http"></param>
+  /// <param name="client"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static HttpContent WriteTo(this string text, HttpClient http, Uri uri) => http.WriteText(text, uri);
+  public static HttpContent WriteTo(this string text, HttpClient client, Uri uri) => client.WriteText(text, uri);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="http"></param>
+  /// <param name="client"></param>
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<HttpContent> WriteToAsync(this string text, HttpClient http, Uri uri, CancellationToken cancellation = default) => await http.WriteTextAsync(text, uri, cancellation).ConfigureAwait(false);
+  public static async Task<HttpContent> WriteToAsync(this string text, HttpClient client, Uri uri, CancellationToken cancellation = default) => await client.WriteTextAsync(text, uri, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="tcp"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, TcpClient tcp, Encoding encoding = null)
+  public static string WriteTo(this string text, TcpClient to, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    tcp.WriteText(text, encoding);
+    to.WriteText(text, encoding);
 
     return text;
   }
@@ -1477,19 +1477,19 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="tcp"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, TcpClient tcp, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, TcpClient to, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await tcp.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+    await to.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
 
     return text;
   }
@@ -1498,16 +1498,16 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="udp"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string WriteTo(this string text, UdpClient udp, Encoding encoding = null)
+  public static string WriteTo(this string text, UdpClient to, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (udp is null) throw new ArgumentNullException(nameof(udp));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    udp.WriteText(text, encoding);
+    to.WriteText(text, encoding);
 
     return text;
   }
@@ -1516,19 +1516,19 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="udp"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<string> WriteToAsync(this string text, UdpClient udp, Encoding encoding = null, CancellationToken cancellation = default)
+  public static async Task<string> WriteToAsync(this string text, UdpClient to, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (udp is null) throw new ArgumentNullException(nameof(udp));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await udp.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+    await to.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
 
     return text;
   }

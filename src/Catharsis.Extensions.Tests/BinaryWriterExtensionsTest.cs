@@ -1,7 +1,6 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
-using Microsoft.VisualBasic;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -23,8 +22,19 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(BinaryWriter writer)
+    static void Validate(BinaryWriter original)
     {
+      using (original)
+      {
+        var clone = original.Clone();
+
+        using (clone)
+        {
+          clone.Should().NotBeSameAs(original).And.NotBe(original);
+          clone.BaseStream.Should().BeSameAs(original.BaseStream);
+          clone.BaseStream.Position.Should().Be(original.BaseStream.Position);
+        }
+      }
     }
   }
 
@@ -101,19 +111,19 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().IsEmpty()).ThrowExactly<ArgumentException>();
 
-      Validate(Stream.Null.ToBinaryWriter(), true);
-      Validate(Attributes.EmptyStream().ToBinaryWriter(), true);
-      Validate(Attributes.RandomStream().ToBinaryWriter(), false);
-      Validate(Attributes.WriteOnlyStream().ToBinaryWriter(), true);
+      Validate(true, Stream.Null.ToBinaryWriter());
+      Validate(true, Attributes.EmptyStream().ToBinaryWriter());
+      Validate(false, Attributes.RandomStream().ToBinaryWriter());
+      Validate(true, Attributes.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
 
-    static void Validate(BinaryWriter writer, bool isEmpty)
+    static void Validate(bool result, BinaryWriter writer)
     {
       using (writer)
       {
-        writer.IsEmpty().Should().Be(isEmpty);
+        writer.IsEmpty().Should().Be(result);
       }
     }
   }

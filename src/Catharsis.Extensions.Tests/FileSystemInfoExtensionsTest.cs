@@ -44,7 +44,7 @@ public sealed class FileSystemInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileSystemInfo fileSystem)
+    static void Validate(FileSystemInfo info)
     {
     }
   }

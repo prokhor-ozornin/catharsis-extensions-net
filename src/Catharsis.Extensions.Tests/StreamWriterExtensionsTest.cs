@@ -24,6 +24,10 @@ public sealed class StreamWriterExtensionsTest : UnitTest
 
     static void Validate(StreamWriter writer)
     {
+      using (writer)
+      {
+
+      }
     }
   }
 
@@ -98,7 +102,7 @@ public sealed class StreamWriterExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(StreamWriter writer, byte[] bytes)
+    static void Validate(StreamWriter writer, IEnumerable<byte> bytes)
     {
       using (writer)
       {

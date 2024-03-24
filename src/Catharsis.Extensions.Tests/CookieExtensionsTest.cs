@@ -55,14 +55,14 @@ public sealed class CookieExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((Cookie) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
 
-    Validate(new Cookie(), true);
-    Validate(new Cookie("name", null), true);
-    Validate(new Cookie("name", string.Empty), true);
-    Validate(new Cookie("name", " \t\r\n "), true);
-    Validate(new Cookie("name", "value"), false);
+    Validate(true, new Cookie());
+    Validate(true, new Cookie("name", null));
+    Validate(true, new Cookie("name", string.Empty));
+    Validate(true, new Cookie("name", " \t\r\n "));
+    Validate(false, new Cookie("name", "value"));
 
     return;
 
-    static void Validate(Cookie cookie, bool isEmpty) => cookie.IsEmpty().Should().Be(isEmpty);
+    static void Validate(bool result, Cookie cookie) => cookie.IsEmpty().Should().Be(result);
   }
 }

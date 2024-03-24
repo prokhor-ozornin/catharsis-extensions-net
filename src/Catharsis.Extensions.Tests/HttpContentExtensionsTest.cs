@@ -21,8 +21,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpContent content)
     {
+      using (content)
+      {
+
+      }
     }
   }
 
@@ -39,8 +43,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(HttpContent content)
     {
+      using (content)
+      {
+
+      }
     }
   }
 
@@ -61,8 +69,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(byte[] result, HttpContent content)
     {
+      using (content)
+      {
+
+      }
     }
   }
 
@@ -84,8 +96,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(byte[] result, HttpContent content)
     {
+      using (content)
+      {
+
+      }
     }
   }
 
@@ -106,8 +122,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(string result, HttpContent content)
     {
+      using (content)
+      {
+
+      }
     }
   }
 
@@ -131,8 +151,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(string result, HttpContent content)
     {
+      using (content)
+      {
+
+      }
     }
   }
 }

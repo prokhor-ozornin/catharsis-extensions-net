@@ -39,10 +39,15 @@ public sealed class SocketExtensionsTest : UnitTest
     socket.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
     socket.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(Socket socket, TimeSpan? timeout = null)
     {
+      using (socket)
+      {
+      }
     }
   }
 
@@ -60,11 +65,15 @@ public sealed class SocketExtensionsTest : UnitTest
     //  socket.Connect(new DnsEndPoint())
     //}
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(Socket socket)
     {
+      using (socket)
+      {
+      }
     }
-    throw new NotImplementedException();
   }
 }

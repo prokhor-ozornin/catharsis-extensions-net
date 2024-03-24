@@ -37,7 +37,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateOnly min, DateOnly max) => min.Min(max).Should().Be(min);
+    static void Validate(DateOnly result, DateOnly left, DateOnly right) => left.Min(right).Should().Be(result);
   }
 
   /// <summary>
@@ -66,7 +66,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateOnly min, DateOnly max) => min.Max(max).Should().Be(max);
+    static void Validate(DateOnly result, DateOnly left, DateOnly right) => left.Max(right).Should().Be(result);
   }
 
   /// <summary>
@@ -121,7 +121,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isWeekday, DateOnly date) => date.IsWeekday().Should().Be(isWeekday);
+    static void Validate(bool result, DateOnly date) => date.IsWeekday().Should().Be(result);
   }
 
   /// <summary>
@@ -142,7 +142,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isWeekend, DateOnly date) => date.IsWeekend().Should().Be(isWeekend);
+    static void Validate(bool result, DateOnly date) => date.IsWeekend().Should().Be(result);
   }
 
   /// <summary>

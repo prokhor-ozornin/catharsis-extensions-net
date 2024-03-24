@@ -1,9 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Frozen;
+using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -29,11 +32,11 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     new object[] { null }.IsEmpty().Should().BeFalse();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence) => sequence.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -49,9 +52,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence, IEnumerable<T> superset, IEqualityComparer<T> comparer = null) => sequence.IsSubset(superset, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -67,9 +68,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence, IEnumerable<T> subset, IEqualityComparer<T> comparer = null) => sequence.IsSuperset(subset, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -85,9 +84,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence, IEnumerable<T> reversed, IEqualityComparer<T> comparer = null) => sequence.IsReversed(reversed, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -117,7 +114,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IEnumerable<T> sequence)
     {
     }
   }
@@ -149,9 +146,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> left, IEnumerable<T> right) => left.Min(right).Should().BeSameAs(result);
   }
 
   /// <summary>
@@ -181,9 +176,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> left, IEnumerable<T> right) => left.Max(right).Should().BeSameAs(result);
   }
 
   /// <summary>
@@ -204,9 +197,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => sequence.Contains(other, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -221,9 +212,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence.ContainsUnique(comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -238,9 +227,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence) => sequence.ContainsNull().Should().Be(result);
   }
 
   /// <summary>
@@ -255,9 +242,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence) => sequence.ContainsDefault().Should().Be(result);
   }
 
   /// <summary>
@@ -292,9 +277,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => sequence.StartsWith(other, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -310,9 +293,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => sequence.EndsWith(other, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -332,9 +313,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(string result, IEnumerable<T> sequence, string separator = null) => sequence.Join(separator).Should().Be(result);
   }
 
   /// <summary>
@@ -358,9 +337,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> sequence, int count) => sequence.Repeat(count).Should().NotBeNull().And.Equal(result);
   }
 
   /// <summary>
@@ -383,7 +360,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IEnumerable<T> sequence)
     {
     }
   }
@@ -408,7 +385,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IEnumerable<T> sequence)
     {
     }
   }
@@ -1242,8 +1219,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(IEnumerable<char> text, SecureString destination)
     {
+      using (destination)
+      {
+
+      }
     }
   }
 
@@ -1260,8 +1241,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -1279,8 +1264,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -1297,8 +1286,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -1316,8 +1309,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -1342,8 +1339,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(byte[] bytes, HashAlgorithm algorithm)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -1355,20 +1356,15 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-    using var algorithm = MD5.Create();
-    algorithm.Should().NotBeNull();
-
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
-
-    foreach (var sequence in sequences)
-    {
-      sequence.HashMd5().Should().NotBeNull().And.NotBeSameAs(sequence.HashMd5()).And.HaveCount(16).And.Equal(algorithm.ComputeHash(sequence));
-    }
+    Validate(Enumerable.Empty<byte>().ToArray());
+    Validate(Attributes.RandomBytes());
 
     return;
 
-    static void Validate()
+    static void Validate(byte[] bytes)
     {
+      using var algorithm = MD5.Create();
+      bytes.HashMd5().Should().NotBeNull().And.NotBeSameAs(bytes.HashMd5()).And.HaveCount(16).And.Equal(algorithm.ComputeHash(bytes));
     }
   }
 
@@ -1380,20 +1376,15 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-    using var algorithm = SHA1.Create();
-    algorithm.Should().NotBeNull();
-
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
-
-    foreach (var sequence in sequences)
-    {
-      sequence.HashSha1().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha1()).And.HaveCount(20).And.Equal(algorithm.ComputeHash(sequence));
-    }
+    Validate(Enumerable.Empty<byte>().ToArray());
+    Validate(Attributes.RandomBytes());
 
     return;
 
-    static void Validate()
+    static void Validate(byte[] bytes)
     {
+      using var algorithm = SHA1.Create();
+      bytes.HashSha1().Should().NotBeNull().And.NotBeSameAs(bytes.HashSha1()).And.HaveCount(20).And.Equal(algorithm.ComputeHash(bytes));
     }
   }
 
@@ -1405,20 +1396,15 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-    using var algorithm = SHA256.Create();
-    algorithm.Should().NotBeNull();
-
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
-
-    foreach (var sequence in sequences)
-    {
-      sequence.HashSha256().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha256()).And.HaveCount(32).And.Equal(algorithm.ComputeHash(sequence));
-    }
+    Validate(Enumerable.Empty<byte>().ToArray());
+    Validate(Attributes.RandomBytes());
 
     return;
 
-    static void Validate()
+    static void Validate(byte[] bytes)
     {
+      using var algorithm = SHA256.Create();
+      bytes.HashSha256().Should().NotBeNull().And.NotBeSameAs(bytes.HashSha256()).And.HaveCount(32).And.Equal(algorithm.ComputeHash(bytes));
     }
   }
 
@@ -1430,20 +1416,15 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-    using var algorithm = SHA384.Create();
-    algorithm.Should().NotBeNull();
-
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
-
-    foreach (var sequence in sequences)
-    {
-      sequence.HashSha384().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha384()).And.HaveCount(48).And.Equal(algorithm.ComputeHash(sequence));
-    }
+    Validate(Enumerable.Empty<byte>().ToArray());
+    Validate(Attributes.RandomBytes());
 
     return;
 
-    static void Validate()
+    static void Validate(byte[] bytes)
     {
+      using var algorithm = SHA384.Create();
+      bytes.HashSha384().Should().NotBeNull().And.NotBeSameAs(bytes.HashSha384()).And.HaveCount(48).And.Equal(algorithm.ComputeHash(bytes));
     }
   }
 
@@ -1455,20 +1436,15 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-    using var algorithm = SHA512.Create();
-    algorithm.Should().NotBeNull();
-
-    IEnumerable<byte[]> sequences = [Enumerable.Empty<byte>().ToArray(), Attributes.RandomBytes()];
-
-    foreach (var sequence in sequences)
-    {
-      sequence.HashSha512().Should().NotBeNull().And.NotBeSameAs(sequence.HashSha512()).And.HaveCount(64).And.Equal(algorithm.ComputeHash(sequence));
-    }
+    Validate(Enumerable.Empty<byte>().ToArray());
+    Validate(Attributes.RandomBytes());
 
     return;
 
-    static void Validate()
+    static void Validate(byte[] bytes)
     {
+      using var algorithm = SHA512.Create();
+      bytes.HashSha512().Should().NotBeNull().And.NotBeSameAs(bytes.HashSha512()).And.HaveCount(64).And.Equal(algorithm.ComputeHash(bytes));
     }
   }
 
@@ -1484,9 +1460,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(bool result, IEnumerable<T> sequence, IComparer<T> comparer = null) => sequence.IsOrdered(comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -1501,9 +1475,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence.ToReadOnlySet(comparer).Should().BeOfType<HashSet<T>>().And.NotBeNull().And.Equal(result);
   }
 
   /// <summary>
@@ -1518,9 +1490,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> sequence, IEqualityComparer<T> comparer = null) => sequence.ToFrozenSet(comparer).Should().BeOfType<FrozenSet<T>>().And.NotBeNull().And.Equal(result);
   }
 
   /// <summary>
@@ -1535,8 +1505,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<TElement, TPriority>(IEnumerable<(TElement Element, TPriority Priority)> sequence, IComparer<TPriority> comparer = null)
     {
+      var array = sequence.ToArray();
+      var queue = array.ToPriorityQueue(comparer);
+      queue.Should().BeOfType<PriorityQueue<TElement, TPriority>>().And.NotBeNull();
+      queue.UnorderedItems.Order().Should().Equal(array);
     }
   }
 
@@ -1552,8 +1526,6 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> sequence) => sequence.ToImmutableQueue().Should().BeOfType<ImmutableQueue<T>>().And.NotBeNull().And.Equal(result);
   }
 }

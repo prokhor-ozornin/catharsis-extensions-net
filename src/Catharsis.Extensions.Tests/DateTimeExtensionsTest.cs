@@ -95,9 +95,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime min, DateTime max)
-    {
-    }
+    static void Validate(DateTime result, DateTime left, DateTime right) => left.Min(right).Should().Be(result);
   }
 
   /// <summary>
@@ -126,9 +124,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(DateTime result, DateTime left, DateTime right) => left.Max(right).Should().Be(result);
   }
 
   /// <summary>
@@ -178,7 +174,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isPast, DateTime date) => date.IsPast().Should().Be(isPast);
+    static void Validate(bool result, DateTime date) => date.IsPast().Should().Be(result);
   }
 
   /// <summary>
@@ -196,7 +192,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isFuture, DateTime date) => date.IsFuture().Should().Be(isFuture);
+    static void Validate(bool result, DateTime date) => date.IsFuture().Should().Be(result);
   }
 
   /// <summary>
@@ -219,7 +215,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isWeekday, DateTime date) => date.IsWeekday().Should().Be(isWeekday);
+    static void Validate(bool result, DateTime date) => date.IsWeekday().Should().Be(result);
   }
 
   /// <summary>
@@ -242,7 +238,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isWeekend, DateTime date) => date.IsWeekend().Should().Be(isWeekend);
+    static void Validate(bool result, DateTime date) => date.IsWeekend().Should().Be(result);
   }
 
   /// <summary>
@@ -450,9 +446,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(DateTimeOffset result, DateTime date) => date.ToDateTimeOffset().Should().Be(result);
   }
 
   /// <summary>
@@ -471,9 +465,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(string result, DateTime date) => date.ToIsoString().Should().Be(result);
   }
 
   /// <summary>
@@ -492,9 +484,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(string result, DateTime date) => date.ToRfcString().Should().Be(result);
   }
 
   /// <summary>
@@ -510,9 +500,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(DateOnly result, DateTime date) => date.ToDateOnly().Should().Be(result);
   }
 
   /// <summary>
@@ -528,8 +516,6 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(TimeOnly result, DateTime date) => date.ToTimeOnly().Should().Be(result);
   }
 }

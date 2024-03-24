@@ -52,7 +52,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isEmpty, StringBuilder builder) => builder.IsEmpty().Should().Be(isEmpty);
+    static void Validate(bool result, StringBuilder builder) => builder.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -106,9 +106,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(StringBuilder min, StringBuilder max)
-    {
-    }
+    static void Validate(StringBuilder result, StringBuilder left, StringBuilder right) => left.Min(right).Should().BeSameAs(result);
   }
 
   /// <summary>
@@ -138,9 +136,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(StringBuilder min, StringBuilder max)
-    {
-    }
+    static void Validate(StringBuilder result, StringBuilder left, StringBuilder right) => left.Max(right).Should().BeSameAs(result);
   }
 
   /// <summary>
@@ -224,7 +220,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(StringBuilder builder)
+    static void Validate(string text)
     {
     }
   }

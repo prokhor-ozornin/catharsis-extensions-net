@@ -25,14 +25,14 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    Validate(null, true);
-    Validate(string.Empty, true);
-    Validate(" \t\r\n ", true);
-    Validate(" * ", false);
+    Validate(true, null);
+    Validate(true, string.Empty);
+    Validate(true, " \t\r\n ");
+    Validate(false, " * ");
 
     return;
 
-    static void Validate(string text, bool result) => text.IsEmpty().Should().Be(result);
+    static void Validate(bool result, string text) => text.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -47,7 +47,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string text, bool result) => text.IsUpperCased().Should().Be(result);
+    static void Validate(bool result, string text) => text.IsUpperCased().Should().Be(result);
   }
 
   /// <summary>
@@ -62,7 +62,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string text, bool result) => text.IsLowerCased().Should().Be(result);
+    static void Validate(bool result, string text) => text.IsLowerCased().Should().Be(result);
   }
 
   /// <summary>
@@ -71,19 +71,19 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void IsBoolean_Method()
   {
-    Validate(null, false);
-    Validate(string.Empty, false);
-    Validate(bool.FalseString, true);
-    Validate(bool.TrueString, true);
-    Validate("invalid", false);
-    Validate("TRUE", true);
-    Validate("TruE", true);
-    Validate("true", true);
-    Validate(" true ", true);
+    Validate(false, null);
+    Validate(false, string.Empty);
+    Validate(true, bool.FalseString);
+    Validate(true, bool.TrueString);
+    Validate(false, "invalid");
+    Validate(true, "TRUE");
+    Validate(true, "TruE");
+    Validate(true, "true");
+    Validate(true, " true ");
 
     return;
 
-    static void Validate(string text, bool result) => text.IsBoolean().Should().Be(result);
+    static void Validate(bool result, string text) => text.IsBoolean().Should().Be(result);
   }
 
   /// <summary>
@@ -96,17 +96,17 @@ public sealed class StringExtensionsTest : UnitTest
 
     CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
     {
-      Validate(null, false, culture);
-      Validate(string.Empty, false, culture);
-      Validate("invalid", false, culture);
-      Validate(sbyte.MinValue.ToString(culture), true, culture);
-      Validate(sbyte.MaxValue.ToString(culture), true, culture);
-      Validate($" {sbyte.MinValue.ToString(culture)} ", true, culture);
+      Validate(false, null, culture);
+      Validate(false, string.Empty, culture);
+      Validate(false, "invalid", culture);
+      Validate(true, sbyte.MinValue.ToString(culture), culture);
+      Validate(true, sbyte.MaxValue.ToString(culture), culture);
+      Validate(true, $" {sbyte.MinValue.ToString(culture)} ", culture);
     });
 
     return;
 
-    static void Validate(string text, bool result, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
   }
 
   /// <summary>
@@ -117,17 +117,17 @@ public sealed class StringExtensionsTest : UnitTest
   {
     CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
     {
-      Validate(null, false, culture);
-      Validate(string.Empty, false, culture);
-      Validate("invalid", false, culture);
-      Validate(byte.MinValue.ToString(culture), true, culture);
-      Validate(byte.MaxValue.ToString(culture), true, culture);
-      Validate($" {byte.MinValue.ToString(culture)} ", true, culture);
+      Validate(false, null, culture);
+      Validate(false, string.Empty, culture);
+      Validate(false, "invalid", culture);
+      Validate(true, byte.MinValue.ToString(culture), culture);
+      Validate(true, byte.MaxValue.ToString(culture), culture);
+      Validate(true, $" {byte.MinValue.ToString(culture)} ", culture);
     });
 
     return;
 
-    static void Validate(string text, bool result, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
   }
 
   /// <summary>
@@ -138,17 +138,17 @@ public sealed class StringExtensionsTest : UnitTest
   {
     CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
     {
-      Validate(null, false, culture);
-      Validate(string.Empty, false, culture);
-      Validate("invalid", false, culture);
-      Validate(short.MinValue.ToString(culture), true, culture);
-      Validate(short.MaxValue.ToString(culture), true, culture);
-      Validate($" {short.MinValue.ToString(culture)} ", true, culture);
+      Validate(false, null, culture);
+      Validate(false, string.Empty, culture);
+      Validate(false, "invalid", culture);
+      Validate(true, short.MinValue.ToString(culture), culture);
+      Validate(true, short.MaxValue.ToString(culture), culture);
+      Validate(true, $" {short.MinValue.ToString(culture)} ", culture);
     });
 
     return;
 
-    static void Validate(string text, bool result, IFormatProvider format = null) => text.IsShort(format).Should().Be(result);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsShort(format).Should().Be(result);
   }
 
   /// <summary>
@@ -159,17 +159,17 @@ public sealed class StringExtensionsTest : UnitTest
   {
     CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
     {
-      Validate(null, false, culture);
-      Validate(string.Empty, false, culture);
-      Validate("invalid", false, culture);
-      Validate(ushort.MinValue.ToString(culture), true, culture);
-      Validate(ushort.MaxValue.ToString(culture), true, culture);
-      Validate($" {ushort.MinValue.ToString(culture)} ", true, culture);
+      Validate(false, null, culture);
+      Validate(false, string.Empty, culture);
+      Validate(false, "invalid", culture);
+      Validate(true, ushort.MinValue.ToString(culture), culture);
+      Validate(true, ushort.MaxValue.ToString(culture), culture);
+      Validate(true, $" {ushort.MinValue.ToString(culture)} ", culture);
     });
 
     return;
 
-    static void Validate(string text, bool result, IFormatProvider format = null) => text.IsUshort(format).Should().Be(result);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsUshort(format).Should().Be(result);
   }
 
   /// <summary>
@@ -190,7 +190,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isInt, string text, IFormatProvider format = null) => text.IsInt(format).Should().Be(isInt);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsInt(format).Should().Be(result);
   }
 
   /// <summary>
@@ -211,7 +211,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isUint, string text, IFormatProvider format = null) => text.IsUint(format).Should().Be(isUint);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsUint(format).Should().Be(result);
   }
 
   /// <summary>
@@ -232,7 +232,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isLong, string text, IFormatProvider format = null) => text.IsLong(format).Should().Be(isLong);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsLong(format).Should().Be(result);
   }
 
   /// <summary>
@@ -253,7 +253,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isUlong, string text, IFormatProvider format = null) => text.IsUlong(format).Should().Be(isUlong);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsUlong(format).Should().Be(result);
   }
 
   /// <summary>
@@ -278,7 +278,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isFloat, string text, IFormatProvider format = null) => text.IsFloat(format).Should().Be(isFloat);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsFloat(format).Should().Be(result);
   }
 
   /// <summary>
@@ -303,7 +303,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isDouble, string text, IFormatProvider format = null) => text.IsDouble().Should().Be(isDouble);
+    static void Validate(bool resukt, string text, IFormatProvider format = null) => text.IsDouble(format).Should().Be(resukt);
   }
 
   /// <summary>
@@ -327,7 +327,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isDecimal, string text, IFormatProvider format = null) => text.IsDecimal(format).Should().Be(isDecimal);
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsDecimal(format).Should().Be(result);
   }
 
   /// <summary>
@@ -536,7 +536,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string min, string max) => min.Min(max).Should().Be(min);
+    static void Validate(string result, string left, string right) => left.Min(right).Should().Be(result);
   }
 
   /// <summary>
@@ -566,7 +566,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string min, string max) => min.Max(max).Should().Be(max);
+    static void Validate(string result, string left, string right) => left.Max(right).Should().Be(result);
   }
 
   /// <summary>
@@ -2287,39 +2287,42 @@ public sealed class StringExtensionsTest : UnitTest
       AssertionExtensions.Should(string.Empty.ToGuid).ThrowExactly<FormatException>();
       AssertionExtensions.Should("invalid".ToGuid).ThrowExactly<FormatException>();
 
-      foreach (var guid in new[] { Guid.Empty, Guid.NewGuid() })
+      new[] { Guid.Empty, Guid.NewGuid() }.ForEach(guid =>
       {
-        guid.ToString().ToGuid().Should().Be(guid);
-        guid.ToString().ToLowerInvariant().ToGuid().Should().Be(guid);
-        guid.ToString().ToUpperInvariant().ToGuid().Should().Be(guid);
-        guid.ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty).ToGuid().Should().Be(guid);
-      }
+        Validate(guid.ToString());
+        Validate(guid.ToString().ToLowerInvariant());
+        Validate(guid.ToString().ToUpperInvariant());
+        Validate(guid.ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty));
+      });
+
+      static void Validate(string text) => text.ToGuid().Should().Be(Guid.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      string.Empty.ToGuid(out var result).Should().BeFalse();
-      result.Should().BeNull();
+      Validate(false, string.Empty);
+      Validate(false, "invalid");
 
-      string.Empty.ToGuid(out result).Should().BeFalse();
-      result.Should().BeNull();
-
-      "invalid".ToGuid(out result).Should().BeFalse();
-      result.Should().BeNull();
-
-      foreach (var guid in new[] { Guid.Empty, Guid.NewGuid() })
+      new[] { Guid.Empty, Guid.NewGuid() }.ForEach(guid =>
       {
-        guid.ToString().ToGuid(out result).Should().BeTrue();
-        result.Should().Be(guid);
+        Validate(true, guid.ToString());
+        Validate(true, guid.ToString().ToLowerInvariant());
+        Validate(true, guid.ToString().ToUpperInvariant());
+        Validate(true, guid.ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty));
+      });
 
-        guid.ToString().ToLowerInvariant().ToGuid(out result).Should().BeTrue();
-        result.Should().Be(guid);
+      static void Validate(bool result, string text)
+      {
+        text.ToGuid(out var guid).Should().Be(result);
 
-        guid.ToString().ToUpperInvariant().ToGuid(out result).Should().BeTrue();
-        result.Should().Be(guid);
-
-        guid.ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty).ToGuid(out result).Should().BeTrue();
-        result.Should().Be(guid);
+        if (result)
+        {
+          guid.Should().Be(Guid.Parse(text));
+        }
+        else
+        {
+          guid.Should().BeNull();
+        }
       }
     }
   }
@@ -2375,6 +2378,11 @@ public sealed class StringExtensionsTest : UnitTest
       uri.Scheme.Should().Be(Uri.UriSchemeHttps);
       uri.UserEscaped.Should().BeFalse();
       uri.UserInfo.Should().Be("user:password");
+
+      static void Validate(string text)
+      {
+
+      }
     }
 
     using (new AssertionScope())
@@ -2421,6 +2429,11 @@ public sealed class StringExtensionsTest : UnitTest
       result.Scheme.Should().Be(Uri.UriSchemeHttps);
       result.UserEscaped.Should().BeFalse();
       result.UserInfo.Should().Be("user:password");
+
+      static void Validate(string text)
+      {
+
+      }
     }
   }
 
@@ -2481,6 +2494,13 @@ public sealed class StringExtensionsTest : UnitTest
         typeInfo.AssemblyQualifiedName.ToType(out result).Should().BeTrue();
         result.Should().Be(typeInfo);
       });
+    }
+
+    return;
+
+    static void Validate(string text)
+    {
+
     }
   }
 
@@ -2667,6 +2687,13 @@ public sealed class StringExtensionsTest : UnitTest
         info.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
       });
     }
+
+    return;
+
+    static void Validate(string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2714,6 +2741,13 @@ public sealed class StringExtensionsTest : UnitTest
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
       directory.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
     }
+
+    return;
+
+    static void Validate(string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2725,6 +2759,13 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StringExtensions.ToPath(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2767,6 +2808,13 @@ public sealed class StringExtensionsTest : UnitTest
         result.Should().Be(ip);
       }
     }
+
+    return;
+
+    static void Validate(string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2778,6 +2826,13 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StringExtensions.ToIpHost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2788,19 +2843,21 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.ToRegex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    string.Empty.ToRegex().Should().NotBeSameAs(string.Empty.ToRegex());
+    Validate(string.Empty);
+    Validate("[a-z]*");
 
-    var regex = string.Empty.ToRegex();
-    regex.ToString().Should().BeEmpty();
-    regex.Options.Should().Be(RegexOptions.None);
-    regex.MatchTimeout.Should().Be(Timeout.InfiniteTimeSpan);
-    regex.RightToLeft.Should().BeFalse();
+    return;
 
-    regex = "[a-z]*".ToRegex(RegexOptions.IgnoreCase | RegexOptions.RightToLeft);
-    regex.ToString().Should().Be("[a-z]*");
-    regex.Options.Should().Be(RegexOptions.IgnoreCase | RegexOptions.RightToLeft);
-    regex.MatchTimeout.Should().Be(Timeout.InfiniteTimeSpan);
-    regex.RightToLeft.Should().BeTrue();
+    static void Validate(string text, RegexOptions options = RegexOptions.None)
+    {
+      var regex = text.ToRegex(options);
+
+      regex.Should().BeOfType<Regex>().And.NotBeNull().And.NotBeSameAs(text.ToRegex(options));
+      regex.ToString().Should().Be("[a-z]*");
+      regex.Options.Should().Be(options);
+      regex.MatchTimeout.Should().Be(Timeout.InfiniteTimeSpan);
+      regex.RightToLeft.Should().Be((options & RegexOptions.RightToLeft) == RegexOptions.RightToLeft);
+    }
   }
 
   /// <summary>
@@ -2811,20 +2868,21 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.ToStringBuilder(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    var builder = string.Empty.ToStringBuilder();
-    builder.Should().NotBeNull().And.NotBeSameAs(string.Empty.ToStringBuilder());
-    builder.ToString().Should().BeEmpty();
-    builder.Capacity.Should().Be(16);
-    builder.MaxCapacity.Should().Be(int.MaxValue);
-    builder.Length.Should().Be(0);
+    Validate(string.Empty);
+    Validate(Attributes.RandomString());
 
-    var value = Attributes.RandomString();
-    builder = value.ToStringBuilder();
-    builder.Should().NotBeNull().And.NotBeSameAs(value.ToStringBuilder());
-    builder.ToString().Should().Be(value);
-    builder.Capacity.Should().Be(value.Length);
-    builder.MaxCapacity.Should().Be(int.MaxValue);
-    builder.Length.Should().Be(value.Length);
+    return;
+
+    static void Validate(string text)
+    {
+      var builder = text.ToStringBuilder();
+
+      builder.Should().NotBeNull().And.NotBeSameAs(text.ToStringBuilder());
+      builder.ToString().Should().Be(text);
+      builder.Capacity.Should().BePositive();
+      builder.MaxCapacity.Should().Be(int.MaxValue);
+      builder.Length.Should().Be(text.Length);
+    }
   }
 
   /// <summary>
@@ -2835,15 +2893,17 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.ToStringReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    var reader = string.Empty.ToStringReader();
-    reader.Should().NotBeNull().And.NotBeSameAs(string.Empty.ToStringReader());
-    reader.Peek().Should().Be(-1);
-    reader.ReadToEnd().Should().BeEmpty();
+    Validate(string.Empty);
+    Validate(Attributes.RandomString());
 
-    var value = Attributes.RandomString();
-    reader = value.ToStringReader();
-    reader.Should().NotBeNull().And.NotBeSameAs(value.ToStringReader());
-    reader.ReadToEnd().Should().Be(value);
+    return;
+
+    static void Validate(string text)
+    {
+      using var reader = text.ToStringReader();
+      reader.Should().BeOfType<StringReader>().And.NotBeNull();
+      reader.ReadToEnd().Should().Be(text);
+    }
   }
 
   /// <summary>
@@ -2855,6 +2915,13 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((string) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2866,6 +2933,13 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((string) null).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2886,6 +2960,13 @@ public sealed class StringExtensionsTest : UnitTest
     document.Text().Should().Be("<?xml version=\"1.0\" encoding=\"utf-16\"?><article id=\"1\">Text</article>");*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2897,6 +2978,13 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((string) null).ToXDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2909,6 +2997,13 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text)
+    {
+
+    }
   }
 
   /// <summary>
@@ -2919,15 +3014,18 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.ToProcess(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    foreach (var command in new[] { string.Empty, Attributes.ShellCommand() })
+    Validate(string.Empty);
+    Validate(Attributes.ShellCommand());
+
+    return;
+
+    static void Validate(string text, ProcessStartInfo info = null)
     {
-      var process = command.ToProcess();
+      using var process = text.ToProcess(info);
 
       AssertionExtensions.Should(() => process.Id).ThrowExactly<InvalidOperationException>();
 
-      process.Should().NotBeNull().And.NotBeSameAs(string.Empty.ToProcess());
-
-      process.StartInfo.FileName.Should().Be(command);
+      process.StartInfo.FileName.Should().Be(text);
       process.StartInfo.ArgumentList.Should().BeEmpty();
       process.StartInfo.Arguments.Should().BeEmpty();
       process.StartInfo.CreateNoWindow.Should().BeFalse();
@@ -2962,6 +3060,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, TextWriter to)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -2975,6 +3083,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, TextWriter to)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -2988,19 +3106,19 @@ public sealed class StringExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Validate(Stream.Null.ToBinaryWriter(), string.Empty);
-      Validate(Attributes.EmptyStream().ToBinaryWriter(), Attributes.RandomString());
+      Validate(string.Empty, Stream.Null.ToBinaryWriter());
+      Validate(Attributes.RandomString(), Attributes.EmptyStream().ToBinaryWriter());
     }
 
     return;
 
-    static void Validate(BinaryWriter writer, string text)
+    static void Validate(string text, BinaryWriter to)
     {
-      using (writer)
+      using (to)
       {
-        text.WriteTo(writer).Should().NotBeNull().And.BeSameAs(text);
+        text.WriteTo(to).Should().NotBeNull().And.BeSameAs(text);
 
-        using (var reader = writer.BaseStream.MoveToStart().ToBinaryReader())
+        using (var reader = to.BaseStream.MoveToStart().ToBinaryReader())
         {
           reader.ToText().Should().Be(text);
         }
@@ -3018,6 +3136,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, XmlWriter to)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3030,6 +3158,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, XmlWriter to)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3042,6 +3180,12 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteTo((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, FileInfo to, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -3055,6 +3199,12 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.RandomFakeFile(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, FileInfo to, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -3067,6 +3217,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteTo((Process) null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, Process to)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3080,6 +3240,16 @@ public sealed class StringExtensionsTest : UnitTest
     //AssertionExtensions.Should(() => string.Empty.WriteToAsync(ShellProcess)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, Process to)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3092,6 +3262,12 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteTo((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, Uri to, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -3105,6 +3281,12 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.LocalHost(), null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, Uri to, Encoding encoding = null)
+    {
+    }
   }
 
   /// <summary>
@@ -3118,6 +3300,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Http(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, HttpClient client, Uri uri)
+    {
+      using (client)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3132,6 +3324,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Http(), Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, HttpClient client, Uri uri)
+    {
+      using (client)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3144,6 +3346,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, TcpClient to, Encoding encoding = null)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3157,6 +3369,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Tcp(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, TcpClient to, Encoding encoding = null)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3169,6 +3391,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, UdpClient to, Encoding encoding = null)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3182,6 +3414,16 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Udp(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, UdpClient to, Encoding encoding = null)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -3193,6 +3435,13 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((string) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, params Type[] types)
+    {
+
+    }
   }
 
   /// <summary>
@@ -3207,6 +3456,13 @@ public sealed class StringExtensionsTest : UnitTest
     subject.AsXml().AsXml<Guid>().Should().Be(subject);*/
 
     throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, params Type[] types)
+    {
+
+    }
   }
 
   /// <summary>
@@ -3229,6 +3485,13 @@ public sealed class StringExtensionsTest : UnitTest
     {
       text.Hash(Attributes.HashAlgorithm()).Should().NotBeNull().And.NotBeSameAs(text.Hash(Attributes.HashAlgorithm())).And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
+
+    return;
+
+    static void Validate()
+    {
+
+    }
   }
 
   /// <summary>
@@ -3239,13 +3502,14 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((string) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    using var algorithm = MD5.Create();
-    algorithm.Should().NotBeNull();
+    Validate(string.Empty);
+    Validate(Attributes.RandomString());
 
-    string[] texts = [string.Empty, Attributes.RandomString()];
+    return;
 
-    foreach (var text in texts)
+    static void Validate(string text)
     {
+      using var algorithm = MD5.Create();
       text.HashMd5().Should().NotBeNull().And.NotBeSameAs(text.HashMd5()).And.HaveLength(32).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
@@ -3258,13 +3522,14 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((string) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    using var algorithm = SHA1.Create();
-    algorithm.Should().NotBeNull();
+    Validate(string.Empty);
+    Validate(Attributes.RandomString());
 
-    string[] texts = [string.Empty, Attributes.RandomString()];
+    return;
 
-    foreach (var text in texts)
+    static void Validate(string text)
     {
+      using var algorithm = SHA1.Create();
       text.HashSha1().Should().NotBeNull().And.NotBeSameAs(text.HashSha1()).And.HaveLength(40).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
@@ -3277,13 +3542,14 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((string) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    using var algorithm = SHA256.Create();
-    algorithm.Should().NotBeNull();
+    Validate(string.Empty);
+    Validate(Attributes.RandomString());
 
-    string[] texts = [string.Empty, Attributes.RandomString()];
+    return;
 
-    foreach (var text in texts)
+    static void Validate(string text)
     {
+      using var algorithm = SHA256.Create();
       text.HashSha256().Should().NotBeNull().And.NotBeSameAs(text.HashSha256()).And.HaveLength(64).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
@@ -3296,13 +3562,14 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((string) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    using var algorithm = SHA384.Create();
-    algorithm.Should().NotBeNull();
+    Validate(string.Empty);
+    Validate(Attributes.RandomString());
 
-    string[] texts = [string.Empty, Attributes.RandomString()];
+    return;
 
-    foreach (var text in texts)
+    static void Validate(string text)
     {
+      using var algorithm = SHA384.Create();
       text.HashSha384().Should().NotBeNull().And.NotBeSameAs(text.HashSha384()).And.HaveLength(96).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
@@ -3315,13 +3582,14 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((string) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    using var algorithm = SHA512.Create();
-    algorithm.Should().NotBeNull();
+    Validate(string.Empty);
+    Validate(Attributes.RandomString());
 
-    string[] texts = [string.Empty, Attributes.RandomString()];
+    return;
 
-    foreach (var text in texts)
+    static void Validate(string text)
     {
+      using var algorithm = SHA512.Create();
       text.HashSha512().Should().NotBeNull().And.NotBeSameAs(text.HashSha512()).And.HaveLength(128).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
@@ -3332,29 +3600,20 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void IsDateOnly_Method()
   {
-    using (new AssertionScope())
+    new[] { null, CultureInfo.InvariantCulture }.ForEach(culture =>
     {
-      Validate(null);
-      Validate(CultureInfo.InvariantCulture);
-    }
+      Validate(false, null, culture);
+      Validate(false, string.Empty, culture);
+      Validate(false, "invalid", culture);
+      Validate(true, $" {DateOnly.MinValue.ToString("D", culture)} ", culture);
+      Validate(true, $" {DateOnly.MaxValue.ToString("D", culture)} ", culture);
+      Validate(true, $" {DateOnly.FromDateTime(DateTime.UtcNow).ToString("D", culture)} ", culture);
+      Validate(true, $" {DateOnly.FromDateTime(DateTime.Now).ToString("D", culture)} ", culture);
+    });
 
     return;
 
-    static void Validate(IFormatProvider format)
-    {
-      format ??= CultureInfo.InvariantCulture;
-
-      StringExtensions.IsDateOnly(null, format).Should().BeFalse();
-
-      string.Empty.IsDateOnly(format).Should().BeFalse();
-
-      "invalid".IsDateOnly(format).Should().BeFalse();
-
-      $" {DateOnly.MinValue.ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
-      $" {DateOnly.MaxValue.ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
-      $" {DateOnly.FromDateTime(DateTime.UtcNow).ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
-      $" {DateOnly.FromDateTime(DateTime.Now).ToString("D", format)} ".IsDateOnly(format).Should().BeTrue();
-    }
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsDateOnly(format).Should().Be(result);
   }
 
   /// <summary>
@@ -3363,27 +3622,20 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void IsTimeOnly_Method()
   {
-    using (new AssertionScope())
+    new[] { null, CultureInfo.InvariantCulture }.ForEach(culture =>
     {
-      Validate(null);
-      Validate(CultureInfo.InvariantCulture);
-    }
+      Validate(false, null, culture);
+      Validate(false, string.Empty, culture);
+      Validate(false, "invalid", culture);
+      Validate(true, $" {TimeOnly.MinValue.ToString("T", culture)} ", culture);
+      Validate(true, $" {TimeOnly.MaxValue.ToString("T", culture)} ", culture);
+      Validate(true, $" {TimeOnly.FromDateTime(DateTime.UtcNow).ToString("T", culture)} ", culture);
+      Validate(true, $" {TimeOnly.FromDateTime(DateTime.Now).ToString("T", culture)} ", culture);
+    });
 
     return;
 
-    static void Validate(IFormatProvider format)
-    {
-      StringExtensions.IsTimeOnly(null, format).Should().BeFalse();
-
-      string.Empty.IsTimeOnly(format).Should().BeFalse();
-
-      "invalid".IsTimeOnly(format).Should().BeFalse();
-
-      $" {TimeOnly.MinValue.ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
-      $" {TimeOnly.MaxValue.ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
-      $" {TimeOnly.FromDateTime(DateTime.UtcNow).ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
-      $" {TimeOnly.FromDateTime(DateTime.Now).ToString("T", format)} ".IsTimeOnly(format).Should().BeTrue();
-    }
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsTimeOnly(format).Should().Be(result);
   }
 
   /// <summary>
@@ -3398,6 +3650,10 @@ public sealed class StringExtensionsTest : UnitTest
 
     var bytes = Attributes.RandomBytes();
     bytes.ToHex().Should().NotBeNull().And.NotBeSameAs(bytes.ToHex()).And.Be(System.Convert.ToHexString(bytes));
+
+    return;
+
+    static void Validate(byte[] result, string text) => text.FromHex().Should().NotBeNull().And.Equal(result);
   }
 
   /// <summary>

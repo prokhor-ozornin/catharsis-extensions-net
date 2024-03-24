@@ -22,9 +22,7 @@ public sealed class FieldInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FieldInfo field, Type type)
-    {
-    }
+    static void Validate<T>(bool result, FieldInfo field) => field.IsOfType<T>().Should().Be(result);
   }
 
   /// <summary>
@@ -39,9 +37,7 @@ public sealed class FieldInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FieldInfo field, bool isProtected)
-    {
-    }
+    static void Validate(bool result, FieldInfo field) => field.IsProtected().Should().Be(result);
   }
 
   /// <summary>
@@ -56,9 +52,7 @@ public sealed class FieldInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FieldInfo field, bool isInternal)
-    {
-    }
+    static void Validate(bool result, FieldInfo field) => field.IsInternal().Should().Be(result);
   }
 
   /// <summary>
@@ -73,8 +67,6 @@ public sealed class FieldInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FieldInfo field, bool isProtectedInternal)
-    {
-    }
+    static void Validate(bool result, FieldInfo field) => field.IsProtectedInternal().Should().Be(result);
   }
 }

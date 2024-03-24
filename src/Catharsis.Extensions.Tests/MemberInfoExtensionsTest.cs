@@ -26,9 +26,7 @@ public sealed class MemberInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, MemberInfo member) => member.IsEvent().Should().Be(result);
   }
 
   /// <summary>
@@ -45,9 +43,7 @@ public sealed class MemberInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, MemberInfo member) => member.IsField().Should().Be(result);
   }
 
   /// <summary>
@@ -64,9 +60,7 @@ public sealed class MemberInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, MemberInfo member) => member.IsProperty().Should().Be(result);
   }
 
   /// <summary>
@@ -83,9 +77,7 @@ public sealed class MemberInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, MemberInfo member) => member.IsMethod().Should().Be(result);
   }
 
   /// <summary>
@@ -102,9 +94,7 @@ public sealed class MemberInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, MemberInfo member) => member.IsConstructor().Should().Be(result);
   }
 
   /// <summary>
@@ -165,7 +155,7 @@ public sealed class MemberInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(MemberInfo member)
     {
     }
   }
@@ -195,7 +185,7 @@ public sealed class MemberInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(MemberInfo member)
     {
     }
   }

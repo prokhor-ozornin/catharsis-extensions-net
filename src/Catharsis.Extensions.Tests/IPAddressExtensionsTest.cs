@@ -69,7 +69,7 @@ public sealed class IPAddressExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isAvailable, IPAddress address, TimeSpan? timeout = null) => address.IsAvailable(timeout).Should().Be(isAvailable);
+    static void Validate(bool result, IPAddress address, TimeSpan? timeout = null) => address.IsAvailable(timeout).Should().Be(result);
   }
 
   /// <summary>
@@ -96,7 +96,7 @@ public sealed class IPAddressExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isAvailable, IPAddress address, TimeSpan? timeout = null) => address.IsAvailableAsync(timeout).Await().Should().Be(isAvailable);
+    static void Validate(bool result, IPAddress address, TimeSpan? timeout = null) => address.IsAvailableAsync(timeout).Await().Should().Be(result);
   }
 
   /// <summary>
@@ -111,23 +111,13 @@ public sealed class IPAddressExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IPAddress.Loopback.Min(IPAddress.IPv6Loopback)).ThrowExactly<SocketException>();
     AssertionExtensions.Should(() => IPAddress.None.Min(IPAddress.IPv6None)).ThrowExactly<SocketException>();
     
-    var first = IPAddress.Loopback;
-    var second = IPAddress.Loopback;
-    first.Min(second).Should().BeSameAs(first);
-
-    first = IPAddress.Parse("192.168.0.1");
-    second = IPAddress.Parse("192.168.0.1");
-    first.Min(second).Should().BeSameAs(first);
-
-    first = IPAddress.Parse("10.0.0.1");
-    second = IPAddress.Parse("10.0.0.2");
-    first.Min(second).Should().BeSameAs(first);
+    Validate(IPAddress.Loopback, IPAddress.Loopback, IPAddress.Loopback);
+    Validate(IPAddress.Parse("192.168.0.1"), IPAddress.Parse("192.168.0.1"), IPAddress.Parse("192.168.0.1"));
+    Validate(IPAddress.Parse("10.0.0.1"), IPAddress.Parse("10.0.0.1"), IPAddress.Parse("10.0.0.2"));
 
     return;
 
-    static void Validate(IPAddress min, IPAddress max)
-    {
-    }
+    static void Validate(IPAddress result, IPAddress left, IPAddress right) => left.Min(right).Should().BeSameAs(result);
   }
 
   /// <summary>
@@ -142,23 +132,13 @@ public sealed class IPAddressExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IPAddress.Loopback.Max(IPAddress.IPv6Loopback)).ThrowExactly<SocketException>();
     AssertionExtensions.Should(() => IPAddress.None.Max(IPAddress.IPv6None)).ThrowExactly<SocketException>();
 
-    var first = IPAddress.Loopback;
-    var second = IPAddress.Loopback;
-    first.Max(second).Should().BeSameAs(first);
-
-    first = IPAddress.Parse("192.168.0.1");
-    second = IPAddress.Parse("192.168.0.1");
-    first.Max(second).Should().BeSameAs(first);
-
-    first = IPAddress.Parse("10.0.0.1");
-    second = IPAddress.Parse("10.0.0.2");
-    first.Max(second).Should().BeSameAs(second);
+    Validate(IPAddress.Loopback, IPAddress.Loopback, IPAddress.Loopback);
+    Validate(IPAddress.Parse("192.168.0.1"), IPAddress.Parse("192.168.0.1"), IPAddress.Parse("192.168.0.1"));
+    Validate(IPAddress.Parse("10.0.0.2"), IPAddress.Parse("10.0.0.1"), IPAddress.Parse("10.0.0.2"));
 
     return;
 
-    static void Validate(IPAddress min, IPAddress max)
-    {
-    }
+    static void Validate(IPAddress result, IPAddress left, IPAddress right) => left.Max(right).Should().BeSameAs(result);
   }
 
   /// <summary>
@@ -173,7 +153,7 @@ public sealed class IPAddressExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(IPAddress address, bool isV4) => address.IsV4();
+    static void Validate(bool result, IPAddress address) => address.IsV4().Should().Be(result);
   }
 
   /// <summary>
@@ -188,7 +168,7 @@ public sealed class IPAddressExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(IPAddress address, bool isV6) => address.IsV6();
+    static void Validate(bool result, IPAddress address) => address.IsV6().Should().Be(result);
   }
 
   /// <summary>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -38,7 +39,7 @@ public sealed class IDictionaryExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
     {
     }
   }
@@ -71,7 +72,7 @@ public sealed class IDictionaryExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
     {
     }
   }
@@ -88,7 +89,7 @@ public sealed class IDictionaryExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
     {
     }
   }
@@ -105,7 +106,7 @@ public sealed class IDictionaryExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
     {
     }
   }

@@ -23,7 +23,7 @@ public sealed class IListExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IList<T> list)
     {
     }
   }
@@ -41,7 +41,7 @@ public sealed class IListExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IList<T> list)
     {
     }
   }
@@ -60,7 +60,7 @@ public sealed class IListExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IList<T> list)
     {
     }
   }
@@ -95,7 +95,7 @@ public sealed class IListExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IList<T> list)
     {
     }
   }
@@ -130,7 +130,7 @@ public sealed class IListExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IList<T> list)
     {
     }
   }
@@ -151,7 +151,7 @@ public sealed class IListExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IList<T> list)
     {
     }
   }
@@ -167,16 +167,16 @@ public sealed class IListExtensionsTest : UnitTest
     var collection = new List<object>();
     collection.Randomize().Should().BeSameAs(collection).And.BeEmpty();
 
-    collection = new List<object> { string.Empty };
+    collection = [string.Empty];
     collection.Randomize().Should().BeSameAs(collection).And.Equal(string.Empty);
 
     var sequence = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
-    collection = new List<object>(sequence);
+    collection = [..sequence];
     collection.Randomize().Should().BeSameAs(collection).And.Contain(sequence);
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IList<T> list)
     {
     }
   }
@@ -206,7 +206,7 @@ public sealed class IListExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(IList<T> list)
     {
     }
   }

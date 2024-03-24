@@ -72,9 +72,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, bool isEmpty)
-    {
-    }
+    static void Validate(bool result, FileInfo file) => file.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -136,13 +134,13 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      Validate(Attributes.RandomEmptyFile(), null);
+      Validate(Attributes.RandomEmptyFile());
       Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
     }
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding)
+    static void Validate(FileInfo file, Encoding encoding = null)
     {
       file.TryFinallyDelete(file =>
       {
@@ -166,13 +164,13 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
-      Validate(Attributes.RandomEmptyFile(), null);
+      Validate(Attributes.RandomEmptyFile());
       Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
     }
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding)
+    static void Validate(FileInfo file, Encoding encoding = null)
     {
       file.TryFinallyDelete(file =>
       {
@@ -261,9 +259,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, DirectoryInfo directory, bool isPresent)
-    {
-    }
+    static void Validate(bool result, FileInfo file, DirectoryInfo directory) => file.InDirectory(directory).Should().Be(result);
   }
 
   /// <summary>
@@ -329,7 +325,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding)
+    static void Validate(FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -346,7 +342,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding)
+    static void Validate(FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -363,9 +359,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file)
-    {
-    }
+    static void Validate(byte[] result, FileInfo file) => file.ToBytes().Should().NotBeSameAs(file.ToBytes()).And.Equal(result);
   }
 
   /// <summary>
@@ -390,9 +384,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file)
-    {
-    }
+    static void Validate(byte[] result, FileInfo file) => file.ToBytesAsync().ToArray().Should().NotBeSameAs(file.ToBytesAsync().ToArray()).And.Equal(result);
   }
 
   /// <summary>
@@ -407,9 +399,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding)
-    {
-    }
+    static void Validate(string result, FileInfo file, Encoding encoding = null) => file.ToText(encoding).Should().NotBeSameAs(file.ToText()).And.Be(result);
   }
 
   /// <summary>
@@ -486,7 +476,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding)
+    static void Validate(FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -503,7 +493,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding)
+    static void Validate(FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -555,7 +545,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, CancellationToken token)
+    static void Validate(FileInfo file)
     {
     }
   }
@@ -592,7 +582,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, byte[] bytes, CancellationToken token)
+    static void Validate(FileInfo file, byte[] bytes)
     {
     }
   }
@@ -610,7 +600,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, string text, Encoding encoding)
+    static void Validate(FileInfo file, string text, Encoding encoding = null)
     {
     }
   }
@@ -629,7 +619,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, string text, Encoding encoding, CancellationToken token)
+    static void Validate(FileInfo file, string text, Encoding encoding = null)
     {
     }
   }
@@ -646,7 +636,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, Type[] types)
+    static void Validate(FileInfo file, params Type[] types)
     {
     }
   }
@@ -663,7 +653,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(FileInfo file, Type[] types)
+    static void Validate(FileInfo file, params Type[] types)
     {
     }
   }

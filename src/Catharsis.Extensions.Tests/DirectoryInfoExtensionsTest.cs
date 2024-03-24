@@ -1,5 +1,4 @@
-﻿using System.Collections.Specialized;
-using Catharsis.Commons;
+﻿using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -138,9 +137,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, DirectoryInfo directory) => directory.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -173,7 +170,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(DirectoryInfo directory)
     {
     }
   }
@@ -208,7 +205,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(DirectoryInfo directory)
     {
     }
   }
@@ -225,9 +222,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(FileInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.Files(pattern, recursive).Should().Equal(result);
   }
 
   /// <summary>
@@ -242,9 +237,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(DirectoryInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.Directories(pattern, recursive).Should().Equal(result);
   }
 
   /// <summary>
@@ -260,9 +253,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(bool result, DirectoryInfo directory, DirectoryInfo parent) => directory.InDirectory(parent).Should().Be(result);
   }
 
   /// <summary>
@@ -277,9 +268,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
-    {
-    }
+    static void Validate(long result, DirectoryInfo directory, string pattern = null, bool recursive = true) => directory.Size(pattern, recursive).Should().Be(result);
   }
 
   /// <summary>
@@ -294,7 +283,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(DirectoryInfo directory, string pattern = null, bool recursive = false)
     {
     }
   }

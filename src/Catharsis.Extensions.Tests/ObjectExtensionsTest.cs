@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -29,7 +30,7 @@ public sealed class ObjectExtensionsTest : UnitTest
     
     return;
 
-    static void Validate<T>(bool isTrue, object instance) => instance.Is<T>().Should().Be(isTrue);
+    static void Validate<T>(bool result, object instance) => instance.Is<T>().Should().Be(result);
   }
 
   /// <summary>
@@ -42,7 +43,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isSame, object left, object right) => left.IsSameAs(right).Should().Be(isSame);
+    static void Validate(bool result, object left, object right) => left.IsSameAs(right).Should().Be(result);
   }
 
   /// <summary>
@@ -51,8 +52,6 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void IsNull_Method()
   {
-
-
     ((object) null).IsNull().Should().BeTrue();
     ((int?) null).IsNull().Should().BeTrue();
 
@@ -68,7 +67,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool isNull, object instance) => instance.IsNull().Should().Be(isNull);
+    static void Validate(bool result, object instance) => instance.IsNull().Should().Be(result);
   }
 
   /// <summary>
@@ -117,7 +116,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(bool isEmpty, T? nullable) where T : struct => nullable.IsEmpty().Should().Be(isEmpty);
+    static void Validate<T>(bool result, T? nullable) where T : struct => nullable.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -154,7 +153,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(bool isEmpty, Lazy<T> lazy) => lazy.IsEmpty().Should().Be(isEmpty);
+    static void Validate<T>(bool result, Lazy<T> lazy) => lazy.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -169,7 +168,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(object instance) where T : class
     {
     }
   }
@@ -193,7 +192,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate<T>(object instance)
     {
     }
   }
@@ -295,13 +294,13 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Equality_Expression_Enumerable_Method()
   {
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -310,13 +309,13 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Equality_Expression_Array_Method()
   {
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -325,13 +324,13 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void HashCode_String_Enumerable_Method()
   {
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -377,13 +376,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     testObject.GetHashCode("PublicProperty").Should().NotBe(testObject.GetHashCode("ProtectedProperty"));
     testObject.GetHashCode(it => it.PublicProperty).Should().NotBe(testObject.GetHashCode("ProtectedProperty"));*/
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -392,13 +391,13 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void HashCode_Expression_Enumerable_Method()
   {
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -407,13 +406,13 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void HashCode_Expression_Array_Method()
   {
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -447,13 +446,13 @@ public sealed class ObjectExtensionsTest : UnitTest
       new object().TryFinally(_ => text).Should().Be(text);
     }
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -479,13 +478,13 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     }
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -510,13 +509,13 @@ public sealed class ObjectExtensionsTest : UnitTest
       AssertionExtensions.Should(() => Stream.Null.TryFinallyDispose((Func<Stream, bool>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("function");
     }
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -527,13 +526,13 @@ public sealed class ObjectExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance)
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -545,13 +544,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
     AssertionExtensions.Should(() => new object().PrintAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance)
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -563,13 +562,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().Print((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, Stream stream, Encoding encoding = null)
     {
-    }
+      using (stream)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -582,13 +585,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, Stream stream, Encoding encoding = null)
     {
-    }
+      using (stream)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
   
   /// <summary>
@@ -600,13 +607,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().Print((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, TextWriter writer)
     {
-    }
+      using (writer)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -619,13 +630,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null.ToStreamWriter(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, TextWriter writer)
     {
-    }
+      using (writer)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -637,13 +652,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().Print((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, XmlWriter writer)
     {
-    }
+      using (writer)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -655,13 +674,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
     AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, XmlWriter writer)
     {
-    }
+      using (writer)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -702,13 +725,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().Print((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, FileInfo file, Encoding encoding = null)
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -721,13 +744,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => new object().PrintAsync(Attributes.RandomFakeFile(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, FileInfo file, Encoding encoding = null)
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -739,13 +762,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().Print((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, Uri uri, Encoding encoding = null)
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -758,13 +781,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => new object().PrintAsync(Attributes.LocalHost(), null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, Uri uri, Encoding encoding = null)
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -795,13 +818,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     AssertionExtensions.Should(() => new object().PrintAsync(Process.GetCurrentProcess(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -838,13 +865,13 @@ public sealed class ObjectExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ObjectExtensions.GetState(null, (IEnumerable<Expression<Func<object, object>>>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     }
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -869,13 +896,13 @@ public sealed class ObjectExtensionsTest : UnitTest
       AssertionExtensions.Should(() => new object().SetState((object) null)).ThrowExactly<ArgumentNullException>().WithParameterName("properties");
     }
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -892,13 +919,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     text.GetMember(instance => instance.ToString(CultureInfo.InvariantCulture)).Should().Be(text);
     DateTime.UtcNow.GetMember(instance => instance.Ticks <= DateTime.UtcNow.Ticks).Should().BeTrue();
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -915,13 +942,11 @@ public sealed class ObjectExtensionsTest : UnitTest
     //var subject = new TestObject {PublicField = "value"};
     //subject.Field("PublicField").To<string>().Should().Be("value");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
-    {
-    }
-
-    throw new NotImplementedException();
+    static void Validate<T>(T result, object instance, string name) => instance.GetFieldValue<T>(name).Should().BeSameAs(result);
   }
 
   /// <summary>
@@ -970,13 +995,11 @@ public sealed class ObjectExtensionsTest : UnitTest
     subject.Property("PrivateProperty", property);
     subject.Property("PrivateProperty").Should().Be(property);*/
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
-    {
-    }
-
-    throw new NotImplementedException();
+    static void Validate<T>(T result, object instance, string name) => instance.GetPropertyValue<T>(name).Should().BeSameAs(result);
   }
 
   /// <summary>
@@ -988,13 +1011,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.SetPropertyValue<object>(null, string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().SetPropertyValue(null, null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1023,13 +1046,13 @@ public sealed class ObjectExtensionsTest : UnitTest
       ((bool) string.Empty.Method("Contains", string.Empty)).Should().BeTrue();*/
     }
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1038,13 +1061,13 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void ToSequence_Method()
   {
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1055,13 +1078,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ObjectExtensions.ToFormattedString(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
-    {
-    }
-
-    throw new NotImplementedException();
+    static void Validate(string result, object instance, IFormatProvider provider = null, string format = null) => instance.ToFormattedString(provider, format).Should().Be(result);
   }
 
   /// <summary>
@@ -1072,13 +1093,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ObjectExtensions.ToInvariantString(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
-    {
-    }
-
-    throw new NotImplementedException();
+    static void Validate(string result, object instance, string format = null) => instance.ToInvariantString(format).Should().Be(result);
   }
 
   /// <summary>
@@ -1129,13 +1148,13 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     }
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1147,13 +1166,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().SerializeAsDataContract((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, XmlWriter writer, params Type[] types)
     {
-    }
+      using (writer)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -1165,13 +1188,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().SerializeAsDataContract((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, TextWriter writer, params Type[] types)
     {
-    }
+      using (writer)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -1183,13 +1210,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().SerializeAsDataContract((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, Stream stream, Encoding encoding = null, params Type[] types)
     {
-    }
+      using (stream)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -1201,13 +1232,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().SerializeAsDataContract((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, FileInfo file, Encoding encoding = null, params Type[] types)
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1218,13 +1249,14 @@ public sealed class ObjectExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, params Type[] types)
     {
-    }
 
-    throw new NotImplementedException();
+    }
   }
 
   /// <summary>
@@ -1236,13 +1268,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().SerializeAsXml((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, XmlWriter writer, params Type[] types)
     {
-    }
+      using (writer)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -1254,13 +1290,17 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().SerializeAsXml((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, TextWriter writer, params Type[] types)
     {
-    }
+      using (writer)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -1309,13 +1349,17 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     // TODO Encoding support
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, Stream stream, Encoding encoding = null, params Type[] types)
     {
-    }
+      using (stream)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -1327,13 +1371,13 @@ public sealed class ObjectExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
     AssertionExtensions.Should(() => new object().SerializeAsXml((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, FileInfo file, Encoding encoding = null, params Type[] types)
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1344,12 +1388,12 @@ public sealed class ObjectExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(object instance, params Type[] types)
     {
     }
-
-    throw new NotImplementedException();
   }
 }

@@ -19,12 +19,6 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     ShellProcess = Attributes.ShellCommand().ToProcess(new ProcessStartInfo { RedirectStandardError = true, RedirectStandardInput = true, RedirectStandardOutput = true });
     ShellProcess.Start();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 
   /// <summary>
@@ -35,13 +29,17 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.Restart(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -52,13 +50,17 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.Finish(null, TimeSpan.Zero)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -80,8 +82,12 @@ public sealed class ProcessExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(Process process)
     {
+      using (process)
+      {
+
+      }
     }
   }
 
@@ -93,13 +99,17 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(byte[] result, Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -110,13 +120,17 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(byte[] result, Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -127,13 +141,17 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(string result, Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -144,13 +162,17 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(string result, Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -161,13 +183,17 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToErrorText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(string result, Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -178,13 +204,17 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ProcessExtensions.ToErrorTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(string result, Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -196,13 +226,17 @@ public sealed class ProcessExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ProcessExtensions.WriteBytes(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(Process process, byte[] bytes)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -215,13 +249,17 @@ public sealed class ProcessExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     AssertionExtensions.Should(() => ShellProcess.WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(Process process, byte[] bytes)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -233,13 +271,17 @@ public sealed class ProcessExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ProcessExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(Process process, string text)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -252,13 +294,17 @@ public sealed class ProcessExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
     AssertionExtensions.Should(() => ShellProcess.WriteTextAsync(string.Empty, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(Process process, string text)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>
@@ -270,13 +316,17 @@ public sealed class ProcessExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ProcessExtensions.FinishAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
     AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
+    throw new NotImplementedException();
+
     return;
 
-    static void Validate()
+    static void Validate(Process process)
     {
-    }
+      using (process)
+      {
 
-    throw new NotImplementedException();
+      }
+    }
   }
 
   /// <summary>

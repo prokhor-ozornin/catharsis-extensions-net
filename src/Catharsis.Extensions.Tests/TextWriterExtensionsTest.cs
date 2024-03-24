@@ -39,6 +39,10 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
     static void Validate(TextWriter writer)
     {
+      using (writer)
+      {
+
+      }
     }
   }
 
@@ -79,6 +83,10 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
     static void Validate(TextWriter writer)
     {
+      using (writer)
+      {
+
+      }
     }
   }
 
@@ -96,6 +104,10 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
     static void Validate(TextWriter writer)
     {
+      using (writer)
+      {
+
+      }
     }
   }
 
@@ -114,6 +126,10 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
     static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
     {
+      using (writer)
+      {
+
+      }
     }
   }
 
@@ -133,6 +149,10 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
     static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
     {
+      using (writer)
+      {
+
+      }
     }
   }
 
@@ -174,6 +194,10 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
     static void Validate(TextWriter writer, string text)
     {
+      using (writer)
+      {
+
+      }
     }
   }
 }

@@ -22,7 +22,7 @@ public sealed class MatchExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(IEnumerable<Capture> result, Match match)
     {
     }
   }

@@ -138,7 +138,7 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(NameValueCollection collection)
     {
     }
   }
@@ -155,7 +155,7 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(NameValueCollection collection)
     {
     }
   }
@@ -172,7 +172,7 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
 
     return;
 
-    static void Validate()
+    static void Validate(NameValueCollection collection)
     {
     }
   }

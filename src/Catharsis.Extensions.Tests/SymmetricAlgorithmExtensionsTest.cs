@@ -25,6 +25,10 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
 
     static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -43,6 +47,10 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
 
     static void Validate(SymmetricAlgorithm algorithm, Stream stream)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -98,7 +106,7 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
 
     static void Validate(SymmetricAlgorithm algorithm, Stream stream)
     {
-      using (var stream = new MemoryStream(bytes))
+      /*using (var stream = new MemoryStream(bytes))
       {
         algorithm.EncryptAsync(stream).Await().Should().Equal(encrypted);
         stream.ReadByte().Should().Be(-1);
@@ -131,7 +139,7 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
       using (var encryptor = Algorithm)
       {
         encryptor.EncryptAsync(new MemoryStream(bytes)).Await().Should().NotEqual(encrypted);
-      }
+      }*/
     }
   }
 
@@ -151,6 +159,10 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
 
     static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -169,6 +181,10 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
 
     static void Validate(SymmetricAlgorithm algorithm, Stream stream)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -188,6 +204,10 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
 
     static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 
@@ -206,6 +226,10 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
 
     static void Validate(SymmetricAlgorithm algorithm, Stream stream)
     {
+      using (algorithm)
+      {
+
+      }
     }
   }
 }

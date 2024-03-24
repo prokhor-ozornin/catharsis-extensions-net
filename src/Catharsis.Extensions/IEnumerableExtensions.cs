@@ -636,341 +636,341 @@ public static class IEnumerableExtensions
   }
 
   /// <summary>
-  ///   <para>Returns BASE64-encoded representation of a bytes sequence.</para>
+  ///   <para>Returns BASE64-encoded representation of a sequence sequence.</para>
   /// </summary>
-  /// <param name="bytes">Bytes to convert to BASE64 encoding.</param>
-  /// <returns>BASE64 string representation of <paramref name="bytes"/> array.</returns>
+  /// <param name="sequence">Bytes to convert to BASE64 encoding.</param>
+  /// <returns>BASE64 string representation of <paramref name="sequence"/> array.</returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string ToBase64(this IEnumerable<byte> bytes) => bytes is not null ? Convert.ToBase64String(bytes.AsArray()) : throw new ArgumentNullException(nameof(bytes));
+  public static string ToBase64(this IEnumerable<byte> sequence) => sequence is not null ? Convert.ToBase64String(sequence.AsArray()) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>
   /// </summary>    
-  /// <param name="bytes"></param>
+  /// <param name="sequence"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string ToHex(this IEnumerable<byte> bytes)
+  public static string ToHex(this IEnumerable<byte> sequence)
   {
-    if (bytes is null)
-      throw new ArgumentNullException(nameof(bytes));
+    if (sequence is null)
+      throw new ArgumentNullException(nameof(sequence));
 
     #if NET8_0
-    return Convert.ToHexString(bytes.AsArray());
+    return Convert.ToHexString(sequence.AsArray());
     #else
-      return BitConverter.ToString(bytes.AsArray()).Replace("-", "");
+      return BitConverter.ToString(sequence.AsArray()).Replace("-", "");
     #endif
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, TextWriter destination, Encoding encoding = null)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, TextWriter to, Encoding encoding = null)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    bytes.AsArray().ToText(encoding).WriteTo(destination);
+    sequence.AsArray().ToText(encoding).WriteTo(to);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, TextWriter destination, Encoding encoding = null)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, TextWriter to, Encoding encoding = null)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    await bytes.AsArray().ToText(encoding).WriteToAsync(destination).ConfigureAwait(false);
+    await sequence.AsArray().ToText(encoding).WriteToAsync(to).ConfigureAwait(false);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, BinaryWriter destination)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, BinaryWriter to)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteBytes(bytes);
+    to.WriteBytes(sequence);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, XmlWriter destination, Encoding encoding = null)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, XmlWriter to, Encoding encoding = null)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteBytes(bytes, encoding);
+    to.WriteBytes(sequence, encoding);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, XmlWriter destination, Encoding encoding = null)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, XmlWriter to, Encoding encoding = null)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    await destination.WriteBytesAsync(bytes, encoding).ConfigureAwait(false);
+    await to.WriteBytesAsync(sequence, encoding).ConfigureAwait(false);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, FileInfo destination)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, FileInfo to)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteBytes(bytes);
+    to.WriteBytes(sequence);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, FileInfo destination, CancellationToken cancellation = default)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, FileInfo to, CancellationToken cancellation = default)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await destination.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+    await to.WriteBytesAsync(sequence, cancellation).ConfigureAwait(false);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, Uri destination, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, Uri to, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteBytes(bytes, timeout, headers);
+    to.WriteBytes(sequence, timeout, headers);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="destination"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Uri destination, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, Uri to, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await destination.WriteBytesAsync(bytes, timeout, cancellation, headers).ConfigureAwait(false);
+    await to.WriteBytesAsync(sequence, timeout, cancellation, headers).ConfigureAwait(false);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="process"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, Process process)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, Process to)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (process is null) throw new ArgumentNullException(nameof(process));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    process.WriteBytes(bytes);
+    to.WriteBytes(sequence);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="process"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Process process, CancellationToken cancellation = default)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, Process to, CancellationToken cancellation = default)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (process is null) throw new ArgumentNullException(nameof(process));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    await process.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+    await to.WriteBytesAsync(sequence, cancellation).ConfigureAwait(false);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="http"></param>
+  /// <param name="sequence"></param>
+  /// <param name="client"></param>
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static HttpContent WriteTo(this IEnumerable<byte> bytes, HttpClient http, Uri uri) => http.WriteBytes(bytes, uri);
+  public static HttpContent WriteTo(this IEnumerable<byte> sequence, HttpClient client, Uri uri) => client.WriteBytes(sequence, uri);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="http"></param>
+  /// <param name="sequence"></param>
+  /// <param name="client"></param>
   /// <param name="uri"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<HttpContent> WriteToAsync(this IEnumerable<byte> bytes, HttpClient http, Uri uri, CancellationToken cancellation = default) => await http.WriteBytesAsync(bytes, uri, cancellation).ConfigureAwait(false);
+  public static async Task<HttpContent> WriteToAsync(this IEnumerable<byte> sequence, HttpClient client, Uri uri, CancellationToken cancellation = default) => await client.WriteBytesAsync(sequence, uri, cancellation).ConfigureAwait(false);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="tcp"></param>
+  /// <param name="sequence"></param>
+  /// <param name="client"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, TcpClient tcp)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, TcpClient client)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (client is null) throw new ArgumentNullException(nameof(client));
 
-    tcp.WriteBytes(bytes);
+    client.WriteBytes(sequence);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="tcp"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, TcpClient tcp, CancellationToken cancellation = default)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, TcpClient to, CancellationToken cancellation = default)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (tcp is null) throw new ArgumentNullException(nameof(tcp));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await tcp.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+    await to.WriteBytesAsync(sequence, cancellation).ConfigureAwait(false);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="udp"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, UdpClient udp)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, UdpClient to)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (udp is null) throw new ArgumentNullException(nameof(udp));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    udp.WriteBytes(bytes);
+    to.WriteBytes(sequence);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
-  /// <param name="udp"></param>
+  /// <param name="sequence"></param>
+  /// <param name="to"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, UdpClient udp, CancellationToken cancellation = default)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, UdpClient to, CancellationToken cancellation = default)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-    if (udp is null) throw new ArgumentNullException(nameof(udp));
+    if (sequence is null) throw new ArgumentNullException(nameof(sequence));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await udp.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+    await to.WriteBytesAsync(sequence, cancellation).ConfigureAwait(false);
 
-    return bytes;
+    return sequence;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="destination"></param>
+  /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static IEnumerable<char> WriteTo(this IEnumerable<char> text, SecureString destination)
+  public static IEnumerable<char> WriteTo(this IEnumerable<char> text, SecureString to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (to is null) throw new ArgumentNullException(nameof(to));
 
-    destination.WriteText(text);
+    to.WriteText(text);
 
     return text;
   }
@@ -1029,9 +1029,9 @@ public static class IEnumerableExtensions
   }
 
   /// <summary>
-  ///   <para>Computes hash digest for the given sequence of bytes, using <c>MD5</c> algorithm.</para>
+  ///   <para>Computes hash digest for the given sequence of sequence, using <c>MD5</c> algorithm.</para>
   /// </summary>
-  /// <param name="bytes">Source bytes sequence.</param>
+  /// <param name="bytes">Source sequence sequence.</param>
   /// <returns>Hash digest value.</returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
@@ -1045,9 +1045,9 @@ public static class IEnumerableExtensions
   }
 
   /// <summary>
-  ///   <para>Computes hash digest for the given array of bytes, using <c>SHA1</c> algorithm.</para>
+  ///   <para>Computes hash digest for the given array of sequence, using <c>SHA1</c> algorithm.</para>
   /// </summary>
-  /// <param name="bytes">Source bytes sequence.</param>
+  /// <param name="bytes">Source sequence sequence.</param>
   /// <returns>Hash digest value.</returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
@@ -1061,9 +1061,9 @@ public static class IEnumerableExtensions
   }
 
   /// <summary>
-  ///   <para>Computes hash digest for the given array of bytes, using <c>SHA256</c> algorithm.</para>
+  ///   <para>Computes hash digest for the given array of sequence, using <c>SHA256</c> algorithm.</para>
   /// </summary>
-  /// <param name="bytes">Source bytes sequence.</param>
+  /// <param name="bytes">Source sequence sequence.</param>
   /// <returns>Hash digest value.</returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
@@ -1093,9 +1093,9 @@ public static class IEnumerableExtensions
   }
 
   /// <summary>
-  ///   <para>Computes hash digest for the given array of bytes, using <c>SHA512</c> algorithm.</para>
+  ///   <para>Computes hash digest for the given array of sequence, using <c>SHA512</c> algorithm.</para>
   /// </summary>
-  /// <param name="bytes">Source bytes sequence.</param>
+  /// <param name="bytes">Source sequence sequence.</param>
   /// <returns>Hash digest value.</returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="InvalidOperationException"></exception>
