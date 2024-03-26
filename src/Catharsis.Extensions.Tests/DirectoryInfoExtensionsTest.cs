@@ -59,6 +59,9 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
       AssertionExtensions.Should(() => DirectoryInfoExtensions.With(null, Enumerable.Empty<FileSystemInfo>())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
       AssertionExtensions.Should(() => Attributes.RandomDirectory().With((IEnumerable<FileSystemInfo>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("entries");
 
+      static void Validate(DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -66,15 +69,12 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
       AssertionExtensions.Should(() => DirectoryInfoExtensions.With(null, Array.Empty<FileSystemInfo>())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
       AssertionExtensions.Should(() => Attributes.RandomDirectory().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entries");
 
+      static void Validate(DirectoryInfo directory, params FileSystemInfo[] entries)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 
   /// <summary>
@@ -92,6 +92,9 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
       AssertionExtensions.Should(() => DirectoryInfoExtensions.Without(null, Enumerable.Empty<FileSystemInfo>())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
       AssertionExtensions.Should(() => Attributes.RandomDirectory().Without((IEnumerable<FileSystemInfo>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("entries");
 
+      static void Validate(DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -99,15 +102,12 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
       AssertionExtensions.Should(() => DirectoryInfoExtensions.Without(null, Array.Empty<FileSystemInfo>())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
       AssertionExtensions.Should(() => Attributes.RandomDirectory().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entries");
 
+      static void Validate(DirectoryInfo directory, params FileSystemInfo[] entries)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 
   /// <summary>

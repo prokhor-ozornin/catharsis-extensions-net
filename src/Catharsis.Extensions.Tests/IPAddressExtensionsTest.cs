@@ -202,7 +202,7 @@ public sealed class IPAddressExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IPAddress) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-    new[] {IPAddress.Any, IPAddress.Broadcast, IPAddress.Loopback, IPAddress.None}.ForEach(address => Validate(address, 4));
+    new[] { IPAddress.Any, IPAddress.Broadcast, IPAddress.Loopback, IPAddress.None }.ForEach(address => Validate(address, 4));
     new[] { IPAddress.IPv6Any, IPAddress.IPv6Loopback, IPAddress.IPv6None }.ForEach(address => Validate(address, 16));
 
     return;

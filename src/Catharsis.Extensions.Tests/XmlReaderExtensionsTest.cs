@@ -49,7 +49,6 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-
       }
     }
   }

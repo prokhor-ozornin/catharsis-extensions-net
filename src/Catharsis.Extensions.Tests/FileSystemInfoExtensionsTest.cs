@@ -17,7 +17,7 @@ public sealed class FileSystemInfoExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => FileSystemInfoExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entry");
 
-    foreach (var info in new FileSystemInfo[] { Attributes.RandomFakeFile(), Attributes.RandomFakeDirectory() })
+    new FileSystemInfo[] { Attributes.RandomFakeFile(), Attributes.RandomFakeDirectory() }.ForEach(info =>
     {
       var uri = info.ToUri();
       uri.Should().NotBeNull().And.NotBeSameAs(info.ToUri());
@@ -40,7 +40,7 @@ public sealed class FileSystemInfoExtensionsTest : UnitTest
       uri.UserEscaped.Should().BeFalse();
       uri.UserInfo.Should().BeEmpty();
       uri.ToString().ToPath().Should().Be(info.FullName);
-    }
+    });
 
     return;
 

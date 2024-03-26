@@ -27,6 +27,13 @@ public sealed class SecureStringExtensionsTest : UnitTest
       AssertionExtensions.Should(() => SecureStringExtensions.With(null, Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
       AssertionExtensions.Should(() => Attributes.EmptySecureString().With((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
+      static void Validate(SecureString secure, IEnumerable<char> characters)
+      {
+        using (secure)
+        {
+
+        }
+      }
     }
 
     using (new AssertionScope())
@@ -34,19 +41,16 @@ public sealed class SecureStringExtensionsTest : UnitTest
       AssertionExtensions.Should(() => SecureStringExtensions.With(null, Array.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => Attributes.EmptySecureString().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
+      static void Validate(SecureString secure, params char[] characters)
+      {
+        using (secure)
+        {
+
+        }
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(SecureString secure)
-    {
-      using (secure)
-      {
-
-      }
-    }
   }
 
   /// <summary>
@@ -64,6 +68,13 @@ public sealed class SecureStringExtensionsTest : UnitTest
       AssertionExtensions.Should(() => SecureStringExtensions.Without(null, Enumerable.Empty<int>())).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
       AssertionExtensions.Should(() => Attributes.EmptySecureString().Without((IEnumerable<int>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
+      static void Validate(SecureString secure, IEnumerable<int> positions)
+      {
+        using (secure)
+        {
+
+        }
+      }
     }
 
     using (new AssertionScope())
@@ -71,19 +82,16 @@ public sealed class SecureStringExtensionsTest : UnitTest
       AssertionExtensions.Should(() => SecureStringExtensions.Without(null, Array.Empty<int>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => Attributes.EmptySecureString().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
+      static void Validate(SecureString secure, params int[] positions)
+      {
+        using (secure)
+        {
+
+        }
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(SecureString secure)
-    {
-      using (secure)
-      {
-
-      }
-    }
   }
 
   /// <summary>
@@ -114,13 +122,10 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => SecureStringExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+    AssertionExtensions.Should(() => SecureStringExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
 
-      Validate(Attributes.EmptySecureString());
-      Validate(Attributes.RandomSecureString());
-    }
+    Validate(Attributes.EmptySecureString());
+    Validate(Attributes.RandomSecureString());
 
     return;
 
@@ -140,14 +145,11 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void Min_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => SecureStringExtensions.Min(null, new SecureString())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => new SecureString().Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+    AssertionExtensions.Should(() => SecureStringExtensions.Min(null, new SecureString())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    AssertionExtensions.Should(() => new SecureString().Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-      Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString(), Attributes.EmptySecureString());
-      Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString(), Attributes.RandomSecureString());
-    }
+    Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString(), Attributes.EmptySecureString());
+    Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString(), Attributes.RandomSecureString());
 
     return;
 
@@ -169,14 +171,11 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void Max_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => SecureStringExtensions.Max(null, new SecureString())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => new SecureString().Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+    AssertionExtensions.Should(() => SecureStringExtensions.Max(null, new SecureString())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    AssertionExtensions.Should(() => new SecureString().Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-      Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString(), Attributes.EmptySecureString());
-      Validate(Attributes.RandomSecureString(), Attributes.EmptySecureString(), Attributes.RandomSecureString());
-    }
+    Validate(Attributes.EmptySecureString(), Attributes.EmptySecureString(), Attributes.EmptySecureString());
+    Validate(Attributes.RandomSecureString(), Attributes.EmptySecureString(), Attributes.RandomSecureString());
 
     return;
 
@@ -243,13 +242,10 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void ToBytes_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => SecureStringExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+    AssertionExtensions.Should(() => SecureStringExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
 
-      Validate(Attributes.EmptySecureString());
-      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomSecureString(), encoding.GetEncoding()));
-    }
+    Validate(Attributes.EmptySecureString());
+    Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomSecureString(), encoding.GetEncoding()));
 
     return;
 
@@ -314,24 +310,30 @@ public sealed class SecureStringExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => SecureStringExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
       AssertionExtensions.Should(() => Attributes.EmptySecureString().WriteText((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      static void Validate(SecureString secure, IEnumerable<char> characters)
+      {
+        using (secure)
+        {
+
+        }
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => SecureStringExtensions.WriteText(null, Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
       AssertionExtensions.Should(() => Attributes.EmptySecureString().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      static void Validate(SecureString secure, char[] characters)
+      {
+        using (secure)
+        {
+
+        }
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(SecureString secure, char[] chars)
-    {
-      using (secure)
-      {
-
-      }
-    }
   }
 }

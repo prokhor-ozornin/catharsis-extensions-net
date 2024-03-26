@@ -110,6 +110,10 @@ public sealed class MemberInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => MemberInfoExtensions.Attribute<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -149,15 +153,13 @@ public sealed class MemberInfoExtensionsTest : UnitTest
       field = typeof(TestObject).GetField("PublicField");
       field.Attribute(typeof(DescriptionAttribute)).Should().NotBeNull();
       field.Attribute<DescriptionAttribute>().Should().NotBeNull();*/
+
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(MemberInfo member)
-    {
-    }
   }
 
   /// <summary>
@@ -173,21 +175,23 @@ public sealed class MemberInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => MemberInfoExtensions.Attributes<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => MemberInfoExtensions.Attributes(null, typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("member");
       AssertionExtensions.Should(() => typeof(object).Attributes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(MemberInfo member)
-    {
-    }
   }
 
   [Serializable]

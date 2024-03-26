@@ -28,6 +28,9 @@ public sealed class XDocumentExtensionsTest : UnitTest
       AssertionExtensions.Should(() => XDocumentExtensions.With(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -35,15 +38,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
       AssertionExtensions.Should(() => XDocumentExtensions.With(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 
   /// <summary>
@@ -95,13 +95,10 @@ public sealed class XDocumentExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
-      Validate(new XDocument());
-      Validate(new XDocument(new XElement("root")));
-    }
+    Validate(new XDocument());
+    Validate(new XDocument(new XElement("root")));
 
     return;
 

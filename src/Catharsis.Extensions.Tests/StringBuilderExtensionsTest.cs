@@ -61,13 +61,10 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StringBuilder) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+    AssertionExtensions.Should(() => ((StringBuilder) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
-      Validate(new StringBuilder());
-      Validate(Attributes.RandomString().ToStringBuilder());
-    }
+    Validate(new StringBuilder());
+    Validate(Attributes.RandomString().ToStringBuilder());
 
     return;
 
@@ -90,19 +87,19 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     var first = new StringBuilder();
     var second = new StringBuilder();
-    first.Min(second).Should().BeSameAs(first);
+    Validate(first, first, second);
 
     first = new StringBuilder();
     second = new StringBuilder(char.MinValue.ToString());
-    first.Min(second).Should().BeSameAs(first);
+    Validate(first, first, second);
 
     first = new StringBuilder(char.MaxValue.ToString());
     second = new StringBuilder(char.MinValue.ToString());
-    first.Min(second).Should().BeSameAs(first);
+    Validate(first, first, second);
 
     first = new StringBuilder(char.MaxValue.ToString());
     second = new StringBuilder(char.MinValue.Repeat(2));
-    first.Min(second).Should().BeSameAs(first);
+    Validate(first, first, second);
 
     return;
 
@@ -120,19 +117,19 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     var first = new StringBuilder();
     var second = new StringBuilder();
-    first.Max(second).Should().BeSameAs(first);
+    Validate(first, first, second);
 
     first = new StringBuilder();
     second = new StringBuilder(char.MinValue.ToString());
-    first.Max(second).Should().BeSameAs(second);
+    Validate(second, first, second);
 
     first = new StringBuilder(char.MaxValue.ToString());
     second = new StringBuilder(char.MinValue.ToString());
-    first.Max(second).Should().BeSameAs(first);
+    Validate(first, first, second);
 
     first = new StringBuilder(char.MaxValue.ToString());
     second = new StringBuilder(char.MinValue.Repeat(2));
-    first.Max(second).Should().BeSameAs(second);
+    Validate(second, first, second);
 
     return;
 
@@ -168,13 +165,10 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   [Fact]
   public void ToStringWriter_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringBuilderExtensions.ToStringWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+    AssertionExtensions.Should(() => StringBuilderExtensions.ToStringWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
-      Validate(Attributes.RandomString());
-      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(Attributes.RandomString(), culture));
-    }
+    Validate(Attributes.RandomString());
+    CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(Attributes.RandomString(), culture));
 
     return;
 

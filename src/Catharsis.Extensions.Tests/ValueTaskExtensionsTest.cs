@@ -25,15 +25,28 @@ public sealed class ValueTaskExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ValueTask.CompletedTask.Await(null, Attributes.CancellationToken())).NotThrow<OperationCanceledException>();
       AssertionExtensions.Should(() => ValueTask.FromCanceled(Attributes.CancellationToken()).Await()).NotThrow<OperationCanceledException>();
+
+      static void Validate()
+      {
+
+      }
     }
 
     using (new AssertionScope())
     {
+      static void Validate()
+      {
+
+      }
 
     }
 
     using (new AssertionScope())
     {
+      static void Validate()
+      {
+
+      }
 
     }
 

@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Xml;
 using Catharsis.Commons;
 using FluentAssertions;
 using Xunit;
@@ -81,7 +80,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
     DateTime.MaxValue.Min(DateTime.MaxValue).Should().Be(DateTime.MaxValue);
     DateTime.MaxValue.Min(DateTime.MinValue).Should().Be(DateTime.MinValue);
 
-    foreach (var date in new[] {DateTime.Now, DateTime.UtcNow})
+    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       date.Min(date).Should().Be(date);
       date.Add(TimeSpan.Zero).Min(date).Should().Be(date);
@@ -91,7 +90,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
       date.Add(TimeSpan.FromSeconds(1)).Min(date).Should().Be(date);
       date.Add(TimeSpan.FromMilliseconds(1)).Min(date).Should().Be(date);
       date.Add(TimeSpan.FromTicks(1)).Min(date).Should().Be(date);
-    }
+    });
 
     return;
 
@@ -110,7 +109,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
     DateTime.MaxValue.Max(DateTime.MaxValue).Should().Be(DateTime.MaxValue);
     DateTime.MaxValue.Max(DateTime.MinValue).Should().Be(DateTime.MaxValue);
 
-    foreach (var date in new[] {DateTime.Now, DateTime.UtcNow})
+    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       date.Max(date).Should().Be(date);
       date.Add(TimeSpan.Zero).Max(date).Should().Be(date);
@@ -120,7 +119,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
       date.Add(TimeSpan.FromSeconds(1)).Max(date).Should().Be(date.Add(TimeSpan.FromSeconds(1)));
       date.Add(TimeSpan.FromMilliseconds(1)).Max(date).Should().Be(date.Add(TimeSpan.FromMilliseconds(1)));
       date.Add(TimeSpan.FromTicks(1)).Max(date).Should().Be(date.Add(TimeSpan.FromTicks(1)));
-    }
+    });
 
     return;
 
@@ -133,7 +132,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void Range_Method()
   {
-    foreach (var date in new[] {DateTime.Now, DateTime.UtcNow})
+    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       date.Range(date, TimeSpan.Zero).Should().BeEmpty();
       date.Range(date, TimeSpan.FromTicks(1)).Should().BeEmpty();
@@ -150,7 +149,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
       date.Range(date.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(2));
       date.Range(date.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
-    }
+    });
 
     return;
 
@@ -439,10 +438,10 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void ToDateTimeOffset_Method()
   {
-    foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
+    new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       date.ToDateTimeOffset().Should().BeSameDateAs(date.ToDateTimeOffset()).And.BeSameDateAs(new DateTimeOffset(date.ToUniversalTime())).And.BeWithin(TimeSpan.Zero);
-    }
+    });
 
     return;
 
@@ -493,10 +492,10 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void ToDateOnly_Method()
   {
-    foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
+    new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       date.ToDateOnly().Should().Be(date.ToDateOnly()).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day);
-    }
+    });
 
     return;
 
@@ -509,10 +508,10 @@ public sealed class DateTimeExtensionsTest : UnitTest
   [Fact]
   public void ToTimeOnly_Method()
   {
-    foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
+    new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       date.ToTimeOnly().Should().Be(date.ToTimeOnly()).And.HaveHours(date.Hour).And.HaveMinutes(date.Minute).And.HaveSeconds(date.Second).And.HaveMilliseconds(date.Millisecond);
-    }
+    });
 
     return;
 

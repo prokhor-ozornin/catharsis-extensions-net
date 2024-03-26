@@ -19,7 +19,7 @@ public sealed class IComparableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(bool isPositive, T instance) where T : struct, IComparable<T> => instance.IsPositive().Should().Be(isPositive);
+    static void Validate<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsPositive().Should().Be(result);
   }
 
   /// <summary>
@@ -32,7 +32,7 @@ public sealed class IComparableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(bool isNegative, T instance) where T : struct, IComparable<T> => instance.IsNegative().Should().Be(isNegative);
+    static void Validate<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsNegative().Should().Be(result);
   }
 
   /// <summary>
@@ -45,7 +45,7 @@ public sealed class IComparableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(bool isDefault, T instance) where T : struct, IComparable<T> => instance.IsDefault().Should().Be(isDefault);
+    static void Validate<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsDefault().Should().Be(result);
   }
 
   /// <summary>

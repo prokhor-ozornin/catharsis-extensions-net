@@ -37,6 +37,10 @@ public sealed class ActionExtensionsTest : UnitTest
       counter = 0;
       action.Execute(() => counter < count).Should().NotBeNull().And.BeSameAs(action);
       counter.Should().Be(count);
+
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -63,13 +67,13 @@ public sealed class ActionExtensionsTest : UnitTest
       collection = [];
       action.Execute(x => x?.Count < count, null).Should().NotBeNull().And.BeSameAs(action);
       collection.Should().BeEmpty();
+
+      static void Validate()
+      {
+      }
     }
 
-    return;
-
-    static void Validate()
-    {
-    }
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -85,20 +89,22 @@ public sealed class ActionExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ActionExtensions.ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
+
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Action<object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
 
+
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 }

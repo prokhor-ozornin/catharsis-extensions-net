@@ -130,13 +130,10 @@ public sealed class FileInfoExtensionsTest : UnitTest
   [Fact]
   public void Lines_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => FileInfoExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+    AssertionExtensions.Should(() => FileInfoExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      Validate(Attributes.RandomEmptyFile());
-      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
-    }
+    Validate(Attributes.RandomEmptyFile());
+    Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
 
     return;
 
@@ -160,13 +157,10 @@ public sealed class FileInfoExtensionsTest : UnitTest
   [Fact]
   public void LinesAsync_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
+    AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
-      Validate(Attributes.RandomEmptyFile());
-      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
-    }
+    Validate(Attributes.RandomEmptyFile());
+    Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
 
     return;
 
@@ -209,15 +203,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
   [Fact]
   public void TryFinallyDelete_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((FileInfo) null).TryFinallyDelete(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("file");
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    AssertionExtensions.Should(() => ((FileInfo) null).TryFinallyDelete(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+    AssertionExtensions.Should(() => Attributes.RandomFakeFile().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      Validate(Attributes.RandomFakeFile(), Attributes.RandomBytes());
-      Validate(Attributes.RandomEmptyFile(), Attributes.RandomBytes());
-      Validate(Attributes.RandomNonEmptyFile(), Attributes.RandomBytes());
-    }
+    Validate(Attributes.RandomFakeFile(), Attributes.RandomBytes());
+    Validate(Attributes.RandomEmptyFile(), Attributes.RandomBytes());
+    Validate(Attributes.RandomNonEmptyFile(), Attributes.RandomBytes());
 
     return;
 
@@ -408,15 +399,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
   [Fact]
   public void ToTextAsync_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
+    AssertionExtensions.Should(() => FileInfoExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
-      ValidateFile(Attributes.RandomEmptyFile(), Attributes.RandomString(), null);
-      Encoding.GetEncodings().ForEach(encoding => ValidateFile(Attributes.RandomEmptyFile(), Attributes.RandomString(), encoding.GetEncoding()));
+    ValidateFile(Attributes.RandomEmptyFile(), Attributes.RandomString(), null);
+    Encoding.GetEncodings().ForEach(encoding => ValidateFile(Attributes.RandomEmptyFile(), Attributes.RandomString(), encoding.GetEncoding()));
 
-      // Attributes.CancellationToken() & offset
-    }
+    // Attributes.CancellationToken() & offset
 
     return;
 

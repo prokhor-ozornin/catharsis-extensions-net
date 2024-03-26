@@ -62,7 +62,7 @@ public static class BasicTypesExtensions
   /// <param name="count"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static IEnumerable<object> Nulls(this int count) => count >= 0 ? count.Objects<object>(() => null) : throw new ArgumentOutOfRangeException(nameof(count));
+  public static IEnumerable<object> Nulls(this int count) => count.Objects<object>(() => null);
 
   /// <summary>
   ///   <para></para>

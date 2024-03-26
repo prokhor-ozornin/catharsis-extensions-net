@@ -23,20 +23,21 @@ public sealed class FuncExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Func<object>) null).ToTask()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("function").Await();
+
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Func<object, object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("function").Await();
 
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 }

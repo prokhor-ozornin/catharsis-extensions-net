@@ -16,13 +16,10 @@ public sealed class UriBuilderExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => UriBuilderExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+    AssertionExtensions.Should(() => UriBuilderExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
-      Validate(new UriBuilder());
-      Validate(new UriBuilder("https://user:password@192.168.0.1/path?query#id"));
-    }
+    Validate(new UriBuilder());
+    Validate(new UriBuilder("https://user:password@192.168.0.1/path?query#id"));
 
     return;
 
@@ -57,6 +54,9 @@ public sealed class UriBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => UriBuilderExtensions.WithQuery(null, new Dictionary<string, object>())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => new UriBuilder().WithQuery((IReadOnlyDictionary<string, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("parameters");
 
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -64,14 +64,11 @@ public sealed class UriBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => UriBuilderExtensions.WithQuery(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => new UriBuilder().WithQuery(((string Name, object Value)[]) null)).ThrowExactly<ArgumentNullException>().WithParameterName("parameters");
 
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 }

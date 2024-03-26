@@ -44,6 +44,14 @@ public sealed class HttpClientExtensionsTest : UnitTest
         http.DefaultRequestHeaders.GetValues(headerUserAgent.Name).Should().HaveCount(2).And.AllBeEquivalentTo(headerUserAgent.Value);
         http.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
       }
+
+      static void Validate(HttpClient client)
+      {
+        using (client)
+        {
+
+        }
+      }
     }
 
     using (new AssertionScope())
@@ -66,6 +74,14 @@ public sealed class HttpClientExtensionsTest : UnitTest
         http.DefaultRequestHeaders.GetValues(headerUserAgent.Name).Should().HaveCount(2).And.AllBeEquivalentTo(headerUserAgent.Value);
         http.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
       }
+
+      static void Validate(HttpClient client)
+      {
+        using (client)
+        {
+
+        }
+      }
     }
 
     using (new AssertionScope())
@@ -87,17 +103,17 @@ public sealed class HttpClientExtensionsTest : UnitTest
         http.DefaultRequestHeaders.GetValues(headerUserAgent.Name).Should().Equal(headerUserAgent.Value);
         http.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
       }
-    }
 
-    return;
-
-    static void Validate(HttpClient client)
-    {
-      using (client)
+      static void Validate(HttpClient client)
       {
+        using (client)
+        {
 
+        }
       }
     }
+
+    throw new NotImplementedException();
   }
 
   /// <summary>

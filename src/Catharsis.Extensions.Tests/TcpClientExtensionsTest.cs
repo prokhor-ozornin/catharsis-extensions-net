@@ -52,12 +52,12 @@ public sealed class TcpClientExtensionsTest : UnitTest
     tcp.ReceiveTimeout.Should().Be(tcp.Client.ReceiveTimeout).And.Be(receiveTimeout);
     tcp.SendTimeout.Should().Be(tcp.Client.SendTimeout).And.Be(sendTimeout);
 
-    foreach (var timespan in new[] {TimeSpan.MinValue, TimeSpan.Zero, TimeSpan.MaxValue})
+    new[] { TimeSpan.MinValue, TimeSpan.Zero, TimeSpan.MaxValue }.ForEach(timespan =>
     {
       tcp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Tcp());
       tcp.ReceiveTimeout.Should().Be(tcp.Client.ReceiveTimeout).And.Be((int) timespan.TotalMilliseconds);
       tcp.SendTimeout.Should().Be(tcp.Client.SendTimeout).And.Be((int) timespan.TotalMilliseconds);
-    }
+    });
 
     return;
 
@@ -106,25 +106,29 @@ public sealed class TcpClientExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((TcpClient) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
+      static void Validate(TcpClient client)
+      {
+        using (client)
+        {
+
+        }
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TcpClient) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
+      static void Validate(TcpClient client)
+      {
+        using (client)
+        {
+
+        }
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TcpClient client)
-    {
-      using (client)
-      {
-
-      }
-    }
   }
 
   /// <summary>
@@ -141,25 +145,29 @@ public sealed class TcpClientExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((TcpClient) null).ToAsyncEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
+      static void Validate(TcpClient client)
+      {
+        using (client)
+        {
+
+        }
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TcpClient) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
 
+      static void Validate(TcpClient client)
+      {
+        using (client)
+        {
+
+        }
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TcpClient client)
-    {
-      using (client)
-      {
-
-      }
-    }
   }
 
   /// <summary>

@@ -175,21 +175,23 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.ToEnumerable(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+
+      static void Validate(Uri uri)
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.ToEnumerable(null, 1)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Attributes.LocalHost().ToEnumerable(0)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
+
+      static void Validate(Uri uri)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(Uri uri)
-    {
-    }
   }
 
   /// <summary>
@@ -205,21 +207,23 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+
+      static void Validate(Uri uri)
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null, 1).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Attributes.LocalHost().ToAsyncEnumerable(0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
+
+      static void Validate(Uri uri)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(Uri uri)
-    {
-    }
   }
 
   /// <summary>

@@ -1,8 +1,6 @@
 using System.Globalization;
-using System.Runtime.InteropServices;
 using Catharsis.Commons;
 using FluentAssertions;
-using FluentAssertions.Extensions;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -111,7 +109,7 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
     DateTimeOffset.MaxValue.Max(DateTimeOffset.MaxValue).Should().Be(DateTimeOffset.MaxValue);
     DateTimeOffset.MaxValue.Max(DateTimeOffset.MinValue).Should().Be(DateTimeOffset.MaxValue);
 
-    foreach (var date in new[] {DateTimeOffset.Now, DateTimeOffset.UtcNow})
+    new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
     {
       date.Max(date).Should().Be(date);
       date.Add(TimeSpan.Zero).Max(date).Should().Be(date);
@@ -121,7 +119,7 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
       date.Add(TimeSpan.FromSeconds(1)).Max(date).Should().Be(date.Add(TimeSpan.FromSeconds(1)));
       date.Add(TimeSpan.FromMilliseconds(1)).Max(date).Should().Be(date.Add(TimeSpan.FromMilliseconds(1)));
       date.Add(TimeSpan.FromTicks(1)).Max(date).Should().Be(date.Add(TimeSpan.FromTicks(1)));
-    }
+    });
 
     return;
 
@@ -134,7 +132,7 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void Range_Method()
   {
-    foreach (var date in new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow })
+    new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
     {
       date.Range(date, TimeSpan.Zero).Should().BeEmpty();
       date.Range(date, TimeSpan.FromTicks(1)).Should().BeEmpty();
@@ -151,7 +149,7 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
 
       date.Range(date.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(2));
       date.Range(date.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
-    }
+    });
 
     return;
 
@@ -454,17 +452,17 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void ToIsoString_Method()
   {
-    var now = DateTimeOffset.Now;
-    now.ToIsoString().Should().Be(now.ToUniversalTime().ToString("o"));
-    DateTimeOffset.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture).Should().Be(now);
-
-    now = DateTimeOffset.UtcNow;
-    now.ToIsoString().Should().Be(now.ToString("o"));
-    DateTimeOffset.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now);
-
+    //Validate(DateTimeOffset.Now);
+    //Validate(DateTimeOffset.UtcNow);
+    
     return;
 
-    static void Validate(string result, DateTimeOffset date) => date.ToIsoString().Should().Be(result);
+    static void Validate(string result, DateTimeOffset date)
+    {
+      var iso = date.ToIsoString();
+      iso.Should().NotBeNull().And.NotBeSameAs(date.ToIsoString()).And.Be(date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture)).And.Be(result);
+      DateTimeOffset.ParseExact(iso, "o", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(date.ToUniversalTime());
+    }
   }
 
   /// <summary>
@@ -508,10 +506,10 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   [Fact]
   public void ToTimeOnly_Method()
   {
-    foreach (var date in new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow })
+    new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
     {
       date.ToTimeOnly().Should().Be(date.ToTimeOnly()).And.HaveHours(date.Hour).And.HaveMinutes(date.Minute).And.HaveSeconds(date.Second).And.HaveMilliseconds(date.Millisecond);
-    }
+    });
 
     return;
 

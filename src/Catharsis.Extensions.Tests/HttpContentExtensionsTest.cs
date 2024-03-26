@@ -60,12 +60,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((HttpContent) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
-    foreach (var bytes in new[] { [], Attributes.RandomBytes() })
+    new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
     {
       using var content = new ByteArrayContent(bytes);
 
       content.ToBytes().Should().NotBeNull().And.NotBeSameAs(content.ToBytes()).And.Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(bytes);
-    }
+    });
 
     return;
 
@@ -86,13 +86,13 @@ public sealed class HttpContentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
 
-    foreach (var bytes in new[] { [], Attributes.RandomBytes() })
+    new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
     {
       using var content = new ByteArrayContent(bytes);
 
       content.ToBytesAsync().Should().NotBeNull().And.NotBeSameAs(content.ToBytesAsync());
       content.ToBytesAsync().ToArray().Should().Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(bytes);
-    }
+    });
 
     return;
 
@@ -113,12 +113,12 @@ public sealed class HttpContentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((HttpContent) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
-    foreach (var text in new[] { string.Empty, Attributes.RandomString() })
+    new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
     {
       using var content = new StringContent(text);
 
       content.ToText().Should().NotBeNull().And.NotBeSameAs(content.ToText()).And.Be(content.ReadAsStringAsync().Await()).And.Be(text);
-    }
+    });
 
     return;
 
@@ -139,7 +139,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((HttpContent) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
 
-    foreach (var text in new[] { string.Empty, Attributes.RandomString() })
+    new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
     {
       using var content = new StringContent(text);
 
@@ -147,7 +147,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
       content.ToTextAsync().Should().NotBeNull().And.NotBeSameAs(content.ToTextAsync());
       content.ToTextAsync().Await().Should().Be(content.ReadAsStringAsync().Await()).And.Be(text);
-    }
+    });
 
     return;
 

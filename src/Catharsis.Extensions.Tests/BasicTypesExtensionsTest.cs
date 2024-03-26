@@ -1,7 +1,6 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using FluentAssertions.Extensions;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -21,19 +20,18 @@ public sealed class BasicTypesExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    foreach (var character in new[] { char.MinValue, char.MaxValue })
+    new[] { char.MinValue, char.MaxValue }.ForEach(character =>
     {
-      character.Repeat(0).Should().NotBeNull().And.BeSameAs(character.Repeat(0)).And.BeEmpty();
-
-      var text = character.Repeat(count);
-      text.Should().NotBeNull().And.NotBeSameAs(character.Repeat(count)).And.HaveLength(count);
-      text.ToCharArray().Should().AllBeEquivalentTo(character);
-    }
+      Validate(character, count);
+    });
 
     return;
 
     static void Validate(char character, int count)
     {
+      var result = character.Repeat(count);
+      result.Should().NotBeNull().And.NotBeSameAs(character.Repeat(count)).And.HaveLength(count);
+      result.ToCharArray().Should().AllBeEquivalentTo(character);
     }
   }
 
@@ -89,6 +87,10 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       counter = 0;
       count.Times(() => counter++);
       counter.Should().Be(count);
+
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -107,13 +109,13 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       values = [];
       count.Times(values.Add);
       values.Should().HaveCount(count).And.Equal(Enumerable.Range(0, count));
+
+      static void Validate()
+      {
+      }
     }
 
-    return;
-
-    static void Validate()
-    {
-    }
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -153,6 +155,10 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       0.Objects<object>().Should().BeEmpty();
       1.Objects<Guid>().Should().Equal(Guid.Empty);
       count.Objects<Guid>().Should().HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
+
+      static void Validate(int count)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -163,6 +169,10 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       0.Objects(() => new object()).Should().BeEmpty();
       1.Objects(() => Guid.Empty).Should().Equal(Guid.Empty);
       count.Objects(() => Guid.Empty).Should().HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
+
+      static void Validate(int count)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -173,15 +183,13 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       0.Objects(index => index).Should().BeEmpty();
       1.Objects(index => index).Should().Equal(0);
       count.Objects(index => index).Should().Equal(Enumerable.Range(0, count));
+
+      static void Validate(int count)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(int count)
-    {
-    }
   }
 
   /// <summary>

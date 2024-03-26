@@ -66,7 +66,7 @@ public sealed class DriveInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DirectoryInfo[] result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.Directories(pattern, recursive).Should().Equal(result);
+    static void Validate(IEnumerable<DirectoryInfo> result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.Directories(pattern, recursive).Should().Equal(result);
   }
 
   /// <summary>

@@ -118,10 +118,10 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((IPHostEntry) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
 
-    foreach (var host in new[] { new IPHostEntry(), new IPHostEntry { AddressList = [] } })
+    new[] { new IPHostEntry(), new IPHostEntry { AddressList = [] } }.ForEach(host =>
     {
       host.ToEnumerable().Should().NotBeNull().And.BeSameAs(host.ToEnumerable()).And.Equal(host.AddressList ?? []);
-    }
+    });
 
     return;
 

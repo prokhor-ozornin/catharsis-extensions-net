@@ -22,7 +22,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
     DateOnly.MaxValue.Min(DateOnly.MaxValue).Should().Be(DateOnly.MaxValue);
     DateOnly.MaxValue.Min(DateOnly.MinValue).Should().Be(DateOnly.MinValue);
 
-    foreach (var date in new[] { DateTime.Now, DateTime.UtcNow })
+    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       var dateOnly = DateOnly.FromDateTime(date);
 
@@ -33,7 +33,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
       dateOnly.AddYears(1).Min(dateOnly).Should().Be(dateOnly);
       dateOnly.AddMonths(1).Min(dateOnly).Should().Be(dateOnly);
       dateOnly.AddDays(1).Min(dateOnly).Should().Be(dateOnly);
-    }
+    });
 
     return;
 
@@ -52,9 +52,10 @@ public sealed class DateOnlyExtensionsTest : UnitTest
     DateOnly.MaxValue.Max(DateOnly.MaxValue).Should().Be(DateOnly.MaxValue);
     DateOnly.MaxValue.Max(DateOnly.MinValue).Should().Be(DateOnly.MaxValue);
 
-    foreach (var date in new[] { DateTime.Now, DateTime.UtcNow })
+    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       var dateOnly = DateOnly.FromDateTime(date);
+
       dateOnly.Max(dateOnly).Should().Be(dateOnly);
       dateOnly.AddYears(0).Max(dateOnly).Should().Be(dateOnly);
       dateOnly.AddMonths(0).Max(dateOnly).Should().Be(dateOnly);
@@ -62,7 +63,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
       dateOnly.AddYears(1).Max(dateOnly).Should().Be(dateOnly.AddYears(1));
       dateOnly.AddMonths(1).Max(dateOnly).Should().Be(dateOnly.AddMonths(1));
       dateOnly.AddDays(1).Max(dateOnly).Should().Be(dateOnly.AddDays(1));
-    }
+    });
 
     return;
 
@@ -75,7 +76,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void Range_Methods()
   {
-    foreach (var date in new[] { DateTime.Now, DateTime.UtcNow })
+    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       var dateOnly = DateOnly.FromDateTime(date);
 
@@ -94,7 +95,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
 
       dateOnly.Range(dateOnly.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(2));
       dateOnly.Range(dateOnly.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly.AddDays(-3), dateOnly.AddDays(-1));
-    }
+    });
 
     return;
 

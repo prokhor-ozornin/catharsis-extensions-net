@@ -1099,7 +1099,7 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.Range(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().Range(int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>();
 
-    foreach (var max in new int?[] {null, 0, int.MaxValue})
+    new int?[] { null, 0, int.MaxValue }.ForEach(max =>
     {
       var range = new Random().Range(max);
       range.Should().NotBeNull().And.NotBeSameAs(new Random().Range());
@@ -1107,7 +1107,7 @@ public sealed class RandomExtensionsTest : UnitTest
       range.Start.Value.Should().Be(0);
       range.End.IsFromEnd.Should().BeFalse();
       range.End.Value.Should().BeInRange(0, max ?? int.MaxValue);
-    }
+    });
 
     return;
 
@@ -1122,17 +1122,14 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void RangeSequence_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.RangeSequence(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
-      AssertionExtensions.Should(() => new Random().RangeSequence(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    AssertionExtensions.Should(() => RandomExtensions.RangeSequence(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => new Random().RangeSequence(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      const int count = 1000;
+    const int count = 1000;
 
-      new Random().RangeSequence(0).Should().NotBeSameAs(new Random().RangeSequence(0)).And.BeEmpty();
-      new Random().RangeSequence(count, 0).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => Validate(element, 0));
-      new Random().RangeSequence(count).Should().NotBeNull().And.NotBeSameAs(new Random().RangeSequence(count)).And.HaveCount(count).And.AllSatisfy(element => Validate(element, null));
-    }
+    new Random().RangeSequence(0).Should().NotBeSameAs(new Random().RangeSequence(0)).And.BeEmpty();
+    new Random().RangeSequence(count, 0).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => Validate(element, 0));
+    new Random().RangeSequence(count).Should().NotBeNull().And.NotBeSameAs(new Random().RangeSequence(count)).And.HaveCount(count).And.AllSatisfy(element => Validate(element, null));
 
     return;
 
@@ -1198,7 +1195,10 @@ public sealed class RandomExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => RandomExtensions.Object(null, Enumerable.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().Object((IEnumerable<Type>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
-      
+
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -1206,12 +1206,9 @@ public sealed class RandomExtensionsTest : UnitTest
       AssertionExtensions.Should(() => RandomExtensions.Object(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().Object(null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
 
-    }
-
-    return;
-
-    static void Validate()
-    {
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
@@ -1233,7 +1230,9 @@ public sealed class RandomExtensionsTest : UnitTest
       AssertionExtensions.Should(() => new Random().ObjectSequence(0, (IEnumerable<Type>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
       AssertionExtensions.Should(() => new Random().ObjectSequence(-1, Enumerable.Empty<Type>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -1242,12 +1241,9 @@ public sealed class RandomExtensionsTest : UnitTest
       AssertionExtensions.Should(() => new Random().ObjectSequence(0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
       AssertionExtensions.Should(() => new Random().ObjectSequence(-1, [])).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-    }
-
-    return;
-
-    static void Validate()
-    {
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
@@ -1361,19 +1357,16 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void FilePathSequence_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.FilePathSequence(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
-      AssertionExtensions.Should(() => new Random().FilePathSequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    AssertionExtensions.Should(() => RandomExtensions.FilePathSequence(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => new Random().FilePathSequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      const int count = 1000;
+    const int count = 1000;
 
-      new Random().FilePathSequence(0).Should().NotBeNull().And.NotBeSameAs(new Random().FilePathSequence(0)).And.BeEmpty();
-      new Random().FilePathSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(path, Path.GetTempPath()));
+    new Random().FilePathSequence(0).Should().NotBeNull().And.NotBeSameAs(new Random().FilePathSequence(0)).And.BeEmpty();
+    new Random().FilePathSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(path, Path.GetTempPath()));
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
-      new Random().FilePathSequence(count, currentDirectory).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(path, currentDirectory.FullName));
-    }
+    var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+    new Random().FilePathSequence(count, currentDirectory).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(path, currentDirectory.FullName));
 
     return;
 
@@ -1417,20 +1410,17 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void DirectoryPathSequence_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.DirectoryPathSequence(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
-      AssertionExtensions.Should(() => new Random().DirectoryPathSequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    AssertionExtensions.Should(() => RandomExtensions.DirectoryPathSequence(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => new Random().DirectoryPathSequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      const int count = 1000;
+    const int count = 1000;
 
-      new Random().DirectoryPathSequence(0).Should().NotBeNull().And.NotBeSameAs(new Random().DirectoryPathSequence(0)).And.BeEmpty();
+    new Random().DirectoryPathSequence(0).Should().NotBeNull().And.NotBeSameAs(new Random().DirectoryPathSequence(0)).And.BeEmpty();
 
-      new Random().DirectoryPathSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(Path.GetTempPath(), path));
+    new Random().DirectoryPathSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(Path.GetTempPath(), path));
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
-      new Random().DirectoryPathSequence(count, currentDirectory).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(currentDirectory.FullName, path));
-    }
+    var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+    new Random().DirectoryPathSequence(count, currentDirectory).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(currentDirectory.FullName, path));
 
     return;
 
@@ -1448,15 +1438,12 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void Directory_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.Directory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => RandomExtensions.Directory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      Validate(new Random().Directory(), Path.GetTempPath());
+    Validate(new Random().Directory(), Path.GetTempPath());
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
-      Validate(currentDirectory, currentDirectory.FullName);
-    }
+    var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+    Validate(currentDirectory, currentDirectory.FullName);
 
     return;
 
@@ -1482,20 +1469,17 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void DirectorySequence_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.DirectorySequence(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
-      AssertionExtensions.Should(() => new Random().DirectorySequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    AssertionExtensions.Should(() => RandomExtensions.DirectorySequence(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => new Random().DirectorySequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      const int count = 10;
+    const int count = 10;
 
-      new Random().DirectorySequence(0).Should().NotBeNull().And.NotBeSameAs(new Random().DirectorySequence(0)).And.BeEmpty();
+    new Random().DirectorySequence(0).Should().NotBeNull().And.NotBeSameAs(new Random().DirectorySequence(0)).And.BeEmpty();
 
-      new Random().DirectorySequence(count).Should().NotBeNull().And.NotBeSameAs(new Random().DirectorySequence(count)).And.HaveCount(count).And.AllSatisfy(directory => Validate(directory, Path.GetTempPath()));
+    new Random().DirectorySequence(count).Should().NotBeNull().And.NotBeSameAs(new Random().DirectorySequence(count)).And.HaveCount(count).And.AllSatisfy(directory => Validate(directory, Path.GetTempPath()));
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
-      new Random().DirectorySequence(count, currentDirectory).Should().NotBeNull().And.NotBeSameAs(new Random().DirectorySequence(count, currentDirectory)).And.HaveCount(count).And.AllSatisfy(directory => Validate(directory, currentDirectory.FullName));
-    }
+    var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+    new Random().DirectorySequence(count, currentDirectory).Should().NotBeNull().And.NotBeSameAs(new Random().DirectorySequence(count, currentDirectory)).And.HaveCount(count).And.AllSatisfy(directory => Validate(directory, currentDirectory.FullName));
 
     return;
 
@@ -1521,15 +1505,12 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void File_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.File(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => RandomExtensions.File(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      Validate(new Random().File(), Path.GetTempPath());
+    Validate(new Random().File(), Path.GetTempPath());
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
-      Validate(new Random().File(currentDirectory), currentDirectory.FullName);
-    }
+    var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+    Validate(new Random().File(currentDirectory), currentDirectory.FullName);
 
     return;
 
@@ -1556,20 +1537,17 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void FileSequence_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.FileSequence(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
-      AssertionExtensions.Should(() => new Random().FileSequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    AssertionExtensions.Should(() => RandomExtensions.FileSequence(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+    AssertionExtensions.Should(() => new Random().FileSequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      const int count = 10;
+    const int count = 10;
 
-      new Random().FileSequence(0).Should().NotBeNull().And.NotBeSameAs(new Random().FileSequence(0)).And.BeEmpty();
+    new Random().FileSequence(0).Should().NotBeNull().And.NotBeSameAs(new Random().FileSequence(0)).And.BeEmpty();
 
-      new Random().FileSequence(count).Should().NotBeNull().And.NotBeSameAs(new Random().FileSequence(count)).And.HaveCount(count).And.AllSatisfy(file => Validate(file, Path.GetTempPath()));
+    new Random().FileSequence(count).Should().NotBeNull().And.NotBeSameAs(new Random().FileSequence(count)).And.HaveCount(count).And.AllSatisfy(file => Validate(file, Path.GetTempPath()));
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
-      new Random().FileSequence(count, currentDirectory).Should().NotBeNull().And.NotBeSameAs(new Random().FileSequence(count, currentDirectory)).And.HaveCount(count).And.AllSatisfy(file => Validate(file, currentDirectory.FullName));
-    }
+    var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+    new Random().FileSequence(count, currentDirectory).Should().NotBeNull().And.NotBeSameAs(new Random().FileSequence(count, currentDirectory)).And.HaveCount(count).And.AllSatisfy(file => Validate(file, currentDirectory.FullName));
 
     return;
 
@@ -1599,13 +1577,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.BinaryFile(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().BinaryFile(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1614,27 +1592,26 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void BinaryFileAsync_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
-      AssertionExtensions.Should(() => new Random().BinaryFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
+    AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+    AssertionExtensions.Should(() => new Random().BinaryFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
 
-      /*const int size = 4096;
+    /*const int size = 4096;
 
-      var tempPath = Path.GetTempPath();
+    var tempPath = Path.GetTempPath();
 
-      Validate(new Random().BinaryFile(int.MinValue), tempPath
+    Validate(new Random().BinaryFile(int.MinValue), tempPath
 
-                                     //int.MinValue, null);
+                                   //int.MinValue, null);
 
 
-      Validate( int.MinValue);
-      Validate(0);
-      Validate(size);
-      Validate(size, 0, 0);
-      Validate(size, byte.MinValue, byte.MinValue);
-      Validate(size, byte.MaxValue, byte.MaxValue);*/
-    }
+    Validate( int.MinValue);
+    Validate(0);
+    Validate(size);
+    Validate(size, 0, 0);
+    Validate(size, byte.MinValue, byte.MinValue);
+    Validate(size, byte.MaxValue, byte.MaxValue);*/
+
+    throw new NotImplementedException();
 
     return;
 
@@ -1671,8 +1648,6 @@ public sealed class RandomExtensionsTest : UnitTest
         }
       });
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1684,13 +1659,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.BinaryFileInRange(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().BinaryFileInRange(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1699,27 +1674,26 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void BinaryFileInRangeAsync_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.BinaryFileInRangeAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
-      AssertionExtensions.Should(() => new Random().BinaryFileInRangeAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
-      AssertionExtensions.Should(() => new Random().BinaryFileInRangeAsync(0, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    AssertionExtensions.Should(() => RandomExtensions.BinaryFileInRangeAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+    AssertionExtensions.Should(() => new Random().BinaryFileInRangeAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
+    AssertionExtensions.Should(() => new Random().BinaryFileInRangeAsync(0, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      const int size = 4096;
+    const int size = 4096;
 
-      Validate(0);
-      Validate(size);
+    Validate(0);
+    Validate(size);
 
-      //Validate(size, Range.All);
-      //Validate(size, ..int.MaxValue);
-      Validate(size, ..0);
-      Validate(size, ..byte.MinValue);
-      Validate(size, byte.MaxValue..byte.MaxValue);
+    //Validate(size, Range.All);
+    //Validate(size, ..int.MaxValue);
+    Validate(size, ..0);
+    Validate(size, ..byte.MinValue);
+    Validate(size, byte.MaxValue..byte.MaxValue);
 
-      //Validate(size, ..0, Range.All);
-      //Validate(size, ..0, ..byte.MaxValue);
-      Validate(size, ..0, 1..2);
-    }
+    //Validate(size, ..0, Range.All);
+    //Validate(size, ..0, ..byte.MaxValue);
+    Validate(size, ..0, 1..2);
+
+    throw new NotImplementedException();
 
     return;
 
@@ -1751,8 +1725,6 @@ public sealed class RandomExtensionsTest : UnitTest
         }
       });
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1765,13 +1737,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().BinaryFileSequence(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
     AssertionExtensions.Should(() => new Random().BinaryFileSequence(0, -1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1784,13 +1756,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().BinaryFileSequenceAsync(-1, 0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
     AssertionExtensions.Should(() => new Random().BinaryFileSequenceAsync(0, -1).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1803,13 +1775,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().BinaryFileSequenceInRange(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
     AssertionExtensions.Should(() => new Random().BinaryFileSequenceInRange(0, -1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1822,13 +1794,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().BinaryFileSequenceInRangeAsync(-1, 0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
     AssertionExtensions.Should(() => new Random().BinaryFileSequenceInRangeAsync(0, -1).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1840,13 +1812,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.TextFile(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().TextFile(-1)).ThrowExactly<ArgumentNullException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1858,13 +1830,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.TextFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
     AssertionExtensions.Should(() => new Random().TextFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1876,13 +1848,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.TextFileInRange(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().TextFileInRange(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1894,13 +1866,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.TextFileInRangeAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
     AssertionExtensions.Should(() => new Random().TextFileInRangeAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1913,13 +1885,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().TextFileSequence(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
     AssertionExtensions.Should(() => new Random().TextFileSequence(0, -1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1932,13 +1904,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().TextFileSequenceAsync(-1, 0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
     AssertionExtensions.Should(() => new Random().TextFileSequenceAsync(0, -1).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1951,13 +1923,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().TextFileSequenceInRange(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
     AssertionExtensions.Should(() => new Random().TextFileSequenceInRange(0, -1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1970,13 +1942,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().TextFileSequenceInRangeAsync(-1, 0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
     AssertionExtensions.Should(() => new Random().TextFileSequenceInRangeAsync(0, -1).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -1987,13 +1959,13 @@ public sealed class RandomExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => RandomExtensions.IpV6Address(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2005,13 +1977,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.IpV6AddressSequence(null, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().IpV6AddressSequence(-1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2038,13 +2010,13 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().ByteSequence(count, byte.MaxValue, byte.MinValue).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
     new Random().ByteSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2058,13 +2030,13 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2077,13 +2049,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().PhysicalAddressSequence(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
     AssertionExtensions.Should(() => new Random().PhysicalAddressSequence(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2096,13 +2068,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new Random().PhysicalAddressSequenceInRange(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
     AssertionExtensions.Should(() => new Random().PhysicalAddressSequenceInRange(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2114,13 +2086,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.MemoryStream(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().MemoryStream(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2129,42 +2101,39 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void MemoryStreamAsync_Method()
   {
-    using (new AssertionScope())
+    AssertionExtensions.Should(() => RandomExtensions.MemoryStreamAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+    AssertionExtensions.Should(() => new Random().MemoryStreamAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
+
+    const int count = 1000;
+
+    new Random().MemoryStreamAsync(0).Await().Length.Should().Be(0);
+    new Random().MemoryStreamAsync(0, null, null, Attributes.CancellationToken()).Await().Length.Should().Be(0);
+
+    using (var stream = new Random().MemoryStreamAsync(count).Await())
     {
-      AssertionExtensions.Should(() => RandomExtensions.MemoryStreamAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
-      AssertionExtensions.Should(() => new Random().MemoryStreamAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
+      AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      const int count = 1000;
+      Validate(stream, count);
 
-      new Random().MemoryStreamAsync(0).Await().Length.Should().Be(0);
-      new Random().MemoryStreamAsync(0, null, null, Attributes.CancellationToken()).Await().Length.Should().Be(0);
+      stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
+    }
 
-      using (var stream = new Random().MemoryStreamAsync(count).Await())
-      {
-        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (var stream = new Random().MemoryStreamAsync(count, 0, 100).Await())
+    {
+      AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-        Validate(stream, count);
+      Validate(stream, count);
 
-        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
-      }
+      stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, 100));
+    }
 
-      using (var stream = new Random().MemoryStreamAsync(count, 0, 100).Await())
-      {
-        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (var stream = new Random().MemoryStreamAsync(count, 0, 0).Await())
+    {
+      AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-        Validate(stream, count);
+      Validate(stream, count);
 
-        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, 100));
-      }
-
-      using (var stream = new Random().MemoryStreamAsync(count, 0, 0).Await())
-      {
-        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-        Validate(stream, count);
-
-        stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
-      }
+      stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
     }
 
     return;
@@ -2190,13 +2159,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.MemoryStreamInRange(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().MemoryStreamInRange(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2205,41 +2174,38 @@ public sealed class RandomExtensionsTest : UnitTest
   [Fact]
   public void MemoryStreamInRangeAsync_Method()
   {
-    using (new AssertionScope())
+    const int count = 1000;
+
+    AssertionExtensions.Should(() => RandomExtensions.MemoryStreamInRangeAsync(null, 0, default, 1..2)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+
+    new Random().MemoryStreamInRangeAsync(0, default, Range.All).Await().Length.Should().Be(0);
+    new Random().MemoryStreamInRangeAsync(0, Attributes.CancellationToken(), Range.All).Await().Length.Should().Be(0);
+
+    using (var stream = new Random().MemoryStreamInRangeAsync(count, default, Range.All).Await())
     {
-      const int count = 1000;
+      AssertionExtensions.Should(() => new Random().MemoryStreamInRangeAsync(count, Attributes.CancellationToken(), Range.All)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      AssertionExtensions.Should(() => RandomExtensions.MemoryStreamInRangeAsync(null, 0, default, 1..2)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+      Validate(stream, count);
 
-      new Random().MemoryStreamInRangeAsync(0, default, Range.All).Await().Length.Should().Be(0);
-      new Random().MemoryStreamInRangeAsync(0, Attributes.CancellationToken(), Range.All).Await().Length.Should().Be(0);
+      stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
+    }
 
-      using (var stream = new Random().MemoryStreamInRangeAsync(count, default, Range.All).Await())
-      {
-        AssertionExtensions.Should(() => new Random().MemoryStreamInRangeAsync(count, Attributes.CancellationToken(), Range.All)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (var stream = new Random().MemoryStreamInRangeAsync(count, default, ..100).Await())
+    {
+      AssertionExtensions.Should(() => new Random().MemoryStreamInRangeAsync(count, Attributes.CancellationToken(), Range.All)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-        Validate(stream, count);
+      Validate(stream, count);
 
-        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(byte.MinValue, byte.MaxValue));
-      }
+      stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, 100));
+    }
 
-      using (var stream = new Random().MemoryStreamInRangeAsync(count, default, ..100).Await())
-      {
-        AssertionExtensions.Should(() => new Random().MemoryStreamInRangeAsync(count, Attributes.CancellationToken(), Range.All)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (var stream = new Random().MemoryStreamInRangeAsync(count, default, ..0).Await())
+    {
+      AssertionExtensions.Should(() => new Random().MemoryStreamInRangeAsync(count, Attributes.CancellationToken(), Range.All)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-        Validate(stream, count);
+      Validate(stream, count);
 
-        stream.ToArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, 100));
-      }
-
-      using (var stream = new Random().MemoryStreamInRangeAsync(count, default, ..0).Await())
-      {
-        AssertionExtensions.Should(() => new Random().MemoryStreamInRangeAsync(count, Attributes.CancellationToken(), Range.All)).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-        Validate(stream, count);
-
-        stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
-      }
+      stream.ToArray().Should().HaveCount(count).And.AllBeEquivalentTo(0);
     }
 
     return;
@@ -2264,13 +2230,13 @@ public sealed class RandomExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => RandomExtensions.Stream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2281,13 +2247,13 @@ public sealed class RandomExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => RandomExtensions.StreamInRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2304,6 +2270,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().Uint(uint.MinValue, uint.MaxValue).Should().BeInRange(uint.MinValue, uint.MaxValue);
     new Random().Uint(uint.MaxValue, uint.MinValue).Should().BeInRange(uint.MinValue, uint.MaxValue);
     new Random().Uint().Should().BeInRange(uint.MinValue, uint.MaxValue);
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2323,6 +2291,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().UintInRange(Range.All).Should().Be(0);
     new Random().UintInRange(..0).Should().Be(0);
     new Random().UintInRange().Should().BeInRange(uint.MinValue, uint.MaxValue);
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2350,6 +2320,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().UintSequence(count, uint.MinValue, uint.MaxValue).Should().NotBeNull().And.NotBeSameAs(new Random().UintSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(uint.MinValue, uint.MaxValue));
     new Random().UintSequence(count, uint.MaxValue, uint.MinValue).Should().NotBeNull().And.NotBeSameAs(new Random().UintSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(uint.MinValue, uint.MaxValue));
     new Random().UintSequence(count).Should().NotBeNull().And.NotBeSameAs(new Random().UintSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(uint.MinValue, uint.MaxValue));
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2380,6 +2352,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().UintSequenceInRange(count, ..0, Range.All).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(0);
     new Random().UintSequenceInRange(count, ..0, 1..2).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(1);
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
@@ -2402,6 +2376,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().Long(long.MaxValue, long.MinValue).Should().BeInRange(long.MinValue, long.MaxValue);
     new Random().Long().Should().BeInRange(long.MinValue, long.MaxValue);
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
@@ -2420,6 +2396,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().LongInRange(Range.All).Should().Be(0);
     new Random().LongInRange(..0).Should().Be(0);
     new Random().LongInRange().Should().BeInRange(long.MinValue, long.MaxValue);
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2447,6 +2425,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().LongSequence(count, long.MinValue, long.MaxValue).Should().NotBeNull().And.NotBeSameAs(new Random().LongSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(long.MinValue, long.MaxValue));
     new Random().LongSequence(count, long.MaxValue, long.MinValue).Should().NotBeNull().And.NotBeSameAs(new Random().LongSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(long.MinValue, long.MaxValue));
     new Random().LongSequence(count).Should().NotBeNull().And.NotBeSameAs(new Random().LongSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(long.MinValue, long.MaxValue));
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2480,6 +2460,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().LongSequenceInRange(count, ..0, ..short.MaxValue).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, short.MaxValue));
     new Random().LongSequenceInRange(count, ..0, 1..2).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(1);
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
@@ -2496,6 +2478,8 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.Float(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
     new Random().Float().Should().BeInRange(float.MinValue, float.MaxValue);
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2517,6 +2501,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().FloatSequence(0).Should().NotBeNull().And.NotBeSameAs(new Random().FloatSequence(0)).And.BeEmpty();
     new Random().FloatSequence(count).Should().NotBeNull().And.NotBeSameAs(new Random().FloatSequence(count)).And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(float.MinValue, float.MaxValue));
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
@@ -2534,12 +2520,12 @@ public sealed class RandomExtensionsTest : UnitTest
 
     return;
 
+    throw new NotImplementedException();
+
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
-  }
+    }
 
   /// <summary>
   ///   <para>Performs testing of <see cref="RandomExtensions.IpAddressInRange(Random, Range[])"/> method.</para>
@@ -2549,13 +2535,13 @@ public sealed class RandomExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => RandomExtensions.IpAddressInRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2567,13 +2553,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.IpAddressSequence(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().IpAddressSequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2585,13 +2571,13 @@ public sealed class RandomExtensionsTest : UnitTest
     AssertionExtensions.Should(() => RandomExtensions.IpAddressSequence(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
     AssertionExtensions.Should(() => new Random().IpAddressSequence(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
     {
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -2607,6 +2593,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().DateTime(DateTime.MinValue, DateTime.MaxValue).Should().BeIn(DateTimeKind.Utc).And.BeOnOrAfter(DateTime.MinValue).And.BeOnOrBefore(DateTime.MaxValue);
     new Random().DateTime(DateTime.MaxValue, DateTime.MinValue).Should().BeIn(DateTimeKind.Utc).And.BeOnOrAfter(DateTime.MinValue).And.BeOnOrBefore(DateTime.MaxValue);
     new Random().DateTime().Should().BeIn(DateTimeKind.Utc).And.BeOnOrAfter(DateTime.MinValue).And.BeOnOrBefore(DateTime.MaxValue);
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2634,6 +2622,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().DateTimeSequence(count, DateTime.MaxValue, DateTime.MinValue).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeOnOrAfter(DateTime.MinValue).And.BeOnOrBefore(DateTime.MaxValue));
     new Random().DateTimeSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeOnOrAfter(DateTime.MinValue).And.BeOnOrBefore(DateTime.MaxValue));
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
@@ -2654,6 +2644,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().DateTimeOffset(DateTimeOffset.MinValue, DateTimeOffset.MaxValue).Should().HaveOffset(TimeSpan.Zero).And.BeOnOrAfter(DateTimeOffset.MinValue).And.BeOnOrBefore(DateTimeOffset.MaxValue);
     new Random().DateTimeOffset(DateTimeOffset.MaxValue, DateTimeOffset.MinValue).Should().HaveOffset(TimeSpan.Zero).And.BeOnOrAfter(DateTimeOffset.MinValue).And.BeOnOrBefore(DateTimeOffset.MaxValue);
     new Random().DateTimeOffset().Should().HaveOffset(TimeSpan.Zero).And.BeOnOrAfter(DateTimeOffset.MinValue).And.BeOnOrBefore(DateTimeOffset.MaxValue);
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2681,6 +2673,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().DateTimeOffsetSequence(count, DateTimeOffset.MaxValue, DateTimeOffset.MinValue).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().HaveOffset(TimeSpan.Zero).And.BeOnOrAfter(DateTimeOffset.MinValue).And.BeOnOrBefore(DateTimeOffset.MaxValue));
     new Random().DateTimeOffsetSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().HaveOffset(TimeSpan.Zero).And.BeOnOrAfter(DateTimeOffset.MinValue).And.BeOnOrBefore(DateTimeOffset.MaxValue));
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
@@ -2701,6 +2695,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().DateOnly(DateOnly.MinValue, DateOnly.MaxValue).Should().BeOnOrAfter(DateOnly.MinValue).And.BeOnOrBefore(DateOnly.MaxValue);
     new Random().DateOnly(DateOnly.MaxValue, DateOnly.MinValue).Should().BeOnOrAfter(DateOnly.MinValue).And.BeOnOrBefore(DateOnly.MaxValue);
     new Random().DateOnly().Should().BeOnOrAfter(DateOnly.MinValue).And.BeOnOrBefore(DateOnly.MaxValue);
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2729,6 +2725,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().DateOnlySequence(count, DateOnly.MaxValue, DateOnly.MinValue).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeOnOrAfter(DateOnly.MinValue).And.BeOnOrBefore(DateOnly.MaxValue));
     new Random().DateOnlySequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeOnOrAfter(DateOnly.MinValue).And.BeOnOrBefore(DateOnly.MaxValue));
 
+    throw new NotImplementedException();
+
     return;
 
     static void Validate()
@@ -2749,6 +2747,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().TimeOnly(TimeOnly.MinValue, TimeOnly.MaxValue).Should().BeOnOrAfter(TimeOnly.MinValue).And.BeOnOrBefore(TimeOnly.MaxValue);
     new Random().TimeOnly(TimeOnly.MaxValue, TimeOnly.MinValue).Should().BeOnOrAfter(TimeOnly.MinValue).And.BeOnOrBefore(TimeOnly.MaxValue);
     new Random().TimeOnly().Should().BeOnOrAfter(TimeOnly.MinValue).And.BeOnOrBefore(TimeOnly.MaxValue);
+
+    throw new NotImplementedException();
 
     return;
 
@@ -2773,6 +2773,8 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().TimeOnlySequence(count, TimeOnly.MinValue, TimeOnly.MinValue).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(TimeOnly.MinValue);
     new Random().TimeOnlySequence(count, TimeOnly.MaxValue, TimeOnly.MaxValue).Should().NotBeNull().And.HaveCount(count).And.AllBeEquivalentTo(TimeOnly.MaxValue);
     new Random().TimeOnlySequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeOnOrAfter(TimeOnly.MinValue).And.BeOnOrBefore(TimeOnly.MaxValue));
+
+    throw new NotImplementedException();
 
     return;
 

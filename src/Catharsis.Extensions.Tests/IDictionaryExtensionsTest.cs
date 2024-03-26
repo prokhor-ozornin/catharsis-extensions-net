@@ -26,6 +26,9 @@ public sealed class IDictionaryExtensionsTest : UnitTest
       AssertionExtensions.Should(() => IDictionaryExtensions.With(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().With((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
+      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -33,15 +36,12 @@ public sealed class IDictionaryExtensionsTest : UnitTest
       AssertionExtensions.Should(() => IDictionaryExtensions.With(null, Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
+      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, params (TKey key, TValue value)[] elements)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
-    {
-    }
   }
 
   /// <summary>
@@ -59,6 +59,9 @@ public sealed class IDictionaryExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((IDictionary<string, object>) null).Without(Enumerable.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().Without((IEnumerable<string>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
+      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -66,15 +69,12 @@ public sealed class IDictionaryExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((IDictionary<string, object>) null).Without(Array.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
+      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, params (TKey key, TValue value)[] elements)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
-    {
-    }
   }
 
   /// <summary>

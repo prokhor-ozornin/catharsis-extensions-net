@@ -71,7 +71,7 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void Range_Methods()
   {
-    foreach (var date in new[] { DateTime.Now, DateTime.UtcNow })
+    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
       var timeOnly = TimeOnly.FromDateTime(date);
 
@@ -90,7 +90,7 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
 
       timeOnly.Range(timeOnly.Add(3.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(3.Milliseconds()), 2.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(2.Milliseconds()));
       timeOnly.Range(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly.Add(-3.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
-    }
+    });
 
     return;
 

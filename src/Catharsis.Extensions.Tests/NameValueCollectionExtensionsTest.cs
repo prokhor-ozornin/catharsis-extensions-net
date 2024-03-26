@@ -48,6 +48,9 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.With(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().With((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
+      static void Validate(NameValueCollection collection)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -55,15 +58,12 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.With(null, Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
+      static void Validate(NameValueCollection collection)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 
   /// <summary>
@@ -81,6 +81,9 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Without(null, Enumerable.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().Without((IEnumerable<string>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
+      static void Validate(NameValueCollection collection, IEnumerable<string> elements)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -88,15 +91,12 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Without(null, Array.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
+      static void Validate(NameValueCollection collection, params string[] elements)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 
   /// <summary>
@@ -105,13 +105,10 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+    AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
-      Validate([]);
-      Validate(new NameValueCollection().With(Attributes.RandomObjects().Select(element => (element.GetType().FullName, element))));
-    }
+    Validate([]);
+    Validate(new NameValueCollection().With(Attributes.RandomObjects().Select(element => (element.GetType().FullName, element))));
 
     return;
 

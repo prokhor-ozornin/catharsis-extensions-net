@@ -14,7 +14,7 @@ public sealed class ICollectionExtensionsTest : UnitTest
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="ICollectionExtensions.With{T}(ICollection{T}, IEnumerable{T})"/></description></item>
-  ///     <item><description><see cref="ICollectionExtensions.With{T}(ICollection{T}, IEnumerable{T})"/></description></item>
+  ///     <item><description><see cref="ICollectionExtensions.With{T}(ICollection{T}, T[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -33,6 +33,10 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
       collection.With(elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
       collection.With(elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements.Concat(elements));
+
+      static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -40,15 +44,12 @@ public sealed class ICollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ICollectionExtensions.With<object>(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("to");
       AssertionExtensions.Should(() => ICollectionExtensions.With(Array.Empty<object>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
+      static void Validate<T>(ICollection<T> collection, params T[] elements)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
-    {
-    }
   }
 
   /// <summary>
@@ -76,6 +77,10 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
       collection = [..elements];
       collection.Without(elements).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+
+      static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -83,15 +88,12 @@ public sealed class ICollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((ICollection<object>) null).Without([])).ThrowExactly<ArgumentNullException>().WithParameterName("from");
       AssertionExtensions.Should(() => Array.Empty<object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
+      static void Validate<T>(ICollection<T> collection, params T[] elements)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
-    {
-    }
   }
 
   /// <summary>
@@ -100,14 +102,11 @@ public sealed class ICollectionExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ICollectionExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
-      AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
+    AssertionExtensions.Should(() => ICollectionExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+    AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
 
-      Validate(Array.Empty<object>().ToList());
-      Validate(Attributes.RandomObjects().ToList());
-    }
+    Validate(Array.Empty<object>().ToList());
+    Validate(Attributes.RandomObjects().ToList());
 
     return;
 

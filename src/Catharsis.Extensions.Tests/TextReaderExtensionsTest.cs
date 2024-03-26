@@ -17,16 +17,13 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void IsEnd_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Attributes.RandomReadOnlyForwardStream().ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
+    AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    AssertionExtensions.Should(() => Attributes.RandomReadOnlyForwardStream().ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
 
-      Validate(Stream.Null.ToStreamReader());
-      Validate(Attributes.EmptyStream().ToStreamReader());
-      Validate(Attributes.RandomStream().ToStreamReader());
-      Validate(Attributes.RandomReadOnlyStream().ToStreamReader());
-    }
+    Validate(Stream.Null.ToStreamReader());
+    Validate(Attributes.EmptyStream().ToStreamReader());
+    Validate(Attributes.RandomStream().ToStreamReader());
+    Validate(Attributes.RandomReadOnlyStream().ToStreamReader());
 
     return;
 
@@ -227,25 +224,31 @@ public sealed class TextReaderExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      static void Validate(TextReader reader)
+      {
+        using (reader)
+        {
+
+        }
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      static void Validate(TextReader reader, int count)
+      {
+        using (reader)
+        {
+
+        }
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TextReader reader)
-    {
-      using (reader)
-      {
-
-      }
-    }
   }
 
   /// <summary>
@@ -261,25 +264,31 @@ public sealed class TextReaderExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+
+      static void Validate(TextReader reader)
+      {
+        using (reader)
+        {
+
+        }
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToAsyncEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      static void Validate(TextReader reader, int count)
+      {
+        using (reader)
+        {
+
+        }
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TextReader reader)
-    {
-      using (reader)
-      {
-
-      }
-    }
   }
 
   /// <summary>

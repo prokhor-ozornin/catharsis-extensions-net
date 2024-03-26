@@ -81,6 +81,9 @@ public sealed class IListExtensionsTest : UnitTest
       AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(0, (IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
       AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(-1, Enumerable.Empty<object>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
 
+      static void Validate<T>(IList<T> list)
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -89,15 +92,12 @@ public sealed class IListExtensionsTest : UnitTest
       AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
       AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(-1, [])).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
 
+      static void Validate<T>(IList<T> list)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate<T>(IList<T> list)
-    {
-    }
   }
 
   /// <summary>
@@ -118,21 +118,23 @@ public sealed class IListExtensionsTest : UnitTest
       AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
       AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, 0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
       AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, 0, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+
+      static void Validate<T>(IList<T> list)
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IListExtensions.Fill(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().Fill((Func<int, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("filler");
+
+      static void Validate<T>(IList<T> list)
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate<T>(IList<T> list)
-    {
-    }
   }
 
   /// <summary>

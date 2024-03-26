@@ -402,9 +402,10 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
+  /// <param name="culture"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string CapitalizeAll(this string text) => text is not null ? text.Length > 0 ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text) : string.Empty : throw new ArgumentNullException(nameof(text));
+  public static string CapitalizeAll(this string text, CultureInfo culture = null) => text is not null ? text.Length > 0 ? (culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
   ///   <para>Multiplies/repeats value of source string given number of times, returning resulting string.</para>

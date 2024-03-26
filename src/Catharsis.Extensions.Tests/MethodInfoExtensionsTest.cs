@@ -86,6 +86,10 @@ public sealed class MethodInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => MethodInfoExtensions.ToDelegate<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
@@ -102,14 +106,12 @@ public sealed class MethodInfoExtensionsTest : UnitTest
       AssertionExtensions.Should(() => methodDelegate.DynamicInvoke(new object(), new object())).ThrowExactly<TargetParameterCountException>();
       methodDelegate.DynamicInvoke("test").To<string>().Should().Be("test");
       method.ToDelegate(typeof(AsString)).Should().Be(method.ToDelegate<AsString>());
+
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 }

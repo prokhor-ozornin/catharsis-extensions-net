@@ -37,15 +37,12 @@ public sealed class StreamWriterExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
+    AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+    AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
 
-      Validate(Attributes.EmptyStream().ToStreamWriter());
-      Validate(Attributes.RandomStream().ToStreamWriter());
-      Validate(Attributes.WriteOnlyStream().ToStreamWriter());
-    }
+    Validate(Attributes.EmptyStream().ToStreamWriter());
+    Validate(Attributes.RandomStream().ToStreamWriter());
+    Validate(Attributes.WriteOnlyStream().ToStreamWriter());
 
     return;
 
@@ -66,13 +63,10 @@ public sealed class StreamWriterExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StreamWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+    AssertionExtensions.Should(() => ((StreamWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
-      Validate(Stream.Null.ToStreamWriter());
-      Validate(Attributes.RandomStream().ToStreamWriter());
-    }
+    Validate(Stream.Null.ToStreamWriter());
+    Validate(Attributes.RandomStream().ToStreamWriter());
 
     return;
 
@@ -92,13 +86,10 @@ public sealed class StreamWriterExtensionsTest : UnitTest
   [Fact]
   public void Rewind_Method()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+    AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
-      Validate(Stream.Null.ToStreamWriter(), Attributes.RandomBytes());
-      Validate(Attributes.RandomStream().ToStreamWriter(), Attributes.RandomBytes());
-    }
+    Validate(Stream.Null.ToStreamWriter(), Attributes.RandomBytes());
+    Validate(Attributes.RandomStream().ToStreamWriter(), Attributes.RandomBytes());
 
     return;
 

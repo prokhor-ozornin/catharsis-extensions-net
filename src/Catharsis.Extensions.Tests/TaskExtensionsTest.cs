@@ -25,27 +25,30 @@ public sealed class TaskExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((Task) null).Await()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Task<object>) null).Await()).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Task<object>) null).Await(out _)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 
   /// <summary>
@@ -62,21 +65,21 @@ public sealed class TaskExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((Task) null).Execute()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Task<object>) null).Execute()).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 
   /// <summary>
@@ -93,21 +96,21 @@ public sealed class TaskExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((Task) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Task<object>) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
   
   /// <summary>
@@ -123,19 +126,21 @@ public sealed class TaskExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => TaskExtensions.ToValueTask(null)).ThrowExactly<ArgumentNullException>().WithParameterName("task");
+
+      static void Validate()
+      {
+      }
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => TaskExtensions.ToValueTask<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("task");
+
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 }
