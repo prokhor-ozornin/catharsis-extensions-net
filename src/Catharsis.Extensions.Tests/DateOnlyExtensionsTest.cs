@@ -1,4 +1,3 @@
-using System;
 using Catharsis.Commons;
 using FluentAssertions;
 using Xunit;
@@ -84,17 +83,17 @@ public sealed class DateOnlyExtensionsTest : UnitTest
       dateOnly.Range(dateOnly, TimeSpan.FromTicks(1)).Should().BeEmpty();
       dateOnly.Range(dateOnly, TimeSpan.FromTicks(-1)).Should().BeEmpty();
 
-      dateOnly.Range(dateOnly.AddDays(1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(1), 1.Days())).And.HaveCount(1).And.Equal(dateOnly);
-      dateOnly.Range(dateOnly.AddDays(-1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-1), 1.Days())).And.HaveCount(1).And.Equal(dateOnly.AddDays(-1));
+      dateOnly.Range(dateOnly.AddDays(1), 1.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(dateOnly);
+      dateOnly.Range(dateOnly.AddDays(-1), 1.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(dateOnly.AddDays(-1));
 
-      dateOnly.Range(dateOnly.AddDays(1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(1), 2.Days())).And.HaveCount(1).And.Equal(dateOnly);
-      dateOnly.Range(dateOnly.AddDays(-1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-1), 2.Days())).And.HaveCount(1).And.Equal(dateOnly.AddDays(-1));
+      dateOnly.Range(dateOnly.AddDays(1), 2.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(dateOnly);
+      dateOnly.Range(dateOnly.AddDays(-1), 2.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(dateOnly.AddDays(-1));
 
-      dateOnly.Range(dateOnly.AddDays(2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(2), 1.Days())).And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(1));
-      dateOnly.Range(dateOnly.AddDays(-2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-2), 1.Days())).And.HaveCount(2).And.Equal(dateOnly.AddDays(-2), dateOnly.AddDays(-1));
+      dateOnly.Range(dateOnly.AddDays(2), 1.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(1));
+      dateOnly.Range(dateOnly.AddDays(-2), 1.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(dateOnly.AddDays(-2), dateOnly.AddDays(-1));
 
-      dateOnly.Range(dateOnly.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(2));
-      dateOnly.Range(dateOnly.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(dateOnly.Range(dateOnly.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(dateOnly.AddDays(-3), dateOnly.AddDays(-1));
+      dateOnly.Range(dateOnly.AddDays(3), 2.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(dateOnly, dateOnly.AddDays(2));
+      dateOnly.Range(dateOnly.AddDays(-3), 2.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(dateOnly.AddDays(-3), dateOnly.AddDays(-1));
     });
 
     return;

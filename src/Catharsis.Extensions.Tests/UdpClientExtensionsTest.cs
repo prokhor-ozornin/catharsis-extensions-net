@@ -45,17 +45,17 @@ public sealed class UdpClientExtensionsTest : UnitTest
     receiveTimeout.Should().Be(client.Client.ReceiveTimeout).And.Be(0);
     sendTimeout.Should().Be(client.Client.SendTimeout).And.Be(0);
 
-    client.WithTimeout(null).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
+    client.WithTimeout(null).Should().BeOfType<UdpClient>().And.BeSameAs(Attributes.Udp());
     client.Client.ReceiveTimeout.Should().Be(receiveTimeout);
     client.Client.SendTimeout.Should().Be(sendTimeout);
 
     var timespan = TimeSpan.FromMilliseconds(-1);
-    client.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
+    client.WithTimeout(timespan).Should().BeOfType<UdpClient>().And.BeSameAs(Attributes.Udp());
     client.Client.ReceiveTimeout.Should().Be(0);
     client.Client.SendTimeout.Should().Be(0);
 
     timespan = TimeSpan.Zero;
-    client.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Udp());
+    client.WithTimeout(timespan).Should().BeOfType<UdpClient>().And.BeSameAs(Attributes.Udp());
     client.Client.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
     client.Client.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
 
@@ -150,7 +150,7 @@ public sealed class UdpClientExtensionsTest : UnitTest
     {
       using (client)
       {
-        client.ToBytes().Should().NotBeNull().And.NotBeSameAs(client.ToBytes()).And.Equal(result);
+        client.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
       }
     }
   }
@@ -171,7 +171,7 @@ public sealed class UdpClientExtensionsTest : UnitTest
     {
       using (client)
       {
-        client.ToBytesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(client.ToBytesAsync().ToArray()).And.Equal(result);
+        client.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(result);
       }
     }
   }
@@ -192,7 +192,7 @@ public sealed class UdpClientExtensionsTest : UnitTest
     {
       using (client)
       {
-        client.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(client.ToText(encoding)).And.Be(result);
+        client.ToText(encoding).Should().BeOfType<string>().And.Be(result);
       }
     }
   }
@@ -213,7 +213,9 @@ public sealed class UdpClientExtensionsTest : UnitTest
     {
       using (client)
       {
-        client.ToTextAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(client.ToTextAsync(encoding).Await()).And.Be(result);
+        var task = client.ToTextAsync(encoding);
+        task.Should().BeOfType<Task<string>>();
+        task.Await().Should().BeOfType<string>().And.Be(result);
       }
     }
   }

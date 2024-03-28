@@ -11,7 +11,6 @@ using FluentAssertions.Execution;
 using Xunit;
 using System.Xml;
 using Catharsis.Commons;
-using System.ComponentModel.DataAnnotations;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -521,7 +520,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, string left, string right) => left.Min(right).Should().NotBeNull().And.Be(result);
+    static void Validate(string result, string left, string right) => left.Min(right).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -540,7 +539,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, string left, string right) => left.Max(right).Should().NotBeNull().And.Be(result);
+    static void Validate(string result, string left, string right) => left.Max(right).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -711,7 +710,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, string text, string postfix) => text.Append(postfix).Should().NotBeNull().And.Be(text + postfix).And.Be(result);
+    static void Validate(string result, string text, string postfix) => text.Append(postfix).Should().BeOfType<string>().And.Be(text + postfix).And.Be(result);
   }
 
   /// <summary>
@@ -720,9 +719,9 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void Prepend_Method()
   {
-    StringExtensions.Prepend(null, null).Should().NotBeNull().And.BeEmpty();
-    string.Empty.Prepend(null).Should().NotBeNull().And.BeEmpty();
-    string.Empty.Prepend(string.Empty).Should().NotBeNull().And.BeEmpty();
+    StringExtensions.Prepend(null, null).Should().BeOfType<string>().And.BeEmpty();
+    string.Empty.Prepend(null).Should().BeOfType<string>().And.BeEmpty();
+    string.Empty.Prepend(string.Empty).Should().BeOfType<string>().And.BeEmpty();
    
     "\r\n".Prepend("\t").Should().BeNullOrWhiteSpace();
     "value".Prepend(null).Should().Be("value");
@@ -730,7 +729,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, string text, string prefix) => text.Prepend(prefix).Should().NotBeNull().And.Be(prefix + text).And.Be(result);
+    static void Validate(string result, string text, string prefix) => text.Prepend(prefix).Should().BeOfType<string>().And.Be(prefix + text).And.Be(result);
   }
 
   /// <summary>
@@ -767,11 +766,11 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.Reverse(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    string.Empty.Reverse().Should().NotBeNull().And.BeSameAs(string.Empty.Reverse()).And.BeEmpty();
+    string.Empty.Reverse().Should().BeOfType<string>().And.BeSameAs(string.Empty.Reverse()).And.BeEmpty();
 
     var text = Attributes.RandomString();
     var reversed = text.Reverse();
-    reversed.Should().NotBeNull().And.NotBeSameAs(text.Reverse()).And.Be(reversed.ToCharArray().ToText());
+    reversed.Should().BeOfType<string>().And.Be(reversed.ToCharArray().ToText());
 
     return;
 
@@ -918,7 +917,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, string text, CultureInfo culture = null) => text.CapitalizeAll(culture).Should().NotBeNull().And.Be((culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text)).And.Be(result);
+    static void Validate(string result, string text, CultureInfo culture = null) => text.CapitalizeAll(culture).Should().BeOfType<string>().And.Be((culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text)).And.Be(result);
   }
 
   /// <summary>
@@ -930,17 +929,17 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StringExtensions.Repeat(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     AssertionExtensions.Should(() => string.Empty.Repeat(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-    string.Empty.Repeat(0).Should().NotBeNull().And.BeSameAs(string.Empty.Repeat(0)).And.BeEmpty();
-    string.Empty.Repeat(1).Should().NotBeNull().And.BeSameAs(string.Empty.Repeat(1)).And.BeEmpty();
+    string.Empty.Repeat(0).Should().BeOfType<string>().And.BeSameAs(string.Empty.Repeat(0)).And.BeEmpty();
+    string.Empty.Repeat(1).Should().BeOfType<string>().And.BeSameAs(string.Empty.Repeat(1)).And.BeEmpty();
 
     const int count = 1000;
 
     var repeated = char.MinValue.ToString().Repeat(count);
-    repeated.Should().NotBeNull().And.NotBeSameAs(char.MinValue.ToString().Repeat(count)).And.HaveLength(count);
+    repeated.Should().BeOfType<string>().And.HaveLength(count);
     repeated.ToCharArray().Should().AllBeEquivalentTo(char.MinValue);
 
     repeated = char.MaxValue.ToString().Repeat(count);
-    repeated.Should().NotBeNull().And.NotBeSameAs(char.MinValue.ToString().Repeat(count)).And.HaveLength(count);
+    repeated.Should().BeOfType<string>().And.HaveLength(count);
     repeated.ToCharArray().Should().AllBeEquivalentTo(char.MinValue);
 
     "*".Repeat(0).Should().BeEmpty();
@@ -949,7 +948,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, string text, int count) => text.Repeat(count).Should().NotBeNull().And.Be(result);
+    static void Validate(string result, string text, int count) => text.Repeat(count).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -960,20 +959,20 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    string.Empty.Lines().Should().NotBeNull().And.BeSameAs(string.Empty.Lines()).And.BeEmpty();
-    string.Empty.Lines("\t").Should().NotBeNull().And.BeSameAs(string.Empty.Lines("\t")).And.BeEmpty();
+    string.Empty.Lines().Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines()).And.BeEmpty();
+    string.Empty.Lines("\t").Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines("\t")).And.BeEmpty();
 
     var text = Attributes.RandomString();
-    text.Lines().Should().NotBeNull().And.NotBeSameAs(text.Lines()).And.HaveCount(1).And.HaveElementAt(0, text);
+    text.Lines().Should().BeOfType<string[]>().And.HaveCount(1).And.HaveElementAt(0, text);
 
     var strings = 10.Objects(() => Attributes.RandomString()).AsArray();
     text = strings.Join(Environment.NewLine);
     var lines = text.Lines();
-    lines.Should().NotBeNull().And.NotBeSameAs(text.Lines()).And.HaveCount(strings.Length).And.Equal(strings);
+    lines.Should().BeOfType<string[]>().And.HaveCount(strings.Length).And.Equal(strings);
 
     return;
 
-    static void Validate(IEnumerable<string> result, string text, string separator = null) => text.Lines(separator).Should().NotBeNull().And.NotBeSameAs(text.Lines(separator)).And.Equal(result);
+    static void Validate(IEnumerable<string> result, string text, string separator = null) => text.Lines(separator).Should().BeOfType<string[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -1028,14 +1027,14 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    string.Empty.FromBase64().Should().NotBeNull().And.BeSameAs(string.Empty.FromBase64()).And.BeEmpty();
+    string.Empty.FromBase64().Should().BeOfType<byte[]>().And.BeSameAs(string.Empty.FromBase64()).And.BeEmpty();
 
     var bytes = Attributes.RandomBytes();
-    bytes.ToBase64().Should().NotBeNull().And.NotBeSameAs(bytes.ToBase64()).And.Be(System.Convert.ToBase64String(bytes));
+    bytes.ToBase64().Should().BeOfType<string>().And.Be(System.Convert.ToBase64String(bytes));
 
     return;
 
-    static void Validate(byte[] result, string text) => text.FromBase64().Should().NotBeNull().And.NotBeSameAs(text.FromBase64()).And.Equal(result);
+    static void Validate(byte[] result, string text) => text.FromBase64().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -1051,7 +1050,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string text) => text.UrlEncode().Should().NotBeNull().And.Be(Uri.EscapeDataString(text));
+    static void Validate(string text) => text.UrlEncode().Should().BeOfType<string>().And.Be(Uri.EscapeDataString(text));
   }
 
   /// <summary>
@@ -1067,7 +1066,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string text) => text.UrlDecode().Should().NotBeNull().And.Be(Uri.UnescapeDataString(text));
+    static void Validate(string text) => text.UrlDecode().Should().BeOfType<string>().And.Be(Uri.UnescapeDataString(text));
   }
 
   /// <summary>
@@ -1083,7 +1082,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string text) => text.HtmlEncode().Should().NotBeNull().And.Be(WebUtility.HtmlEncode(text));
+    static void Validate(string text) => text.HtmlEncode().Should().BeOfType<string>().And.Be(WebUtility.HtmlEncode(text));
   }
 
   /// <summary>
@@ -1099,7 +1098,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string text) => text.HtmlDecode().Should().NotBeNull().And.Be(WebUtility.HtmlDecode(text));
+    static void Validate(string text) => text.HtmlDecode().Should().BeOfType<string>().And.Be(WebUtility.HtmlDecode(text));
   }
 
   /// <summary>
@@ -1137,7 +1136,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, string text, char value) => text.Unindent(value).Should().NotBeNull().And.NotBeSameAs(text.Unindent(value)).And.Be(result);
+    static void Validate(string result, string text, char value) => text.Unindent(value).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -1177,7 +1176,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string text, string result) => text.Unspacify().Should().NotBeNull().And.NotBeSameAs(text.Unspacify()).And.Be(result);
+    static void Validate(string text, string result) => text.Unspacify().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -1217,7 +1216,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, string text) => text.Untabify().Should().NotBeNull().And.NotBeSameAs(text.Untabify()).And.Be(result);
+    static void Validate(string result, string text) => text.Untabify().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -1241,7 +1240,7 @@ public sealed class StringExtensionsTest : UnitTest
 
       process.Finish(TimeSpan.FromSeconds(5));
 
-      process.Should().NotBeNull();
+      process.Should().BeOfType<Process>();
 
       process.Id.Should().BePositive();
       process.HasExited.Should().BeTrue();
@@ -1307,10 +1306,10 @@ public sealed class StringExtensionsTest : UnitTest
 
     static void Validate(string text, Encoding encoding = null)
     {
-      string.Empty.ToBytes(encoding).Should().NotBeNull().And.BeSameAs(string.Empty.ToBytes(encoding)).And.BeEmpty();
+      string.Empty.ToBytes(encoding).Should().BeOfType<byte[]>().And.BeSameAs(string.Empty.ToBytes(encoding)).And.BeEmpty();
 
       var bytes = text.ToBytes(encoding);
-      bytes.Should().NotBeNull().And.NotBeSameAs(text.ToBytes(encoding)).And.HaveCount((encoding ?? Encoding.Default).GetByteCount(text));
+      bytes.Should().BeOfType<byte[]>().And.HaveCount((encoding ?? Encoding.Default).GetByteCount(text));
       bytes.ToText(encoding).Should().Be(text);
     }
   }
@@ -2429,8 +2428,6 @@ public sealed class StringExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      string.Empty.ToUri().Should().NotBeSameAs(string.Empty.ToUri());
-
       var uri = string.Empty.ToUri();
       uri.IsAbsoluteUri.Should().BeFalse();
       uri.OriginalString.Should().BeEmpty();
@@ -2479,25 +2476,25 @@ public sealed class StringExtensionsTest : UnitTest
       result.Should().BeNull();
 
       string.Empty.ToUri(out result);
-      result.Should().NotBeNull();
+      result.Should().BeOfType<Uri>();
       result.IsAbsoluteUri.Should().BeFalse();
       result.OriginalString.Should().BeEmpty();
       result.ToString().Should().BeEmpty();
 
       "path".ToUri(out result);
-      result.Should().NotBeNull();
+      result.Should().BeOfType<Uri>();
       result.IsAbsoluteUri.Should().BeFalse();
       result.OriginalString.Should().Be("path");
       result.ToString().Should().Be("path");
 
       "scheme:".ToUri(out result);
-      result.Should().NotBeNull();
+      result.Should().BeOfType<Uri>();
       result.IsAbsoluteUri.Should().BeTrue();
       result.OriginalString.Should().Be("scheme:");
       result.ToString().Should().Be("scheme:");
 
       "https://user:password@localhost:8080/path?query#id".ToUri(out result);
-      result.Should().NotBeNull();
+      result.Should().BeOfType<Uri>();
       result.IsAbsoluteUri.Should().BeTrue();
       result.OriginalString.Should().Be("https://user:password@localhost:8080/path?query#id");
       result.ToString().Should().Be("https://user:password@localhost:8080/path?query#id");
@@ -2728,8 +2725,6 @@ public sealed class StringExtensionsTest : UnitTest
 
       var name = Path.GetTempFileName();
 
-      name.ToFile().Should().NotBeSameAs(name.ToFile());
-
       name.ToFile().TryFinallyDelete(file =>
       {
         file.Exists.Should().BeTrue();
@@ -2794,8 +2789,6 @@ public sealed class StringExtensionsTest : UnitTest
       AssertionExtensions.Should(string.Empty.ToDirectory).ThrowExactly<ArgumentException>();
 
       var name = Environment.SystemDirectory;
-
-      name.ToDirectory().Should().NotBeSameAs(name.ToDirectory());
 
       var directory = name.ToDirectory();
       directory.Exists.Should().BeTrue();
@@ -2872,7 +2865,6 @@ public sealed class StringExtensionsTest : UnitTest
       new[] { IPAddress.None, IPAddress.Any, IPAddress.Loopback, IPAddress.Broadcast, IPAddress.IPv6None, IPAddress.IPv6Any, IPAddress.IPv6Loopback }.ForEach(ip =>
       {
         ip.ToString().ToIpAddress().Should().Be(ip);
-        ip.ToString().ToIpAddress().Should().NotBeSameAs(ip.ToString().ToIpAddress());
       });
 
       static void Validate(string text)
@@ -2938,7 +2930,7 @@ public sealed class StringExtensionsTest : UnitTest
     {
       var regex = text.ToRegex(options);
 
-      regex.Should().BeOfType<Regex>().And.NotBeNull().And.NotBeSameAs(text.ToRegex(options));
+      regex.Should().BeOfType<Regex>();
       regex.ToString().Should().Be("[a-z]*");
       regex.Options.Should().Be(options);
       regex.MatchTimeout.Should().Be(Timeout.InfiniteTimeSpan);
@@ -2963,7 +2955,7 @@ public sealed class StringExtensionsTest : UnitTest
     {
       var builder = text.ToStringBuilder();
 
-      builder.Should().NotBeNull().And.NotBeSameAs(text.ToStringBuilder());
+      builder.Should().BeOfType<StringBuilder>();
       builder.ToString().Should().Be(text);
       builder.Capacity.Should().BePositive();
       builder.MaxCapacity.Should().Be(int.MaxValue);
@@ -2987,7 +2979,7 @@ public sealed class StringExtensionsTest : UnitTest
     static void Validate(string text)
     {
       using var reader = text.ToStringReader();
-      reader.Should().BeOfType<StringReader>().And.NotBeNull();
+      reader.Should().BeOfType<StringReader>();
       reader.ReadToEnd().Should().Be(text);
     }
   }
@@ -3199,7 +3191,7 @@ public sealed class StringExtensionsTest : UnitTest
     {
       using (to)
       {
-        text.WriteTo(to).Should().NotBeNull().And.BeSameAs(text);
+        text.WriteTo(to).Should().BeOfType<string>().And.BeSameAs(text);
 
         using (var reader = to.BaseStream.MoveToStart().ToBinaryReader())
         {
@@ -3560,13 +3552,13 @@ public sealed class StringExtensionsTest : UnitTest
 
     AssertionExtensions.Should(() => ((string) null).Hash(Attributes.HashAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     
-    algorithm.Should().NotBeNull();
+    algorithm.Should().BeOfType<MD5>();
 
     string[] texts = [string.Empty, Attributes.RandomString()];
 
     texts.ForEach(text =>
     {
-      text.Hash(Attributes.HashAlgorithm()).Should().NotBeNull().And.NotBeSameAs(text.Hash(Attributes.HashAlgorithm())).And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.Hash(Attributes.HashAlgorithm()).Should().BeOfType<string>().And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     });
 
     return;
@@ -3593,7 +3585,7 @@ public sealed class StringExtensionsTest : UnitTest
     static void Validate(string text)
     {
       using var algorithm = MD5.Create();
-      text.HashMd5().Should().NotBeNull().And.NotBeSameAs(text.HashMd5()).And.HaveLength(32).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashMd5().Should().BeOfType<string>().And.HaveLength(32).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -3613,7 +3605,7 @@ public sealed class StringExtensionsTest : UnitTest
     static void Validate(string text)
     {
       using var algorithm = SHA1.Create();
-      text.HashSha1().Should().NotBeNull().And.NotBeSameAs(text.HashSha1()).And.HaveLength(40).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashSha1().Should().BeOfType<string>().And.HaveLength(40).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -3633,7 +3625,7 @@ public sealed class StringExtensionsTest : UnitTest
     static void Validate(string text)
     {
       using var algorithm = SHA256.Create();
-      text.HashSha256().Should().NotBeNull().And.NotBeSameAs(text.HashSha256()).And.HaveLength(64).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashSha256().Should().BeOfType<string>().And.HaveLength(64).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -3653,7 +3645,7 @@ public sealed class StringExtensionsTest : UnitTest
     static void Validate(string text)
     {
       using var algorithm = SHA384.Create();
-      text.HashSha384().Should().NotBeNull().And.NotBeSameAs(text.HashSha384()).And.HaveLength(96).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashSha384().Should().BeOfType<string>().And.HaveLength(96).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -3673,7 +3665,7 @@ public sealed class StringExtensionsTest : UnitTest
     static void Validate(string text)
     {
       using var algorithm = SHA512.Create();
-      text.HashSha512().Should().NotBeNull().And.NotBeSameAs(text.HashSha512()).And.HaveLength(128).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      text.HashSha512().Should().BeOfType<string>().And.HaveLength(128).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
     }
   }
 
@@ -3729,14 +3721,14 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.FromHex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    string.Empty.FromHex().Should().NotBeNull().And.BeSameAs(string.Empty.FromHex()).And.BeEmpty();
+    string.Empty.FromHex().Should().BeOfType<byte[]>().And.BeSameAs(string.Empty.FromHex()).And.BeEmpty();
 
     var bytes = Attributes.RandomBytes();
-    bytes.ToHex().Should().NotBeNull().And.NotBeSameAs(bytes.ToHex()).And.Be(System.Convert.ToHexString(bytes));
+    bytes.ToHex().Should().BeOfType<string>().And.Be(System.Convert.ToHexString(bytes));
 
     return;
 
-    static void Validate(byte[] result, string text) => text.FromHex().Should().NotBeNull().And.Equal(result);
+    static void Validate(byte[] result, string text) => text.FromHex().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>

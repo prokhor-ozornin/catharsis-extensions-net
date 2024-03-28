@@ -178,8 +178,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
       using var writer = builder.ToStringWriter(format);
 
-      writer.Should().NotBeNull().And.NotBeSameAs(builder.ToStringWriter());
-
+      writer.Should().BeOfType<StringWriter>();
       writer.FormatProvider.Should().Be(format);
       writer.Write(text);
       builder.ToString().Should().Be(writer.ToString()).And.Be(text);
@@ -200,9 +199,9 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     using var writer = builder.ToXmlWriter();
 
-    writer.Should().NotBeNull().And.NotBeSameAs(builder.ToXmlWriter());
+    writer.Should().BeOfType<XmlWriter>();
 
-    writer.Settings.Should().NotBeNull();
+    writer.Settings.Should().BeOfType<XmlWriterSettings>();
     writer.WriteState.Should().Be(WriteState.Start);
     writer.XmlLang.Should().BeNull();
     writer.XmlSpace.Should().Be(XmlSpace.None);

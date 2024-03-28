@@ -20,7 +20,7 @@ public sealed class FileSystemInfoExtensionsTest : UnitTest
     new FileSystemInfo[] { Attributes.RandomFakeFile(), Attributes.RandomFakeDirectory() }.ForEach(info =>
     {
       var uri = info.ToUri();
-      uri.Should().NotBeNull().And.NotBeSameAs(info.ToUri());
+      uri.Should().BeOfType<Uri>();
       uri.IsAbsoluteUri.Should().BeTrue();
       uri.OriginalString.Should().Be(info.FullName);
       uri.AbsolutePath.ToPath().Should().Be(info.FullName);

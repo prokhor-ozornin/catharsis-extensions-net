@@ -73,19 +73,26 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
       using (algorithm)
       {
         var encrypted = algorithm.EncryptAsync(bytes).Await();
-        encrypted.Should().NotBeNull().And.NotBeSameAs(bytes).And.NotEqual(bytes);
+        encrypted.Should().BeOfType<byte[]>().And.NotBeSameAs(bytes).And.NotEqual(bytes);
 
         algorithm.Key = algorithm.Key;
         algorithm.IV = algorithm.IV;
-        algorithm.EncryptAsync(bytes).Await().Should().Equal(encrypted);
+        var task = algorithm.EncryptAsync(bytes);
+        task.Should().BeOfType<Task<byte[]>>();
+        task.Await().Should().BeOfType<byte[]>().And.Equal(encrypted);
 
         algorithm.Key = algorithm.Key;
-        algorithm.EncryptAsync(bytes).Await().Should().NotEqual(encrypted);
+        task = algorithm.EncryptAsync(bytes);
+        task.Await().Should().BeOfType<byte[]>().And.NotEqual(encrypted);
 
         algorithm.IV = algorithm.IV;
-        algorithm.EncryptAsync(bytes).Await().Should().NotEqual(encrypted);
+        task = algorithm.EncryptAsync(bytes);
+        task.Should().BeOfType<Task<byte>>();
+        task.Await().Should().BeOfType<byte[]>().And.NotEqual(encrypted);
 
-        algorithm.EncryptAsync(bytes).Await().Should().NotEqual(encrypted);
+        task = algorithm.EncryptAsync(bytes);
+        task.Should().BeOfType<Task<byte>>();
+        task.Await().Should().BeOfType<byte[]>().And.NotEqual(encrypted);
       }
     }
   }

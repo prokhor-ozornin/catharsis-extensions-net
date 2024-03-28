@@ -138,7 +138,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.Empty().Should().NotBeNull().And.BeSameAs(reader);
+        reader.Empty().Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
         reader.BaseStream.Should().HaveLength(0).And.HavePosition(0);
         reader.PeekChar().Should().Be(-1);
       }
@@ -165,7 +165,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       using (reader)
       {
         reader.BaseStream.MoveToEnd();
-        reader.Rewind().Should().NotBeNull().And.BeSameAs(reader);
+        reader.Rewind().Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
         reader.BaseStream.Should().HavePosition(0);
       }
     }
@@ -192,13 +192,13 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       {
         AssertionExtensions.Should(() => reader.Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-        reader.Skip(0).Should().NotBeNull().And.BeSameAs(reader);
+        reader.Skip(0).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
         reader.IsStart().Should().BeTrue();
 
-        reader.Skip((int) reader.BaseStream.Length).Should().NotBeNull().And.BeSameAs(reader);
+        reader.Skip((int) reader.BaseStream.Length).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
         reader.IsEnd().Should().BeTrue();
 
-        reader.Skip(int.MaxValue).Should().NotBeNull().And.BeSameAs(reader);
+        reader.Skip(int.MaxValue).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
         reader.IsEnd().Should().BeTrue();
       }
     }
@@ -225,7 +225,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     {
       using var reader = stream.ToBinaryReader();
 
-      reader.TryFinallyClear(_ => { }).Should().NotBeNull().And.BeSameAs(reader);
+      reader.TryFinallyClear(_ => { }).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
       reader.BaseStream.Should().HavePosition(0).And.HaveLength(0);
     }
   }
@@ -258,7 +258,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         using (reader)
         {
           var sequence = reader.ToEnumerable();
-          sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToEnumerable());
+          sequence.Should().BeOfType<IEnumerable<byte>>();
           sequence.Should().Equal(result);
         }
       }
@@ -285,7 +285,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
           AssertionExtensions.Should(() => reader.ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
           var sequence = reader.ToEnumerable(1);
-          sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToEnumerable(1));
+          sequence.Should().BeOfType<IEnumerable<byte[]>>();
           sequence.SelectMany(bytes => bytes).Should().Equal(result);
         }
       }
@@ -320,7 +320,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         using (reader)
         {
           var sequence = reader.ToAsyncEnumerable();
-          sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToAsyncEnumerable());
+          sequence.Should().BeOfType<IAsyncEnumerable<byte>>();
           sequence.ToArray().Should().Equal(result);
         }
       }
@@ -347,7 +347,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
           AssertionExtensions.Should(() => reader.ToAsyncEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
           var sequence = reader.ToAsyncEnumerable(1);
-          sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToAsyncEnumerable(5));
+          sequence.Should().BeOfType<IAsyncEnumerable<byte[]>>();
           sequence.ToArray().SelectMany(bytes => bytes).Should().Equal(result);
         }
       }
@@ -376,7 +376,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         reader.BaseStream.MoveToStart();
 
         var sequence = reader.ToBytes();
-        sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToBytes());
+        sequence.Should().BeOfType<IEnumerable<byte>>();
 
         sequence.ToArray().Should().Equal(bytes);
         sequence.ToArray().Should().BeEmpty();
@@ -406,7 +406,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         reader.BaseStream.MoveToStart();
 
         var sequence = reader.ToBytesAsync();
-        sequence.Should().NotBeNull().And.NotBeSameAs(reader.ToBytesAsync());
+        sequence.Should().BeOfType<IAsyncEnumerable<byte>>();
 
         sequence.ToArray().Should().Equal(bytes);
         sequence.ToArray().Should().BeEmpty();
@@ -440,7 +440,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.ToText().Should().NotBeNull().And.Be(result);
+        reader.ToText().Should().BeOfType<string>().And.Be(result);
       }
     }
   }

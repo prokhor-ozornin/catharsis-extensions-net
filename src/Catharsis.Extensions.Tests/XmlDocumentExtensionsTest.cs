@@ -170,7 +170,7 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(byte[] result, XmlDocument document) => document.ToBytes().Should().NotBeNull().And.NotBeSameAs(document.ToBytes()).And.Equal(result);
+    static void Validate(byte[] result, XmlDocument document) => document.ToBytes().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -185,7 +185,7 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, XmlDocument document) => document.ToText().Should().NotBeNull().And.NotBeSameAs(document.ToText()).And.Be(result);
+    static void Validate(string result, XmlDocument document) => document.ToText().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>

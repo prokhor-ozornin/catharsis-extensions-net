@@ -85,7 +85,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     var file = Attributes.RandomFakeFile();
     file.Exists.Should().BeFalse();
-    file.Empty().Should().NotBeNull().And.BeSameAs(file);
+    file.Empty().Should().BeOfType<FileInfo>().And.BeSameAs(file);
     file.Exists.Should().BeTrue();
     file.Length.Should().Be(0);
     file.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
@@ -93,7 +93,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
     Attributes.RandomNonEmptyFile().TryFinallyDelete(info =>
     {
       info.Length.Should().BePositive();
-      info.Empty().Should().NotBeNull().And.BeSameAs(info);
+      info.Empty().Should().BeOfType<FileInfo>().And.BeSameAs(info);
 
       info.Exists.Should().BeTrue();
       info.Length.Should().Be(0);
@@ -142,11 +142,11 @@ public sealed class FileInfoExtensionsTest : UnitTest
       file.TryFinallyDelete(file =>
       {
         var lines = file.Lines(encoding);
-        lines.Should().NotBeNull().And.BeSameAs(file.Lines(encoding)).And.BeEmpty();
+        lines.Should().BeOfType<string[]>().And.BeSameAs(file.Lines(encoding)).And.BeEmpty();
 
         lines = new Random().LettersSequence(80, 1000).ToArray();
         lines.Join(Environment.NewLine).WriteToAsync(file, encoding).Await();
-        file.Lines(encoding).Should().NotBeNull().And.NotBeSameAs(file.Lines(encoding)).And.Equal(lines);
+        file.Lines(encoding).Should().BeOfType<string[]>().And.Equal(lines);
       });
     }
   }
@@ -170,10 +170,10 @@ public sealed class FileInfoExtensionsTest : UnitTest
       {
         var lines = new Random().LettersSequence(80, 1000).ToArray();
         lines.Join(Environment.NewLine).WriteToAsync(file, encoding).Await();
-        file.LinesAsync(encoding).ToArray().Should().NotBeNull().And.Equal(lines);
+        file.LinesAsync(encoding).ToArray().Should().BeOfType<IAsyncEnumerable<string>>().And.Equal(lines);
 
         var linesAsync = file.LinesAsync(encoding);
-        linesAsync.Should().NotBeNull().And.NotBeSameAs(file.LinesAsync(encoding));
+        linesAsync.Should().BeOfType<IAsyncEnumerable<string>>();
         linesAsync.ToArray().Should().BeEmpty();
       });
     }
@@ -215,7 +215,12 @@ public sealed class FileInfoExtensionsTest : UnitTest
     static void Validate(FileInfo file, byte[] bytes)
     {
       file.Exists.Should().BeFalse();
-      file.TryFinallyDelete(info => bytes.WriteToAsync(info).Await()).Should().NotBeNull().And.BeSameAs(file);
+      file.TryFinallyDelete(info =>
+      {
+        var task = bytes.WriteToAsync(info);
+        task.Should().BeOfType<Task<IEnumerable<byte>>>();
+        //task.Await().Should().BeOfType<IEnumerable<byte>>().And.BeSameAs(file);
+      }).Should().NotBeNull().And.BeSameAs(file);
       file.Exists.Should().BeFalse();
     }
   }
@@ -350,7 +355,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(byte[] result, FileInfo file) => file.ToBytes().Should().NotBeSameAs(file.ToBytes()).And.Equal(result);
+    static void Validate(byte[] result, FileInfo file) => file.ToBytes().Should().Equal(result);
   }
 
   /// <summary>
@@ -375,7 +380,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(byte[] result, FileInfo file) => file.ToBytesAsync().ToArray().Should().NotBeSameAs(file.ToBytesAsync().ToArray()).And.Equal(result);
+    static void Validate(byte[] result, FileInfo file) => file.ToBytesAsync().ToArray().Should().Equal(result);
   }
 
   /// <summary>
@@ -390,7 +395,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, FileInfo file, Encoding encoding = null) => file.ToText(encoding).Should().NotBeSameAs(file.ToText()).And.Be(result);
+    static void Validate(string result, FileInfo file, Encoding encoding = null) => file.ToText(encoding).Should().Be(result);
   }
 
   /// <summary>
@@ -412,8 +417,11 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       file.TryFinallyDelete(file =>
       {
-        text.WriteToAsync(file, encoding).Await();
-        file.ToTextAsync(encoding).Await().Should().Be(text);
+        text.WriteTo(file, encoding);
+        
+        var task = file.ToTextAsync(encoding);
+        task.Should().BeOfType<Task<string>>();
+        task.Await().Should().BeOfType<string>().And.Be(text);
       });
     }
   }

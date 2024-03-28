@@ -25,17 +25,17 @@ public sealed class SocketExtensionsTest : UnitTest
     receiveTimeout.Should().Be(0);
     sendTimeout.Should().Be(0);
 
-    socket.WithTimeout(null).Should().NotBeNull().And.BeSameAs(socket);
+    socket.WithTimeout(null).Should().BeOfType<Socket>().And.BeSameAs(socket);
     socket.ReceiveTimeout.Should().Be(receiveTimeout);
     socket.SendTimeout.Should().Be(sendTimeout);
 
     var timespan = TimeSpan.FromMilliseconds(-1);
-    socket.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(socket);
+    socket.WithTimeout(timespan).Should().BeOfType<Socket>().And.BeSameAs(socket);
     socket.ReceiveTimeout.Should().Be(0);
     socket.SendTimeout.Should().Be(0);
 
     timespan = TimeSpan.Zero;
-    socket.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(socket);
+    socket.WithTimeout(timespan).Should().BeOfType<Socket>().And.BeSameAs(socket);
     socket.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
     socket.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
 

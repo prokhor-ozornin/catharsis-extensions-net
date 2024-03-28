@@ -152,7 +152,7 @@ public sealed class StreamExtensionsTest : UnitTest
         {
           using (right)
           {
-            left.Min(right).Should().NotBeNull().And.BeSameAs(result);
+            left.Min(right).Should().BeOfType<Stream>().And.BeSameAs(result);
           }
         }
       }
@@ -186,7 +186,7 @@ public sealed class StreamExtensionsTest : UnitTest
         {
           using (right)
           {
-            left.Max(right).Should().NotBeNull().And.BeSameAs(result);
+            left.Max(right).Should().BeOfType<Stream>().And.BeSameAs(result);
           }
         }
       }
@@ -253,7 +253,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.MoveToEnd().MoveToStart().Should().NotBeNull().And.BeSameAs(stream).And.HavePosition(0);
+        stream.MoveToEnd().MoveToStart().Should().BeOfType<Stream>().And.BeSameAs(stream).And.HavePosition(0);
       }
     }
   }
@@ -276,7 +276,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.MoveToStart().MoveToEnd().Should().NotBeNull().And.BeSameAs(stream).And.HavePosition(stream.Length);
+        stream.MoveToStart().MoveToEnd().Should().BeOfType<Stream>().And.BeSameAs(stream).And.HavePosition(stream.Length);
       }
     }
   }
@@ -297,7 +297,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.Lines(encoding).Should().NotBeNull().And.Equal(result);
+        stream.Lines(encoding).Should().BeOfType<string[]>().And.Equal(result);
       }
     }
   }
@@ -362,7 +362,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.TryFinallyClear(stream => stream.WriteBytes(bytes)).Should().NotBeNull().And.BeSameAs(stream);
+        stream.TryFinallyClear(stream => stream.WriteBytes(bytes)).Should().BeOfType<Stream>().And.BeSameAs(stream);
         stream.Should().HavePosition(0).And.HaveLength(0);
       }
     }
@@ -392,7 +392,7 @@ public sealed class StreamExtensionsTest : UnitTest
         AssertionExtensions.Should(() => synchronized.ReadTimeout).ThrowExactly<InvalidOperationException>();
         AssertionExtensions.Should(() => synchronized.WriteTimeout).ThrowExactly<InvalidOperationException>();
 
-        synchronized.Should().NotBeNull().And.NotBeSameAs(stream);
+        synchronized.Should().BeOfType<Stream>().And.NotBeSameAs(stream);
 
         synchronized.CanRead.Should().Be(stream.CanRead);
         synchronized.CanWrite.Should().Be(stream.CanWrite);
@@ -441,7 +441,7 @@ public sealed class StreamExtensionsTest : UnitTest
         AssertionExtensions.Should(() => readOnly.ReadTimeout).ThrowExactly<InvalidOperationException>();
         AssertionExtensions.Should(() => readOnly.WriteTimeout).ThrowExactly<InvalidOperationException>();
 
-        readOnly.Should().NotBeNull().And.NotBeSameAs(stream);
+        readOnly.Should().BeOfType<Stream>().And.NotBeSameAs(stream);
 
         readOnly.CanRead.Should().BeTrue();
         readOnly.CanWrite.Should().BeFalse();
@@ -492,7 +492,7 @@ public sealed class StreamExtensionsTest : UnitTest
         AssertionExtensions.Should(() => readOnly.Length).ThrowExactly<NotSupportedException>();
         AssertionExtensions.Should(() => readOnly.Position).ThrowExactly<NotSupportedException>();
 
-        readOnly.Should().NotBeNull().And.NotBeSameAs(stream);
+        readOnly.Should().BeOfType<Stream>().And.NotBeSameAs(stream);
 
         readOnly.CanRead.Should().BeTrue();
         readOnly.CanWrite.Should().BeFalse();
@@ -531,7 +531,7 @@ public sealed class StreamExtensionsTest : UnitTest
         AssertionExtensions.Should(() => writeOnly.ReadTimeout).ThrowExactly<InvalidOperationException>();
         AssertionExtensions.Should(() => writeOnly.WriteTimeout).ThrowExactly<InvalidOperationException>();
 
-        writeOnly.Should().NotBeNull().And.NotBeSameAs(stream);
+        writeOnly.Should().BeOfType<Stream>().And.NotBeSameAs(stream);
 
         writeOnly.CanRead.Should().BeFalse();
         writeOnly.CanWrite.Should().BeTrue();
@@ -580,7 +580,7 @@ public sealed class StreamExtensionsTest : UnitTest
         AssertionExtensions.Should(() => writeOnly.ReadTimeout).ThrowExactly<InvalidOperationException>();
         AssertionExtensions.Should(() => writeOnly.WriteTimeout).ThrowExactly<InvalidOperationException>();
 
-        writeOnly.Should().NotBeNull().And.NotBeSameAs(stream);
+        writeOnly.Should().BeOfType<Stream>().And.NotBeSameAs(stream);
 
         writeOnly.CanRead.Should().BeFalse();
         writeOnly.CanWrite.Should().BeTrue();
@@ -611,7 +611,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.ToBytes().Should().NotBeNull().And.Equal(result);
+        stream.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
         stream.IsEnd().Should().BeTrue();
       }
     }
@@ -647,7 +647,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.ToBytesAsync().ToArray().Should().NotBeNull().And.Equal(result);
+        stream.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(result);
         stream.IsEnd().Should().BeTrue();
       }
     }
@@ -669,7 +669,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.ToText(encoding).Should().NotBeNull().And.Be(result);
+        stream.ToText(encoding).Should().BeOfType<string>().And.Be(result);
         stream.IsEnd().Should().BeTrue();
       }
     }
@@ -703,7 +703,9 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.ToTextAsync(encoding).Await().Should().NotBeNull().And.Be(result);
+        var task = stream.ToTextAsync(encoding);
+        task.Should().BeOfType<Task<string>>();
+        task.Await().Should().BeOfType<string>().And.Be(result);
         stream.IsEnd().Should().BeTrue();
       }
     }
@@ -729,7 +731,7 @@ public sealed class StreamExtensionsTest : UnitTest
         var position = stream.Position;
         var length = stream.Length;
 
-        stream.MoveToEnd().WriteBytes(bytes).Should().NotBeNull().And.BeSameAs(stream);
+        stream.MoveToEnd().WriteBytes(bytes).Should().BeOfType<Stream>().And.BeSameAs(stream);
         stream.Position.Should().Be(position + bytes.Length);
         stream.Length.Should().Be(length + bytes.Length);
         //stream.MoveBy(-bytes.Length)
@@ -758,7 +760,9 @@ public sealed class StreamExtensionsTest : UnitTest
         var position = stream.Position;
         var length = stream.Length;
 
-        stream.WriteBytesAsync(bytes).Await().Should().NotBeNull().And.BeSameAs(stream);
+        var task = stream.WriteBytesAsync(bytes);
+        task.Should().BeOfType<Task<Stream>>();
+        task.Await().Should().BeOfType<Stream>().And.BeSameAs(stream);
         stream.Position.Should().Be(position + bytes.Length);
         stream.Length.Should().Be(length + bytes.Length);
       }
@@ -826,7 +830,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        bytes.WriteTo(stream).Should().NotBeNull().And.BeSameAs(bytes);
+        bytes.WriteTo(stream).Should().BeOfType<byte[]>().And.BeSameAs(bytes);
         //
       }
     }
@@ -850,7 +854,8 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        bytes.WriteToAsync(stream).Await().Should().NotBeNull();
+        var task = bytes.WriteToAsync(stream);
+        task.Should().BeOfType<Task<IEnumerable<byte>>>();
         //
       }
     }
@@ -873,7 +878,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        text.WriteTo(stream, encoding).Should().NotBeNull().And.BeSameAs(text);
+        text.WriteTo(stream, encoding).Should().BeOfType<string>().And.BeSameAs(text);
         //
       }
     }
@@ -897,7 +902,9 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        text.WriteToAsync(stream, encoding).Await().Should().NotBeNull();
+        var task = text.WriteToAsync(stream, encoding);
+        task.Should().BeOfType<Task<string>>();
+        task.Await().Should().BeOfType<string>();
         //
       }
     }
@@ -1265,7 +1272,7 @@ public sealed class StreamExtensionsTest : UnitTest
         AssertionExtensions.Should(() => buffered.ReadTimeout).ThrowExactly<InvalidOperationException>();
         AssertionExtensions.Should(() => buffered.WriteTimeout).ThrowExactly<InvalidOperationException>();
 
-        buffered.Should().NotBeNull();
+        buffered.Should().BeOfType<BufferedStream>();
 
         buffered.BufferSize.Should().Be(size ?? 4096);
         buffered.UnderlyingStream.Should().BeSameAs(stream);
@@ -1313,7 +1320,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
         using (var reader = stream.ToBinaryReader(encoding))
         {
-          reader.BaseStream.Should().NotBeNull().And.BeSameAs(stream);
+          reader.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(stream);
           reader.ReadBytes(bytes.Length).Should().Equal(bytes);
         }
 
@@ -1739,14 +1746,14 @@ public sealed class StreamExtensionsTest : UnitTest
 
     AssertionExtensions.Should(() => ((Stream) null).Hash(Attributes.HashAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
     
-    algorithm.Should().NotBeNull();
+    algorithm.Should().BeOfType<MD5>();
 
     new[] { Stream.Null, Attributes.RandomStream() }.ForEach(stream =>
     {
       using (stream)
       {
         var hash = stream.Hash(Attributes.HashAlgorithm());
-        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().Hash(Attributes.HashAlgorithm())).And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+        hash.Should().BeOfType<byte[]>().And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
       }
     });
 
@@ -1778,7 +1785,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
     AssertionExtensions.Should(() => ((Stream) null).HashAsync(Attributes.HashAlgorithm())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
 
-    algorithm.Should().NotBeNull();
+    algorithm.Should().BeOfType<MD5>();
 
     new[] { Stream.Null, Attributes.RandomStream() }.ForEach(stream =>
     {
@@ -1786,9 +1793,9 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         AssertionExtensions.Should(() => stream.HashAsync(algorithm, Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
 
-        var hash = stream.HashAsync(Attributes.HashAlgorithm());
-        hash.Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashAsync(Attributes.HashAlgorithm()));
-        hash.Await().Should().HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+        var task = stream.HashAsync(Attributes.HashAlgorithm());
+        task.Should().BeOfType<Task<byte>[]>();
+        task.Await().Should().HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
       }
     });
 
@@ -1827,7 +1834,7 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = MD5.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashMd5().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashMd5()).And.HaveCount(16).And.Equal(bytes);
+        stream.MoveToStart().HashMd5().Should().BeOfType<byte[]>().And.HaveCount(16).And.Equal(bytes);
       }
     }
   }
@@ -1852,7 +1859,9 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = MD5.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashMd5Async().Await().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashMd5Async().Await()).And.HaveCount(16).And.Equal(bytes);
+        var task = stream.MoveToStart().HashMd5Async();
+        task.Should().BeOfType<Task<byte[]>>();
+        task.Await().Should().BeOfType<byte[]>().And.HaveCount(16).And.Equal(bytes);
       }
     }
   }
@@ -1876,7 +1885,7 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = SHA1.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashSha1().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha1()).And.HaveCount(20).And.Equal(bytes);
+        stream.MoveToStart().HashSha1().Should().BeOfType<byte[]>().And.HaveCount(20).And.Equal(bytes);
       }
     }
   }
@@ -1901,7 +1910,9 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = SHA1.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashSha1Async().Await().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha1Async().Await()).And.HaveCount(20).And.Equal(bytes);
+        var task = stream.MoveToStart().HashSha1Async();
+        task.Should().BeOfType<Task<byte[]>>();
+        task.Await().Should().BeOfType<byte[]>().And.HaveCount(20).And.Equal(bytes);
       }
     }
   }
@@ -1925,7 +1936,7 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = SHA256.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashSha256().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha256()).And.HaveCount(32).And.Equal(bytes);
+        stream.MoveToStart().HashSha256().Should().BeOfType<byte[]>().And.HaveCount(32).And.Equal(bytes);
       }
     }
   }
@@ -1950,7 +1961,9 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = SHA256.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashSha256Async().Await().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha256Async().Await()).And.HaveCount(32).And.Equal(bytes);
+        var task = stream.MoveToStart().HashSha256Async();
+        task.Should().BeOfType<Task<byte>>();
+        task.Await().Should().BeOfType<byte[]>().And.HaveCount(32).And.Equal(bytes);
       }
     }
   }
@@ -1974,7 +1987,7 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = SHA384.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashSha384().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha384()).And.HaveCount(48).And.Equal(bytes);
+        stream.MoveToStart().HashSha384().Should().BeOfType<byte[]>().And.HaveCount(48).And.Equal(bytes);
       }
     }
   }
@@ -1999,7 +2012,9 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = SHA384.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashSha384Async().Await().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha384Async().Await()).And.HaveCount(48).And.Equal(bytes);
+        var task = stream.MoveToStart().HashSha384Async();
+        task.Should().BeOfType<Task<byte[]>>();
+        task.Await().Should().BeOfType<byte[]>().And.HaveCount(48).And.Equal(bytes);
       }
     }
   }
@@ -2023,7 +2038,7 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = SHA512.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashSha512().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha512()).And.HaveCount(64).And.Equal(bytes);
+        stream.MoveToStart().HashSha512().Should().BeOfType<byte[]>().And.HaveCount(64).And.Equal(bytes);
       }
     }
   }
@@ -2048,7 +2063,9 @@ public sealed class StreamExtensionsTest : UnitTest
       {
         using var algorithm = SHA384.Create();
         var bytes = algorithm.ComputeHash(stream.MoveToStart());
-        stream.MoveToStart().HashSha512Async().Await().Should().NotBeNull().And.NotBeSameAs(stream.MoveToStart().HashSha512Async().Await()).And.HaveCount(64).And.Equal(bytes);
+        var task = stream.MoveToStart().HashSha512Async();
+        task.Should().BeOfType<Task<byte[]>>();
+        task.Await().Should().BeOfType<byte[]>().And.HaveCount(64).And.Equal(bytes);
       }
     }
   }

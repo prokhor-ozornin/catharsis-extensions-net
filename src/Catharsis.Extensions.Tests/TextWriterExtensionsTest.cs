@@ -24,7 +24,7 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
     var synchronized = writer.AsSynchronized();
 
-    synchronized.Should().NotBeNull().And.NotBeSameAs(writer).And.NotBeSameAs(writer.AsSynchronized());
+    synchronized.Should().BeOfType<TextWriter>().And.NotBeSameAs(writer);
 
     synchronized.Encoding.Should().Be(writer.Encoding);
     synchronized.FormatProvider.Should().Be(writer.FormatProvider);

@@ -79,17 +79,17 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
       timeOnly.Range(timeOnly, TimeSpan.FromTicks(1)).Should().BeEmpty();
       timeOnly.Range(timeOnly, TimeSpan.FromTicks(-1)).Should().BeEmpty();
 
-      timeOnly.Range(timeOnly.Add(1.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(1.Milliseconds()), 1.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly);
-      timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 1.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(1.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly);
+      timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
 
-      timeOnly.Range(timeOnly.Add(1.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(1.Milliseconds()), 2.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly);
-      timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 2.Milliseconds())).And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(1.Milliseconds()), 2.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly);
+      timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 2.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
 
-      timeOnly.Range(timeOnly.Add(2.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(2.Milliseconds()), 1.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(1.Milliseconds()));
-      timeOnly.Range(timeOnly.Add(-2.Milliseconds()), 1.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(-2.Milliseconds()), 1.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly.Add(-2.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(2.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(-2.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(timeOnly.Add(-2.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
 
-      timeOnly.Range(timeOnly.Add(3.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(3.Milliseconds()), 2.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(2.Milliseconds()));
-      timeOnly.Range(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds()).Should().NotBeNull().And.NotBeSameAs(timeOnly.Range(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds())).And.HaveCount(2).And.Equal(timeOnly.Add(-3.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(3.Milliseconds()), 2.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(2.Milliseconds()));
+      timeOnly.Range(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(timeOnly.Add(-3.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
     });
 
     return;

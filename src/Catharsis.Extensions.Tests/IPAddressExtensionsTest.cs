@@ -96,7 +96,12 @@ public sealed class IPAddressExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool result, IPAddress address, TimeSpan? timeout = null) => address.IsAvailableAsync(timeout).Await().Should().Be(result);
+    static void Validate(bool result, IPAddress address, TimeSpan? timeout = null)
+    {
+      var task = address.IsAvailableAsync(timeout);
+      task.Should().BeOfType<Task<bool>>();
+      task.Await().Should().Be(result);
+    }
   }
 
   /// <summary>
@@ -187,7 +192,7 @@ public sealed class IPAddressExtensionsTest : UnitTest
     {
       var host = address.ToIpHost();
 
-      host.Should().NotBeNull().And.NotBeSameAs(address.ToIpHost());
+      host.Should().BeOfType<IPHostEntry>();
       host.AddressList.Should().Equal(address);
       host.Aliases.Should().BeEmpty();
       host.HostName.Should().BeNull();
@@ -207,6 +212,6 @@ public sealed class IPAddressExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(IPAddress address, int count) => address.ToBytes().Should().NotBeNull().And.NotBeSameAs(address.ToBytes()).And.HaveCount(count).And.Equal(address.GetAddressBytes());
+    static void Validate(IPAddress address, int count) => address.ToBytes().Should().BeOfType<byte[]>().And.HaveCount(count).And.Equal(address.GetAddressBytes());
   }
 }

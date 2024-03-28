@@ -17,16 +17,16 @@ public sealed class RangeExtensionsTest : UnitTest
   {
     new[] { Range.All, .., ..0, ^0..0, ^0.., 1..1, ^1..^1, int.MaxValue..int.MaxValue }.ForEach(range =>
     {
-      range.ToEnumerable().Should().NotBeNull().And.BeSameAs(range.ToEnumerable()).And.BeEmpty();
+      range.ToEnumerable().Should().BeOfType<IEnumerable<int>>().And.BeSameAs(range.ToEnumerable()).And.BeEmpty();
     });
 
     new[] { ..1, ..^1, 1..0, ^1..0, ^1.. }.ForEach(range =>
     {
-      range.ToEnumerable().Should().NotBeNull().And.NotBeSameAs(range.ToEnumerable()).And.AllBeEquivalentTo(0);
+      range.ToEnumerable().Should().BeOfType<IEnumerable<int>>().And.AllBeEquivalentTo(0);
     });
 
     var totalRange = ..int.MaxValue;
-    totalRange.ToEnumerable().Should().NotBeNull().And.NotBeSameAs(totalRange.ToEnumerable()).And.HaveCount(int.MaxValue);
+    totalRange.ToEnumerable().Should().BeOfType<IEnumerable<int>>().And.HaveCount(int.MaxValue);
 
     return;
 

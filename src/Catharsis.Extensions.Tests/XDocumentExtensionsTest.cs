@@ -192,7 +192,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(byte[] result, XDocument document) => document.ToBytes().Should().NotBeNull().And.NotBeSameAs(document.ToBytes()).And.Equal(result);
+    static void Validate(byte[] result, XDocument document) => document.ToBytes().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -208,7 +208,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(byte[] result, XDocument document) => document.ToBytesAsync().Await().Should().NotBeNull().And.NotBeSameAs(document.ToBytesAsync().Await()).And.Equal(result);
+    static void Validate(byte[] result, XDocument document)
+    {
+      var task = document.ToBytesAsync();
+      task.Should().BeOfType<Task<byte[]>>();
+      task.Await().Should().BeOfType<byte[]>().And.Equal(result);
+    }
   }
 
   /// <summary>
@@ -223,7 +228,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, XDocument document) => document.ToText().Should().NotBeNull().And.NotBeSameAs(document.ToText()).And.Be(result);
+    static void Validate(string result, XDocument document) => document.ToText().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -239,7 +244,12 @@ public sealed class XDocumentExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, XDocument document) => document.ToTextAsync().Await().Should().NotBeNull().And.NotBeSameAs(document.ToTextAsync().Await()).And.Be(result);
+    static void Validate(string result, XDocument document)
+    {
+      var task = document.ToTextAsync();
+      task.Should().BeOfType<Task<string>>();
+      task.Await().Should().BeOfType<string>().And.Be(result);
+    }
   }
 
   /// <summary>

@@ -159,7 +159,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(Type type, params Type[] implementations) => type.Implementations().Should().NotBeNull().And.NotBeSameAs(type.Implementations()).And.Equal(implementations);
+    static void Validate(Type type, params Type[] implementations) => type.Implementations().Should().BeOfType<IEnumerable<Type>>().And.Equal(implementations);
   }
 
   /// <summary>
@@ -174,7 +174,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(Type type, params Type[] implementors) => type.Implementors().Should().NotBeNull().And.NotBeSameAs(type.Implementors()).And.Equal(implementors);
+    static void Validate(Type type, params Type[] implementors) => type.Implementors().Should().BeOfType<IEnumerable<Type>>().And.Equal(implementors);
   }
 
   /// <summary>
@@ -295,7 +295,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
       if (result)
       {
-        info.Should().NotBeNull();
+        info.Should().BeOfType<EventInfo>();
       }
       else
       {
@@ -361,7 +361,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
       if (result)
       {
-        info.Should().NotBeNull();
+        info.Should().BeOfType<FieldInfo>();
       }
       else
       {
@@ -398,7 +398,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
       if (result)
       {
-        info.Should().NotBeNull();
+        info.Should().BeOfType<PropertyInfo>();
       }
       else
       {
@@ -428,7 +428,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
         if (result)
         {
-          info.Should().NotBeNull();
+          info.Should().BeOfType<MethodInfo>();
         }
         else
         {
@@ -448,7 +448,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
         if (result)
         {
-          info.Should().NotBeNull();
+          info.Should().BeOfType<MethodInfo>();
         }
         else
         {

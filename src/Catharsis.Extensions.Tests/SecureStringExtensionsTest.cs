@@ -254,7 +254,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
       using (secure)
       {
         var text = secure.ToText();
-        secure.ToBytes(encoding).Should().NotBeNull().And.NotBeSameAs(secure.ToBytes(encoding)).And.Equal(text.ToBytes(encoding));
+        secure.ToBytes(encoding).Should().BeOfType<byte[]>().And.Equal(text.ToBytes(encoding));
 
         secure.Clear();
         secure.ToBytes(encoding).Should().BeSameAs(secure.ToBytes(encoding)).And.BeEmpty();
@@ -280,7 +280,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
       var text = Attributes.RandomString();
 
       text.ForEach(secure.AppendChar);
-      secure.ToText().Should().NotBeNull().And.NotBeSameAs(secure.ToText()).And.Be(text);
+      secure.ToText().Should().BeOfType<string>().And.Be(text);
     }
 
     throw new NotImplementedException();

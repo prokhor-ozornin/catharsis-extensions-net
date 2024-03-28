@@ -138,7 +138,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     {
       using (writer)
       {
-        writer.Empty().Should().NotBeNull().And.BeSameAs(writer);
+        writer.Empty().Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
         writer.BaseStream.Should().HaveLength(0).And.HavePosition(0);
       }
     }
@@ -164,7 +164,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       using (writer)
       {
         writer.BaseStream.MoveToEnd();
-        writer.Rewind().Should().NotBeNull().And.BeSameAs(writer);
+        writer.Rewind().Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
         writer.BaseStream.Should().HavePosition(0);
       }
     }
@@ -191,7 +191,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
     {
       using var writer = stream.ToBinaryWriter();
 
-      writer.TryFinallyClear(_ => { }).Should().NotBeNull().And.BeSameAs(writer);
+      writer.TryFinallyClear(_ => { }).Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
       writer.BaseStream.Should().HavePosition(0).And.HaveLength(0);
     }
   }

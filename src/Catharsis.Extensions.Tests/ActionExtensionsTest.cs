@@ -31,11 +31,11 @@ public sealed class ActionExtensionsTest : UnitTest
 
       Action action = () => counter++;
 
-      action.Execute(() => false).Should().NotBeNull().And.BeSameAs(action);
+      action.Execute(() => false).Should().BeOfType<Action>().And.BeSameAs(action);
       counter.Should().Be(0);
 
       counter = 0;
-      action.Execute(() => counter < count).Should().NotBeNull().And.BeSameAs(action);
+      action.Execute(() => counter < count).Should().BeOfType<Action>().And.BeSameAs(action);
       counter.Should().Be(count);
 
       static void Validate()
@@ -53,19 +53,19 @@ public sealed class ActionExtensionsTest : UnitTest
       Action<ICollection<int>> action = collection => collection?.Add(int.MaxValue);
 
       var collection = new List<int>();
-      action.Execute(_ => false, collection).Should().NotBeNull().And.BeSameAs(action);
+      action.Execute(_ => false, collection).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
       collection.Should().BeEmpty();
 
       collection = [];
-      action.Execute(_ => false, null).Should().NotBeNull().And.BeSameAs(action);
+      action.Execute(_ => false, null).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
       collection.Should().BeEmpty();
 
       collection = [];
-      action.Execute(x => x?.Count < count, collection).Should().NotBeNull().And.BeSameAs(action);
+      action.Execute(x => x?.Count < count, collection).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
       collection.Should().HaveCount(count).And.AllBeEquivalentTo(int.MaxValue);
 
       collection = [];
-      action.Execute(x => x?.Count < count, null).Should().NotBeNull().And.BeSameAs(action);
+      action.Execute(x => x?.Count < count, null).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
       collection.Should().BeEmpty();
 
       static void Validate()

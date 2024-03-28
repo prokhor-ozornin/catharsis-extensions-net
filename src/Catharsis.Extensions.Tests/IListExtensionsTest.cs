@@ -194,7 +194,7 @@ public sealed class IListExtensionsTest : UnitTest
     /*var list = new List<object> { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
     var readOnly = CollectionsExtensions.AsReadOnly(list);
 
-    readOnly.Should().NotBeNull().And.NotBeSameAs(list).And.Equal(list);
+    readOnly.Should().NotBeNull().And.Equal(list);
     readOnly.IsReadOnly.Should().BeTrue();
     readOnly.GetType().Should().Implement<IReadOnlyList<object>>();
 

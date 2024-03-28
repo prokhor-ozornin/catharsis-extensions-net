@@ -27,12 +27,12 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
       var collection = new List<object>();
 
-      collection.With(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+      collection.With(Enumerable.Empty<object>()).Should().BeOfType<List<object>>().And.BeSameAs(collection).And.BeEmpty();
 
       IEnumerable<object> elements = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
 
-      collection.With(elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
-      collection.With(elements).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements.Concat(elements));
+      collection.With(elements).Should().BeOfType<object[]>().And.BeSameAs(collection).And.Equal(elements);
+      collection.With(elements).Should().BeOfType<object[]>().And.BeSameAs(collection).And.Equal(elements.Concat(elements));
 
       static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
       {
@@ -68,15 +68,15 @@ public sealed class ICollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => Array.Empty<object>().Without((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
       var collection = new List<object>();
-      collection.Without(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(collection);
+      collection.Without(Enumerable.Empty<object>()).Should().BeOfType<List<object>>().And.BeSameAs(collection).And.Equal(collection);
 
       var elements = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
 
       collection = [..elements];
-      collection.Without(Enumerable.Empty<object>()).Should().NotBeNull().And.BeSameAs(collection).And.Equal(elements);
+      collection.Without(Enumerable.Empty<object>()).Should().BeOfType<List<object>>().And.BeSameAs(collection).And.Equal(elements);
 
       collection = [..elements];
-      collection.Without(elements).Should().NotBeNull().And.BeSameAs(collection).And.BeEmpty();
+      collection.Without(elements).Should().BeOfType<List<object>>().And.BeSameAs(collection).And.BeEmpty();
 
       static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
       {

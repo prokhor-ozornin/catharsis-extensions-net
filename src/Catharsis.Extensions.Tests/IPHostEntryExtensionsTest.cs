@@ -89,7 +89,12 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
     
     return;
 
-    static void Validate(bool result, IPHostEntry host, TimeSpan? timeout = null) => host.IsAvailableAsync(timeout).Await().Should().Be(result);
+    static void Validate(bool result, IPHostEntry host, TimeSpan? timeout = null)
+    {
+      var task = host.IsAvailableAsync(timeout);
+      task.Should().BeOfType<Task<bool>>();
+      task.Await().Should().Be(result);
+    }
   }
 
   /// <summary>
@@ -120,7 +125,7 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
 
     new[] { new IPHostEntry(), new IPHostEntry { AddressList = [] } }.ForEach(host =>
     {
-      host.ToEnumerable().Should().NotBeNull().And.BeSameAs(host.ToEnumerable()).And.Equal(host.AddressList ?? []);
+      host.ToEnumerable().Should().BeOfType<IEnumerable<IPAddress>>().And.BeSameAs(host.ToEnumerable()).And.Equal(host.AddressList ?? []);
     });
 
     return;

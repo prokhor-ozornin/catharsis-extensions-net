@@ -62,18 +62,16 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
     new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
     {
-      using var content = new ByteArrayContent(bytes);
-
-      content.ToBytes().Should().NotBeNull().And.NotBeSameAs(content.ToBytes()).And.Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(bytes);
+      Validate(bytes, new ByteArrayContent(bytes));
     });
 
     return;
 
-    static void Validate(byte[] result, HttpContent content)
+    static void Validate(IEnumerable<byte> result, HttpContent content)
     {
       using (content)
       {
-
+        content.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(result);
       }
     }
   }
@@ -88,19 +86,18 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
     new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
     {
-      using var content = new ByteArrayContent(bytes);
-
-      content.ToBytesAsync().Should().NotBeNull().And.NotBeSameAs(content.ToBytesAsync());
-      content.ToBytesAsync().ToArray().Should().Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(bytes);
+      Validate(bytes, new ByteArrayContent(bytes));
     });
 
     return;
 
-    static void Validate(byte[] result, HttpContent content)
+    static void Validate(IEnumerable<byte> result, HttpContent content)
     {
       using (content)
       {
-
+        var task = content.ToBytesAsync();
+        task.Should().BeOfType<IAsyncEnumerable<byte[]>>();
+        task.ToArray().Should().BeOfType<byte[]>().And.Equal(content.ReadAsByteArrayAsync().Await()).And.Equal(result);
       }
     }
   }
@@ -115,9 +112,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
 
     new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
     {
-      using var content = new StringContent(text);
-
-      content.ToText().Should().NotBeNull().And.NotBeSameAs(content.ToText()).And.Be(content.ReadAsStringAsync().Await()).And.Be(text);
+      Validate(text, new StringContent(text));
     });
 
     return;
@@ -126,7 +121,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
     {
       using (content)
       {
-
+        content.ToText().Should().BeOfType<string>().And.Be(content.ReadAsStringAsync().Await()).And.Be(result);
       }
     }
   }
@@ -138,15 +133,11 @@ public sealed class HttpContentExtensionsTest : UnitTest
   public void ToTextAsync_Method()
   {
     AssertionExtensions.Should(() => ((HttpContent) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
+    AssertionExtensions.Should(() => new StringContent(string.Empty).ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
     new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
     {
-      using var content = new StringContent(text);
-
-      AssertionExtensions.Should(() => content.ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-      content.ToTextAsync().Should().NotBeNull().And.NotBeSameAs(content.ToTextAsync());
-      content.ToTextAsync().Await().Should().Be(content.ReadAsStringAsync().Await()).And.Be(text);
+      Validate(text, new StringContent(text));
     });
 
     return;
@@ -155,7 +146,9 @@ public sealed class HttpContentExtensionsTest : UnitTest
     {
       using (content)
       {
-
+        var task = content.ToTextAsync();
+        task.Should().BeOfType<Task<string>>();
+        task.Await().Should().BeOfType<string>().And.Be(content.ReadAsStringAsync().Await()).And.Be(result);
       }
     }
   }

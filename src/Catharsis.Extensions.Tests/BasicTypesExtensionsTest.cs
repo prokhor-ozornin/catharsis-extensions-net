@@ -30,7 +30,7 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     static void Validate(char character, int count)
     {
       var result = character.Repeat(count);
-      result.Should().NotBeNull().And.NotBeSameAs(character.Repeat(count)).And.HaveLength(count);
+      result.Should().BeOfType<string>().And.HaveLength(count);
       result.ToCharArray().Should().AllBeEquivalentTo(character);
     }
   }
@@ -43,14 +43,14 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => int.MinValue.To(0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-    int.MinValue.To(int.MinValue).Should().NotBeNull().And.BeSameAs(int.MinValue.To(int.MinValue)).And.BeEmpty();
-    int.MaxValue.To(int.MaxValue).Should().NotBeNull().And.BeSameAs(int.MaxValue.To(int.MaxValue)).And.BeEmpty();
-    0.To(0).Should().NotBeNull().And.BeSameAs(0.To(0)).And.BeEmpty();
-    (-1).To(0).Should().NotBeNull().And.NotBeSameAs((-1).To(0)).And.Equal(-1);
-    (-1).To(1).Should().NotBeNull().And.NotBeSameAs((-1).To(1)).And.Equal(-1, 0);
-    0.To(1).Should().NotBeNull().And.NotBeSameAs(0.To(1)).And.Equal(0);
-    0.To(2).Should().NotBeNull().And.NotBeSameAs(0.To(2)).And.Equal(0, 1);
-    0.To(short.MaxValue).Should().NotBeNull().And.NotBeSameAs(0.To(short.MaxValue)).And.HaveCount(short.MaxValue);
+    int.MinValue.To(int.MinValue).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(int.MinValue.To(int.MinValue)).And.BeEmpty();
+    int.MaxValue.To(int.MaxValue).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(int.MaxValue.To(int.MaxValue)).And.BeEmpty();
+    0.To(0).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(0.To(0)).And.BeEmpty();
+    (-1).To(0).Should().BeOfType<IEnumerable<int>>().And.Equal(-1);
+    (-1).To(1).Should().BeOfType<IEnumerable<int>>().And.Equal(-1, 0);
+    0.To(1).Should().BeOfType<IEnumerable<int>>().And.Equal(0);
+    0.To(2).Should().BeOfType<IEnumerable<int>>().And.Equal(0, 1);
+    0.To(short.MaxValue).Should().BeOfType<IEnumerable<int>>().And.HaveCount(short.MaxValue);
 
     return;
 

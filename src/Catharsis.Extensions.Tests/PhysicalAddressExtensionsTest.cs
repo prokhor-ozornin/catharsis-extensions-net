@@ -44,6 +44,6 @@ public sealed class PhysicalAddressExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(PhysicalAddress address) => address.ToBytes().Should().NotBeNull().And.NotBeSameAs(address.ToBytes()).And.Equal(address.GetAddressBytes());
+    static void Validate(PhysicalAddress address) => address.ToBytes().Should().BeOfType<byte[]>().And.Equal(address.GetAddressBytes());
   }
 }

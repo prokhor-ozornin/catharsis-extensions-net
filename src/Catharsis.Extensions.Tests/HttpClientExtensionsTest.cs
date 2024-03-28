@@ -33,13 +33,13 @@ public sealed class HttpClientExtensionsTest : UnitTest
       {
         http.DefaultRequestHeaders.Should().BeEmpty();
 
-        http.WithHeaders().Should().NotBeNull().And.BeSameAs(http);
+        http.WithHeaders().Should().BeOfType<HttpClient>().And.BeSameAs(http);
         http.DefaultRequestHeaders.Should().BeEmpty();
 
-        http.WithHeaders(headerUserAgent).Should().NotBeNull().And.BeSameAs(http);
+        http.WithHeaders(headerUserAgent).Should().BeOfType<HttpClient>().And.BeSameAs(http);
         http.DefaultRequestHeaders.GetValues(headerUserAgent.Name).Should().Equal(headerUserAgent.Value);
 
-        http.WithHeaders(headerUserAgent, headerConnection).Should().NotBeNull().And.BeSameAs(http);
+        http.WithHeaders(headerUserAgent, headerConnection).Should().BeOfType<HttpClient>().And.BeSameAs(http);
         http.DefaultRequestHeaders.Should().HaveCount(2);
         http.DefaultRequestHeaders.GetValues(headerUserAgent.Name).Should().HaveCount(2).And.AllBeEquivalentTo(headerUserAgent.Value);
         http.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
@@ -63,13 +63,13 @@ public sealed class HttpClientExtensionsTest : UnitTest
       {
         http.DefaultRequestHeaders.Should().BeEmpty();
 
-        http.WithHeaders().Should().NotBeNull().And.BeSameAs(http);
+        http.WithHeaders().Should().BeOfType<HttpClient>().And.BeSameAs(http);
         http.DefaultRequestHeaders.Should().BeEmpty();
 
-        http.WithHeaders(headerUserAgent).Should().NotBeNull().And.BeSameAs(http);
+        http.WithHeaders(headerUserAgent).Should().BeOfType<HttpClient>().And.BeSameAs(http);
         http.DefaultRequestHeaders.GetValues(headerUserAgent.Name).Should().Equal(headerUserAgent.Value);
 
-        http.WithHeaders(headerUserAgent, headerConnection).Should().NotBeNull().And.BeSameAs(http);
+        http.WithHeaders(headerUserAgent, headerConnection).Should().BeOfType<HttpClient>().And.BeSameAs(http);
         http.DefaultRequestHeaders.Should().HaveCount(2);
         http.DefaultRequestHeaders.GetValues(headerUserAgent.Name).Should().HaveCount(2).And.AllBeEquivalentTo(headerUserAgent.Value);
         http.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
@@ -94,11 +94,11 @@ public sealed class HttpClientExtensionsTest : UnitTest
         http.DefaultRequestHeaders.Should().BeEmpty();
 
         var headers = new Dictionary<string, object>();
-        http.WithHeaders(headers).Should().NotBeNull().And.BeSameAs(http);
+        http.WithHeaders(headers).Should().BeOfType<HttpClient>().And.BeSameAs(http);
         http.DefaultRequestHeaders.Should().BeEmpty();
 
         headers = new Dictionary<string, object> {{headerUserAgent.Name, headerUserAgent.Value}, { headerConnection.Name, headerConnection.Value}};
-        http.WithHeaders(headers).Should().NotBeNull().And.BeSameAs(http);
+        http.WithHeaders(headers).Should().BeOfType<HttpClient>().And.BeSameAs(http);
         http.DefaultRequestHeaders.Should().HaveCount(2);
         http.DefaultRequestHeaders.GetValues(headerUserAgent.Name).Should().Equal(headerUserAgent.Value);
         http.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
@@ -133,11 +133,11 @@ public sealed class HttpClientExtensionsTest : UnitTest
     var timeout = http.Timeout;
     timeout.Should().BeGreaterThan(TimeSpan.Zero);
       
-    http.WithTimeout(null).Should().NotBeNull().And.BeSameAs(http);
+    http.WithTimeout(null).Should().BeOfType<HttpClient>().And.BeSameAs(http);
     http.Timeout.Should().Be(timeout);
 
     var timespan = TimeSpan.FromTicks(1);
-    http.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(http);
+    http.WithTimeout(timespan).Should().BeOfType<HttpClient>().And.BeSameAs(http);
     http.Timeout.Should().Be(timespan);
 
     return;

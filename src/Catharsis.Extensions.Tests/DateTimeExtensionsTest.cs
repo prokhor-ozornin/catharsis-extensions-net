@@ -138,17 +138,17 @@ public sealed class DateTimeExtensionsTest : UnitTest
       date.Range(date, TimeSpan.FromTicks(1)).Should().BeEmpty();
       date.Range(date, TimeSpan.FromTicks(-1)).Should().BeEmpty();
 
-      date.Range(date.AddDays(1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(1), 1.Days())).And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-1), 1.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.Range(date.AddDays(1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(1), 2.Days())).And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-1), 2.Days())).And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 2.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 2.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.Range(date.AddDays(2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(2), 1.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(1));
-      date.Range(date.AddDays(-2), 1.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-2), 1.Days())).And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
+      date.Range(date.AddDays(2), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
+      date.Range(date.AddDays(-2), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
 
-      date.Range(date.AddDays(3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(3), 2.Days())).And.HaveCount(2).And.Equal(date, date.AddDays(2));
-      date.Range(date.AddDays(-3), 2.Days()).Should().NotBeNull().And.NotBeSameAs(date.Range(date.AddDays(-3), 2.Days())).And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
+      date.Range(date.AddDays(3), 2.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
+      date.Range(date.AddDays(-3), 2.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
     });
 
     return;

@@ -707,7 +707,7 @@ public sealed class ObjectExtensionsTest : UnitTest
     {
       using (writer)
       {
-        text.Print(writer).Should().NotBeNull().And.BeSameAs(text);
+        text.Print(writer).Should().BeOfType<string>().And.BeSameAs(text);
 
         using var reader = writer.BaseStream.MoveToStart().ToBinaryReader();
 

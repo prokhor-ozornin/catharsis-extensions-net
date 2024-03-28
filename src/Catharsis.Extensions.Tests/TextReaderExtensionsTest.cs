@@ -55,7 +55,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.Lines().Should().NotBeNull().And.NotBeSameAs(reader.Lines()).And.Equal(result);
+        reader.Lines().Should().BeOfType<IEnumerable<string>>().And.Equal(result);
       }
     }
   }
@@ -76,7 +76,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.LinesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(reader.LinesAsync().ToArray()).And.Equal(result);
+        reader.LinesAsync().ToArray().Should().BeOfType<IAsyncEnumerable<string>>().And.Equal(result);
       }
     }
   }
@@ -120,7 +120,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
     {
       using var synchronized = reader.AsSynchronized();
 
-      synchronized.Should().NotBeNull().And.NotBeSameAs(reader);
+      synchronized.Should().BeOfType<TextReader>().And.NotBeSameAs(reader);
       synchronized.Peek().Should().Be(reader.Peek());
     }
   }
@@ -141,7 +141,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.ToBytes(encoding).Should().NotBeNull().And.NotBeSameAs(reader.ToBytes(encoding)).And.Equal(result);
+        reader.ToBytes(encoding).Should().BeOfType<byte[]>().And.Equal(result);
       }
     }
   }
@@ -162,7 +162,9 @@ public sealed class TextReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.ToBytesAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(reader.ToBytesAsync(encoding).Await()).And.Equal(result);
+        var task = reader.ToBytesAsync(encoding);
+        task.Should().BeOfType<Task<byte[]>>();
+        task.Await().Should().BeOfType<byte[]>().And.Equal(result);
       }
     }
   }
@@ -183,7 +185,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.ToText().Should().NotBeNull().And.NotBeSameAs(reader.ToText()).And.Be(result);
+        reader.ToText().Should().BeOfType<string>().And.Be(result);
       }
     }
   }
@@ -205,7 +207,9 @@ public sealed class TextReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.ToTextAsync().Await().Should().Be(result);
+        var task = reader.ToTextAsync();
+        task.Should().BeOfType<Task<string>>();
+        task.Await().Should().BeOfType<string>().And.Be(result);
         reader.Read().Should().Be(-1);
       }
     }

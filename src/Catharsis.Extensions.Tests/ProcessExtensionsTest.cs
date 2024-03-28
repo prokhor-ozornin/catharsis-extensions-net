@@ -77,7 +77,7 @@ public sealed class ProcessExtensionsTest : UnitTest
 
     process.Start();
     AssertionExtensions.Should(() => process.TryFinallyKill(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
-    process.TryFinallyKill(_ => { }).Should().NotBeNull().And.BeSameAs(process);
+    process.TryFinallyKill(_ => { }).Should().BeOfType<Process>().And.BeSameAs(process);
     process.HasExited.Should().BeTrue();
 
     return;

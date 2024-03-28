@@ -130,7 +130,7 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
     AssertionExtensions.Should(() => new NameValueCollection().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
     var collection = new NameValueCollection();
-    collection.TryFinallyClear(collection => collection.Add("key", "value")).Should().NotBeNull().And.BeSameAs(collection);
+    collection.TryFinallyClear(collection => collection.Add("key", "value")).Should().BeOfType<NameValueCollection>().And.BeSameAs(collection);
     collection.Count.Should().Be(0);
 
     return;

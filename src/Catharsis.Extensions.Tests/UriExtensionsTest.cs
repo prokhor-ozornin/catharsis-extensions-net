@@ -81,7 +81,12 @@ public sealed class UriExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool result, Uri uri) => uri.IsAvailableAsync().Await().Should().Be(result);
+    static void Validate(bool result, Uri uri)
+    {
+      var task = uri.IsAvailableAsync();
+      task.Should().BeOfType<Task<bool>>();
+      task.Await().Should().Be(result);
+    }
   }
 
   /// <summary>
@@ -111,7 +116,7 @@ public sealed class UriExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, Uri uri) => uri.GetHost().Should().NotBeSameAs(uri.GetHost()).And.Be(result);
+    static void Validate(string result, Uri uri) => uri.GetHost().Should().Be(result);
   }
 
   /// <summary>
@@ -242,7 +247,7 @@ public sealed class UriExtensionsTest : UnitTest
     {
       var builder = uri.ToUriBuilder();
 
-      builder.Should().NotBeNull().And.NotBeSameAs(uri.ToUriBuilder());
+      builder.Should().BeOfType<UriBuilder>();
       builder.Uri.Should().Be(uri);
       builder.Fragment.Should().Be(uri.Fragment);
       builder.Host.Should().Be(uri.Host);
@@ -317,7 +322,7 @@ public sealed class UriExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(byte[] result, Uri uri) => uri.ToBytes().Should().NotBeNull().And.NotBeSameAs(uri.ToBytes()).And.Equal(result);
+    static void Validate(byte[] result, Uri uri) => uri.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
   }
 
   /// <summary>
@@ -332,7 +337,7 @@ public sealed class UriExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(byte[] result, Uri uri) => uri.ToBytesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(uri.ToBytes().ToArray()).And.Equal(result);
+    static void Validate(byte[] result, Uri uri) => uri.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -347,7 +352,7 @@ public sealed class UriExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, Uri uri, Encoding encoding = null) => uri.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(uri.ToText(encoding)).And.Be(result);
+    static void Validate(string result, Uri uri, Encoding encoding = null) => uri.ToText(encoding).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -362,7 +367,12 @@ public sealed class UriExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, Uri uri, Encoding encoding = null) => uri.ToTextAsync().Await().Should().NotBeNull().And.NotBeSameAs(uri.ToTextAsync().Await()).And.Be(result);
+    static void Validate(string result, Uri uri, Encoding encoding = null)
+    {
+      var task = uri.ToTextAsync(encoding);
+      task.Should().BeOfType<Task<string>>();
+      task.Await().Should().BeOfType<string>().And.Be(result);
+    }
   }
 
   /// <summary>

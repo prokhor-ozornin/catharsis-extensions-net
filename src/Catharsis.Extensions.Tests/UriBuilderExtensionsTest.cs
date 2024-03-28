@@ -25,7 +25,7 @@ public sealed class UriBuilderExtensionsTest : UnitTest
 
     static void Validate(UriBuilder builder)
     {
-      builder.Empty().Should().NotBeNull().And.BeSameAs(builder);
+      builder.Empty().Should().BeOfType<UriBuilder>().And.BeSameAs(builder);
       builder.Fragment.Should().BeEmpty();
       builder.Host.Should().BeEmpty();
       builder.Password.Should().BeEmpty();

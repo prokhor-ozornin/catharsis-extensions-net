@@ -26,11 +26,11 @@ public sealed class SmtpClientExtensionsTest : UnitTest
     var timeout = smtp.Timeout;
     timeout.Should().Be(100000);
 
-    smtp.WithTimeout(null).Should().NotBeNull().And.BeSameAs(smtp);
+    smtp.WithTimeout(null).Should().BeOfType<SmtpClient>().And.BeSameAs(smtp);
     smtp.Timeout.Should().Be(timeout);
 
     var timespan = TimeSpan.Zero;
-    smtp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(smtp);
+    smtp.WithTimeout(timespan).Should().BeOfType<SmtpClient>().And.BeSameAs(smtp);
     smtp.Timeout.Should().Be((int) timespan.TotalMilliseconds);
 
     throw new NotImplementedException();

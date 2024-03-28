@@ -48,13 +48,13 @@ public sealed class TcpClientExtensionsTest : UnitTest
     receiveTimeout.Should().Be(tcp.Client.ReceiveTimeout).And.Be(0);
     sendTimeout.Should().Be(tcp.Client.SendTimeout).And.Be(0);
 
-    tcp.WithTimeout(null).Should().NotBeNull().And.BeSameAs(Attributes.Tcp());
+    tcp.WithTimeout(null).Should().BeOfType<TcpClient>().And.BeSameAs(Attributes.Tcp());
     tcp.ReceiveTimeout.Should().Be(tcp.Client.ReceiveTimeout).And.Be(receiveTimeout);
     tcp.SendTimeout.Should().Be(tcp.Client.SendTimeout).And.Be(sendTimeout);
 
     new[] { TimeSpan.MinValue, TimeSpan.Zero, TimeSpan.MaxValue }.ForEach(timespan =>
     {
-      tcp.WithTimeout(timespan).Should().NotBeNull().And.BeSameAs(Attributes.Tcp());
+      tcp.WithTimeout(timespan).Should().BeOfType<TcpClient>().And.BeSameAs(Attributes.Tcp());
       tcp.ReceiveTimeout.Should().Be(tcp.Client.ReceiveTimeout).And.Be((int) timespan.TotalMilliseconds);
       tcp.SendTimeout.Should().Be(tcp.Client.SendTimeout).And.Be((int) timespan.TotalMilliseconds);
     });
@@ -186,7 +186,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
     {
       using (client)
       {
-        client.ToBytes().Should().NotBeNull().And.NotBeSameAs(client.ToBytes()).And.Equal(result);
+        client.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
       }
     }
   }
@@ -207,7 +207,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
     {
       using (client)
       {
-        client.ToBytesAsync().ToArray().Should().NotBeNull().And.NotBeSameAs(client.ToBytesAsync().ToArray()).And.Equal(result);
+        client.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(result);
       }
     }
   }
@@ -228,7 +228,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
     {
       using (client)
       {
-        client.ToText(encoding).Should().NotBeNull().And.NotBeSameAs(client.ToText(encoding)).And.Be(result);
+        client.ToText(encoding).Should().BeOfType<string>().And.Be(result);
       }
     }
   }
@@ -249,7 +249,9 @@ public sealed class TcpClientExtensionsTest : UnitTest
     {
       using (client)
       {
-        client.ToTextAsync(encoding).Await().Should().NotBeNull().And.NotBeSameAs(client.ToTextAsync(encoding).Await()).And.Be(result);
+        var task = client.ToTextAsync(encoding);
+        task.Should().BeOfType<Task<string>>();
+        task.Await().Should().BeOfType<string>().And.Be(result);
       }
     }
   }
