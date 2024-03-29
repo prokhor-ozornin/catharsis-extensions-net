@@ -101,8 +101,8 @@ public sealed class StreamReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.Empty().Should().BeSameAs(reader);
-        reader.BaseStream.Should().HaveLength(0).And.HavePosition(0);
+        reader.Empty().Should().BeOfType<StreamReader>().And.BeSameAs(reader);
+        reader.BaseStream.Should().BeOfType<Stream>().And.HaveLength(0).And.HavePosition(0);
         reader.Peek().Should().Be(-1);
       }
     }
@@ -126,7 +126,7 @@ public sealed class StreamReaderExtensionsTest : UnitTest
       using (reader)
       {
         reader.ToBytesAsync().Await();
-        reader.Rewind().Should().BeSameAs(reader);
+        reader.Rewind().Should().BeOfType<StreamReader>().And.BeSameAs(reader);
         reader.BaseStream.Should().HavePosition(0);
       }
     }

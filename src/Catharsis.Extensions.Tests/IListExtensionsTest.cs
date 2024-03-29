@@ -167,14 +167,14 @@ public sealed class IListExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IListExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
 
     var collection = new List<object>();
-    collection.Randomize().Should().BeSameAs(collection).And.BeEmpty();
+    collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.BeEmpty();
 
     collection = [string.Empty];
-    collection.Randomize().Should().BeSameAs(collection).And.Equal(string.Empty);
+    collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.Equal(string.Empty);
 
     var sequence = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
     collection = [..sequence];
-    collection.Randomize().Should().BeSameAs(collection).And.Contain(sequence);
+    collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.Contain(sequence);
 
     return;
 

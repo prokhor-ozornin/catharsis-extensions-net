@@ -20,7 +20,7 @@ public sealed class AssemblyExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Assembly.GetExecutingAssembly().Resource(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
     //Assembly.GetExecutingAssembly().Resource("invalid").Should().BeNull();
-    //Assembly.GetExecutingAssembly().Resource("Catharsis.Commons.Resource.txt").Should().Be("resource");
+    //Assembly.GetExecutingAssembly().Resource("Catharsis.Commons.Resource.txt").Should().BeOfType<string>().And.Be("resource");
 
     // TODO Encoding support
 

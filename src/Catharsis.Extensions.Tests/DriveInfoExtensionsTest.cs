@@ -25,7 +25,7 @@ public sealed class DriveInfoExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.NotBe(original);
+      clone.Should().BeOfType<DriveInfo>().And.NotBeSameAs(original).And.NotBe(original);
       clone.ToString().Should().Be(original.ToString());
       clone.Name.Should().Be(original.Name);
       clone.IsReady.Should().Be(original.IsReady);
@@ -47,7 +47,7 @@ public sealed class DriveInfoExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((DriveInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
 
-    DriveInfo.GetDrives().Should().Contain(drive => !drive.IsEmpty());
+    DriveInfo.GetDrives().Should().BeOfType<DriveInfo[]>().And.Contain(drive => !drive.IsEmpty());
 
     return;
 
@@ -66,7 +66,7 @@ public sealed class DriveInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(IEnumerable<DirectoryInfo> result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.Directories(pattern, recursive).Should().Equal(result);
+    static void Validate(IEnumerable<DirectoryInfo> result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.Directories(pattern, recursive).Should().BeOfType<IEnumerable<DirectoryInfo>>().And.Equal(result);
   }
 
   /// <summary>

@@ -54,19 +54,19 @@ public sealed class ActionExtensionsTest : UnitTest
 
       var collection = new List<int>();
       action.Execute(_ => false, collection).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
-      collection.Should().BeEmpty();
+      collection.Should().BeOfType<List<int>>().And.BeEmpty();
 
       collection = [];
       action.Execute(_ => false, null).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
-      collection.Should().BeEmpty();
+      collection.Should().BeOfType<List<int>>().And.BeEmpty();
 
       collection = [];
       action.Execute(x => x?.Count < count, collection).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
-      collection.Should().HaveCount(count).And.AllBeEquivalentTo(int.MaxValue);
+      collection.Should().BeOfType<List<int>>().And.HaveCount(count).And.AllBeEquivalentTo(int.MaxValue);
 
       collection = [];
       action.Execute(x => x?.Count < count, null).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
-      collection.Should().BeEmpty();
+      collection.Should().BeOfType<List<int>>().And.BeEmpty();
 
       static void Validate()
       {

@@ -29,7 +29,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.Be(original);
+      clone.Should().BeOfType<StringBuilder>().And.NotBeSameAs(original).And.Be(original);
       clone.ToString().Should().Be(original.ToString());
       clone.Length.Should().Be(original.Length);
       clone.Capacity.Should().Be(original.Capacity);
@@ -70,7 +70,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     static void Validate(StringBuilder builder)
     {
-      builder.Empty().Should().BeSameAs(builder);
+      builder.Empty().Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
       builder.Length.Should().Be(0);
       builder.ToString().Should().BeEmpty();
     }
@@ -103,7 +103,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(StringBuilder result, StringBuilder left, StringBuilder right) => left.Min(right).Should().BeSameAs(result);
+    static void Validate(StringBuilder result, StringBuilder left, StringBuilder right) => left.Min(right).Should().BeOfType<StringBuilder>().And.BeSameAs(result);
   }
 
   /// <summary>
@@ -133,7 +133,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(StringBuilder result, StringBuilder left, StringBuilder right) => left.Max(right).Should().BeSameAs(result);
+    static void Validate(StringBuilder result, StringBuilder left, StringBuilder right) => left.Max(right).Should().BeOfType<StringBuilder>().And.BeSameAs(result);
   }
 
   /// <summary>
@@ -153,7 +153,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     static void Validate(string text)
     {
       var builder = new StringBuilder();
-      builder.TryFinallyClear(x => x.Append(text)).Should().BeSameAs(builder);
+      builder.TryFinallyClear(x => x.Append(text)).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
       builder.Length.Should().Be(0);
       builder.ToString().Should().BeEmpty();
     }

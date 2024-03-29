@@ -26,9 +26,9 @@ public sealed class PhysicalAddressExtensionsTest : UnitTest
     {
       var clone = original.Clone();
       
-      clone.Should().NotBeSameAs(original).And.Be(original);
+      clone.Should().BeOfType<PhysicalAddress>().And.NotBeSameAs(original).And.Be(original);
       clone.ToString().Should().Be(original.ToString());
-      clone.GetAddressBytes().Should().Equal(original.GetAddressBytes());
+      clone.GetAddressBytes().Should().BeOfType<byte[]>().And.Equal(original.GetAddressBytes());
     }
   }
 

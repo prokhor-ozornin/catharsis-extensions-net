@@ -130,23 +130,23 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     var first = Enumerable.Empty<object>();
     var second = Enumerable.Empty<object>();
-    first.Min(second).Should().BeSameAs(first);
+    first.Min(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
     first = Enumerable.Empty<object>();
     second = new object[] { null };
-    first.Min(second).Should().BeSameAs(first);
+    first.Min(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
     first = new object[] { string.Empty };
     second = new object[] { null };
-    first.Min(second).Should().BeSameAs(first);
+    first.Min(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
     first = new object[] { string.Empty };
     second = new object[] { null, string.Empty };
-    first.Min(second).Should().BeSameAs(first);
+    first.Min(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
     return;
 
-    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> left, IEnumerable<T> right) => left.Min(right).Should().BeSameAs(result);
+    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> left, IEnumerable<T> right) => left.Min(right).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(result);
   }
 
   /// <summary>
@@ -160,23 +160,23 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     var first = Enumerable.Empty<object>();
     var second = Enumerable.Empty<object>();
-    first.Max(second).Should().BeSameAs(first);
+    first.Max(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
     first = Enumerable.Empty<object>();
     second = new object[] { null };
-    first.Max(second).Should().BeSameAs(second);
+    first.Max(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(second);
 
     first = new object[] { string.Empty };
     second = new object[] { null };
-    first.Max(second).Should().BeSameAs(first);
+    first.Max(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
     first = new object[] { string.Empty };
     second = new object[] { null, string.Empty };
-    first.Max(second).Should().BeSameAs(second);
+    first.Max(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(second);
 
     return;
 
-    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> left, IEnumerable<T> right) => left.Max(right).Should().BeSameAs(result);
+    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> left, IEnumerable<T> right) => left.Max(right).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(result);
   }
 
   /// <summary>
@@ -304,12 +304,12 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IEnumerableExtensions.Join<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().Join().Should().BeEmpty();
-    Enumerable.Empty<object>().Join(",").Should().BeEmpty();
+    Enumerable.Empty<object>().Join().Should().BeOfType<string>().And.BeEmpty();
+    Enumerable.Empty<object>().Join(",").Should().BeOfType<string>().And.BeEmpty();
 
-    new object[] { null, string.Empty, "*", null }.Join().Should().Be("*");
-    new object[] { null, string.Empty, "*", null }.Join(",").Should().Be("*");
-    new object[] { null, string.Empty, "*", 100, null, "#" }.Join(",").Should().Be("*,100,#");
+    new object[] { null, string.Empty, "*", null }.Join().Should().BeOfType<string>().And.Be("*");
+    new object[] { null, string.Empty, "*", null }.Join(",").Should().BeOfType<string>().And.Be("*");
+    new object[] { null, string.Empty, "*", 100, null, "#" }.Join(",").Should().BeOfType<string>().And.Be("*,100,#");
 
     return;
 
@@ -325,15 +325,15 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.Repeat<object>(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
     AssertionExtensions.Should(() => Enumerable.Empty<object>().Repeat(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-    Enumerable.Empty<object>().Repeat(0).Should().BeEmpty();
-    Enumerable.Empty<object>().Repeat(1).Should().BeEmpty();
+    Enumerable.Empty<object>().Repeat(0).Should().BeOfType<IEnumerable<object>>().And.BeEmpty();
+    Enumerable.Empty<object>().Repeat(1).Should().BeOfType<IEnumerable<object>>().And.BeEmpty();
 
     var sequence = new object[] { null, 1, 55.5, string.Empty, Guid.Empty, null };
 
-    sequence.Repeat(0).Should().BeEmpty();
-    sequence.Repeat(1).Should().BeSameAs(sequence).And.Equal(sequence);
-    sequence.Repeat(2).Should().Equal(sequence.Concat(sequence));
-    sequence.Repeat(3).Should().Equal(sequence.Concat(sequence).Concat(sequence));
+    sequence.Repeat(0).Should().BeOfType<IEnumerable<object>>().And.BeEmpty();
+    sequence.Repeat(1).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(sequence).And.Equal(sequence);
+    sequence.Repeat(2).Should().BeOfType<IEnumerable<object>>().And.Equal(sequence.Concat(sequence));
+    sequence.Repeat(3).Should().BeOfType<IEnumerable<object>>().And.Equal(sequence.Concat(sequence).Concat(sequence));
 
     return;
 
@@ -351,7 +351,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     Enumerable.Empty<object>().Random().Should().BeNull();
 
     var element = new object();
-    new[] { element }.Random().Should().BeSameAs(element);
+    new[] { element }.Random().Should().BeOfType<object>().And.BeSameAs(element);
 
     string[] elements = ["first", "second"];
     elements.Should().Contain(elements.Random());
@@ -374,14 +374,14 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     AssertionExtensions.Should(() => IEnumerableExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
     IEnumerable<object> collection = [];
-    collection.Randomize().Should().NotBeSameAs(collection).And.BeEmpty();
+    collection.Randomize().Should().BeOfType<IEnumerable<object>>().And.NotBeSameAs(collection).And.BeEmpty();
 
     collection = new object[] { string.Empty };
-    collection.Randomize().Should().NotBeSameAs(collection).And.Equal(string.Empty);
+    collection.Randomize().Should().BeOfType<IEnumerable<object>>().And.NotBeSameAs(collection).And.Equal(string.Empty);
 
     var sequence = new object[] { 1, 2, 3, 4, 5 };
     collection = new List<object>(sequence);
-    collection.Randomize().Should().NotBeSameAs(collection).And.Contain(sequence);
+    collection.Randomize().Should().BeOfType<IEnumerable<object>>().And.NotBeSameAs(collection).And.Contain(sequence);
 
     return;
 
@@ -416,13 +416,13 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IEnumerableExtensions.AsArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().AsArray().Should().BeEmpty().And.BeSameAs(Enumerable.Empty<object>().AsArray());
+    Enumerable.Empty<object>().AsArray().Should().BeOfType<object[]>().And.BeEmpty().And.BeSameAs(Enumerable.Empty<object>().AsArray());
 
     object[] array = [];
-    array.AsArray().Should().BeSameAs(array);
+    array.AsArray().Should().BeOfType<object[]>().And.BeSameAs(array);
 
     var list = new List<object> {null, 1, 55.5, string.Empty, Guid.Empty, null};
-    list.AsArray().Should().NotBeSameAs(list).And.Equal(list);
+    list.AsArray().Should().BeOfType<object[]>().And.NotBeSameAs(list).And.Equal(list);
 
     return;
 
@@ -439,10 +439,10 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IEnumerableExtensions.AsNotNullable<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().AsNotNullable().Should().BeEmpty();
+    Enumerable.Empty<object>().AsNotNullable().Should().BeOfType<IEnumerable<object>>().And.BeEmpty();
 
     var sequence = new object[] {null, 1, 55.5, string.Empty, Guid.Empty, null};
-    sequence.AsNotNullable().Should().Equal(sequence.Where(element => element is not null));
+    sequence.AsNotNullable().Should().BeOfType<IEnumerable<object>>().And.Equal(sequence.Where(element => element is not null));
 
     return;
 
@@ -469,7 +469,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     {
       var result = sequence.ToAsyncEnumerable();
       result.Should().BeOfType<IAsyncEnumerable<T>>();
-      result.ToArray().Should().Equal(sequence.ToArray());
+      result.ToArray().Should().BeOfType<T[]>().And.Equal(sequence.ToArray());
     }
   }
 
@@ -481,10 +481,10 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IEnumerableExtensions.ToLinkedList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().ToLinkedList().Should().BeEmpty();
+    Enumerable.Empty<object>().ToLinkedList().Should().BeOfType<LinkedList<object>>().And.BeEmpty();
 
     IEnumerable<int?> sequence = new int?[] {1, null, 2, null, 3};
-    sequence.ToLinkedList().Should().Equal(sequence);
+    sequence.ToLinkedList().Should().BeOfType<LinkedList<int?>>().And.Equal(sequence);
 
     return;
 
@@ -518,11 +518,11 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IEnumerableExtensions.ToSortedSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().ToSortedSet().Should().BeEmpty();
+    Enumerable.Empty<object>().ToSortedSet().Should().BeOfType<SortedSet<object>>().And.BeEmpty();
 
     IEnumerable<int?> sequence = new int?[] {1, null, 2, null, 3, null, 3, 2, 1};
-    sequence.ToSortedSet().Should().Equal(null, 1, 2, 3);
-    sequence.ToSortedSet(Comparer<int?>.Create((x, y) => x.GetValueOrDefault() < y.GetValueOrDefault() ? 1 : x.GetValueOrDefault() > y.GetValueOrDefault() ? -1 : 0)).Should().Equal(3, 2, 1, null);
+    sequence.ToSortedSet().Should().BeOfType<SortedSet<int?>>().And.Equal(null, 1, 2, 3);
+    sequence.ToSortedSet(Comparer<int?>.Create((x, y) => x.GetValueOrDefault() < y.GetValueOrDefault() ? 1 : x.GetValueOrDefault() > y.GetValueOrDefault() ? -1 : 0)).Should().BeOfType<SortedSet<int?>>().And.Equal(3, 2, 1, null);
 
     return;
 
@@ -539,10 +539,10 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IEnumerableExtensions.ToStack<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
 
-    Enumerable.Empty<object>().ToStack().Should().BeEmpty();
+    Enumerable.Empty<object>().ToStack().Should().BeOfType<Stack<object>>().And.BeEmpty();
 
     IEnumerable<int?> sequence = new int?[] {null, 1, null, 2, null, 3, null};
-    sequence.ToStack().Should().Equal(sequence.Reverse());
+    sequence.ToStack().Should().BeOfType<Stack<int?>>().And.Equal(sequence.Reverse());
 
     return;
 
@@ -607,7 +607,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     var result = sequence.ToMemory();
     result.Should().BeOfType<Memory<object>>();
     result.Length.Should().Be(sequence.Length);
-    result.ToArray().Should().Equal(sequence);
+    result.ToArray().Should().BeOfType<object[]>().And.Equal(sequence);
 
     return;
 
@@ -632,7 +632,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     var result = sequence.ToReadOnlyMemory();
     result.Should().BeOfType<ReadOnlyMemory<object>>();
     result.Length.Should().Be(sequence.Length);
-    result.ToArray().Should().Equal(sequence);
+    result.ToArray().Should().BeOfType<object[]>().And.Equal(sequence);
 
     return;
 
@@ -654,7 +654,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     var sequence = new object[] {null, 1, 55.5, string.Empty, Guid.Empty, null};
     var result = sequence.ToSpan();
     result.Length.Should().Be(sequence.Length);
-    result.ToArray().Should().Equal(sequence);
+    result.ToArray().Should().BeOfType<object[]>().And.Equal(sequence);
 
     return;
 
@@ -676,7 +676,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     var sequence = new object[] {null, 1, 55.5, string.Empty, Guid.Empty, null};
     var result = sequence.ToReadOnlySpan();
     result.Length.Should().Be(sequence.Length);
-    result.ToArray().Should().Equal(sequence);
+    result.ToArray().Should().BeOfType<object[]>().And.Equal(sequence);
 
     return;
 
@@ -937,7 +937,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
         writer.BaseStream.Length.Should().Be(length + count);
         writer.BaseStream.Position.Should().Be(position + count);
-        writer.BaseStream.MoveBy(-count).ToBytesAsync().ToArray().Should().Equal(bytes);
+        writer.BaseStream.MoveBy(-count).ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
       }
     }
   }

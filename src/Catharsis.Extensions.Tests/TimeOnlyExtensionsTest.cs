@@ -75,9 +75,9 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
     {
       var timeOnly = TimeOnly.FromDateTime(date);
 
-      timeOnly.Range(timeOnly, TimeSpan.Zero).Should().BeEmpty();
-      timeOnly.Range(timeOnly, TimeSpan.FromTicks(1)).Should().BeEmpty();
-      timeOnly.Range(timeOnly, TimeSpan.FromTicks(-1)).Should().BeEmpty();
+      timeOnly.Range(timeOnly, TimeSpan.Zero).Should().BeOfType<IEnumerable<TimeOnly>>().And.BeEmpty();
+      timeOnly.Range(timeOnly, TimeSpan.FromTicks(1)).Should().BeOfType<IEnumerable<TimeOnly>>().And.BeEmpty();
+      timeOnly.Range(timeOnly, TimeSpan.FromTicks(-1)).Should().BeOfType<IEnumerable<TimeOnly>>().And.BeEmpty();
 
       timeOnly.Range(timeOnly.Add(1.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly);
       timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));

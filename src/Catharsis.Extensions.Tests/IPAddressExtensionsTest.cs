@@ -33,7 +33,7 @@ public sealed class IPAddressExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.Be(original);
+      clone.Should().BeOfType<IPAddress>().And.NotBeSameAs(original).And.Be(original);
       clone.ToString().Should().Be(original.ToString());
       clone.AddressFamily.Should().Be(original.AddressFamily);
       clone.IsIPv4MappedToIPv6.Should().Be(original.IsIPv4MappedToIPv6);
@@ -122,7 +122,7 @@ public sealed class IPAddressExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(IPAddress result, IPAddress left, IPAddress right) => left.Min(right).Should().BeSameAs(result);
+    static void Validate(IPAddress result, IPAddress left, IPAddress right) => left.Min(right).Should().BeOfType<IPAddress>().And.BeSameAs(result);
   }
 
   /// <summary>
@@ -143,7 +143,7 @@ public sealed class IPAddressExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(IPAddress result, IPAddress left, IPAddress right) => left.Max(right).Should().BeSameAs(result);
+    static void Validate(IPAddress result, IPAddress left, IPAddress right) => left.Max(right).Should().BeOfType<IPAddress>().And.BeSameAs(result);
   }
 
   /// <summary>

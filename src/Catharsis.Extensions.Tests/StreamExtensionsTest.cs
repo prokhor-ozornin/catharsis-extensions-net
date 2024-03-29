@@ -120,7 +120,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.Empty().Should().BeSameAs(stream).And.HavePosition(0).And.HaveLength(0);
+        stream.Empty().Should().BeOfType<Stream>().And.BeSameAs(stream).And.HavePosition(0).And.HaveLength(0);
       }
     }
   }
@@ -318,7 +318,7 @@ public sealed class StreamExtensionsTest : UnitTest
     {
       using (stream)
       {
-        stream.LinesAsync(encoding).ToArray().Should().Equal(result);
+        stream.LinesAsync(encoding).ToArray().Should().BeOfType<string[]>().And.Equal(result);
       }
     }
   }
@@ -363,7 +363,7 @@ public sealed class StreamExtensionsTest : UnitTest
       using (stream)
       {
         stream.TryFinallyClear(stream => stream.WriteBytes(bytes)).Should().BeOfType<Stream>().And.BeSameAs(stream);
-        stream.Should().HavePosition(0).And.HaveLength(0);
+        stream.Should().BeOfType<Stream>().And.HavePosition(0).And.HaveLength(0);
       }
     }
   }
@@ -625,18 +625,18 @@ public sealed class StreamExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StreamExtensions.ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
 
-    Stream.Null.ToBytesAsync().ToArray().Should().BeEmpty();
+    Stream.Null.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.BeEmpty();
 
     var bytes = Attributes.RandomBytes();
 
     var stream = new MemoryStream(bytes);
-    stream.ToBytesAsync().ToArray().Should().Equal(bytes);
+    stream.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
     stream.ReadByte().Should().Be(-1);
     stream.Close();
     //AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
 
     stream = new MemoryStream(bytes);
-    stream.ToBytesAsync().ToArray().Should().Equal(bytes);
+    stream.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
     //AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
 
     throw new NotImplementedException();
@@ -945,7 +945,7 @@ public sealed class StreamExtensionsTest : UnitTest
     byte[] compressed = [];
     using (var deflate = stream.Deflate(CompressionMode.Compress))
     {
-      deflate.BaseStream.Should().BeSameAs(stream);
+      deflate.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(stream);
       AssertionExtensions.Should(() => deflate.ReadByte()).ThrowExactly<InvalidOperationException>();
       deflate.Write(bytes);
     }
@@ -1348,11 +1348,11 @@ public sealed class StreamExtensionsTest : UnitTest
 
       using (var writer = stream.ToBinaryWriter(encoding))
       {
-        writer.BaseStream.Should().BeSameAs(stream);
+        writer.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(stream);
         writer.Write(bytes);
       }
 
-      stream.ToArray().Should().Equal(bytes);
+      stream.ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
 
       AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
     }
@@ -1378,8 +1378,8 @@ public sealed class StreamExtensionsTest : UnitTest
         var bytes = stream.ToArray();
         using var reader = stream.ToStreamReader(encoding);
 
-        reader.BaseStream.Should().BeSameAs(stream);
-        reader.ToText().Should().Be(bytes.ToText(encoding));
+        reader.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(stream);
+        reader.ToText().Should().BeOfType<string>().And.Be(bytes.ToText(encoding));
       }
     }
   }
@@ -1403,11 +1403,11 @@ public sealed class StreamExtensionsTest : UnitTest
 
       using (var writer = stream.ToStreamWriter(encoding))
       {
-        writer.BaseStream.Should().BeSameAs(stream);
+        writer.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(stream);
         writer.Write(text);
       }
 
-      stream.ToArray().Should().Equal(text.ToBytes(encoding));
+      stream.ToArray().Should().BeOfType<byte[]>().And.Equal(text.ToBytes(encoding));
       AssertionExtensions.Should(() => stream.ReadByte()).ThrowExactly<ObjectDisposedException>();
     }
   }
@@ -1795,7 +1795,7 @@ public sealed class StreamExtensionsTest : UnitTest
 
         var task = stream.HashAsync(Attributes.HashAlgorithm());
         task.Should().BeOfType<Task<byte>[]>();
-        task.Await().Should().HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
+        task.Await().Should().BeOfType<byte[]>().And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(stream.MoveToStart()));
       }
     });
 

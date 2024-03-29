@@ -134,9 +134,9 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   {
     new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
     {
-      date.Range(date, TimeSpan.Zero).Should().BeEmpty();
-      date.Range(date, TimeSpan.FromTicks(1)).Should().BeEmpty();
-      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeEmpty();
+      date.Range(date, TimeSpan.Zero).Should().BeOfType<IEnumerable<DateTimeOffset>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(1)).Should().BeOfType<IEnumerable<DateTimeOffset>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeOfType<IEnumerable<DateTimeOffset>>().And.BeEmpty();
 
       date.Range(date.AddDays(1), 1.Days()).Should().BeOfType<IEnumerable<DateTimeOffset>>().And.HaveCount(1).And.Equal(date);
       date.Range(date.AddDays(-1), 1.Days()).Should().BeOfType<IEnumerable<DateTimeOffset>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
@@ -472,16 +472,16 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   public void ToRfcString_Method()
   {
     var now = DateTimeOffset.Now;
-    now.ToRfcString().Should().Be(now.ToUniversalTime().ToString("r"));
+    now.ToRfcString().Should().BeOfType<string>().And.Be(now.ToUniversalTime().ToString("r"));
     DateTimeOffset.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.ToUniversalTime().TruncateToSecondStart());
 
     now = DateTimeOffset.UtcNow;
-    now.ToRfcString().Should().Be(now.ToString("r"));
+    now.ToRfcString().Should().BeOfType<string>().And.Be(now.ToString("r"));
     DateTimeOffset.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.TruncateToSecondStart());
 
     return;
 
-    static void Validate(string result, DateTimeOffset date) => date.ToRfcString().Should().Be(result);
+    static void Validate(string result, DateTimeOffset date) => date.ToRfcString().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>

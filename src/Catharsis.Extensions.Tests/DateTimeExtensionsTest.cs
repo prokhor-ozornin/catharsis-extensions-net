@@ -134,9 +134,9 @@ public sealed class DateTimeExtensionsTest : UnitTest
   {
     new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
     {
-      date.Range(date, TimeSpan.Zero).Should().BeEmpty();
-      date.Range(date, TimeSpan.FromTicks(1)).Should().BeEmpty();
-      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeEmpty();
+      date.Range(date, TimeSpan.Zero).Should().BeOfType<IEnumerable<DateTime>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(1)).Should().BeOfType<IEnumerable<DateTime>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeOfType<IEnumerable<DateTime>>().And.BeEmpty();
 
       date.Range(date.AddDays(1), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
       date.Range(date.AddDays(-1), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
@@ -455,16 +455,16 @@ public sealed class DateTimeExtensionsTest : UnitTest
   public void ToIsoString_Method()
   {
     var now = DateTime.Now;
-    now.ToIsoString().Should().Be(now.ToUniversalTime().ToString("o"));
+    now.ToIsoString().Should().BeOfType<string>().And.Be(now.ToUniversalTime().ToString("o"));
     DateTime.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture).Should().Be(now);
 
     now = DateTime.UtcNow;
-    now.ToIsoString().Should().Be(now.ToString("o"));
+    now.ToIsoString().Should().BeOfType<string>().And.Be(now.ToString("o"));
     DateTime.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now);
 
     return;
 
-    static void Validate(string result, DateTime date) => date.ToIsoString().Should().Be(result);
+    static void Validate(string result, DateTime date) => date.ToIsoString().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -474,16 +474,16 @@ public sealed class DateTimeExtensionsTest : UnitTest
   public void ToRfcString_Method()
   {
     var now = DateTime.Now;
-    now.ToRfcString().Should().Be(now.ToUniversalTime().ToString("r"));
+    now.ToRfcString().Should().BeOfType<string>().And.Be(now.ToUniversalTime().ToString("r"));
     DateTime.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.ToUniversalTime().TruncateToSecondStart());
 
     now = DateTime.UtcNow;
-    now.ToRfcString().Should().Be(now.ToString("r"));
+    now.ToRfcString().Should().BeOfType<string>().And.Be(now.ToString("r"));
     DateTime.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now.TruncateToSecondStart());
 
     return;
 
-    static void Validate(string result, DateTime date) => date.ToRfcString().Should().Be(result);
+    static void Validate(string result, DateTime date) => date.ToRfcString().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>

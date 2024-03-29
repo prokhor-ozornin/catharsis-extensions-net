@@ -78,7 +78,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
         var result = sequence.ForEach(value => collection.Add(value));
 
         result.Should().BeOfType<IAsyncEnumerable<T>>().And.BeSameAs(sequence);
-        collection.Should().Equal(elements);
+        collection.Should().BeOfType<List<T>>().And.Equal(elements);
       }
     }
 
@@ -91,7 +91,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
         var result = sequence.ForEach((index, value) => collection.Insert(index, value));
 
         result.Should().BeOfType<IAsyncEnumerable<T>>().And.BeSameAs(sequence);
-        collection.Should().Equal(elements);
+        collection.Should().BeOfType<List<T>>().And.Equal(elements);
       }
 
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).ForEach((_, _) => { })).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
@@ -132,7 +132,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
         var task = sequence.ForEachAsync(value => collection.Add(value));
         task.Should().BeOfType<Task<IAsyncEnumerable<T>>>();
         task.Await().Should().BeOfType<IAsyncEnumerable<T>>().And.BeSameAs(sequence);
-        collection.Should().Equal(elements);
+        collection.Should().BeOfType<List<T>>().And.Equal(elements);
       }
     }
 
@@ -154,7 +154,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
         var task = sequence.ForEachAsync((index, value) => collection.Insert(index, value));
         task.Should().BeOfType<Task<IAsyncEnumerable<T>>>();
         task.Await().Should().BeOfType<IAsyncEnumerable<T>>().And.BeSameAs(sequence);
-        collection.Should().Equal(elements);
+        collection.Should().BeOfType<List<T>>().And.Equal(elements);
       }
     }
   }
@@ -368,7 +368,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       var set = sequence.ToHashSet(comparer);
       set.Should().BeOfType<T[]>().And.Equal(result);
-      set.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
+      set.Comparer.Should().BeOfType<IEqualityComparer<T>>().And.BeSameAs(comparer ?? EqualityComparer<T>.Default);
     }
   }
 
@@ -393,7 +393,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var task = sequence.ToHashSetAsync(comparer);
       var set = task.Await();
       set.Should().BeOfType<IEnumerable<T>>().And.Equal(result);
-      set.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
+      set.Comparer.Should().BeOfType<IEqualityComparer<T>>().And.BeSameAs(comparer ?? EqualityComparer<T>.Default);
     }
   }
 
@@ -416,7 +416,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       var set = sequence.ToSortedSet();
       set.Should().BeOfType<SortedSet<T>>().And.Equal(result.ToSortedSet(comparer));
-      set.Comparer.Should().BeSameAs(comparer ?? Comparer<T>.Default);
+      set.Comparer.Should().BeOfType<IComparer<T>>().And.BeSameAs(comparer ?? Comparer<T>.Default);
     }
   }
 
@@ -441,7 +441,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var task = sequence.ToSortedSetAsync();
       var set = task.Await();
       set.Should().BeOfType<SortedSet<T>>().And.Equal(result.ToSortedSet(comparer));
-      set.Comparer.Should().BeSameAs(comparer ?? Comparer<T>.Default);
+      set.Comparer.Should().BeOfType<IComparer<T>>().And.BeSameAs(comparer ?? Comparer<T>.Default);
     }
   }
 
@@ -465,7 +465,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       var dictionary = sequence.ToDictionary(key, comparer);
       dictionary.Should().BeOfType<Dictionary<TKey, TValue>>().And.Equal(result.ToDictionary(key, comparer));
-      dictionary.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
+      dictionary.Comparer.Should().BeOfType<IEqualityComparer<TKey>>().And.BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
     }
   }
 
@@ -491,7 +491,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var task = sequence.ToDictionaryAsync(key, comparer);
       var dictionary = task.Await();
       dictionary.Should().BeOfType<Dictionary<TKey, TValue>>().And.Equal(result.ToDictionary(key, comparer));
-      dictionary.Comparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
+      dictionary.Comparer.Should().BeOfType<IEqualityComparer<TKey>>().And.BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
     }
   }
 
@@ -706,7 +706,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
         using var stream = sequence.ToMemoryStream();
 
         stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
-        stream.ToArray().Should().Equal(bytes);
+        stream.ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
       }
     }
 
@@ -724,7 +724,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
         using var stream = sequence.ToMemoryStream();
 
         stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
-        stream.ToArray().Should().Equal(bytes);
+        stream.ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
       }
     }
   }
@@ -755,7 +755,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
         using var stream = task.Await();
 
         stream.Should().HavePosition(0).And.HaveLength(bytes.Length);
-        stream.ToArray().Should().Equal(bytes);
+        stream.ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
       }
     }
 
@@ -834,7 +834,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       var queue = sequence.ToPriorityQueue(comparer);
       queue.Should().BeOfType<PriorityQueue<TElement, TPriority>>();
-      queue.Comparer.Should().BeSameAs(comparer ?? Comparer<TPriority>.Default);
+      queue.Comparer.Should().BeOfType<IComparer<TElement>>().And.BeSameAs(comparer ?? Comparer<TPriority>.Default);
       queue.UnorderedItems.Should().BeEquivalentTo(result);
     }
   }
@@ -861,7 +861,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var task = sequence.ToPriorityQueueAsync(comparer);
       var queue = task.Await();
       queue.Should().BeOfType<PriorityQueue<TElement, TPriority>>();
-      queue.Comparer.Should().BeSameAs(comparer ?? Comparer<TPriority>.Default);
+      queue.Comparer.Should().BeOfType<IComparer<TPriority>>().And.BeSameAs(comparer ?? Comparer<TPriority>.Default);
       queue.UnorderedItems.Should().BeEquivalentTo(result);
     }
   }
@@ -969,7 +969,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       var set = sequence.ToImmutableHashSet(comparer);
       set.Should().BeOfType<ImmutableHashSet<T>>().And.Equal(result.ToImmutableHashSet(comparer));
-      set.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
+      set.KeyComparer.Should().BeOfType<IEqualityComparer<T>>().And.BeSameAs(comparer ?? EqualityComparer<T>.Default);
     }
   }
 
@@ -994,7 +994,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var task = sequence.ToImmutableHashSetAsync(comparer);
       var set = task.Await();
       set.Should().BeOfType<ImmutableHashSet<T>>().And.Equal(result.ToImmutableHashSet(comparer));
-      set.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<T>.Default);
+      set.KeyComparer.Should().BeOfType<IEqualityComparer<T>>().And.BeSameAs(comparer ?? EqualityComparer<T>.Default);
     }
   }
 
@@ -1052,8 +1052,8 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       var dictionary = sequence.ToImmutableDictionary(key, comparer);
       dictionary.Should().BeOfType<ImmutableDictionary<TKey, TValue>>().And.Equal(result.ToImmutableDictionary(key, comparer));
-      dictionary.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
-      dictionary.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
+      dictionary.KeyComparer.Should().BeOfType<IEqualityComparer<TKey>>().And.BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
+      dictionary.ValueComparer.Should().BeOfType<IEqualityComparer<TValue>>().And.BeSameAs(EqualityComparer<TKey>.Default);
     }
   }
 
@@ -1079,8 +1079,8 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var task = sequence.ToImmutableDictionaryAsync(key, comparer);
       var dictionary = task.Await();
       dictionary.Should().BeOfType<ImmutableDictionary<TKey, TValue>>().And.Equal(result.ToImmutableDictionary(key, comparer));
-      dictionary.KeyComparer.Should().BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
-      dictionary.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
+      dictionary.KeyComparer.Should().BeOfType<IEqualityComparer<TKey>>().And.BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
+      dictionary.ValueComparer.Should().BeOfType<IEqualityComparer<TValue>>().And.BeSameAs(EqualityComparer<TKey>.Default);
     }
   }
 
@@ -1104,8 +1104,8 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       var dictionary = sequence.ToImmutableSortedDictionary(key, keyComparer, valueComparer);
       dictionary.Should().BeOfType<ImmutableDictionary<TKey, TValue>>().And.Equal(result.ToDictionary(key).ToImmutableSortedDictionary(keyComparer, valueComparer));
-      dictionary.KeyComparer.Should().BeSameAs(keyComparer ?? Comparer<TKey>.Default);
-      dictionary.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
+      dictionary.KeyComparer.Should().BeOfType<IComparer<TKey>>().And.BeSameAs(keyComparer ?? Comparer<TKey>.Default);
+      dictionary.ValueComparer.Should().BeOfType<IEqualityComparer<TValue>>().And.BeSameAs(EqualityComparer<TKey>.Default);
     }
   }
 
@@ -1131,8 +1131,8 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       var task = sequence.ToImmutableSortedDictionaryAsync(key, keyComparer, valueComparer);
       var result = task.Await();
       result.Should().BeOfType<ImmutableSortedDictionary<TKey, TValue>>().And.Equal(elements.ToDictionary(key).ToImmutableSortedDictionary(keyComparer, valueComparer));
-      result.KeyComparer.Should().BeSameAs(keyComparer ?? Comparer<TKey>.Default);
-      result.ValueComparer.Should().BeSameAs(EqualityComparer<TKey>.Default);
+      result.KeyComparer.Should().BeOfType<IComparer<TKey>>().And.BeSameAs(keyComparer ?? Comparer<TKey>.Default);
+      result.ValueComparer.Should().BeOfType<IEqualityComparer<TValue>>().And.BeSameAs(EqualityComparer<TKey>.Default);
     }
   }
 

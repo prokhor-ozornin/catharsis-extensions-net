@@ -97,10 +97,10 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().SbyteSequenceInRange(0).Should().BeSameAs(new Random().SbyteSequenceInRange(0));
+    new Random().SbyteSequenceInRange(0).Should().BeOfType<IEnumerable<sbyte>>().And.BeSameAs(new Random().SbyteSequenceInRange(0));
 
-    new Random().SbyteSequenceInRange(0, Range.All).Should().BeEmpty();
-    new Random().SbyteSequenceInRange(0, ..int.MaxValue).Should().BeEmpty();
+    new Random().SbyteSequenceInRange(0, Range.All).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
+    new Random().SbyteSequenceInRange(0, ..int.MaxValue).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
     
     new Random().SbyteSequenceInRange(count, ..0).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
     new Random().SbyteSequenceInRange(count, sbyte.MaxValue..sbyte.MaxValue).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(sbyte.MaxValue);
@@ -174,7 +174,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().ByteSequence(0).Should().NotBeNull().And.BeEmpty();
+    new Random().ByteSequence(0).Should().BeOfType<IEnumerable<byte>>().And.NotBeNull().And.BeEmpty();
 
     new Random().ByteSequence(count, 0, 0).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
     new Random().ByteSequence(count, byte.MinValue, byte.MinValue).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(byte.MinValue);
@@ -201,10 +201,10 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().ByteSequenceInRange(0).Should().BeSameAs(new Random().ByteSequenceInRange(0));
+    new Random().ByteSequenceInRange(0).Should().BeOfType<IEnumerable<sbyte>>().And.BeSameAs(new Random().ByteSequenceInRange(0));
 
-    new Random().ByteSequenceInRange(0, Range.All).Should().BeEmpty();
-    new Random().ByteSequenceInRange(0, ..int.MaxValue).Should().BeEmpty();
+    new Random().ByteSequenceInRange(0, Range.All).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
+    new Random().ByteSequenceInRange(0, ..int.MaxValue).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
 
     new Random().ByteSequenceInRange(count, ..0).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
     new Random().ByteSequenceInRange(count, ..byte.MinValue).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(byte.MinValue);
@@ -304,10 +304,10 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().ShortSequenceInRange(0).Should().BeSameAs(new Random().ShortSequenceInRange(0));
+    new Random().ShortSequenceInRange(0).Should().BeOfType<IEnumerable<short>>().And.BeSameAs(new Random().ShortSequenceInRange(0));
 
-    new Random().ShortSequenceInRange(0, Range.All).Should().BeEmpty();
-    new Random().ShortSequenceInRange(0, ..int.MaxValue).Should().BeEmpty();
+    new Random().ShortSequenceInRange(0, Range.All).Should().BeOfType<IEnumerable<short>>().And.BeEmpty();
+    new Random().ShortSequenceInRange(0, ..int.MaxValue).Should().BeOfType<IEnumerable<short>>().And.BeEmpty();
 
     new Random().ShortSequenceInRange(count, ..0).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
     new Random().ShortSequenceInRange(count, short.MaxValue..short.MaxValue).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(short.MaxValue);
@@ -407,10 +407,10 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().UshortSequenceInRange(0).Should().BeSameAs(new Random().UshortSequenceInRange(0));
+    new Random().UshortSequenceInRange(0).Should().BeOfType<IEnumerable<ushort>>().And.BeSameAs(new Random().UshortSequenceInRange(0));
 
-    new Random().UshortSequenceInRange(0, Range.All).Should().BeEmpty();
-    new Random().UshortSequenceInRange(0, ..int.MaxValue).Should().BeEmpty();
+    new Random().UshortSequenceInRange(0, Range.All).Should().BeOfType<IEnumerable<ushort>>().And.BeEmpty();
+    new Random().UshortSequenceInRange(0, ..int.MaxValue).Should().BeOfType<IEnumerable<ushort>>().And.BeEmpty();
 
     new Random().UshortSequenceInRange(count, ..0).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
     new Random().UshortSequenceInRange(count, ..ushort.MinValue).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(ushort.MinValue);
@@ -510,10 +510,10 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().IntSequenceInRange(0).Should().BeSameAs(new Random().IntSequenceInRange(0));
+    new Random().IntSequenceInRange(0).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(new Random().IntSequenceInRange(0));
 
-    new Random().IntSequenceInRange(0, Range.All).Should().BeEmpty();
-    new Random().IntSequenceInRange(0, ..int.MaxValue).Should().BeEmpty();
+    new Random().IntSequenceInRange(0, Range.All).Should().BeOfType<IEnumerable<int>>().And.BeEmpty();
+    new Random().IntSequenceInRange(0, ..int.MaxValue).Should().BeOfType<IEnumerable<int>>().And.BeEmpty();
 
     new Random().IntSequenceInRange(count, ..0).Should().BeOfType<IEnumerable<int>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
     new Random().IntSequenceInRange(count, int.MaxValue..int.MaxValue).Should().BeOfType<IEnumerable<int>>().And.HaveCount(count).And.AllBeEquivalentTo(int.MaxValue);
@@ -650,10 +650,10 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().CharSequenceInRange(0).Should().BeSameAs(new Random().CharSequenceInRange(0));
+    new Random().CharSequenceInRange(0).Should().BeOfType<IEnumerable<char>>().And.BeSameAs(new Random().CharSequenceInRange(0));
 
-    new Random().CharSequenceInRange(0, Range.All).Should().BeEmpty();
-    new Random().CharSequenceInRange(0, ..int.MaxValue).Should().BeEmpty();
+    new Random().CharSequenceInRange(0, Range.All).Should().BeOfType<IEnumerable<char>>().And.BeEmpty();
+    new Random().CharSequenceInRange(0, ..int.MaxValue).Should().BeOfType<IEnumerable<char>>().And.BeEmpty();
 
     new Random().CharSequenceInRange(count, ..0).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
     new Random().CharSequenceInRange(count, ..char.MinValue).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
@@ -682,13 +682,13 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().String(0).Should().BeSameAs(new Random().String(0)).And.BeEmpty();
-    new Random().String(count, (char) 0, (char) 0).ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo((char) 0);
-    new Random().String(count, char.MinValue, char.MinValue).ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
-    new Random().String(count, char.MaxValue, char.MaxValue).ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
-    new Random().String(count, char.MinValue, char.MaxValue).ToCharArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
-    new Random().String(count, char.MaxValue, char.MinValue).ToCharArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
-    new Random().String(count).ToCharArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
+    new Random().String(0).Should().BeOfType<string>().And.BeSameAs(new Random().String(0)).And.BeEmpty();
+    new Random().String(count, (char) 0, (char) 0).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+    new Random().String(count, char.MinValue, char.MinValue).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
+    new Random().String(count, char.MaxValue, char.MaxValue).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
+    new Random().String(count, char.MinValue, char.MaxValue).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
+    new Random().String(count, char.MaxValue, char.MinValue).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
+    new Random().String(count).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
 
     return;
 
@@ -708,19 +708,19 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().StringInRange(0).Should().BeSameAs(new Random().StringInRange(0));
+    new Random().StringInRange(0).Should().BeOfType<string>().And.BeSameAs(new Random().StringInRange(0));
 
-    new Random().StringInRange(0, Range.All).Should().BeEmpty();
-    new Random().StringInRange(0, ..int.MaxValue).Should().BeEmpty();
+    new Random().StringInRange(0, Range.All).Should().BeOfType<string>().And.BeEmpty();
+    new Random().StringInRange(0, ..int.MaxValue).Should().BeOfType<string>().And.BeEmpty();
 
-    new Random().StringInRange(count, ..0).ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo((char) 0);
-    new Random().StringInRange(count, ..char.MinValue).ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
-    new Random().StringInRange(count, char.MaxValue..char.MaxValue).ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
-    new Random().StringInRange(count, Range.All).ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo((char) 0);
+    new Random().StringInRange(count, ..0).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+    new Random().StringInRange(count, ..char.MinValue).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
+    new Random().StringInRange(count, char.MaxValue..char.MaxValue).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
+    new Random().StringInRange(count, Range.All).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
 
-    new Random().StringInRange(count, ..0, Range.All).ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo((char) 0);
-    new Random().StringInRange(count, ..0, ..char.MaxValue).ToCharArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange((char) 0, char.MaxValue));
-    new Random().StringInRange(count, ..0, 'a'..'b').ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo('a');
+    new Random().StringInRange(count, ..0, Range.All).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+    new Random().StringInRange(count, ..0, ..char.MaxValue).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange((char) 0, char.MaxValue));
+    new Random().StringInRange(count, ..0, 'a'..'b').ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo('a');
 
     return;
 
@@ -778,10 +778,10 @@ public sealed class RandomExtensionsTest : UnitTest
     const int size = 10;
     const int count = 1000;
 
-    new Random().StringSequenceInRange(0, 0).Should().BeSameAs(new Random().StringSequenceInRange(0, 0));
+    new Random().StringSequenceInRange(0, 0).Should().BeOfType<IEnumerable<string>>().And.BeSameAs(new Random().StringSequenceInRange(0, 0));
 
-    new Random().StringSequenceInRange(size, 0, Range.All).Should().BeEmpty();
-    new Random().StringSequenceInRange(size, 0, ..int.MaxValue).Should().BeEmpty();
+    new Random().StringSequenceInRange(size, 0, Range.All).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
+    new Random().StringSequenceInRange(size, 0, ..int.MaxValue).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
 
     new Random().StringSequenceInRange(0, count).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeEmpty());
 
@@ -812,8 +812,8 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().Digits(0).Should().BeSameAs(new Random().Digits(0)).And.BeEmpty();
-    new Random().Digits(count).Should().HaveLength(count).And.MatchRegex(@"^[0-9]+$");
+    new Random().Digits(0).Should().BeOfType<string>().And.BeSameAs(new Random().Digits(0)).And.BeEmpty();
+    new Random().Digits(count).Should().BeOfType<string>().And.HaveLength(count).And.MatchRegex(@"^[0-9]+$");
 
     return;
 
@@ -835,7 +835,7 @@ public sealed class RandomExtensionsTest : UnitTest
     const int size = 10;
     const int count = 1000;
 
-    new Random().DigitsSequence(int.MaxValue, 0).Should().BeEmpty();
+    new Random().DigitsSequence(int.MaxValue, 0).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
 
     new Random().DigitsSequence(0, count).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeEmpty());
 
@@ -859,8 +859,8 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().Letters(0).Should().BeSameAs(new Random().Letters(0)).And.BeEmpty();
-    new Random().Letters(count).Should().HaveLength(count).And.MatchRegex(@"^[a-zA-Z]+$");
+    new Random().Letters(0).Should().BeOfType<string>().And.BeSameAs(new Random().Letters(0)).And.BeEmpty();
+    new Random().Letters(count).Should().BeOfType<string>().And.HaveLength(count).And.MatchRegex(@"^[a-zA-Z]+$");
 
     return;
 
@@ -906,8 +906,8 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().AlphaDigits(0).Should().BeSameAs(new Random().AlphaDigits(0)).And.BeEmpty();
-    new Random().AlphaDigits(count).Should().NotBeSameAs(new Random().AlphaDigits(count)).And.HaveLength(count).And.MatchRegex(@"^[a-zA-Z0-9]+$");
+    new Random().AlphaDigits(0).Should().BeOfType<string>().And.BeSameAs(new Random().AlphaDigits(0)).And.BeEmpty();
+    new Random().AlphaDigits(count).Should().BeOfType<string>().And.NotBeSameAs(new Random().AlphaDigits(count)).And.HaveLength(count).And.MatchRegex(@"^[a-zA-Z0-9]+$");
 
     return;
 
@@ -929,7 +929,7 @@ public sealed class RandomExtensionsTest : UnitTest
     const int size = 10;
     const int count = 1000;
 
-    new Random().AlphaDigitsSequence(int.MaxValue, 0).Should().BeEmpty();
+    new Random().AlphaDigitsSequence(int.MaxValue, 0).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
 
     new Random().AlphaDigitsSequence(0, count).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeEmpty());
 
@@ -955,12 +955,12 @@ public sealed class RandomExtensionsTest : UnitTest
 
     new Random().SecureString(0).Length.Should().Be(0);
 
-    new Random().SecureString(count, (char) 0, (char) 0).ToText().ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo((char) 0);
-    new Random().SecureString(count, char.MinValue, char.MinValue).ToText().ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
-    new Random().SecureString(count, char.MaxValue, char.MaxValue).ToText().ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
-    new Random().SecureString(count, char.MinValue, char.MaxValue).ToText().ToCharArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
-    new Random().SecureString(count, char.MaxValue, char.MinValue).ToText().ToCharArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
-    new Random().SecureString(count).ToText().ToCharArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
+    new Random().SecureString(count, (char) 0, (char) 0).ToText().ToCharArray().Should().BeOfType<SecureString>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+    new Random().SecureString(count, char.MinValue, char.MinValue).ToText().ToCharArray().Should().BeOfType<SecureString>().And.HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
+    new Random().SecureString(count, char.MaxValue, char.MaxValue).ToText().ToCharArray().Should().BeOfType<SecureString>().And.HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
+    new Random().SecureString(count, char.MinValue, char.MaxValue).ToText().ToCharArray().Should().BeOfType<SecureString>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
+    new Random().SecureString(count, char.MaxValue, char.MinValue).ToText().ToCharArray().Should().BeOfType<SecureString>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
+    new Random().SecureString(count).ToText().ToCharArray().Should().BeOfType<SecureString>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(char.MinValue, char.MaxValue));
 
     return;
 
@@ -983,14 +983,14 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().SecureStringInRange(0, Range.All).Length.Should().Be(0);
     new Random().SecureStringInRange(0, ..int.MaxValue).Length.Should().Be(0);
 
-    new Random().SecureStringInRange(count, ..0).ToText().ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo((char) 0);
-    new Random().SecureStringInRange(count, ..char.MinValue).ToText().ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
-    new Random().SecureStringInRange(count, char.MaxValue..char.MaxValue).ToText().ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
-    new Random().SecureStringInRange(count, Range.All).ToText().ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo((char) 0);
+    new Random().SecureStringInRange(count, ..0).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+    new Random().SecureStringInRange(count, ..char.MinValue).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
+    new Random().SecureStringInRange(count, char.MaxValue..char.MaxValue).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
+    new Random().SecureStringInRange(count, Range.All).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
 
-    new Random().SecureStringInRange(count, ..0, Range.All).ToText().ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo((char) 0);
-    new Random().SecureStringInRange(count, ..0, ..char.MaxValue).ToText().ToCharArray().Should().HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange((char) 0, char.MaxValue));
-    new Random().SecureStringInRange(count, ..0, 'a'..'b').ToText().ToCharArray().Should().HaveCount(count).And.AllBeEquivalentTo('a');
+    new Random().SecureStringInRange(count, ..0, Range.All).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+    new Random().SecureStringInRange(count, ..0, ..char.MaxValue).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange((char) 0, char.MaxValue));
+    new Random().SecureStringInRange(count, ..0, 'a'..'b').ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo('a');
 
     return;
 
@@ -1012,13 +1012,13 @@ public sealed class RandomExtensionsTest : UnitTest
     const int size = 10;
     const int count = 1000;
 
-    new Random().SecureStringSequence(int.MaxValue, 0).Should().BeEmpty();
+    new Random().SecureStringSequence(int.MaxValue, 0).Should().BeOfType<IEnumerable<SecureString>>().And.BeEmpty();
 
     new Random().SecureStringSequence(0, count).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.Length.Should().Be(0));
 
     new Random().SecureStringSequence(size, count, (char) 0, (char) 0).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
-    new Random().SecureStringSequence(size, count, char.MinValue, char.MinValue).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MinValue));
-    new Random().SecureStringSequence(size, count, char.MaxValue, char.MaxValue).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MaxValue));
+    new Random().SecureStringSequence(size, count, char.MinValue, char.MinValue).Should().BeOfType<IEnumerable<SecureString>>().And.NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MinValue));
+    new Random().SecureStringSequence(size, count, char.MaxValue, char.MaxValue).Should().BeOfType<IEnumerable<SecureString>>().And.NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MaxValue));
     new Random().SecureStringSequence(size, count).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllSatisfy(x => x.Should().BeInRange(char.MinValue, char.MaxValue)));
 
     return;
@@ -1041,8 +1041,8 @@ public sealed class RandomExtensionsTest : UnitTest
     const int size = 10;
     const int count = 1000;
 
-    new Random().SecureStringSequenceInRange(size, 0, Range.All).Should().BeEmpty();
-    new Random().SecureStringSequenceInRange(size, 0, ..int.MaxValue).Should().BeEmpty();
+    new Random().SecureStringSequenceInRange(size, 0, Range.All).Should().BeOfType<IEnumerable<SecureString>>().And.BeEmpty();
+    new Random().SecureStringSequenceInRange(size, 0, ..int.MaxValue).Should().BeOfType<IEnumerable<SecureString>>().And.BeEmpty();
 
     new Random().SecureStringSequenceInRange(0, count).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.Length.Should().Be(0));
 
@@ -1099,7 +1099,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().RangeSequence(0).Should().BeEmpty();
+    new Random().RangeSequence(0).Should().BeOfType<IEnumerable<Range>>().And.BeEmpty();
     new Random().RangeSequence(count, 0).Should().BeOfType<IEnumerable<Range>>().And.HaveCount(count).And.AllSatisfy(element => Validate(element, 0));
     new Random().RangeSequence(count).Should().BeOfType<IEnumerable<Range>>().And.HaveCount(count).And.AllSatisfy(element => Validate(element, null));
 
@@ -1143,7 +1143,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
     const int count = 1000;
 
-    new Random().GuidSequence(0).Should().BeEmpty();
+    new Random().GuidSequence(0).Should().BeOfType<IEnumerable<Guid>>().And.BeEmpty();
     new Random().GuidSequence(count).Should().BeOfType<IEnumerable<Guid>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().NotBe(Guid.Empty).And.NotBe(Guid.NewGuid()));
 
     return;
@@ -1229,7 +1229,7 @@ public sealed class RandomExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => RandomExtensions.FileName(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-    new Random().FileName().Should().NotBeNullOrWhiteSpace().And.MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
+    new Random().FileName().Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
 
     return;
 
@@ -1250,7 +1250,7 @@ public sealed class RandomExtensionsTest : UnitTest
     const int count = 1000;
 
     new Random().FileNameSequence(0).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
-    new Random().FileNameSequence(count).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(element => element.Should().NotBeNullOrWhiteSpace().And.MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$"));
+    new Random().FileNameSequence(count).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().NotBeNullOrWhiteSpace().And.MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$"));
 
     return;
 
@@ -1267,7 +1267,7 @@ public sealed class RandomExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => RandomExtensions.DirectoryName(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-    new Random().DirectoryName().Should().NotBeNullOrWhiteSpace().And.HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
+    new Random().DirectoryName().Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
 
     return;
 
@@ -1307,14 +1307,14 @@ public sealed class RandomExtensionsTest : UnitTest
 
     var path = new Random().FilePath();
     var file = Path.GetFileName(path);
-    path.Should().NotBeNullOrWhiteSpace().And.NotBe(new Random().FilePath()).And.Be(Path.Combine(Path.GetTempPath(), file));
-    file.Should().MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
+    path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().FilePath()).And.Be(Path.Combine(Path.GetTempPath(), file));
+    file.Should().BeOfType<string>().And.MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
 
     var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
     path = new Random().FilePath(currentDirectory);
     file = Path.GetFileName(path);
-    path.Should().NotBeNullOrWhiteSpace().And.NotBe(new Random().FilePath(currentDirectory)).And.Be(Path.Combine(currentDirectory.FullName, file));
-    file.Should().MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
+    path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().FilePath(currentDirectory)).And.Be(Path.Combine(currentDirectory.FullName, file));
+    file.Should().BeOfType<string>().And.MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
 
     return;
 
@@ -1345,8 +1345,8 @@ public sealed class RandomExtensionsTest : UnitTest
     static void Validate(string path, string directory)
     {
       var file = Path.GetFileName(path);
-      path.Should().NotBeNullOrWhiteSpace().And.NotBe(new Random().FilePath()).And.Be(Path.Combine(directory, file));
-      file.Should().MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
+      path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().FilePath()).And.Be(Path.Combine(directory, file));
+      file.Should().BeOfType<string>().And.MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
     }
   }
 
@@ -1360,14 +1360,14 @@ public sealed class RandomExtensionsTest : UnitTest
 
     var path = new Random().DirectoryPath();
     var file = Path.GetFileName(path);
-    path.Should().NotBeNullOrWhiteSpace().And.NotBe(new Random().DirectoryPath()).And.Be(Path.Combine(Path.GetTempPath(), file));
-    file.Should().HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
+    path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().DirectoryPath()).And.Be(Path.Combine(Path.GetTempPath(), file));
+    file.Should().BeOfType<string>().And.HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
 
     var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
     path = new Random().DirectoryPath(currentDirectory);
     file = Path.GetFileName(path);
-    path.Should().NotBeNullOrWhiteSpace().And.NotBe(new Random().DirectoryPath(currentDirectory)).And.Be(Path.Combine(currentDirectory.FullName, file));
-    file.Should().HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
+    path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().DirectoryPath(currentDirectory)).And.Be(Path.Combine(currentDirectory.FullName, file));
+    file.Should().BeOfType<string>().And.HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
 
     return;
 
@@ -1392,15 +1392,15 @@ public sealed class RandomExtensionsTest : UnitTest
     new Random().DirectoryPathSequence(count).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(path => Validate(Path.GetTempPath(), path));
 
     var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
-    new Random().DirectoryPathSequence(count, currentDirectory).Should().NotBeNull().And.HaveCount(count).And.AllSatisfy(path => Validate(currentDirectory.FullName, path));
+    new Random().DirectoryPathSequence(count, currentDirectory).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(path => Validate(currentDirectory.FullName, path));
 
     return;
 
     static void Validate(string directory, string path)
     {
       var file = Path.GetFileName(path);
-      path.Should().NotBeNullOrWhiteSpace().And.NotBe(new Random().DirectoryPath()).And.Be(Path.Combine(directory, file));
-      file.Should().HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
+      path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().DirectoryPath()).And.Be(Path.Combine(directory, file));
+      file.Should().BeOfType<string>().And.HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
     }
   }
 

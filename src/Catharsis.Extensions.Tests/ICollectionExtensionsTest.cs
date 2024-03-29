@@ -110,7 +110,7 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(ICollection<T> collection) => collection.Empty().Should().BeSameAs(collection).And.BeEmpty();
+    static void Validate<T>(ICollection<T> collection) => collection.Empty().Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
   }
 
   /// <summary>
@@ -127,6 +127,6 @@ public sealed class ICollectionExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(ICollection<T> collection, params T[] elements) => collection.TryFinallyClear(collection => collection.With(elements)).Should().BeSameAs(collection).And.BeEmpty();
+    static void Validate<T>(ICollection<T> collection, params T[] elements) => collection.TryFinallyClear(collection => collection.With(elements)).Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
   }
 }

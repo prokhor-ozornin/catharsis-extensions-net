@@ -26,7 +26,7 @@ public sealed class RegexExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.Be(original);
+      clone.Should().BeOfType<Regex>().And.NotBeSameAs(original).And.Be(original);
       clone.ToString().Should().Be(original.ToString());
       clone.MatchTimeout.Should().Be(original.MatchTimeout);
       clone.Options.Should().Be(original.Options);

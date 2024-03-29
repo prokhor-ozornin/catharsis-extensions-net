@@ -27,7 +27,7 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.NotBe(original);
+      clone.Should().BeOfType<DirectoryInfo>().And.NotBeSameAs(original).And.NotBe(original);
       clone.ToString().Should().Be(original.ToString());
       clone.FullName.Should().Be(original.FullName);
       clone.Name.Should().Be(original.Name);

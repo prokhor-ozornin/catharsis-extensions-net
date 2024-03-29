@@ -30,8 +30,8 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
 
         using (clone)
         {
-          clone.Should().NotBeSameAs(original).And.NotBe(original);
-          clone.BaseStream.Should().BeSameAs(original.BaseStream);
+          clone.Should().BeOfType<BinaryWriter>().And.NotBeSameAs(original).And.NotBe(original);
+          clone.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(original.BaseStream);
           clone.BaseStream.Position.Should().Be(original.BaseStream.Position);
         }
       }
@@ -139,7 +139,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       using (writer)
       {
         writer.Empty().Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
-        writer.BaseStream.Should().HaveLength(0).And.HavePosition(0);
+        writer.BaseStream.Should().BeOfType<Stream>().And.HaveLength(0).And.HavePosition(0);
       }
     }
   }
@@ -165,7 +165,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       {
         writer.BaseStream.MoveToEnd();
         writer.Rewind().Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
-        writer.BaseStream.Should().HavePosition(0);
+        writer.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0);
       }
     }
   }
@@ -192,7 +192,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       using var writer = stream.ToBinaryWriter();
 
       writer.TryFinallyClear(_ => { }).Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
-      writer.BaseStream.Should().HavePosition(0).And.HaveLength(0);
+      writer.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0).And.HaveLength(0);
     }
   }
 
@@ -215,8 +215,8 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       using var stream = new MemoryStream();
       using var writer = new BinaryWriter(stream);
       
-      writer.WriteBytes(bytes).Should().BeSameAs(writer);
-      stream.ToArray().Should().Equal(bytes);
+      writer.WriteBytes(bytes).Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
+      stream.ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
     }
   }
 
@@ -241,8 +241,8 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       using var stream = new MemoryStream();
       using var writer = new BinaryWriter(stream);
 
-      writer.WriteText(text).Should().BeSameAs(writer);
-      //stream.ToArray().Should().Equal(bytes);
+      writer.WriteText(text).Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
+      //stream.ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
     }
   }
 }

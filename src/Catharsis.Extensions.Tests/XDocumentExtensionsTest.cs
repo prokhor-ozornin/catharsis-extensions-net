@@ -62,7 +62,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.NotBe(original);
+      clone.Should().BeOfType<XDocument>().And.NotBeSameAs(original).And.NotBe(original);
       clone.ToString().Should().Be(original.ToString());
       clone.Root.Should().Be(original.Root);
       clone.Declaration.Should().Be(original.Declaration);
@@ -104,7 +104,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
 
     static void Validate(XDocument document)
     {
-      document.Empty().Should().BeSameAs(document);
+      document.Empty().Should().BeOfType<XDocument>().And.BeSameAs(document);
       document.Nodes().Should().BeEmpty();
     }
   }
@@ -124,7 +124,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
 
     static void Validate(XDocument document, params object[] nodes)
     {
-      document.TryFinallyClear(document => document.With(nodes)).Should().BeSameAs(document);
+      document.TryFinallyClear(document => document.With(nodes)).Should().BeOfType<XDocument>().And.BeSameAs(document);
       document.Nodes().Should().BeEmpty();
     }
   }

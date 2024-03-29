@@ -28,7 +28,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.NotBe(original);
+      clone.Should().BeOfType<FileInfo>().And.NotBeSameAs(original).And.NotBe(original);
       clone.ToString().Should().Be(original.ToString());
       clone.FullName.Should().Be(original.FullName);
       clone.Name.Should().Be(original.Name);
@@ -174,7 +174,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
         var linesAsync = file.LinesAsync(encoding);
         linesAsync.Should().BeOfType<IAsyncEnumerable<string>>();
-        linesAsync.ToArray().Should().BeEmpty();
+        linesAsync.ToArray().Should().BeOfType<string[]>().And.BeEmpty();
       });
     }
   }
@@ -220,7 +220,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
         var task = bytes.WriteToAsync(info);
         task.Should().BeOfType<Task<IEnumerable<byte>>>();
         //task.Await().Should().BeOfType<IEnumerable<byte>>().And.BeSameAs(file);
-      }).Should().NotBeNull().And.BeSameAs(file);
+      }).Should().BeOfType<FileInfo>().And.NotBeNull().And.BeSameAs(file);
       file.Exists.Should().BeFalse();
     }
   }
@@ -355,7 +355,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(byte[] result, FileInfo file) => file.ToBytes().Should().Equal(result);
+    static void Validate(byte[] result, FileInfo file) => file.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
   }
 
   /// <summary>
@@ -371,7 +371,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
     Attributes.RandomEmptyFile().TryFinallyDelete(file =>
     {
       bytes.WriteToAsync(file).Await();
-      file.ToBytesAsync().ToArray().Should().Equal(bytes);
+      file.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
     });
 
     // Attributes.CancellationToken() & offset
@@ -380,7 +380,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(byte[] result, FileInfo file) => file.ToBytesAsync().ToArray().Should().Equal(result);
+    static void Validate(byte[] result, FileInfo file) => file.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -395,7 +395,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, FileInfo file, Encoding encoding = null) => file.ToText(encoding).Should().Be(result);
+    static void Validate(string result, FileInfo file, Encoding encoding = null) => file.ToText(encoding).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>

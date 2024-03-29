@@ -31,7 +31,7 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     {
       var result = character.Repeat(count);
       result.Should().BeOfType<string>().And.HaveLength(count);
-      result.ToCharArray().Should().AllBeEquivalentTo(character);
+      result.ToCharArray().Should().BeOfType<char[]>().And.AllBeEquivalentTo(character);
     }
   }
 
@@ -100,15 +100,15 @@ public sealed class BasicTypesExtensionsTest : UnitTest
 
       var values = new List<int>();
       0.Times(values.Add);
-      values.Should().BeEmpty();
+      values.Should().BeOfType<List<int>>().And.BeEmpty();
 
       values = [];
       1.Times(values.Add);
-      values.Should().Equal(0);
+      values.Should().BeOfType<List<int>>().And.Equal(0);
 
       values = [];
       count.Times(values.Add);
-      values.Should().HaveCount(count).And.Equal(Enumerable.Range(0, count));
+      values.Should().BeOfType<List<int>>().And.HaveCount(count).And.Equal(Enumerable.Range(0, count));
 
       static void Validate()
       {
@@ -152,9 +152,9 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => (-1).Objects<object>()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      0.Objects<object>().Should().BeEmpty();
-      1.Objects<Guid>().Should().Equal(Guid.Empty);
-      count.Objects<Guid>().Should().HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
+      0.Objects<object>().Should().BeOfType<IEnumerable<object>>().And.BeEmpty();
+      1.Objects<Guid>().Should().BeOfType<IEnumerable<Guid>>().And.Equal(Guid.Empty);
+      count.Objects<Guid>().Should().BeOfType<IEnumerable<Guid>>().And.HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
 
       static void Validate(int count)
       {
@@ -166,9 +166,9 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       AssertionExtensions.Should(() => 0.Objects((Func<object>) null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("constructor");
       AssertionExtensions.Should(() => (-1).Objects<object>(() => null).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      0.Objects(() => new object()).Should().BeEmpty();
-      1.Objects(() => Guid.Empty).Should().Equal(Guid.Empty);
-      count.Objects(() => Guid.Empty).Should().HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
+      0.Objects(() => new object()).Should().BeOfType<IEnumerable<object>>().And.BeEmpty();
+      1.Objects(() => Guid.Empty).Should().BeOfType<IEnumerable<Guid>>().And.Equal(Guid.Empty);
+      count.Objects(() => Guid.Empty).Should().BeOfType<IEnumerable<Guid>>().And.HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
 
       static void Validate(int count)
       {
@@ -180,9 +180,9 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       AssertionExtensions.Should(() => 0.Objects((Func<int, object>) null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("constructor");
       AssertionExtensions.Should(() => (-1).Objects<object>(_ => null).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      0.Objects(index => index).Should().BeEmpty();
-      1.Objects(index => index).Should().Equal(0);
-      count.Objects(index => index).Should().Equal(Enumerable.Range(0, count));
+      0.Objects(index => index).Should().BeOfType<IEnumerable<int>>().And.BeEmpty();
+      1.Objects(index => index).Should().BeOfType<IEnumerable<int>>().And.Equal(0);
+      count.Objects(index => index).Should().BeOfType<IEnumerable<int>>().And.Equal(Enumerable.Range(0, count));
 
       static void Validate(int count)
       {

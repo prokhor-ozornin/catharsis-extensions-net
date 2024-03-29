@@ -31,8 +31,8 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         
         using (clone)
         {
-          clone.Should().NotBeSameAs(original).And.NotBe(original);
-          clone.BaseStream.Should().BeSameAs(original.BaseStream);
+          clone.Should().BeOfType<BinaryReader>().And.NotBeSameAs(original).And.NotBe(original);
+          clone.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(original.BaseStream);
           clone.BaseStream.Position.Should().Be(original.BaseStream.Position);
         }
       }
@@ -139,7 +139,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       using (reader)
       {
         reader.Empty().Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.BaseStream.Should().HaveLength(0).And.HavePosition(0);
+        reader.BaseStream.Should().BeOfType<Stream>().And.HaveLength(0).And.HavePosition(0);
         reader.PeekChar().Should().Be(-1);
       }
     }
@@ -166,7 +166,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       {
         reader.BaseStream.MoveToEnd();
         reader.Rewind().Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.BaseStream.Should().HavePosition(0);
+        reader.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0);
       }
     }
   }
@@ -226,7 +226,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       using var reader = stream.ToBinaryReader();
 
       reader.TryFinallyClear(_ => { }).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-      reader.BaseStream.Should().HavePosition(0).And.HaveLength(0);
+      reader.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0).And.HaveLength(0);
     }
   }
 
@@ -257,9 +257,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       {
         using (reader)
         {
-          var sequence = reader.ToEnumerable();
-          sequence.Should().BeOfType<IEnumerable<byte>>();
-          sequence.Should().Equal(result);
+          reader.ToEnumerable().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
         }
       }
     }
@@ -286,7 +284,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
 
           var sequence = reader.ToEnumerable(1);
           sequence.Should().BeOfType<IEnumerable<byte[]>>();
-          sequence.SelectMany(bytes => bytes).Should().Equal(result);
+          sequence.SelectMany(bytes => bytes).Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
         }
       }
     }
@@ -321,7 +319,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         {
           var sequence = reader.ToAsyncEnumerable();
           sequence.Should().BeOfType<IAsyncEnumerable<byte>>();
-          sequence.ToArray().Should().Equal(result);
+          sequence.ToArray().Should().BeOfType<byte[]>().And.Equal(result);
         }
       }
     }
@@ -348,7 +346,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
 
           var sequence = reader.ToAsyncEnumerable(1);
           sequence.Should().BeOfType<IAsyncEnumerable<byte[]>>();
-          sequence.ToArray().SelectMany(bytes => bytes).Should().Equal(result);
+          sequence.ToArray().SelectMany(bytes => bytes).Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
         }
       }
     }
@@ -377,9 +375,8 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
 
         var sequence = reader.ToBytes();
         sequence.Should().BeOfType<IEnumerable<byte>>();
-
-        sequence.ToArray().Should().Equal(bytes);
-        sequence.ToArray().Should().BeEmpty();
+        sequence.ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
+        sequence.ToArray().Should().BeOfType<byte[]>().And.BeEmpty();
       }
     }
   }
@@ -408,8 +405,8 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         var sequence = reader.ToBytesAsync();
         sequence.Should().BeOfType<IAsyncEnumerable<byte>>();
 
-        sequence.ToArray().Should().Equal(bytes);
-        sequence.ToArray().Should().BeEmpty();
+        sequence.ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
+        sequence.ToArray().Should().BeOfType<byte[]>().And.BeEmpty();
       }
     }
   }

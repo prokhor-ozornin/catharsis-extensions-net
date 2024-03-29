@@ -79,9 +79,9 @@ public sealed class DateOnlyExtensionsTest : UnitTest
     {
       var dateOnly = DateOnly.FromDateTime(date);
 
-      dateOnly.Range(dateOnly, TimeSpan.Zero).Should().BeEmpty();
-      dateOnly.Range(dateOnly, TimeSpan.FromTicks(1)).Should().BeEmpty();
-      dateOnly.Range(dateOnly, TimeSpan.FromTicks(-1)).Should().BeEmpty();
+      dateOnly.Range(dateOnly, TimeSpan.Zero).Should().BeOfType<IEnumerable<DateOnly>>().And.BeEmpty();
+      dateOnly.Range(dateOnly, TimeSpan.FromTicks(1)).Should().BeOfType<IEnumerable<DateOnly>>().And.BeEmpty();
+      dateOnly.Range(dateOnly, TimeSpan.FromTicks(-1)).Should().BeOfType<IEnumerable<DateOnly>>().And.BeEmpty();
 
       dateOnly.Range(dateOnly.AddDays(1), 1.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(dateOnly);
       dateOnly.Range(dateOnly.AddDays(-1), 1.Days()).Should().BeOfType<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(dateOnly.AddDays(-1));

@@ -441,9 +441,9 @@ public sealed class ObjectExtensionsTest : UnitTest
       //AssertionExtensions.Should(() => text.ToStringReader().TryFinally(reader => { reader.TryFinally(reader => reader.ReadToEnd().Should().Be(text)); }).Read()).ThrowExactly<ObjectDisposedException>();
 
       var list = new List<string>().TryFinally(list => list.Add(text));
-      list.Should().ContainSingle().Which.Should().Be(text);
+      list.Should().BeOfType<List<string>>().And.ContainSingle().Which.Should().Be(text);
 
-      new object().TryFinally(_ => text).Should().Be(text);
+      new object().TryFinally(_ => text).Should().BeOfType<string>().And.Be(text);
     }
 
     throw new NotImplementedException();
@@ -711,7 +711,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
         using var reader = writer.BaseStream.MoveToStart().ToBinaryReader();
 
-        reader.ToText().Should().Be(text.ToStateString());
+        reader.ToText().Should().BeOfType<string>().And.Be(text.ToStateString());
       }
     }
   }
@@ -916,7 +916,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     var text = Attributes.RandomString();
     text.GetMember(instance => instance.Length).Should().Be(text.Length);
-    text.GetMember(instance => instance.ToString(CultureInfo.InvariantCulture)).Should().Be(text);
+    text.GetMember(instance => instance.ToString(CultureInfo.InvariantCulture)).Should().BeOfType<string>().And.Be(text);
     DateTime.UtcNow.GetMember(instance => instance.Ticks <= DateTime.UtcNow.Ticks).Should().BeTrue();
 
     throw new NotImplementedException();
@@ -946,7 +946,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(T result, object instance, string name) => instance.GetFieldValue<T>(name).Should().BeSameAs(result);
+    static void Validate<T>(T result, object instance, string name) => instance.GetFieldValue<T>(name).Should().BeOfType<T>().And.BeSameAs(result);
   }
 
   /// <summary>
@@ -999,7 +999,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(T result, object instance, string name) => instance.GetPropertyValue<T>(name).Should().BeSameAs(result);
+    static void Validate<T>(T result, object instance, string name) => instance.GetPropertyValue<T>(name).Should().BeOfType<T>().And.BeSameAs(result);
   }
 
   /// <summary>
@@ -1082,7 +1082,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, object instance, IFormatProvider provider = null, string format = null) => instance.ToFormattedString(provider, format).Should().Be(result);
+    static void Validate(string result, object instance, IFormatProvider provider = null, string format = null) => instance.ToFormattedString(provider, format).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -1097,7 +1097,7 @@ public sealed class ObjectExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, object instance, string format = null) => instance.ToInvariantString(format).Should().Be(result);
+    static void Validate(string result, object instance, string format = null) => instance.ToInvariantString(format).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>

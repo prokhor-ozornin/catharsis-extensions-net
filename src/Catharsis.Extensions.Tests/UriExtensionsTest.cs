@@ -27,7 +27,7 @@ public sealed class UriExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.NotBe(original);
+      clone.Should().BeOfType<Uri>().And.NotBeSameAs(original).And.NotBe(original);
       clone.ToString().Should().Be(original.ToString());
       clone.OriginalString.Should().Be(original.OriginalString);
       clone.AbsoluteUri.Should().Be(original.AbsoluteUri);
@@ -131,7 +131,7 @@ public sealed class UriExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string[] result, Uri uri, Encoding encoding = null) => uri.Lines(encoding).Should().Equal(result);
+    static void Validate(string[] result, Uri uri, Encoding encoding = null) => uri.Lines(encoding).Should().BeOfType<string[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -146,7 +146,7 @@ public sealed class UriExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string[] result, Uri uri, Encoding encoding = null) => uri.LinesAsync(encoding).ToArray().Should().Equal(result);
+    static void Validate(string[] result, Uri uri, Encoding encoding = null) => uri.LinesAsync(encoding).ToArray().Should().BeOfType<string[]>().And.Equal(result);
   }
 
   /// <summary>

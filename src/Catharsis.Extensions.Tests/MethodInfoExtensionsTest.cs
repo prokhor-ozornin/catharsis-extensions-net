@@ -104,8 +104,8 @@ public sealed class MethodInfoExtensionsTest : UnitTest
       methodDelegate.Target.Should().BeNull();
       AssertionExtensions.Should(() => methodDelegate.DynamicInvoke()).ThrowExactly<TargetParameterCountException>();
       AssertionExtensions.Should(() => methodDelegate.DynamicInvoke(new object(), new object())).ThrowExactly<TargetParameterCountException>();
-      methodDelegate.DynamicInvoke("test").To<string>().Should().Be("test");
-      method.ToDelegate(typeof(AsString)).Should().Be(method.ToDelegate<AsString>());
+      methodDelegate.DynamicInvoke("test").Should().BeOfType<string>().And.Be("test");
+      method.ToDelegate(typeof(AsString)).Should().BeOfType<Delegate>().And.Be(method.ToDelegate<AsString>());
 
       static void Validate()
       {

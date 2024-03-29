@@ -27,7 +27,7 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original);
+      clone.Should().BeOfType<NameValueCollection>().And.NotBeSameAs(original);
       clone.AllKeys.Should().Equal(original.AllKeys);
       clone.Count.Should().Be(original.Count);
     }
@@ -114,7 +114,7 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
 
     static void Validate(NameValueCollection collection)
     {
-      collection.Empty().Should().BeSameAs(collection);
+      collection.Empty().Should().BeOfType<NameValueCollection>().And.BeSameAs(collection);
       collection.Count.Should().Be(0);
       collection.AllKeys.Should().BeEmpty();
     }

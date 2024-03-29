@@ -133,7 +133,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
     {
       using (secure)
       {
-        secure.Empty().Should().BeSameAs(secure);
+        secure.Empty().Should().BeOfType<SecureString>().And.BeSameAs(secure);
         secure.Length.Should().Be(0);
       }
     }
@@ -159,7 +159,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
       {
         using (right)
         {
-          left.Min(right).Should().BeSameAs(result);
+          left.Min(right).Should().BeOfType<SecureString>().And.BeSameAs(result);
         }
       }
     }
@@ -185,7 +185,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
       {
         using (right)
         {
-          left.Max(right).Should().BeSameAs(result);
+          left.Max(right).Should().BeOfType<SecureString>().And.BeSameAs(result);
         }
       }
     }
@@ -209,7 +209,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
     {
       using (secure)
       {
-        secure.TryFinallyClear(secure => secure.With(char.MinValue)).Should().BeSameAs(secure);
+        secure.TryFinallyClear(secure => secure.With(char.MinValue)).Should().BeOfType<SecureString>().And.BeSameAs(secure);
         secure.Length.Should().Be(0);
       }
     }
@@ -257,7 +257,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
         secure.ToBytes(encoding).Should().BeOfType<byte[]>().And.Equal(text.ToBytes(encoding));
 
         secure.Clear();
-        secure.ToBytes(encoding).Should().BeSameAs(secure.ToBytes(encoding)).And.BeEmpty();
+        secure.ToBytes(encoding).Should().BeOfType<byte[]>().And.BeSameAs(secure.ToBytes(encoding)).And.BeEmpty();
       }
     }
   }
@@ -272,7 +272,7 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     using (var secure = new SecureString())
     {
-      secure.ToText().Should().BeSameAs(secure.ToText()).And.BeEmpty();
+      secure.ToText().Should().BeOfType<string>().And.BeSameAs(secure.ToText()).And.BeEmpty();
     }
 
     using (var secure = new SecureString())

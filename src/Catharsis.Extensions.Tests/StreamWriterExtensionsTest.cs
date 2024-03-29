@@ -74,8 +74,8 @@ public sealed class StreamWriterExtensionsTest : UnitTest
     {
       using (writer)
       {
-        writer.Empty().Should().BeSameAs(writer);
-        writer.BaseStream.Should().HaveLength(0).And.HavePosition(0);
+        writer.Empty().Should().BeOfType<StreamWriter>().And.BeSameAs(writer);
+        writer.BaseStream.Should().BeOfType<Stream>().And.HaveLength(0).And.HavePosition(0);
       }
     }
   }
@@ -99,8 +99,8 @@ public sealed class StreamWriterExtensionsTest : UnitTest
       {
         bytes.WriteToAsync(writer).Await();
         writer.Flush();
-        writer.Rewind().Should().BeSameAs(writer);
-        writer.BaseStream.Should().HavePosition(0);
+        writer.Rewind().Should().BeOfType<StreamWriter>().And.BeSameAs(writer);
+        writer.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0);
       }
     }
   }

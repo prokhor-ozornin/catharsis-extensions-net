@@ -41,8 +41,8 @@ public sealed class ArrayExtensionsTest : UnitTest
 
     var bytes = Attributes.RandomBytes();
 
-    Enumerable.Empty<byte>().ToBase64().Should().BeEmpty();
-    bytes.ToBase64().Should().Be(Convert.ToBase64String(bytes));
+    Enumerable.Empty<byte>().ToBase64().Should().BeOfType<string>().And.BeEmpty();
+    bytes.ToBase64().Should().BeOfType<string>().And.Be(Convert.ToBase64String(bytes));
 
     throw new NotImplementedException();
 

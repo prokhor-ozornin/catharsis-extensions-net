@@ -116,7 +116,7 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
 
     static void Validate(XmlDocument document)
     {
-      document.Empty().Should().BeSameAs(document);
+      document.Empty().Should().BeOfType<XmlDocument>().And.BeSameAs(document);
       document.HasChildNodes.Should().BeFalse();
     }
   }
@@ -136,7 +136,7 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
 
     static void Validate(XmlDocument document, params XmlNode[] nodes)
     {
-      document.TryFinallyClear(xml => xml.With(nodes)).Should().BeSameAs(document);
+      document.TryFinallyClear(xml => xml.With(nodes)).Should().BeOfType<XmlDocument>().And.BeSameAs(document);
       document.ChildNodes.Count.Should().Be(0);
     }
   }

@@ -723,9 +723,9 @@ public sealed class StringExtensionsTest : UnitTest
     string.Empty.Prepend(null).Should().BeOfType<string>().And.BeEmpty();
     string.Empty.Prepend(string.Empty).Should().BeOfType<string>().And.BeEmpty();
    
-    "\r\n".Prepend("\t").Should().BeNullOrWhiteSpace();
-    "value".Prepend(null).Should().Be("value");
-    "second".Prepend(" & ").Prepend("first").Should().Be("first & second");
+    "\r\n".Prepend("\t").Should().BeOfType<string>().And.BeNullOrWhiteSpace();
+    "value".Prepend(null).Should().BeOfType<string>().And.Be("value");
+    "second".Prepend(" & ").Prepend("first").Should().BeOfType<string>().And.Be("first & second");
 
     return;
 
@@ -742,14 +742,14 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => string.Empty.RemoveRange(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
     AssertionExtensions.Should(() => string.Empty.RemoveRange(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-    string.Empty.RemoveRange(0).Should().BeEmpty();
-    string.Empty.RemoveRange(10).Should().BeEmpty();
+    string.Empty.RemoveRange(0).Should().BeOfType<string>().And.BeEmpty();
+    string.Empty.RemoveRange(10).Should().BeOfType<string>().And.BeEmpty();
 
     const string value = "0123456789";
-    value.RemoveRange(0).Should().Be(value);
-    value.RemoveRange(1).Should().Be(value.TakeLast(value.Length - 1).ToArray().ToText());
-    value.RemoveRange(value.Length).Should().BeEmpty();
-    value.RemoveRange(value.Length + 1).Should().BeEmpty();
+    value.RemoveRange(0).Should().BeOfType<string>().And.Be(value);
+    value.RemoveRange(1).Should().BeOfType<string>().And.Be(value.TakeLast(value.Length - 1).ToArray().ToText());
+    value.RemoveRange(value.Length).Should().BeOfType<string>().And.BeEmpty();
+    value.RemoveRange(value.Length + 1).Should().BeOfType<string>().And.BeEmpty();
 
     return;
 
@@ -858,8 +858,8 @@ public sealed class StringExtensionsTest : UnitTest
 
     CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
     {
-      value.SwapCase(culture).Should().BeUpperCased();
-      value.SwapCase(culture).SwapCase(culture).Should().BeLowerCased();
+      value.SwapCase(culture).Should().BeOfType<string>().And.BeUpperCased();
+      value.SwapCase(culture).SwapCase(culture).Should().BeOfType<string>().And.BeLowerCased();
     });
 
     return;
@@ -879,15 +879,15 @@ public sealed class StringExtensionsTest : UnitTest
 
     CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
     {
-      string.Empty.Capitalize(culture).Should().BeEmpty();
+      string.Empty.Capitalize(culture).Should().BeOfType<string>().And.BeEmpty();
 
-      "Word & Deed".Capitalize(culture).Should().Be("Word & Deed");
-      "word & deed".Capitalize(culture).Should().Be("Word & deed");
-      "wORD & deed".Capitalize(culture).Should().Be("WORD & deed");
+      "Word & Deed".Capitalize(culture).Should().BeOfType<string>().And.Be("Word & Deed");
+      "word & deed".Capitalize(culture).Should().BeOfType<string>().And.Be("Word & deed");
+      "wORD & deed".Capitalize(culture).Should().BeOfType<string>().And.Be("WORD & deed");
 
-      "Слово & Дело".Capitalize(culture).Should().Be("Слово & Дело");
-      "слово & дело".Capitalize(culture).Should().Be("Слово & дело");
-      "сЛОВО & дело".Capitalize(culture).Should().Be("СЛОВО & дело");
+      "Слово & Дело".Capitalize(culture).Should().BeOfType<string>().And.Be("Слово & Дело");
+      "слово & дело".Capitalize(culture).Should().BeOfType<string>().And.Be("Слово & дело");
+      "сЛОВО & дело".Capitalize(culture).Should().BeOfType<string>().And.Be("СЛОВО & дело");
     });
 
     return;
@@ -905,15 +905,15 @@ public sealed class StringExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringExtensions.CapitalizeAll(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-    string.Empty.CapitalizeAll().Should().BeEmpty();
+    string.Empty.CapitalizeAll().Should().BeOfType<string>().And.BeEmpty();
 
-    "Word & Deed".CapitalizeAll().Should().Be("Word & Deed");
-    "word & deed".CapitalizeAll().Should().Be("Word & Deed");
-    "wORD & deed".CapitalizeAll().Should().Be("Word & Deed");
+    "Word & Deed".CapitalizeAll().Should().BeOfType<string>().And.Be("Word & Deed");
+    "word & deed".CapitalizeAll().Should().BeOfType<string>().And.Be("Word & Deed");
+    "wORD & deed".CapitalizeAll().Should().BeOfType<string>().And.Be("Word & Deed");
 
-    "Слово & Дело".CapitalizeAll().Should().Be("Слово & Дело");
-    "слово & дело".CapitalizeAll().Should().Be("Слово & Дело");
-    "сЛОВО & дело".CapitalizeAll().Should().Be("Слово & Дело");
+    "Слово & Дело".CapitalizeAll().Should().BeOfType<string>().And.Be("Слово & Дело");
+    "слово & дело".CapitalizeAll().Should().BeOfType<string>().And.Be("Слово & Дело");
+    "сЛОВО & дело".CapitalizeAll().Should().BeOfType<string>().And.Be("Слово & Дело");
 
     return;
 
@@ -936,15 +936,15 @@ public sealed class StringExtensionsTest : UnitTest
 
     var repeated = char.MinValue.ToString().Repeat(count);
     repeated.Should().BeOfType<string>().And.HaveLength(count);
-    repeated.ToCharArray().Should().AllBeEquivalentTo(char.MinValue);
+    repeated.ToCharArray().Should().BeOfType<char[]>().And.AllBeEquivalentTo(char.MinValue);
 
     repeated = char.MaxValue.ToString().Repeat(count);
     repeated.Should().BeOfType<string>().And.HaveLength(count);
-    repeated.ToCharArray().Should().AllBeEquivalentTo(char.MinValue);
+    repeated.ToCharArray().Should().BeOfType<char[]>().And.AllBeEquivalentTo(char.MinValue);
 
-    "*".Repeat(0).Should().BeEmpty();
-    "*".Repeat(1).Should().Be("*");
-    "xyz".Repeat(2).Should().Be("xyzxyz");
+    "*".Repeat(0).Should().BeOfType<string>().And.BeEmpty();
+    "*".Repeat(1).Should().BeOfType<string>().And.Be("*");
+    "xyz".Repeat(2).Should().BeOfType<string>().And.Be("xyzxyz");
 
     return;
 
@@ -1112,16 +1112,16 @@ public sealed class StringExtensionsTest : UnitTest
 
     const int count = 2;
     
-    string.Empty.Indent('*', 0).Should().BeEmpty();
-    string.Empty.Indent('*').Should().Be("*");
-    string.Empty.Indent('*', count).Should().HaveLength(count).And.Be('*'.Repeat(count));
+    string.Empty.Indent('*', 0).Should().BeOfType<string>().And.BeEmpty();
+    string.Empty.Indent('*').Should().BeOfType<string>().And.Be("*");
+    string.Empty.Indent('*', count).Should().BeOfType<string>().And.HaveLength(count).And.Be('*'.Repeat(count));
 
-    "***".Indent(' ', count).Should().HaveLength(count + 3).And.Be(' '.Repeat(count) + "***");
-    $" 1.{Environment.NewLine} 2. ".Indent('*', count).Should().HaveLength(count * 2 + 4 + Environment.NewLine.Length).And.Be('*'.Repeat(count) + "1." + Environment.NewLine + '*'.Repeat(count) + "2.");
+    "***".Indent(' ', count).Should().BeOfType<string>().And.HaveLength(count + 3).And.Be(' '.Repeat(count) + "***");
+    $" 1.{Environment.NewLine} 2. ".Indent('*', count).Should().BeOfType<string>().And.HaveLength(count * 2 + 4 + Environment.NewLine.Length).And.Be('*'.Repeat(count) + "1." + Environment.NewLine + '*'.Repeat(count) + "2.");
 
     return;
 
-    static void Validate(string result, string text, char character, int count) => text.Indent(character, count).Should().Be(result);
+    static void Validate(string result, string text, char character, int count) => text.Indent(character, count).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -1190,12 +1190,12 @@ public sealed class StringExtensionsTest : UnitTest
 
     const int count = 2;
 
-    string.Empty.Tabify(0).Should().BeEmpty();
-    string.Empty.Tabify().Should().Be("\t");
-    string.Empty.Tabify(count).Should().HaveLength(count).And.Be('\t'.Repeat(count));
+    string.Empty.Tabify(0).Should().BeOfType<string>().And.BeEmpty();
+    string.Empty.Tabify().Should().BeOfType<string>().And.Be("\t");
+    string.Empty.Tabify(count).Should().BeOfType<string>().And.HaveLength(count).And.Be('\t'.Repeat(count));
 
-    "***".Tabify(count).Should().HaveLength(count + 3).And.Be('\t'.Repeat(count) + "***");
-    $" 1.{Environment.NewLine} 2. ".Tabify(count).Should().HaveLength(count * 2 + 4 + Environment.NewLine.Length).And.Be('\t'.Repeat(count) + "1." + Environment.NewLine + '\t'.Repeat(count) + "2.");
+    "***".Tabify(count).Should().BeOfType<string>().And.HaveLength(count + 3).And.Be('\t'.Repeat(count) + "***");
+    $" 1.{Environment.NewLine} 2. ".Tabify(count).Should().BeOfType<string>().And.HaveLength(count * 2 + 4 + Environment.NewLine.Length).And.Be('\t'.Repeat(count) + "1." + Environment.NewLine + '\t'.Repeat(count) + "2.");
 
     return;
 
@@ -1310,7 +1310,7 @@ public sealed class StringExtensionsTest : UnitTest
 
       var bytes = text.ToBytes(encoding);
       bytes.Should().BeOfType<byte[]>().And.HaveCount((encoding ?? Encoding.Default).GetByteCount(text));
-      bytes.ToText(encoding).Should().Be(text);
+      bytes.ToText(encoding).Should().BeOfType<string>().And.Be(text);
     }
   }
 
@@ -2541,13 +2541,13 @@ public sealed class StringExtensionsTest : UnitTest
       Attributes.RandomName().ToType().Should().BeNull();
 
       nameof(Object).ToType().Should().BeNull();
-      typeof(object).FullName.ToType().Should().Be(typeof(object));
-      typeof(object).AssemblyQualifiedName.ToType().Should().Be(typeof(object));
+      typeof(object).FullName.ToType().Should().BeOfType<Type>().And.Be(typeof(object));
+      typeof(object).AssemblyQualifiedName.ToType().Should().BeOfType<Type>().And.Be(typeof(object));
 
       Assembly.GetExecutingAssembly().DefinedTypes.ForEach(type =>
       {
         nameof(type).ToType().Should().BeNull();
-        type.AssemblyQualifiedName.ToType().Should().Be(type);
+        type.AssemblyQualifiedName.ToType().Should().BeOfType<Type>().And.Be(type);
       });
 
       static void Validate()
@@ -2582,7 +2582,7 @@ public sealed class StringExtensionsTest : UnitTest
         result.Should().BeNull();
 
         typeInfo.AssemblyQualifiedName.ToType(out result).Should().BeTrue();
-        result.Should().Be(typeInfo);
+        result.Should().BeOfType<Type>().And.Be(typeInfo);
       });
 
       static void Validate()
@@ -2864,7 +2864,7 @@ public sealed class StringExtensionsTest : UnitTest
 
       new[] { IPAddress.None, IPAddress.Any, IPAddress.Loopback, IPAddress.Broadcast, IPAddress.IPv6None, IPAddress.IPv6Any, IPAddress.IPv6Loopback }.ForEach(ip =>
       {
-        ip.ToString().ToIpAddress().Should().Be(ip);
+        ip.ToString().ToIpAddress().Should().BeOfType<IPAddress>().And.Be(ip);
       });
 
       static void Validate(string text)
@@ -2886,7 +2886,7 @@ public sealed class StringExtensionsTest : UnitTest
       new[] { IPAddress.None, IPAddress.Any, IPAddress.Loopback, IPAddress.Broadcast, IPAddress.IPv6None, IPAddress.IPv6Any, IPAddress.IPv6Loopback }.ForEach(ip =>
       {
         ip.ToString().ToIpAddress(out result).Should().BeTrue();
-        result.Should().Be(ip);
+        result.Should().BeOfType<IPAddress>().And.Be(ip);
       });
 
       static void Validate(string text)
@@ -3195,7 +3195,7 @@ public sealed class StringExtensionsTest : UnitTest
 
         using (var reader = to.BaseStream.MoveToStart().ToBinaryReader())
         {
-          reader.ToText().Should().Be(text);
+          reader.ToText().Should().BeOfType<string>().And.Be(text);
         }
       }
     }

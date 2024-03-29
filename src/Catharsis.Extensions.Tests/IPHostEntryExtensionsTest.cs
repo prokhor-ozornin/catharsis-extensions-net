@@ -26,7 +26,7 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.Be(original);
+      clone.Should().BeOfType<IPHostEntry>().And.NotBeSameAs(original).And.Be(original);
       clone.ToString().Should().Be(original.ToString());
       clone.AddressList.Should().Equal(original.AddressList);
       clone.Aliases.Should().Equal(original.Aliases);

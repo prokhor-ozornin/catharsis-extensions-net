@@ -28,7 +28,7 @@ public sealed class CookieExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().NotBeSameAs(original).And.NotBe(original);
+      clone.Should().BeOfType<Cookie>().And.NotBeSameAs(original).And.NotBe(original);
       clone.ToString().Should().Be(original.ToString());
       clone.Name.Should().Be(original.Name);
       clone.Value.Should().Be(original.Value);
