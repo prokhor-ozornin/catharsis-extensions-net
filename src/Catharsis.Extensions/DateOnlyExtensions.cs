@@ -10,22 +10,6 @@ public static class DateOnlyExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static DateOnly Min(this DateOnly left, DateOnly right) => left <= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static DateOnly Max(this DateOnly left, DateOnly right) => left >= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <param name="offset"></param>

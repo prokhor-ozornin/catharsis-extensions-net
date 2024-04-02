@@ -84,7 +84,7 @@ public sealed class UriExtensionsTest : UnitTest
     static void Validate(bool result, Uri uri)
     {
       var task = uri.IsAvailableAsync();
-      task.Should().BeOfType<Task<bool>>();
+      task.Should().BeAssignableTo<Task<bool>>();
       task.Await().Should().Be(result);
     }
   }
@@ -370,7 +370,7 @@ public sealed class UriExtensionsTest : UnitTest
     static void Validate(string result, Uri uri, Encoding encoding = null)
     {
       var task = uri.ToTextAsync(encoding);
-      task.Should().BeOfType<Task<string>>();
+      task.Should().BeAssignableTo<Task<string>>();
       task.Await().Should().BeOfType<string>().And.Be(result);
     }
   }

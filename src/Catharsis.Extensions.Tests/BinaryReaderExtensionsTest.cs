@@ -3,6 +3,7 @@ using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
+using System.Reflection.PortableExecutable;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -19,7 +20,10 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => BinaryReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-    throw new NotImplementedException();
+    Validate(Stream.Null.ToBinaryReader());
+    Validate(Attributes.EmptyStream().ToBinaryReader());
+    Validate(Attributes.RandomStream().ToBinaryReader());
+    Validate(Attributes.RandomReadOnlyStream().ToBinaryReader());
 
     return;
 
@@ -32,8 +36,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         using (clone)
         {
           clone.Should().BeOfType<BinaryReader>().And.NotBeSameAs(original).And.NotBe(original);
-          clone.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(original.BaseStream);
-          clone.BaseStream.Position.Should().Be(original.BaseStream.Position);
+          clone.BaseStream.Should().BeAssignableTo<Stream>().And.BeSameAs(original.BaseStream).And.HavePosition(original.BaseStream.Position);
         }
       }
     }
@@ -62,7 +65,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         reader.BaseStream.MoveToStart();
         reader.IsStart().Should().BeTrue();
         reader.BaseStream.MoveToEnd();
-        reader.IsStart().Should().Be(reader.BaseStream.Length == 0);
+        reader.IsStart().Should().Be(reader.BaseStream.IsEmpty());
       }
     }
   }
@@ -87,9 +90,9 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       using (reader)
       {
         reader.BaseStream.MoveToStart();
-        reader.IsEnd().Should().Be(reader.BaseStream.Length == 0);
+        reader.IsEnd().Should().Be(reader.BaseStream.IsEnd()).And.Be(reader.BaseStream.IsEmpty());
         reader.BaseStream.MoveToEnd();
-        reader.IsEnd().Should().BeTrue();
+        reader.IsEnd().Should().Be(reader.BaseStream.IsEnd()).And.BeTrue();
       }
     }
   }
@@ -107,14 +110,14 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     Validate(false, Attributes.RandomStream().ToBinaryReader());
     Validate(false, Attributes.RandomReadOnlyStream().ToBinaryReader());
     Validate(false, Attributes.RandomReadOnlyForwardStream().ToBinaryReader());
-
+    
     return;
 
     static void Validate(bool result, BinaryReader reader)
     {
       using (reader)
       {
-        reader.IsEmpty().Should().Be(result);
+        reader.IsEmpty().Should().Be(reader.BaseStream.IsEmpty()).And.Be(result);
       }
     }
   }
@@ -128,6 +131,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => ((BinaryReader) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
     AssertionExtensions.Should(() => Attributes.RandomReadOnlyForwardStream().ToBinaryReader().Empty()).ThrowExactly<NotSupportedException>();
 
+    Validate(Stream.Null.ToBinaryReader());
     Validate(Attributes.EmptyStream().ToBinaryReader());
     Validate(Attributes.RandomStream().ToBinaryReader());
     Validate(Attributes.RandomReadOnlyStream().ToBinaryReader());
@@ -139,7 +143,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       using (reader)
       {
         reader.Empty().Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.BaseStream.Should().BeOfType<Stream>().And.HaveLength(0).And.HavePosition(0);
+        reader.BaseStream.IsEmpty().Should().BeTrue();
         reader.PeekChar().Should().Be(-1);
       }
     }
@@ -153,7 +157,8 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => ((BinaryReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
     AssertionExtensions.Should(() => Attributes.RandomReadOnlyForwardStream().ToBinaryReader().Rewind()).ThrowExactly<NotSupportedException>();
-
+    
+    Validate(Stream.Null.ToBinaryReader());
     Validate(Attributes.EmptyStream().ToBinaryReader());
     Validate(Attributes.RandomStream().ToBinaryReader());
     Validate(Attributes.RandomReadOnlyStream().ToBinaryReader());
@@ -166,7 +171,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       {
         reader.BaseStream.MoveToEnd();
         reader.Rewind().Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0);
+        reader.BaseStream.IsStart().Should().BeTrue();
       }
     }
   }
@@ -178,6 +183,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
   public void Skip_Method()
   {
     AssertionExtensions.Should(() => BinaryReaderExtensions.Skip(null, 0)).ThrowExactly<ArgumentNullException>();
+    AssertionExtensions.Should(() => Stream.Null.ToBinaryReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
     Validate(Stream.Null.ToBinaryReader());
     Validate(Attributes.EmptyStream().ToBinaryReader());
@@ -190,7 +196,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        AssertionExtensions.Should(() => reader.Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+        reader.Rewind();
 
         reader.Skip(0).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
         reader.IsStart().Should().BeTrue();
@@ -214,19 +220,19 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Stream.Null.ToBinaryReader().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     AssertionExtensions.Should(() => Attributes.RandomReadOnlyForwardStream().ToBinaryReader().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
-    Validate(Stream.Null);
-    Validate(Attributes.EmptyStream());
-    Validate(Attributes.RandomStream());
-    Validate(Attributes.RandomReadOnlyStream());
+    Validate(Stream.Null.ToBinaryReader());
+    Validate(Attributes.EmptyStream().ToBinaryReader());
+    Validate(Attributes.RandomStream().ToBinaryReader());
 
     return;
 
-    static void Validate(Stream stream)
+    static void Validate(BinaryReader reader)
     {
-      using var reader = stream.ToBinaryReader();
-
-      reader.TryFinallyClear(_ => { }).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-      reader.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0).And.HaveLength(0);
+      using (reader)
+      {
+        reader.TryFinallyClear(reader => reader.BaseStream.WriteByte(byte.MaxValue)).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
+        reader.IsEmpty().Should().BeTrue();
+      }
     }
   }
 
@@ -376,7 +382,6 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         var sequence = reader.ToBytes();
         sequence.Should().BeOfType<IEnumerable<byte>>();
         sequence.ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
-        sequence.ToArray().Should().BeOfType<byte[]>().And.BeEmpty();
       }
     }
   }

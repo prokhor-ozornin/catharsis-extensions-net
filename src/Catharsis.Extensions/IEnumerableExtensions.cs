@@ -142,6 +142,22 @@ public static class IEnumerableExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static (IEnumerable<T> Min, IEnumerable<T> Max) MinMax<T>(this IEnumerable<T> left, IEnumerable<T> right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Count() <= right.Count() ? (left, right) : (right, left);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <param name="other"></param>
   /// <param name="comparer"></param>
@@ -570,6 +586,14 @@ public static class IEnumerableExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> sequence, IEqualityComparer<TKey> comparer = null) where TKey : notnull => sequence.ToDictionary(comparer);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="sequence"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string ToText(this IEnumerable<char> sequence) => sequence is not null ? new string(sequence.AsArray()) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
   ///   <para></para>

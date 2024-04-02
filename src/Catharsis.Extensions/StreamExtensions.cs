@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Linq;
+using System.Net;
 
 namespace Catharsis.Extensions;
 
@@ -14,6 +15,30 @@ namespace Catharsis.Extensions;
 /// <seealso cref="Stream"/>
 public static class StreamExtensions
 {
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsReadOnly(this Stream stream) => stream is not null ? stream.CanRead && !stream.CanWrite : throw new ArgumentNullException(nameof(stream));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsWriteOnly(this Stream stream) => stream is not null ? stream.CanWrite && !stream.CanRead : throw new ArgumentNullException(nameof(stream));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsOperable(this Stream stream) => stream is not null ? stream.CanRead || stream.CanWrite : throw new ArgumentNullException(nameof(stream));
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -78,10 +103,10 @@ public static class StreamExtensions
     if (left is null) throw new ArgumentNullException(nameof(left));
     if (right is null) throw new ArgumentNullException(nameof(right));
 
-    var first = left.CanSeek ? left.Length : left.ToEnumerable().Count();
-    var second = right.CanSeek ? right.Length : right.ToEnumerable().Count();
+    var leftCount = left.CanSeek ? left.Length : left.ToEnumerable().Count();
+    var rightCount = right.CanSeek ? right.Length : right.ToEnumerable().Count();
 
-    return first <= second ? left : right;
+    return leftCount <= rightCount ? left : right;
   }
 
   /// <summary>
@@ -96,10 +121,28 @@ public static class StreamExtensions
     if (left is null) throw new ArgumentNullException(nameof(left));
     if (right is null) throw new ArgumentNullException(nameof(right));
 
-    var first = left.CanSeek ? left.Length : left.ToEnumerable().Count();
-    var second = right.CanSeek ? right.Length : right.ToEnumerable().Count();
+    var leftCount = left.CanSeek ? left.Length : left.ToEnumerable().Count();
+    var rightCount = right.CanSeek ? right.Length : right.ToEnumerable().Count();
 
-    return first >= second ? left : right;
+    return leftCount >= rightCount ? left : right;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static (Stream Min, Stream Max) MinMax(this Stream left, Stream right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    var leftCount = left.CanSeek ? left.Length : left.ToEnumerable().Count();
+    var rightCount = right.CanSeek ? right.Length : right.ToEnumerable().Count();
+
+    return leftCount <= rightCount ? (left, right) : (right, left);
   }
 
   /// <summary>
@@ -313,13 +356,14 @@ public static class StreamExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <param name="encoding"></param>
+  /// <param name="close"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static string ToText(this Stream stream, Encoding encoding = null)
+  public static string ToText(this Stream stream, Encoding encoding = null, bool close = false)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
 
-    using var reader = stream.ToStreamReader(encoding, false);
+    using var reader = stream.ToStreamReader(encoding, close);
     
     return reader.ToText();
   }

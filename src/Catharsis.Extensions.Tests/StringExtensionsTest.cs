@@ -543,6 +543,22 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.MinMax(string, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MinMax_Method()
+  {
+    AssertionExtensions.Should(() => StringExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
+    AssertionExtensions.Should(() => string.Empty.MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string min, string max) => min.MinMax(max).Should().Be((min, max));
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.Compare(string, string, CultureInfo)"/> method.</para>
   /// </summary>
   [Fact]

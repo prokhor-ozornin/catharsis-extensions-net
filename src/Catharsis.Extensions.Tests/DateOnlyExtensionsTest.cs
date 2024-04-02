@@ -10,66 +10,6 @@ namespace Catharsis.Extensions.Tests;
 public sealed class DateOnlyExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.Min(DateOnly, DateOnly)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Min_Method()
-  {
-    DateOnly.MinValue.Min(DateOnly.MinValue).Should().Be(DateOnly.MinValue);
-    DateOnly.MinValue.Min(DateOnly.MaxValue).Should().Be(DateOnly.MinValue);
-
-    DateOnly.MaxValue.Min(DateOnly.MaxValue).Should().Be(DateOnly.MaxValue);
-    DateOnly.MaxValue.Min(DateOnly.MinValue).Should().Be(DateOnly.MinValue);
-
-    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
-    {
-      var dateOnly = DateOnly.FromDateTime(date);
-
-      dateOnly.Min(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddYears(0).Min(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddMonths(0).Min(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddDays(0).Min(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddYears(1).Min(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddMonths(1).Min(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddDays(1).Min(dateOnly).Should().Be(dateOnly);
-    });
-
-    return;
-
-    static void Validate(DateOnly result, DateOnly left, DateOnly right) => left.Min(right).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.Max(DateOnly, DateOnly)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Max_Method()
-  {
-    DateOnly.MinValue.Max(DateOnly.MinValue).Should().Be(DateOnly.MinValue);
-    DateOnly.MinValue.Max(DateOnly.MaxValue).Should().Be(DateOnly.MaxValue);
-
-    DateOnly.MaxValue.Max(DateOnly.MaxValue).Should().Be(DateOnly.MaxValue);
-    DateOnly.MaxValue.Max(DateOnly.MinValue).Should().Be(DateOnly.MaxValue);
-
-    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
-    {
-      var dateOnly = DateOnly.FromDateTime(date);
-
-      dateOnly.Max(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddYears(0).Max(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddMonths(0).Max(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddDays(0).Max(dateOnly).Should().Be(dateOnly);
-      dateOnly.AddYears(1).Max(dateOnly).Should().Be(dateOnly.AddYears(1));
-      dateOnly.AddMonths(1).Max(dateOnly).Should().Be(dateOnly.AddMonths(1));
-      dateOnly.AddDays(1).Max(dateOnly).Should().Be(dateOnly.AddDays(1));
-    });
-
-    return;
-
-    static void Validate(DateOnly result, DateOnly left, DateOnly right) => left.Max(right).Should().Be(result);
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="DateOnlyExtensions.Range(DateOnly, DateOnly, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]

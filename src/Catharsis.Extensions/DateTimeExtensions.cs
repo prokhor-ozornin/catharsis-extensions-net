@@ -31,22 +31,6 @@ public static class DateTimeExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static DateTime Min(this DateTime left, DateTime right) => left <= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static DateTime Max(this DateTime left, DateTime right) => left >= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <param name="offset"></param>

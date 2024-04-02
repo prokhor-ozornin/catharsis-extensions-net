@@ -211,7 +211,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
     static void Validate(byte[] result, XDocument document)
     {
       var task = document.ToBytesAsync();
-      task.Should().BeOfType<Task<byte[]>>();
+      task.Should().BeAssignableTo<Task<byte[]>>();
       task.Await().Should().BeOfType<byte[]>().And.Equal(result);
     }
   }
@@ -247,7 +247,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
     static void Validate(string result, XDocument document)
     {
       var task = document.ToTextAsync();
-      task.Should().BeOfType<Task<string>>();
+      task.Should().BeAssignableTo<Task<string>>();
       task.Await().Should().BeOfType<string>().And.Be(result);
     }
   }

@@ -1,5 +1,4 @@
 ﻿using Catharsis.Commons;
-using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
 
@@ -31,8 +30,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
         using (clone)
         {
           clone.Should().BeOfType<BinaryWriter>().And.NotBeSameAs(original).And.NotBe(original);
-          clone.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(original.BaseStream);
-          clone.BaseStream.Position.Should().Be(original.BaseStream.Position);
+          clone.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(original.BaseStream).And.HavePosition(original.BaseStream.Position);
         }
       }
     }
@@ -61,7 +59,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
         writer.BaseStream.MoveToStart();
         writer.IsStart().Should().BeTrue();
         writer.BaseStream.MoveToEnd();
-        writer.IsStart().Should().Be(writer.BaseStream.Length == 0);
+        writer.IsStart().Should().Be(writer.BaseStream.IsEmpty());
       }
     }
   }
@@ -87,7 +85,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       using (writer)
       {
         writer.BaseStream.MoveToStart();
-        writer.IsEnd().Should().Be(writer.BaseStream.Length == 0);
+        writer.IsEnd().Should().Be(writer.BaseStream.IsEmpty());
         writer.BaseStream.MoveToEnd();
         writer.IsEnd().Should().BeTrue();
       }

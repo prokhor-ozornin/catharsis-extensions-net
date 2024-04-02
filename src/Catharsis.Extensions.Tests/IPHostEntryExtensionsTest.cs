@@ -92,7 +92,7 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
     static void Validate(bool result, IPHostEntry host, TimeSpan? timeout = null)
     {
       var task = host.IsAvailableAsync(timeout);
-      task.Should().BeOfType<Task<bool>>();
+      task.Should().BeAssignableTo<Task<bool>>();
       task.Await().Should().Be(result);
     }
   }

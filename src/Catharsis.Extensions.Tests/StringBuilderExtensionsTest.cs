@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Net.Sockets;
+using System.Net;
 using System.Text;
 using System.Xml;
 using Catharsis.Commons;
@@ -134,6 +136,22 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     return;
 
     static void Validate(StringBuilder result, StringBuilder left, StringBuilder right) => left.Max(right).Should().BeOfType<StringBuilder>().And.BeSameAs(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.MinMax(StringBuilder, StringBuilder)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MinMax_Method()
+  {
+    AssertionExtensions.Should(() => StringBuilderExtensions.MinMax(null, string.Empty.ToStringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("min");
+    AssertionExtensions.Should(() => string.Empty.ToStringBuilder().MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(StringBuilder min, StringBuilder max) => min.MinMax(max).Should().Be((min, max));
   }
 
   /// <summary>

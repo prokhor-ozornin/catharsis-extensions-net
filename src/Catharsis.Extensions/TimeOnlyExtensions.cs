@@ -10,22 +10,6 @@ public static class TimeOnlyExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static TimeOnly Min(this TimeOnly left, TimeOnly right) => left <= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static TimeOnly Max(this TimeOnly left, TimeOnly right) => left >= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <param name="offset"></param>

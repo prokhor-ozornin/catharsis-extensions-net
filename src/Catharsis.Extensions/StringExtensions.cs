@@ -240,7 +240,21 @@ public static class StringExtensions
 
     return left.Length >= right.Length ? left : right;
   }
-  
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static (string Min, string Max) MinMax(this string left, string right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Length <= right.Length ? (left, right) : (right, left);
+  }
 
   /// <summary>
   ///   <para>Compares two specified strings and returns an integer that indicates their relative position in the sort order.</para>

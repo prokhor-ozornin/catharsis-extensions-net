@@ -78,7 +78,7 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
         algorithm.Key = algorithm.Key;
         algorithm.IV = algorithm.IV;
         var task = algorithm.EncryptAsync(bytes);
-        task.Should().BeOfType<Task<byte[]>>();
+        task.Should().BeAssignableTo<Task<byte[]>>();
         task.Await().Should().BeOfType<byte[]>().And.Equal(encrypted);
 
         algorithm.Key = algorithm.Key;
@@ -87,11 +87,11 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
 
         algorithm.IV = algorithm.IV;
         task = algorithm.EncryptAsync(bytes);
-        task.Should().BeOfType<Task<byte>>();
+        task.Should().BeAssignableTo<Task<byte>>();
         task.Await().Should().BeOfType<byte[]>().And.NotEqual(encrypted);
 
         task = algorithm.EncryptAsync(bytes);
-        task.Should().BeOfType<Task<byte>>();
+        task.Should().BeAssignableTo<Task<byte>>();
         task.Await().Should().BeOfType<byte[]>().And.NotEqual(encrypted);
       }
     }

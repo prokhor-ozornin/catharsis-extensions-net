@@ -250,7 +250,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
       using (client)
       {
         var task = client.ToTextAsync(encoding);
-        task.Should().BeOfType<Task<string>>();
+        task.Should().BeAssignableTo<Task<string>>();
         task.Await().Should().BeOfType<string>().And.Be(result);
       }
     }

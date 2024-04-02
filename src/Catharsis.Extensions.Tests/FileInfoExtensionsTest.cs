@@ -218,7 +218,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
       file.TryFinallyDelete(info =>
       {
         var task = bytes.WriteToAsync(info);
-        task.Should().BeOfType<Task<IEnumerable<byte>>>();
+        task.Should().BeAssignableTo<Task<IEnumerable<byte>>>();
         //task.Await().Should().BeOfType<IEnumerable<byte>>().And.BeSameAs(file);
       }).Should().BeOfType<FileInfo>().And.NotBeNull().And.BeSameAs(file);
       file.Exists.Should().BeFalse();
@@ -420,7 +420,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
         text.WriteTo(file, encoding);
         
         var task = file.ToTextAsync(encoding);
-        task.Should().BeOfType<Task<string>>();
+        task.Should().BeAssignableTo<Task<string>>();
         task.Await().Should().BeOfType<string>().And.Be(text);
       });
     }

@@ -90,6 +90,6 @@ public sealed class IComparableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(T left, T right) where T : IComparable => left.MinMax(right).Should().Be((left, right));
+    static void Validate<T>(T min, T max) where T : IComparable => min.MinMax(max).Should().Be((min, max));
   }
 }

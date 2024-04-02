@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Net;
 using System.Text;
 using System.Xml;
 
@@ -62,6 +63,21 @@ public static class StringBuilderExtensions
     if (right is null) throw new ArgumentNullException(nameof(right));
 
     return left.Length >= right.Length ? left : right;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static (StringBuilder Min, StringBuilder Max) MinMax(this StringBuilder left, StringBuilder right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Length <= right.Length ? (left, right) : (right, left);
   }
 
   /// <summary>

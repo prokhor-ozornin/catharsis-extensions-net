@@ -180,6 +180,21 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.MinMax{T}(IEnumerable{T}, IEnumerable{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MinMax_Method()
+  {
+    AssertionExtensions.Should(() => IEnumerableExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(IEnumerable<T> min, IEnumerable<T> max) => min.MinMax(max).Should().Be((min, max));
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IEnumerableExtensions.Contains{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/> method.</para>
   /// </summary>
   [Fact]
@@ -764,6 +779,23 @@ public sealed class IEnumerableExtensionsTest : UnitTest
     return;
 
     static void Validate()
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToText(IEnumerable{char})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToText_Method()
+  {
+    AssertionExtensions.Should(() => IEnumerableExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(IEnumerable<char> characters)
     {
     }
   }

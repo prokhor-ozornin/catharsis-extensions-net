@@ -69,64 +69,6 @@ public sealed class DateTimeExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.Min(DateTime, DateTime)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Min_Method()
-  {
-    DateTime.MinValue.Min(DateTime.MinValue).Should().Be(DateTime.MinValue);
-    DateTime.MinValue.Min(DateTime.MaxValue).Should().Be(DateTime.MinValue);
-
-    DateTime.MaxValue.Min(DateTime.MaxValue).Should().Be(DateTime.MaxValue);
-    DateTime.MaxValue.Min(DateTime.MinValue).Should().Be(DateTime.MinValue);
-
-    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
-    {
-      date.Min(date).Should().Be(date);
-      date.Add(TimeSpan.Zero).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromDays(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromHours(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromMinutes(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromSeconds(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromMilliseconds(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromTicks(1)).Min(date).Should().Be(date);
-    });
-
-    return;
-
-    static void Validate(DateTime result, DateTime left, DateTime right) => left.Min(right).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.Max(DateTime, DateTime)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Max_Method()
-  {
-    DateTime.MinValue.Max(DateTime.MinValue).Should().Be(DateTime.MinValue);
-    DateTime.MinValue.Max(DateTime.MaxValue).Should().Be(DateTime.MaxValue);
-
-    DateTime.MaxValue.Max(DateTime.MaxValue).Should().Be(DateTime.MaxValue);
-    DateTime.MaxValue.Max(DateTime.MinValue).Should().Be(DateTime.MaxValue);
-
-    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
-    {
-      date.Max(date).Should().Be(date);
-      date.Add(TimeSpan.Zero).Max(date).Should().Be(date);
-      date.Add(TimeSpan.FromDays(1)).Max(date).Should().Be(date.Add(TimeSpan.FromDays(1)));
-      date.Add(TimeSpan.FromHours(1)).Max(date).Should().Be(date.Add(TimeSpan.FromHours(1)));
-      date.Add(TimeSpan.FromMinutes(1)).Max(date).Should().Be(date.Add(TimeSpan.FromMinutes(1)));
-      date.Add(TimeSpan.FromSeconds(1)).Max(date).Should().Be(date.Add(TimeSpan.FromSeconds(1)));
-      date.Add(TimeSpan.FromMilliseconds(1)).Max(date).Should().Be(date.Add(TimeSpan.FromMilliseconds(1)));
-      date.Add(TimeSpan.FromTicks(1)).Max(date).Should().Be(date.Add(TimeSpan.FromTicks(1)));
-    });
-
-    return;
-
-    static void Validate(DateTime result, DateTime left, DateTime right) => left.Max(right).Should().Be(result);
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="DateTimeExtensions.Range(DateTime, DateTime, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]

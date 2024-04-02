@@ -27,22 +27,6 @@ public static class DateTimeOffsetExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static DateTimeOffset Min(this DateTimeOffset left, DateTimeOffset right) => left <= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static DateTimeOffset Max(this DateTimeOffset left, DateTimeOffset right) => left >= right ? left : right;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <param name="offset"></param>

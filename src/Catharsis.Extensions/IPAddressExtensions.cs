@@ -33,7 +33,7 @@ public static class IPAddressExtensions
 
     var reply = timeout is not null ? ping.Send(address, (int) timeout.Value.TotalMilliseconds) : ping.Send(address);
 
-    return reply.Status == IPStatus.Success;
+    return reply?.Status == IPStatus.Success;
   }
 
   /// <summary>
@@ -83,7 +83,22 @@ public static class IPAddressExtensions
 
     return left.Address >= right.Address ? left : right;
   }
-  
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static (IPAddress Min, IPAddress Max) MinMax(this IPAddress left, IPAddress right)
+  {
+    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (right is null) throw new ArgumentNullException(nameof(right));
+
+    return left.Address <= right.Address ? (left, right) : (right, left);
+  }
+
   /// <summary>
   ///   <para></para>
   /// </summary>

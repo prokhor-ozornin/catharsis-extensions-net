@@ -46,7 +46,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     static void Validate<T>(bool result, IAsyncEnumerable<T> sequence)
     {
       var task = sequence.IsEmptyAsync();
-      task.Should().BeOfType<Task<bool>>();
+      task.Should().BeAssignableTo<Task<bool>>();
       task.Await().Should().Be(result);
     }
   }
@@ -130,7 +130,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
         var collection = new List<T>();
 
         var task = sequence.ForEachAsync(value => collection.Add(value));
-        task.Should().BeOfType<Task<IAsyncEnumerable<T>>>();
+        task.Should().BeAssignableTo<Task<IAsyncEnumerable<T>>>();
         task.Await().Should().BeOfType<IAsyncEnumerable<T>>().And.BeSameAs(sequence);
         collection.Should().BeOfType<List<T>>().And.Equal(elements);
       }
@@ -152,7 +152,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
         var collection = new List<T>();
 
         var task = sequence.ForEachAsync((index, value) => collection.Insert(index, value));
-        task.Should().BeOfType<Task<IAsyncEnumerable<T>>>();
+        task.Should().BeAssignableTo<Task<IAsyncEnumerable<T>>>();
         task.Await().Should().BeOfType<IAsyncEnumerable<T>>().And.BeSameAs(sequence);
         collection.Should().BeOfType<List<T>>().And.Equal(elements);
       }
@@ -226,7 +226,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     static void Validate<T>(IEnumerable<T> result, IAsyncEnumerable<T> sequence)
     {
       var task = sequence.ToArrayAsync();
-      task.Should().BeOfType<Task<T[]>>();
+      task.Should().BeAssignableTo<Task<T[]>>();
       task.Await().Should().BeOfType<T[]>().And.Equal(result);
     }
   }
@@ -268,7 +268,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     static void Validate<T>(IEnumerable<T> result, IAsyncEnumerable<T> sequence)
     {
       var task = sequence.ToListAsync();
-      task.Should().BeOfType<Task<List<T>>>();
+      task.Should().BeAssignableTo<Task<List<T>>>();
       task.Await().Should().BeOfType<List<T>>().And.Equal(result);
     }
   }
@@ -310,7 +310,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     static void Validate<T>(IEnumerable<T> result, IAsyncEnumerable<T> sequence)
     {
       var task = sequence.ToLinkedListAsync();
-      task.Should().BeOfType<Task<LinkedList<T>>>();
+      task.Should().BeAssignableTo<Task<LinkedList<T>>>();
       task.Await().Should().BeOfType<LinkedList<T>>().And.Equal(result);
     }
   }
@@ -632,7 +632,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     static void Validate<T>(IEnumerable<T> result, IAsyncEnumerable<T> sequence)
     {
       var task = sequence.ToStackAsync();
-      task.Should().BeOfType<Task<Stack<T>>>();
+      task.Should().BeAssignableTo<Task<Stack<T>>>();
       task.Await().Should().BeOfType<Stack<T>>().And.Equal(result);
     }
   }
@@ -677,7 +677,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     static void Validate<T>(IEnumerable<T> result, IAsyncEnumerable<T> sequence)
     {
       var task = sequence.ToQueueAsync();
-      task.Should().BeOfType<Task<Queue<T>>>();
+      task.Should().BeAssignableTo<Task<Queue<T>>>();
       task.Await().Should().BeOfType<Queue<T>>().And.Equal(result);
     }
   }
@@ -903,7 +903,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     static void Validate<T>(IEnumerable<T> result, IAsyncEnumerable<T> sequence)
     {
       var task = sequence.ToImmutableArrayAsync();
-      task.Should().BeOfType<Task<ImmutableArray<T>>>();
+      task.Should().BeAssignableTo<Task<ImmutableArray<T>>>();
       task.Await().Should().BeOfType<ImmutableArray<T>>().And.Equal(result);
     }
   }
@@ -945,7 +945,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     static void Validate<T>(IEnumerable<T> result, IAsyncEnumerable<T> sequence)
     {
       var task = sequence.ToImmutableListAsync();
-      task.Should().BeOfType<Task<ImmutableList<T>>>();
+      task.Should().BeAssignableTo<Task<ImmutableList<T>>>();
       task.Await().Should().BeOfType<ImmutableList<T>>().And.Equal(result);
     }
   }
@@ -1173,7 +1173,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     static void Validate<T>(IEnumerable<T> result, IAsyncEnumerable<T> sequence)
     {
       var task = sequence.ToImmutableQueueAsync();
-      task.Should().BeOfType<Task<ImmutableQueue<T>>>();
+      task.Should().BeAssignableTo<Task<ImmutableQueue<T>>>();
       task.Await().Should().BeOfType<ImmutableQueue<T>>().And.Equal(result);
     }
   }

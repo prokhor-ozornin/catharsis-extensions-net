@@ -163,7 +163,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
       using (reader)
       {
         var task = reader.ToBytesAsync(encoding);
-        task.Should().BeOfType<Task<byte[]>>();
+        task.Should().BeAssignableTo<Task<byte[]>>();
         task.Await().Should().BeOfType<byte[]>().And.Equal(result);
       }
     }
@@ -208,7 +208,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
       using (reader)
       {
         var task = reader.ToTextAsync();
-        task.Should().BeOfType<Task<string>>();
+        task.Should().BeAssignableTo<Task<string>>();
         task.Await().Should().BeOfType<string>().And.Be(result);
         reader.Read().Should().Be(-1);
       }

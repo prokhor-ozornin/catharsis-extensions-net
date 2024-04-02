@@ -71,62 +71,6 @@ public sealed class DateTimeOffsetExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.Min(DateTimeOffset, DateTimeOffset)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Min_Method()
-  {
-    //Validate(DateTimeOffset.MinValue, DateTimeOffset.MinValue);
-    //Validate(DateTimeOffset.MaxValue, DateTimeOffset.MaxValue);
-    //Validate(DateTimeOffset.MinValue, DateTimeOffset.MaxValue);
-
-    new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
-    {
-      date.Min(date).Should().Be(date);
-      date.Add(TimeSpan.Zero).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromDays(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromHours(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromMinutes(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromSeconds(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromMilliseconds(1)).Min(date).Should().Be(date);
-      date.Add(TimeSpan.FromTicks(1)).Min(date).Should().Be(date);
-    });
-
-    return;
-
-    static void Validate(DateTimeOffset result, DateTimeOffset left, DateTimeOffset right) => left.Min(right).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.Max(DateTimeOffset, DateTimeOffset)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Max_Method()
-  {
-    DateTimeOffset.MinValue.Max(DateTimeOffset.MinValue).Should().Be(DateTimeOffset.MinValue);
-    DateTimeOffset.MinValue.Max(DateTimeOffset.MaxValue).Should().Be(DateTimeOffset.MaxValue);
-
-    DateTimeOffset.MaxValue.Max(DateTimeOffset.MaxValue).Should().Be(DateTimeOffset.MaxValue);
-    DateTimeOffset.MaxValue.Max(DateTimeOffset.MinValue).Should().Be(DateTimeOffset.MaxValue);
-
-    new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
-    {
-      date.Max(date).Should().Be(date);
-      date.Add(TimeSpan.Zero).Max(date).Should().Be(date);
-      date.Add(TimeSpan.FromDays(1)).Max(date).Should().Be(date.Add(TimeSpan.FromDays(1)));
-      date.Add(TimeSpan.FromHours(1)).Max(date).Should().Be(date.Add(TimeSpan.FromHours(1)));
-      date.Add(TimeSpan.FromMinutes(1)).Max(date).Should().Be(date.Add(TimeSpan.FromMinutes(1)));
-      date.Add(TimeSpan.FromSeconds(1)).Max(date).Should().Be(date.Add(TimeSpan.FromSeconds(1)));
-      date.Add(TimeSpan.FromMilliseconds(1)).Max(date).Should().Be(date.Add(TimeSpan.FromMilliseconds(1)));
-      date.Add(TimeSpan.FromTicks(1)).Max(date).Should().Be(date.Add(TimeSpan.FromTicks(1)));
-    });
-
-    return;
-
-    static void Validate(DateTimeOffset result, DateTimeOffset left, DateTimeOffset right) => left.Max(right).Should().Be(result);
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.Range(DateTimeOffset, DateTimeOffset, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]

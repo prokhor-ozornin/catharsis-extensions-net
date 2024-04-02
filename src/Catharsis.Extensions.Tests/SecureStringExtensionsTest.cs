@@ -1,4 +1,6 @@
-﻿using System.Security;
+﻿using System.Net.Sockets;
+using System.Net;
+using System.Security;
 using System.Text;
 using Catharsis.Commons;
 using FluentAssertions;
@@ -189,6 +191,22 @@ public sealed class SecureStringExtensionsTest : UnitTest
         }
       }
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.MinMax(SecureString, SecureString)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MinMax_Method()
+  {
+    AssertionExtensions.Should(() => SecureStringExtensions.MinMax(null, Attributes.EmptySecureString())).ThrowExactly<ArgumentNullException>().WithParameterName("min");
+    AssertionExtensions.Should(() => Attributes.EmptySecureString().MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(SecureString min, SecureString max) => min.MinMax(max).Should().Be((min, max));
   }
 
   /// <summary>

@@ -147,7 +147,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
       using (content)
       {
         var task = content.ToTextAsync();
-        task.Should().BeOfType<Task<string>>();
+        task.Should().BeAssignableTo<Task<string>>();
         task.Await().Should().BeOfType<string>().And.Be(content.ReadAsStringAsync().Await()).And.Be(result);
       }
     }

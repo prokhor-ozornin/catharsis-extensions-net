@@ -10,62 +10,6 @@ namespace Catharsis.Extensions.Tests;
 public sealed class TimeOnlyExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.Min(TimeOnly, TimeOnly)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Min_Method()
-  {
-    Validate(TimeOnly.MinValue, TimeOnly.MinValue, TimeOnly.MinValue);
-    Validate(TimeOnly.MinValue, TimeOnly.MinValue, TimeOnly.MaxValue);
-    Validate(TimeOnly.MinValue, TimeOnly.MaxValue, TimeOnly.MinValue);
-    Validate(TimeOnly.MaxValue, TimeOnly.MaxValue, TimeOnly.MaxValue);
-
-    var time = TimeOnly.MinValue;
-
-    //Validate(time.Add(TimeSpan.Zero), time);
-
-    //time.Min(time).Should().Be(time);
-    //time.Add(TimeSpan.Zero).Min(time).Should().Be(time);
-    //time.Add(TimeSpan.FromDays(1)).Min(time).Should().Be(time);
-    //time.Add(TimeSpan.FromHours(1)).Min(time).Should().Be(time);
-    //time.Add(TimeSpan.FromMinutes(1)).Min(time).Should().Be(time);
-    //time.Add(TimeSpan.FromSeconds(1)).Min(time).Should().Be(time);
-    //time.Add(TimeSpan.FromMilliseconds(1)).Min(time).Should().Be(time);
-    //time.Add(TimeSpan.FromTicks(1)).Min(time).Should().Be(time);
-
-    return;
-
-    static void Validate(TimeOnly result, TimeOnly min, TimeOnly max) => min.Min(max).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.Max(TimeOnly, TimeOnly)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Max_Method()
-  {
-    TimeOnly.MinValue.Max(TimeOnly.MinValue).Should().Be(TimeOnly.MinValue);
-    TimeOnly.MinValue.Max(TimeOnly.MaxValue).Should().Be(TimeOnly.MaxValue);
-
-    TimeOnly.MaxValue.Max(TimeOnly.MaxValue).Should().Be(TimeOnly.MaxValue);
-    TimeOnly.MinValue.Max(TimeOnly.MaxValue).Should().Be(TimeOnly.MaxValue);
-
-    var timeOnly = TimeOnly.MinValue;
-    timeOnly.Max(timeOnly).Should().Be(timeOnly);
-    timeOnly.Add(TimeSpan.Zero).Max(timeOnly).Should().Be(timeOnly);
-    timeOnly.Add(TimeSpan.FromDays(1)).Max(timeOnly).Should().Be(timeOnly.Add(TimeSpan.FromDays(1)));
-    timeOnly.Add(TimeSpan.FromHours(1)).Max(timeOnly).Should().Be(timeOnly.Add(TimeSpan.FromHours(1)));
-    timeOnly.Add(TimeSpan.FromMinutes(1)).Max(timeOnly).Should().Be(timeOnly.Add(TimeSpan.FromMinutes(1)));
-    timeOnly.Add(TimeSpan.FromSeconds(1)).Max(timeOnly).Should().Be(timeOnly.Add(TimeSpan.FromSeconds(1)));
-    timeOnly.Add(TimeSpan.FromMilliseconds(1)).Max(timeOnly).Should().Be(timeOnly.Add(TimeSpan.FromMilliseconds(1)));
-    timeOnly.Add(TimeSpan.FromTicks(1)).Max(timeOnly).Should().Be(timeOnly.Add(TimeSpan.FromTicks(1)));
-
-    return;
-
-    static void Validate(TimeOnly result, TimeOnly min, TimeOnly max) => min.Max(max).Should().Be(result);
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="TimeOnlyExtensions.Range(TimeOnly, TimeOnly, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
