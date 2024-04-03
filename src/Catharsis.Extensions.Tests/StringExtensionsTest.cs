@@ -20,6 +20,76 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StringExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StringExtensions.With(string, IEnumerable{char})"/></description></item>
+  ///     <item><description><see cref="StringExtensions.With(string, char[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void With_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.With(null, Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.With((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
+
+      static void Validate<T>(string text, IEnumerable<char> characters)
+      {
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.With(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
+
+      static void Validate<T>(string text, params char[] characters)
+      {
+      }
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StringExtensions.Without(string, IEnumerable{int})"/></description></item>
+  ///     <item><description><see cref="StringExtensions.Without(string, int[])"/></description></item>
+  ///     <item><description><see cref="StringExtensions.Without(string, int, int?, Predicate{char})"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Without_Methods()
+  {
+    using (new AssertionScope())
+    {
+      static void Validate(string text, IEnumerable<int> positions)
+      {
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      static void Validate(string text, int[] positions)
+      {
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Without(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Without(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+      AssertionExtensions.Should(() => string.Empty.Without(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      static void Validate(string text)
+      {
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.IsEmpty(string)"/> method.</para>
   /// </summary>
   [Fact]
@@ -746,32 +816,6 @@ public sealed class StringExtensionsTest : UnitTest
     return;
 
     static void Validate(string result, string text, string prefix) => text.Prepend(prefix).Should().BeOfType<string>().And.Be(prefix + text).And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.RemoveRange(string, int, int?, Predicate{char})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void RemoveRange_Method()
-  {
-    AssertionExtensions.Should(() => StringExtensions.RemoveRange(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    AssertionExtensions.Should(() => string.Empty.RemoveRange(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
-    AssertionExtensions.Should(() => string.Empty.RemoveRange(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-
-    string.Empty.RemoveRange(0).Should().BeOfType<string>().And.BeEmpty();
-    string.Empty.RemoveRange(10).Should().BeOfType<string>().And.BeEmpty();
-
-    const string value = "0123456789";
-    value.RemoveRange(0).Should().BeOfType<string>().And.Be(value);
-    value.RemoveRange(1).Should().BeOfType<string>().And.Be(value.TakeLast(value.Length - 1).ToArray().ToText());
-    value.RemoveRange(value.Length).Should().BeOfType<string>().And.BeEmpty();
-    value.RemoveRange(value.Length + 1).Should().BeOfType<string>().And.BeEmpty();
-
-    return;
-
-    static void Validate()
-    {
-    }
   }
 
   /// <summary>

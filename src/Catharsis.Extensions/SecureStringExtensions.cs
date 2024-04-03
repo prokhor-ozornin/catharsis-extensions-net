@@ -21,6 +21,7 @@ public static class SecureStringExtensions
   public static SecureString With(this SecureString secure, IEnumerable<char> characters)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
+    if (characters is null) throw new ArgumentNullException(nameof(characters));
 
     foreach (var character in characters)
     {
@@ -48,6 +49,7 @@ public static class SecureStringExtensions
   public static SecureString Without(this SecureString secure, IEnumerable<int> positions)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
+    if (positions is null) throw new ArgumentNullException(nameof(positions));
 
     foreach (var position in positions)
     {
@@ -115,7 +117,7 @@ public static class SecureStringExtensions
     if (left is null) throw new ArgumentNullException(nameof(left));
     if (right is null) throw new ArgumentNullException(nameof(right));
 
-    return left.Length >= right.Length ? left : right;
+    return left.Length > right.Length ? left : right;
   }
 
   /// <summary>

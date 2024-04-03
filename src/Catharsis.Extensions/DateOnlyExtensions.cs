@@ -16,7 +16,7 @@ public static class DateOnlyExtensions
   /// <returns></returns>
   public static IEnumerable<DateOnly> Range(this DateOnly from, DateOnly to, TimeSpan offset)
   {
-    if (from == to || offset == TimeSpan.Zero)
+    if (from == to || offset == default)
     {
       yield break;
     }
@@ -49,41 +49,43 @@ public static class DateOnlyExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateOnly TruncateToYearStart(this DateOnly date) => new(date.Year, 1, 1);
+  public static DateOnly StartOfYear(this DateOnly date) => new(date.Year, 1, 1);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateOnly TruncateToMonthStart(this DateOnly date) => new(date.Year, date.Month, 1);
+  public static DateOnly StartOfMonth(this DateOnly date) => new(date.Year, date.Month, 1);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateOnly TruncateToYearEnd(this DateOnly date) => new(date.Year, 12, DateTime.DaysInMonth(date.Year, date.Month));
+  public static DateOnly EndOfYear(this DateOnly date) => new(date.Year, 12, DateTime.DaysInMonth(date.Year, date.Month));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateOnly TruncateToMonthEnd(this DateOnly date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+  public static DateOnly EndOfMonth(this DateOnly date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
+  /// <param name="kind"></param>
   /// <returns></returns>
-  public static DateTime ToDateTime(this DateOnly date) => date.ToDateTime(TimeOnly.MinValue);
+  public static DateTime ToDateTime(this DateOnly date, DateTimeKind kind = default) => date.ToDateTime(default, kind);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
+  /// <param name="kind"></param>
   /// <returns></returns>
-  public static DateTimeOffset ToDateTimeOffset(this DateOnly date) => new(date.ToDateTime(), TimeSpan.Zero);
+  public static DateTimeOffset ToDateTimeOffset(this DateOnly date, DateTimeKind kind = default) => new(date.ToDateTime(kind));
 }
 #endif

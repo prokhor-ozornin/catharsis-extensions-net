@@ -11,92 +11,88 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IListExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="IListExtensions.With{T}(IList{T}, int, T)"/> method.</para>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="IListExtensions.With{T}(IList{T}, int, T)"/></description></item>
+  ///     <item><description><see cref="IListExtensions.With{T}(IList{T}, int, IEnumerable{T})"/></description></item>
+  ///     <item><description><see cref="IListExtensions.With{T}(IList{T}, int, T[])"/></description></item>
+  ///   </list>
   /// </summary>
   [Fact]
-  public void With_Method()
+  public void With_Methods()
   {
-    AssertionExtensions.Should(() => IListExtensions.With<object>(null, default, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
-    AssertionExtensions.Should(() => Array.Empty<object>().With(-1, null)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
+    using (new AssertionScope())
+    {
+      static void Validate<T>(IList<T> list)
+      {
+
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IListExtensions.With<object>(null, 0, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => Array.Empty<object>().With(0, (IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => Array.Empty<object>().With(-1, Enumerable.Empty<object>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+
+      static void Validate<T>(IList<T> list)
+      {
+
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IListExtensions.With<object>(null, default, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => Array.Empty<object>().With(-1, null)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
+
+      static void Validate<T>(IList<T> list)
+      {
+
+      }
+    }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate<T>(IList<T> list)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IListExtensions.Without{T}(IList{T}, int)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Without_Method()
-  {
-    AssertionExtensions.Should(() => IListExtensions.Without<object>(null, default)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
-    AssertionExtensions.Should(() => Array.Empty<object>().Without(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate<T>(IList<T> list)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IListExtensions.RemoveRange{T}(IList{T}, int, int?, Predicate{T})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void RemoveRange_Method()
-  {
-    AssertionExtensions.Should(() => ((IList<object>) null).RemoveRange(0)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
-    AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
-    AssertionExtensions.Should(() => Array.Empty<object>().RemoveRange(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate<T>(IList<T> list)
-    {
-    }
   }
 
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="IListExtensions.InsertRange{T}(IList{T}, int, IEnumerable{T})"/></description></item>
-  ///     <item><description><see cref="IListExtensions.InsertRange{T}(IList{T}, int, T[])"/></description></item>
+  ///     <item><description><see cref="IListExtensions.Without{T}(IList{T}, IEnumerable{int})"/></description></item>
+  ///     <item><description><see cref="IListExtensions.Without{T}(IList{T}, int[])"/></description></item>
+  ///     <item><description><see cref="IListExtensions.Without{T}(IList{T}, int, int?, Predicate{T})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void InsertRange_Methods()
+  public void Without_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.InsertRange<object>(null, 0, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
-      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(0, (IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
-      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(-1, Enumerable.Empty<object>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
-
       static void Validate<T>(IList<T> list)
       {
+
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.InsertRange(null, 0, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
-      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
-      AssertionExtensions.Should(() => Array.Empty<object>().InsertRange(-1, [])).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+      AssertionExtensions.Should(() => IListExtensions.Without<object>(null, default)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => Array.Empty<object>().Without(new[] { -1 })).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
 
       static void Validate<T>(IList<T> list)
       {
+
       }
     }
 
+    using (new AssertionScope())
+    {
+      static void Validate<T>(IList<T> list)
+      {
+
+      }
+    }
+    
     throw new NotImplementedException();
   }
 

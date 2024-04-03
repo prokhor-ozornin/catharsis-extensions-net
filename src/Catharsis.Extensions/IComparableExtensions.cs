@@ -48,7 +48,7 @@ public static class IComparableExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static T Max<T>(this T left, T right) where T : IComparable => left is not null ? left.CompareTo(right) >= 0 ? left : right : throw new ArgumentNullException(nameof(left));
+  public static T Max<T>(this T left, T right) where T : IComparable => left is not null ? left.CompareTo(right) > 0 ? left : right : throw new ArgumentNullException(nameof(left));
 
   /// <summary>
   ///   <para></para>

@@ -52,7 +52,7 @@ public static class ICollectionExtensions
 
     foreach (var element in elements)
     {
-      collection.Add(element);
+      collection.Remove(element);
     }
     
     return collection;
@@ -98,6 +98,6 @@ public static class ICollectionExtensions
     if (collection is null) throw new ArgumentNullException(nameof(collection));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return collection.TryFinally(action, collection => collection.Clear());
+    return collection.TryFinally(action, x => x.Clear());
   }
 }

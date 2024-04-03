@@ -17,6 +17,71 @@ namespace Catharsis.Extensions;
 public static class StringExtensions
 {
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="characters"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string With(this string text, IEnumerable<char> characters)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (characters is null) throw new ArgumentNullException(nameof(characters));
+
+    return text + characters.ToText();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="characters"></param>
+  /// <returns></returns>
+  public static string With(this string text, params char[] characters) => With(text, characters as IEnumerable<char>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="positions"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static string Without(this string text, IEnumerable<int> positions)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (positions is null) throw new ArgumentNullException(nameof(positions));
+
+    return text.ToStringBuilder().Without(positions).ToString();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="positions"></param>
+  /// <returns></returns>
+  public static string Without(this string text, params int[] positions) => Without(text, positions as IEnumerable<int>);
+
+  /// <summary>
+  ///   <para>Removes specified number of characters from the beginning of a string.</para>
+  /// </summary>
+  /// <param name="text">String to be altered.</param>
+  /// <param name="offset"></param>
+  /// <param name="count">Number of characters to drop.</param>
+  /// <param name="condition"></param>
+  /// <returns>Resulting string with removed characters.</returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
+  public static string Without(this string text, int offset, int? count = null, Predicate<char> condition = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return condition is not null ? text.Skip(offset).Where(character => condition(character)).AsArray().ToText() : count is not null ? text.Remove(offset, count.Value) : text.Remove(offset);
+  }
+
+  /// <summary>
   ///   <para>Determines where a string is either <c>null</c> reference or is <see cref="string.Empty"/>.</para>
   /// </summary>
   /// <param name="text">String to evaluate.</param>
@@ -301,25 +366,6 @@ public static class StringExtensions
   /// <returns>Concatenated result of <paramref name="right"/> and <paramref name="left"/> string.</returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static string Prepend(this string left, string right) => right + left;
-
-  /// <summary>
-  ///   <para>Removes specified number of characters from the beginning of a string.</para>
-  /// </summary>
-  /// <param name="text">String to be altered.</param>
-  /// <param name="offset"></param>
-  /// <param name="count">Number of characters to drop.</param>
-  /// <param name="condition"></param>
-  /// <returns>Resulting string with removed characters.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static string RemoveRange(this string text, int offset, int? count = null, Predicate<char> condition = null)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
-    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    return condition is not null ? text.Skip(offset).Where(character => condition(character)).AsArray().ToText() : count is not null ? text.Remove(offset, count.Value) : text.Remove(offset);
-  }
 
   /// <summary>
   ///   <para></para>

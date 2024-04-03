@@ -32,59 +32,13 @@ public static class IListExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="list"></param>
-  /// <param name="position"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static IList<T> Without<T>(this IList<T> list, int position)
-  {
-    if (list is null) throw new ArgumentNullException(nameof(list));
-    if (position < 0) throw new ArgumentOutOfRangeException(nameof(position));
-
-    list.RemoveAt(position);
-
-    return list;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="from"></param>
-  /// <param name="offset"></param>
-  /// <param name="count"></param>
-  /// <param name="condition"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static IList<T> RemoveRange<T>(this IList<T> from, int offset, int? count = null, Predicate<T> condition = null)
-  {
-    if (from is null) throw new ArgumentNullException(nameof(from));
-    if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
-    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    for (var i = offset; i < offset + (count ?? from.Count - offset); i++)
-    {
-      if (condition is null || condition(from[i]))
-      {
-        from.RemoveAt(i);
-      }
-    }
-
-    return from;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
   /// <param name="to"></param>
   /// <param name="offset"></param>
   /// <param name="from"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static IList<T> InsertRange<T>(this IList<T> to, int offset, IEnumerable<T> from)
+  public static IList<T> With<T>(this IList<T> to, int offset, IEnumerable<T> from)
   {
     if (to is null) throw new ArgumentNullException(nameof(to));
     if (from is null) throw new ArgumentNullException(nameof(from));
@@ -105,7 +59,64 @@ public static class IListExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static IList<T> InsertRange<T>(this IList<T> to, int offset, params T[] from) => to.InsertRange(offset, from as IEnumerable<T>);
+  public static IList<T> With<T>(this IList<T> to, int offset, params T[] from) => to.With(offset, from as IEnumerable<T>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="positions"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IList<T> Without<T>(this IList<T> list, IEnumerable<int> positions)
+  {
+    if (list is null) throw new ArgumentNullException(nameof(list));
+
+    foreach (var position in positions)
+    {
+      list.RemoveAt(position);
+    }
+
+    return list;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="positions"></param>
+  /// <returns></returns>
+  public static IList<T> Without<T>(this IList<T> list, params int[] positions) => Without(list, positions as IEnumerable<int>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="list"></param>
+  /// <param name="offset"></param>
+  /// <param name="count"></param>
+  /// <param name="condition"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
+  public static IList<T> Without<T>(this IList<T> list, int offset, int? count = null, Predicate<T> condition = null)
+  {
+    if (list is null) throw new ArgumentNullException(nameof(list));
+    if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    for (var i = offset; i < offset + (count ?? list.Count - offset); i++)
+    {
+      if (condition is null || condition(list[i]))
+      {
+        list.RemoveAt(i);
+      }
+    }
+
+    return list;
+  }
 
   /// <summary>
   ///   <para></para>

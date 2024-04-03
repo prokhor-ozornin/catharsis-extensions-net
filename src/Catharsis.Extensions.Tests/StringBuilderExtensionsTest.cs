@@ -1,6 +1,4 @@
 ﻿using System.Globalization;
-using System.Net.Sockets;
-using System.Net;
 using System.Text;
 using System.Xml;
 using Catharsis.Commons;
@@ -15,6 +13,79 @@ namespace Catharsis.Extensions.Tests;
 /// </summary>
 public sealed class StringBuilderExtensionsTest : UnitTest
 {
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StringBuilderExtensions.With(StringBuilder, IEnumerable{object})"/></description></item>
+  ///     <item><description><see cref="StringBuilderExtensions.With(StringBuilder, object[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void With_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringBuilderExtensions.With(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => string.Empty.ToStringBuilder().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
+
+      static void Validate<T>(IEnumerable<object> elements)
+      {
+        var builder = new StringBuilder();
+
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringBuilderExtensions.With(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => string.Empty.ToStringBuilder().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
+
+      static void Validate<T>(params object[] elements)
+      {
+        var builder = new StringBuilder();
+      }
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StringBuilderExtensions.Without(StringBuilder, IEnumerable{int})"/></description></item>
+  ///     <item><description><see cref="StringBuilderExtensions.Without(StringBuilder, int[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Without_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((StringBuilder) null).Without(Enumerable.Empty<int>())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => string.Empty.ToStringBuilder().Without((IEnumerable<int>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("positions");
+
+      static void Validate<T>(IEnumerable<object> elements)
+      {
+        var builder = new StringBuilder();
+
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((ICollection<object>) null).Without([])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => Array.Empty<object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("positions");
+
+      static void Validate<T>(params object[] elements)
+      {
+        var builder = new StringBuilder();
+
+      }
+    }
+
+    throw new NotImplementedException();
+  }
+
   /// <summary>
   ///   <para>Performs testing of <see cref="StringBuilderExtensions.Clone(StringBuilder)"/> method.</para>
   /// </summary>

@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Net;
 using System.Text;
 using System.Xml;
 
@@ -11,6 +10,62 @@ namespace Catharsis.Extensions;
 /// <seealso cref="StringBuilder"/>
 public static class StringBuilderExtensions
 {
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder"></param>
+  /// <param name="elements"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static StringBuilder With(this StringBuilder builder, IEnumerable<object> elements)
+  {
+    if (builder is null) throw new ArgumentNullException(nameof(builder));
+    if (elements is null) throw new ArgumentNullException(nameof(elements));
+
+    foreach (var element in elements)
+    {
+      builder.Append(element);
+    }
+
+    return builder;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder"></param>
+  /// <param name="elements"></param>
+  /// <returns></returns>
+  public static StringBuilder With(this StringBuilder builder, params object[] elements) => builder.With(elements as IEnumerable<object>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder"></param>
+  /// <param name="positions"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static StringBuilder Without(this StringBuilder builder, IEnumerable<int> positions)
+  {
+    if (builder is null) throw new ArgumentNullException(nameof(builder));
+    if (positions is null) throw new ArgumentNullException(nameof(positions));
+
+    foreach (var position in positions)
+    {
+      builder.Remove(position, 1);
+    }
+
+    return builder;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder"></param>
+  /// <param name="positions"></param>
+  /// <returns></returns>
+  public static StringBuilder Without(this StringBuilder builder, params int[] positions) => Without(builder, positions as IEnumerable<int>);
+
   /// <summary>
   ///   <para></para>
   /// </summary>
