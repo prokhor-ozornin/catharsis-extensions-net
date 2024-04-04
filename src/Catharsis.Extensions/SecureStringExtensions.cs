@@ -1,7 +1,6 @@
 using System.Security;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.Net;
 
 namespace Catharsis.Extensions;
 
@@ -205,29 +204,4 @@ public static class SecureStringExtensions
       }
     }
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
-  public static SecureString WriteText(this SecureString destination, IEnumerable<char> text)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    text.ForEach(destination.AppendChar);
-
-    return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  public static SecureString WriteText(this SecureString destination, params char[] text) => destination.WriteText(text as IEnumerable<char>);
 }

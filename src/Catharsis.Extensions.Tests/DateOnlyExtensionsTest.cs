@@ -176,7 +176,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
     static void Validate(DateOnly date, DateTimeKind kind)
     {
       var result = date.ToDateTimeOffset(kind);
-      result.Should().HaveOffset(kind != DateTimeKind.Utc ? TimeZoneInfo.Local.GetUtcOffset(result) : default).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(TimeSpan.Zero);
+      result.Should().HaveOffset(kind != DateTimeKind.Utc ? TimeZoneInfo.Local.GetUtcOffset(result) : default).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(default);
     }
   }
 }

@@ -583,14 +583,14 @@ public sealed class StringExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StringExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
     AssertionExtensions.Should(() => string.Empty.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-    Validate(string.Empty, string.Empty, string.Empty);
-    Validate(string.Empty, char.MinValue.ToString(), string.Empty);
-    Validate(char.MaxValue.ToString(), char.MaxValue.ToString(), char.MinValue.ToString());
-    Validate(char.MaxValue.ToString(), char.MaxValue.ToString(), char.MinValue.Repeat(2));
+    Validate(string.Empty, string.Empty);
+    Validate(string.Empty, char.MinValue.ToString());
+    Validate(char.MaxValue.ToString(), char.MinValue.ToString());
+    Validate(char.MaxValue.ToString(), char.MinValue.Repeat(2));
 
     return;
 
-    static void Validate(string result, string left, string right) => left.Min(right).Should().BeOfType<string>().And.Be(result);
+    static void Validate(string min, string max) => min.Min(max).Should().BeOfType<string>().And.Be(min);
   }
 
   /// <summary>
@@ -599,17 +599,17 @@ public sealed class StringExtensionsTest : UnitTest
   [Fact]
   public void Max_Method()
   {
-    AssertionExtensions.Should(() => StringExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-    AssertionExtensions.Should(() => string.Empty.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+    AssertionExtensions.Should(() => StringExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
+    AssertionExtensions.Should(() => string.Empty.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
 
-    Validate(string.Empty, string.Empty, string.Empty);
-    Validate(char.MinValue.ToString(), string.Empty, char.MinValue.ToString());
-    Validate(char.MaxValue.ToString(), char.MinValue.ToString(), char.MaxValue.ToString());
-    Validate(char.MinValue.Repeat(2), char.MaxValue.ToString(), char.MinValue.Repeat(2));
+    Validate(string.Empty, string.Empty);
+    Validate(string.Empty, char.MinValue.ToString());
+    Validate(char.MaxValue.ToString(), char.MinValue.ToString());
+    Validate(char.MaxValue.ToString(), char.MinValue.Repeat(2));
 
     return;
 
-    static void Validate(string result, string left, string right) => left.Max(right).Should().BeOfType<string>().And.Be(result);
+    static void Validate(string min, string max) => min.Max(max).Should().BeOfType<string>().And.Be(max);
   }
 
   /// <summary>
@@ -3876,7 +3876,7 @@ public sealed class StringExtensionsTest : UnitTest
         AssertionExtensions.Should(() => string.Empty.ToTimeOnly(format)).ThrowExactly<FormatException>();
         AssertionExtensions.Should(() => "invalid".ToTimeOnly(format)).ThrowExactly<FormatException>();
 
-        $" {time.ToString("T", format)} ".ToTimeOnly(format).Should().Be(time.TruncateToSecondStart());
+        $" {time.ToString("T", format)} ".ToTimeOnly(format).Should().Be(time.StartOfSecond());
       }
     }
 
@@ -3902,7 +3902,7 @@ public sealed class StringExtensionsTest : UnitTest
         result.Should().BeNull();
 
         $" {time.ToString("T", format)} ".ToTimeOnly(out result, format).Should().BeTrue();
-        result.Should().Be(time.TruncateToSecondStart());
+        result.Should().Be(time.StartOfSecond());
       }
     }
   }

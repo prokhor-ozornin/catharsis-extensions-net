@@ -37,7 +37,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="characters"></param>
   /// <returns></returns>
-  public static string With(this string text, params char[] characters) => With(text, characters as IEnumerable<char>);
+  public static string With(this string text, params char[] characters) => text.With(characters as IEnumerable<char>);
 
   /// <summary>
   ///   <para></para>
@@ -60,7 +60,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="positions"></param>
   /// <returns></returns>
-  public static string Without(this string text, params int[] positions) => Without(text, positions as IEnumerable<int>);
+  public static string Without(this string text, params int[] positions) => text.Without(positions as IEnumerable<int>);
 
   /// <summary>
   ///   <para>Removes specified number of characters from the beginning of a string.</para>

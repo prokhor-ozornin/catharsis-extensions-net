@@ -15,14 +15,11 @@ public static class SmtpClientExtensions
   /// <param name="timeout"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static SmtpClient WithTimeout(this SmtpClient smtp, TimeSpan? timeout)
+  public static SmtpClient WithTimeout(this SmtpClient smtp, TimeSpan timeout)
   {
     if (smtp is null) throw new ArgumentNullException(nameof(smtp));
 
-    if (timeout is not null)
-    {
-      smtp.Timeout = (int) timeout.Value.TotalMilliseconds;
-    }
+    smtp.Timeout = (int) timeout.TotalMilliseconds;
 
     return smtp;
   }

@@ -15,125 +15,118 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void Range_Methods()
   {
-    new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
-    {
-      var timeOnly = TimeOnly.FromDateTime(date);
-
-      timeOnly.Range(timeOnly, TimeSpan.Zero).Should().BeOfType<IEnumerable<TimeOnly>>().And.BeEmpty();
-      timeOnly.Range(timeOnly, TimeSpan.FromTicks(1)).Should().BeOfType<IEnumerable<TimeOnly>>().And.BeEmpty();
-      timeOnly.Range(timeOnly, TimeSpan.FromTicks(-1)).Should().BeOfType<IEnumerable<TimeOnly>>().And.BeEmpty();
-
-      timeOnly.Range(timeOnly.Add(1.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly);
-      timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
-
-      timeOnly.Range(timeOnly.Add(1.Milliseconds()), 2.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly);
-      timeOnly.Range(timeOnly.Add(-1.Milliseconds()), 2.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(timeOnly.Add(-1.Milliseconds()));
-
-      timeOnly.Range(timeOnly.Add(2.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(1.Milliseconds()));
-      timeOnly.Range(timeOnly.Add(-2.Milliseconds()), 1.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(timeOnly.Add(-2.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
-
-      timeOnly.Range(timeOnly.Add(3.Milliseconds()), 2.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(timeOnly, timeOnly.Add(2.Milliseconds()));
-      timeOnly.Range(timeOnly.Add(-3.Milliseconds()), 2.Milliseconds()).Should().BeOfType<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(timeOnly.Add(-3.Milliseconds()), timeOnly.Add(-1.Milliseconds()));
-    });
+    Validate(DateTime.Now.ToTimeOnly());
 
     return;
 
-    static void Validate(TimeOnly from, TimeOnly to, TimeSpan offset, params TimeOnly[] ranges)
+    static void Validate(TimeOnly time)
     {
+      time.Range(time, TimeSpan.Zero).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.BeEmpty();
+      time.Range(time, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.BeEmpty();
+      time.Range(time, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.BeEmpty();
+
+      time.Range(time.Add(1.Milliseconds()), 1.Milliseconds()).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(time);
+      time.Range(time.Add(-1.Milliseconds()), 1.Milliseconds()).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(time.Add(-1.Milliseconds()));
+
+      time.Range(time.Add(1.Milliseconds()), 2.Milliseconds()).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(time);
+      time.Range(time.Add(-1.Milliseconds()), 2.Milliseconds()).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.HaveCount(1).And.Equal(time.Add(-1.Milliseconds()));
+
+      time.Range(time.Add(2.Milliseconds()), 1.Milliseconds()).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(time, time.Add(1.Milliseconds()));
+      time.Range(time.Add(-2.Milliseconds()), 1.Milliseconds()).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(time.Add(-2.Milliseconds()), time.Add(-1.Milliseconds()));
+
+      time.Range(time.Add(3.Milliseconds()), 2.Milliseconds()).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(time, time.Add(2.Milliseconds()));
+      time.Range(time.Add(-3.Milliseconds()), 2.Milliseconds()).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.HaveCount(2).And.Equal(time.Add(-3.Milliseconds()), time.Add(-1.Milliseconds()));
     }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.TruncateToHourStart(TimeOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.StartOfHour(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToHourStart_Method()
+  public void StartOfHour_Method()
   {
     Validate(TimeOnly.MinValue);
     Validate(TimeOnly.MaxValue);
     Validate(DateTime.Now.ToTimeOnly());
-    Validate(DateTime.UtcNow.ToTimeOnly());
 
     return;
 
-    static void Validate(TimeOnly time) => time.TruncateToHourStart().Should().BeOnOrBefore(time).And.HaveHours(time.Hour).And.HaveMinutes(0).And.HaveSeconds(0).And.HaveMilliseconds(0);
+    static void Validate(TimeOnly time) => time.StartOfHour().Should().HaveHours(time.Hour).And.HaveMinutes(0).And.HaveSeconds(0).And.HaveMilliseconds(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.TruncateToMinuteStart(TimeOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.StartOfMinute(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToMinuteStart_Method()
+  public void StartOfMinute_Method()
   {
     Validate(TimeOnly.MinValue);
     Validate(TimeOnly.MaxValue);
     Validate(DateTime.Now.ToTimeOnly());
-    Validate(DateTime.UtcNow.ToTimeOnly());
 
     return;
 
-    static void Validate(TimeOnly time) => time.TruncateToMinuteStart().Should().BeOnOrBefore(time).And.HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(0).And.HaveMilliseconds(0);
+    static void Validate(TimeOnly time) => time.StartOfMinute().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(0).And.HaveMilliseconds(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.TruncateToSecondStart(TimeOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.StartOfSecond(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToSecondStart_Method()
+  public void StartOfSecond_Method()
   {
     Validate(TimeOnly.MinValue);
     Validate(TimeOnly.MaxValue);
     Validate(DateTime.Now.ToTimeOnly());
-    Validate(DateTime.UtcNow.ToTimeOnly());
 
     return;
 
-    static void Validate(TimeOnly time) => time.TruncateToSecondStart().Should().BeOnOrBefore(time).And.HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(0);
+    static void Validate(TimeOnly time) => time.StartOfSecond().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.TruncateToHourEnd(TimeOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.EndOfHour(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToHourEnd_Method()
+  public void EndOfHour_Method()
   {
     Validate(TimeOnly.MinValue);
+    Validate(TimeOnly.MaxValue);
     Validate(DateTime.Now.ToTimeOnly());
-    Validate(DateTime.UtcNow.ToTimeOnly());
 
     return;
 
-    static void Validate(TimeOnly time) => time.TruncateToHourEnd().Should().BeOnOrAfter(time).And.HaveHours(time.Hour).And.HaveMinutes(59).And.HaveSeconds(59).And.HaveMilliseconds(999);
+    static void Validate(TimeOnly time) => time.EndOfHour().Should().HaveHours(time.Hour).And.HaveMinutes(59).And.HaveSeconds(59).And.HaveMilliseconds(999);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.TruncateToMinuteEnd(TimeOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.EndOfMinute(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToMinuteEnd_Method()
+  public void EndOfMinute_Method()
   {
     Validate(TimeOnly.MinValue);
+    Validate(TimeOnly.MaxValue);
     Validate(DateTime.Now.ToTimeOnly());
-    Validate(DateTime.UtcNow.ToTimeOnly());
 
     return;
 
-    static void Validate(TimeOnly time) => time.TruncateToMinuteEnd().Should().BeOnOrAfter(time).And.HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(59).And.HaveMilliseconds(999);
+    static void Validate(TimeOnly time) => time.EndOfMinute().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(59).And.HaveMilliseconds(999);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.TruncateToSecondEnd(TimeOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.EndOfSecond(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToSecondEnd_Method()
+  public void EndOfSecond_Method()
   {
     Validate(TimeOnly.MinValue);
+    Validate(TimeOnly.MaxValue);
     Validate(DateTime.Now.ToTimeOnly());
-    Validate(DateTime.UtcNow.ToTimeOnly());
 
     return;
 
-    static void Validate(TimeOnly time) => time.TruncateToSecondEnd().Should().BeOnOrAfter(time).And.HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(999);
+    static void Validate(TimeOnly time) => time.EndOfSecond().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(999);
   }
 
   /// <summary>
@@ -145,14 +138,13 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
     Validate(TimeOnly.MinValue);
     Validate(TimeOnly.MaxValue);
     Validate(DateTime.Now.ToTimeOnly());
-    Validate(DateTime.UtcNow.ToTimeOnly());
 
     return;
 
     static void Validate(TimeOnly time)
     {
       var now = DateTimeOffset.UtcNow;
-      time.ToDateTime().Should().BeSameDateAs(time.ToDateTime()).And.BeIn(DateTimeKind.Utc).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(time.Hour).And.HaveMinute(time.Minute).And.HaveSecond(time.Second);
+      time.ToDateTime().Should().BeIn(DateTimeKind.Utc).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(time.Hour).And.HaveMinute(time.Minute).And.HaveSecond(time.Second);
     }
   }
 
@@ -165,14 +157,13 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
     Validate(TimeOnly.MinValue);
     Validate(TimeOnly.MaxValue);
     Validate(DateTime.Now.ToTimeOnly());
-    Validate(DateTime.UtcNow.ToTimeOnly());
 
     return;
 
     static void Validate(TimeOnly time)
     {
       var now = DateTimeOffset.UtcNow;
-      time.ToDateTimeOffset().Should().BeSameDateAs(time.ToDateTime()).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(time.Hour).And.HaveMinute(time.Minute).And.HaveSecond(time.Second).And.BeWithin(TimeSpan.Zero);
+      time.ToDateTimeOffset().Should().HaveOffset(default).And.HaveYear(now.Year).And.HaveMonth(now.Month).And.HaveDay(now.Day).And.HaveHour(time.Hour).And.HaveMinute(time.Minute).And.HaveSecond(time.Second).And.BeWithin(default);
     }
   }
 }

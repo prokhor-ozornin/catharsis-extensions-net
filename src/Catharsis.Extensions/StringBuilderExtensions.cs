@@ -64,7 +64,7 @@ public static class StringBuilderExtensions
   /// <param name="builder"></param>
   /// <param name="positions"></param>
   /// <returns></returns>
-  public static StringBuilder Without(this StringBuilder builder, params int[] positions) => Without(builder, positions as IEnumerable<int>);
+  public static StringBuilder Without(this StringBuilder builder, params int[] positions) => builder.Without(positions as IEnumerable<int>);
 
   /// <summary>
   ///   <para></para>
@@ -117,7 +117,7 @@ public static class StringBuilderExtensions
     if (left is null) throw new ArgumentNullException(nameof(left));
     if (right is null) throw new ArgumentNullException(nameof(right));
 
-    return left.Length >= right.Length ? left : right;
+    return left.Length > right.Length ? left : right;
   }
 
   /// <summary>

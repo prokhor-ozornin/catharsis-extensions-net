@@ -60,7 +60,7 @@ public sealed class IComparableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(T result, T left, T right) where T : IComparable => left.Min(right).Should().BeSameAs(result);
+    static void Validate<T>(T min, T max) where T : IComparable => min.Min(max).Should().BeSameAs(min);
   }
 
   /// <summary>
@@ -75,7 +75,7 @@ public sealed class IComparableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(T result, T left, T right) where T : IComparable => left.Max(right).Should().BeSameAs(result);
+    static void Validate<T>(T min, T max) where T : IComparable => min.Max(max).Should().BeSameAs(max);
   }
 
   /// <summary>

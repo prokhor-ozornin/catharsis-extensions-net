@@ -35,42 +35,42 @@ public static class TimeOnlyExtensions
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly TruncateToHourStart(this TimeOnly time) => new(time.Hour, 0, 0, 0);
+  public static TimeOnly StartOfHour(this TimeOnly time) => new(time.Hour, 0, 0, 0);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly TruncateToMinuteStart(this TimeOnly time) => new(time.Hour, time.Minute, 0, 0);
+  public static TimeOnly StartOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 0, 0);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly TruncateToSecondStart(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 0);
+  public static TimeOnly StartOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 0);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly TruncateToHourEnd(this TimeOnly time) => new(time.Hour, 59, 59, 999);
+  public static TimeOnly EndOfHour(this TimeOnly time) => new(time.Hour, 59, 59, 999);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly TruncateToMinuteEnd(this TimeOnly time) => new(time.Hour, time.Minute, 59, 999);
+  public static TimeOnly EndOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 59, 999);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly TruncateToSecondEnd(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 999);
+  public static TimeOnly EndOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 999);
 
   /// <summary>
   ///   <para></para>

@@ -994,7 +994,7 @@ public static class IEnumerableExtensions
     if (text is null) throw new ArgumentNullException(nameof(text));
     if (to is null) throw new ArgumentNullException(nameof(to));
 
-    to.WriteText(text);
+    to.With(text);
 
     return text;
   }

@@ -125,8 +125,8 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void Min_Method()
   {
-    AssertionExtensions.Should(() => IEnumerableExtensions.Min(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-    AssertionExtensions.Should(() => Enumerable.Empty<object>().Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+    AssertionExtensions.Should(() => IEnumerableExtensions.Min(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("min");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
 
     var first = Enumerable.Empty<object>();
     var second = Enumerable.Empty<object>();
@@ -146,7 +146,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> left, IEnumerable<T> right) => left.Min(right).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(result);
+    static void Validate<T>(IEnumerable<T> min, IEnumerable<T> max) => min.Min(max).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(min);
   }
 
   /// <summary>
@@ -155,8 +155,8 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void Max_Method()
   {
-    AssertionExtensions.Should(() => IEnumerableExtensions.Max(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-    AssertionExtensions.Should(() => Enumerable.Empty<object>().Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+    AssertionExtensions.Should(() => IEnumerableExtensions.Max(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("min");
+    AssertionExtensions.Should(() => Enumerable.Empty<object>().Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
 
     var first = Enumerable.Empty<object>();
     var second = Enumerable.Empty<object>();
@@ -176,7 +176,7 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     return;
 
-    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> left, IEnumerable<T> right) => left.Max(right).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(result);
+    static void Validate<T>(IEnumerable<T> min, IEnumerable<T> max) => min.Max(max).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(max);
   }
 
   /// <summary>

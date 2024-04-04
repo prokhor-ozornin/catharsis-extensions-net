@@ -31,11 +31,11 @@ public static class ICollectionExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="to"></param>
-  /// <param name="from"></param>
+  /// <param name="collection"></param>
+  /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static ICollection<T> With<T>(this ICollection<T> to, params T[] from) => to.With(from as IEnumerable<T>);
+  public static ICollection<T> With<T>(this ICollection<T> collection, params T[] elements) => collection.With(elements as IEnumerable<T>);
 
   /// <summary>
   ///   <para>Sequentially removes all elements, returned by the enumerator, from the specified collection, if it has it.</para>
@@ -62,12 +62,12 @@ public static class ICollectionExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="from"></param>
-  /// <param name="sequence"></param>
+  /// <param name="collection"></param>
+  /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="ArgumentNullException"></exception>
-  public static ICollection<T> Without<T>(this ICollection<T> from, params T[] sequence) => from.Without(sequence as IEnumerable<T>);
+  public static ICollection<T> Without<T>(this ICollection<T> collection, params T[] elements) => collection.Without(elements as IEnumerable<T>);
 
   /// <summary>
   ///   <para></para>

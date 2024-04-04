@@ -28,10 +28,14 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => StringBuilderExtensions.With(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => string.Empty.ToStringBuilder().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate<T>(IEnumerable<object> elements)
-      {
-        var builder = new StringBuilder();
+      Validate(new StringBuilder(), []);
+      Validate(new StringBuilder(), [string.Empty, Attributes.RandomString()]);
 
+      static void Validate(StringBuilder builder, IEnumerable<object> elements)
+      {
+        var text = builder.ToString();
+        builder.With(elements).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
+        builder.ToString().Should().Be(text + elements.Join());
       }
     }
 
@@ -40,13 +44,16 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => StringBuilderExtensions.With(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => string.Empty.ToStringBuilder().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate<T>(params object[] elements)
+      Validate(new StringBuilder(), []);
+      Validate(new StringBuilder(), [string.Empty, Attributes.RandomString()]);
+
+      static void Validate(StringBuilder builder, params object[] elements)
       {
-        var builder = new StringBuilder();
+        var text = builder.ToString();
+        builder.With(elements).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
+        builder.ToString().Should().Be(text + elements.Join());
       }
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -64,26 +71,32 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((StringBuilder) null).Without(Enumerable.Empty<int>())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => string.Empty.ToStringBuilder().Without((IEnumerable<int>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("positions");
 
-      static void Validate<T>(IEnumerable<object> elements)
-      {
-        var builder = new StringBuilder();
+      Validate(new StringBuilder(), []);
+      Attributes.RandomString().ToStringBuilder().With(text => Validate(text, new int[text.Length].Fill(_ => 0)));
 
+      static void Validate(StringBuilder builder, IEnumerable<int> positions)
+      {
+        var text = builder.ToString();
+        builder.Without(positions).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
+        builder.ToString().Should().Be(text.Without(positions));
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((ICollection<object>) null).Without([])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => ((StringBuilder) null).Without([])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => Array.Empty<object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("positions");
 
-      static void Validate<T>(params object[] elements)
-      {
-        var builder = new StringBuilder();
+      Validate(new StringBuilder(), []);
+      Attributes.RandomString().ToStringBuilder().With(text => Validate(text, new int[text.Length].Fill(_ => 0).AsArray()));
 
+      static void Validate(StringBuilder builder, params int[] positions)
+      {
+        var text = builder.ToString();
+        builder.Without(positions).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
+        builder.ToString().Should().Be(text.Without(positions));
       }
     }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -94,7 +107,8 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringBuilderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
-    throw new NotImplementedException();
+    Validate(new StringBuilder());
+    Validate(Attributes.RandomString().ToStringBuilder());
 
     return;
 
@@ -102,7 +116,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().BeOfType<StringBuilder>().And.NotBeSameAs(original).And.Be(original);
+      clone.Should().BeOfType<StringBuilder>().And.NotBeSameAs(original);
       clone.ToString().Should().Be(original.ToString());
       clone.Length.Should().Be(original.Length);
       clone.Capacity.Should().Be(original.Capacity);
@@ -121,11 +135,10 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     Validate(true, new StringBuilder());
     Validate(true, new StringBuilder().Append(string.Empty));
     Validate(false, new StringBuilder().Append(char.MinValue));
-    Validate(true, Attributes.RandomString().ToStringBuilder().Clear());
 
     return;
 
-    static void Validate(bool result, StringBuilder builder) => builder.IsEmpty().Should().Be(result);
+    static void Validate(bool result, StringBuilder builder) => builder.IsEmpty().Should().Be(builder.Length == 0).And.Be(result);
   }
 
   /// <summary>
@@ -144,8 +157,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     static void Validate(StringBuilder builder)
     {
       builder.Empty().Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
-      builder.Length.Should().Be(0);
-      builder.ToString().Should().BeEmpty();
+      builder.IsEmpty().Should().BeTrue();
     }
   }
 
@@ -158,25 +170,13 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StringBuilderExtensions.Min(null, new StringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
     AssertionExtensions.Should(() => new StringBuilder().Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-    var first = new StringBuilder();
-    var second = new StringBuilder();
-    Validate(first, first, second);
-
-    first = new StringBuilder();
-    second = new StringBuilder(char.MinValue.ToString());
-    Validate(first, first, second);
-
-    first = new StringBuilder(char.MaxValue.ToString());
-    second = new StringBuilder(char.MinValue.ToString());
-    Validate(first, first, second);
-
-    first = new StringBuilder(char.MaxValue.ToString());
-    second = new StringBuilder(char.MinValue.Repeat(2));
-    Validate(first, first, second);
+    Validate(new StringBuilder(), new StringBuilder());
+    Validate(new StringBuilder(), char.MinValue.ToString().ToStringBuilder());
+    Validate(char.MaxValue.ToString().ToStringBuilder(), char.MinValue.ToString().ToStringBuilder());
 
     return;
 
-    static void Validate(StringBuilder result, StringBuilder left, StringBuilder right) => left.Min(right).Should().BeOfType<StringBuilder>().And.BeSameAs(result);
+    static void Validate(StringBuilder min, StringBuilder max) => min.Min(max).Should().BeOfType<StringBuilder>().And.BeSameAs(min);
   }
 
   /// <summary>
@@ -188,25 +188,13 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StringBuilderExtensions.Max(null, new StringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
     AssertionExtensions.Should(() => new StringBuilder().Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-    var first = new StringBuilder();
-    var second = new StringBuilder();
-    Validate(first, first, second);
-
-    first = new StringBuilder();
-    second = new StringBuilder(char.MinValue.ToString());
-    Validate(second, first, second);
-
-    first = new StringBuilder(char.MaxValue.ToString());
-    second = new StringBuilder(char.MinValue.ToString());
-    Validate(first, first, second);
-
-    first = new StringBuilder(char.MaxValue.ToString());
-    second = new StringBuilder(char.MinValue.Repeat(2));
-    Validate(second, first, second);
+    Validate(new StringBuilder(), new StringBuilder());
+    Validate(new StringBuilder(), char.MinValue.ToString().ToStringBuilder());
+    Validate(char.MaxValue.ToString().ToStringBuilder(), char.MinValue.ToString().ToStringBuilder());
 
     return;
 
-    static void Validate(StringBuilder result, StringBuilder left, StringBuilder right) => left.Max(right).Should().BeOfType<StringBuilder>().And.BeSameAs(result);
+    static void Validate(StringBuilder min, StringBuilder max) => min.Max(max).Should().BeOfType<StringBuilder>().And.BeSameAs(max);
   }
 
   /// <summary>
@@ -215,10 +203,12 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   [Fact]
   public void MinMax_Method()
   {
-    AssertionExtensions.Should(() => StringBuilderExtensions.MinMax(null, string.Empty.ToStringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("min");
-    AssertionExtensions.Should(() => string.Empty.ToStringBuilder().MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
+    AssertionExtensions.Should(() => StringBuilderExtensions.MinMax(null, string.Empty.ToStringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    AssertionExtensions.Should(() => string.Empty.ToStringBuilder().MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-    throw new NotImplementedException();
+    Validate(new StringBuilder(), new StringBuilder());
+    Validate(new StringBuilder(), char.MinValue.ToString().ToStringBuilder());
+    Validate(char.MaxValue.ToString().ToStringBuilder(), char.MinValue.ToString().ToStringBuilder());
 
     return;
 
@@ -234,17 +224,15 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StringBuilderExtensions.TryFinallyClear(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
     AssertionExtensions.Should(() => new StringBuilder().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-    Validate(string.Empty);
-    Validate(Attributes.RandomString());
+    Validate(string.Empty.ToStringBuilder());
+    Validate(Attributes.RandomString().ToStringBuilder());
 
     return;
 
-    static void Validate(string text)
+    static void Validate(StringBuilder builder)
     {
-      var builder = new StringBuilder();
-      builder.TryFinallyClear(x => x.Append(text)).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
-      builder.Length.Should().Be(0);
-      builder.ToString().Should().BeEmpty();
+      builder.TryFinallyClear(builder => builder.With(char.MinValue, char.MaxValue)).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
+      builder.IsEmpty().Should().BeTrue();
     }
   }
 
@@ -256,21 +244,19 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringBuilderExtensions.ToStringWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
-    Validate(Attributes.RandomString());
-    CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(Attributes.RandomString(), culture));
+    new StringBuilder().With(builder => CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(builder, culture)));
 
     return;
 
-    static void Validate(string text, IFormatProvider format = null)
+    static void Validate(StringBuilder builder, IFormatProvider format = null)
     {
-      var builder = new StringBuilder();
-
       using var writer = builder.ToStringWriter(format);
 
       writer.Should().BeOfType<StringWriter>();
-      writer.FormatProvider.Should().Be(format);
-      writer.Write(text);
-      builder.ToString().Should().Be(writer.ToString()).And.Be(text);
+      writer.GetStringBuilder().Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
+      writer.FormatProvider.Should().BeSameAs(format);
+      writer.Encoding.Should().Be(new UnicodeEncoding(false, false));
+      writer.NewLine.Should().Be(Environment.NewLine);
     }
   }
 
@@ -282,28 +268,25 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => StringBuilderExtensions.ToXmlWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
-    var value = Attributes.RandomName();
-
-    var builder = new StringBuilder();
-
-    using var writer = builder.ToXmlWriter();
-
-    writer.Should().BeOfType<XmlWriter>();
-
-    writer.Settings.Should().BeOfType<XmlWriterSettings>();
-    writer.WriteState.Should().Be(WriteState.Start);
-    writer.XmlLang.Should().BeNull();
-    writer.XmlSpace.Should().Be(XmlSpace.None);
-
-    writer.WriteRaw(value);
-    writer.Flush();
-
-    builder.ToString().Should().Be($"<?xml version=\"1.0\" encoding=\"utf-16\"?>{value}");
+    Validate(new StringBuilder(), string.Empty);
+    Validate(new StringBuilder(), Attributes.RandomString());
 
     return;
 
-    static void Validate(string text)
+    static void Validate(StringBuilder builder, string xml)
     {
+      var text = builder.ToString();
+
+      using var writer = builder.ToXmlWriter();
+
+      writer.Should().BeAssignableTo<XmlWriter>();
+      writer.Settings.Should().BeOfType<XmlWriterSettings>();
+      writer.WriteState.Should().Be(WriteState.Start);
+      writer.XmlLang.Should().BeNull();
+      writer.XmlSpace.Should().Be(XmlSpace.None);
+      
+      writer.WriteText(xml).Flush();
+      builder.ToString().Should().Be(text + $"<?xml version=\"1.0\" encoding=\"utf-16\"?>{xml}");
     }
   }
 }

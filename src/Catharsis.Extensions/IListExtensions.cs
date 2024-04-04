@@ -72,6 +72,7 @@ public static class IListExtensions
   public static IList<T> Without<T>(this IList<T> list, IEnumerable<int> positions)
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
+    if (positions is null) throw new ArgumentNullException(nameof(positions));
 
     foreach (var position in positions)
     {
@@ -88,7 +89,7 @@ public static class IListExtensions
   /// <param name="list"></param>
   /// <param name="positions"></param>
   /// <returns></returns>
-  public static IList<T> Without<T>(this IList<T> list, params int[] positions) => Without(list, positions as IEnumerable<int>);
+  public static IList<T> Without<T>(this IList<T> list, params int[] positions) => list.Without(positions as IEnumerable<int>);
 
   /// <summary>
   ///   <para></para>

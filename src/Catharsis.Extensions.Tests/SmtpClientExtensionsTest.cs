@@ -11,37 +11,26 @@ namespace Catharsis.Extensions.Tests;
 public sealed class SmtpClientExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="SmtpClientExtensions.WithTimeout(SmtpClient, TimeSpan?)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SmtpClientExtensions.WithTimeout(SmtpClient, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
   public void WithTimeout_Method()
   {
-    AssertionExtensions.Should(() => ((SmtpClient) null).WithTimeout(null)).ThrowExactly<ArgumentNullException>().WithParameterName("smtp");
+    using var client = new SmtpClient();
 
-    using var smtp = new SmtpClient();
-
-    AssertionExtensions.Should(() => smtp.WithTimeout(TimeSpan.MinValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
-    AssertionExtensions.Should(() => smtp.WithTimeout(TimeSpan.MaxValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
-
-    var timeout = smtp.Timeout;
-    timeout.Should().Be(100000);
-
-    smtp.WithTimeout(null).Should().BeOfType<SmtpClient>().And.BeSameAs(smtp);
-    smtp.Timeout.Should().Be(timeout);
-
-    var timespan = TimeSpan.Zero;
-    smtp.WithTimeout(timespan).Should().BeOfType<SmtpClient>().And.BeSameAs(smtp);
-    smtp.Timeout.Should().Be((int) timespan.TotalMilliseconds);
-
-    throw new NotImplementedException();
+    Validate(client, TimeSpan.Zero);
 
     return;
 
-    static void Validate(SmtpClient client, TimeSpan? timeout = null)
+    static void Validate(SmtpClient client, TimeSpan timeout)
     {
       using (client)
       {
+        AssertionExtensions.Should(() => client.WithTimeout(TimeSpan.MinValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
+        AssertionExtensions.Should(() => client.WithTimeout(TimeSpan.MaxValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
 
+        client.WithTimeout(timeout).Should().BeOfType<SmtpClient>().And.BeSameAs(client);
+        client.Timeout.Should().Be((int) timeout.TotalMilliseconds);
       }
     }
   }

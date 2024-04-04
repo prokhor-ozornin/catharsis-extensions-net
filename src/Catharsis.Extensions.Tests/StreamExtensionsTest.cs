@@ -208,26 +208,26 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void Min_Method()
   {
-    AssertionExtensions.Should(() => StreamExtensions.Min(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-    AssertionExtensions.Should(() => Stream.Null.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+    AssertionExtensions.Should(() => StreamExtensions.Min(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
+    AssertionExtensions.Should(() => Stream.Null.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
 
-    Validate(Stream.Null, Stream.Null, Stream.Null);
-    Validate(Stream.Null, Stream.Null, Attributes.EmptyStream());
-    Validate(Stream.Null, Stream.Null, Attributes.RandomStream());
+    Validate(Stream.Null, Stream.Null);
+    Validate(Stream.Null, Attributes.EmptyStream());
+    Validate(Stream.Null, Attributes.RandomStream());
     
-    Validate(Attributes.EmptyStream(), Attributes.EmptyStream(), Stream.Null);
-    Validate(Attributes.EmptyStream(), Attributes.EmptyStream(), Attributes.EmptyStream());
-    Validate(Attributes.EmptyStream(), Attributes.EmptyStream(), Attributes.RandomStream());
+    Validate(Attributes.EmptyStream(), Stream.Null);
+    Validate(Attributes.EmptyStream(), Attributes.EmptyStream());
+    Validate(Attributes.EmptyStream(), Attributes.RandomStream());
 
     return;
 
-    static void Validate(Stream result, Stream left, Stream right)
+    static void Validate(Stream min, Stream max)
     {
-      using (left)
+      using (min)
       {
-        using (right)
+        using (max)
         {
-          left.Min(right).Should().BeAssignableTo<Stream>().And.BeSameAs(result);
+          min.Min(max).Should().BeAssignableTo<Stream>().And.BeSameAs(min);
         }
       }
     }
@@ -242,23 +242,23 @@ public sealed class StreamExtensionsTest : UnitTest
     AssertionExtensions.Should(() => StreamExtensions.Max(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
     AssertionExtensions.Should(() => Stream.Null.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-    Validate(Stream.Null, Stream.Null, Stream.Null);
-    Validate(Attributes.EmptyStream(), Stream.Null, Attributes.EmptyStream());
-    Validate(Attributes.RandomStream(), Stream.Null, Attributes.RandomStream());
+    Validate(Stream.Null, Stream.Null);
+    Validate(Stream.Null, Attributes.EmptyStream());
+    Validate(Stream.Null, Attributes.RandomStream());
 
-    Validate(Stream.Null, Attributes.EmptyStream(), Stream.Null);
-    Validate(Attributes.EmptyStream(), Attributes.EmptyStream(), Attributes.EmptyStream());
-    Validate(Attributes.RandomStream(), Attributes.EmptyStream(), Attributes.RandomStream());
+    Validate(Attributes.EmptyStream(), Stream.Null);
+    Validate(Attributes.EmptyStream(), Attributes.EmptyStream());
+    Validate(Attributes.EmptyStream(), Attributes.RandomStream());
 
     return;
 
-    static void Validate(Stream result, Stream left, Stream right)
+    static void Validate(Stream min, Stream max)
     {
-      using (left)
+      using (min)
       {
-        using (right)
+        using (max)
         {
-          left.Max(right).Should().BeOfType<Stream>().And.BeSameAs(result);
+          min.Max(max).Should().BeOfType<Stream>().And.BeSameAs(max);
         }
       }
     }
