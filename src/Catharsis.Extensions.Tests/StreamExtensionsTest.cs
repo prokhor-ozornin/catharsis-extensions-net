@@ -149,6 +149,33 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.IsUnset(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().IsEmpty()).ThrowExactly<ArgumentException>();
+
+    Validate(true, null);
+    Validate(true, Stream.Null);
+    Validate(true, Attributes.EmptyStream());
+    Validate(false, Attributes.RandomStream());
+    Validate(false, Attributes.RandomReadOnlyStream());
+    Validate(false, Attributes.RandomReadOnlyForwardStream());
+    Validate(true, Attributes.WriteOnlyStream());
+
+    return;
+
+    static void Validate(bool result, Stream stream)
+    {
+      using (stream)
+      {
+        stream.IsUnset().Should().Be(stream is null || stream.IsEmpty()).And.Be(result);
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StreamExtensions.IsEmpty(Stream)"/> method.</para>
   /// </summary>
   [Fact]

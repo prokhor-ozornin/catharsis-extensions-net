@@ -72,6 +72,23 @@ public sealed class XDocumentExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.IsUnset(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    Validate(true, null);
+    Validate(true, new XDocument());
+    Validate(false, new XDocument(new XComment("comment")));
+    Validate(false, new XDocument(new XProcessingInstruction("target", "data")));
+    Validate(false, new XDocument(new XElement("element")));
+
+    return;
+
+    static void Validate(bool result, XDocument document) => document.IsUnset().Should().Be(document is null || document.IsEmpty()).And.Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XDocumentExtensions.IsEmpty(XDocument)"/> method.</para>
   /// </summary>
   [Fact]

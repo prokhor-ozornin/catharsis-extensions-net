@@ -87,7 +87,7 @@ public static class StringExtensions
   /// <param name="text">String to evaluate.</param>
   /// <returns><c>true</c> if <paramref name="text"/> is either a <c>null</c> reference or an empty string.</returns>
   /// <seealso cref="string.IsNullOrEmpty(string)"/>
-  public static bool IsEmpty(this string text) => string.IsNullOrWhiteSpace(text);
+  public static bool IsUnset(this string text) => string.IsNullOrWhiteSpace(text);
 
   /// <summary>
   ///   <para></para>

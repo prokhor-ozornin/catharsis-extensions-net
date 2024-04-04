@@ -24,6 +24,14 @@ public static class IEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
+  public static bool IsUnset<T>(this IEnumerable<T> sequence) => sequence is null || sequence.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty<T>(this IEnumerable<T> sequence) => !sequence?.Any() ?? throw new ArgumentNullException(nameof(sequence));
 

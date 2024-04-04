@@ -80,6 +80,14 @@ public static class StringBuilderExtensions
   /// <param name="builder"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsUnset(this StringBuilder builder) => builder is null || builder.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this StringBuilder builder) => builder is not null ? builder.Length == 0 : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>

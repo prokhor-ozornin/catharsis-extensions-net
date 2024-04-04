@@ -48,6 +48,24 @@ public sealed class CookieExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="CookieExtensions.IsUnset(Cookie)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    Validate(true, null);
+    Validate(true, new Cookie());
+    Validate(true, new Cookie("name", null));
+    Validate(true, new Cookie("name", string.Empty));
+    Validate(true, new Cookie("name", " \t\r\n "));
+    Validate(false, new Cookie("name", "value"));
+
+    return;
+
+    static void Validate(bool result, Cookie cookie) => cookie.IsUnset().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="CookieExtensions.IsEmpty(Cookie)"/> method.</para>
   /// </summary>
   [Fact]

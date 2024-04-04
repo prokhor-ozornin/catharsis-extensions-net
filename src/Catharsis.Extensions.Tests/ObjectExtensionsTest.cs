@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -68,6 +67,32 @@ public sealed class ObjectExtensionsTest : UnitTest
     return;
 
     static void Validate(bool result, object instance) => instance.IsNull().Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.IsUnset{T}(T?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Nullable_IsUnset_Method()
+  {
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(bool result, T? nullable) where T : struct => nullable.IsUnset().Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.IsUnset{T}(Lazy{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Lazy_IsUnset_Method()
+  {
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(bool result, Lazy<T> lazy) => lazy.IsUnset().Should().Be(result);
   }
 
   /// <summary>

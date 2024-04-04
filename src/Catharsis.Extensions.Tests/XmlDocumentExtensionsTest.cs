@@ -79,6 +79,28 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="XmlDocumentExtensions.IsUnset(XmlDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    Validate(true, null);
+    Validate(true, new XmlDocument());
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateComment(null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateDocumentType("name", null, null, null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateElement("element"))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateProcessingInstruction("target", "data"))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateSignificantWhitespace(null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateWhitespace(null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateXmlDeclaration("1.0", null, null))));
+    Validate(true, new XmlDocument().With(document => document.With(document.CreateDocumentFragment())));
+
+    return;
+
+    static void Validate(bool result, XmlDocument document) => document.IsUnset().Should().Be(document is null || document.IsEmpty()).And.Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XmlDocumentExtensions.IsEmpty(XmlDocument)"/> method.</para>
   /// </summary>
   [Fact]

@@ -93,6 +93,31 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsUnset(BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().IsUnset()).ThrowExactly<ArgumentException>();
+
+    Validate(true, null);
+    Validate(true, Stream.Null.ToBinaryWriter());
+    Validate(true, Attributes.EmptyStream().ToBinaryWriter());
+    Validate(false, Attributes.RandomStream().ToBinaryWriter());
+    Validate(true, Attributes.WriteOnlyStream().ToBinaryWriter());
+
+    return;
+
+    static void Validate(bool result, BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.IsUnset().Should().Be(result);
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsEmpty(BinaryWriter)"/> method.</para>
   /// </summary>
   [Fact]

@@ -1,6 +1,5 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions;
-using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -55,6 +54,30 @@ public sealed class StreamReaderExtensionsTest : UnitTest
         reader.IsStart().Should().BeTrue();
         reader.BaseStream.MoveToEnd();
         reader.IsStart().Should().Be(reader.BaseStream.Length == 0);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamReaderExtensions.IsUnset(StreamReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    Validate(true, null);
+    Validate(true, Stream.Null.ToStreamReader());
+    Validate(true, Attributes.EmptyStream().ToStreamReader());
+    Validate(false, Attributes.RandomStream().ToStreamReader());
+    Validate(false, Attributes.RandomReadOnlyStream().ToStreamReader());
+    Validate(false, Attributes.RandomReadOnlyForwardStream().ToStreamReader());
+
+    return;
+
+    static void Validate(bool result, StreamReader reader)
+    {
+      using (reader)
+      {
+        reader.IsUnset().Should().Be(reader is null || reader.IsEmpty()).And.Be(result);
       }
     }
   }

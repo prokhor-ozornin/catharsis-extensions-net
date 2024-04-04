@@ -13,6 +13,25 @@ namespace Catharsis.Extensions.Tests;
 public sealed class TcpClientExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="TcpClientExtensions.IsUnset(TcpClient)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, TcpClient client)
+    {
+      using (client)
+      {
+        client.IsUnset().Should().Be(result);
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="TcpClientExtensions.IsEmpty(TcpClient)"/> method.</para>
   /// </summary>
   [Fact]

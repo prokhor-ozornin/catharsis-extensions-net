@@ -19,6 +19,19 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IEnumerableExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.IsUnset{T}(IEnumerable{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(bool result, IEnumerable<T> sequence) => sequence.IsUnset().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IEnumerableExtensions.IsEmpty{T}(IEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]

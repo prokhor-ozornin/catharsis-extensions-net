@@ -75,6 +75,13 @@ public static class DirectoryInfoExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <returns></returns>
+  public static bool IsUnset(this DirectoryInfo directory) => directory is null || directory.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="directory"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this DirectoryInfo directory) => directory.ToEnumerable().IsEmpty();
 

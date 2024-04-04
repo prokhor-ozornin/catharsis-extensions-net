@@ -49,6 +49,14 @@ public static class XDocumentExtensions
   /// <param name="document"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static bool IsUnset(this XDocument document) => document is null || document.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this XDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>

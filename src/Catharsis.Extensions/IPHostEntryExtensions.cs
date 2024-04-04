@@ -33,7 +33,7 @@ public static class IPHostEntryExtensions
   {
     if (host is null) throw new ArgumentNullException(nameof(host));
 
-    var address = host.HostName.IsEmpty() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
+    var address = host.HostName.IsUnset() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
 
     if (address is null)
     {
@@ -58,7 +58,7 @@ public static class IPHostEntryExtensions
   {
     if (host is null) throw new ArgumentNullException(nameof(host));
 
-    var address = host.HostName.IsEmpty() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
+    var address = host.HostName.IsUnset() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
 
     if (address is null)
     {
@@ -77,8 +77,15 @@ public static class IPHostEntryExtensions
   /// </summary>
   /// <param name="host"></param>
   /// <returns></returns>
+  public static bool IsUnset(this IPHostEntry host) => host is null || host.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="host"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static bool IsEmpty(this IPHostEntry host) => host is not null ? host.HostName.IsEmpty() && (host.AddressList is null || host.AddressList.IsEmpty()) : throw new ArgumentNullException(nameof(host));
+  public static bool IsEmpty(this IPHostEntry host) => host is not null ? host.HostName.IsUnset() && host.AddressList.IsUnset() : throw new ArgumentNullException(nameof(host));
 
   /// <summary>
   ///   <para></para>

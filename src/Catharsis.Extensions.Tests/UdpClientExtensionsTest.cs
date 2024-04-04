@@ -13,6 +13,19 @@ namespace Catharsis.Extensions.Tests;
 public sealed class UdpClientExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="UdpClientExtensions.IsUnset(UdpClient)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, UdpClient client) => client.IsUnset().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="UdpClientExtensions.IsEmpty(UdpClient)"/> method.</para>
   /// </summary>
   [Fact]

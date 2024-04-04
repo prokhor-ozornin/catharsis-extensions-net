@@ -23,6 +23,13 @@ public static class FileInfoExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  public static bool IsUnset(this FileInfo file) => file is null || file.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this FileInfo file) => file is not null ? !file.Exists || file.Length == 0 : throw new ArgumentNullException(nameof(file));
 

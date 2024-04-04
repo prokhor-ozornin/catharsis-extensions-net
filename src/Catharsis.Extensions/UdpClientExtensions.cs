@@ -16,6 +16,13 @@ public static class UdpClientExtensions
   /// </summary>
   /// <param name="udp"></param>
   /// <returns></returns>
+  public static bool IsUnset(this UdpClient udp) => udp is null || udp.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="udp"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this UdpClient udp) => udp?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(udp));
 

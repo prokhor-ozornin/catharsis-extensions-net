@@ -12,6 +12,22 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IAsyncEnumerableExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.IsUnset{T}(IAsyncEnumerable{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    Validate<object>(true, null);
+    Validate(true, Attributes.EmptyAsyncEnumerable());
+    Validate(true, Array.Empty<object>().ToAsyncEnumerable());
+    Validate(false, new Random().GuidSequence(1).ToAsyncEnumerable());
+
+    return;
+
+    static void Validate<T>(bool result, IAsyncEnumerable<T> sequence) => sequence.IsUnset().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.IsEmpty{T}(IAsyncEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]

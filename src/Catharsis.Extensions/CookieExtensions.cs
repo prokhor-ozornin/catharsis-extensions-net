@@ -30,6 +30,13 @@ public static class CookieExtensions
   /// </summary>
   /// <param name="cookie"></param>
   /// <returns></returns>
+  public static bool IsUnset(this Cookie cookie) => cookie is null || cookie.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="cookie"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static bool IsEmpty(this Cookie cookie) => cookie is not null ? cookie.Name.IsEmpty() || cookie.Value.IsEmpty() : throw new ArgumentNullException(nameof(cookie));
+  public static bool IsEmpty(this Cookie cookie) => cookie is not null ? cookie.Name.IsUnset() || cookie.Value.IsUnset() : throw new ArgumentNullException(nameof(cookie));
 }

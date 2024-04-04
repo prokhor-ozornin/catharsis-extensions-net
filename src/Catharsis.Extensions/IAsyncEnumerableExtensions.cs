@@ -19,6 +19,14 @@ public static class IAsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
+  public static bool IsUnset<T>(this IAsyncEnumerable<T> sequence) => sequence is null || sequence.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="sequence"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty<T>(this IAsyncEnumerable<T> sequence) => sequence?.IsEmptyAsync().Result ?? throw new ArgumentNullException(nameof(sequence));
 

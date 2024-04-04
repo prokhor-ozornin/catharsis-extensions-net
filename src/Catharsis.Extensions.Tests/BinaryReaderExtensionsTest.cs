@@ -3,7 +3,6 @@ using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
-using System.Reflection.PortableExecutable;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -93,6 +92,30 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         reader.IsEnd().Should().Be(reader.BaseStream.IsEnd()).And.Be(reader.BaseStream.IsEmpty());
         reader.BaseStream.MoveToEnd();
         reader.IsEnd().Should().Be(reader.BaseStream.IsEnd()).And.BeTrue();
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.IsUnset(BinaryReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    Validate(true, null);
+    Validate(true, Stream.Null.ToBinaryReader());
+    Validate(true, Attributes.EmptyStream().ToBinaryReader());
+    Validate(false, Attributes.RandomStream().ToBinaryReader());
+    Validate(false, Attributes.RandomReadOnlyStream().ToBinaryReader());
+    Validate(false, Attributes.RandomReadOnlyForwardStream().ToBinaryReader());
+
+    return;
+
+    static void Validate(bool result, BinaryReader reader)
+    {
+      using (reader)
+      {
+        reader.IsUnset().Should().Be(reader is null || reader.IsEmpty()).And.Be(result);
       }
     }
   }

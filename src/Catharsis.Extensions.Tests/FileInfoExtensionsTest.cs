@@ -47,6 +47,19 @@ public sealed class FileInfoExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.IsUnset(FileInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, FileInfo file) => file.IsUnset().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="FileInfoExtensions.IsEmpty(FileInfo)"/> method.</para>
   /// </summary>
   [Fact]

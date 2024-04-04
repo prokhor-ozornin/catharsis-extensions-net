@@ -14,6 +14,13 @@ public static class TcpClientExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
+  public static bool IsUnset(this TcpClient tcp) => tcp is null || tcp.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="tcp"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this TcpClient tcp) => tcp?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(tcp));
 

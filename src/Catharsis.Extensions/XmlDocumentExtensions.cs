@@ -70,6 +70,13 @@ public static class XmlDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  public static bool IsUnset(this XmlDocument document) => document is null || document.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this XmlDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 

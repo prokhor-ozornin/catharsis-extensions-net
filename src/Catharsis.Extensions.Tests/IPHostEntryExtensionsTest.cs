@@ -18,7 +18,10 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => IPHostEntryExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("host");
 
-    throw new NotImplementedException();
+    Validate(new IPHostEntry());
+    Validate(new IPHostEntry { HostName = string.Empty, AddressList = [] });
+    Validate(new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
+    Validate(new IPHostEntry { AddressList = [IPAddress.Loopback] });
 
     return;
 
@@ -26,7 +29,7 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().BeOfType<IPHostEntry>().And.NotBeSameAs(original).And.Be(original);
+      clone.Should().BeOfType<IPHostEntry>().And.NotBeSameAs(original);
       clone.ToString().Should().Be(original.ToString());
       clone.AddressList.Should().Equal(original.AddressList);
       clone.Aliases.Should().Equal(original.Aliases);
@@ -98,6 +101,23 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsUnset(IPHostEntry)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    Validate(true, null);
+    Validate(true, new IPHostEntry());
+    Validate(true, new IPHostEntry { HostName = string.Empty, AddressList = [] });
+    Validate(false, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
+    Validate(false, new IPHostEntry { AddressList = [IPAddress.Loopback] });
+
+    return;
+
+    static void Validate(bool result, IPHostEntry host) => host.IsUnset().Should().Be(host is null || host.IsEmpty()).And.Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsEmpty(IPHostEntry)"/> method.</para>
   /// </summary>
   [Fact]
@@ -107,12 +127,12 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
 
     Validate(true, new IPHostEntry());
     Validate(true, new IPHostEntry { HostName = string.Empty, AddressList = [] });
-    Validate(false, new IPHostEntry { HostName = "localhost" });
+    Validate(false, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
     Validate(false, new IPHostEntry { AddressList = [IPAddress.Loopback] });
 
     return;
 
-    static void Validate(bool result, IPHostEntry host) => host.IsEmpty().Should().Be(result);
+    static void Validate(bool result, IPHostEntry host) => host.IsEmpty().Should().Be(host.HostName.IsUnset() && host.AddressList.IsUnset()).And.Be(result);
   }
 
   /// <summary>

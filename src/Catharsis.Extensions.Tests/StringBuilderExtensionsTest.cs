@@ -125,6 +125,22 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsUnset(StringBuilder)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    Validate(true, null);
+    Validate(true, new StringBuilder());
+    Validate(true, new StringBuilder().Append(string.Empty));
+    Validate(false, new StringBuilder().Append(char.MinValue));
+
+    return;
+
+    static void Validate(bool result, StringBuilder builder) => builder.IsUnset().Should().Be(builder is null || builder.IsEmpty()).And.Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsEmpty(StringBuilder)"/> method.</para>
   /// </summary>
   [Fact]

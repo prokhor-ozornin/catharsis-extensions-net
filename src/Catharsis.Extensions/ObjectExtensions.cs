@@ -50,7 +50,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static bool IsEmpty<T>(this T? instance) where T : struct => !instance.HasValue || instance.Value.ToString().IsEmpty();
+  public static bool IsUnset<T>(this T? instance) where T : struct => instance is null || instance.IsEmpty();
 
   /// <summary>
   ///   <para></para>
@@ -58,7 +58,23 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <returns></returns>
-  public static bool IsEmpty<T>(this Lazy<T> instance) => instance is not null ? !instance.IsValueCreated || instance.Value is null || instance.Value.ToString().IsEmpty() : throw new ArgumentNullException(nameof(instance));
+  public static bool IsUnset<T>(this Lazy<T> instance) => instance is null || instance.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static bool IsEmpty<T>(this T? instance) where T : struct => !instance.HasValue || instance.Value.ToString().IsUnset();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static bool IsEmpty<T>(this Lazy<T> instance) => instance is not null ? !instance.IsValueCreated || instance.Value is null || instance.Value.ToString().IsUnset() : throw new ArgumentNullException(nameof(instance));
 
   /// <summary>
   ///   <para></para>

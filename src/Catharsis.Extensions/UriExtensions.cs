@@ -79,7 +79,7 @@ public static class UriExtensions
 
     var query = uri.Query;
 
-    return query.IsEmpty() ? new Dictionary<string, string>() : HttpUtility.ParseQueryString(uri.Query).ToDictionary();
+    return query.IsUnset() ? new Dictionary<string, string>() : HttpUtility.ParseQueryString(uri.Query).ToDictionary();
   }
 
   /// <summary>

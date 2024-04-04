@@ -27,6 +27,13 @@ public static class StreamReaderExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
+  public static bool IsUnset(this StreamReader reader) => reader is null || reader.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this StreamReader reader) => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
 

@@ -111,6 +111,19 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.IsUnset(DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, DirectoryInfo directory) => directory.IsUnset().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.IsEmpty(DirectoryInfo)"/> method.</para>
   /// </summary>
   [Fact]

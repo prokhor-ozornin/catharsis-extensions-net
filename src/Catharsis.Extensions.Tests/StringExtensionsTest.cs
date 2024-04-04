@@ -90,10 +90,10 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsEmpty(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsUnset(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsUnset_Method()
   {
     Validate(true, null);
     Validate(true, string.Empty);
@@ -102,7 +102,7 @@ public sealed class StringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool result, string text) => text.IsEmpty().Should().Be(result);
+    static void Validate(bool result, string text) => text.IsUnset().Should().Be(result);
   }
 
   /// <summary>

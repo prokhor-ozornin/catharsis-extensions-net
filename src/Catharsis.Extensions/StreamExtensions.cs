@@ -72,6 +72,13 @@ public static class StreamExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <returns></returns>
+  public static bool IsUnset(this Stream stream) => stream is null || stream.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this Stream stream) => stream is not null ? stream.CanSeek ? stream.Length == 0 : stream.IsEnd() : throw new ArgumentNullException(nameof(stream));
 

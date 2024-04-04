@@ -35,6 +35,13 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
+  public static bool IsUnset(this BinaryWriter writer) => writer is null || writer.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="writer"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this BinaryWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 

@@ -35,6 +35,13 @@ public static class BinaryReaderExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <returns></returns>
+  public static bool IsUnset(this BinaryReader reader) => reader is null || reader.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static bool IsEmpty(this BinaryReader reader) => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
 

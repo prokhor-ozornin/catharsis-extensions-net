@@ -112,6 +112,27 @@ public sealed class SecureStringExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.IsUnset(SecureString)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    Validate(true, null);
+    Validate(true, Attributes.EmptySecureString());
+    Validate(false, Attributes.RandomSecureString());
+
+    return;
+
+    static void Validate(bool result, SecureString secure)
+    {
+      using (secure)
+      {
+        secure.IsUnset().Should().Be(secure is null || secure.IsEmpty()).And.Be(result);
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="SecureStringExtensions.IsEmpty(SecureString)"/> method.</para>
   /// </summary>
   [Fact]
