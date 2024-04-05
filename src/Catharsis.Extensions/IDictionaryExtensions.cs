@@ -16,6 +16,25 @@ public static class IDictionaryExtensions
   /// <typeparam name="TKey"></typeparam>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="dictionary"></param>
+  /// <param name="key"></param>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IDictionary<TKey, TValue> With<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) where TKey : notnull
+  {
+    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+
+    dictionary[key] = value;
+
+    return dictionary;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
   /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>

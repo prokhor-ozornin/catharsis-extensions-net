@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -14,6 +13,7 @@ public sealed class IDictionaryExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
+  ///     <item><description><see cref="IDictionaryExtensions.With{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue})"/></description></item>
   ///     <item><description><see cref="IDictionaryExtensions.With{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{ValueTuple{TKey, TValue}})"/></description></item>
   ///     <item><description><see cref="IDictionaryExtensions.With{TKey, TValue}(IDictionary{TKey, TValue}, ValueTuple{TKey, TValue}[])"/></description></item>
   ///   </list>
@@ -21,6 +21,15 @@ public sealed class IDictionaryExtensionsTest : UnitTest
   [Fact]
   public void With_Methods()
   {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IDictionaryExtensions.With<string, object>(null, string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+
+      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+      {
+      }
+    }
+
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IDictionaryExtensions.With(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");

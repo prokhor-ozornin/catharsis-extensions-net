@@ -23,6 +23,7 @@ public static class CookieExtensions
     Version = cookie.Version,
     Comment = cookie.Comment,
     CommentUri = cookie.CommentUri,
+    Discard = cookie.Discard
   } : throw new ArgumentNullException(nameof(cookie));
 
   /// <summary>

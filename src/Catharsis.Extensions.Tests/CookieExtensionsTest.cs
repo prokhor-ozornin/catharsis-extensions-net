@@ -18,9 +18,24 @@ public sealed class CookieExtensionsTest : UnitTest
   {
     AssertionExtensions.Should(() => CookieExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
 
-    Validate(new Cookie());
-    //Validate(new Cookie());
-    throw new NotImplementedException();
+    Validate(new Cookie("id", string.Empty, "/", "localhost"));
+    
+    Validate(new Cookie
+    {
+      Name = "id",
+      Value = string.Empty,
+      Comment = "comment",
+      CommentUri = "localhost".ToUri(),
+      Domain = "localhost",
+      Expires = DateTime.Now,
+      Expired = true,
+      Discard = true,
+      HttpOnly = true,
+      Path = "/",
+      Port = string.Empty,
+      Secure = true,
+      Version = 1
+    });
 
     return;
 
@@ -28,7 +43,7 @@ public sealed class CookieExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().BeOfType<Cookie>().And.NotBeSameAs(original).And.NotBe(original);
+      clone.Should().BeOfType<Cookie>().And.NotBeSameAs(original).And.Be(original);
       clone.ToString().Should().Be(original.ToString());
       clone.Name.Should().Be(original.Name);
       clone.Value.Should().Be(original.Value);
@@ -42,7 +57,7 @@ public sealed class CookieExtensionsTest : UnitTest
       clone.Path.Should().Be(original.Path);
       clone.Port.Should().Be(original.Port);
       clone.Secure.Should().Be(original.Secure);
-      clone.TimeStamp.Should().Be(original.TimeStamp);
+      clone.TimeStamp.Should().BeOnOrAfter(original.TimeStamp);
       clone.Version.Should().Be(original.Version);
     }
   }
@@ -62,7 +77,7 @@ public sealed class CookieExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool result, Cookie cookie) => cookie.IsUnset().Should().Be(result);
+    static void Validate(bool result, Cookie cookie) => cookie.IsUnset().Should().Be(cookie is null || cookie.IsEmpty()).And.Be(result);
   }
 
   /// <summary>
@@ -81,6 +96,6 @@ public sealed class CookieExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool result, Cookie cookie) => cookie.IsEmpty().Should().Be(result);
+    static void Validate(bool result, Cookie cookie) => cookie.IsEmpty().Should().Be(cookie.Name.IsUnset() || cookie.Value.IsUnset()).And.Be(result);
   }
 }
