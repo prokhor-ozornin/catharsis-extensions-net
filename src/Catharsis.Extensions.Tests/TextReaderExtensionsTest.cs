@@ -17,13 +17,16 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void IsEnd_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-    AssertionExtensions.Should(() => Attributes.RandomReadOnlyForwardStream().ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => Attributes.RandomReadOnlyForwardStream().ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
 
-    Validate(Stream.Null.ToStreamReader());
-    Validate(Attributes.EmptyStream().ToStreamReader());
-    Validate(Attributes.RandomStream().ToStreamReader());
-    Validate(Attributes.RandomReadOnlyStream().ToStreamReader());
+      Validate(Stream.Null.ToStreamReader());
+      Validate(Attributes.EmptyStream().ToStreamReader());
+      Validate(Attributes.RandomStream().ToStreamReader());
+      Validate(Attributes.RandomReadOnlyStream().ToStreamReader());
+    }
 
     return;
 
@@ -45,7 +48,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void Lines_Method()
   {
-    AssertionExtensions.Should(() => TextReaderExtensions.Lines(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TextReaderExtensions.Lines(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    }
 
     throw new NotImplementedException();
 
@@ -66,7 +72,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void LinesAsync_Method()
   {
-    AssertionExtensions.Should(() => TextReaderExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TextReaderExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+    }
 
     throw new NotImplementedException();
 
@@ -87,8 +96,11 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void Skip_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-    AssertionExtensions.Should(() => Stream.Null.ToStreamReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    }
 
     throw new NotImplementedException();
 
@@ -109,10 +121,13 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void AsSynchronized_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).AsSynchronized()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).AsSynchronized()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-    Validate(Attributes.EmptyTextReader());
-    Validate(Attributes.RandomString().ToStringReader());
+      Validate(Attributes.EmptyTextReader());
+      Validate(Attributes.RandomString().ToStringReader());
+    }
 
     return;
 
@@ -131,7 +146,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToBytes_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    }
 
     throw new NotImplementedException();
 
@@ -152,7 +170,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+    }
 
     throw new NotImplementedException();
 
@@ -175,7 +196,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToText_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    }
 
     throw new NotImplementedException();
 
@@ -196,10 +220,13 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToTextAsync_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
-    Validate(string.Empty, Attributes.EmptyTextReader());
-    Attributes.RandomString().With(text => Validate(text, text.ToStringReader()));
+      Validate(string.Empty, Attributes.EmptyTextReader());
+      Attributes.RandomString().With(text => Validate(text, text.ToStringReader()));
+    }
 
     return;
 
@@ -301,29 +328,32 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToXmlReader_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-    /*const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-
-    var textReader = Xml.ToStringReader();
-    textReader.ToXmlReader().With(reader =>
+    using (new AssertionScope())
     {
-      reader.Settings.CloseInput.Should().BeFalse();
-      reader.Settings.IgnoreComments.Should().BeTrue();
-      reader.Settings.IgnoreWhitespace.Should().BeTrue();
-      reader.ReadStartElement("article");
-      return reader.ReadString();
-    }).Should().Be("text");
-    textReader.Read().Should().Be(-1);
+      AssertionExtensions.Should(() => ((TextReader) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-    textReader = Xml.ToStringReader();
-    textReader.ToXmlReader().With(reader =>
-    {
-      //reader.Settings.CloseInput.Should().BeTrue();
-      reader.ReadStartElement("article");
-      return reader.ReadString();
-    }).Should().Be("text");
-    AssertionExtensions.Should(() => textReader.Read()).ThrowExactly<ObjectDisposedException>();*/
+      /*const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+
+      var textReader = Xml.ToStringReader();
+      textReader.ToXmlReader().With(reader =>
+      {
+        reader.Settings.CloseInput.Should().BeFalse();
+        reader.Settings.IgnoreComments.Should().BeTrue();
+        reader.Settings.IgnoreWhitespace.Should().BeTrue();
+        reader.ReadStartElement("article");
+        return reader.ReadString();
+      }).Should().Be("text");
+      textReader.Read().Should().Be(-1);
+
+      textReader = Xml.ToStringReader();
+      textReader.ToXmlReader().With(reader =>
+      {
+        //reader.Settings.CloseInput.Should().BeTrue();
+        reader.ReadStartElement("article");
+        return reader.ReadString();
+      }).Should().Be("text");
+      AssertionExtensions.Should(() => textReader.Read()).ThrowExactly<ObjectDisposedException>();*/
+    }
 
     throw new NotImplementedException();
 
@@ -344,7 +374,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToXmlDictionaryReader_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToXmlDictionaryReader()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    }
 
     throw new NotImplementedException();
 
@@ -365,21 +398,24 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToXmlDocument_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToXmlDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-    /*const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
-
-    using (var reader = Xml.ToStringReader())
+    using (new AssertionScope())
     {
-      reader.AsXmlDocument().Text().Should().Be(Xml);
-      reader.Read().Should().Be(-1);
+      AssertionExtensions.Should(() => ((TextReader) null).ToXmlDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      /*const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
+
+      using (var reader = Xml.ToStringReader())
+      {
+        reader.AsXmlDocument().Text().Should().Be(Xml);
+        reader.Read().Should().Be(-1);
+      }
+
+      using (var reader = Xml.ToStringReader())
+      {
+        reader.AsXmlDocument().Text().Should().Be(Xml);
+        AssertionExtensions.Should(() => reader.Read()).ThrowExactly<ObjectDisposedException>();
+      }*/
     }
-
-    using (var reader = Xml.ToStringReader())
-    {
-      reader.AsXmlDocument().Text().Should().Be(Xml);
-      AssertionExtensions.Should(() => reader.Read()).ThrowExactly<ObjectDisposedException>();
-    }*/
 
     throw new NotImplementedException();
 
@@ -400,7 +436,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToXDocument_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToXDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToXDocument()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    }
 
     throw new NotImplementedException();
 
@@ -421,22 +460,25 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToXDocumentAsync_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
-    AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-    /*const string Xml = "<?xml version=\"1.0\"?><article>text</article>";
-
-    using (var reader = Xml.ToStringReader())
+    using (new AssertionScope())
     {
-      reader.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
-      reader.Read().Should().Be(-1);
+      AssertionExtensions.Should(() => ((TextReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+      /*const string Xml = "<?xml version=\"1.0\"?><article>text</article>";
+
+      using (var reader = Xml.ToStringReader())
+      {
+        reader.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
+        reader.Read().Should().Be(-1);
+      }
+
+      using (var reader = Xml.ToStringReader())
+      {
+        reader.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
+        reader.Read().Should().Be(-1);
+      }*/
     }
-
-    using (var reader = Xml.ToStringReader())
-    {
-      reader.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
-      reader.Read().Should().Be(-1);
-    }*/
 
     throw new NotImplementedException();
 
@@ -457,7 +499,10 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void DeserializeAsDataContract_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    }
 
     throw new NotImplementedException();
 
@@ -478,21 +523,24 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void DeserializeAsXml_Method()
   {
-    AssertionExtensions.Should(() => ((TextReader) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-    /*var subject = Guid.Empty;
-
-    using (var reader = subject.AsXml().ToStringReader())
+    using (new AssertionScope())
     {
-      reader.AsXml<Guid>().Should().Be(subject);
-      reader.ReadLine();
+      AssertionExtensions.Should(() => ((TextReader) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      /*var subject = Guid.Empty;
+
+      using (var reader = subject.AsXml().ToStringReader())
+      {
+        reader.AsXml<Guid>().Should().Be(subject);
+        reader.ReadLine();
+      }
+
+      using (var reader = subject.AsXml().ToStringReader())
+      {
+        reader.AsXml<Guid>().Should().Be(subject);
+        AssertionExtensions.Should(() => reader.ReadLine()).ThrowExactly<ObjectDisposedException>();
+      }*/
     }
-
-    using (var reader = subject.AsXml().ToStringReader())
-    {
-      reader.AsXml<Guid>().Should().Be(subject);
-      AssertionExtensions.Should(() => reader.ReadLine()).ThrowExactly<ObjectDisposedException>();
-    }*/
 
     throw new NotImplementedException();
 

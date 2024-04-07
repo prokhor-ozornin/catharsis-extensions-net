@@ -21,11 +21,14 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Is_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.Is<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Is<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
-    Validate<object>(true, new object());
-    Validate<string>(false, new object());
-    Validate<IEnumerable<char>>(true, string.Empty);
+      Validate<object>(true, new object());
+      Validate<string>(false, new object());
+      Validate<IEnumerable<char>>(true, string.Empty);
+    }
     
     return;
 
@@ -38,6 +41,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void IsSameAs_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -51,18 +58,21 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void IsNull_Method()
   {
-    ((object) null).IsNull().Should().BeTrue();
-    ((int?) null).IsNull().Should().BeTrue();
+    using (new AssertionScope())
+    {
+      ((object) null).IsNull().Should().BeTrue();
+      ((int?) null).IsNull().Should().BeTrue();
 
-    new object().IsNull().Should().BeFalse();
-    string.Empty.IsNull().Should().BeFalse();
-    Array.Empty<object>().IsNull().Should().BeFalse();
-    Enumerable.Empty<object>().IsNull().Should().BeFalse();
-    Guid.Empty.IsNull().Should().BeFalse();
+      new object().IsNull().Should().BeFalse();
+      string.Empty.IsNull().Should().BeFalse();
+      Array.Empty<object>().IsNull().Should().BeFalse();
+      Enumerable.Empty<object>().IsNull().Should().BeFalse();
+      Guid.Empty.IsNull().Should().BeFalse();
 
-    new WeakReference(null).IsNull().Should().BeTrue();
-    new WeakReference(new object()).IsNull().Should().BeFalse();
-    new WeakReference(string.Empty).IsNull().Should().BeFalse();
+      new WeakReference(null).IsNull().Should().BeTrue();
+      new WeakReference(new object()).IsNull().Should().BeFalse();
+      new WeakReference(string.Empty).IsNull().Should().BeFalse();
+    }
 
     return;
 
@@ -75,6 +85,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Nullable_IsUnset_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -88,6 +102,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Lazy_IsUnset_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -101,43 +119,46 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Nullable_IsEmpty_Method()
   {
-    ((sbyte?) sbyte.MinValue).IsEmpty().Should().BeFalse();
-    ((sbyte?) sbyte.MaxValue).IsEmpty().Should().BeFalse();
-    ((sbyte?) null).IsEmpty().Should().BeTrue();
+    using (new AssertionScope())
+    {
+      ((sbyte?)sbyte.MinValue).IsEmpty().Should().BeFalse();
+      ((sbyte?)sbyte.MaxValue).IsEmpty().Should().BeFalse();
+      ((sbyte?)null).IsEmpty().Should().BeTrue();
 
-    ((byte?) byte.MinValue).IsEmpty().Should().BeFalse();
-    ((byte?) byte.MaxValue).IsEmpty().Should().BeFalse();
-    ((byte?) null).IsEmpty().Should().BeTrue();
+      ((byte?)byte.MinValue).IsEmpty().Should().BeFalse();
+      ((byte?)byte.MaxValue).IsEmpty().Should().BeFalse();
+      ((byte?)null).IsEmpty().Should().BeTrue();
 
-    ((short?) short.MinValue).IsEmpty().Should().BeFalse();
-    ((short?) short.MaxValue).IsEmpty().Should().BeFalse();
-    ((short?) null).IsEmpty().Should().BeTrue();
+      ((short?)short.MinValue).IsEmpty().Should().BeFalse();
+      ((short?)short.MaxValue).IsEmpty().Should().BeFalse();
+      ((short?)null).IsEmpty().Should().BeTrue();
 
-    ((ushort?) ushort.MinValue).IsEmpty().Should().BeFalse();
-    ((ushort?) ushort.MaxValue).IsEmpty().Should().BeFalse();
-    ((ushort?) null).IsEmpty().Should().BeTrue();
+      ((ushort?)ushort.MinValue).IsEmpty().Should().BeFalse();
+      ((ushort?)ushort.MaxValue).IsEmpty().Should().BeFalse();
+      ((ushort?)null).IsEmpty().Should().BeTrue();
 
-    ((int?) int.MinValue).IsEmpty().Should().BeFalse();
-    ((int?) int.MaxValue).IsEmpty().Should().BeFalse();
-    ((int?) null).IsEmpty().Should().BeTrue();
+      ((int?)int.MinValue).IsEmpty().Should().BeFalse();
+      ((int?)int.MaxValue).IsEmpty().Should().BeFalse();
+      ((int?)null).IsEmpty().Should().BeTrue();
 
-    ((uint?) uint.MinValue).IsEmpty().Should().BeFalse();
-    ((uint?) uint.MaxValue).IsEmpty().Should().BeFalse();
-    ((uint?) null).IsEmpty().Should().BeTrue();
+      ((uint?)uint.MinValue).IsEmpty().Should().BeFalse();
+      ((uint?)uint.MaxValue).IsEmpty().Should().BeFalse();
+      ((uint?)null).IsEmpty().Should().BeTrue();
 
-    ((long?) long.MinValue).IsEmpty().Should().BeFalse();
-    ((long?) long.MaxValue).IsEmpty().Should().BeFalse();
-    ((long?) null).IsEmpty().Should().BeTrue();
+      ((long?)long.MinValue).IsEmpty().Should().BeFalse();
+      ((long?)long.MaxValue).IsEmpty().Should().BeFalse();
+      ((long?)null).IsEmpty().Should().BeTrue();
 
-    ((ulong?) ulong.MinValue).IsEmpty().Should().BeFalse();
-    ((ulong?) ulong.MaxValue).IsEmpty().Should().BeFalse();
-    ((ulong?) null).IsEmpty().Should().BeTrue();
+      ((ulong?)ulong.MinValue).IsEmpty().Should().BeFalse();
+      ((ulong?)ulong.MaxValue).IsEmpty().Should().BeFalse();
+      ((ulong?)null).IsEmpty().Should().BeTrue();
 
-    ((char?) null).IsEmpty().Should().BeTrue();
-    ((char?) char.MinValue).IsEmpty().Should().BeFalse();
+      ((char?)null).IsEmpty().Should().BeTrue();
+      ((char?)char.MinValue).IsEmpty().Should().BeFalse();
 
-    ((Guid?) Guid.Empty).IsEmpty().Should().BeFalse();
-    ((Guid?) null).IsEmpty().Should().BeTrue();
+      ((Guid?)Guid.Empty).IsEmpty().Should().BeFalse();
+      ((Guid?)null).IsEmpty().Should().BeTrue();
+    }
 
     return;
 
@@ -150,31 +171,34 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Lazy_IsEmpty_Method()
   {
-    new Lazy<object>().IsEmpty().Should().BeTrue();
+    using (new AssertionScope())
+    {
+      new Lazy<object>().IsEmpty().Should().BeTrue();
 
-    new Lazy<object>(new object()).IsEmpty().Should().BeFalse();
-    var lazy = new Lazy<object>(() => new object());
-    lazy.IsEmpty().Should().BeTrue();
-    _ = lazy.Value;
-    lazy.IsEmpty().Should().BeFalse();
+      new Lazy<object>(new object()).IsEmpty().Should().BeFalse();
+      var lazy = new Lazy<object>(() => new object());
+      lazy.IsEmpty().Should().BeTrue();
+      _ = lazy.Value;
+      lazy.IsEmpty().Should().BeFalse();
 
-    new Lazy<object>((object) null).IsEmpty().Should().BeTrue();
-    lazy = new Lazy<object>(() => null);
-    lazy.IsEmpty().Should().BeTrue();
-    _ = lazy.Value;
-    lazy.IsEmpty().Should().BeTrue();
+      new Lazy<object>((object)null).IsEmpty().Should().BeTrue();
+      lazy = new Lazy<object>(() => null);
+      lazy.IsEmpty().Should().BeTrue();
+      _ = lazy.Value;
+      lazy.IsEmpty().Should().BeTrue();
 
-    new Lazy<object>(string.Empty).IsEmpty().Should().BeTrue();
-    lazy = new Lazy<object>(() => string.Empty);
-    lazy.IsEmpty().Should().BeTrue();
-    _ = lazy.Value;
-    lazy.IsEmpty().Should().BeTrue();
+      new Lazy<object>(string.Empty).IsEmpty().Should().BeTrue();
+      lazy = new Lazy<object>(() => string.Empty);
+      lazy.IsEmpty().Should().BeTrue();
+      _ = lazy.Value;
+      lazy.IsEmpty().Should().BeTrue();
 
-    new Lazy<object>(" \t\r\n ").IsEmpty().Should().BeTrue();
-    lazy = new Lazy<object>(() => " \t\r\n ");
-    lazy.IsEmpty().Should().BeTrue();
-    _ = lazy.Value;
-    lazy.IsEmpty().Should().BeTrue();
+      new Lazy<object>(" \t\r\n ").IsEmpty().Should().BeTrue();
+      lazy = new Lazy<object>(() => " \t\r\n ");
+      lazy.IsEmpty().Should().BeTrue();
+      _ = lazy.Value;
+      lazy.IsEmpty().Should().BeTrue();
+    }
 
     return;
 
@@ -187,7 +211,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void As_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.As<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.As<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    }
 
     throw new NotImplementedException();
 
@@ -204,14 +231,17 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void To_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.To<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.To<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
-    /*object? subject = null;
-    subject.To<object>().Should().BeNull();
-    subject.To<string>().Should().BeNull();
+      /*object? subject = null;
+      subject.To<object>().Should().BeNull();
+      subject.To<string>().Should().BeNull();
 
-    subject = new object();
-    subject.To<object>().Should().BeSameAs(subject);*/
+      subject = new object();
+      subject.To<object>().Should().BeSameAs(subject);*/
+    }
 
     throw new NotImplementedException();
 
@@ -228,10 +258,13 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void With_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.With<object>(null, _ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.With<object>(null, _ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-    throw new NotImplementedException();
+      throw new NotImplementedException();
+    }
 
     return;
 
@@ -246,9 +279,12 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void While_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.While<object>(null, _ => true, _ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().While(null, _ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("condition");
-    AssertionExtensions.Should(() => new object().While(_ => true, null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.While<object>(null, _ => true, _ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().While(null, _ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("condition");
+      AssertionExtensions.Should(() => new object().While(_ => true, null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    }
 
     throw new NotImplementedException();
 
@@ -265,6 +301,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Equality_String_Enumerable_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -280,29 +320,32 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Equality_String_Array_Method()
   {
-    /*var subject = new object();
-    subject.Equality(subject, (string[]) null).Should().BeTrue();
-    subject.Equality(subject, (Expression<Func<object, object>>[]) null).Should().BeTrue();
-    Guid.Empty.ToString().Equality(Guid.Empty.ToString(), (string[]) null).Should().BeTrue();
-    Guid.Empty.ToString().Equality(Guid.Empty.ToString(), (Expression<Func<object, object>>[]) null).Should().BeTrue();
-    Guid.NewGuid().ToString().Equality(Guid.NewGuid().ToString(), "Length").Should().BeTrue();
-    Guid.NewGuid().ToString().Equality(Guid.NewGuid().ToString(), text => text.Length).Should().BeTrue();
-    "first".Equality("second", "Length").Should().BeFalse();
-    "first".Equality("second", text => text.Length).Should().BeFalse();
-    "text".Equality("text", "property").Should().BeTrue();
-    "first".Equality("second", "property").Should().BeFalse();
+    using (new AssertionScope())
+    {
+      /*var subject = new object();
+        subject.Equality(subject, (string[]) null).Should().BeTrue();
+        subject.Equality(subject, (Expression<Func<object, object>>[]) null).Should().BeTrue();
+        Guid.Empty.ToString().Equality(Guid.Empty.ToString(), (string[]) null).Should().BeTrue();
+        Guid.Empty.ToString().Equality(Guid.Empty.ToString(), (Expression<Func<object, object>>[]) null).Should().BeTrue();
+        Guid.NewGuid().ToString().Equality(Guid.NewGuid().ToString(), "Length").Should().BeTrue();
+        Guid.NewGuid().ToString().Equality(Guid.NewGuid().ToString(), text => text.Length).Should().BeTrue();
+        "first".Equality("second", "Length").Should().BeFalse();
+        "first".Equality("second", text => text.Length).Should().BeFalse();
+        "text".Equality("text", "property").Should().BeTrue();
+        "first".Equality("second", "property").Should().BeFalse();
 
-    var testSubject = new TestObject();
-    testSubject.Equality(testSubject, (string[]) null).Should().BeTrue();
-    testSubject.Equality(testSubject, (Expression<Func<TestObject, object>>[]) null).Should().BeTrue();
-    new TestObject().Equality(new TestObject(), (string[]) null).Should().BeTrue();
-    new TestObject().Equality(new TestObject(), (Expression<Func<TestObject, object>>[]) null).Should().BeTrue();
-    new TestObject {PublicProperty = "property"}.Equality(new TestObject {PublicProperty = "property"}, (string[]) null).Should().BeTrue();
-    new TestObject {PublicProperty = "property"}.Equality(new TestObject {PublicProperty = "property"}, (Expression<Func<TestObject, object>>[]) null).Should().BeTrue();
-    new TestObject {PublicProperty = "property"}.Equality(new TestObject(), (string[]) null).Should().BeFalse();
-    new TestObject {PublicProperty = "property"}.Equality(new TestObject(), (Expression<Func<TestObject, object>>[]) null).Should().BeFalse();
-    new TestObject {PublicProperty = "first"}.Equality(new TestObject {PublicProperty = "second"}, (string[]) null).Should().BeFalse();
-    new TestObject {PublicProperty = "first"}.Equality(new TestObject {PublicProperty = "second"}, (Expression<Func<TestObject, object>>[]) null).Should().BeFalse();*/
+        var testSubject = new TestObject();
+        testSubject.Equality(testSubject, (string[]) null).Should().BeTrue();
+        testSubject.Equality(testSubject, (Expression<Func<TestObject, object>>[]) null).Should().BeTrue();
+        new TestObject().Equality(new TestObject(), (string[]) null).Should().BeTrue();
+        new TestObject().Equality(new TestObject(), (Expression<Func<TestObject, object>>[]) null).Should().BeTrue();
+        new TestObject {PublicProperty = "property"}.Equality(new TestObject {PublicProperty = "property"}, (string[]) null).Should().BeTrue();
+        new TestObject {PublicProperty = "property"}.Equality(new TestObject {PublicProperty = "property"}, (Expression<Func<TestObject, object>>[]) null).Should().BeTrue();
+        new TestObject {PublicProperty = "property"}.Equality(new TestObject(), (string[]) null).Should().BeFalse();
+        new TestObject {PublicProperty = "property"}.Equality(new TestObject(), (Expression<Func<TestObject, object>>[]) null).Should().BeFalse();
+        new TestObject {PublicProperty = "first"}.Equality(new TestObject {PublicProperty = "second"}, (string[]) null).Should().BeFalse();
+        new TestObject {PublicProperty = "first"}.Equality(new TestObject {PublicProperty = "second"}, (Expression<Func<TestObject, object>>[]) null).Should().BeFalse();*/
+    }
 
     throw new NotImplementedException();
 
@@ -319,6 +362,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Equality_Expression_Enumerable_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -334,6 +381,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Equality_Expression_Array_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -349,6 +400,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void HashCode_String_Enumerable_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -364,42 +419,45 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void HashCode_String_Array_Method()
   {
-    /*new object().GetHashCode((string[]) null).Should().NotBe(0);
-    new object().GetHashCode((Expression<Func<object, object>>[]) null).Should().NotBe(0);
+    using (new AssertionScope())
+    {
+      /*new object().GetHashCode((string[]) null).Should().NotBe(0);
+        new object().GetHashCode((Expression<Func<object, object>>[]) null).Should().NotBe(0);
 
-    new object().GetHashCode((string[]) null).Should().NotBe(new object().GetHashCode((string[]) null));
-    new object().GetHashCode((Expression<Func<object, object>>[]) null).Should().NotBe(new object().GetHashCode((Expression<Func<object, object>>[]) null));
+        new object().GetHashCode((string[]) null).Should().NotBe(new object().GetHashCode((string[]) null));
+        new object().GetHashCode((Expression<Func<object, object>>[]) null).Should().NotBe(new object().GetHashCode((Expression<Func<object, object>>[]) null));
 
-    var subject = new object();
-    subject.GetHashCode((string[]) null).Should().Be(subject.GetHashCode((string[]) null));
-    subject.GetHashCode((Expression<Func<object, object>>[]) null).Should().Be(subject.GetHashCode((Expression<Func<object, object>>[]) null));
-    subject.GetHashCode((string[]) null).Should().Be(subject.GetHashCode());
-    subject.GetHashCode((Expression<Func<object, object>>[]) null).Should().Be(subject.GetHashCode());
-    string.Empty.GetHashCode((string[]) null).Should().NotBe(new object().GetHashCode((string[]) null));
-    string.Empty.GetHashCode((string[]) null).Should().Be(string.Empty.GetHashCode((string[]) null));
+        var subject = new object();
+        subject.GetHashCode((string[]) null).Should().Be(subject.GetHashCode((string[]) null));
+        subject.GetHashCode((Expression<Func<object, object>>[]) null).Should().Be(subject.GetHashCode((Expression<Func<object, object>>[]) null));
+        subject.GetHashCode((string[]) null).Should().Be(subject.GetHashCode());
+        subject.GetHashCode((Expression<Func<object, object>>[]) null).Should().Be(subject.GetHashCode());
+        string.Empty.GetHashCode((string[]) null).Should().NotBe(new object().GetHashCode((string[]) null));
+        string.Empty.GetHashCode((string[]) null).Should().Be(string.Empty.GetHashCode((string[]) null));
 
-    Guid.NewGuid().ToString().GetHashCode("Length").Should().Be(Guid.NewGuid().ToString().GetHashCode("Length"));
-    Guid.NewGuid().ToString().GetHashCode("Length").Should().Be(Guid.NewGuid().ToString().GetHashCode(it => it.Length));
-    Guid.NewGuid().ToString().GetHashCode(it => it.Length).Should().Be(Guid.NewGuid().ToString().GetHashCode(it => it.Length));
+        Guid.NewGuid().ToString().GetHashCode("Length").Should().Be(Guid.NewGuid().ToString().GetHashCode("Length"));
+        Guid.NewGuid().ToString().GetHashCode("Length").Should().Be(Guid.NewGuid().ToString().GetHashCode(it => it.Length));
+        Guid.NewGuid().ToString().GetHashCode(it => it.Length).Should().Be(Guid.NewGuid().ToString().GetHashCode(it => it.Length));
 
-    var testObject = new TestObject();
-    testObject.GetHashCode((string[]) null).Should().Be(testObject.GetHashCode((string[]) null));
-    testObject.GetHashCode("PublicProperty").Should().Be(testObject.GetHashCode("PublicProperty"));
-    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode("PublicProperty"));
-    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode(it => it.PublicProperty));
-    testObject.GetHashCode("PublicProperty").Should().Be(testObject.GetHashCode("ProtectedProperty"));
-    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode("ProtectedProperty"));
-    testObject.GetHashCode("invalid").Should().Be(testObject.GetHashCode("invalid"));
-    testObject.GetHashCode("invalid_1").Should().Be(testObject.GetHashCode("invalid_2"));
+        var testObject = new TestObject();
+        testObject.GetHashCode((string[]) null).Should().Be(testObject.GetHashCode((string[]) null));
+        testObject.GetHashCode("PublicProperty").Should().Be(testObject.GetHashCode("PublicProperty"));
+        testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode("PublicProperty"));
+        testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode(it => it.PublicProperty));
+        testObject.GetHashCode("PublicProperty").Should().Be(testObject.GetHashCode("ProtectedProperty"));
+        testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode("ProtectedProperty"));
+        testObject.GetHashCode("invalid").Should().Be(testObject.GetHashCode("invalid"));
+        testObject.GetHashCode("invalid_1").Should().Be(testObject.GetHashCode("invalid_2"));
 
-    testObject.PublicProperty = "property";
-    new TestObject {PublicProperty = "property"}.GetHashCode((string[]) null).Should().Be(new TestObject {PublicProperty = "property"}.GetHashCode((string[]) null));
-    new TestObject {PublicProperty = "first"}.GetHashCode((string[]) null).Should().NotBe(new TestObject {PublicProperty = "second"}.GetHashCode((string[]) null));
-    testObject.GetHashCode("PublicProperty").Should().Be(testObject.GetHashCode("PublicProperty"));
-    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode("PublicProperty"));
-    testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode(it => it.PublicProperty));
-    testObject.GetHashCode("PublicProperty").Should().NotBe(testObject.GetHashCode("ProtectedProperty"));
-    testObject.GetHashCode(it => it.PublicProperty).Should().NotBe(testObject.GetHashCode("ProtectedProperty"));*/
+        testObject.PublicProperty = "property";
+        new TestObject {PublicProperty = "property"}.GetHashCode((string[]) null).Should().Be(new TestObject {PublicProperty = "property"}.GetHashCode((string[]) null));
+        new TestObject {PublicProperty = "first"}.GetHashCode((string[]) null).Should().NotBe(new TestObject {PublicProperty = "second"}.GetHashCode((string[]) null));
+        testObject.GetHashCode("PublicProperty").Should().Be(testObject.GetHashCode("PublicProperty"));
+        testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode("PublicProperty"));
+        testObject.GetHashCode(it => it.PublicProperty).Should().Be(testObject.GetHashCode(it => it.PublicProperty));
+        testObject.GetHashCode("PublicProperty").Should().NotBe(testObject.GetHashCode("ProtectedProperty"));
+        testObject.GetHashCode(it => it.PublicProperty).Should().NotBe(testObject.GetHashCode("ProtectedProperty"));*/
+    }
 
     throw new NotImplementedException();
 
@@ -416,6 +474,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void HashCode_Expression_Enumerable_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -431,6 +493,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void HashCode_Expression_Array_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -549,7 +615,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Print_Console_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    }
 
     throw new NotImplementedException();
 
@@ -566,8 +635,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void PrintAsync_Console_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
 
     throw new NotImplementedException();
 
@@ -584,8 +656,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Print_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().Print((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().Print((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -606,9 +681,12 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void PrintAsync_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
 
     throw new NotImplementedException();
 
@@ -629,8 +707,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Print_TextWriter_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().Print((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().Print((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -651,9 +732,12 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void PrintAsync_TextWriter_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null.ToStreamWriter(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null.ToStreamWriter(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
 
     throw new NotImplementedException();
 
@@ -674,8 +758,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Print_XmlWriter_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().Print((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().Print((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -696,8 +783,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void PrintAsync_XmlWriter_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    }
 
     throw new NotImplementedException();
 
@@ -747,8 +837,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Print_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().Print((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().Print((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -765,9 +858,12 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void PrintAsync_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Attributes.RandomFakeFile())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(Attributes.RandomFakeFile(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Attributes.RandomFakeFile())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(Attributes.RandomFakeFile(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
 
     throw new NotImplementedException();
 
@@ -784,8 +880,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Print_Uri_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().Print((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().Print((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -802,9 +901,12 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void PrintAsync_Uri_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(Attributes.LocalHost(), null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(Attributes.LocalHost(), null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
 
     throw new NotImplementedException();
 
@@ -821,8 +923,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void Print_Process_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Process.GetCurrentProcess())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().Print((Process) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Process.GetCurrentProcess())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().Print((Process) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     return;
 
@@ -839,9 +944,12 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void PrintAsync_Process_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Process.GetCurrentProcess())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    AssertionExtensions.Should(() => new object().PrintAsync(Process.GetCurrentProcess(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Process.GetCurrentProcess())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(Process.GetCurrentProcess(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
 
     throw new NotImplementedException();
 
@@ -936,13 +1044,16 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void GetMember_Method()
   {
-    //AssertionExtensions.Should(() => ObjectExtensions.GetMember(null, Enumerable.Empty<Expression<Func<object, object>>>().First())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    //AssertionExtensions.Should(() => new object().GetMember<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("expression");
+    using (new AssertionScope())
+    {
+      //AssertionExtensions.Should(() => ObjectExtensions.GetMember(null, Enumerable.Empty<Expression<Func<object, object>>>().First())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+        //AssertionExtensions.Should(() => new object().GetMember<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("expression");
 
-    var text = Attributes.RandomString();
-    text.GetMember(instance => instance.Length).Should().Be(text.Length);
-    text.GetMember(instance => instance.ToString(CultureInfo.InvariantCulture)).Should().BeOfType<string>().And.Be(text);
-    DateTime.UtcNow.GetMember(instance => instance.Ticks <= DateTime.UtcNow.Ticks).Should().BeTrue();
+        var text = Attributes.RandomString();
+      text.GetMember(instance => instance.Length).Should().Be(text.Length);
+      text.GetMember(instance => instance.ToString(CultureInfo.InvariantCulture)).Should().BeOfType<string>().And.Be(text);
+      DateTime.UtcNow.GetMember(instance => instance.Ticks <= DateTime.UtcNow.Ticks).Should().BeTrue();
+    }
 
     throw new NotImplementedException();
 
@@ -959,13 +1070,16 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void GetFieldValue_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.GetFieldValue<object>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().GetFieldValue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.GetFieldValue<object>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().GetFieldValue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
-    //var result = new object().GetFieldValue<Guid>("field");
+      //var result = new object().GetFieldValue<Guid>("field");
 
-    //var subject = new TestObject {PublicField = "value"};
-    //subject.Field("PublicField").To<string>().Should().Be("value");
+      //var subject = new TestObject {PublicField = "value"};
+      //subject.Field("PublicField").To<string>().Should().Be("value");
+    }
 
     throw new NotImplementedException();
 
@@ -980,45 +1094,48 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void GetPropertyValue_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.GetPropertyValue<object>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().GetPropertyValue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.GetPropertyValue<object>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().GetPropertyValue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
-    /*new object().Property("property").Should().BeNull();
+      /*new object().Property("property").Should().BeNull();
 
-    var subject = new TestObject {PublicProperty = "value"};
-    subject.Property("PublicProperty").As<string>().Should().Be("value");
+      var subject = new TestObject {PublicProperty = "value"};
+      subject.Property("PublicProperty").As<string>().Should().Be("value");
 
 
-    AssertionExtensions.Should(() => ObjectExtensions.Property<object>(null, "property", new object())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new object().Property(null, new object())).ThrowExactly<ArgumentNullException>();
-    AssertionExtensions.Should(() => new object().Property(string.Empty, new object())).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => ObjectExtensions.Property<object>(null, "property", new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new object().Property(null, new object())).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => new object().Property(string.Empty, new object())).ThrowExactly<ArgumentException>();
 
-    subject = new TestObject();
+      subject = new TestObject();
 
-    subject.Property("PublicProperty", null).Should().BeSameAs(subject);
+      subject.Property("PublicProperty", null).Should().BeSameAs(subject);
 
-    var property = Attributes.RandomString();
+      var property = Attributes.RandomString();
 
-    subject.Property("ReadOnlyProperty", property);
-    subject.Property("ReadOnlyProperty").Should().BeNull();
+      subject.Property("ReadOnlyProperty", property);
+      subject.Property("ReadOnlyProperty").Should().BeNull();
 
-    subject.Property("PublicStaticProperty", property);
-    subject.Property("PublicStaticProperty").Should().Be(property);
+      subject.Property("PublicStaticProperty", property);
+      subject.Property("PublicStaticProperty").Should().Be(property);
 
-    subject.Property("ProtectedStaticProperty", property);
-    subject.Property("ProtectedStaticProperty").Should().Be(property);
+      subject.Property("ProtectedStaticProperty", property);
+      subject.Property("ProtectedStaticProperty").Should().Be(property);
 
-    subject.Property("PrivateStaticProperty", property);
-    subject.Property("PrivateStaticProperty").Should().Be(property);
+      subject.Property("PrivateStaticProperty", property);
+      subject.Property("PrivateStaticProperty").Should().Be(property);
 
-    subject.Property("PublicProperty", property);
-    subject.Property("PublicProperty").Should().Be(property);
+      subject.Property("PublicProperty", property);
+      subject.Property("PublicProperty").Should().Be(property);
 
-    subject.Property("ProtectedProperty", property);
-    subject.Property("ProtectedProperty").Should().Be(property);
+      subject.Property("ProtectedProperty", property);
+      subject.Property("ProtectedProperty").Should().Be(property);
 
-    subject.Property("PrivateProperty", property);
-    subject.Property("PrivateProperty").Should().Be(property);*/
+      subject.Property("PrivateProperty", property);
+      subject.Property("PrivateProperty").Should().Be(property);*/
+    }
 
     throw new NotImplementedException();
 
@@ -1033,8 +1150,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SetPropertyValue_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SetPropertyValue<object>(null, string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().SetPropertyValue(null, null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SetPropertyValue<object>(null, string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().SetPropertyValue(null, null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+    }
 
     throw new NotImplementedException();
 
@@ -1086,6 +1206,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void ToSequence_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -1101,7 +1225,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void ToFormattedString_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.ToFormattedString(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.ToFormattedString(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    }
 
     throw new NotImplementedException();
 
@@ -1116,7 +1243,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void ToInvariantString_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.ToInvariantString(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.ToInvariantString(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    }
 
     throw new NotImplementedException();
 
@@ -1188,8 +1318,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsDataContract_XmlWriter_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().SerializeAsDataContract((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().SerializeAsDataContract((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -1210,8 +1343,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsDataContract_TextWriter_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().SerializeAsDataContract((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().SerializeAsDataContract((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -1232,8 +1368,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsDataContract_Stream_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().SerializeAsDataContract((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().SerializeAsDataContract((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -1254,8 +1393,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsDataContract_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().SerializeAsDataContract((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().SerializeAsDataContract((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -1272,7 +1414,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsDataContract_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    }
 
     throw new NotImplementedException();
 
@@ -1290,8 +1435,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsXml_XmlWriter_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().SerializeAsXml((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().SerializeAsXml((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -1312,8 +1460,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsXml_TextWriter_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().SerializeAsXml((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().SerializeAsXml((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -1334,45 +1485,48 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsXml_Stream_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().SerializeAsXml((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-
-    /*var subject = Attributes.RandomString();
-
-    var xml = subject.AsXml();
-    var stringWriter = new StringWriter();
-    stringWriter.ToXmlWriter().Write(writer =>
+    using (new AssertionScope())
     {
-      new XmlSerializer(subject.GetType()).Serialize(writer, subject);
-      stringWriter.ToString().Should().Be(xml);
-    });
-    subject.AsXml((Type[]) null).Should().Be(xml);
-    subject.AsXml(Array.Empty<Type>()).Should().Be(xml);
-    subject.AsXml((Type[]) null).Should().Be(xml);
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().SerializeAsXml((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-    using (var stream = new MemoryStream())
-    {
-      subject.AsXml(stream, Encoding.Unicode).Should().BeSameAs(subject);
-      stream.Rewind().Text().Should().Be(xml);
-      stream.CanWrite.Should().BeTrue();
+      /*var subject = Attributes.RandomString();
+
+      var xml = subject.AsXml();
+      var stringWriter = new StringWriter();
+      stringWriter.ToXmlWriter().Write(writer =>
+      {
+        new XmlSerializer(subject.GetType()).Serialize(writer, subject);
+        stringWriter.ToString().Should().Be(xml);
+      });
+      subject.AsXml((Type[]) null).Should().Be(xml);
+      subject.AsXml(Array.Empty<Type>()).Should().Be(xml);
+      subject.AsXml((Type[]) null).Should().Be(xml);
+
+      using (var stream = new MemoryStream())
+      {
+        subject.AsXml(stream, Encoding.Unicode).Should().BeSameAs(subject);
+        stream.Rewind().Text().Should().Be(xml);
+        stream.CanWrite.Should().BeTrue();
+      }
+
+      using (var writer = new StringWriter())
+      {
+        subject.AsXml(writer).Should().BeSameAs(subject);
+        writer.ToString().Should().Be(xml);
+        writer.WriteLine();
+      }
+
+      stringWriter = new StringWriter();
+      using (var writer = stringWriter.ToXmlWriter())
+      {
+        subject.AsXml(writer).Should().BeSameAs(subject);
+        stringWriter.ToString().Should().Be(xml);
+        stringWriter.WriteLine();
+      }*/
+
+      // TODO Encoding support
     }
-
-    using (var writer = new StringWriter())
-    {
-      subject.AsXml(writer).Should().BeSameAs(subject);
-      writer.ToString().Should().Be(xml);
-      writer.WriteLine();
-    }
-
-    stringWriter = new StringWriter();
-    using (var writer = stringWriter.ToXmlWriter())
-    {
-      subject.AsXml(writer).Should().BeSameAs(subject);
-      stringWriter.ToString().Should().Be(xml);
-      stringWriter.WriteLine();
-    }*/
-
-    // TODO Encoding support
 
     throw new NotImplementedException();
 
@@ -1393,8 +1547,11 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsXml_FileInfo_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-    AssertionExtensions.Should(() => new object().SerializeAsXml((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => new object().SerializeAsXml((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
 
     throw new NotImplementedException();
 
@@ -1411,7 +1568,10 @@ public sealed class ObjectExtensionsTest : UnitTest
   [Fact]
   public void SerializeAsXml_Method()
   {
-    AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+    }
 
     throw new NotImplementedException();
 

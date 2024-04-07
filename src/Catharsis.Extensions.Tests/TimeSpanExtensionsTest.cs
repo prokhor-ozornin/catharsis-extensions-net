@@ -1,5 +1,6 @@
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -15,6 +16,10 @@ public sealed class TimeSpanExtensionsTest : UnitTest
   [Fact]
   public void With_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -28,6 +33,10 @@ public sealed class TimeSpanExtensionsTest : UnitTest
   [Fact]
   public void Without_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -41,13 +50,16 @@ public sealed class TimeSpanExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    Validate(false, TimeSpan.MinValue);
-    Validate(false, TimeSpan.MaxValue);
-    Validate(false, TimeSpan.FromTicks(long.MinValue));
-    Validate(false, TimeSpan.FromTicks(long.MaxValue));
+    using (new AssertionScope())
+    {
+      Validate(false, TimeSpan.MinValue);
+      Validate(false, TimeSpan.MaxValue);
+      Validate(false, TimeSpan.FromTicks(long.MinValue));
+      Validate(false, TimeSpan.FromTicks(long.MaxValue));
 
-    Validate(true, TimeSpan.Zero);
-    Validate(true, TimeSpan.FromTicks(0));
+      Validate(true, TimeSpan.Zero);
+      Validate(true, TimeSpan.FromTicks(0));
+    }
 
     return;
 
@@ -60,11 +72,14 @@ public sealed class TimeSpanExtensionsTest : UnitTest
   [Fact]
   public void InThePast_Method()
   {
-    var now = DateTime.UtcNow;
+    using (new AssertionScope())
+    {
+      var now = DateTime.UtcNow;
 
-    TimeSpan.Zero.InThePast().Should().BeBefore(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
-    TimeSpan.FromMinutes(1).InThePast().Should().BeBefore(DateTimeOffset.UtcNow).And.BeBefore(now).And.BeWithin(TimeSpan.Zero);
-    TimeSpan.FromMinutes(-1).InThePast().Should().BeAfter(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
+      TimeSpan.Zero.InThePast().Should().BeBefore(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
+      TimeSpan.FromMinutes(1).InThePast().Should().BeBefore(DateTimeOffset.UtcNow).And.BeBefore(now).And.BeWithin(TimeSpan.Zero);
+      TimeSpan.FromMinutes(-1).InThePast().Should().BeAfter(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
+    }
 
     return;
 
@@ -82,13 +97,16 @@ public sealed class TimeSpanExtensionsTest : UnitTest
   [Fact]
   public void InTheFuture_Method()
   {
-    var now = DateTime.UtcNow;
+    using (new AssertionScope())
+    {
+      var now = DateTime.UtcNow;
 
-    //Validate();
+      //Validate();
 
-    //TimeSpan.Zero.InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
-    //TimeSpan.FromMinutes(1).InTheFuture().Should().BeAfter(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
-    //TimeSpan.FromMinutes(-1).InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow).And.BeBefore(now).And.BeWithin(TimeSpan.Zero);
+      //TimeSpan.Zero.InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
+      //TimeSpan.FromMinutes(1).InTheFuture().Should().BeAfter(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
+      //TimeSpan.FromMinutes(-1).InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow).And.BeBefore(now).And.BeWithin(TimeSpan.Zero);
+    }
 
     return;
 

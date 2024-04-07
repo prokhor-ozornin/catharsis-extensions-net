@@ -59,6 +59,10 @@ public sealed class ValueTaskExtensionsTest : UnitTest
   [Fact]
   public void Execute_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -74,6 +78,10 @@ public sealed class ValueTaskExtensionsTest : UnitTest
   [Fact]
   public void ExecuteAsync_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;

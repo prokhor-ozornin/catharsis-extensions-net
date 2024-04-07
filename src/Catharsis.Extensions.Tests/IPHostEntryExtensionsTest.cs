@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,12 +17,15 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
   [Fact]
   public void Clone_Method()
   {
-    AssertionExtensions.Should(() => IPHostEntryExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("host");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IPHostEntryExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("host");
 
-    Validate(new IPHostEntry());
-    Validate(new IPHostEntry { HostName = string.Empty, AddressList = [] });
-    Validate(new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
-    Validate(new IPHostEntry { AddressList = [IPAddress.Loopback] });
+      Validate(new IPHostEntry());
+      Validate(new IPHostEntry { HostName = string.Empty, AddressList = [] });
+      Validate(new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
+      Validate(new IPHostEntry { AddressList = [IPAddress.Loopback] });
+    }
 
     return;
 
@@ -43,22 +47,25 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
   [Fact]
   public void IsAvailable_Method()
   {
-    AssertionExtensions.Should(() => ((IPHostEntry) null).IsAvailable()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IPHostEntry) null).IsAvailable()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
 
-    AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailable()).ThrowExactly<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailable(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailable(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailable()).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailable(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailable(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
-    AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailable()).ThrowExactly<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailable(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailable(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailable()).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailable(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailable(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
-    Validate(false, new IPHostEntry());
-    Validate(false, new IPHostEntry { HostName = string.Empty, AddressList = [] });
-    Validate(true, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
-    Validate(true, new IPHostEntry { HostName = IPAddress.Loopback.ToString() }, TimeSpan.FromMilliseconds(1));
-    Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() });
-    Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() }, TimeSpan.FromMilliseconds(1));
+      Validate(false, new IPHostEntry());
+      Validate(false, new IPHostEntry { HostName = string.Empty, AddressList = [] });
+      Validate(true, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
+      Validate(true, new IPHostEntry { HostName = IPAddress.Loopback.ToString() }, TimeSpan.FromMilliseconds(1));
+      Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() });
+      Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() }, TimeSpan.FromMilliseconds(1));
+    }
 
     return;
 
@@ -71,24 +78,27 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
   [Fact]
   public void IsAvailableAsync_Method()
   {
-    AssertionExtensions.Should(() => ((IPHostEntry) null).IsAvailableAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("host").Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IPHostEntry) null).IsAvailableAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("host").Await();
 
-    AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
-    AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-    AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
-    Validate(false, new IPHostEntry());
-    Validate(false, new IPHostEntry { HostName = string.Empty, AddressList = [] });
+      Validate(false, new IPHostEntry());
+      Validate(false, new IPHostEntry { HostName = string.Empty, AddressList = [] });
 
-    Validate(true, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
-    Validate(true, new IPHostEntry { HostName = IPAddress.Loopback.ToString() }, TimeSpan.FromMilliseconds(1));
+      Validate(true, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
+      Validate(true, new IPHostEntry { HostName = IPAddress.Loopback.ToString() }, TimeSpan.FromMilliseconds(1));
 
-    Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() });
-    Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() }, TimeSpan.FromMilliseconds(1));
+      Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() });
+      Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() }, TimeSpan.FromMilliseconds(1));
+    }
     
     return;
 
@@ -106,11 +116,14 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
   [Fact]
   public void IsUnset_Method()
   {
-    Validate(true, null);
-    Validate(true, new IPHostEntry());
-    Validate(true, new IPHostEntry { HostName = string.Empty, AddressList = [] });
-    Validate(false, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
-    Validate(false, new IPHostEntry { AddressList = [IPAddress.Loopback] });
+    using (new AssertionScope())
+    {
+      Validate(true, null);
+      Validate(true, new IPHostEntry());
+      Validate(true, new IPHostEntry { HostName = string.Empty, AddressList = [] });
+      Validate(false, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
+      Validate(false, new IPHostEntry { AddressList = [IPAddress.Loopback] });
+    }
 
     return;
 
@@ -123,12 +136,15 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    AssertionExtensions.Should(() => ((IPHostEntry) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IPHostEntry) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
 
-    Validate(true, new IPHostEntry());
-    Validate(true, new IPHostEntry { HostName = string.Empty, AddressList = [] });
-    Validate(false, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
-    Validate(false, new IPHostEntry { AddressList = [IPAddress.Loopback] });
+      Validate(true, new IPHostEntry());
+      Validate(true, new IPHostEntry { HostName = string.Empty, AddressList = [] });
+      Validate(false, new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
+      Validate(false, new IPHostEntry { AddressList = [IPAddress.Loopback] });
+    }
 
     return;
 
@@ -141,12 +157,15 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
   [Fact]
   public void ToEnumerable_Method()
   {
-    AssertionExtensions.Should(() => ((IPHostEntry) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
-
-    new[] { new IPHostEntry(), new IPHostEntry { AddressList = [] } }.ForEach(host =>
+    using (new AssertionScope())
     {
-      host.ToEnumerable().Should().BeOfType<IEnumerable<IPAddress>>().And.BeSameAs(host.ToEnumerable()).And.Equal(host.AddressList ?? []);
-    });
+      AssertionExtensions.Should(() => ((IPHostEntry) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
+
+      new[] { new IPHostEntry(), new IPHostEntry { AddressList = [] } }.ForEach(host =>
+      {
+        host.ToEnumerable().Should().BeOfType<IEnumerable<IPAddress>>().And.BeSameAs(host.ToEnumerable()).And.Equal(host.AddressList ?? []);
+      });
+    }
 
     return;
 

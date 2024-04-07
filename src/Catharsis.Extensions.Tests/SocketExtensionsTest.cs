@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,28 +17,31 @@ public sealed class SocketExtensionsTest : UnitTest
   [Fact]
   public void WithTimeout_Method()
   {
-    AssertionExtensions.Should(() => ((Socket) null).WithTimeout(null)).ThrowExactly<ArgumentNullException>().WithParameterName("socket");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Socket) null).WithTimeout(null)).ThrowExactly<ArgumentNullException>().WithParameterName("socket");
 
-    using var socket = new Socket(SocketType.Stream, ProtocolType.IP);
+      using var socket = new Socket(SocketType.Stream, ProtocolType.IP);
 
-    var receiveTimeout = socket.ReceiveTimeout;
-    var sendTimeout = socket.SendTimeout;
-    receiveTimeout.Should().Be(0);
-    sendTimeout.Should().Be(0);
+      var receiveTimeout = socket.ReceiveTimeout;
+      var sendTimeout = socket.SendTimeout;
+      receiveTimeout.Should().Be(0);
+      sendTimeout.Should().Be(0);
 
-    socket.WithTimeout(null).Should().BeOfType<Socket>().And.BeSameAs(socket);
-    socket.ReceiveTimeout.Should().Be(receiveTimeout);
-    socket.SendTimeout.Should().Be(sendTimeout);
+      socket.WithTimeout(null).Should().BeOfType<Socket>().And.BeSameAs(socket);
+      socket.ReceiveTimeout.Should().Be(receiveTimeout);
+      socket.SendTimeout.Should().Be(sendTimeout);
 
-    var timespan = TimeSpan.FromMilliseconds(-1);
-    socket.WithTimeout(timespan).Should().BeOfType<Socket>().And.BeSameAs(socket);
-    socket.ReceiveTimeout.Should().Be(0);
-    socket.SendTimeout.Should().Be(0);
+      var timespan = TimeSpan.FromMilliseconds(-1);
+      socket.WithTimeout(timespan).Should().BeOfType<Socket>().And.BeSameAs(socket);
+      socket.ReceiveTimeout.Should().Be(0);
+      socket.SendTimeout.Should().Be(0);
 
-    timespan = TimeSpan.Zero;
-    socket.WithTimeout(timespan).Should().BeOfType<Socket>().And.BeSameAs(socket);
-    socket.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
-    socket.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
+      timespan = TimeSpan.Zero;
+      socket.WithTimeout(timespan).Should().BeOfType<Socket>().And.BeSameAs(socket);
+      socket.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
+      socket.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
+    }
 
     throw new NotImplementedException();
 
@@ -57,13 +61,16 @@ public sealed class SocketExtensionsTest : UnitTest
   [Fact]
   public void TryFinallyDisconnect_Method()
   {
-    AssertionExtensions.Should(() => ((Socket) null).TryFinallyDisconnect(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("socket");
-    AssertionExtensions.Should(() => new Socket(SocketType.Stream, ProtocolType.IP).TryFinallyDisconnect(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Socket) null).TryFinallyDisconnect(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("socket");
+      AssertionExtensions.Should(() => new Socket(SocketType.Stream, ProtocolType.IP).TryFinallyDisconnect(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-    //using (var socket = new Socket(SocketType.Unknown, ProtocolType.Icmp))
-    //{
-    //  socket.Connect(new DnsEndPoint())
-    //}
+      //using (var socket = new Socket(SocketType.Unknown, ProtocolType.Icmp))
+      //{
+      //  socket.Connect(new DnsEndPoint())
+      //}
+    }
 
     throw new NotImplementedException();
 

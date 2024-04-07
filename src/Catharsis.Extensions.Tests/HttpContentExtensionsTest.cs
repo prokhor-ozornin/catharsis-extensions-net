@@ -1,5 +1,6 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -15,7 +16,10 @@ public sealed class HttpContentExtensionsTest : UnitTest
   [Fact]
   public void ToStream_Method()
   {
-    AssertionExtensions.Should(() => HttpContentExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("content");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => HttpContentExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("content");
+    }
 
     throw new NotImplementedException();
 
@@ -36,8 +40,11 @@ public sealed class HttpContentExtensionsTest : UnitTest
   [Fact]
   public void ToStreamAsync_Method()
   {
-    AssertionExtensions.Should(() => HttpContentExtensions.ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
-    AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => HttpContentExtensions.ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
+      AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
 
     throw new NotImplementedException();
 
@@ -58,12 +65,15 @@ public sealed class HttpContentExtensionsTest : UnitTest
   [Fact]
   public void ToBytes_Method()
   {
-    AssertionExtensions.Should(() => ((HttpContent) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
-
-    new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
+    using (new AssertionScope())
     {
-      Validate(bytes, new ByteArrayContent(bytes));
-    });
+      AssertionExtensions.Should(() => ((HttpContent) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
+
+      new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
+      {
+        Validate(bytes, new ByteArrayContent(bytes));
+      });
+    }
 
     return;
 
@@ -82,12 +92,15 @@ public sealed class HttpContentExtensionsTest : UnitTest
   [Fact]
   public void ToBytesAsync_Method()
   {
-    AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
-
-    new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
+    using (new AssertionScope())
     {
-      Validate(bytes, new ByteArrayContent(bytes));
-    });
+      AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
+
+      new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
+      {
+        Validate(bytes, new ByteArrayContent(bytes));
+      });
+    }
 
     return;
 
@@ -108,12 +121,15 @@ public sealed class HttpContentExtensionsTest : UnitTest
   [Fact]
   public void ToText_Method()
   {
-    AssertionExtensions.Should(() => ((HttpContent) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
-
-    new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
+    using (new AssertionScope())
     {
-      Validate(text, new StringContent(text));
-    });
+      AssertionExtensions.Should(() => ((HttpContent) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
+
+      new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
+      {
+        Validate(text, new StringContent(text));
+      });
+    }
 
     return;
 
@@ -132,13 +148,16 @@ public sealed class HttpContentExtensionsTest : UnitTest
   [Fact]
   public void ToTextAsync_Method()
   {
-    AssertionExtensions.Should(() => ((HttpContent) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
-    AssertionExtensions.Should(() => new StringContent(string.Empty).ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-    new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
+    using (new AssertionScope())
     {
-      Validate(text, new StringContent(text));
-    });
+      AssertionExtensions.Should(() => ((HttpContent) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
+      AssertionExtensions.Should(() => new StringContent(string.Empty).ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+
+      new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
+      {
+        Validate(text, new StringContent(text));
+      });
+    }
 
     return;
 

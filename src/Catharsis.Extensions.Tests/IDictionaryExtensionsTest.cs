@@ -92,7 +92,10 @@ public sealed class IDictionaryExtensionsTest : UnitTest
   [Fact]
   public void GetValueOrDefault_Method()
   {
-    AssertionExtensions.Should(() => IDictionaryExtensions.GetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IDictionaryExtensions.GetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
 
     throw new NotImplementedException();
 
@@ -109,7 +112,10 @@ public sealed class IDictionaryExtensionsTest : UnitTest
   [Fact]
   public void SetValueOrDefault_Method()
   {
-    AssertionExtensions.Should(() => IDictionaryExtensions.SetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IDictionaryExtensions.SetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
 
     throw new NotImplementedException();
 
@@ -126,7 +132,10 @@ public sealed class IDictionaryExtensionsTest : UnitTest
   [Fact]
   public void ToSortedList_Method()
   {
-    AssertionExtensions.Should(() => IDictionaryExtensions.ToSortedList<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IDictionaryExtensions.ToSortedList<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
 
     throw new NotImplementedException();
 
@@ -143,7 +152,10 @@ public sealed class IDictionaryExtensionsTest : UnitTest
   [Fact]
   public void ToSortedDictionary_Method()
   {
-    AssertionExtensions.Should(() => IDictionaryExtensions.ToSortedDictionary<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IDictionaryExtensions.ToSortedDictionary<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
 
     throw new NotImplementedException();
 
@@ -160,7 +172,10 @@ public sealed class IDictionaryExtensionsTest : UnitTest
   [Fact]
   public void ToFrozenDictionary_Method()
   {
-    AssertionExtensions.Should(() => IDictionaryExtensions.ToFrozenDictionary<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IDictionaryExtensions.ToFrozenDictionary<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
 
     throw new NotImplementedException();
 

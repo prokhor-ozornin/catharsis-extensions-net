@@ -18,9 +18,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
   [Fact]
   public void IsEvent_Method()
   {
-    AssertionExtensions.Should(() => MemberInfoExtensions.IsEvent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MemberInfoExtensions.IsEvent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
-    //typeof(TestObject).Event("PublicEvent").As<MemberInfo>().IsEvent().Should().BeTrue();
+      //typeof(TestObject).Event("PublicEvent").As<MemberInfo>().IsEvent().Should().BeTrue();
+    }
 
     throw new NotImplementedException();
 
@@ -35,9 +38,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
   [Fact]
   public void IsField_Method()
   {
-    AssertionExtensions.Should(() => MemberInfoExtensions.IsField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MemberInfoExtensions.IsField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
-    //typeof(TestObject).Field("PublicField").As<MemberInfo>().IsField().Should().BeTrue();
+      //typeof(TestObject).Field("PublicField").As<MemberInfo>().IsField().Should().BeTrue();
+    }
 
     throw new NotImplementedException();
 
@@ -52,9 +58,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
   [Fact]
   public void IsProperty_Method()
   {
-    AssertionExtensions.Should(() => MemberInfoExtensions.IsProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MemberInfoExtensions.IsProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
-    //typeof(TestObject).Property("PublicProperty").As<MemberInfo>().IsProperty().Should().BeTrue();
+      //typeof(TestObject).Property("PublicProperty").As<MemberInfo>().IsProperty().Should().BeTrue();
+    }
 
     throw new NotImplementedException();
 
@@ -69,9 +78,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
   [Fact]
   public void IsMethod_Method()
   {
-    AssertionExtensions.Should(() => MemberInfoExtensions.IsMethod(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MemberInfoExtensions.IsMethod(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
-    //typeof(TestObject).Method("PublicMethod").As<MemberInfo>().IsMethod().Should().BeTrue();
+      //typeof(TestObject).Method("PublicMethod").As<MemberInfo>().IsMethod().Should().BeTrue();
+    }
 
     throw new NotImplementedException();
 
@@ -86,9 +98,12 @@ public sealed class MemberInfoExtensionsTest : UnitTest
   [Fact]
   public void IsConstructor_Method()
   {
-    AssertionExtensions.Should(() => MemberInfoExtensions.IsConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
-    
-    //typeof(TestObject).Constructor().As<MemberInfo>().IsConstructor().Should().BeTrue();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MemberInfoExtensions.IsConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      
+      //typeof(TestObject).Constructor().As<MemberInfo>().IsConstructor().Should().BeTrue();
+    }
 
     throw new NotImplementedException();
 

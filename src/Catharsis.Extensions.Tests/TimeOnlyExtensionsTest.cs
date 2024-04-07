@@ -1,5 +1,6 @@
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -15,7 +16,10 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void Range_Methods()
   {
-    Validate(DateTime.Now.ToTimeOnly());
+    using (new AssertionScope())
+    {
+      Validate(DateTime.Now.ToTimeOnly());
+    }
 
     return;
 
@@ -45,9 +49,12 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void StartOfHour_Method()
   {
-    Validate(TimeOnly.MinValue);
-    Validate(TimeOnly.MaxValue);
-    Validate(DateTime.Now.ToTimeOnly());
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+    }
 
     return;
 
@@ -60,9 +67,12 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void StartOfMinute_Method()
   {
-    Validate(TimeOnly.MinValue);
-    Validate(TimeOnly.MaxValue);
-    Validate(DateTime.Now.ToTimeOnly());
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+    }
 
     return;
 
@@ -75,9 +85,12 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void StartOfSecond_Method()
   {
-    Validate(TimeOnly.MinValue);
-    Validate(TimeOnly.MaxValue);
-    Validate(DateTime.Now.ToTimeOnly());
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+    }
 
     return;
 
@@ -90,9 +103,12 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void EndOfHour_Method()
   {
-    Validate(TimeOnly.MinValue);
-    Validate(TimeOnly.MaxValue);
-    Validate(DateTime.Now.ToTimeOnly());
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+    }
 
     return;
 
@@ -105,9 +121,12 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void EndOfMinute_Method()
   {
-    Validate(TimeOnly.MinValue);
-    Validate(TimeOnly.MaxValue);
-    Validate(DateTime.Now.ToTimeOnly());
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+    }
 
     return;
 
@@ -120,9 +139,12 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void EndOfSecond_Method()
   {
-    Validate(TimeOnly.MinValue);
-    Validate(TimeOnly.MaxValue);
-    Validate(DateTime.Now.ToTimeOnly());
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+    }
 
     return;
 
@@ -135,9 +157,12 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void ToDateTime_Method()
   {
-    Validate(TimeOnly.MinValue);
-    Validate(TimeOnly.MaxValue);
-    Validate(DateTime.Now.ToTimeOnly());
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+    }
 
     return;
 
@@ -154,9 +179,12 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   [Fact]
   public void ToDateTimeOffset_Method()
   {
-    Validate(TimeOnly.MinValue);
-    Validate(TimeOnly.MaxValue);
-    Validate(DateTime.Now.ToTimeOnly());
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+    }
 
     return;
 

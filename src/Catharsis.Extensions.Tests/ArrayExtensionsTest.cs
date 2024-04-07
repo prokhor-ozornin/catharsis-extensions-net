@@ -22,6 +22,10 @@ public sealed class ArrayExtensionsTest : UnitTest
     AssertionExtensions.Should(() => Array.Empty<object>().Range(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
     AssertionExtensions.Should(() => Array.Empty<object>().Range(null, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -37,12 +41,16 @@ public sealed class ArrayExtensionsTest : UnitTest
   [Fact]
   public void CharArray_FromBase64_Method()
   {
-    AssertionExtensions.Should(() => ArrayExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
+    using (new AssertionScope())
+    {
 
-    var bytes = Attributes.RandomBytes();
+      AssertionExtensions.Should(() => ArrayExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
 
-    Enumerable.Empty<byte>().ToBase64().Should().BeOfType<string>().And.BeEmpty();
-    bytes.ToBase64().Should().BeOfType<string>().And.Be(Convert.ToBase64String(bytes));
+      var bytes = Attributes.RandomBytes();
+
+      Enumerable.Empty<byte>().ToBase64().Should().BeOfType<string>().And.BeEmpty();
+      bytes.ToBase64().Should().BeOfType<string>().And.Be(Convert.ToBase64String(bytes));
+    }
 
     throw new NotImplementedException();
 
@@ -59,10 +67,14 @@ public sealed class ArrayExtensionsTest : UnitTest
   [Fact]
   public void CharArray_ToBytes_Method()
   {
-    AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>()
+        .WithParameterName("chars");
 
-    //Validate(Attributes.RandomChars());
-    //Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomChars(), encoding.GetEncoding()));
+      //Validate(Attributes.RandomChars());
+      //Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomChars(), encoding.GetEncoding()));
+    }
 
     throw new NotImplementedException();
 
@@ -83,13 +95,16 @@ public sealed class ArrayExtensionsTest : UnitTest
   [Fact]
   public void CharArray_ToText_Method()
   {
-    AssertionExtensions.Should(() => ArrayExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ArrayExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
 
-    Array.Empty<char>().ToText().Should().BeOfType<char[]>().And.BeSameAs(Array.Empty<char>().ToText()).And.BeEmpty();
+      Array.Empty<char>().ToText().Should().BeOfType<char[]>().And.BeSameAs(Array.Empty<char>().ToText()).And.BeEmpty();
 
-    var text = Attributes.RandomString();
-    var chars = text.ToCharArray();
-    chars.ToText().Should().BeOfType<string>().And.Be(text);
+      var text = Attributes.RandomString();
+      var chars = text.ToCharArray();
+      chars.ToText().Should().BeOfType<string>().And.Be(text);
+    }
 
     throw new NotImplementedException();
 
@@ -106,10 +121,13 @@ public sealed class ArrayExtensionsTest : UnitTest
   [Fact]
   public void ByteArray_ToText_Method()
   {
-    AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-    //Validate(Attributes.RandomBytes(), null);
-    //Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomBytes(), encoding.GetEncoding()));
+      //Validate(Attributes.RandomBytes(), null);
+      //Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomBytes(), encoding.GetEncoding()));
+    }
 
     throw new NotImplementedException();
 

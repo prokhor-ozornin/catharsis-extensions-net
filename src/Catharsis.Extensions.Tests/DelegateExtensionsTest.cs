@@ -1,5 +1,6 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -30,16 +31,19 @@ public sealed class DelegateExtensionsTest : UnitTest
   [Fact]
   public void And_Method()
   {
-    AssertionExtensions.Should(() => DelegateExtensions.And(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-    AssertionExtensions.Should(() => IncrementDelegate.And(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
-    AssertionExtensions.Should(() => IncrementDelegate.And(DecrementDelegate)).ThrowExactly<ArgumentException>();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => DelegateExtensions.And(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+      AssertionExtensions.Should(() => IncrementDelegate.And(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+      AssertionExtensions.Should(() => IncrementDelegate.And(DecrementDelegate)).ThrowExactly<ArgumentException>();
 
-    /*var andDelegate = IncrementDelegate.And(IncrementDelegate);
-    andDelegate.Should().BeOfType<MulticastDelegate>();
-    andDelegate.Method.Should().Equals(GetType().Method("IncrementValue")).Should().BeTrue();
-    andDelegate.Target.Should().BeNull();
-    andDelegate.GetInvocationList().Should().Equal(IncrementDelegate, IncrementDelegate);
-    andDelegate.DynamicInvoke(0).As<int>().Should().Be(1);*/
+      /*var andDelegate = IncrementDelegate.And(IncrementDelegate);
+      andDelegate.Should().BeOfType<MulticastDelegate>();
+      andDelegate.Method.Should().Equals(GetType().Method("IncrementValue")).Should().BeTrue();
+      andDelegate.Target.Should().BeNull();
+      andDelegate.GetInvocationList().Should().Equal(IncrementDelegate, IncrementDelegate);
+      andDelegate.DynamicInvoke(0).As<int>().Should().Be(1);*/
+    }
 
     throw new NotImplementedException();
 
@@ -56,12 +60,15 @@ public sealed class DelegateExtensionsTest : UnitTest
   [Fact]
   public void Not_Method()
   {
-    AssertionExtensions.Should(() => DelegateExtensions.Not(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-    AssertionExtensions.Should(() => IncrementDelegate.Not(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
-    AssertionExtensions.Should(() => IncrementDelegate.Not(DecrementDelegate)).ThrowExactly<ArgumentException>();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => DelegateExtensions.Not(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+      AssertionExtensions.Should(() => IncrementDelegate.Not(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+      AssertionExtensions.Should(() => IncrementDelegate.Not(DecrementDelegate)).ThrowExactly<ArgumentException>();
 
-    /*IncrementDelegate.Not(null).Should().BeSameAs(IncrementDelegate);
-    IncrementDelegate.Not(IncrementDelegate).Should().BeNull();*/
+      /*IncrementDelegate.Not(null).Should().BeSameAs(IncrementDelegate);
+      IncrementDelegate.Not(IncrementDelegate).Should().BeNull();*/
+    }
 
     throw new NotImplementedException();
 

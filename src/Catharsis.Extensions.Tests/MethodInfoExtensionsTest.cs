@@ -19,7 +19,10 @@ public sealed class MethodInfoExtensionsTest : UnitTest
   [Fact]
   public void IsOverridable_Method()
   {
-    AssertionExtensions.Should(() => MethodInfoExtensions.IsOverridable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MethodInfoExtensions.IsOverridable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+    }
 
     throw new NotImplementedException();
 
@@ -34,7 +37,10 @@ public sealed class MethodInfoExtensionsTest : UnitTest
   [Fact]
   public void IsProtected_Method()
   {
-    AssertionExtensions.Should(() => MethodInfoExtensions.IsProtected(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MethodInfoExtensions.IsProtected(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+    }
 
     throw new NotImplementedException();
 
@@ -49,7 +55,10 @@ public sealed class MethodInfoExtensionsTest : UnitTest
   [Fact]
   public void IsInternal_Method()
   {
-    AssertionExtensions.Should(() => MethodInfoExtensions.IsInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MethodInfoExtensions.IsInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+    }
 
     throw new NotImplementedException();
 
@@ -64,7 +73,10 @@ public sealed class MethodInfoExtensionsTest : UnitTest
   [Fact]
   public void IsProtectedInternal_Method()
   {
-    AssertionExtensions.Should(() => MethodInfoExtensions.IsProtectedInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MethodInfoExtensions.IsProtectedInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+    }
 
     throw new NotImplementedException();
 

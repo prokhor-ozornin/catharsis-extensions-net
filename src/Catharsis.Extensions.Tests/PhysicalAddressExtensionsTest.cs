@@ -1,6 +1,7 @@
 ﻿using System.Net.NetworkInformation;
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,10 +17,13 @@ public sealed class PhysicalAddressExtensionsTest : UnitTest
   [Fact]
   public void Clone_Method()
   {
-    AssertionExtensions.Should(() => PhysicalAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => PhysicalAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-    Validate(PhysicalAddress.None);
-    Validate(new PhysicalAddress(Attributes.RandomBytes()));
+      Validate(PhysicalAddress.None);
+      Validate(new PhysicalAddress(Attributes.RandomBytes()));
+    }
 
     return;
 
@@ -39,10 +43,13 @@ public sealed class PhysicalAddressExtensionsTest : UnitTest
   [Fact]
   public void ToBytes_Method()
   {
-    AssertionExtensions.Should(() => ((PhysicalAddress) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((PhysicalAddress) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-    Validate(PhysicalAddress.None, []);
-    Attributes.RandomBytes().With(bytes => Validate(new PhysicalAddress(bytes), bytes));
+      Validate(PhysicalAddress.None, []);
+      Attributes.RandomBytes().With(bytes => Validate(new PhysicalAddress(bytes), bytes));
+    }
 
     return;
 

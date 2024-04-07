@@ -16,10 +16,13 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void Clone_Method()
   {
-    AssertionExtensions.Should(() => ((DirectoryInfo) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
 
-    Validate(Directory.GetCurrentDirectory().ToDirectory());
-    Validate(Attributes.RandomDirectory());
+      Validate(Directory.GetCurrentDirectory().ToDirectory());
+      Validate(Attributes.RandomDirectory());
+    }
 
     return;
 
@@ -116,6 +119,10 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void IsUnset_Method()
   {
+    using (new AssertionScope())
+    {
+    }
+
     throw new NotImplementedException();
 
     return;
@@ -129,24 +136,27 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    AssertionExtensions.Should(() => ((DirectoryInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
-
-    var directory = Attributes.RandomFakeDirectory();
-    directory.Exists.Should().BeFalse();
-    directory.IsEmpty().Should().BeTrue();
-
-    directory = Environment.SystemDirectory.ToDirectory();
-    directory.Exists.Should().BeTrue();
-    directory.IsEmpty().Should().BeFalse();
-
-    Attributes.RandomDirectory().TryFinallyDelete(info =>
+    using (new AssertionScope())
     {
-      info.Exists.Should().BeTrue();
-      info.IsEmpty().Should().BeTrue();
-      new Random().File(new Random().Directory(info));
-      new Random().File(info);
-      info.IsEmpty().Should().BeFalse();
-    });
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+
+      var directory = Attributes.RandomFakeDirectory();
+      directory.Exists.Should().BeFalse();
+      directory.IsEmpty().Should().BeTrue();
+
+      directory = Environment.SystemDirectory.ToDirectory();
+      directory.Exists.Should().BeTrue();
+      directory.IsEmpty().Should().BeFalse();
+
+      Attributes.RandomDirectory().TryFinallyDelete(info =>
+      {
+        info.Exists.Should().BeTrue();
+        info.IsEmpty().Should().BeTrue();
+        new Random().File(new Random().Directory(info));
+        new Random().File(info);
+        info.IsEmpty().Should().BeFalse();
+      });
+    }
 
     return;
 
@@ -159,7 +169,10 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    AssertionExtensions.Should(() => ((DirectoryInfo) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    }
 
     throw new NotImplementedException();
 
@@ -176,8 +189,11 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void TryFinallyClear_Method()
   {
-    AssertionExtensions.Should(() => ((DirectoryInfo) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
-    AssertionExtensions.Should(() => Attributes.RandomFakeDirectory().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+      AssertionExtensions.Should(() => Attributes.RandomFakeDirectory().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+    }
 
     throw new NotImplementedException();
 
@@ -194,27 +210,30 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void TryFinallyDelete_Method()
   {
-    AssertionExtensions.Should(() => ((DirectoryInfo) null).TryFinallyDelete(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
-    AssertionExtensions.Should(() => Attributes.RandomFakeDirectory().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
-
-    var directory = Attributes.RandomFakeDirectory();
-    directory.Exists.Should().BeFalse();
-    directory.TryFinallyDelete(info =>
+    using (new AssertionScope())
     {
-      new Random().File(info);
-      new Random().File(new Random().Directory(info));
-    });
-    directory.Exists.Should().BeFalse();
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).TryFinallyDelete(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+      AssertionExtensions.Should(() => Attributes.RandomFakeDirectory().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-    directory = Attributes.RandomDirectory();
-    directory.Exists.Should().BeTrue();
-    directory.TryFinallyDelete(info =>
-    {
-      new Random().File(info);
-      new Random().File(new Random().Directory(info));
-    });
-    directory.Exists.Should().BeTrue();
-    directory.IsEmpty().Should().BeTrue();
+      var directory = Attributes.RandomFakeDirectory();
+      directory.Exists.Should().BeFalse();
+      directory.TryFinallyDelete(info =>
+      {
+        new Random().File(info);
+        new Random().File(new Random().Directory(info));
+      });
+      directory.Exists.Should().BeFalse();
+
+      directory = Attributes.RandomDirectory();
+      directory.Exists.Should().BeTrue();
+      directory.TryFinallyDelete(info =>
+      {
+        new Random().File(info);
+        new Random().File(new Random().Directory(info));
+      });
+      directory.Exists.Should().BeTrue();
+      directory.IsEmpty().Should().BeTrue();
+    }
 
     return;
 
@@ -229,7 +248,10 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void Files_Method()
   {
-    AssertionExtensions.Should(() => DirectoryInfoExtensions.Files(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => DirectoryInfoExtensions.Files(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    }
 
     throw new NotImplementedException();
 
@@ -244,7 +266,10 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void Directories_Method()
   {
-    AssertionExtensions.Should(() => ((DirectoryInfo) null).Directories()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).Directories()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    }
 
     throw new NotImplementedException();
 
@@ -259,8 +284,11 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void InDirectory_Method()
   {
-    AssertionExtensions.Should(() => ((DirectoryInfo) null).InDirectory(Attributes.RandomFakeDirectory())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
-    AssertionExtensions.Should(() => Attributes.RandomFakeDirectory().InDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("parent");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).InDirectory(Attributes.RandomFakeDirectory())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+      AssertionExtensions.Should(() => Attributes.RandomFakeDirectory().InDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("parent");
+    }
 
     throw new NotImplementedException();
 
@@ -275,7 +303,10 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void Size_Method()
   {
-    AssertionExtensions.Should(() => ((DirectoryInfo) null).Size()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).Size()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    }
 
     throw new NotImplementedException();
 
@@ -290,7 +321,10 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void ToEnumerable_Method()
   {
-    AssertionExtensions.Should(() => DirectoryInfoExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => DirectoryInfoExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+    }
 
     throw new NotImplementedException();
 

@@ -16,10 +16,13 @@ public sealed class UriBuilderExtensionsTest : UnitTest
   [Fact]
   public void Empty_Method()
   {
-    AssertionExtensions.Should(() => UriBuilderExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => UriBuilderExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
-    Validate(new UriBuilder());
-    Validate(new UriBuilder("https://user:password@192.168.0.1/path?query#id"));
+      Validate(new UriBuilder());
+      Validate(new UriBuilder("https://user:password@192.168.0.1/path?query#id"));
+    }
 
     return;
 

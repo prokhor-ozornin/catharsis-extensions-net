@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,8 +17,11 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   [Fact]
   public void Encrypt_Bytes_Method()
   {
-    AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Encrypt(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Encrypt((IEnumerable<byte>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Encrypt(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Encrypt((IEnumerable<byte>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    }
 
     throw new NotImplementedException();
 
@@ -38,8 +42,11 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   [Fact]
   public void Encrypt_Stream_Method()
   {
-    AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Encrypt(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Encrypt((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Encrypt(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Encrypt((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+    }
 
     throw new NotImplementedException();
 
@@ -60,11 +67,14 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   [Fact]
   public void EncryptAsync_Bytes_Method()
   {
-    AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.EncryptAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync(Attributes.RandomBytes(), Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.EncryptAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync(Attributes.RandomBytes(), Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
 
-    Validate(Attributes.SymmetricAlgorithm(), Attributes.RandomBytes());
+      Validate(Attributes.SymmetricAlgorithm(), Attributes.RandomBytes());
+    }
 
     return;
 
@@ -103,9 +113,12 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   [Fact]
   public void EncryptAsync_Stream_Method()
   {
-    AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.EncryptAsync(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync((Stream) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync(Attributes.RandomStream(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.EncryptAsync(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync((Stream) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync(Attributes.RandomStream(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
 
     throw new NotImplementedException();
 
@@ -157,8 +170,11 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   [Fact]
   public void Decrypt_Bytes_Method()
   {
-    AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Decrypt(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Decrypt((IEnumerable<byte>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Decrypt(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Decrypt((IEnumerable<byte>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    }
 
     throw new NotImplementedException();
 
@@ -179,8 +195,11 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   [Fact]
   public void Decrypt_Stream_Method()
   {
-    AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Decrypt(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Decrypt((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Decrypt(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Decrypt((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+    }
 
     throw new NotImplementedException();
 
@@ -201,9 +220,12 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   [Fact]
   public void DecryptAsync_Bytes_Method()
   {
-    AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.DecryptAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync(Attributes.RandomBytes(), Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.DecryptAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync(Attributes.RandomBytes(), Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
+    }
 
     throw new NotImplementedException();
 
@@ -224,8 +246,11 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   [Fact]
   public void DecryptAsync_Stream_Method()
   {
-    AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.DecryptAsync(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
-    AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync((Stream) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.DecryptAsync(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
+      AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync((Stream) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream");
+    }
 
     throw new NotImplementedException();
 

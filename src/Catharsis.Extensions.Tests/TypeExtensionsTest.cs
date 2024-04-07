@@ -18,7 +18,10 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void IsSealed_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.IsSealed(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.IsSealed(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    }
 
     throw new NotImplementedException();
 
@@ -33,7 +36,10 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void IsStatic_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.IsStatic(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.IsStatic(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    }
 
     throw new NotImplementedException();
 
@@ -48,7 +54,10 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void IsAssignableFrom_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.IsAssignableFrom<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.IsAssignableFrom<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    }
 
     throw new NotImplementedException();
 
@@ -63,11 +72,14 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void IsAssignableTo_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.IsAssignableTo<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.IsAssignableTo<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
-    Validate<object>(true, typeof(object));
-    Validate<object>(true, typeof(string));
-    Validate<string>(false, typeof(object));
+      Validate<object>(true, typeof(object));
+      Validate<object>(true, typeof(string));
+      Validate<string>(false, typeof(object));
+    }
 
     throw new NotImplementedException();
 
@@ -82,7 +94,10 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void IsArray_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.IsArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.IsArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    }
 
     throw new NotImplementedException();
 
@@ -153,7 +168,10 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void Implementations_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.Implementations(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.Implementations(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    }
 
     throw new NotImplementedException();
 
@@ -168,7 +186,10 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void Implementors_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.Implementors(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.Implementors(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    }
 
     throw new NotImplementedException();
 
@@ -183,20 +204,23 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void HasField_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.HasField(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-    AssertionExtensions.Should(() => typeof(object).HasField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.HasField(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).HasField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
-    Validate(false, typeof(object), "field");
-    
-    /*typeof(object).HasField("field").Should().BeFalse();
+      Validate(false, typeof(object), "field");
+      
+      /*typeof(object).HasField("field").Should().BeFalse();
 
-    var subject = typeof(TestObject);
-    subject.HasField("PublicStaticField").Should().BeTrue();
-    subject.HasField("ProtectedStaticField").Should().BeTrue();
-    subject.HasField("PrivateStaticField").Should().BeTrue();
-    subject.HasField("PublicField").Should().BeTrue();
-    subject.HasField("ProtectedField").Should().BeTrue();
-    subject.HasField("PrivateField").Should().BeTrue()*/
+      var subject = typeof(TestObject);
+      subject.HasField("PublicStaticField").Should().BeTrue();
+      subject.HasField("ProtectedStaticField").Should().BeTrue();
+      subject.HasField("PrivateStaticField").Should().BeTrue();
+      subject.HasField("PublicField").Should().BeTrue();
+      subject.HasField("ProtectedField").Should().BeTrue();
+      subject.HasField("PrivateField").Should().BeTrue()*/
+    }
 
     return;
 
@@ -209,20 +233,23 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void HasProperty_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.HasProperty(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-    AssertionExtensions.Should(() => typeof(object).HasProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.HasProperty(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).HasProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
-    Validate(false, typeof(object), "property");
+      Validate(false, typeof(object), "property");
 
-    /*typeof(object).HasProperty("property").Should().BeFalse();
+      /*typeof(object).HasProperty("property").Should().BeFalse();
 
-    var subject = typeof(TestObject);
-    subject.HasProperty("PublicStaticProperty").Should().BeTrue();
-    subject.HasProperty("ProtectedStaticProperty").Should().BeTrue();
-    subject.HasProperty("PrivateStaticProperty").Should().BeTrue();
-    subject.HasProperty("PublicProperty").Should().BeTrue();
-    subject.HasProperty("ProtectedProperty").Should().BeTrue();
-    subject.HasProperty("PrivateProperty").Should().BeTrue();*/
+      var subject = typeof(TestObject);
+      subject.HasProperty("PublicStaticProperty").Should().BeTrue();
+      subject.HasProperty("ProtectedStaticProperty").Should().BeTrue();
+      subject.HasProperty("PrivateStaticProperty").Should().BeTrue();
+      subject.HasProperty("PublicProperty").Should().BeTrue();
+      subject.HasProperty("ProtectedProperty").Should().BeTrue();
+      subject.HasProperty("PrivateProperty").Should().BeTrue();*/
+    }
 
     throw new NotImplementedException();
 
@@ -277,13 +304,16 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void AnyEvent_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.AnyEvent(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-    AssertionExtensions.Should(() => typeof(object).AnyEvent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.AnyEvent(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).AnyEvent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
-    /*var type = typeof(TestObject);
-    type.Event("PublicEvent").Should().NotBeNull();
-    type.Event("ProtectedEvent").Should().NotBeNull();
-    type.Event("PrivateEvent").Should().NotBeNull();*/
+      /*var type = typeof(TestObject);
+      type.Event("PublicEvent").Should().NotBeNull();
+      type.Event("ProtectedEvent").Should().NotBeNull();
+      type.Event("PrivateEvent").Should().NotBeNull();*/
+    }
 
     throw new NotImplementedException();
 
@@ -310,46 +340,49 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void AnyField_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.AnyField(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-    AssertionExtensions.Should(() => typeof(object).AnyField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
-
-    /*var type = typeof(TestObject);
-
-    type.Field("PublicStaticField").Use(field =>
+    using (new AssertionScope())
     {
-      field.IsPublic.Should().BeTrue();
-      field.IsStatic.Should().BeTrue();
-    });
+      AssertionExtensions.Should(() => TypeExtensions.AnyField(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).AnyField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
-    type.Field("ProtectedStaticField").Use(field =>
-    {
-      field.IsPrivate.Should().BeFalse();
-      field.IsStatic.Should().BeTrue();
-    });
+      /*var type = typeof(TestObject);
 
-    type.Field("PrivateStaticField").Use(field =>
-    {
-      field.IsPrivate.Should().BeTrue();
-      field.IsStatic.Should().BeTrue();
-    });
+      type.Field("PublicStaticField").Use(field =>
+      {
+        field.IsPublic.Should().BeTrue();
+        field.IsStatic.Should().BeTrue();
+      });
 
-    type.Field("PublicField").Use(field =>
-    {
-      field.IsPublic.Should().BeTrue();
-      field.IsStatic.Should().BeFalse();
-    });
+      type.Field("ProtectedStaticField").Use(field =>
+      {
+        field.IsPrivate.Should().BeFalse();
+        field.IsStatic.Should().BeTrue();
+      });
 
-    type.Field("ProtectedField").Use(field =>
-    {
-      field.IsPrivate.Should().BeFalse();
-      field.IsStatic.Should().BeFalse();
-    });
+      type.Field("PrivateStaticField").Use(field =>
+      {
+        field.IsPrivate.Should().BeTrue();
+        field.IsStatic.Should().BeTrue();
+      });
 
-    type.Field("PrivateField").Use(field =>
-    {
-      field.IsPrivate.Should().BeTrue();
-      field.IsStatic.Should().BeFalse();
-    });*/
+      type.Field("PublicField").Use(field =>
+      {
+        field.IsPublic.Should().BeTrue();
+        field.IsStatic.Should().BeFalse();
+      });
+
+      type.Field("ProtectedField").Use(field =>
+      {
+        field.IsPrivate.Should().BeFalse();
+        field.IsStatic.Should().BeFalse();
+      });
+
+      type.Field("PrivateField").Use(field =>
+      {
+        field.IsPrivate.Should().BeTrue();
+        field.IsStatic.Should().BeFalse();
+      });*/
+    }
 
     throw new NotImplementedException();
 
@@ -376,17 +409,20 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void AnyProperty_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.AnyProperty(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-    AssertionExtensions.Should(() => typeof(object).AnyProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.AnyProperty(null, "name")).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).AnyProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
-    //var type = typeof(TestObject);
+      //var type = typeof(TestObject);
 
-    //ReflectionExtensions.AnyProperty(type, "PublicStaticProperty").With(property => property.IsPublic().Should().BeTrue());
-    //ReflectionExtensions.AnyProperty(type, "ProtectedStaticProperty").With(property => property.IsPublic().Should().BeFalse());
-    //ReflectionExtensions.AnyProperty(type, "PrivateStaticProperty").With(property => property.IsPublic().Should().BeFalse());
-    //ReflectionExtensions.AnyProperty(type, "PublicProperty").With(property => property.IsPublic().Should().BeTrue());
-    //ReflectionExtensions.AnyProperty(type, "ProtectedProperty").With(property => property.IsPublic().Should().BeFalse());
-    //ReflectionExtensions.AnyProperty(type, "PrivateProperty").With(property => property.IsPublic().Should().BeFalse());
+      //ReflectionExtensions.AnyProperty(type, "PublicStaticProperty").With(property => property.IsPublic().Should().BeTrue());
+      //ReflectionExtensions.AnyProperty(type, "ProtectedStaticProperty").With(property => property.IsPublic().Should().BeFalse());
+      //ReflectionExtensions.AnyProperty(type, "PrivateStaticProperty").With(property => property.IsPublic().Should().BeFalse());
+      //ReflectionExtensions.AnyProperty(type, "PublicProperty").With(property => property.IsPublic().Should().BeTrue());
+      //ReflectionExtensions.AnyProperty(type, "ProtectedProperty").With(property => property.IsPublic().Should().BeFalse());
+      //ReflectionExtensions.AnyProperty(type, "PrivateProperty").With(property => property.IsPublic().Should().BeFalse());
+    }
 
     throw new NotImplementedException();
 
@@ -495,10 +531,13 @@ public sealed class TypeExtensionsTest : UnitTest
   [Fact]
   public void HasDefaultConstructor_Method()
   {
-    AssertionExtensions.Should(() => TypeExtensions.HasDefaultConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.HasDefaultConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
-    /*typeof(TestObject).Constructor().Should().NotBeNull();
-    typeof(string).Constructor().Should().BeNull();*/
+      /*typeof(TestObject).Constructor().Should().NotBeNull();
+      typeof(string).Constructor().Should().BeNull();*/
+    }
 
     throw new NotImplementedException();
 

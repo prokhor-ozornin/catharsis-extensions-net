@@ -1,5 +1,6 @@
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -15,7 +16,10 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void Range_Method()
   {
-    Validate(DateTime.Now.ToDateOnly());
+    using (new AssertionScope())
+    {
+      Validate(DateTime.Now.ToDateOnly());
+    }
 
     return;
 
@@ -45,15 +49,18 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void IsWeekday_Method()
   {
-    var monday = new DateOnly(2024, 1, 1);
+    using (new AssertionScope())
+    {
+      var monday = new DateOnly(2024, 1, 1);
 
-    Validate(true, monday);
-    Validate(true, monday.AddDays(1));
-    Validate(true, monday.AddDays(2));
-    Validate(true, monday.AddDays(3));
-    Validate(true, monday.AddDays(4));
-    Validate(false, monday.AddDays(5));
-    Validate(false, monday.AddDays(6));
+      Validate(true, monday);
+      Validate(true, monday.AddDays(1));
+      Validate(true, monday.AddDays(2));
+      Validate(true, monday.AddDays(3));
+      Validate(true, monday.AddDays(4));
+      Validate(false, monday.AddDays(5));
+      Validate(false, monday.AddDays(6));
+    }
 
     return;
 
@@ -66,15 +73,18 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void IsWeekend_Method()
   {
-    var monday = new DateOnly(2024, 1, 1);
+    using (new AssertionScope())
+    {
+      var monday = new DateOnly(2024, 1, 1);
 
-    Validate(false, monday);
-    Validate(false, monday.AddDays(1));
-    Validate(false, monday.AddDays(2));
-    Validate(false, monday.AddDays(3));
-    Validate(false, monday.AddDays(4));
-    Validate(true, monday.AddDays(5));
-    Validate(true, monday.AddDays(6));
+      Validate(false, monday);
+      Validate(false, monday.AddDays(1));
+      Validate(false, monday.AddDays(2));
+      Validate(false, monday.AddDays(3));
+      Validate(false, monday.AddDays(4));
+      Validate(true, monday.AddDays(5));
+      Validate(true, monday.AddDays(6));
+    }
 
     return;
 
@@ -87,9 +97,12 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void StartOfYear_Method()
   {
-    Validate(DateOnly.MinValue);
-    Validate(DateOnly.MaxValue);
-    Validate(DateTime.Now.ToDateOnly());
+    using (new AssertionScope())
+    {
+      Validate(DateOnly.MinValue);
+      Validate(DateOnly.MaxValue);
+      Validate(DateTime.Now.ToDateOnly());
+    }
 
     return;
 
@@ -102,9 +115,12 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void StartOfMonth_Method()
   {
-    Validate(DateOnly.MinValue);
-    Validate(DateOnly.MaxValue);
-    Validate(DateTime.Now.ToDateOnly());
+    using (new AssertionScope())
+    {
+      Validate(DateOnly.MinValue);
+      Validate(DateOnly.MaxValue);
+      Validate(DateTime.Now.ToDateOnly());
+    }
 
     return;
 
@@ -117,9 +133,12 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void EndOfYear_Method()
   {
-    Validate(DateOnly.MinValue);
-    Validate(DateOnly.MaxValue);
-    Validate(DateTime.Now.ToDateOnly());
+    using (new AssertionScope())
+    {
+      Validate(DateOnly.MinValue);
+      Validate(DateOnly.MaxValue);
+      Validate(DateTime.Now.ToDateOnly());
+    }
 
     return;
 
@@ -132,9 +151,12 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void EndOfMonth_Method()
   {
-    Validate(DateOnly.MinValue);
-    Validate(DateOnly.MaxValue);
-    Validate(DateTime.Now.ToDateOnly());
+    using (new AssertionScope())
+    {
+      Validate(DateOnly.MinValue);
+      Validate(DateOnly.MaxValue);
+      Validate(DateTime.Now.ToDateOnly());
+    }
 
     return;
 
@@ -147,12 +169,15 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void ToDateTime_Method()
   {
-    Enum.GetValues<DateTimeKind>().ForEach(kind =>
+    using (new AssertionScope())
     {
-      Validate(DateOnly.MinValue, kind);
-      Validate(DateOnly.MaxValue, kind);
-      Validate(DateTime.Now.ToDateOnly(), kind);
-    });
+      Enum.GetValues<DateTimeKind>().ForEach(kind =>
+      {
+        Validate(DateOnly.MinValue, kind);
+        Validate(DateOnly.MaxValue, kind);
+        Validate(DateTime.Now.ToDateOnly(), kind);
+      });
+    }
 
     return;
     
@@ -165,11 +190,14 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   [Fact]
   public void ToDateTimeOffset_Method()
   {
-    Enum.GetValues<DateTimeKind>().ForEach(kind =>
+    using (new AssertionScope())
     {
-      Validate(DateOnly.MaxValue, kind);
-      Validate(DateTime.Now.ToDateOnly(), kind);
-    });
+      Enum.GetValues<DateTimeKind>().ForEach(kind =>
+      {
+        Validate(DateOnly.MaxValue, kind);
+        Validate(DateTime.Now.ToDateOnly(), kind);
+      });
+    }
 
     return;
 

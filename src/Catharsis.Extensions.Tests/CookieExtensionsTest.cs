@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,26 +17,29 @@ public sealed class CookieExtensionsTest : UnitTest
   [Fact]
   public void Clone_Method()
   {
-    AssertionExtensions.Should(() => CookieExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
-
-    Validate(new Cookie("id", string.Empty, "/", "localhost"));
-    
-    Validate(new Cookie
+    using (new AssertionScope())
     {
-      Name = "id",
-      Value = string.Empty,
-      Comment = "comment",
-      CommentUri = "localhost".ToUri(),
-      Domain = "localhost",
-      Expires = DateTime.Now,
-      Expired = true,
-      Discard = true,
-      HttpOnly = true,
-      Path = "/",
-      Port = string.Empty,
-      Secure = true,
-      Version = 1
-    });
+      AssertionExtensions.Should(() => CookieExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
+
+      Validate(new Cookie("id", string.Empty, "/", "localhost"));
+      
+      Validate(new Cookie
+      {
+        Name = "id",
+        Value = string.Empty,
+        Comment = "comment",
+        CommentUri = "localhost".ToUri(),
+        Domain = "localhost",
+        Expires = DateTime.Now,
+        Expired = true,
+        Discard = true,
+        HttpOnly = true,
+        Path = "/",
+        Port = string.Empty,
+        Secure = true,
+        Version = 1
+      });
+    }
 
     return;
 
@@ -68,12 +72,15 @@ public sealed class CookieExtensionsTest : UnitTest
   [Fact]
   public void IsUnset_Method()
   {
-    Validate(true, null);
-    Validate(true, new Cookie());
-    Validate(true, new Cookie("name", null));
-    Validate(true, new Cookie("name", string.Empty));
-    Validate(true, new Cookie("name", " \t\r\n "));
-    Validate(false, new Cookie("name", "value"));
+    using (new AssertionScope())
+    {
+      Validate(true, null);
+      Validate(true, new Cookie());
+      Validate(true, new Cookie("name", null));
+      Validate(true, new Cookie("name", string.Empty));
+      Validate(true, new Cookie("name", " \t\r\n "));
+      Validate(false, new Cookie("name", "value"));
+    }
 
     return;
 
@@ -86,13 +93,16 @@ public sealed class CookieExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    AssertionExtensions.Should(() => ((Cookie) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Cookie) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
 
-    Validate(true, new Cookie());
-    Validate(true, new Cookie("name", null));
-    Validate(true, new Cookie("name", string.Empty));
-    Validate(true, new Cookie("name", " \t\r\n "));
-    Validate(false, new Cookie("name", "value"));
+      Validate(true, new Cookie());
+      Validate(true, new Cookie("name", null));
+      Validate(true, new Cookie("name", string.Empty));
+      Validate(true, new Cookie("name", " \t\r\n "));
+      Validate(false, new Cookie("name", "value"));
+    }
 
     return;
 

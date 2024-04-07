@@ -1,5 +1,6 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -15,9 +16,12 @@ public sealed class DriveInfoExtensionsTest : UnitTest
   [Fact]
   public void Clone_Method()
   {
-    AssertionExtensions.Should(() => DriveInfoExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => DriveInfoExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
 
-    DriveInfo.GetDrives().ForEach(Validate);
+      DriveInfo.GetDrives().ForEach(Validate);
+    }
 
     return;
 
@@ -45,9 +49,12 @@ public sealed class DriveInfoExtensionsTest : UnitTest
   [Fact]
   public void IsEmpty_Method()
   {
-    AssertionExtensions.Should(() => ((DriveInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DriveInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
 
-    DriveInfo.GetDrives().Should().BeOfType<DriveInfo[]>().And.Contain(drive => !drive.IsEmpty());
+      DriveInfo.GetDrives().Should().BeOfType<DriveInfo[]>().And.Contain(drive => !drive.IsEmpty());
+    }
 
     return;
 
@@ -60,7 +67,10 @@ public sealed class DriveInfoExtensionsTest : UnitTest
   [Fact]
   public void Directories_Method()
   {
-    AssertionExtensions.Should(() => ((DriveInfo) null).Directories()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DriveInfo) null).Directories()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+    }
 
     throw new NotImplementedException();
 
@@ -75,7 +85,10 @@ public sealed class DriveInfoExtensionsTest : UnitTest
   [Fact]
   public void Size_Method()
   {
-    AssertionExtensions.Should(() => ((DriveInfo) null).Size()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DriveInfo) null).Size()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+    }
 
     throw new NotImplementedException();
 

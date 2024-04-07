@@ -1,5 +1,6 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -15,18 +16,21 @@ public sealed class RangeExtensionsTest : UnitTest
   [Fact]
   public void ToEnumerable_Method()
   {
-    new[] { Range.All, .., ..0, ^0..0, ^0.., 1..1, ^1..^1, int.MaxValue..int.MaxValue }.ForEach(range =>
+    using (new AssertionScope())
     {
-      range.ToEnumerable().Should().BeOfType<IEnumerable<int>>().And.BeSameAs(range.ToEnumerable()).And.BeEmpty();
-    });
+      new[] { Range.All, .., ..0, ^0..0, ^0.., 1..1, ^1..^1, int.MaxValue..int.MaxValue }.ForEach(range =>
+      {
+        range.ToEnumerable().Should().BeOfType<IEnumerable<int>>().And.BeSameAs(range.ToEnumerable()).And.BeEmpty();
+      });
 
-    new[] { ..1, ..^1, 1..0, ^1..0, ^1.. }.ForEach(range =>
-    {
-      range.ToEnumerable().Should().BeOfType<IEnumerable<int>>().And.AllBeEquivalentTo(0);
-    });
+      new[] { ..1, ..^1, 1..0, ^1..0, ^1.. }.ForEach(range =>
+      {
+        range.ToEnumerable().Should().BeOfType<IEnumerable<int>>().And.AllBeEquivalentTo(0);
+      });
 
-    var totalRange = ..int.MaxValue;
-    totalRange.ToEnumerable().Should().BeOfType<IEnumerable<int>>().And.HaveCount(int.MaxValue);
+      var totalRange = ..int.MaxValue;
+      totalRange.ToEnumerable().Should().BeOfType<IEnumerable<int>>().And.HaveCount(int.MaxValue);
+    }
 
     return;
 

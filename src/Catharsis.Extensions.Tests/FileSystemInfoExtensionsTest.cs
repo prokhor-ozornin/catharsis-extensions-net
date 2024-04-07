@@ -1,5 +1,6 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -15,10 +16,13 @@ public sealed class FileSystemInfoExtensionsTest : UnitTest
   [Fact]
   public void ToUri_Method()
   {
-    AssertionExtensions.Should(() => FileSystemInfoExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entry");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => FileSystemInfoExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entry");
 
-    Validate(Attributes.RandomFakeFile());
-    Validate(Attributes.RandomFakeDirectory());
+      Validate(Attributes.RandomFakeFile());
+      Validate(Attributes.RandomFakeDirectory());
+    }
 
     return;
 

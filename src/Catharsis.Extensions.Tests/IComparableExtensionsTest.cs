@@ -1,5 +1,6 @@
 ﻿using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -15,7 +16,10 @@ public sealed class IComparableExtensionsTest : UnitTest
   [Fact]
   public void IsPositive_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
 
     return;
 
@@ -28,7 +32,10 @@ public sealed class IComparableExtensionsTest : UnitTest
   [Fact]
   public void IsNegative_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
 
     return;
 
@@ -41,7 +48,10 @@ public sealed class IComparableExtensionsTest : UnitTest
   [Fact]
   public void IsDefault_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
 
     return;
 
@@ -54,7 +64,10 @@ public sealed class IComparableExtensionsTest : UnitTest
   [Fact]
   public void Min_Method()
   {
-    AssertionExtensions.Should(() => IComparableExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IComparableExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    }
 
     throw new NotImplementedException();
 
@@ -69,7 +82,10 @@ public sealed class IComparableExtensionsTest : UnitTest
   [Fact]
   public void Max_Method()
   {
-    AssertionExtensions.Should(() => IComparableExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IComparableExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    }
 
     throw new NotImplementedException();
 
@@ -84,7 +100,10 @@ public sealed class IComparableExtensionsTest : UnitTest
   [Fact]
   public void MinMax_Method()
   {
-    AssertionExtensions.Should(() => IComparableExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IComparableExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+    }
 
     throw new NotImplementedException();
 

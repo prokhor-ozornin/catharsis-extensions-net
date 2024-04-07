@@ -139,11 +139,14 @@ public sealed class IListExtensionsTest : UnitTest
   [Fact]
   public void Swap_Method()
   {
-    AssertionExtensions.Should(() => IListExtensions.Swap<object>(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
-    AssertionExtensions.Should(() => Array.Empty<object>().Swap(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("firstIndex");
-    AssertionExtensions.Should(() => Array.Empty<object>().Swap(1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("firstIndex");
-    AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
-    AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IListExtensions.Swap<object>(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => Array.Empty<object>().Swap(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("firstIndex");
+      AssertionExtensions.Should(() => Array.Empty<object>().Swap(1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("firstIndex");
+      AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
+      AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
+    }
 
     throw new NotImplementedException();
 
@@ -160,17 +163,20 @@ public sealed class IListExtensionsTest : UnitTest
   [Fact]
   public void Randomize_Method()
   {
-    AssertionExtensions.Should(() => IListExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IListExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
 
-    var collection = new List<object>();
-    collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.BeEmpty();
+      var collection = new List<object>();
+      collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.BeEmpty();
 
-    collection = [string.Empty];
-    collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.Equal(string.Empty);
+      collection = [string.Empty];
+      collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.Equal(string.Empty);
 
-    var sequence = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
-    collection = [..sequence];
-    collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.Contain(sequence);
+      var sequence = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
+      collection = [..sequence];
+      collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.Contain(sequence);
+    }
 
     return;
 
@@ -185,20 +191,23 @@ public sealed class IListExtensionsTest : UnitTest
   [Fact]
   public void AsReadOnly_Method()
   {
-    AssertionExtensions.Should(() => IListExtensions.AsReadOnly<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IListExtensions.AsReadOnly<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
 
-    /*var list = new List<object> { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
-    var readOnly = CollectionsExtensions.AsReadOnly(list);
+      /*var list = new List<object> { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
+      var readOnly = CollectionsExtensions.AsReadOnly(list);
 
-    readOnly.Should().NotBeNull().And.Equal(list);
-    readOnly.IsReadOnly.Should().BeTrue();
-    readOnly.GetType().Should().Implement<IReadOnlyList<object>>();
+      readOnly.Should().NotBeNull().And.Equal(list);
+      readOnly.IsReadOnly.Should().BeTrue();
+      readOnly.GetType().Should().Implement<IReadOnlyList<object>>();
 
-    AssertionExtensions.Should(readOnly.Clear).ThrowExactly<NotSupportedException>();
-    AssertionExtensions.Should(() => readOnly.Add(new object())).ThrowExactly<NotSupportedException>();
-    AssertionExtensions.Should(() => readOnly.Insert(0, new object())).ThrowExactly<NotSupportedException>();
-    AssertionExtensions.Should(() => readOnly.Remove(new object())).ThrowExactly<NotSupportedException>();
-    AssertionExtensions.Should(() => readOnly.RemoveAt(0)).ThrowExactly<NotSupportedException>();*/
+      AssertionExtensions.Should(readOnly.Clear).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => readOnly.Add(new object())).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => readOnly.Insert(0, new object())).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => readOnly.Remove(new object())).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => readOnly.RemoveAt(0)).ThrowExactly<NotSupportedException>();*/
+    }
 
     throw new NotImplementedException();
 

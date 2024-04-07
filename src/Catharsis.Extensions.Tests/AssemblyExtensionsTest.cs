@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,13 +17,16 @@ public sealed class AssemblyExtensionsTest : UnitTest
   [Fact]
   public void Assembly_Resource_Method()
   {
-    AssertionExtensions.Should(() => AssemblyExtensions.Resource(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("assembly");
-    AssertionExtensions.Should(() => Assembly.GetExecutingAssembly().Resource(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => AssemblyExtensions.Resource(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("assembly");
+      AssertionExtensions.Should(() => Assembly.GetExecutingAssembly().Resource(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
-    //Assembly.GetExecutingAssembly().Resource("invalid").Should().BeNull();
-    //Assembly.GetExecutingAssembly().Resource("Catharsis.Commons.Resource.txt").Should().BeOfType<string>().And.Be("resource");
+      //Assembly.GetExecutingAssembly().Resource("invalid").Should().BeNull();
+      //Assembly.GetExecutingAssembly().Resource("Catharsis.Commons.Resource.txt").Should().BeOfType<string>().And.Be("resource");
 
-    // TODO Encoding support
+      // TODO Encoding support
+    }
 
     throw new NotImplementedException();
 

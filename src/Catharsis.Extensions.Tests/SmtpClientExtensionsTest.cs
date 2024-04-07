@@ -1,6 +1,7 @@
 ﻿using System.Net.Mail;
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,9 +17,12 @@ public sealed class SmtpClientExtensionsTest : UnitTest
   [Fact]
   public void WithTimeout_Method()
   {
-    using var client = new SmtpClient();
+    using (new AssertionScope())
+    {
+      using var client = new SmtpClient();
 
-    Validate(client, TimeSpan.Zero);
+      Validate(client, TimeSpan.Zero);
+    }
 
     return;
 

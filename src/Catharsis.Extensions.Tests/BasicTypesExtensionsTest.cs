@@ -16,14 +16,17 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Char_Repeat_Method()
   {
-    AssertionExtensions.Should(() => char.MinValue.Repeat(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-
-    const int count = 1000;
-
-    new[] { char.MinValue, char.MaxValue }.ForEach(character =>
+    using (new AssertionScope())
     {
-      Validate(character, count);
-    });
+      AssertionExtensions.Should(() => char.MinValue.Repeat(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      const int count = 1000;
+
+      new[] { char.MinValue, char.MaxValue }.ForEach(character =>
+      {
+        Validate(character, count);
+      });
+    }
 
     return;
 
@@ -41,16 +44,19 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void To_Method()
   {
-    AssertionExtensions.Should(() => int.MinValue.To(0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => int.MinValue.To(0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-    int.MinValue.To(int.MinValue).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(int.MinValue.To(int.MinValue)).And.BeEmpty();
-    int.MaxValue.To(int.MaxValue).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(int.MaxValue.To(int.MaxValue)).And.BeEmpty();
-    0.To(0).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(0.To(0)).And.BeEmpty();
-    (-1).To(0).Should().BeOfType<IEnumerable<int>>().And.Equal(-1);
-    (-1).To(1).Should().BeOfType<IEnumerable<int>>().And.Equal(-1, 0);
-    0.To(1).Should().BeOfType<IEnumerable<int>>().And.Equal(0);
-    0.To(2).Should().BeOfType<IEnumerable<int>>().And.Equal(0, 1);
-    0.To(short.MaxValue).Should().BeOfType<IEnumerable<int>>().And.HaveCount(short.MaxValue);
+      int.MinValue.To(int.MinValue).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(int.MinValue.To(int.MinValue)).And.BeEmpty();
+      int.MaxValue.To(int.MaxValue).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(int.MaxValue.To(int.MaxValue)).And.BeEmpty();
+      0.To(0).Should().BeOfType<IEnumerable<int>>().And.BeSameAs(0.To(0)).And.BeEmpty();
+      (-1).To(0).Should().BeOfType<IEnumerable<int>>().And.Equal(-1);
+      (-1).To(1).Should().BeOfType<IEnumerable<int>>().And.Equal(-1, 0);
+      0.To(1).Should().BeOfType<IEnumerable<int>>().And.Equal(0);
+      0.To(2).Should().BeOfType<IEnumerable<int>>().And.Equal(0, 1);
+      0.To(short.MaxValue).Should().BeOfType<IEnumerable<int>>().And.HaveCount(short.MaxValue);
+    }
 
     return;
 
@@ -69,12 +75,12 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Times_Methods()
   {
-    const int count = 10000;
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => 0.Times((Action) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
       AssertionExtensions.Should(() => (-1).Times(() => {})).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      const int count = 10000;
 
       var counter = 0;
       0.Times(() => counter++);
@@ -97,6 +103,8 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => 0.Times((Action<int>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
       AssertionExtensions.Should(() => (-1).Times(_ => {})).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      const int count = 10000;
 
       var values = new List<int>();
       0.Times(values.Add);
@@ -124,7 +132,10 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Nulls_Method()
   {
-    AssertionExtensions.Should(() => (-1).Nulls()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => (-1).Nulls()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    }
 
     throw new NotImplementedException();
 
@@ -146,11 +157,11 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Objects_Methods()
   {
-    const int count = 10000;
-
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => (-1).Objects<object>()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      const int count = 10000;
 
       0.Objects<object>().Should().BeOfType<IEnumerable<object>>().And.BeEmpty();
       1.Objects<Guid>().Should().BeOfType<IEnumerable<Guid>>().And.Equal(Guid.Empty);
@@ -166,6 +177,8 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       AssertionExtensions.Should(() => 0.Objects((Func<object>) null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("constructor");
       AssertionExtensions.Should(() => (-1).Objects<object>(() => null).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
+      const int count = 10000;
+
       0.Objects(() => new object()).Should().BeOfType<IEnumerable<object>>().And.BeEmpty();
       1.Objects(() => Guid.Empty).Should().BeOfType<IEnumerable<Guid>>().And.Equal(Guid.Empty);
       count.Objects(() => Guid.Empty).Should().BeOfType<IEnumerable<Guid>>().And.HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
@@ -179,6 +192,8 @@ public sealed class BasicTypesExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => 0.Objects((Func<int, object>) null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("constructor");
       AssertionExtensions.Should(() => (-1).Objects<object>(_ => null).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      const int count = 10000;
 
       0.Objects(index => index).Should().BeOfType<IEnumerable<int>>().And.BeEmpty();
       1.Objects(index => index).Should().BeOfType<IEnumerable<int>>().And.Equal(0);
@@ -198,10 +213,13 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Days_Method()
   {
-    AssertionExtensions.Should(() => int.MinValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
-    AssertionExtensions.Should(() => int.MaxValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => int.MinValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
+      AssertionExtensions.Should(() => int.MaxValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
 
-    new[] { -1, 0, 1 }.ForEach(Validate);
+      new[] { -1, 0, 1 }.ForEach(Validate);
+    }
 
     return;
 
@@ -229,10 +247,13 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Hours_Method()
   {
-    AssertionExtensions.Should(() => int.MinValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
-    AssertionExtensions.Should(() => int.MaxValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => int.MinValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
+      AssertionExtensions.Should(() => int.MaxValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
 
-    new[] { -1, 0, 1 }.ForEach(Validate);
+      new[] { -1, 0, 1 }.ForEach(Validate);
+    }
 
     return;
 
@@ -260,7 +281,10 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Minutes_Method()
   {
-    new[] { -1, 0, 1 }.ForEach(Validate);
+    using (new AssertionScope())
+    {
+      new[] { -1, 0, 1 }.ForEach(Validate);
+    }
 
     return;
 
@@ -288,7 +312,10 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Seconds_Method()
   {
-    new[] { -1, 0, 1 }.ForEach(Validate);
+    using (new AssertionScope())
+    {
+      new[] { -1, 0, 1 }.ForEach(Validate);
+    }
 
     return;
 
@@ -316,7 +343,10 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Milliseconds_Method()
   {
-    new[] { -1, 0, 1 }.ForEach(Validate);
+    using (new AssertionScope())
+    {
+      new[] { -1, 0, 1 }.ForEach(Validate);
+    }
 
     return;
 
@@ -344,7 +374,10 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Ticks_Method()
   {
-    new long[] { -1, 0, 1 }.ForEach(Validate);
+    using (new AssertionScope())
+    {
+      new long[] { -1, 0, 1 }.ForEach(Validate);
+    }
 
     return;
 
@@ -372,18 +405,21 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Float_Round_Method()
   {
-    float.MinValue.Round().Should().Be((float) Math.Round(float.MinValue));
-    float.MaxValue.Round().Should().Be((float) Math.Round(float.MaxValue));
-    float.Epsilon.Round().Should().Be(0);
-    float.NaN.Round().Should().Be(float.NaN);
-    float.NegativeInfinity.Round().Should().Be(float.NegativeInfinity);
-    float.PositiveInfinity.Round().Should().Be(float.PositiveInfinity);
+    using (new AssertionScope())
+    {
+      float.MinValue.Round().Should().Be((float)Math.Round(float.MinValue));
+      float.MaxValue.Round().Should().Be((float)Math.Round(float.MaxValue));
+      float.Epsilon.Round().Should().Be(0);
+      float.NaN.Round().Should().Be(float.NaN);
+      float.NegativeInfinity.Round().Should().Be(float.NegativeInfinity);
+      float.PositiveInfinity.Round().Should().Be(float.PositiveInfinity);
 
-    ((float) -1.4).Round().Should().Be(-1);
-    ((float) -1.5).Round().Should().Be(-2);
-    ((float) 0).Round().Should().Be(0);
-    ((float) 1.4).Round().Should().Be(1);
-    ((float) 1.5).Round().Should().Be(2);
+      ((float)-1.4).Round().Should().Be(-1);
+      ((float)-1.5).Round().Should().Be(-2);
+      ((float)0).Round().Should().Be(0);
+      ((float)1.4).Round().Should().Be(1);
+      ((float)1.5).Round().Should().Be(2);
+    }
 
     return;
 
@@ -427,17 +463,20 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Decimal_Round_Method()
   {
-    decimal.MinValue.Round().Should().Be((decimal) Math.Round(decimal.MinValue));
-    decimal.MaxValue.Round().Should().Be((decimal) Math.Round(decimal.MaxValue));
-    decimal.Zero.Round().Should().Be(decimal.Zero);
-    decimal.MinusOne.Round().Should().Be(-1);
-    decimal.One.Round().Should().Be(1);
+    using (new AssertionScope())
+    {
+      decimal.MinValue.Round().Should().Be((decimal)Math.Round(decimal.MinValue));
+      decimal.MaxValue.Round().Should().Be((decimal)Math.Round(decimal.MaxValue));
+      decimal.Zero.Round().Should().Be(decimal.Zero);
+      decimal.MinusOne.Round().Should().Be(-1);
+      decimal.One.Round().Should().Be(1);
 
-    ((decimal) -1.4).Round().Should().Be(-1);
-    ((decimal) -1.5).Round().Should().Be(-2);
-    ((decimal) 0).Round().Should().Be(0);
-    ((decimal) 1.4).Round().Should().Be(1);
-    ((decimal) 1.5).Round().Should().Be(2);
+      ((decimal)-1.4).Round().Should().Be(-1);
+      ((decimal)-1.5).Round().Should().Be(-2);
+      ((decimal)0).Round().Should().Be(0);
+      ((decimal)1.4).Round().Should().Be(1);
+      ((decimal)1.5).Round().Should().Be(2);
+    }
 
     return;
 
@@ -452,12 +491,15 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Float_Power_Method()
   {
-    /*
-    0.0.Power(1).Should().Be(0);
-    1.0.Power(0).Should().Be(1);
-    2.0.Power(2).Should().Be(4);
-    5.0.Power(3).Should().Be(Math.Pow(5, 3));
-    */
+    using (new AssertionScope())
+    {
+      /*
+        0.0.Power(1).Should().Be(0);
+        1.0.Power(0).Should().Be(1);
+        2.0.Power(2).Should().Be(4);
+        5.0.Power(3).Should().Be(Math.Pow(5, 3));
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -474,12 +516,15 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Double_Power_Method()
   {
-    /*
-    0.0.Power(1).Should().Be(0);
-    1.0.Power(0).Should().Be(1);
-    2.0.Power(2).Should().Be(4);
-    5.0.Power(3).Should().Be(Math.Pow(5, 3));
-    */
+    using (new AssertionScope())
+    {
+      /*
+        0.0.Power(1).Should().Be(0);
+        1.0.Power(0).Should().Be(1);
+        2.0.Power(2).Should().Be(4);
+        5.0.Power(3).Should().Be(Math.Pow(5, 3));
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -496,12 +541,15 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Decimal_Power_Method()
   {
-    /*
-    0.0.Power(1).Should().Be(0);
-    1.0.Power(0).Should().Be(1);
-    2.0.Power(2).Should().Be(4);
-    5.0.Power(3).Should().Be(Math.Pow(5, 3));
-    */
+    using (new AssertionScope())
+    {
+      /*
+        0.0.Power(1).Should().Be(0);
+        1.0.Power(0).Should().Be(1);
+        2.0.Power(2).Should().Be(4);
+        5.0.Power(3).Should().Be(Math.Pow(5, 3));
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -518,11 +566,14 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Sbyte_Abs_Method()
   {
-    /*
-    ((float) -1.0).Abs().Should().Be((float) 1.0);
-    ((float) 0.0).Abs().Should().Be((float) 0);
-    ((float) 1.0).Abs().Should().Be((float) 1.0);
-    */
+    using (new AssertionScope())
+    {
+      /*
+        ((float) -1.0).Abs().Should().Be((float) 1.0);
+        ((float) 0.0).Abs().Should().Be((float) 0);
+        ((float) 1.0).Abs().Should().Be((float) 1.0);
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -539,11 +590,14 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Short_Abs_Method()
   {
-    /*
-    ((short) -1).Abs().Should().Be(1);
-    ((short) 0).Abs().Should().Be(0);
-    ((short) 1).Abs().Should().Be(1);
-    */
+    using (new AssertionScope())
+    {
+      /*
+        ((short) -1).Abs().Should().Be(1);
+        ((short) 0).Abs().Should().Be(0);
+        ((short) 1).Abs().Should().Be(1);
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -560,11 +614,14 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Int_Abs_Method()
   {
-    /*
-    ((int) -1).Abs().Should().Be(1);
-    ((int) 0).Abs().Should().Be(0);
-    ((int) 1).Abs().Should().Be(1);
-    */
+    using (new AssertionScope())
+    {
+      /*
+        ((int) -1).Abs().Should().Be(1);
+        ((int) 0).Abs().Should().Be(0);
+        ((int) 1).Abs().Should().Be(1);
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -581,11 +638,14 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Long_Abs_Method()
   {
-    /*
-    ((long) -1).Abs().Should().Be(1);
-    ((long) 0).Abs().Should().Be(0);
-    ((long) 1).Abs().Should().Be(1);
-    */
+    using (new AssertionScope())
+    {
+      /*
+        ((long) -1).Abs().Should().Be(1);
+        ((long) 0).Abs().Should().Be(0);
+        ((long) 1).Abs().Should().Be(1);
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -602,11 +662,14 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Float_Abs_Method()
   {
-    /*
-    ((float) -1.0).Abs().Should().Be((float) 1.0);
-    ((float) 0.0).Abs().Should().Be((float) 0);
-    ((float) 1.0).Abs().Should().Be((float) 1.0);
-    */
+    using (new AssertionScope())
+    {
+      /*
+        ((float) -1.0).Abs().Should().Be((float) 1.0);
+        ((float) 0.0).Abs().Should().Be((float) 0);
+        ((float) 1.0).Abs().Should().Be((float) 1.0);
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -623,11 +686,14 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Double_Abs_Method()
   {
-    /*
-    (-1.1).Abs().Should().Be(1.1);
-    (0.0).Abs().Should().Be(0);
-    (1.1).Abs().Should().Be(1.1);
-    */
+    using (new AssertionScope())
+    {
+      /*
+        (-1.1).Abs().Should().Be(1.1);
+        (0.0).Abs().Should().Be(0);
+        (1.1).Abs().Should().Be(1.1);
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -644,11 +710,14 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Decimal_Abs_Method()
   {
-    /*
-    ((decimal) -1.1).Abs().Should().Be((decimal) 1.1);
-    ((decimal) 0.0).Abs().Should().Be(0);
-    ((decimal) 1.1).Abs().Should().Be((decimal) 1.1);
-    */
+    using (new AssertionScope())
+    {
+      /*
+        ((decimal) -1.1).Abs().Should().Be((decimal) 1.1);
+        ((decimal) 0.0).Abs().Should().Be(0);
+        ((decimal) 1.1).Abs().Should().Be((decimal) 1.1);
+        */
+    }
 
     throw new NotImplementedException();
 
@@ -665,13 +734,16 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Float_Ceil_Method()
   {
-    /*(-1.4).Ceil().Should().Be(-2);
-    (-1.5).Ceil().Should().Be(-2);
-    (-1.6).Ceil().Should().Be(-2);
-    0.0.Ceil().Should().Be(0);
-    1.4.Ceil().Should().Be(2);
-    1.5.Ceil().Should().Be(2);
-    1.6.Ceil().Should().Be(2);*/
+    using (new AssertionScope())
+    {
+      /*(-1.4).Ceil().Should().Be(-2);
+        (-1.5).Ceil().Should().Be(-2);
+        (-1.6).Ceil().Should().Be(-2);
+        0.0.Ceil().Should().Be(0);
+        1.4.Ceil().Should().Be(2);
+        1.5.Ceil().Should().Be(2);
+        1.6.Ceil().Should().Be(2);*/
+    }
 
     throw new NotImplementedException();
 
@@ -688,13 +760,16 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Double_Ceil_Method()
   {
-    /*(-1.4).Ceil().Should().Be(-2);
-    (-1.5).Ceil().Should().Be(-2);
-    (-1.6).Ceil().Should().Be(-2);
-    0.0.Ceil().Should().Be(0);
-    1.4.Ceil().Should().Be(2);
-    1.5.Ceil().Should().Be(2);
-    1.6.Ceil().Should().Be(2);*/
+    using (new AssertionScope())
+    {
+      /*(-1.4).Ceil().Should().Be(-2);
+        (-1.5).Ceil().Should().Be(-2);
+        (-1.6).Ceil().Should().Be(-2);
+        0.0.Ceil().Should().Be(0);
+        1.4.Ceil().Should().Be(2);
+        1.5.Ceil().Should().Be(2);
+        1.6.Ceil().Should().Be(2);*/
+    }
 
     throw new NotImplementedException();
 
@@ -711,13 +786,16 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Decimal_Ceil_Method()
   {
-    /*(-1.4).Ceil().Should().Be(-2);
-    (-1.5).Ceil().Should().Be(-2);
-    (-1.6).Ceil().Should().Be(-2);
-    0.0.Ceil().Should().Be(0);
-    1.4.Ceil().Should().Be(2);
-    1.5.Ceil().Should().Be(2);
-    1.6.Ceil().Should().Be(2);*/
+    using (new AssertionScope())
+    {
+      /*(-1.4).Ceil().Should().Be(-2);
+        (-1.5).Ceil().Should().Be(-2);
+        (-1.6).Ceil().Should().Be(-2);
+        0.0.Ceil().Should().Be(0);
+        1.4.Ceil().Should().Be(2);
+        1.5.Ceil().Should().Be(2);
+        1.6.Ceil().Should().Be(2);*/
+    }
 
     throw new NotImplementedException();
 
@@ -734,13 +812,16 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Float_Floor_Method()
   {
-    /*(-1.4).Floor().Should().Be(-1);
-    (-1.5).Floor().Should().Be(-1);
-    (-1.6).Floor().Should().Be(-1);
-    0.0.Floor().Should().Be(0);
-    1.4.Floor().Should().Be(1);
-    1.5.Floor().Should().Be(1);
-    1.6.Floor().Should().Be(1);*/
+    using (new AssertionScope())
+    {
+      /*(-1.4).Floor().Should().Be(-1);
+        (-1.5).Floor().Should().Be(-1);
+        (-1.6).Floor().Should().Be(-1);
+        0.0.Floor().Should().Be(0);
+        1.4.Floor().Should().Be(1);
+        1.5.Floor().Should().Be(1);
+        1.6.Floor().Should().Be(1);*/
+    }
 
     throw new NotImplementedException();
 
@@ -757,13 +838,16 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Double_Floor_Method()
   {
-    /*(-1.4).Floor().Should().Be(-1);
-    (-1.5).Floor().Should().Be(-1);
-    (-1.6).Floor().Should().Be(-1);
-    0.0.Floor().Should().Be(0);
-    1.4.Floor().Should().Be(1);
-    1.5.Floor().Should().Be(1);
-    1.6.Floor().Should().Be(1);*/
+    using (new AssertionScope())
+    {
+      /*(-1.4).Floor().Should().Be(-1);
+        (-1.5).Floor().Should().Be(-1);
+        (-1.6).Floor().Should().Be(-1);
+        0.0.Floor().Should().Be(0);
+        1.4.Floor().Should().Be(1);
+        1.5.Floor().Should().Be(1);
+        1.6.Floor().Should().Be(1);*/
+    }
 
     throw new NotImplementedException();
 
@@ -780,13 +864,16 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void Decimal_Floor_Method()
   {
-    /*(-1.4).Floor().Should().Be(-1);
-    (-1.5).Floor().Should().Be(-1);
-    (-1.6).Floor().Should().Be(-1);
-    0.0.Floor().Should().Be(0);
-    1.4.Floor().Should().Be(1);
-    1.5.Floor().Should().Be(1);
-    1.6.Floor().Should().Be(1);*/
+    using (new AssertionScope())
+    {
+      /*(-1.4).Floor().Should().Be(-1);
+        (-1.5).Floor().Should().Be(-1);
+        (-1.6).Floor().Should().Be(-1);
+        0.0.Floor().Should().Be(0);
+        1.4.Floor().Should().Be(1);
+        1.5.Floor().Should().Be(1);
+        1.6.Floor().Should().Be(1);*/
+    }
 
     throw new NotImplementedException();
 

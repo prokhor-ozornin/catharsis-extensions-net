@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Catharsis.Commons;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -16,7 +17,10 @@ public sealed class FieldInfoExtensionsTest : UnitTest
   [Fact]
   public void IsOfType_Method()
   {
-    AssertionExtensions.Should(() => FieldInfoExtensions.IsOfType<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => FieldInfoExtensions.IsOfType<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+    }
 
     throw new NotImplementedException();
 
@@ -31,7 +35,10 @@ public sealed class FieldInfoExtensionsTest : UnitTest
   [Fact]
   public void IsProtected_Method()
   {
-    AssertionExtensions.Should(() => FieldInfoExtensions.IsProtected(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => FieldInfoExtensions.IsProtected(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+    }
 
     throw new NotImplementedException();
 
@@ -46,7 +53,10 @@ public sealed class FieldInfoExtensionsTest : UnitTest
   [Fact]
   public void IsInternal_Method()
   {
-    AssertionExtensions.Should(() => FieldInfoExtensions.IsInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => FieldInfoExtensions.IsInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+    }
 
     throw new NotImplementedException();
 
@@ -61,7 +71,10 @@ public sealed class FieldInfoExtensionsTest : UnitTest
   [Fact]
   public void IsProtectedInternal_Method()
   {
-    AssertionExtensions.Should(() => FieldInfoExtensions.IsProtectedInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => FieldInfoExtensions.IsProtectedInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+    }
 
     throw new NotImplementedException();
 
