@@ -139,4 +139,30 @@ public sealed class ArrayExtensionsTest : UnitTest
       bytes.ToText(encoding).Should().BeOfType<string>().And.HaveLength((encoding ?? Encoding.Default).GetCharCount(bytes)).And.Be((encoding ?? Encoding.Default).GetString(bytes));
     }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ArrayExtensions.ToByteArrayContent(byte[], int?, int?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ByteArray_ToByteArrayContent_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+
+      Validate([]);
+      Validate(Attributes.RandomBytes());
+    }
+
+    return;
+
+    static void Validate(byte[] bytes)
+    {
+      using var content = bytes.ToByteArrayContent();
+      
+      content.Should().BeOfType<ByteArrayContent>();
+      content.Headers.Should().BeEmpty();
+      content.ReadAsByteArrayAsync().Await().Should().Equal(bytes);
+    }
+  }
 }

@@ -1214,6 +1214,16 @@ public static class StringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
+  /// <param name="encoding"></param>
+  /// <param name="contentType"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static StringContent ToStringContent(this string text, Encoding encoding = null, string contentType = null) => text is not null ? new StringContent(text, encoding, contentType) : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static XmlReader ToXmlReader(this string text) => text.ToStringReader().ToXmlReader();

@@ -1703,6 +1703,33 @@ public sealed class StreamExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToStreamContent(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToStreamContent_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StreamExtensions.ToStreamContent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+
+      Validate(Stream.Null);
+      Validate(Attributes.EmptyStream());
+      Validate(Attributes.RandomStream());
+    }
+
+    return;
+
+    static void Validate(Stream stream)
+    {
+      using var content = stream.ToStreamContent();
+
+      content.Should().BeOfType<StreamContent>();
+      content.Headers.Should().BeEmpty();
+      content.ReadAsByteArrayAsync().Await().Should().Equal(stream.MoveToStart().ToBytes());
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StreamExtensions.ToXmlReader(Stream, bool)"/> method.</para>
   /// </summary>
   [Fact]

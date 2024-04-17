@@ -68,4 +68,14 @@ public static class ArrayExtensions
   /// <returns>Array of characters as a string which represents <paramref name="bytes"/> array in <paramref name="encoding"/>.</returns>
   /// <exception cref="ArgumentNullException"></exception>
   public static string ToText(this byte[] bytes, Encoding encoding = null) => bytes is not null ? bytes.Length > 0 ? (encoding ?? Encoding.Default).GetString(bytes) : string.Empty : throw new ArgumentNullException(nameof(bytes));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="bytes"></param>
+  /// <param name="offset"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static ByteArrayContent ToByteArrayContent(this byte[] bytes, int? offset = null, int? count = null) => bytes is not null ? new ByteArrayContent(bytes, offset.GetValueOrDefault(), count.GetValueOrDefault(bytes.Length)) : throw new ArgumentNullException(nameof(bytes));
 }

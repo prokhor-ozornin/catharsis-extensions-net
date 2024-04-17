@@ -739,6 +739,14 @@ public static class StreamExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="stream"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static StreamContent ToStreamContent(this Stream stream) => stream is not null ? new StreamContent(stream) : throw new ArgumentNullException(nameof(stream));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
   /// <param name="close"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>

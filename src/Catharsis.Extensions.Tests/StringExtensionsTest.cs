@@ -3220,6 +3220,35 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToStringContent(string, Encoding, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToStringContent_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.ToStringContent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      Encoding.GetEncodings().ForEach(encoding =>
+      {
+        Validate(string.Empty);
+        Validate(Attributes.RandomString(), encoding.GetEncoding(), "application/json");
+      });
+    }
+
+    return;
+
+    static void Validate(string text, Encoding encoding = null, string contentType = null)
+    {
+      using var content = text.ToStringContent(encoding, contentType);
+
+      content.Should().BeOfType<StringContent>();
+      content.Headers.ContentType?.ToString().Should().Contain(contentType ?? "text/plain");
+      content.ReadAsStringAsync().Await().Should().Be(text);
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.ToXmlReader(string)"/> method.</para>
   /// </summary>
   [Fact]
