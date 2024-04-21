@@ -149,6 +149,7 @@ public static class FileInfoExtensions
     {
       if (info.Exists)
       {
+        info.IsReadOnly = false;
         info.Delete();
       }
     });

@@ -1021,9 +1021,17 @@ public static class ObjectExtensions
   /// <exception cref="ArgumentNullException"></exception>
   public static string ToFormattedString(this object instance, IFormatProvider provider = null, string format = null)
   {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (instance is null)
+    {
+      return string.Empty;
+    }
 
-    return provider is null ? FormattableString.Invariant($"{instance}") : string.Format(provider, format is null ? "{0}" : $"{{0:{format}}}", instance);
+    if (provider is null)
+    {
+      return FormattableString.Invariant($"{instance}");
+    }
+
+    return string.Format(provider, format is null ? "{0}" : $"{{0:{format}}}", instance);
   }
 
   /// <summary>
@@ -1044,7 +1052,10 @@ public static class ObjectExtensions
   /// <exception cref="ArgumentNullException"></exception>
   public static string ToStateString(this object instance, IEnumerable<string> properties = null)
   {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (instance is null)
+    {
+      return string.Empty;
+    }
 
     if (instance is string text)
     {
@@ -1075,7 +1086,10 @@ public static class ObjectExtensions
   /// <exception cref="ArgumentNullException"></exception>
   public static string ToStateString<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
   {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (instance is null)
+    {
+      return string.Empty;
+    }
 
     if (instance is string text)
     {

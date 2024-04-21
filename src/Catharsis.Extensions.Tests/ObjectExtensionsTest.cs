@@ -1227,7 +1227,7 @@ public sealed class ObjectExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.ToFormattedString(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      Validate(string.Empty, null);
     }
 
     throw new NotImplementedException();
@@ -1245,7 +1245,7 @@ public sealed class ObjectExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.ToInvariantString(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      Validate(string.Empty, null);
     }
 
     throw new NotImplementedException();
