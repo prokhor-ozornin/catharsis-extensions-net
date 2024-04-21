@@ -15,6 +15,23 @@ public static class ProcessExtensions
   /// <param name="timeout"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
+  public static Process Run(this Process process, TimeSpan? timeout = null)
+  {
+    if (process is null) throw new ArgumentNullException(nameof(process));
+
+    process.Start();
+    process.Finish(timeout);
+
+    return process;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <param name="timeout"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
   public static Process Restart(this Process process, TimeSpan? timeout = null)
   {
     if (process is null) throw new ArgumentNullException(nameof(process));

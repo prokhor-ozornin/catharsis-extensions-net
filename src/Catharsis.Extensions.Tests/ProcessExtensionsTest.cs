@@ -23,6 +23,30 @@ public sealed class ProcessExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.Run(Process, TimeSpan?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Run_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ProcessExtensions.Run(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(Process process)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="ProcessExtensions.Restart(Process, TimeSpan?)"/> method.</para>
   /// </summary>
   [Fact]
