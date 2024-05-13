@@ -12,7 +12,7 @@ public static class StreamWriterExtensions
   /// <param name="writer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static StreamWriter Clone(this StreamWriter writer) => writer is not null ? new StreamWriter(writer.BaseStream, writer.Encoding) : throw new ArgumentNullException(nameof(writer));
+  public static StreamWriter Clone(this StreamWriter writer) => writer is not null ? new StreamWriter(writer.BaseStream, writer.Encoding) { AutoFlush = writer.AutoFlush, NewLine = writer.NewLine } : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para></para>

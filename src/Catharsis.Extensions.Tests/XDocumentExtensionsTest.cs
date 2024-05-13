@@ -55,9 +55,10 @@ public sealed class XDocumentExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => XDocumentExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
-    }
+      AssertionExtensions.Should(() => new XDocument().Clone()).ThrowExactly<XmlException>();
 
-    throw new NotImplementedException();
+      Validate(new XDocument().With(new XElement("root", new XAttribute("id", Guid.NewGuid()))));
+    }
 
     return;
 

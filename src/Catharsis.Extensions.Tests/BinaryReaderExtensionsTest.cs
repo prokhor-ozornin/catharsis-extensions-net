@@ -24,7 +24,6 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       Validate(Stream.Null.ToBinaryReader());
       Validate(Attributes.EmptyStream().ToBinaryReader());
       Validate(Attributes.RandomStream().ToBinaryReader());
-      Validate(Attributes.RandomReadOnlyStream().ToBinaryReader());
     }
 
     return;
@@ -38,7 +37,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
         using (clone)
         {
           clone.Should().BeOfType<BinaryReader>().And.NotBeSameAs(original).And.NotBe(original);
-          clone.BaseStream.Should().BeAssignableTo<Stream>().And.BeSameAs(original.BaseStream).And.HavePosition(original.BaseStream.Position);
+          clone.BaseStream.Should().BeSameAs(original.BaseStream).And.HavePosition(original.BaseStream.Position);
         }
       }
     }

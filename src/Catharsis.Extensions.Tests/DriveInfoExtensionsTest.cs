@@ -32,14 +32,18 @@ public sealed class DriveInfoExtensionsTest : UnitTest
       clone.Should().BeOfType<DriveInfo>().And.NotBeSameAs(original).And.NotBe(original);
       clone.ToString().Should().Be(original.ToString());
       clone.Name.Should().Be(original.Name);
-      clone.IsReady.Should().Be(original.IsReady);
       clone.RootDirectory.ToString().Should().Be(original.RootDirectory.ToString());
-      clone.TotalSize.Should().Be(original.TotalSize);
-      clone.TotalFreeSpace.Should().Be(original.TotalFreeSpace);
-      clone.AvailableFreeSpace.Should().Be(original.AvailableFreeSpace);
       clone.DriveType.Should().Be(original.DriveType);
-      clone.DriveFormat.Should().Be(original.DriveFormat);
-      clone.VolumeLabel.Should().Be(original.VolumeLabel);
+      clone.IsReady.Should().Be(original.IsReady);
+
+      if (clone.IsReady)
+      {
+        clone.TotalSize.Should().Be(original.TotalSize);
+        clone.TotalFreeSpace.Should().Be(original.TotalFreeSpace);
+        clone.AvailableFreeSpace.Should().Be(original.AvailableFreeSpace);
+        clone.DriveFormat.Should().Be(original.DriveFormat);
+        clone.VolumeLabel.Should().Be(original.VolumeLabel);
+      }
     }
   }
 

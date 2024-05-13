@@ -20,9 +20,10 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-    }
 
-    throw new NotImplementedException();
+      Validate("https://localhost".ToUri());
+      Validate("https://user:password@localhost:443/path?id=1#hash".ToUri());
+    }
 
     return;
 
@@ -30,7 +31,7 @@ public sealed class UriExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().BeOfType<Uri>().And.NotBeSameAs(original).And.NotBe(original);
+      clone.Should().BeOfType<Uri>().And.NotBeSameAs(original).And.Be(original);
       clone.ToString().Should().Be(original.ToString());
       clone.OriginalString.Should().Be(original.OriginalString);
       clone.AbsoluteUri.Should().Be(original.AbsoluteUri);

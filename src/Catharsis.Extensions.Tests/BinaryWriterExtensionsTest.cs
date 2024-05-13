@@ -21,7 +21,9 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
       AssertionExtensions.Should(() => BinaryWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
     }
 
-    throw new NotImplementedException();
+    Validate(Stream.Null.ToBinaryWriter());
+    Validate(Attributes.EmptyStream().ToBinaryWriter());
+    Validate(Attributes.RandomStream().ToBinaryWriter());
 
     return;
 
@@ -34,7 +36,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
         using (clone)
         {
           clone.Should().BeOfType<BinaryWriter>().And.NotBeSameAs(original).And.NotBe(original);
-          clone.BaseStream.Should().BeOfType<Stream>().And.BeSameAs(original.BaseStream).And.HavePosition(original.BaseStream.Position);
+          clone.BaseStream.Should().BeSameAs(original.BaseStream).And.HavePosition(original.BaseStream.Position);
         }
       }
     }

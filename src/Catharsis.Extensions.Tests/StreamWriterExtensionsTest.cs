@@ -19,17 +19,29 @@ public sealed class StreamWriterExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => StreamWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-    }
 
-    throw new NotImplementedException();
+      Validate(Stream.Null.ToStreamWriter());
+      Validate(Attributes.EmptyStream().ToStreamWriter());
+      Validate(Attributes.RandomStream().ToStreamWriter());
+    }
 
     return;
 
-    static void Validate(StreamWriter writer)
+    static void Validate(StreamWriter original)
     {
-      using (writer)
+      using (original)
       {
+        var clone = original.Clone();
 
+        using (clone)
+        {
+          clone.Should().BeOfType<StreamWriter>().And.NotBeSameAs(original);
+          clone.AutoFlush.Should().Be(original.AutoFlush);
+          clone.BaseStream.Should().BeSameAs(original.BaseStream);
+          clone.Encoding.Should().BeSameAs(original.Encoding);
+          clone.NewLine.Should().Be(original.NewLine);
+          clone.FormatProvider.Should().BeSameAs(original.FormatProvider);
+        }
       }
     }
   }

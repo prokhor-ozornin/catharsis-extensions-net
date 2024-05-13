@@ -20,9 +20,10 @@ public sealed class RegexExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RegexExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
-    }
 
-    throw new NotImplementedException();
+      Validate(string.Empty.ToRegex());
+      Validate("anything".ToRegex());
+    }
 
     return;
 
@@ -30,7 +31,7 @@ public sealed class RegexExtensionsTest : UnitTest
     {
       var clone = original.Clone();
 
-      clone.Should().BeOfType<Regex>().And.NotBeSameAs(original).And.Be(original);
+      clone.Should().BeOfType<Regex>().And.NotBeSameAs(original).And.NotBe(original);
       clone.ToString().Should().Be(original.ToString());
       clone.MatchTimeout.Should().Be(original.MatchTimeout);
       clone.Options.Should().Be(original.Options);

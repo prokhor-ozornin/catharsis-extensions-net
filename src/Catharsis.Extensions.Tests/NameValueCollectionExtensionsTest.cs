@@ -20,9 +20,10 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
-    }
 
-    throw new NotImplementedException();
+      Validate([]);
+      Validate(new NameValueCollection().With(("id", Guid.NewGuid())));
+    }
 
     return;
 

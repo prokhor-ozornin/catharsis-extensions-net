@@ -19,9 +19,7 @@ public sealed class SmtpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      using var client = new SmtpClient();
-
-      Validate(client, TimeSpan.Zero);
+      Validate(new SmtpClient(), TimeSpan.Zero);
     }
 
     return;

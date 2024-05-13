@@ -154,7 +154,8 @@ public sealed class StreamExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(Stream stream) {
+    static void Validate(Stream stream)
+    {
       using (stream)
       {
         stream.MoveToStart().IsEnd().Should().Be(stream.IsEmpty());

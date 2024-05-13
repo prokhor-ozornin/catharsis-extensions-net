@@ -19,17 +19,26 @@ public sealed class StreamReaderExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => StreamReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-    }
 
-    throw new NotImplementedException();
+      Validate(Stream.Null.ToStreamReader());
+      Validate(Attributes.EmptyStream().ToStreamReader());
+      Validate(Attributes.RandomStream().ToStreamReader());
+    }
 
     return;
 
-    static void Validate(StreamReader reader)
+    static void Validate(StreamReader original)
     {
-      using (reader)
+      using (original)
       {
+        var clone = original.Clone();
 
+        using (clone)
+        {
+          clone.Should().BeOfType<StreamReader>().And.NotBeSameAs(original);
+          clone.BaseStream.Should().BeSameAs(original.BaseStream);
+          clone.CurrentEncoding.Should().BeSameAs(original.CurrentEncoding);
+        }
       }
     }
   }

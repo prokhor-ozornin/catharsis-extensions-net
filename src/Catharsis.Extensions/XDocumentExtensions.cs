@@ -41,7 +41,7 @@ public static class XDocumentExtensions
   /// <param name="document"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException"></exception>
-  public static XDocument Clone(this XDocument document) => document is not null ? document.CreateReader().TryFinallyDispose(XDocument.Load) : throw new ArgumentNullException(nameof(document));
+  public static XDocument Clone(this XDocument document) => document is not null ? document.ToString().ToStringReader().TryFinallyDispose(XDocument.Load) : throw new ArgumentNullException(nameof(document));
 
   /// <summary>
   ///   <para></para>
