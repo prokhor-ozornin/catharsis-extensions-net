@@ -84,14 +84,14 @@ public static class DateTimeExtensions
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the start of year of the specified <paramref name="date"/>.</returns>
-  public static DateTime TruncateToYearStart(this DateTime date) => new(date.Year, 1, 1, 0, 0, 0, date.Kind);
+  public static DateTime AtStartOfYear(this DateTime date) => new(date.Year, 1, 1, 0, 0, 0, date.Kind);
 
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the start of month.</para>
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the start of month of the specified <paramref name="date"/>.</returns>
-  public static DateTime TruncateToMonthStart(this DateTime date) => new(date.Year, date.Month, 1, 0, 0, 0, date.Kind);
+  public static DateTime AtStartOfMonth(this DateTime date) => new(date.Year, date.Month, 1, 0, 0, 0, date.Kind);
 
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the start of day.</para>
@@ -99,70 +99,70 @@ public static class DateTimeExtensions
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represent the start of day of the specified <paramref name="date"/>.</returns>
   /// <remarks>Date component (year, month, day) remains the same, while time component (hour/minute/second) is changed to represent the beginning of the day (hour : 0, minute : 0, second : 0).</remarks>
-  public static DateTime TruncateToDayStart(this DateTime date) => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Kind);
+  public static DateTime AtStartOfDay(this DateTime date) => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Kind);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTime TruncateToHourStart(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Kind);
+  public static DateTime AtStartOfHour(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Kind);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTime TruncateToMinuteStart(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Kind);
+  public static DateTime AtStartOfMinute(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Kind);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTime TruncateToSecondStart(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Kind);
+  public static DateTime AtStartOfSecond(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Kind);
 
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the end of current year.</para>
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the end of year of the specified <paramref name="date"/>.</returns>
-  public static DateTime TruncateToYearEnd(this DateTime date) => new(date.Year, 12, 31, 23, 59, 59, 999, date.Kind);
+  public static DateTime AtEndOfYear(this DateTime date) => new(date.Year, 12, 31, 23, 59, 59, 999, date.Kind);
 
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the end of current month.</para>
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the end of month of the specified <paramref name="date"/>.</returns>
-  public static DateTime TruncateToMonthEnd(this DateTime date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Kind);
+  public static DateTime AtEndOfMonth(this DateTime date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Kind);
 
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the end of current day.</para>
   /// </summary>
   /// <param name="date">Original date/time object instance.</param>
   /// <returns>New date/time object instance that represents the end of day of the specified <paramref name="date"/>.</returns>
-  public static DateTime TruncateToDayEnd(this DateTime date) => new(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Kind);
+  public static DateTime AtEndOfDay(this DateTime date) => new(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Kind);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTime TruncateToHourEnd(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Kind);
+  public static DateTime AtEndOfHour(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Kind);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTime TruncateToMinuteEnd(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Kind);
+  public static DateTime AtEndOfMinute(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Kind);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTime TruncateToSecondEnd(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Kind);
+  public static DateTime AtEndOfSecond(this DateTime date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Kind);
 
   /// <summary>
   ///   <para></para>

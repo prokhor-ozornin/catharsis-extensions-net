@@ -49,28 +49,28 @@ public static class DateOnlyExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateOnly StartOfYear(this DateOnly date) => new(date.Year, 1, 1);
+  public static DateOnly AtStartOfYear(this DateOnly date) => new(date.Year, 1, 1);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateOnly StartOfMonth(this DateOnly date) => new(date.Year, date.Month, 1);
+  public static DateOnly AtStartOfMonth(this DateOnly date) => new(date.Year, date.Month, 1);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateOnly EndOfYear(this DateOnly date) => new(date.Year, 12, DateTime.DaysInMonth(date.Year, date.Month));
+  public static DateOnly AtEndOfYear(this DateOnly date) => new(date.Year, 12, DateTime.DaysInMonth(date.Year, date.Month));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateOnly EndOfMonth(this DateOnly date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+  public static DateOnly AtEndOfMonth(this DateOnly date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
 
   /// <summary>
   ///   <para></para>

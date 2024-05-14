@@ -16,7 +16,7 @@ public static class TimeOnlyExtensions
   /// <returns></returns>
   public static IEnumerable<TimeOnly> Range(this TimeOnly from, TimeOnly to, TimeSpan offset)
   {
-    if (from == to || offset == TimeSpan.Zero)
+    if (from == to || offset == default)
     {
       yield break;
     }
@@ -35,55 +35,41 @@ public static class TimeOnlyExtensions
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly StartOfHour(this TimeOnly time) => new(time.Hour, 0, 0, 0);
+  public static TimeOnly AtStartOfHour(this TimeOnly time) => new(time.Hour, 0, 0, 0);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly StartOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 0, 0);
+  public static TimeOnly AtStartOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 0, 0);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly StartOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 0);
+  public static TimeOnly AtStartOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 0);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly EndOfHour(this TimeOnly time) => new(time.Hour, 59, 59, 999);
+  public static TimeOnly AtEndOfHour(this TimeOnly time) => new(time.Hour, 59, 59, 999);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly EndOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 59, 999);
+  public static TimeOnly AtEndOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 59, 999);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
-  public static TimeOnly EndOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 999);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  public static DateTime ToDateTime(this TimeOnly time) => DateTime.UtcNow.TruncateToDayStart().Add(time.ToTimeSpan());
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  public static DateTimeOffset ToDateTimeOffset(this TimeOnly time) => time.ToDateTime().ToDateTimeOffset();
+  public static TimeOnly AtEndOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 999);
 }
 #endif

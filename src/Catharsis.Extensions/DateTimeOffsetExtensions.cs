@@ -80,84 +80,84 @@ public static class DateTimeOffsetExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToYearStart(this DateTimeOffset date) => new(date.Year, 1, 1, 0, 0, 0, date.Offset);
+  public static DateTimeOffset AtStartOfYear(this DateTimeOffset date) => new(date.Year, 1, 1, 0, 0, 0, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToMonthStart(this DateTimeOffset date) => new(date.Year, date.Month, 1, 0, 0, 0, date.Offset);
+  public static DateTimeOffset AtStartOfMonth(this DateTimeOffset date) => new(date.Year, date.Month, 1, 0, 0, 0, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToDayStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset);
+  public static DateTimeOffset AtStartOfDay(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToHourStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Offset);
+  public static DateTimeOffset AtStartOfHour(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToMinuteStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Offset);
+  public static DateTimeOffset AtStartOfMinute(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToSecondStart(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Offset);
+  public static DateTimeOffset AtStartOfSecond(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToYearEnd(this DateTimeOffset date) => new(date.Year, 12, 31, 23, 59, 59, 999, date.Offset);
+  public static DateTimeOffset AtEndOfYear(this DateTimeOffset date) => new(date.Year, 12, 31, 23, 59, 59, 999, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToMonthEnd(this DateTimeOffset date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Offset);
+  public static DateTimeOffset AtEndOfMonth(this DateTimeOffset date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToDayEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Offset);
+  public static DateTimeOffset AtEndOfDay(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToHourEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Offset);
+  public static DateTimeOffset AtEndOfHour(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToMinuteEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Offset);
+  public static DateTimeOffset AtEndOfMinute(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  public static DateTimeOffset TruncateToSecondEnd(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Offset);
+  public static DateTimeOffset AtEndOfSecond(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Offset);
 
   /// <summary>
   ///   <para></para>

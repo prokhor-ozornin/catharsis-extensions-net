@@ -19,6 +19,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       Validate(DateTime.Now.ToDateOnly());
+      Validate(DateTime.UtcNow.ToDateOnly());
     }
 
     return;
@@ -51,20 +52,21 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      var monday = new DateOnly(2024, 1, 1);
+      var now = DateTime.UtcNow.ToDateOnly();
+      var dates = new DateOnly[7].Fill(index => now.AddDays(index));
 
-      Validate(true, monday);
-      Validate(true, monday.AddDays(1));
-      Validate(true, monday.AddDays(2));
-      Validate(true, monday.AddDays(3));
-      Validate(true, monday.AddDays(4));
-      Validate(false, monday.AddDays(5));
-      Validate(false, monday.AddDays(6));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Monday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Friday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday));
     }
 
     return;
 
-    static void Validate(bool result, DateOnly date) => date.IsWeekday().Should().Be(date.DayOfWeek is DayOfWeek.Monday or DayOfWeek.Tuesday or DayOfWeek.Wednesday or DayOfWeek.Thursday or DayOfWeek.Friday).And.Be(result);
+    static void Validate(bool result, DateOnly date) => date.IsWeekday().Should().Be(result);
   }
 
   /// <summary>
@@ -75,92 +77,97 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      var monday = new DateOnly(2024, 1, 1);
+      var now = DateTime.UtcNow.ToDateOnly();
+      var dates = new DateOnly[7].Fill(index => now.AddDays(index));
 
-      Validate(false, monday);
-      Validate(false, monday.AddDays(1));
-      Validate(false, monday.AddDays(2));
-      Validate(false, monday.AddDays(3));
-      Validate(false, monday.AddDays(4));
-      Validate(true, monday.AddDays(5));
-      Validate(true, monday.AddDays(6));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Monday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Friday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday));
     }
 
     return;
 
-    static void Validate(bool result, DateOnly date) => date.IsWeekend().Should().Be(date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday).And.Be(result);
+    static void Validate(bool result, DateOnly date) => date.IsWeekend().Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.StartOfYear(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtStartOfYear(DateOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void StartOfYear_Method()
+  public void AtStartOfYear_Method()
   {
     using (new AssertionScope())
     {
       Validate(DateOnly.MinValue);
       Validate(DateOnly.MaxValue);
       Validate(DateTime.Now.ToDateOnly());
+      Validate(DateTime.UtcNow.ToDateOnly());
     }
 
     return;
 
-    static void Validate(DateOnly date) => date.StartOfYear().Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1);
+    static void Validate(DateOnly date) => date.AtStartOfYear().Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.StartOfMonth(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtStartOfMonth(DateOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void StartOfMonth_Method()
+  public void AtStartOfMonth_Method()
   {
     using (new AssertionScope())
     {
       Validate(DateOnly.MinValue);
       Validate(DateOnly.MaxValue);
       Validate(DateTime.Now.ToDateOnly());
+      Validate(DateTime.UtcNow.ToDateOnly());
     }
 
     return;
 
-    static void Validate(DateOnly date) => date.StartOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
+    static void Validate(DateOnly date) => date.AtStartOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.EndOfYear(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtEndOfYear(DateOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void EndOfYear_Method()
+  public void AtEndOfYear_Method()
   {
     using (new AssertionScope())
     {
       Validate(DateOnly.MinValue);
       Validate(DateOnly.MaxValue);
       Validate(DateTime.Now.ToDateOnly());
+      Validate(DateTime.UtcNow.ToDateOnly());
     }
 
     return;
 
-    static void Validate(DateOnly date) => date.EndOfYear().Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
+    static void Validate(DateOnly date) => date.AtEndOfYear().Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.EndOfMonth(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtEndOfMonth(DateOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void EndOfMonth_Method()
+  public void AtEndOfMonth_Method()
   {
     using (new AssertionScope())
     {
       Validate(DateOnly.MinValue);
       Validate(DateOnly.MaxValue);
       Validate(DateTime.Now.ToDateOnly());
+      Validate(DateTime.UtcNow.ToDateOnly());
     }
 
     return;
 
-    static void Validate(DateOnly date) => date.EndOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
+    static void Validate(DateOnly date) => date.AtEndOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
   }
 
   /// <summary>
@@ -176,6 +183,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
         Validate(DateOnly.MinValue, kind);
         Validate(DateOnly.MaxValue, kind);
         Validate(DateTime.Now.ToDateOnly(), kind);
+        Validate(DateTime.UtcNow.ToDateOnly(), kind);
       });
     }
 
@@ -196,6 +204,7 @@ public sealed class DateOnlyExtensionsTest : UnitTest
       {
         Validate(DateOnly.MaxValue, kind);
         Validate(DateTime.Now.ToDateOnly(), kind);
+        Validate(DateTime.UtcNow.ToDateOnly(), kind);
       });
     }
 

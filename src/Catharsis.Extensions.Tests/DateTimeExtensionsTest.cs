@@ -19,28 +19,21 @@ public sealed class DateTimeExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      Validate(DateTime.MinValue);
-      Validate(DateTime.Now);
-      Validate(DateTime.UtcNow);
+      new[] { DateTime.MinValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
+      {
+        Validate(false, date, date.AddYears(1));
+        Validate(false, date, date.AddMonths(1));
+        Validate(false, date, date.AddDays(1));
+        Validate(true, date, date.AddHours(1));
+        Validate(true, date, date.AddMinutes(1));
+        Validate(true, date, date.AddSeconds(1));
+        Validate(true, date, date.AddMilliseconds(1));
+      });
     }
 
     return;
 
-    static void Validate(DateTime date)
-    {
-      var startOfDay = date.TruncateToDayStart();
-
-      date.EqualsByDate(date).Should().BeTrue();
-      date.EqualsByDate(startOfDay).Should().BeTrue();
-
-      startOfDay.AddYears(1).EqualsByDate(startOfDay).Should().BeFalse();
-      startOfDay.AddMonths(1).EqualsByDate(startOfDay).Should().BeFalse();
-      startOfDay.AddDays(1).EqualsByDate(startOfDay).Should().BeFalse();
-      startOfDay.AddHours(1).EqualsByDate(startOfDay).Should().BeTrue();
-      startOfDay.AddMinutes(1).EqualsByDate(startOfDay).Should().BeTrue();
-      startOfDay.AddSeconds(1).EqualsByDate(startOfDay).Should().BeTrue();
-      startOfDay.AddMilliseconds(1).EqualsByDate(startOfDay).Should().BeTrue();
-    }
+    static void Validate(bool result, DateTime left, DateTime right) => left.EqualsByDate(right).Should().Be(result);
   }
 
   /// <summary>
@@ -51,28 +44,21 @@ public sealed class DateTimeExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      Validate(DateTime.Now);
-      Validate(DateTime.UtcNow);
+      new[] { DateTime.MinValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
+      {
+        Validate(true, date, date.AddYears(1));
+        Validate(true, date, date.AddMonths(1));
+        Validate(true, date, date.AddDays(1));
+        Validate(false, date, date.AddHours(1));
+        Validate(false, date, date.AddMinutes(1));
+        Validate(false, date, date.AddSeconds(1));
+        Validate(false, date, date.AddMilliseconds(1));
+      });
     }
 
     return;
 
-    static void Validate(DateTime date)
-    {
-      var startOfDay = date.TruncateToDayStart();
-
-      date.EqualsByTime(date).Should().BeTrue();
-      date.EqualsByTime(startOfDay).Should().BeFalse();
-
-      startOfDay.AddYears(1).EqualsByTime(startOfDay).Should().BeTrue();
-      startOfDay.AddYears(1).EqualsByTime(startOfDay).Should().BeTrue();
-      startOfDay.AddMonths(1).EqualsByTime(startOfDay).Should().BeTrue();
-      startOfDay.AddDays(1).EqualsByTime(startOfDay).Should().BeTrue();
-      startOfDay.AddHours(1).EqualsByTime(startOfDay).Should().BeFalse();
-      startOfDay.AddMinutes(1).EqualsByTime(startOfDay).Should().BeFalse();
-      startOfDay.AddSeconds(1).EqualsByTime(startOfDay).Should().BeFalse();
-      startOfDay.AddMilliseconds(1).EqualsByTime(startOfDay).Should().BeFalse();
-    }
+    static void Validate(bool result, DateTime left, DateTime right) => left.EqualsByTime(right).Should().Be(result);
   }
 
   /// <summary>
@@ -83,30 +69,29 @@ public sealed class DateTimeExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      new[] { DateTime.Now, DateTime.UtcNow }.ForEach(date =>
-      {
-        date.Range(date, TimeSpan.Zero).Should().BeOfType<IEnumerable<DateTime>>().And.BeEmpty();
-        date.Range(date, TimeSpan.FromTicks(1)).Should().BeOfType<IEnumerable<DateTime>>().And.BeEmpty();
-        date.Range(date, TimeSpan.FromTicks(-1)).Should().BeOfType<IEnumerable<DateTime>>().And.BeEmpty();
-
-        date.Range(date.AddDays(1), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
-        date.Range(date.AddDays(-1), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
-
-        date.Range(date.AddDays(1), 2.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
-        date.Range(date.AddDays(-1), 2.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
-
-        date.Range(date.AddDays(2), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
-        date.Range(date.AddDays(-2), 1.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
-
-        date.Range(date.AddDays(3), 2.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
-        date.Range(date.AddDays(-3), 2.Days()).Should().BeOfType<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
-      });
+      Validate(DateTime.Now);
+      Validate(DateTime.UtcNow);
     }
 
     return;
 
-    static void Validate()
+    static void Validate(DateTime date)
     {
+      date.Range(date, default).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
+
+      date.Range(date.AddDays(1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+
+      date.Range(date.AddDays(1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+
+      date.Range(date.AddDays(2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
+      date.Range(date.AddDays(-2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
+
+      date.Range(date.AddDays(3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
+      date.Range(date.AddDays(-3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
     }
   }
 
@@ -163,14 +148,13 @@ public sealed class DateTimeExtensionsTest : UnitTest
       var now = DateTime.UtcNow;
       var dates = new DateTime[7].Fill(index => now.AddDays(index));
 
-      dates.Count(date => date.IsWeekday()).Should().Be(5);
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Monday).IsWeekday().Should().BeTrue();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday).IsWeekday().Should().BeTrue();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday).IsWeekday().Should().BeTrue();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday).IsWeekday().Should().BeTrue();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Friday).IsWeekday().Should().BeTrue();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday).IsWeekday().Should().BeFalse();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday).IsWeekday().Should().BeFalse();
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Monday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Friday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday));
     }
 
     return;
@@ -189,14 +173,13 @@ public sealed class DateTimeExtensionsTest : UnitTest
       var now = DateTime.UtcNow;
       var dates = new DateTime[7].Fill(index => now.AddDays(index));
 
-      dates.Count(date => date.IsWeekend()).Should().Be(2);
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Monday).IsWeekend().Should().BeFalse();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday).IsWeekend().Should().BeFalse();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday).IsWeekend().Should().BeFalse();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday).IsWeekend().Should().BeFalse();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Friday).IsWeekend().Should().BeFalse();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday).IsWeekend().Should().BeTrue();
-      dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday).IsWeekend().Should().BeTrue();
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Monday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Tuesday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Wednesday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Thursday));
+      Validate(false, dates.Single(date => date.DayOfWeek == DayOfWeek.Friday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Saturday));
+      Validate(true, dates.Single(date => date.DayOfWeek == DayOfWeek.Sunday));
     }
 
     return;
@@ -205,10 +188,10 @@ public sealed class DateTimeExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToYearStart(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfYear(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToYearStart_Method()
+  public void AtStartOfYear_Method()
   {
     using (new AssertionScope())
     {
@@ -220,14 +203,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToYearStart().Should().BeOnOrBefore(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+    static void Validate(DateTime date) => date.AtStartOfYear().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToMonthStart(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfMonth(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToMonthStart_Method()
+  public void AtStartOfMonth_Method()
   {
     using (new AssertionScope())
     {
@@ -239,14 +222,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToMonthStart().Should().BeOnOrBefore(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+    static void Validate(DateTime date) => date.AtStartOfMonth().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToDayStart(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfDay(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToDayStart_Method()
+  public void AtStartOfDay_Method()
   {
     using (new AssertionScope())
     {
@@ -258,14 +241,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToDayStart().Should().BeOnOrBefore(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+    static void Validate(DateTime date) => date.AtStartOfDay().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToHourStart(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfHour(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToHourStart_Method()
+  public void AtStartOfHour_Method()
   {
     using (new AssertionScope())
     {
@@ -277,14 +260,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToHourStart().Should().BeOnOrBefore(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(0).And.HaveSecond(0);
+    static void Validate(DateTime date) => date.AtStartOfHour().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToMinuteStart(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfMinute(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToMinuteStart_Method()
+  public void AtStartOfMinute_Method()
   {
     using (new AssertionScope())
     {
@@ -296,14 +279,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToMinuteStart().Should().BeOnOrBefore(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(0);
+    static void Validate(DateTime date) => date.AtStartOfMinute().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToSecondStart(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfSecond(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToSecondStart_Method()
+  public void AtStartOfSecond_Method()
   {
     using (new AssertionScope())
     {
@@ -315,14 +298,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToSecondStart().Should().BeOnOrBefore(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
+    static void Validate(DateTime date) => date.AtStartOfSecond().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToYearEnd(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfYear(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToYearEnd_Method()
+  public void AtEndOfYear_Method()
   {
     using (new AssertionScope())
     {
@@ -334,14 +317,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToYearEnd().Should().BeOnOrAfter(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
+    static void Validate(DateTime date) => date.AtEndOfYear().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToMonthEnd(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfMonth(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToMonthEnd_Method()
+  public void AtEndOfMonth_Method()
   {
     using (new AssertionScope())
     {
@@ -353,14 +336,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToMonthEnd().Should().BeOnOrAfter(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
+    static void Validate(DateTime date) => date.AtEndOfMonth().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToDayEnd(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfDay(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToDayEnd_Method()
+  public void AtEndOfDay_Method()
   {
     using (new AssertionScope())
     {
@@ -372,14 +355,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToDayEnd().Should().BeOnOrAfter(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
+    static void Validate(DateTime date) => date.AtEndOfDay().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToHourEnd(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfHour(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToHourEnd_Method()
+  public void AtEndOfHour_Method()
   {
     using (new AssertionScope())
     {
@@ -391,14 +374,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToHourEnd().Should().BeOnOrAfter(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(59).And.HaveSecond(59);
+    static void Validate(DateTime date) => date.AtEndOfHour().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToMinuteEnd(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfMinute(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToMinuteEnd_Method()
+  public void AtEndOfMinute_Method()
   {
     using (new AssertionScope())
     {
@@ -410,14 +393,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToMinuteEnd().Should().BeOnOrAfter(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(59);
+    static void Validate(DateTime date) => date.AtEndOfMinute().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(59);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.TruncateToSecondEnd(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfSecond(DateTime)"/> method.</para>
   /// </summary>
   [Fact]
-  public void TruncateToSecondEnd_Method()
+  public void AtEndOfSecond_Method()
   {
     using (new AssertionScope())
     {
@@ -429,7 +412,7 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(DateTime date) => date.TruncateToSecondEnd().Should().BeOnOrAfter(date).And.BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
+    static void Validate(DateTime date) => date.AtEndOfSecond().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
   }
 
   /// <summary>
@@ -440,16 +423,15 @@ public sealed class DateTimeExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
-      {
-        date.ToDateTimeOffset().Should().BeSameDateAs(date.ToDateTimeOffset()).And
-          .BeSameDateAs(new DateTimeOffset(date.ToUniversalTime())).And.BeWithin(TimeSpan.Zero);
-      });
+      Validate(DateTime.MinValue);
+      Validate(DateTime.MaxValue);
+      Validate(DateTime.Now);
+      Validate(DateTime.UtcNow);
     }
 
     return;
 
-    static void Validate(DateTimeOffset result, DateTime date) => date.ToDateTimeOffset().Should().Be(result);
+    static void Validate(DateTime date) => date.ToDateTimeOffset().Should().BeSameDateAs(new DateTimeOffset(date.ToUniversalTime())).And.BeWithin(TimeSpan.Zero);
   }
 
   /// <summary>
@@ -460,18 +442,15 @@ public sealed class DateTimeExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      var now = DateTime.Now;
-      now.ToIsoString().Should().BeOfType<string>().And.Be(now.ToUniversalTime().ToString("o"));
-      DateTime.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture).Should().Be(now);
-
-      now = DateTime.UtcNow;
-      now.ToIsoString().Should().BeOfType<string>().And.Be(now.ToString("o"));
-      DateTime.ParseExact(now.ToIsoString(), "o", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now);
+      foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
+      {
+        Validate(date);
+      }
     }
 
     return;
 
-    static void Validate(string result, DateTime date) => date.ToIsoString().Should().BeOfType<string>().And.Be(result);
+    static void Validate(DateTime date) => date.ToIsoString().Should().BeOfType<string>().And.Be(date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture));
   }
 
   /// <summary>
@@ -482,18 +461,15 @@ public sealed class DateTimeExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      var now = DateTime.Now;
-      now.ToRfcString().Should().BeOfType<string>().And.Be(now.ToUniversalTime().ToString("r"));
-      DateTime.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture).Should().Be(now.ToUniversalTime().TruncateToSecondStart());
-
-      now = DateTime.UtcNow;
-      now.ToRfcString().Should().BeOfType<string>().And.Be(now.ToString("r"));
-      DateTime.ParseExact(now.ToRfcString(), "r", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal).Should().Be(now.TruncateToSecondStart());
+      foreach (var date in new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow })
+      {
+        Validate(date);
+      }
     }
 
     return;
 
-    static void Validate(string result, DateTime date) => date.ToRfcString().Should().BeOfType<string>().And.Be(result);
+    static void Validate(DateTime date) => date.ToRfcString().Should().BeOfType<string>().And.Be(date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture));
   }
 
   /// <summary>
@@ -504,16 +480,15 @@ public sealed class DateTimeExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
-      {
-        date.ToDateOnly().Should().Be(date.ToDateOnly()).And.HaveYear(date.Year).And.HaveMonth(date.Month).And
-          .HaveDay(date.Day);
-      });
+      Validate(DateTime.MinValue);
+      Validate(DateTime.MaxValue);
+      Validate(DateTime.Now);
+      Validate(DateTime.UtcNow);
     }
 
     return;
 
-    static void Validate(DateOnly result, DateTime date) => date.ToDateOnly().Should().Be(result);
+    static void Validate(DateTime date) => date.ToDateOnly().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day);
   }
 
   /// <summary>
@@ -524,15 +499,14 @@ public sealed class DateTimeExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
-      {
-        date.ToTimeOnly().Should().Be(date.ToTimeOnly()).And.HaveHours(date.Hour).And.HaveMinutes(date.Minute).And
-          .HaveSeconds(date.Second).And.HaveMilliseconds(date.Millisecond);
-      });
+      Validate(DateTime.MinValue);
+      Validate(DateTime.MaxValue);
+      Validate(DateTime.Now);
+      Validate(DateTime.UtcNow);
     }
 
     return;
 
-    static void Validate(TimeOnly result, DateTime date) => date.ToTimeOnly().Should().Be(result);
+    static void Validate(DateTime date) => date.ToTimeOnly().Should().HaveHours(date.Hour).And.HaveMinutes(date.Minute).And.HaveSeconds(date.Second).And.HaveMilliseconds(date.Millisecond);
   }
 }
