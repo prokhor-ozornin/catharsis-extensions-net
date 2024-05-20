@@ -10,17 +10,17 @@ public static class TimeSpanExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="timespan"></param>
-  /// <param name="add"></param>
+  /// <param name="offset"></param>
   /// <returns></returns>
-  public static TimeSpan With(this TimeSpan timespan, TimeSpan add) => timespan.Add(add);
+  public static TimeSpan With(this TimeSpan timespan, TimeSpan offset) => timespan.Add(offset);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="timespan"></param>
-  /// <param name="subtract"></param>
+  /// <param name="offset"></param>
   /// <returns></returns>
-  public static TimeSpan Without(this TimeSpan timespan, TimeSpan subtract) => timespan.Subtract(subtract);
+  public static TimeSpan Without(this TimeSpan timespan, TimeSpan offset) => timespan.Subtract(offset);
 
   /// <summary>
   ///   <para></para>

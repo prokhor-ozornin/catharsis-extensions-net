@@ -18,13 +18,21 @@ public sealed class TimeSpanExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-    }
+      AssertionExtensions.Should(() => TimeSpan.MinValue.With(TimeSpan.MinValue)).ThrowExactly<OverflowException>();
+      AssertionExtensions.Should(() => TimeSpan.MaxValue.With(TimeSpan.MaxValue)).ThrowExactly<OverflowException>();
 
-    throw new NotImplementedException();
+      Validate(TimeSpan.MinValue, TimeSpan.Zero);
+      Validate(TimeSpan.MinValue, TimeSpan.MaxValue);
+      Validate(TimeSpan.Zero, TimeSpan.MinValue);
+      Validate(TimeSpan.Zero, TimeSpan.Zero);
+      Validate(TimeSpan.Zero, TimeSpan.MaxValue);
+      Validate(TimeSpan.MaxValue, TimeSpan.MinValue);
+      Validate(TimeSpan.MaxValue, TimeSpan.Zero);
+    }
 
     return;
 
-    static void Validate(TimeSpan result, TimeSpan timespan, TimeSpan add) => timespan.With(add).Should().Be(result);
+    static void Validate(TimeSpan timespan, TimeSpan offset) => timespan.With(offset).Should().Be(timespan.Add(offset));
   }
 
   /// <summary>
@@ -35,13 +43,21 @@ public sealed class TimeSpanExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-    }
+      AssertionExtensions.Should(() => TimeSpan.MinValue.Without(TimeSpan.MaxValue)).ThrowExactly<OverflowException>();
+      AssertionExtensions.Should(() => TimeSpan.Zero.Without(TimeSpan.MinValue)).ThrowExactly<OverflowException>();
+      AssertionExtensions.Should(() => TimeSpan.MaxValue.Without(TimeSpan.MinValue)).ThrowExactly<OverflowException>();
 
-    throw new NotImplementedException();
+      Validate(TimeSpan.MinValue, TimeSpan.MinValue);
+      Validate(TimeSpan.MinValue, TimeSpan.Zero);
+      Validate(TimeSpan.Zero, TimeSpan.Zero);
+      Validate(TimeSpan.Zero, TimeSpan.MaxValue);
+      Validate(TimeSpan.MaxValue, TimeSpan.Zero);
+      Validate(TimeSpan.MaxValue, TimeSpan.MaxValue);
+    }
 
     return;
 
-    static void Validate(TimeSpan result, TimeSpan timespan, TimeSpan subtract) => timespan.Subtract(subtract).Should().Be(result);
+    static void Validate(TimeSpan timespan, TimeSpan offset) => timespan.Subtract(offset).Should().Be(timespan.Subtract(offset));
   }
 
   /// <summary>
@@ -53,11 +69,10 @@ public sealed class TimeSpanExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       Validate(false, TimeSpan.MinValue);
+      Validate(true, TimeSpan.Zero);
       Validate(false, TimeSpan.MaxValue);
       Validate(false, TimeSpan.FromTicks(long.MinValue));
       Validate(false, TimeSpan.FromTicks(long.MaxValue));
-
-      Validate(true, TimeSpan.Zero);
       Validate(true, TimeSpan.FromTicks(0));
     }
 
@@ -74,21 +89,19 @@ public sealed class TimeSpanExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      var now = DateTime.UtcNow;
-
-      TimeSpan.Zero.InThePast().Should().BeBefore(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
-      TimeSpan.FromMinutes(1).InThePast().Should().BeBefore(DateTimeOffset.UtcNow).And.BeBefore(now).And.BeWithin(TimeSpan.Zero);
-      TimeSpan.FromMinutes(-1).InThePast().Should().BeAfter(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
+      Validate(TimeSpan.Zero);
+      Validate(TimeSpan.FromTicks(1));
+      Validate(TimeSpan.FromMicroseconds(1));
+      Validate(TimeSpan.FromMilliseconds(1));
+      Validate(TimeSpan.FromSeconds(1));
+      Validate(TimeSpan.FromMinutes(1));
+      Validate(TimeSpan.FromHours(1));
+      Validate(TimeSpan.FromDays(1));
     }
 
     return;
 
-    static void Validate(bool result, DateTimeOffset date, TimeSpan offset)
-    {
-      //TimeSpan.Zero.InThePast().Should().BeBefore(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
-      //TimeSpan.FromMinutes(1).InThePast().Should().BeBefore(DateTimeOffset.UtcNow).And.BeBefore(now).And.BeWithin(TimeSpan.Zero);
-      //TimeSpan.FromMinutes(-1).InThePast().Should().BeAfter(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
-    }
+    static void Validate(TimeSpan timespan) => timespan.InThePast().Should().BeCloseTo(DateTimeOffset.UtcNow - timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
   }
 
   /// <summary>
@@ -99,23 +112,18 @@ public sealed class TimeSpanExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      var now = DateTime.UtcNow;
-
-      //Validate();
-
-      //TimeSpan.Zero.InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
-      //TimeSpan.FromMinutes(1).InTheFuture().Should().BeAfter(DateTimeOffset.UtcNow).And.BeAfter(now).And.BeWithin(TimeSpan.Zero);
-      //TimeSpan.FromMinutes(-1).InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow).And.BeBefore(now).And.BeWithin(TimeSpan.Zero);
+      Validate(TimeSpan.Zero);
+      Validate(TimeSpan.FromTicks(1));
+      Validate(TimeSpan.FromMicroseconds(1));
+      Validate(TimeSpan.FromMilliseconds(1));
+      Validate(TimeSpan.FromSeconds(1));
+      Validate(TimeSpan.FromMinutes(1));
+      Validate(TimeSpan.FromHours(1));
+      Validate(TimeSpan.FromDays(1));
     }
 
     return;
 
-    static void Validate(bool result, TimeSpan offset) => offset.InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow + offset).And.BeCloseTo(DateTimeOffset.UtcNow, offset);
-//    {
-//
-//      TimeSpan.Zero.InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow).And.BeAfter(date).And.BeWithin(TimeSpan.Zero);
-//      TimeSpan.FromMinutes(1).InTheFuture().Should().BeAfter(DateTimeOffset.UtcNow).And.BeAfter(date).And.BeWithin(TimeSpan.Zero);
-//      TimeSpan.FromMinutes(-1).InTheFuture().Should().BeBefore(DateTimeOffset.UtcNow).And.BeBefore(date).And.BeWithin(TimeSpan.Zero);
-//    }
+    static void Validate(TimeSpan timespan) => timespan.InTheFuture().Should().BeCloseTo(DateTimeOffset.UtcNow + timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
   }
 }
