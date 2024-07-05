@@ -84,7 +84,7 @@ public sealed class CookieExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool result, Cookie cookie) => cookie.IsUnset().Should().Be(cookie is null || cookie.IsEmpty()).And.Be(result);
+    static void Validate(bool result, Cookie cookie) => cookie.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -106,6 +106,6 @@ public sealed class CookieExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool result, Cookie cookie) => cookie.IsEmpty().Should().Be(cookie.Name.IsUnset() || cookie.Value.IsUnset()).And.Be(result);
+    static void Validate(bool result, Cookie cookie) => cookie.IsEmpty().Should().Be(result);
   }
 }

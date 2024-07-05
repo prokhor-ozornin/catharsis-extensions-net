@@ -14,7 +14,7 @@ public static class ProcessExtensions
   /// <param name="process"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static Process Run(this Process process, TimeSpan? timeout = null)
   {
     if (process is null) throw new ArgumentNullException(nameof(process));
@@ -31,7 +31,7 @@ public static class ProcessExtensions
   /// <param name="process"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static Process Restart(this Process process, TimeSpan? timeout = null)
   {
     if (process is null) throw new ArgumentNullException(nameof(process));
@@ -51,7 +51,7 @@ public static class ProcessExtensions
   /// <param name="process"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static Process Finish(this Process process, TimeSpan? timeout = null)
   {
     if (process is null) throw new ArgumentNullException(nameof(process));
@@ -77,7 +77,7 @@ public static class ProcessExtensions
   /// <param name="process"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="process"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static Process TryFinallyKill(this Process process, Action<Process> action)
   {
     if (process is null) throw new ArgumentNullException(nameof(process));
@@ -91,7 +91,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static IEnumerable<byte> ToBytes(this Process process) => process?.StandardOutput.BaseStream.ToBytes() ?? throw new ArgumentNullException(nameof(process));
 
   /// <summary>
@@ -99,7 +99,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static IAsyncEnumerable<byte> ToBytesAsync(this Process process) => process?.StandardOutput.BaseStream.ToBytesAsync() ?? throw new ArgumentNullException(nameof(process));
 
   /// <summary>
@@ -107,7 +107,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static string ToText(this Process process) => process?.StandardOutput.ToText() ?? throw new ArgumentNullException(nameof(process));
 
   /// <summary>
@@ -115,7 +115,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static async Task<string> ToTextAsync(this Process process) => process is not null ? await process.StandardOutput.ToTextAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(process));
 
   /// <summary>
@@ -123,7 +123,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static string ToErrorText(this Process process) => process?.StandardError.ToText() ?? throw new ArgumentNullException(nameof(process));
 
   /// <summary>
@@ -131,7 +131,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static async Task<string> ToErrorTextAsync(this Process process) => process is not null ? await process.StandardError.ToTextAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(process));
 
   /// <summary>
@@ -140,7 +140,7 @@ public static class ProcessExtensions
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   public static Process WriteBytes(this Process destination, IEnumerable<byte> bytes)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -158,7 +158,7 @@ public static class ProcessExtensions
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   public static async Task<Process> WriteBytesAsync(this Process destination, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -175,7 +175,7 @@ public static class ProcessExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   public static Process WriteText(this Process destination, string text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -192,7 +192,7 @@ public static class ProcessExtensions
   /// <param name="text"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   public static async Task<Process> WriteTextAsync(this Process destination, string text, CancellationToken cancellation = default)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -203,14 +203,14 @@ public static class ProcessExtensions
     return destination;
   }
 
-  #if NET8_0
+#if NET8_0
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="process"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static async Task<Process> FinishAsync(this Process process, CancellationToken cancellation = default)
   {
     if (process is null) throw new ArgumentNullException(nameof(process));

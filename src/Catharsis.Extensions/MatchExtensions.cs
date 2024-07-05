@@ -13,6 +13,6 @@ public static class MatchExtensions
   /// </summary>
   /// <param name="match"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="match"/> is <see langword="null"/>.</exception>
   public static IEnumerable<Capture> ToEnumerable(this Match match) => match?.Captures ?? throw new ArgumentNullException(nameof(match));
 }

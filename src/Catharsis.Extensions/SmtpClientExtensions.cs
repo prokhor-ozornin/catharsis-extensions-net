@@ -14,7 +14,7 @@ public static class SmtpClientExtensions
   /// <param name="smtp"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="smtp"/> is <see langword="null"/>.</exception>
   public static SmtpClient WithTimeout(this SmtpClient smtp, TimeSpan timeout)
   {
     if (smtp is null) throw new ArgumentNullException(nameof(smtp));

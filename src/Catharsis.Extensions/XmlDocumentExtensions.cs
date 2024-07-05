@@ -15,7 +15,7 @@ public static class XmlDocumentExtensions
   /// <param name="document"></param>
   /// <param name="nodes"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
   public static XmlDocument With(this XmlDocument document, IEnumerable<XmlNode> nodes)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -34,7 +34,7 @@ public static class XmlDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <param name="nodes"></param>
-  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static XmlDocument With(this XmlDocument document, params XmlNode[] nodes) => document.With(nodes as IEnumerable<XmlNode>);
 
   /// <summary>
@@ -43,7 +43,7 @@ public static class XmlDocumentExtensions
   /// <param name="document"></param>
   /// <param name="nodes"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
   public static XmlDocument Without(this XmlDocument document, IEnumerable<XmlNode> nodes)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -63,6 +63,7 @@ public static class XmlDocumentExtensions
   /// <param name="document"></param>
   /// <param name="nodes"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static XmlDocument Without(this XmlDocument document, params XmlNode[] nodes) => document.Without(nodes as IEnumerable<XmlNode>);
 
   /// <summary>
@@ -77,7 +78,7 @@ public static class XmlDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this XmlDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
@@ -85,7 +86,7 @@ public static class XmlDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static XmlDocument Empty(this XmlDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -101,7 +102,7 @@ public static class XmlDocumentExtensions
   /// <param name="document"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static XmlDocument TryFinallyClear(this XmlDocument document, Action<XmlDocument> action)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -115,7 +116,7 @@ public static class XmlDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static IEnumerable<XmlNode> ToEnumerable(this XmlDocument document) => document?.ChildNodes.Cast<XmlNode>() ?? throw new ArgumentNullException(nameof(document));
 
   /// <summary>
@@ -123,7 +124,7 @@ public static class XmlDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static byte[] ToBytes(this XmlDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -140,7 +141,7 @@ public static class XmlDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static string ToText(this XmlDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -158,7 +159,7 @@ public static class XmlDocumentExtensions
   /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static XmlDocument Serialize(this XmlDocument document, XmlWriter destination)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -175,7 +176,7 @@ public static class XmlDocumentExtensions
   /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static XmlDocument Serialize(this XmlDocument document, TextWriter destination)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -193,7 +194,7 @@ public static class XmlDocumentExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static XmlDocument Serialize(this XmlDocument document, Stream destination, Encoding encoding = null)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -211,7 +212,7 @@ public static class XmlDocumentExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static XmlDocument Serialize(this XmlDocument document, FileInfo destination, Encoding encoding = null)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -227,7 +228,7 @@ public static class XmlDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static string Serialize(this XmlDocument document)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));

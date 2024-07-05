@@ -11,7 +11,7 @@ public static class StreamWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static StreamWriter Clone(this StreamWriter writer) => writer is not null ? new StreamWriter(writer.BaseStream, writer.Encoding) { AutoFlush = writer.AutoFlush, NewLine = writer.NewLine } : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -19,7 +19,7 @@ public static class StreamWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this StreamWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -27,7 +27,7 @@ public static class StreamWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static StreamWriter Empty(this StreamWriter writer)
   {
     if (writer is null) throw new ArgumentNullException(nameof(writer));
@@ -42,7 +42,7 @@ public static class StreamWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static StreamWriter Rewind(this StreamWriter writer)
   {
     if (writer is null) throw new ArgumentNullException(nameof(writer));

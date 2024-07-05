@@ -19,7 +19,7 @@ public static class ObjectExtensions
   /// <typeparam name="T">Type of object.</typeparam>
   /// <param name="instance">Object whose type compatibility with <typeparamref name="T"/> is to be determined.</param>
   /// <returns><c>true</c> if <paramref name="instance"/> is type-compatible with <typeparamref name="T"/>, <c>false</c> if not.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
   public static bool Is<T>(this object instance) => instance is not null ? instance is T : throw new ArgumentNullException(nameof(instance));
 
   /// <summary>
@@ -74,6 +74,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty<T>(this Lazy<T> instance) => instance is not null ? !instance.IsValueCreated || instance.Value is null || instance.Value.ToString().IsUnset() : throw new ArgumentNullException(nameof(instance));
 
   /// <summary>
@@ -102,7 +103,7 @@ public static class ObjectExtensions
   /// <param name="action"></param>
   /// <param name="condition"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static T With<T>(this T instance, Action<T> action, Predicate<T> condition = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -128,7 +129,7 @@ public static class ObjectExtensions
   /// <param name="condition"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/>, <paramref name="condition"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static T While<T>(this T instance, Predicate<T> condition, Action<T> action)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -157,8 +158,11 @@ public static class ObjectExtensions
   /// <param name="right">Second object to compare with the current one.</param>
   /// <param name="properties">Set of properties/fields whose values are used in equality comparison.</param>
   /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are considered equal, <c>false</c> otherwise.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
   public static bool Equality<T>(this T left, T right, IEnumerable<string> properties)
   {
+    if (properties is null) throw new ArgumentNullException(nameof(properties));
+
     if (left is null && right is null)
     {
       return true;
@@ -246,8 +250,11 @@ public static class ObjectExtensions
   /// <param name="right">Second object to compare with the current one.</param>
   /// <param name="properties">Set of properties in a form of expression trees, whose values are used in equality comparison.</param>
   /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are considered equal, <c>false</c> otherwise.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
   public static bool Equality<T>(this T left, T right, IEnumerable<Expression<Func<T, object>>> properties)
   {
+    if (properties is null) throw new ArgumentNullException(nameof(properties));
+
     if (left is null && right is null)
     {
       return true;
@@ -296,7 +303,7 @@ public static class ObjectExtensions
   /// <param name="instance">Target object, whose hash code is to be returned.</param>
   /// <param name="properties">Collection of properties names, whose values are to be used in hash code's calculation.</param>
   /// <returns>Hash code for <paramref name="instance"/>.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
   public static int HashCode<T>(this T instance, IEnumerable<string> properties)
   {
     if (properties is null) throw new ArgumentNullException(nameof(properties));
@@ -346,7 +353,7 @@ public static class ObjectExtensions
   /// <param name="instance">Target object, whose hash code is to be returned.</param>
   /// <param name="properties">Collection of properties in a form of expression trees, whose values are to be used in hash code's calculation.</param>
   /// <returns>Hash code for <paramref name="instance"/>.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
   public static int HashCode<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties)
   {
     if (properties is null) throw new ArgumentNullException(nameof(properties));
@@ -387,7 +394,7 @@ public static class ObjectExtensions
   /// <param name="action"></param>
   /// <param name="finalizer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static T TryFinally<T>(this T instance, Action<T> action, Action<T> finalizer = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -409,7 +416,7 @@ public static class ObjectExtensions
   /// <param name="function"></param>
   /// <param name="finalizer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="function"/> is <see langword="null"/>.</exception>
   public static TResult TryFinally<TSubject, TResult>(this TSubject instance, Func<TSubject, TResult> function, Action<TSubject> finalizer = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -434,7 +441,7 @@ public static class ObjectExtensions
   /// <param name="exception"></param>
   /// <param name="finalizer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static Exception TryCatchFinally<T>(this T instance, Action<T> action, Action<T> exception = null, Action<T> finalizer = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -453,7 +460,7 @@ public static class ObjectExtensions
   /// <param name="exception"></param>
   /// <param name="finalizer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="function"/> is <see langword="null"/>.</exception>
   public static TException TryCatchFinally<T, TException>(this T instance, Action<T> function, Action<T> exception = null, Action<T> finalizer = null) where TException : Exception
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -484,7 +491,7 @@ public static class ObjectExtensions
   /// <param name="action"></param>
   /// <param name="finalizer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static T TryFinallyDispose<T>(this T instance, Action<T> action, Action<T> finalizer = null) where T : IDisposable
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -506,7 +513,7 @@ public static class ObjectExtensions
   /// <param name="function"></param>
   /// <param name="finalizer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="function"/> is <see langword="null"/>.</exception>
   public static TResult TryFinallyDispose<TSubject, TResult>(this TSubject instance, Func<TSubject, TResult> function, Action<TSubject> finalizer = null) where TSubject : IDisposable
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -529,7 +536,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
   public static T Print<T>(this T instance)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -546,7 +553,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
   public static async Task<T> PrintAsync<T>(this T instance, CancellationToken cancellation = default)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -566,7 +573,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T Print<T>(this T instance, Stream destination, Encoding encoding = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -585,7 +592,7 @@ public static class ObjectExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static async Task<T> PrintAsync<T>(this T instance, Stream destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -605,7 +612,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T Print<T>(this T instance, TextWriter destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -623,7 +630,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static async Task<T> PrintAsync<T>(this T instance, TextWriter destination, CancellationToken cancellation = default)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -643,7 +650,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T Print<T>(this T instance, XmlWriter destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -660,7 +667,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="instance"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static async Task<T> PrintAsync<T>(this T instance, XmlWriter destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -678,7 +685,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T Print<T>(this T instance, BinaryWriter destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -697,7 +704,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T Print<T>(this T instance, FileInfo destination, Encoding encoding = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -716,7 +723,7 @@ public static class ObjectExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static async Task<T> PrintAsync<T>(this T instance, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -739,7 +746,7 @@ public static class ObjectExtensions
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T Print<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -761,7 +768,7 @@ public static class ObjectExtensions
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static async Task<T> PrintAsync<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -781,7 +788,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T Print<T>(this T instance, Process destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -797,7 +804,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static async Task<T> PrintAsync<T>(this T instance, Process destination, CancellationToken cancellation = default) => await instance.PrintAsync(destination.StandardInput, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -806,7 +813,7 @@ public static class ObjectExtensions
   /// <param name="instance">Target object whose properties values are returned.</param>
   /// <param name="properties"></param>
   /// <returns>Dictionary of name - value pairs for public properties of <paramref name="instance"/>.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
   public static IEnumerable<(string Name, object Value)> GetState(this object instance, IEnumerable<string> properties = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -824,7 +831,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
   public static IEnumerable<(string Name, object Value)> GetState<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -839,7 +846,7 @@ public static class ObjectExtensions
   /// <param name="instance">Target object whose properties are to be changed.</param>
   /// <param name="properties">Object whose public properties are to be used for setting matched ones on target object.</param>
   /// <returns>Back reference to the current target object.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
   public static T SetState<T>(this T instance, IEnumerable<(string Name, object Value)> properties)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -857,7 +864,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
   public static T SetState<T>(this T instance, object properties)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -875,7 +882,7 @@ public static class ObjectExtensions
   /// <param name="instance">Target object, whose member's value is to be returned.</param>
   /// <param name="expression">Lambda expression that represents a member of <typeparamref name="T"/> type, whose value for <paramref name="instance"/> instance is to be returned. Generally it should represents either a public property/field or no-arguments method.</param>
   /// <returns>Value of member of <typeparamref name="T"/> type on a <paramref name="instance"/> instance.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="expression"/> is <see langword="null"/>.</exception>
   public static TResult GetMember<T, TResult>(this T instance, Expression<Func<T, TResult>> expression)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -891,7 +898,7 @@ public static class ObjectExtensions
   /// <param name="instance">Object whose field's value is to be returned.</param>
   /// <param name="name">Name of field of <paramref name="instance"/>'s type.</param>
   /// <returns>Value of <paramref name="instance"/>'s field with a given <paramref name="name"/>.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static T GetFieldValue<T>(this object instance, string name)
   {
@@ -915,7 +922,7 @@ public static class ObjectExtensions
   /// <param name="instance">Target object, whose property's value is to be returned.</param>
   /// <param name="name">Name of property to inspect.</param>
   /// <returns>Value of property <paramref name="name"/> for <paramref name="instance"/> instance, or a <c>null</c> reference in case this property does not exists for <paramref name="instance"/>'s type.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
   public static T GetPropertyValue<T>(this object instance, string name)
   {
@@ -940,7 +947,7 @@ public static class ObjectExtensions
   /// <param name="name">Name of property to change.</param>
   /// <param name="value">New value of object's property.</param>
   /// <returns>Back reference to the current target object.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
   public static T SetPropertyValue<T>(this T instance, string name, object value)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -968,7 +975,7 @@ public static class ObjectExtensions
   /// <param name="name"></param>
   /// <param name="parameters"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
   public static T CallMethod<T>(this object instance, string name, IEnumerable<object> parameters = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -992,7 +999,7 @@ public static class ObjectExtensions
   /// <param name="name">Name of the method to be invoked.</param>
   /// <param name="parameters">Optional set of parameters to be passed to invoked method, if it requires some.</param>
   /// <returns>An object containing the return value of the invoked method.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
   public static T CallMethod<T>(this object instance, string name, params object[] parameters) => instance.CallMethod<T>(name, parameters as IEnumerable<object>);
 
   /// <summary>
@@ -1018,7 +1025,6 @@ public static class ObjectExtensions
   /// <param name="provider"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
   public static string ToFormattedString(this object instance, IFormatProvider provider = null, string format = null)
   {
     if (instance is null)
@@ -1040,7 +1046,6 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
   public static string ToInvariantString(this object instance, string format = null) => instance.ToFormattedString(null, format);
 
   /// <summary>
@@ -1049,7 +1054,6 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
   public static string ToStateString(this object instance, IEnumerable<string> properties = null)
   {
     if (instance is null)
@@ -1073,7 +1077,6 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
   public static string ToStateString(this object instance, params string[] properties) => instance.ToStateString(properties as IEnumerable<string>);
 
   /// <summary>
@@ -1083,7 +1086,6 @@ public static class ObjectExtensions
   /// <param name="instance">Object to be converted to string representation.</param>
   /// <param name="properties">Set of properties, whose values are used for string representation of <paramref name="instance"/>. Each property is represented as a lambda expression.</param>
   /// <returns>String representation of <paramref name="instance"/>. Property name is separated from value by colon character, name-value pairs are separated by comma and immediately following space characters, and all content is placed in square brackets afterwards.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
   public static string ToStateString<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
   {
     if (instance is null)
@@ -1108,7 +1110,6 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
   public static string ToStateString<T>(this T instance, params Expression<Func<T, object>>[] properties) => instance.ToStateString(properties as IEnumerable<Expression<Func<T, object>>>);
 
   /// <summary>
@@ -1119,7 +1120,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsDataContract<T>(this T instance, XmlWriter destination, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1140,7 +1141,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsDataContract<T>(this T instance, TextWriter destination, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1160,7 +1161,7 @@ public static class ObjectExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsDataContract<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1180,7 +1181,7 @@ public static class ObjectExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsDataContract<T>(this T instance, FileInfo destination, Encoding encoding = null, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1197,7 +1198,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
   public static string SerializeAsDataContract(this object instance, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1217,7 +1218,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsXml<T>(this T instance, XmlWriter destination, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1238,7 +1239,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsXml<T>(this T instance, TextWriter destination, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1258,7 +1259,7 @@ public static class ObjectExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsXml<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1278,7 +1279,7 @@ public static class ObjectExtensions
   /// <param name="encoding"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsXml<T>(this T instance, FileInfo destination, Encoding encoding = null, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1295,7 +1296,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="types"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
   public static string SerializeAsXml(this object instance, params Type[] types)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));

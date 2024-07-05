@@ -14,7 +14,7 @@ public static class IPHostEntryExtensions
   /// </summary>
   /// <param name="host"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="host"/> is <see langword="null"/>.</exception>
   public static IPHostEntry Clone(this IPHostEntry host) => host is not null ? new IPHostEntry 
   {
     HostName = host.HostName, 
@@ -28,7 +28,7 @@ public static class IPHostEntryExtensions
   /// <param name="host"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="host"/> is <see langword="null"/>.</exception>
   public static bool IsAvailable(this IPHostEntry host, TimeSpan? timeout = null)
   {
     if (host is null) throw new ArgumentNullException(nameof(host));
@@ -53,7 +53,7 @@ public static class IPHostEntryExtensions
   /// <param name="host"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="host"/> is <see langword="null"/>.</exception>
   public static async Task<bool> IsAvailableAsync(this IPHostEntry host, TimeSpan? timeout = null)
   {
     if (host is null) throw new ArgumentNullException(nameof(host));
@@ -84,7 +84,7 @@ public static class IPHostEntryExtensions
   /// </summary>
   /// <param name="host"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="host"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this IPHostEntry host) => host is not null ? host.HostName.IsUnset() && host.AddressList.IsUnset() : throw new ArgumentNullException(nameof(host));
 
   /// <summary>
@@ -92,6 +92,6 @@ public static class IPHostEntryExtensions
   /// </summary>
   /// <param name="host"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="host"/> is <see langword="null"/>.</exception>
   public static IEnumerable<IPAddress> ToEnumerable(this IPHostEntry host) => host?.AddressList ?? throw new ArgumentNullException(nameof(host));
 }

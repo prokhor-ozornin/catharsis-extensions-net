@@ -13,7 +13,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static NameValueCollection Clone(this NameValueCollection collection) => collection is not null ? new NameValueCollection(collection) : throw new ArgumentNullException(nameof(collection));
 
   /// <summary>
@@ -22,7 +22,7 @@ public static class NameValueCollectionExtensions
   /// <param name="collection"></param>
   /// <param name="elements"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   public static NameValueCollection With(this NameValueCollection collection, IEnumerable<(string Name, object Value)> elements)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -42,7 +42,7 @@ public static class NameValueCollectionExtensions
   /// <param name="collection"></param>
   /// <param name="elements"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static NameValueCollection With(this NameValueCollection collection, params (string Name, object Value)[] elements) => collection.With(elements as IEnumerable<(string Name, object Value)>);
 
   /// <summary>
@@ -51,7 +51,7 @@ public static class NameValueCollectionExtensions
   /// <param name="collection"></param>
   /// <param name="elements"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   public static NameValueCollection Without(this NameValueCollection collection, IEnumerable<string> elements)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -70,7 +70,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static NameValueCollection Without(this NameValueCollection collection, params string[] elements) => collection.Without(elements as IEnumerable<string>);
 
   /// <summary>
@@ -78,7 +78,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static NameValueCollection Empty(this NameValueCollection collection)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -94,7 +94,7 @@ public static class NameValueCollectionExtensions
   /// <param name="collection"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static NameValueCollection TryFinallyClear(this NameValueCollection collection, Action<NameValueCollection> action)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -108,7 +108,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static Dictionary<string, string> ToDictionary(this NameValueCollection collection)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -133,7 +133,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static IEnumerable<(string Name, string Value)> ToValueTuple(this NameValueCollection collection)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));

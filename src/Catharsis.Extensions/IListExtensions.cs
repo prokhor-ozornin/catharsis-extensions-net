@@ -17,7 +17,7 @@ public static class IListExtensions
   /// <param name="position"></param>
   /// <param name="element"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   public static IList<T> With<T>(this IList<T> list, int position, T element)
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
@@ -36,7 +36,7 @@ public static class IListExtensions
   /// <param name="offset"></param>
   /// <param name="from"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="to"/> or <paramref name="from"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> With<T>(this IList<T> to, int offset, IEnumerable<T> from)
   {
@@ -57,7 +57,7 @@ public static class IListExtensions
   /// <param name="offset"></param>
   /// <param name="from"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> With<T>(this IList<T> to, int offset, params T[] from) => to.With(offset, from as IEnumerable<T>);
 
@@ -68,7 +68,7 @@ public static class IListExtensions
   /// <param name="list"></param>
   /// <param name="positions"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="list"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
   public static IList<T> Without<T>(this IList<T> list, IEnumerable<int> positions)
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
@@ -88,7 +88,7 @@ public static class IListExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="list"></param>
   /// <param name="positions"></param>
-  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   public static IList<T> Without<T>(this IList<T> list, params int[] positions) => list.Without(positions as IEnumerable<int>);
 
   /// <summary>
@@ -100,7 +100,7 @@ public static class IListExtensions
   /// <param name="count"></param>
   /// <param name="condition"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> Without<T>(this IList<T> list, int offset, int? count = null, Predicate<T> condition = null)
   {
@@ -128,7 +128,7 @@ public static class IListExtensions
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="list"/> or <paramref name="filler"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> Fill<T>(this IList<T> list, Func<T> filler, int? offset = null, int? count = null) => list?.Fill(_ => filler(), offset, count) ?? throw new ArgumentNullException(nameof(filler));
 
@@ -141,7 +141,7 @@ public static class IListExtensions
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="list"/> or <paramref name="filler"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> Fill<T>(this IList<T> list, Func<int, T> filler, int? offset = null, int? count = null)
   {
@@ -168,7 +168,7 @@ public static class IListExtensions
   /// <param name="firstIndex"></param>
   /// <param name="secondIndex"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> Swap<T>(this IList<T> list, int firstIndex, int secondIndex)
   {
@@ -188,7 +188,7 @@ public static class IListExtensions
   /// <param name="list"></param>
   /// <param name="random"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   public static IList<T> Randomize<T>(this IList<T> list, Random random = null)
   {
     if (list is null) throw new ArgumentNullException(nameof(list));
@@ -218,6 +218,6 @@ public static class IListExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="list"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   public static IReadOnlyList<T> AsReadOnly<T>(this IList<T> list) => list is not null ? new ReadOnlyCollection<T>(list) : throw new ArgumentNullException(nameof(list));
 }

@@ -7,11 +7,11 @@
 public static class BasicTypesExtensions
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Returns a string created by repeating a specified character given number of times.</para>
   /// </summary>
-  /// <param name="character"></param>
-  /// <param name="count"></param>
-  /// <returns></returns>
+  /// <param name="character">Character to repeat.</param>
+  /// <param name="count">Number of repeats.</param>
+  /// <returns>Result string.</returns>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static string Repeat(this char character, int count) => count >= 0 ? new string(character, count) : throw new ArgumentOutOfRangeException(nameof(count));
 
@@ -28,7 +28,7 @@ public static class BasicTypesExtensions
   /// </summary>
   /// <param name="count"></param>
   /// <param name="action"></param>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static void Times(this int count, Action action)
   {
@@ -43,7 +43,7 @@ public static class BasicTypesExtensions
   /// </summary>
   /// <param name="count">Number of times to call a delegate.</param>
   /// <param name="action">Delegate that represents a method to be called.</param>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static void Times(this int count, Action<int> action)
   {
@@ -80,7 +80,7 @@ public static class BasicTypesExtensions
   /// <param name="count"></param>
   /// <param name="constructor"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="constructor"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IEnumerable<T> Objects<T>(this int count, Func<T> constructor)
   {
@@ -100,7 +100,7 @@ public static class BasicTypesExtensions
   /// <param name="count"></param>
   /// <param name="constructor"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="constructor"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IEnumerable<T> Objects<T>(this int count, Func<int, T> constructor)
   {

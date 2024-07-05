@@ -13,7 +13,7 @@ public static class CookieExtensions
   /// </summary>
   /// <param name="cookie"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="cookie"/> is <see langword="null"/>.</exception>
   public static Cookie Clone(this Cookie cookie) => cookie is not null ? new Cookie(cookie.Name, cookie.Value, cookie.Path, cookie.Domain) 
   {
     Secure = cookie.Secure,
@@ -38,6 +38,6 @@ public static class CookieExtensions
   /// </summary>
   /// <param name="cookie"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="cookie"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this Cookie cookie) => cookie is not null ? cookie.Name.IsUnset() || cookie.Value.IsUnset() : throw new ArgumentNullException(nameof(cookie));
 }

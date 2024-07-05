@@ -16,7 +16,7 @@ public static class StringBuilderExtensions
   /// <param name="builder"></param>
   /// <param name="elements"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   public static StringBuilder With(this StringBuilder builder, IEnumerable<object> elements)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));
@@ -35,7 +35,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static StringBuilder With(this StringBuilder builder, params object[] elements) => builder.With(elements as IEnumerable<object>);
 
   /// <summary>
@@ -44,7 +44,7 @@ public static class StringBuilderExtensions
   /// <param name="builder"></param>
   /// <param name="positions"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
   public static StringBuilder Without(this StringBuilder builder, IEnumerable<int> positions)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));
@@ -64,6 +64,7 @@ public static class StringBuilderExtensions
   /// <param name="builder"></param>
   /// <param name="positions"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static StringBuilder Without(this StringBuilder builder, params int[] positions) => builder.Without(positions as IEnumerable<int>);
 
   /// <summary>
@@ -71,7 +72,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static StringBuilder Clone(this StringBuilder builder) => builder is not null ? new StringBuilder(builder.ToString(), builder.Capacity) : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
@@ -79,7 +80,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static bool IsUnset(this StringBuilder builder) => builder is null || builder.IsEmpty();
 
   /// <summary>
@@ -87,7 +88,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this StringBuilder builder) => builder is not null ? builder.Length == 0 : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
@@ -95,7 +96,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static StringBuilder Empty(this StringBuilder builder) => builder?.Clear() ?? throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
@@ -104,7 +105,7 @@ public static class StringBuilderExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static StringBuilder Min(this StringBuilder left, StringBuilder right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -119,7 +120,7 @@ public static class StringBuilderExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static StringBuilder Max(this StringBuilder left, StringBuilder right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -134,7 +135,7 @@ public static class StringBuilderExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static (StringBuilder Min, StringBuilder Max) MinMax(this StringBuilder left, StringBuilder right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -149,7 +150,7 @@ public static class StringBuilderExtensions
   /// <param name="builder"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static StringBuilder TryFinallyClear(this StringBuilder builder, Action<StringBuilder> action)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));
@@ -164,7 +165,7 @@ public static class StringBuilderExtensions
   /// <param name="builder"></param>
   /// <param name="format"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static StringWriter ToStringWriter(this StringBuilder builder, IFormatProvider format = null) => builder is not null ? new StringWriter(builder, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(builder));
 
   /// <summary>
@@ -172,6 +173,6 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static XmlWriter ToXmlWriter(this StringBuilder builder) => builder is not null ? XmlWriter.Create(builder, new XmlWriterSettings { Indent = true }) : throw new ArgumentNullException(nameof(builder));
 }

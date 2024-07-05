@@ -13,7 +13,7 @@ public static class PhysicalAddressExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static PhysicalAddress Clone(this PhysicalAddress address) => address is not null ? new PhysicalAddress(address.GetAddressBytes()) : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
@@ -21,6 +21,6 @@ public static class PhysicalAddressExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static byte[] ToBytes(this PhysicalAddress address) => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
 }

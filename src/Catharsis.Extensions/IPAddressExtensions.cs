@@ -15,7 +15,7 @@ public static class IPAddressExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static IPAddress Clone(this IPAddress address) => address is not null ? new IPAddress(address.GetAddressBytes()) : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
@@ -24,7 +24,7 @@ public static class IPAddressExtensions
   /// <param name="address"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static bool IsAvailable(this IPAddress address, TimeSpan? timeout = null)
   {
     if (address is null) throw new ArgumentNullException(nameof(address));
@@ -42,7 +42,7 @@ public static class IPAddressExtensions
   /// <param name="address"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static async Task<bool> IsAvailableAsync(this IPAddress address, TimeSpan? timeout = null)
   {
     if (address is null) throw new ArgumentNullException(nameof(address));
@@ -60,7 +60,7 @@ public static class IPAddressExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static IPAddress Min(this IPAddress left, IPAddress right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -75,7 +75,7 @@ public static class IPAddressExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static IPAddress Max(this IPAddress left, IPAddress right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -90,7 +90,7 @@ public static class IPAddressExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static (IPAddress Min, IPAddress Max) MinMax(this IPAddress left, IPAddress right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -104,7 +104,7 @@ public static class IPAddressExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static bool IsV4(this IPAddress address) => address is not null ? address.AddressFamily == AddressFamily.InterNetwork : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
@@ -112,7 +112,7 @@ public static class IPAddressExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static bool IsV6(this IPAddress address) => address is not null ? address.AddressFamily == AddressFamily.InterNetworkV6 : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
@@ -120,7 +120,7 @@ public static class IPAddressExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static IPHostEntry ToIpHost(this IPAddress address) => address is not null ? new IPHostEntry { AddressList = [address], Aliases = [] } : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
@@ -128,6 +128,6 @@ public static class IPAddressExtensions
   /// </summary>
   /// <param name="address"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static byte[] ToBytes(this IPAddress address) => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
 }

@@ -11,7 +11,7 @@ public static class HttpContentExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="content"/> is <see langword="null"/>.</exception>
   public static Stream ToStream(this HttpContent content)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
@@ -29,7 +29,7 @@ public static class HttpContentExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="content"/> is <see langword="null"/>.</exception>
   public static async Task<Stream> ToStreamAsync(this HttpContent content, CancellationToken cancellation = default)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
@@ -48,7 +48,7 @@ public static class HttpContentExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="content"/> is <see langword="null"/>.</exception>
   public static IEnumerable<byte> ToBytes(this HttpContent content) => content?.ToStream().ToBytes() ?? throw new ArgumentNullException(nameof(content));
 
   /// <summary>
@@ -56,7 +56,7 @@ public static class HttpContentExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="content"/> is <see langword="null"/>.</exception>
   public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpContent content)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
@@ -74,7 +74,7 @@ public static class HttpContentExtensions
   /// </summary>
   /// <param name="content"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="content"/> is <see langword="null"/>.</exception>
   public static string ToText(this HttpContent content) => content?.ToTextAsync().Result ?? throw new ArgumentNullException(nameof(content));
 
   /// <summary>
@@ -83,7 +83,7 @@ public static class HttpContentExtensions
   /// <param name="content"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="content"/> is <see langword="null"/>.</exception>
   public static async Task<string> ToTextAsync(this HttpContent content, CancellationToken cancellation = default)
   {
     if (content is null) throw new ArgumentNullException(nameof(content));

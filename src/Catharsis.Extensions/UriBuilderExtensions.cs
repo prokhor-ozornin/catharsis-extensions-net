@@ -13,7 +13,7 @@ public static class UriBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static UriBuilder Empty(this UriBuilder builder)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));
@@ -36,7 +36,7 @@ public static class UriBuilderExtensions
   /// <param name="builder"></param>
   /// <param name="parameters"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
   public static UriBuilder WithQuery(this UriBuilder builder, IReadOnlyDictionary<string, object> parameters)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));
@@ -51,7 +51,7 @@ public static class UriBuilderExtensions
   /// <param name="builder"></param>
   /// <param name="parameters"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
   public static UriBuilder WithQuery(this UriBuilder builder, params (string Name, object Value)[] parameters)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));

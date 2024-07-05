@@ -14,7 +14,7 @@ public static class SocketExtensions
   /// <param name="socket"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="socket"/> is <see langword="null"/>.</exception>
   public static Socket WithTimeout(this Socket socket, TimeSpan? timeout)
   {
     if (socket is null) throw new ArgumentNullException(nameof(socket));
@@ -36,7 +36,7 @@ public static class SocketExtensions
   /// <param name="socket"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="socket"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static Socket TryFinallyDisconnect(this Socket socket, Action<Socket> action)
   {
     if (socket is null) throw new ArgumentNullException(nameof(socket));

@@ -112,6 +112,8 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryReader().IsUnset()).ThrowExactly<ArgumentException>();
+
       Validate(true, null);
       Validate(true, Stream.Null.ToBinaryReader());
       Validate(true, Attributes.EmptyStream().ToBinaryReader());
@@ -126,7 +128,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.IsUnset().Should().Be(reader is null || reader.IsEmpty()).And.Be(result);
+        reader.IsUnset().Should().Be(result);
       }
     }
   }
@@ -140,6 +142,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryReader().IsEmpty()).ThrowExactly<ArgumentException>();
 
       Validate(true, Stream.Null.ToBinaryReader());
       Validate(true, Attributes.EmptyStream().ToBinaryReader());
@@ -154,7 +157,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     {
       using (reader)
       {
-        reader.IsEmpty().Should().Be(reader.BaseStream.IsEmpty()).And.Be(result);
+        reader.IsEmpty().Should().Be(result);
       }
     }
   }

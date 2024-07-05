@@ -11,7 +11,7 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static BinaryWriter Clone(this BinaryWriter writer) => writer is not null ? new BinaryWriter(writer.BaseStream) : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -19,7 +19,7 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static bool IsStart(this BinaryWriter writer) => writer?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -27,7 +27,7 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static bool IsEnd(this BinaryWriter writer) => writer?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -42,7 +42,7 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this BinaryWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -50,7 +50,7 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static BinaryWriter Empty(this BinaryWriter writer)
   {
     if (writer is null) throw new ArgumentNullException(nameof(writer));
@@ -65,7 +65,7 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static BinaryWriter Rewind(this BinaryWriter writer)
   {
     if (writer is null) throw new ArgumentNullException(nameof(writer));
@@ -81,7 +81,7 @@ public static class BinaryWriterExtensions
   /// <param name="writer"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static BinaryWriter TryFinallyClear(this BinaryWriter writer, Action<BinaryWriter> action)
   {
     if (writer is null) throw new ArgumentNullException(nameof(writer));
@@ -96,7 +96,7 @@ public static class BinaryWriterExtensions
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   public static BinaryWriter WriteBytes(this BinaryWriter destination, IEnumerable<byte> bytes)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -113,7 +113,7 @@ public static class BinaryWriterExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   public static BinaryWriter WriteText(this BinaryWriter destination, string text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));

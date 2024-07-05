@@ -37,7 +37,7 @@ public static class IComparableExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="left"/> is <see langword="null"/>.</exception>
   public static T Min<T>(this T left, T right) where T : IComparable => left is not null ? left.CompareTo(right) <= 0 ? left : right : throw new ArgumentNullException(nameof(left));
 
   /// <summary>
@@ -47,7 +47,7 @@ public static class IComparableExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="left"/> is <see langword="null"/>.</exception>
   public static T Max<T>(this T left, T right) where T : IComparable => left is not null ? left.CompareTo(right) > 0 ? left : right : throw new ArgumentNullException(nameof(left));
 
   /// <summary>
@@ -57,6 +57,6 @@ public static class IComparableExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="left"/> is <see langword="null"/>.</exception>
   public static (T Min, T Max) MinMax<T>(this T left, T right) where T : IComparable => left is not null ? left.CompareTo(right) <= 0 ? (left, right) : (right, left) : throw new ArgumentNullException(nameof(left));
 }

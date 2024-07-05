@@ -14,7 +14,7 @@ public static class XmlWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static XmlDictionaryWriter ToXmlDictionaryWriter(this XmlWriter writer) => writer is not null ? XmlDictionaryWriter.CreateDictionaryWriter(writer) : throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -24,7 +24,7 @@ public static class XmlWriterExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   public static XmlWriter WriteBytes(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -40,7 +40,7 @@ public static class XmlWriterExtensions
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   public static async Task<XmlWriter> WriteBytesAsync(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -55,7 +55,7 @@ public static class XmlWriterExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   public static XmlWriter WriteText(this XmlWriter destination, string text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -72,7 +72,7 @@ public static class XmlWriterExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   public static async Task<XmlWriter> WriteTextAsync(this XmlWriter destination, string text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));

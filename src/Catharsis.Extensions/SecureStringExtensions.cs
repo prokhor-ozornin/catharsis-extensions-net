@@ -16,7 +16,7 @@ public static class SecureStringExtensions
   /// <param name="secure"></param>
   /// <param name="characters"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="secure"/> or <paramref name="characters"/> is <see langword="null"/>.</exception>
   public static SecureString With(this SecureString secure, IEnumerable<char> characters)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -35,7 +35,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <param name="characters"></param>
-  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   public static SecureString With(this SecureString secure, params char[] characters) => secure.With(characters as IEnumerable<char>);
 
   /// <summary>
@@ -44,7 +44,7 @@ public static class SecureStringExtensions
   /// <param name="secure"></param>
   /// <param name="positions"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="secure"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
   public static SecureString Without(this SecureString secure, IEnumerable<int> positions)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -63,7 +63,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <param name="positions"></param>
-  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   public static SecureString Without(this SecureString secure, params int[] positions) => secure.Without(positions as IEnumerable<int>);
 
   /// <summary>
@@ -78,7 +78,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this SecureString secure) => secure is not null ? secure.Length == 0 : throw new ArgumentNullException(nameof(secure));
 
   /// <summary>
@@ -86,7 +86,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   public static SecureString Empty(this SecureString secure)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -102,7 +102,7 @@ public static class SecureStringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static SecureString Min(this SecureString left, SecureString right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -117,7 +117,7 @@ public static class SecureStringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static SecureString Max(this SecureString left, SecureString right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -132,7 +132,7 @@ public static class SecureStringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static (SecureString Min, SecureString Max) MinMax(this SecureString left, SecureString right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -147,7 +147,7 @@ public static class SecureStringExtensions
   /// <param name="secure"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="secure"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static SecureString TryFinallyClear(this SecureString secure, Action<SecureString> action)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -161,7 +161,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   public static SecureString AsReadOnly(this SecureString secure)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -177,7 +177,7 @@ public static class SecureStringExtensions
   /// <param name="secure"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   public static byte[] ToBytes(this SecureString secure, Encoding encoding = null) => secure.ToText().ToBytes(encoding);
 
   /// <summary>
@@ -185,7 +185,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   public static string ToText(this SecureString secure)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));

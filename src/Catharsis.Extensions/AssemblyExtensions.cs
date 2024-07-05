@@ -15,7 +15,7 @@ public static class AssemblyExtensions
   /// <param name="assembly">Assembly with resource.</param>
   /// <param name="name">The case-sensitive name of the manifest resource being requested.</param>
   /// <returns>Text data of assembly manifest's resource.</returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="assembly"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
   public static Stream Resource(this Assembly assembly, string name)
   {
     if (assembly is null) throw new ArgumentNullException(nameof(assembly));

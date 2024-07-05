@@ -21,7 +21,7 @@ public static class TcpClientExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this TcpClient tcp) => tcp?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -30,7 +30,7 @@ public static class TcpClientExtensions
   /// <param name="tcp"></param>
   /// <param name="timeout"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static TcpClient WithTimeout(this TcpClient tcp, TimeSpan? timeout)
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
@@ -50,7 +50,7 @@ public static class TcpClientExtensions
   /// <param name="tcp"></param>
   /// <param name="action"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="tcp"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static TcpClient TryFinallyDisconnect(this TcpClient tcp, Action<TcpClient> action)
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
@@ -67,7 +67,7 @@ public static class TcpClientExtensions
   /// <param name="tcp"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static IEnumerable<byte> ToEnumerable(this TcpClient tcp, bool close = false) => tcp?.GetStream().ToEnumerable(close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -77,7 +77,7 @@ public static class TcpClientExtensions
   /// <param name="count"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static IEnumerable<byte[]> ToEnumerable(this TcpClient tcp, int count, bool close = false) => tcp?.GetStream().ToEnumerable(count, close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -86,7 +86,7 @@ public static class TcpClientExtensions
   /// <param name="tcp"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static IAsyncEnumerable<byte> ToAsyncEnumerable(this TcpClient tcp, bool close = false) => tcp?.GetStream().ToAsyncEnumerable(close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -96,7 +96,7 @@ public static class TcpClientExtensions
   /// <param name="count"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this TcpClient tcp, int count, bool close = false) => tcp?.GetStream().ToAsyncEnumerable(count, close) ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -104,7 +104,7 @@ public static class TcpClientExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static IEnumerable<byte> ToBytes(this TcpClient tcp) => tcp?.GetStream().ToBytes() ?? throw new ArgumentNullException(nameof(tcp));
 
   /// <summary>
@@ -112,7 +112,7 @@ public static class TcpClientExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static async IAsyncEnumerable<byte> ToBytesAsync(this TcpClient tcp)
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
@@ -129,7 +129,7 @@ public static class TcpClientExtensions
   /// <param name="tcp"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static string ToText(this TcpClient tcp, Encoding encoding = null) => tcp.ToBytes().AsArray().ToText(encoding);
 
   /// <summary>
@@ -138,7 +138,7 @@ public static class TcpClientExtensions
   /// <param name="tcp"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static async Task<string> ToTextAsync(this TcpClient tcp, Encoding encoding = null) => (await tcp.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
 
   /// <summary>
@@ -147,7 +147,7 @@ public static class TcpClientExtensions
   /// <param name="tcp"></param>
   /// <param name="bytes"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="tcp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   public static TcpClient WriteBytes(this TcpClient tcp, IEnumerable<byte> bytes)
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
@@ -165,7 +165,7 @@ public static class TcpClientExtensions
   /// <param name="bytes"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="tcp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   public static async Task<TcpClient> WriteBytesAsync(this TcpClient tcp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     if (tcp is null) throw new ArgumentNullException(nameof(tcp));
@@ -185,7 +185,7 @@ public static class TcpClientExtensions
   /// <param name="text"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   public static TcpClient WriteText(this TcpClient tcp, string text, Encoding encoding = null) => tcp.WriteBytes(text.ToBytes(encoding));
 
   /// <summary>
@@ -196,6 +196,6 @@ public static class TcpClientExtensions
   /// <param name="encoding"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="tcp"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   public static async Task<TcpClient> WriteTextAsync(this TcpClient tcp, string text, Encoding encoding = null, CancellationToken cancellation = default) => await tcp.WriteBytesAsync(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
 }

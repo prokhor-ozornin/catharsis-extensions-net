@@ -14,7 +14,7 @@ public static class IReadOnlyDictionaryExtensions
   /// <param name="dictionary"></param>
   /// <param name="comparer"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
   public static IEnumerable<(TKey Key, TValue Value)> ToValueTuple<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
