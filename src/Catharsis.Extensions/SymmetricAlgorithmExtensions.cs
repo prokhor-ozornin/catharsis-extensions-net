@@ -15,6 +15,7 @@ public static class SymmetricAlgorithmExtensions
   /// <param name="bytes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="algorithm"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="EncryptAsync(SymmetricAlgorithm, IEnumerable{byte}, CancellationToken)"/>
   public static byte[] Encrypt(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes)
   {
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
@@ -39,6 +40,7 @@ public static class SymmetricAlgorithmExtensions
   /// <param name="stream"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="algorithm"/> or <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="EncryptAsync(SymmetricAlgorithm, Stream, CancellationToken)"/>
   public static byte[] Encrypt(this SymmetricAlgorithm algorithm, Stream stream) => algorithm.Encrypt(stream.ToEnumerable());
 
   /// <summary>
@@ -49,6 +51,7 @@ public static class SymmetricAlgorithmExtensions
   /// <param name="cancellation"></param>
   /// <returns>Encrypted binary data.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="algorithm"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Encrypt(SymmetricAlgorithm, IEnumerable{byte})"/>
   public static async Task<byte[]> EncryptAsync(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
@@ -76,6 +79,7 @@ public static class SymmetricAlgorithmExtensions
   /// <param name="cancellation"></param>
   /// <returns>Encrypted binary data.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="algorithm"/> or <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Encrypt(SymmetricAlgorithm, Stream)"/>
   public static async Task<byte[]> EncryptAsync(this SymmetricAlgorithm algorithm, Stream stream, CancellationToken cancellation = default) => await algorithm.EncryptAsync(stream.ToEnumerable(), cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -85,6 +89,7 @@ public static class SymmetricAlgorithmExtensions
   /// <param name="bytes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="algorithm"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DecryptAsync(SymmetricAlgorithm, IEnumerable{byte}, CancellationToken)"/>
   public static byte[] Decrypt(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes)
   {
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
@@ -109,6 +114,7 @@ public static class SymmetricAlgorithmExtensions
   /// <param name="stream"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="algorithm"/> or <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DecryptAsync(SymmetricAlgorithm, Stream, CancellationToken)"/>
   public static byte[] Decrypt(this SymmetricAlgorithm algorithm, Stream stream) => algorithm.Decrypt(stream.ToEnumerable());
 
   /// <summary>
@@ -119,6 +125,7 @@ public static class SymmetricAlgorithmExtensions
   /// <param name="cancellation"></param>
   /// <returns>Decrypted binary data.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="algorithm"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Decrypt(SymmetricAlgorithm, IEnumerable{byte})"/>
   public static async Task<byte[]> DecryptAsync(this SymmetricAlgorithm algorithm, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
@@ -146,5 +153,6 @@ public static class SymmetricAlgorithmExtensions
   /// <param name="cancellation"></param>
   /// <returns>Decrypted binary data.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="algorithm"/> or <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DecryptAsync(SymmetricAlgorithm, IEnumerable{byte}, CancellationToken)"/>
   public static async Task<byte[]> DecryptAsync(this SymmetricAlgorithm algorithm, Stream stream, CancellationToken cancellation = default) => await algorithm.DecryptAsync(stream.ToEnumerable(), cancellation).ConfigureAwait(false);
 }

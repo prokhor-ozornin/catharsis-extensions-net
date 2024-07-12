@@ -19,6 +19,7 @@ public static class IAsyncEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
+  /// <seealso cref="IsEmpty{T}(IAsyncEnumerable{T})"/>
   public static bool IsUnset<T>(this IAsyncEnumerable<T> sequence) => sequence is null || sequence.IsEmpty();
 
   /// <summary>
@@ -28,6 +29,8 @@ public static class IAsyncEnumerableExtensions
   /// <param name="sequence"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="sequence"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsEmptyAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/>
+  /// <seealso cref="IsUnset{T}(IAsyncEnumerable{T})"/>
   public static bool IsEmpty<T>(this IAsyncEnumerable<T> sequence) => sequence?.IsEmptyAsync().Result ?? throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
@@ -48,6 +51,7 @@ public static class IAsyncEnumerableExtensions
   /// <param name="action"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ForEach<T>(this IAsyncEnumerable<T> sequence, Action<int, T> action)"/>
   public static IAsyncEnumerable<T> ForEach<T>(this IAsyncEnumerable<T> sequence, Action<T> action)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -65,6 +69,8 @@ public static class IAsyncEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ForEach<T>(this IAsyncEnumerable<T> sequence, Action<T> action)"/>
+  /// <seealso cref=""/>
   public static async Task<IAsyncEnumerable<T>> ForEachAsync<T>(this IAsyncEnumerable<T> sequence, Action<T> action, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));

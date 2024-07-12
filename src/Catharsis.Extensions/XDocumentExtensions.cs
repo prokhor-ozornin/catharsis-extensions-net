@@ -36,10 +36,10 @@ public static class XDocumentExtensions
   public static XDocument With(this XDocument document, params object[] nodes) => document.With(nodes as IEnumerable<object>);
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="XDocument"/> that has the same text content as the original.</para>
   /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
+  /// <param name="document">XML document instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static XDocument Clone(this XDocument document) => document is not null ? document.ToString().ToStringReader().TryFinallyDispose(XDocument.Load) : throw new ArgumentNullException(nameof(document));
 
@@ -48,13 +48,14 @@ public static class XDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <seealso cref="IsEmpty(XDocument)"/>
   public static bool IsUnset(this XDocument document) => document is null || document.IsEmpty();
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="XDocument"/> instance can be considered "empty", meaning it has no child nodes.</para>
   /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
+  /// <param name="document">XML document instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="document"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this XDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 

@@ -37,6 +37,7 @@ public static class XmlReaderExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytesAsync(XmlReader, Encoding)"/>
   public static byte[] ToBytes(this XmlReader reader, Encoding encoding = null) => reader.ToText().ToBytes(encoding);
 
   /// <summary>
@@ -46,6 +47,7 @@ public static class XmlReaderExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytes(XmlReader, Encoding)"/>
   public static async Task<byte[]> ToBytesAsync(this XmlReader reader, Encoding encoding = null) => (await reader.ToTextAsync().ConfigureAwait(false)).ToBytes(encoding);
 
   /// <summary>
@@ -54,6 +56,7 @@ public static class XmlReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTextAsync(XmlReader)"/>
   public static string ToText(this XmlReader reader) => reader?.ReadOuterXml() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -62,6 +65,7 @@ public static class XmlReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToText(XmlReader)"/>
   public static async Task<string> ToTextAsync(this XmlReader reader) => reader is not null ? await reader.ReadOuterXmlAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -95,6 +99,7 @@ public static class XmlReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToXDocumentAsync(XmlReader, CancellationToken)"/>
   public static XDocument ToXDocument(this XmlReader reader) => reader is not null ? XDocument.Load(reader, LoadOptions.None) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -104,6 +109,7 @@ public static class XmlReaderExtensions
   /// <param name="cancellation"></param>
   /// <returns><see cref="XDocument"/> instance, constructed from XML contents which have been read through a <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToXDocument(XmlReader)"/>
   public static async Task<XDocument> ToXDocumentAsync(this XmlReader reader, CancellationToken cancellation = default)
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));

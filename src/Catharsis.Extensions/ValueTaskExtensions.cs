@@ -12,6 +12,8 @@ public static class ValueTaskExtensions
   /// <param name="task"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
+  /// <seealso cref="Await{T}(ValueTask{T}, TimeSpan?, CancellationToken)"/>
+  /// <seealso cref="Await{T}(ValueTask{T}, out T, TimeSpan?, CancellationToken)"/>
   public static ValueTask Await(this ValueTask task, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
     if (task.IsCompleted)
@@ -34,6 +36,8 @@ public static class ValueTaskExtensions
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <seealso cref="Await(ValueTask, TimeSpan?, CancellationToken)"/>
+  /// <seealso cref="Await{T}(ValueTask{T}, out T, TimeSpan?, CancellationToken)"/>
   public static T Await<T>(this ValueTask<T> task, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
     if (task.IsCompleted)
@@ -55,6 +59,8 @@ public static class ValueTaskExtensions
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <seealso cref="Await(ValueTask, TimeSpan?, CancellationToken)"/>
+  /// <seealso cref="Await{T}(ValueTask{T}, TimeSpan?, CancellationToken)"/>
   public static ValueTask<T> Await<T>(this ValueTask<T> task, out T result, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
     if (task.IsCompleted)
@@ -78,6 +84,7 @@ public static class ValueTaskExtensions
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <seealso cref="ExecuteAsync(ValueTask, Action{ValueTask}, Action{ValueTask}, Action{ValueTask})"/>
   public static ValueTask Execute(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
 
   /// <summary>
@@ -88,6 +95,7 @@ public static class ValueTaskExtensions
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
+  /// <seealso cref="Execute(ValueTask, Action{ValueTask}, Action{ValueTask}, Action{ValueTask})"/>
   public static async ValueTask ExecuteAsync(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null)
   {
     await task.ConfigureAwait(false);

@@ -11,10 +11,10 @@ namespace Catharsis.Extensions;
 public static class FileInfoExtensions
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="FileInfo"/> that will point to the same file as the original.</para>
   /// </summary>
-  /// <param name="file"></param>
-  /// <returns></returns>
+  /// <param name="file">File instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
   public static FileInfo Clone(this FileInfo file) => file is not null ? new FileInfo(file.ToString()) : throw new ArgumentNullException(nameof(file));
 
@@ -23,14 +23,16 @@ public static class FileInfoExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
+  /// <seealso cref="IsEmpty(FileInfo)"/>
   public static bool IsUnset(this FileInfo file) => file is null || file.IsEmpty();
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="FileInfo"/> instance can be considered "empty", meaning it either doesn't exist or its size is zero.</para>
   /// </summary>
-  /// <param name="file"></param>
-  /// <returns></returns>
+  /// <param name="file">File instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="file"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset(FileInfo)"/>
   public static bool IsEmpty(this FileInfo file) => file is not null ? !file.Exists || file.Length == 0 : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -82,6 +84,7 @@ public static class FileInfoExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="LinesAsync(FileInfo, Encoding)"/>
   public static string[] Lines(this FileInfo file, Encoding encoding = null)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -98,6 +101,7 @@ public static class FileInfoExtensions
   /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
   /// <returns>List of strings which have been read from a <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Lines(FileInfo, Encoding)"/>
   public static async IAsyncEnumerable<string> LinesAsync(this FileInfo file, Encoding encoding = null)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -117,6 +121,7 @@ public static class FileInfoExtensions
   /// <param name="action"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryFinallyDelete(FileInfo, Action{FileInfo})"/>
   public static FileInfo TryFinallyClear(this FileInfo file, Action<FileInfo> action)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -136,6 +141,7 @@ public static class FileInfoExtensions
   /// <param name="action"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryFinallyClear(FileInfo, Action{FileInfo})"/>
   public static FileInfo TryFinallyDelete(this FileInfo file, Action<FileInfo> action)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -233,6 +239,7 @@ public static class FileInfoExtensions
   /// <param name="file"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytesAsync(FileInfo)"/>
   public static IEnumerable<byte> ToBytes(this FileInfo file) => file?.ToReadOnlyStream().ToBytes(true) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -241,6 +248,7 @@ public static class FileInfoExtensions
   /// <param name="file">File to read data from.</param>
   /// <returns>Byte content of specified <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytes(FileInfo)"/>
   public static IAsyncEnumerable<byte> ToBytesAsync(this FileInfo file) => file?.ToReadOnlyStream().ToBytesAsync(true) ?? throw new ArgumentNullException(nameof(file));
 
   /// <summary>
@@ -250,6 +258,7 @@ public static class FileInfoExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTextAsync(FileInfo, Encoding)"/>
   public static string ToText(this FileInfo file, Encoding encoding = null)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -266,6 +275,7 @@ public static class FileInfoExtensions
   /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
   /// <returns>Text contents of a <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToText(FileInfo, Encoding)"/>
   public static async Task<string> ToTextAsync(this FileInfo file, Encoding encoding = null)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -330,6 +340,7 @@ public static class FileInfoExtensions
   /// <param name="file"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToXDocumentAsync(FileInfo, CancellationToken)"/>
   public static XDocument ToXDocument(this FileInfo file)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -346,6 +357,7 @@ public static class FileInfoExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToXDocument(FileInfo)"/>
   public static async Task<XDocument> ToXDocumentAsync(this FileInfo file, CancellationToken cancellation = default)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
@@ -364,6 +376,7 @@ public static class FileInfoExtensions
   /// <param name="bytes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync(FileInfo, IEnumerable{byte}, CancellationToken)"/>
   public static FileInfo WriteBytes(this FileInfo destination, IEnumerable<byte> bytes)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -391,6 +404,7 @@ public static class FileInfoExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes(FileInfo, IEnumerable{byte})"/>
   public static async Task<FileInfo> WriteBytesAsync(this FileInfo destination, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -420,6 +434,7 @@ public static class FileInfoExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync(FileInfo, string, Encoding, CancellationToken)"/>
   public static FileInfo WriteText(this FileInfo destination, string text, Encoding encoding = null)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -447,6 +462,7 @@ public static class FileInfoExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText(FileInfo, string, Encoding)"/>
   public static async Task<FileInfo> WriteTextAsync(this FileInfo destination, string text, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));

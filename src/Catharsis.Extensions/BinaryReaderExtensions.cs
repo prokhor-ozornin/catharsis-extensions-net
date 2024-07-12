@@ -7,10 +7,10 @@
 public static class BinaryReaderExtensions
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="BinaryReader"/>, which will read data from the same underlying <see cref="Stream"/>.</para>
   /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
+  /// <param name="reader">Binary reader instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   public static BinaryReader Clone(this BinaryReader reader) => reader is not null ? new BinaryReader(reader.BaseStream) : throw new ArgumentNullException(nameof(reader));
 
@@ -20,6 +20,7 @@ public static class BinaryReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsEnd(BinaryReader)"/>
   public static bool IsStart(this BinaryReader reader) => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -28,21 +29,24 @@ public static class BinaryReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsStart(BinaryReader)"/>
   public static bool IsEnd(this BinaryReader reader) => reader?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance is either <see langword="null"/> or "empty".</para>
   /// </summary>
   /// <param name="reader"></param>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsEmpty(BinaryReader)"/>
   public static bool IsUnset(this BinaryReader reader) => reader is null || reader.IsEmpty();
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
   /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
+  /// <param name="reader">Binary reader instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="reader"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset(BinaryReader)"/>
   public static bool IsEmpty(this BinaryReader reader) => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -120,6 +124,8 @@ public static class BinaryReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToEnumerable(BinaryReader, int)"/>
+  /// <seealso cref="ToAsyncEnumerable(BinaryReader, int)"/>
   public static IEnumerable<byte> ToEnumerable(this BinaryReader reader) => reader?.BaseStream.ToEnumerable() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -129,6 +135,8 @@ public static class BinaryReaderExtensions
   /// <param name="count"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToEnumerable(BinaryReader)"/>
+  /// <seealso cref="ToAsyncEnumerable(BinaryReader)"/>
   public static IEnumerable<byte[]> ToEnumerable(this BinaryReader reader, int count) => reader?.BaseStream.ToEnumerable(count) ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -137,6 +145,8 @@ public static class BinaryReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToAsyncEnumerable(BinaryReader, int)"/>
+  /// <seealso cref="ToEnumerable(BinaryReader, int)"/>
   public static IAsyncEnumerable<byte> ToAsyncEnumerable(this BinaryReader reader) => reader?.BaseStream.ToAsyncEnumerable() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -146,6 +156,8 @@ public static class BinaryReaderExtensions
   /// <param name="count"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToAsyncEnumerable(BinaryReader)"/>
+  /// <seealso cref="ToEnumerable(BinaryReader)"/>
   public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this BinaryReader reader, int count) => reader?.BaseStream.ToAsyncEnumerable(count) ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -154,6 +166,7 @@ public static class BinaryReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytesAsync(BinaryReader)"/>
   public static IEnumerable<byte> ToBytes(this BinaryReader reader) => reader?.BaseStream.ToBytes() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
@@ -162,6 +175,7 @@ public static class BinaryReaderExtensions
   /// <param name="reader"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytes(BinaryReader)"/>
   public static IAsyncEnumerable<byte> ToBytesAsync(this BinaryReader reader) => reader?.BaseStream.ToBytesAsync() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>

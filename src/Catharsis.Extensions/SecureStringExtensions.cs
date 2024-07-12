@@ -17,6 +17,7 @@ public static class SecureStringExtensions
   /// <param name="characters"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="secure"/> or <paramref name="characters"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(SecureString, char[])"/>
   public static SecureString With(this SecureString secure, IEnumerable<char> characters)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -36,6 +37,7 @@ public static class SecureStringExtensions
   /// <param name="secure"></param>
   /// <param name="characters"></param>
   /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(SecureString, IEnumerable{char})"/>
   public static SecureString With(this SecureString secure, params char[] characters) => secure.With(characters as IEnumerable<char>);
 
   /// <summary>
@@ -45,6 +47,7 @@ public static class SecureStringExtensions
   /// <param name="positions"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="secure"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(SecureString, int[])"/>
   public static SecureString Without(this SecureString secure, IEnumerable<int> positions)
   {
     if (secure is null) throw new ArgumentNullException(nameof(secure));
@@ -64,6 +67,7 @@ public static class SecureStringExtensions
   /// <param name="secure"></param>
   /// <param name="positions"></param>
   /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(SecureString, IEnumerable{int})"/>
   public static SecureString Without(this SecureString secure, params int[] positions) => secure.Without(positions as IEnumerable<int>);
 
   /// <summary>
@@ -71,14 +75,16 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <returns></returns>
+  /// <seealso cref="IsEmpty(SecureString)"/>
   public static bool IsUnset(this SecureString secure) => secure is null || secure.IsEmpty();
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="SecureString"/> instance can be considered "empty", meaning its length is zero.</para>
   /// </summary>
-  /// <param name="secure"></param>
-  /// <returns></returns>
+  /// <param name="secure">Secure string instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="secure"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset(SecureString)"/>
   public static bool IsEmpty(this SecureString secure) => secure is not null ? secure.Length == 0 : throw new ArgumentNullException(nameof(secure));
 
   /// <summary>
@@ -103,6 +109,8 @@ public static class SecureStringExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Max(SecureString, SecureString)"/>
+  /// <seealso cref="MinMax(SecureString, SecureString)"/>
   public static SecureString Min(this SecureString left, SecureString right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -118,6 +126,8 @@ public static class SecureStringExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Min(SecureString, SecureString)"/>
+  /// <seealso cref="MinMax(SecureString, SecureString)"/>
   public static SecureString Max(this SecureString left, SecureString right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -133,6 +143,8 @@ public static class SecureStringExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Min(SecureString, SecureString)"/>
+  /// <seealso cref="Max(SecureString, SecureString)"/>
   public static (SecureString Min, SecureString Max) MinMax(this SecureString left, SecureString right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));

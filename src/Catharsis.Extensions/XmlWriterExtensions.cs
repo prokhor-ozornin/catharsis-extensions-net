@@ -25,6 +25,7 @@ public static class XmlWriterExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync(XmlWriter, IEnumerable{byte}, Encoding)"/>
   public static XmlWriter WriteBytes(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -41,6 +42,7 @@ public static class XmlWriterExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes(XmlWriter, IEnumerable{byte}, Encoding)"/>
   public static async Task<XmlWriter> WriteBytesAsync(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -56,6 +58,7 @@ public static class XmlWriterExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync(XmlWriter, string)"/>
   public static XmlWriter WriteText(this XmlWriter destination, string text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -73,6 +76,7 @@ public static class XmlWriterExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText(XmlWriter, string)"/>
   public static async Task<XmlWriter> WriteTextAsync(this XmlWriter destination, string text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));

@@ -7,10 +7,10 @@
 public static class DirectoryInfoExtensions
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="DirectoryInfo"/> that will point to the same directory as the original.</para>
   /// </summary>
-  /// <param name="directory"></param>
-  /// <returns></returns>
+  /// <param name="directory">Directory instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
   public static DirectoryInfo Clone(this DirectoryInfo directory) => directory is not null ? new DirectoryInfo(directory.ToString()) : throw new ArgumentNullException(nameof(directory));
 
@@ -21,6 +21,7 @@ public static class DirectoryInfoExtensions
   /// <param name="entries"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="directory"/> or <paramref name="entries"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(DirectoryInfo, FileSystemInfo[])"/>
   public static DirectoryInfo With(this DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
   {
     if (directory is null) throw new ArgumentNullException(nameof(directory));
@@ -41,6 +42,7 @@ public static class DirectoryInfoExtensions
   /// <param name="entries"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(DirectoryInfo, IEnumerable{FileSystemInfo})"/>
   public static DirectoryInfo With(this DirectoryInfo directory, params FileSystemInfo[] entries) => directory.With(entries as IEnumerable<FileSystemInfo>);
 
   /// <summary>
@@ -50,6 +52,7 @@ public static class DirectoryInfoExtensions
   /// <param name="entries"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="directory"/> or <paramref name="entries"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(DirectoryInfo, FileSystemInfo[])"/>
   public static DirectoryInfo Without(this DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
   {
     if (directory is null) throw new ArgumentNullException(nameof(directory));
@@ -69,6 +72,7 @@ public static class DirectoryInfoExtensions
   /// <param name="directory"></param>
   /// <param name="entries"></param>
   /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(DirectoryInfo, IEnumerable{FileSystemInfo})"/>
   public static DirectoryInfo Without(this DirectoryInfo directory, params FileSystemInfo[] entries) => directory.Without(entries as IEnumerable<FileSystemInfo>);
 
   /// <summary>
@@ -76,15 +80,17 @@ public static class DirectoryInfoExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <returns></returns>
+  /// <seealso cref="IsEmpty(DirectoryInfo)"/>
   public static bool IsUnset(this DirectoryInfo directory) => directory is null || directory.IsEmpty();
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="DirectoryInfo"/> instance can be considered "empty", meaning it either doesn't exist or doesn't contain any other files or directories.</para>
   /// </summary>
-  /// <param name="directory"></param>
-  /// <returns></returns>
+  /// <param name="directory">Directory instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="directory"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
-  public static bool IsEmpty(this DirectoryInfo directory) => directory.ToEnumerable().IsEmpty();
+  /// <seealso cref="IsUnset(DirectoryInfo)"/>
+  public static bool IsEmpty(this DirectoryInfo directory) => directory is not null ? !directory.Exists || directory.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(directory));
 
   /// <summary>
   ///   <para></para>
@@ -109,6 +115,7 @@ public static class DirectoryInfoExtensions
   /// <param name="action"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="directory"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryFinallyDelete(DirectoryInfo, Action{DirectoryInfo})"/>
   public static DirectoryInfo TryFinallyClear(this DirectoryInfo directory, Action<DirectoryInfo> action)
   {
     if (directory is null) throw new ArgumentNullException(nameof(directory));
@@ -128,6 +135,7 @@ public static class DirectoryInfoExtensions
   /// <param name="action"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="directory"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryFinallyClear(DirectoryInfo, Action{DirectoryInfo})"/>
   public static DirectoryInfo TryFinallyDelete(this DirectoryInfo directory, Action<DirectoryInfo> action)
   {
     if (directory is null) throw new ArgumentNullException(nameof(directory));

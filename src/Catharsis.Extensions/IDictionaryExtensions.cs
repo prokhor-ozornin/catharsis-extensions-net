@@ -20,6 +20,8 @@ public static class IDictionaryExtensions
   /// <param name="value"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{ValueTuple{TKey, TValue}})"/>
+  /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, ValueTuple{TKey, TValue}[])"/>
   public static IDictionary<TKey, TValue> With<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
@@ -38,6 +40,8 @@ public static class IDictionaryExtensions
   /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="dictionary"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
+  /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, ValueTuple{TKey, TValue}[])"/>
   public static IDictionary<TKey, TValue> With<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
@@ -60,6 +64,8 @@ public static class IDictionaryExtensions
   /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
+  /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{ValueTuple{TKey, TValue}})"/>
   public static IDictionary<TKey, TValue> With<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, params (TKey key, TValue value)[] elements) where TKey : notnull => dictionary.With(elements as IEnumerable<(TKey key, TValue value)>);
 
   /// <summary>
@@ -71,6 +77,7 @@ public static class IDictionaryExtensions
   /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="dictionary"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without{TKey, TValue}(IDictionary{TKey, TValue}, TKey[])"/>
   public static IDictionary<TKey, TValue> Without<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IEnumerable<TKey> elements) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
@@ -93,6 +100,7 @@ public static class IDictionaryExtensions
   /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{TKey})"/>
   public static IDictionary<TKey, TValue> Without<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, params TKey[] elements) where TKey : notnull => dictionary.Without(elements as IEnumerable<TKey>);
 
   /// <summary>
@@ -105,6 +113,7 @@ public static class IDictionaryExtensions
   /// <param name="value"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="SetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
   public static TValue GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
@@ -122,6 +131,7 @@ public static class IDictionaryExtensions
   /// <param name="value"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
   public static TValue SetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));

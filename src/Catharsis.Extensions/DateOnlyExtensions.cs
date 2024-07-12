@@ -35,6 +35,7 @@ public static class DateOnlyExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
+  /// <seealso cref="IsWeekend(DateOnly)"/>
   public static bool IsWeekday(this DateOnly date) => !date.IsWeekend();
 
   /// <summary>
@@ -42,6 +43,7 @@ public static class DateOnlyExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
+  /// <seealso cref="IsWeekday(DateOnly)"/>
   public static bool IsWeekend(this DateOnly date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
 
   /// <summary>
@@ -49,6 +51,7 @@ public static class DateOnlyExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
+  /// <seealso cref="AtEndOfYear(DateOnly)"/>
   public static DateOnly AtStartOfYear(this DateOnly date) => new(date.Year, 1, 1);
 
   /// <summary>
@@ -56,6 +59,7 @@ public static class DateOnlyExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
+  /// <seealso cref="AtEndOfMonth(DateOnly)"/>
   public static DateOnly AtStartOfMonth(this DateOnly date) => new(date.Year, date.Month, 1);
 
   /// <summary>
@@ -63,6 +67,7 @@ public static class DateOnlyExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
+  /// <seealso cref="AtStartOfYear(DateOnly)"/>
   public static DateOnly AtEndOfYear(this DateOnly date) => new(date.Year, 12, DateTime.DaysInMonth(date.Year, date.Month));
 
   /// <summary>
@@ -70,6 +75,7 @@ public static class DateOnlyExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
+  /// <seealso cref="AtStartOfMonth(DateOnly)"/>
   public static DateOnly AtEndOfMonth(this DateOnly date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
 
   /// <summary>

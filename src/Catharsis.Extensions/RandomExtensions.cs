@@ -20,6 +20,7 @@ public static class RandomExtensions
   /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="SbyteInRange(this Random random, params Range[] ranges)"/>
   public static sbyte Sbyte(this Random random, sbyte? from = null, sbyte? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -36,6 +37,7 @@ public static class RandomExtensions
   /// <param name="ranges"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Sbyte(this Random random, sbyte? from = null, sbyte? to = null)"/>
   public static sbyte SbyteInRange(this Random random, params Range[] ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -64,6 +66,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="SbyteSequenceInRange(this Random random, int count, params Range[] ranges)"/>
   public static IEnumerable<sbyte> SbyteSequence(this Random random, int count, sbyte? from = null, sbyte? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -81,6 +84,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="SbyteSequence(this Random random, int count, sbyte? from = null, sbyte? to = null)"/>
   public static IEnumerable<sbyte> SbyteSequenceInRange(this Random random, int count, params Range[] ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));

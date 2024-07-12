@@ -44,6 +44,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsEnd(Stream)"/>
   public static bool IsStart(this Stream stream) => stream is not null ? stream.Position == 0 : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -52,6 +53,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsStart(Stream)"/>
   public static bool IsEnd(this Stream stream)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -71,14 +73,16 @@ public static class StreamExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsEmpty(Stream)"/>
   public static bool IsUnset(this Stream stream) => stream is null || stream.IsEmpty();
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="Stream"/> instance can be considered "empty", meaning its length is zero or the end of the stream has been reached.</para>
   /// </summary>
-  /// <param name="stream"></param>
-  /// <returns></returns>
+  /// <param name="stream">Stream instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="stream"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset(Stream)"/>
   public static bool IsEmpty(this Stream stream) => stream is not null ? stream.CanSeek ? stream.Length == 0 : stream.IsEnd() : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -104,6 +108,8 @@ public static class StreamExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Max(Stream, Stream)"/>
+  /// <seealso cref="MinMax(Stream, Stream)"/>
   public static Stream Min(this Stream left, Stream right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -122,6 +128,8 @@ public static class StreamExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Min(Stream, Stream)"/>
+  /// <seealso cref="MinMax(Stream, Stream)"/>
   public static Stream Max(this Stream left, Stream right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -140,6 +148,8 @@ public static class StreamExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Min(Stream, Stream)"/>
+  /// <seealso cref="Max(Stream, Stream)"/>
   public static (Stream Min, Stream Max) MinMax(this Stream left, Stream right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -193,6 +203,7 @@ public static class StreamExtensions
   /// <returns>Back reference to <paramref name="stream"/> stream.</returns>
   /// <seealso cref="Stream.Seek(long, SeekOrigin)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="MoveToEnd{TStream}(TStream)"/>
   public static TStream MoveToStart<TStream>(this TStream stream) where TStream : Stream
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -209,6 +220,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="MoveToStart{TStream}(TStream)"/>
   public static TStream MoveToEnd<TStream>(this TStream stream) where TStream : Stream
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -225,6 +237,7 @@ public static class StreamExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="LinesAsync(Stream, Encoding)"/>
   public static string[] Lines(this Stream stream, Encoding encoding = null)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -241,6 +254,7 @@ public static class StreamExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Lines(Stream, Encoding)"/>
   public static async IAsyncEnumerable<string> LinesAsync(this Stream stream, Encoding encoding = null)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -346,6 +360,7 @@ public static class StreamExtensions
   /// <param name="close"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytesAsync(Stream, bool)"/>
   public static IEnumerable<byte> ToBytes(this Stream stream, bool close = false) => stream?.ToEnumerable(close) ?? throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -355,6 +370,7 @@ public static class StreamExtensions
   /// <param name="close"></param>
   /// <returns>The <see cref="byte"/> array from that <paramref name="stream"/></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytes(Stream, bool)"/>
   public static IAsyncEnumerable<byte> ToBytesAsync(this Stream stream, bool close = false) => stream?.ToAsyncEnumerable(close) ?? throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -365,6 +381,7 @@ public static class StreamExtensions
   /// <param name="close"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTextAsync(Stream, Encoding)"/>
   public static string ToText(this Stream stream, Encoding encoding = null, bool close = false)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -381,6 +398,7 @@ public static class StreamExtensions
   /// <param name="encoding">Encoding to be used for bytes-to-text conversion. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <returns>Text data from a <see cref="stream"/> stream.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToText(Stream, Encoding, bool)"/>
   public static async Task<string> ToTextAsync(this Stream stream, Encoding encoding = null)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -398,6 +416,7 @@ public static class StreamExtensions
   /// <param name="bytes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync{TStream}(TStream, IEnumerable{byte}, CancellationToken)"/>
   public static TStream WriteBytes<TStream>(this TStream destination, IEnumerable<byte> bytes) where TStream : Stream
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -420,6 +439,7 @@ public static class StreamExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes{TStream}(TStream, IEnumerable{byte})"/>
   public static async Task<TStream> WriteBytesAsync<TStream>(this TStream destination, IEnumerable<byte> bytes, CancellationToken cancellation = default) where TStream : Stream
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -444,6 +464,7 @@ public static class StreamExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync{TStream}(TStream, string, Encoding, CancellationToken)"/>
   public static TStream WriteText<TStream>(this TStream destination, string text, Encoding encoding = null) where TStream : Stream
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -466,6 +487,7 @@ public static class StreamExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText{TStream}(TStream, string, Encoding)"/>
   public static async Task<TStream> WriteTextAsync<TStream>(this TStream destination, string text, Encoding encoding = null, CancellationToken cancellation = default) where TStream : Stream
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -487,6 +509,7 @@ public static class StreamExtensions
   /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(IEnumerable{byte}, Stream, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, Stream to)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -505,6 +528,7 @@ public static class StreamExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(IEnumerable{byte}, Stream)"/>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, Stream to, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -525,6 +549,7 @@ public static class StreamExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, Stream, Encoding, CancellationToken)"/>
   public static string WriteTo(this string text, Stream to, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -544,6 +569,7 @@ public static class StreamExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, Stream, Encoding)"/>
   public static async Task<string> WriteToAsync(this string text, Stream to, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -562,6 +588,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DecompressAsBrotli(Stream)"/>
   public static BrotliStream CompressAsBrotli(this Stream stream) => stream is not null ? new BrotliStream(stream, CompressionMode.Compress) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -570,6 +597,7 @@ public static class StreamExtensions
   /// <param name="stream">Destination stream where compressed data should be written.</param>
   /// <returns>Back reference to the current <paramref name="stream"/> stream.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DecompressAsDeflate(Stream)"/>
   public static DeflateStream CompressAsDeflate(this Stream stream) => stream is not null ? new DeflateStream(stream, CompressionMode.Compress) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -578,6 +606,7 @@ public static class StreamExtensions
   /// <param name="stream">Destination stream where compressed data should be written.</param>
   /// <returns>Back reference to the current stream.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DecompressAsGzip(Stream)"/>
   public static GZipStream CompressAsGzip(this Stream stream) => stream is not null ? new GZipStream(stream, CompressionMode.Compress) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -586,6 +615,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CompressAsBrotli(Stream)"/>
   public static BrotliStream DecompressAsBrotli(this Stream stream) => stream is not null ? new BrotliStream(stream, CompressionMode.Decompress) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -595,6 +625,7 @@ public static class StreamExtensions
   /// <returns>Decompressed contents of current <paramref name="stream"/>.</returns>
   /// <remarks>After data decompression process, <paramref name="stream"/> will be closed.</remarks>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CompressAsDeflate(Stream)"/>
   public static DeflateStream DecompressAsDeflate(this Stream stream) => stream is not null ? new DeflateStream(stream, CompressionMode.Decompress) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -603,6 +634,7 @@ public static class StreamExtensions
   /// <param name="stream">Stream to read and decompress data from.</param>
   /// <returns>Decompressed contents of current <paramref name="stream"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CompressAsGzip(Stream)"/>
   public static GZipStream DecompressAsGzip(this Stream stream) => stream is not null ? new GZipStream(stream, CompressionMode.Decompress) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -612,6 +644,7 @@ public static class StreamExtensions
   /// <param name="close"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToEnumerable(Stream, int, bool)"/>
   public static IEnumerable<byte> ToEnumerable(this Stream stream, bool close = false) => stream?.ToEnumerable(4096, close).SelectMany(bytes => bytes) ?? throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -623,6 +656,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="ToEnumerable(Stream, bool)"/>
   public static IEnumerable<byte[]> ToEnumerable(this Stream stream, int count, bool close = false)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -638,6 +672,7 @@ public static class StreamExtensions
   /// <param name="close"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToAsyncEnumerable(Stream, int, bool)"/>
   public static async IAsyncEnumerable<byte> ToAsyncEnumerable(this Stream stream, bool close = false)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -660,6 +695,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="ToAsyncEnumerable(Stream, bool)"/>
   public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this Stream stream, int count, bool close = false)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -791,6 +827,7 @@ public static class StreamExtensions
   /// <param name="stream"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToXDocumentAsync(Stream, CancellationToken)"/>
   public static XDocument ToXDocument(this Stream stream)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -807,6 +844,7 @@ public static class StreamExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToXDocument(Stream)"/>
   public static async Task<XDocument> ToXDocumentAsync(this Stream stream, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -859,6 +897,7 @@ public static class StreamExtensions
   /// <param name="algorithm"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="EncryptAsync(Stream, SymmetricAlgorithm, CancellationToken)"/>
   public static byte[] Encrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Encrypt(stream);
 
   /// <summary>
@@ -869,6 +908,7 @@ public static class StreamExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Encrypt(Stream, SymmetricAlgorithm)"/>
   public static async Task<byte[]> EncryptAsync(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.EncryptAsync(stream, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -878,6 +918,7 @@ public static class StreamExtensions
   /// <param name="algorithm"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DecryptAsync(Stream, SymmetricAlgorithm, CancellationToken)"/>
   public static byte[] Decrypt(this Stream stream, SymmetricAlgorithm algorithm) => algorithm.Decrypt(stream);
 
   /// <summary>
@@ -888,6 +929,7 @@ public static class StreamExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Decrypt(Stream, SymmetricAlgorithm)"/>
   public static async Task<byte[]> DecryptAsync(this Stream stream, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.DecryptAsync(stream, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -897,6 +939,7 @@ public static class StreamExtensions
   /// <param name="algorithm"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="HashAsync(Stream, HashAlgorithm, CancellationToken)"/>
   public static byte[] Hash(this Stream stream, HashAlgorithm algorithm)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -913,6 +956,7 @@ public static class StreamExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Hash(Stream, HashAlgorithm)"/>
   public static async Task<byte[]> HashAsync(this Stream stream, HashAlgorithm algorithm, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -932,6 +976,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashMd5Async(Stream, CancellationToken)"/>
   public static byte[] HashMd5(this Stream stream)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -949,6 +994,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashMd5(Stream)"/>
   public static async Task<byte[]> HashMd5Async(this Stream stream, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -967,6 +1013,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashSha1Async(Stream, CancellationToken)"/>
   public static byte[] HashSha1(this Stream stream)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -984,6 +1031,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashSha1(Stream)"/>
   public static async Task<byte[]> HashSha1Async(this Stream stream, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -1002,6 +1050,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashSha256Async(Stream, CancellationToken)"/>
   public static byte[] HashSha256(this Stream stream)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -1019,6 +1068,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashSha256(Stream)"/>
   public static async Task<byte[]> HashSha256Async(this Stream stream, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -1037,6 +1087,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashSha256Async(Stream, CancellationToken)"/>
   public static byte[] HashSha384(this Stream stream)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -1054,6 +1105,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashSha384(Stream)"/>
   public static async Task<byte[]> HashSha384Async(this Stream stream, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -1072,6 +1124,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashSha512Async(Stream, CancellationToken)"/>
   public static byte[] HashSha512(this Stream stream)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -1089,6 +1142,7 @@ public static class StreamExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="HashSha512(Stream)"/>
   public static async Task<byte[]> HashSha512Async(this Stream stream, CancellationToken cancellation = default)
   {
     if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -1107,6 +1161,7 @@ public static class StreamExtensions
   /// <param name="stream">Destination stream where compressed data should be written.</param>
   /// <returns>Back reference to the current stream.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DecompressAsZlib(Stream)"/>
   public static ZLibStream CompressAsZlib(this Stream stream) => stream is not null ? new ZLibStream(stream, CompressionMode.Compress) : throw new ArgumentNullException(nameof(stream));
 
   /// <summary>
@@ -1115,6 +1170,7 @@ public static class StreamExtensions
   /// <param name="stream">Stream to read and decompress data from.</param>
   /// <returns>Decompressed contents of current <paramref name="stream"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CompressAsZlib(Stream)"/>
   public static ZLibStream DecompressAsZlib(this Stream stream) => stream is not null ? new ZLibStream(stream, CompressionMode.Decompress) : throw new ArgumentNullException(nameof(stream));
   #endif
 

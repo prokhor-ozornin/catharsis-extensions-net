@@ -9,10 +9,10 @@ namespace Catharsis.Extensions;
 public static class NameValueCollectionExtensions
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="NameValueCollection"/> that contains the same elements as the original.</para>
   /// </summary>
-  /// <param name="collection"></param>
-  /// <returns></returns>
+  /// <param name="collection">Collection to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static NameValueCollection Clone(this NameValueCollection collection) => collection is not null ? new NameValueCollection(collection) : throw new ArgumentNullException(nameof(collection));
 
@@ -23,6 +23,7 @@ public static class NameValueCollectionExtensions
   /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(NameValueCollection, ValueTuple{string, object}[])"/>
   public static NameValueCollection With(this NameValueCollection collection, IEnumerable<(string Name, object Value)> elements)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -43,6 +44,7 @@ public static class NameValueCollectionExtensions
   /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(NameValueCollection, IEnumerable{ValueTuple{string, object}})"/>
   public static NameValueCollection With(this NameValueCollection collection, params (string Name, object Value)[] elements) => collection.With(elements as IEnumerable<(string Name, object Value)>);
 
   /// <summary>
@@ -52,6 +54,7 @@ public static class NameValueCollectionExtensions
   /// <param name="elements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(NameValueCollection, string[])"/>
   public static NameValueCollection Without(this NameValueCollection collection, IEnumerable<string> elements)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
@@ -71,6 +74,7 @@ public static class NameValueCollectionExtensions
   /// <param name="collection"></param>
   /// <param name="elements"></param>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(NameValueCollection, IEnumerable{string})"/>
   public static NameValueCollection Without(this NameValueCollection collection, params string[] elements) => collection.Without(elements as IEnumerable<string>);
 
   /// <summary>

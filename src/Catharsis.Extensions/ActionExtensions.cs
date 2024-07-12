@@ -14,6 +14,7 @@ public static class ActionExtensions
   /// <param name="condition">Condition of execution.</param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="action"/> or <paramref name="condition"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Execute{T}(Action{T}, Predicate{T}, T)"/>
   public static Action Execute(this Action action, Func<bool> condition)
   {
     if (action is null) throw new ArgumentNullException(nameof(action));
@@ -36,6 +37,7 @@ public static class ActionExtensions
   /// <param name="instance"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="action"/> or <paramref name="condition"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Execute(Action, Func{bool})"/>
   public static Action<T> Execute<T>(this Action<T> action, Predicate<T> condition, T instance)
   {
     if (action is null) throw new ArgumentNullException(nameof(action));
@@ -57,6 +59,7 @@ public static class ActionExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTask(Action{object}, object, TaskCreationOptions, CancellationToken)"/>
   public static Task ToTask(this Action action, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => action is not null ? new Task(action, cancellation, options) : throw new ArgumentNullException(nameof(action));
 
   /// <summary>
@@ -68,5 +71,6 @@ public static class ActionExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTask(Action, TaskCreationOptions, CancellationToken)"/>
   public static Task ToTask(this Action<object> action, object state, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => action is not null ? new Task(action, state, cancellation, options) : throw new ArgumentNullException(nameof(action));
 }

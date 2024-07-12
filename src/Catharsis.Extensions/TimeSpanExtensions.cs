@@ -23,10 +23,10 @@ public static class TimeSpanExtensions
   public static TimeSpan Without(this TimeSpan timespan, TimeSpan offset) => timespan.Subtract(offset);
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="TimeSpan"/> instance can be considered "empty", meaning that it's equal to <see cref="TimeSpan.Zero"/>.</para>
   /// </summary>
-  /// <param name="timespan"></param>
-  /// <returns></returns>
+  /// <param name="timespan">Time span instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="timespan"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   public static bool IsEmpty(this TimeSpan timespan) => timespan == TimeSpan.Zero;
 
   /// <summary>
@@ -34,6 +34,7 @@ public static class TimeSpanExtensions
   /// </summary>
   /// <param name="offset">Time span to subtract from current date/time.</param>
   /// <returns>Current date/time, decremented by the <paramref name="offset"/>, expressed as a local time.</returns>
+  /// <seealso cref="InTheFuture(TimeSpan)"/>
   public static DateTimeOffset InThePast(this TimeSpan offset) => DateTimeOffset.UtcNow - offset;
 
   /// <summary>
@@ -41,5 +42,6 @@ public static class TimeSpanExtensions
   /// </summary>
   /// <param name="offset">Time span to add to current date/time.</param>
   /// <returns>Current date/time, incremented by the <paramref name="offset"/>, expressed as a local time.</returns>
+  /// <seealso cref="InThePast(TimeSpan)"/>
   public static DateTimeOffset InTheFuture(this TimeSpan offset) => DateTimeOffset.UtcNow + offset;
 }

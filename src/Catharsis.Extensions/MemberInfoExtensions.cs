@@ -61,6 +61,7 @@ public static class MemberInfoExtensions
   /// <param name="member">Member of type, whose attribute is to be returned.</param>
   /// <returns>Instance of attribute, whose type equals to <typeparamref name="T"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="member"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Attribute(MemberInfo, Type)"/>
   public static T Attribute<T>(this MemberInfo member) => member is not null ? member.Attributes<T>().FirstOrDefault() : throw new ArgumentNullException(nameof(member));
 
   /// <summary>
@@ -71,6 +72,7 @@ public static class MemberInfoExtensions
   /// <param name="type">Type of custom attribute.</param>
   /// <returns>Instance of attribute, whose type equals to <paramref name="type"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="member"/> or <paramref name="type"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Attribute{T}(MemberInfo)"/>
   public static object Attribute(this MemberInfo member, Type type) => member.Attributes(type).FirstOrDefault();
 
   /// <summary>
@@ -80,6 +82,7 @@ public static class MemberInfoExtensions
   /// <param name="member">Member of type, whose attributes are to be returned.</param>
   /// <returns>Collection of custom attributes, whose type equals to <typeparamref name="T"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="member"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Attributes(MemberInfo, Type)"/>
   public static IEnumerable<T> Attributes<T>(this MemberInfo member) => member.Attributes(typeof(T)).Cast<T>();
 
   /// <summary>
@@ -89,6 +92,7 @@ public static class MemberInfoExtensions
   /// <param name="type">Type of custom attributes.</param>
   /// <returns>Collection of custom attributes, whose type equals to <paramref name="type"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="member"/> or <paramref name="type"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Attributes{T}(MemberInfo)"/>
   public static IEnumerable<object> Attributes(this MemberInfo member, Type type)
   {
     if (member is null) throw new ArgumentNullException(nameof(member));

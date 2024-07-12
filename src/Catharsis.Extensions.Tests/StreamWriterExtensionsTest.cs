@@ -47,6 +47,22 @@ public sealed class StreamWriterExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StreamWriterExtensions.IsUnset(StreamWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
+
+    return;
+
+    static void Validate(bool result, StreamWriter writer) => writer.IsUnset().Should().Be(writer is null || writer.IsEmpty()).And.Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StreamWriterExtensions.IsEmpty(StreamWriter)"/> method.</para>
   /// </summary>
   [Fact]

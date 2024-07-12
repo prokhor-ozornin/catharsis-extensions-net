@@ -48,6 +48,23 @@ public sealed class DriveInfoExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="DriveInfoExtensions.IsUnset(DriveInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    using (new AssertionScope())
+    {
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, DriveInfo drive) => drive.IsUnset().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="DriveInfoExtensions.IsEmpty(DriveInfo)"/> method.</para>
   /// </summary>
   [Fact]

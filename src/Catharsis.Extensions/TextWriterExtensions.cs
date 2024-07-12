@@ -44,6 +44,7 @@ public static class TextWriterExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync{TWriter}(TWriter, IEnumerable{byte}, Encoding, CancellationToken)"/>
   public static TWriter WriteBytes<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -62,6 +63,7 @@ public static class TextWriterExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes{TWriter}(TWriter, IEnumerable{byte}, Encoding)"/>
   public static async Task<TWriter> WriteBytesAsync<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null, CancellationToken cancellation = default) where TWriter : TextWriter
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -78,6 +80,7 @@ public static class TextWriterExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync{TWriter}(TWriter, string, CancellationToken)"/>
   public static TWriter WriteText<TWriter>(this TWriter destination, string text) where TWriter : TextWriter
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -97,6 +100,7 @@ public static class TextWriterExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText{TWriter}(TWriter, string)"/>
   public static async Task<TWriter> WriteTextAsync<TWriter>(this TWriter destination, string text, CancellationToken cancellation = default) where TWriter : TextWriter
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));

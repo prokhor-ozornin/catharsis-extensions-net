@@ -159,7 +159,10 @@ public static class ObjectExtensions
   /// <param name="properties">Set of properties/fields whose values are used in equality comparison.</param>
   /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are considered equal, <c>false</c> otherwise.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
-  public static bool Equality<T>(this T left, T right, IEnumerable<string> properties)
+  /// <seealso cref="Equality<T>(T, T, string[])"/>
+  /// <seealso cref="Equality<T>(T, T, IEnumerable<Expression<Func<T, object>>>)"/>
+  /// <seealso cref="Equality<T>(T, T, params Expression<Func<T, object>>[])"/>
+  public static bool Equality<T>(T, T, IEnumerable<string>)
   {
     if (properties is null) throw new ArgumentNullException(nameof(properties));
 

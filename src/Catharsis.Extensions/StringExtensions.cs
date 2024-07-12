@@ -23,6 +23,7 @@ public static class StringExtensions
   /// <param name="characters"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="characters"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(string, char[])"/>
   public static string With(this string text, IEnumerable<char> characters)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -38,6 +39,7 @@ public static class StringExtensions
   /// <param name="characters"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(string, IEnumerable{char})"/>
   public static string With(this string text, params char[] characters) => text.With(characters as IEnumerable<char>);
 
   /// <summary>
@@ -47,6 +49,8 @@ public static class StringExtensions
   /// <param name="positions"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(string, int[])"/>
+  /// <seealso cref="Without(string, int, int?, Predicate{char})"/>
   public static string Without(this string text, IEnumerable<int> positions)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -62,6 +66,8 @@ public static class StringExtensions
   /// <param name="positions"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(string, IEnumerable{int})"/>
+  /// <seealso cref="Without(string, int, int?, Predicate{char})"/>
   public static string Without(this string text, params int[] positions) => text.Without(positions as IEnumerable<int>);
 
   /// <summary>
@@ -74,6 +80,8 @@ public static class StringExtensions
   /// <returns>Resulting string with removed characters.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="Without(string, IEnumerable{int})"/>
+  /// <seealso cref="Without(string, int[])"/>
   public static string Without(this string text, int offset, int? count = null, Predicate<char> condition = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -88,7 +96,7 @@ public static class StringExtensions
   /// </summary>
   /// <param name="text">String to evaluate.</param>
   /// <returns><c>true</c> if <paramref name="text"/> is either a <c>null</c> reference or an empty string.</returns>
-  /// <seealso cref="string.IsNullOrEmpty(string)"/>
+  /// <seealso cref="string.IsNullOrWhiteSpace(string)"/>
   public static bool IsUnset(this string text) => string.IsNullOrWhiteSpace(text);
 
   /// <summary>
@@ -97,6 +105,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsLowerCased(string)"/>
   public static bool IsUpperCased(this string text)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -110,6 +119,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUpperCased(string)"/>
   public static bool IsLowerCased(this string text)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -285,6 +295,8 @@ public static class StringExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Max(string, string)"/>
+  /// <seealso cref="MinMax(string, string)"/>
   public static string Min(this string left, string right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -300,6 +312,8 @@ public static class StringExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Min(string, string)"/>
+  /// <seealso cref="MinMax(string, string)"/>
   public static string Max(this string left, string right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -315,6 +329,8 @@ public static class StringExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Min(string, string)"/>
+  /// <seealso cref="Max(string, string)"/>
   public static (string Min, string Max) MinMax(this string left, string right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -340,6 +356,7 @@ public static class StringExtensions
   /// <param name="right"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <seealso cref="CompareAsDate(string, string, IFormatProvider)"/>
   public static int CompareAsNumber(this string left, string right, IFormatProvider format = null) => left is not null && right is not null ? left.ToDouble(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDouble(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
 
   /// <summary>
@@ -349,6 +366,7 @@ public static class StringExtensions
   /// <param name="right"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <seealso cref="CompareAsNumber(string, string, IFormatProvider)"/>
   public static int CompareAsDate(this string left, string right, IFormatProvider format = null) => left is not null && right is not null ? left.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
 
   /// <summary>
@@ -357,6 +375,7 @@ public static class StringExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  /// <seealso cref="Prepend(string, string)"/>
   public static string Append(this string left, string right) => left + right;
 
   /// <summary>
@@ -365,6 +384,7 @@ public static class StringExtensions
   /// <param name="left">Source string.</param>
   /// <param name="right">String to prepend.</param>
   /// <returns>Concatenated result of <paramref name="right"/> and <paramref name="left"/> string.</returns>
+  /// <seealso cref="Append(string, string)"/>
   public static string Prepend(this string left, string right) => right + left;
 
   /// <summary>
@@ -382,6 +402,7 @@ public static class StringExtensions
   /// <param name="replacements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="replacements"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Replace(string, ValueTuple{string, object}[])"/>
   public static string Replace(this string text, IEnumerable<(string Name, object Value)> replacements)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -406,6 +427,7 @@ public static class StringExtensions
   /// <param name="replacements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Replace(string, IEnumerable{ValueTuple{string, object}})"/>
   public static string Replace(this string text, params (string Name, object Value)[] replacements) => text.Replace(replacements as IEnumerable<(string Name, object Value)>);
 
   /// <summary>
@@ -442,6 +464,7 @@ public static class StringExtensions
   /// <param name="culture"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CapitalizeAll(string, CultureInfo)"/>
   public static string Capitalize(this string text, CultureInfo culture = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -465,6 +488,7 @@ public static class StringExtensions
   /// <param name="culture"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Capitalize(string, CultureInfo)"/>
   public static string CapitalizeAll(this string text, CultureInfo culture = null) => text is not null ? text.Length > 0 ? (culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -550,6 +574,7 @@ public static class StringExtensions
   /// <param name="text">String to encode.</param>
   /// <returns>Encoded string.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="UrlDecode(string)"/>
   public static string UrlEncode(this string text) => text is not null ? text.Length > 0 ? Uri.EscapeDataString(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -558,6 +583,7 @@ public static class StringExtensions
   /// <param name="text">String to decode.</param>
   /// <returns>Decoded string.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="UrlEncode(string)"/>
   public static string UrlDecode(this string text) => text is not null ? text.Length > 0 ? Uri.UnescapeDataString(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -567,6 +593,7 @@ public static class StringExtensions
   /// <returns>HTML-encoded version of <paramref name="text"/>.</returns>
   /// <seealso cref="WebUtility.HtmlEncode(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="HtmlDecode(string)"/>
   public static string HtmlEncode(this string text) => text is not null ? text.Length > 0 ? WebUtility.HtmlEncode(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -576,6 +603,7 @@ public static class StringExtensions
   /// <returns>HTML-decoded version of <paramref name="text"/>.</returns>
   /// <seealso cref="WebUtility.HtmlDecode(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="HtmlEncode(string)"/>
   public static string HtmlDecode(this string text) => text is not null ? text.Length > 0 ? WebUtility.HtmlDecode(text) : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -587,6 +615,7 @@ public static class StringExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="Unindent(string, char)"/>
   public static string Indent(this string text, char value, int count = 1)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -629,6 +658,7 @@ public static class StringExtensions
   /// <param name="value"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Indent(string, char, int)"/>
   public static string Unindent(this string text, char value)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -656,6 +686,7 @@ public static class StringExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="Unspacify(string)"/>
   public static string Spacify(this string text, int count = 1) => text.Indent(' ', count);
 
   /// <summary>
@@ -664,6 +695,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Spacify(string, int)"/>
   public static string Unspacify(this string text) => text.Unindent(' ');
 
   /// <summary>
@@ -674,6 +706,7 @@ public static class StringExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="Untabify(string)"/>
   public static string Tabify(this string text, int count = 1) => text.Indent('\t', count);
 
   /// <summary>
@@ -682,6 +715,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Tabify(string, int)"/>
   public static string Untabify(this string text) => text.Unindent('\t');
 
   /// <summary>
@@ -691,6 +725,7 @@ public static class StringExtensions
   /// <param name="arguments"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="command"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Execute(string, string[])"/>
   public static Process Execute(this string command, IEnumerable<string> arguments = null)
   {
     if (command is null) throw new ArgumentNullException(nameof(command));
@@ -719,6 +754,7 @@ public static class StringExtensions
   /// <param name="arguments"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="command"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Execute(string, IEnumerable{string})"/>
   public static Process Execute(this string command, params string[] arguments) => command.Execute(arguments as IEnumerable<string>);
 
   /// <summary>

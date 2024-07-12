@@ -24,6 +24,7 @@ public static class IEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <returns></returns>
+  /// <seealso cref="IsEmpty{T}(IEnumerable{T})"/>
   public static bool IsUnset<T>(this IEnumerable<T> sequence) => sequence is null || sequence.IsEmpty();
 
   /// <summary>
@@ -33,6 +34,7 @@ public static class IEnumerableExtensions
   /// <param name="sequence"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="sequence"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset{T}(IEnumerable{T})"/>
   public static bool IsEmpty<T>(this IEnumerable<T> sequence) => !sequence?.Any() ?? throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
@@ -44,6 +46,7 @@ public static class IEnumerableExtensions
   /// <param name="comparer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="superset"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsSuperset{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
   public static bool IsSubset<T>(this IEnumerable<T> sequence, IEnumerable<T> superset, IEqualityComparer<T> comparer = null)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -61,6 +64,7 @@ public static class IEnumerableExtensions
   /// <param name="comparer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="subset"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsSubset{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
   public static bool IsSuperset<T>(this IEnumerable<T> sequence, IEnumerable<T> subset, IEqualityComparer<T> comparer = null) => subset.IsSubset(sequence, comparer);
 
   /// <summary>
@@ -88,6 +92,7 @@ public static class IEnumerableExtensions
   /// <param name="action"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ForEach{T}(IEnumerable{T}, Action{int, T})"/>
   public static IEnumerable<T> ForEach<T>(this IEnumerable<T> sequence, Action<T> action) => action is not null ? sequence.ForEach((_, element) => action(element)) : throw new ArgumentNullException(nameof(action));
 
   /// <summary>
@@ -98,6 +103,7 @@ public static class IEnumerableExtensions
   /// <param name="action">Delegate to be called for each element in a sequence.</param>
   /// <returns>Back reference to the current sequence.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ForEach{T}(IEnumerable{T}, Action{T})"/>
   public static IEnumerable<T> ForEach<T>(this IEnumerable<T> sequence, Action<int, T> action)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -122,6 +128,8 @@ public static class IEnumerableExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Max{T}(IEnumerable{T}, IEnumerable{T})"/>
+  /// <seealso cref="MinMax{T}(IEnumerable{T}, IEnumerable{T})"/>
   public static IEnumerable<T> Min<T>(this IEnumerable<T> left, IEnumerable<T> right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -138,6 +146,8 @@ public static class IEnumerableExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Min{T}(IEnumerable{T}, IEnumerable{T})"/>
+  /// <seealso cref="MinMax{T}(IEnumerable{T}, IEnumerable{T})"/>
   public static IEnumerable<T> Max<T>(this IEnumerable<T> left, IEnumerable<T> right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -154,6 +164,8 @@ public static class IEnumerableExtensions
   /// <param name="right"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Min{T}(IEnumerable{T}, IEnumerable{T})"/>
+  /// <seealso cref="Max{T}(IEnumerable{T}, IEnumerable{T})"/>
   public static (IEnumerable<T> Min, IEnumerable<T> Max) MinMax<T>(this IEnumerable<T> left, IEnumerable<T> right)
   {
     if (left is null) throw new ArgumentNullException(nameof(left));
@@ -255,6 +267,7 @@ public static class IEnumerableExtensions
   /// <param name="comparer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="EndsWith{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
   public static bool StartsWith<T>(this IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -272,6 +285,7 @@ public static class IEnumerableExtensions
   /// <param name="comparer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="StartsWith{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
   public static bool EndsWith<T>(this IEnumerable<T> sequence, IEnumerable<T> other, IEqualityComparer<T> comparer = null)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -608,6 +622,7 @@ public static class IEnumerableExtensions
   /// <param name="sequence"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="sequence"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToMemoryStream(IEnumerable{byte[]})"/>
   public static MemoryStream ToMemoryStream(this IEnumerable<byte> sequence) => sequence?.Chunk(4096).ToMemoryStream() ?? throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
@@ -617,6 +632,7 @@ public static class IEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="sequence"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToMemoryStreamAsync(IEnumerable{byte[]}, CancellationToken)"/>
   public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte> sequence, CancellationToken cancellation = default) => sequence is not null ? await sequence.Chunk(4096).ToMemoryStreamAsync(cancellation).ConfigureAwait(false) : throw new ArgumentNullException(nameof(sequence));
 
   /// <summary>
@@ -625,6 +641,7 @@ public static class IEnumerableExtensions
   /// <param name="sequence"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="sequence"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToMemoryStream(IEnumerable{byte})"/>
   public static MemoryStream ToMemoryStream(this IEnumerable<byte[]> sequence)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -648,6 +665,7 @@ public static class IEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="sequence"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToMemoryStreamAsync(IEnumerable{byte}, CancellationToken)"/>
   public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte[]> sequence, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -699,6 +717,7 @@ public static class IEnumerableExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(IEnumerable{byte}, TextWriter, Encoding)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, TextWriter to, Encoding encoding = null)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -717,6 +736,7 @@ public static class IEnumerableExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(IEnumerable{byte}, TextWriter, Encoding)"/>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, TextWriter to, Encoding encoding = null)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -752,6 +772,7 @@ public static class IEnumerableExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(IEnumerable{byte}, XmlWriter, Encoding)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, XmlWriter to, Encoding encoding = null)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -770,6 +791,7 @@ public static class IEnumerableExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(IEnumerable{byte}, XmlWriter, Encoding)"/>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, XmlWriter to, Encoding encoding = null)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -787,6 +809,7 @@ public static class IEnumerableExtensions
   /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(IEnumerable{byte}, FileInfo, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, FileInfo to)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -805,6 +828,7 @@ public static class IEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(IEnumerable{byte}, FileInfo)"/>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, FileInfo to, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -826,6 +850,7 @@ public static class IEnumerableExtensions
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(IEnumerable{byte}, Uri, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, Uri to, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -846,6 +871,7 @@ public static class IEnumerableExtensions
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(IEnumerable{byte}, Uri, TimeSpan?, ValueTuple{string, object}[])"/>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, Uri to, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -865,6 +891,7 @@ public static class IEnumerableExtensions
   /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(IEnumerable{byte}, Process, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, Process to)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -883,6 +910,7 @@ public static class IEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(IEnumerable{byte}, Process)"/>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, Process to, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -901,6 +929,7 @@ public static class IEnumerableExtensions
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/>, <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(IEnumerable{byte}, HttpClient, Uri, CancellationToken)"/>
   public static HttpContent WriteTo(this IEnumerable<byte> sequence, HttpClient client, Uri uri) => client.WriteBytes(sequence, uri);
 
   /// <summary>
@@ -912,6 +941,7 @@ public static class IEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/>, <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(IEnumerable{byte}, HttpClient, Uri)"/>
   public static async Task<HttpContent> WriteToAsync(this IEnumerable<byte> sequence, HttpClient client, Uri uri, CancellationToken cancellation = default) => await client.WriteBytesAsync(sequence, uri, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -921,6 +951,7 @@ public static class IEnumerableExtensions
   /// <param name="client"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="client"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(IEnumerable{byte}, TcpClient, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, TcpClient client)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -939,6 +970,7 @@ public static class IEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(IEnumerable{byte}, TcpClient)"/>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, TcpClient to, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -958,6 +990,7 @@ public static class IEnumerableExtensions
   /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(IEnumerable{byte}, UdpClient, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, UdpClient to)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -976,6 +1009,7 @@ public static class IEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(IEnumerable{byte}, UdpClient)"/>
   public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> sequence, UdpClient to, CancellationToken cancellation = default)
   {
     if (sequence is null) throw new ArgumentNullException(nameof(sequence));
@@ -1012,6 +1046,7 @@ public static class IEnumerableExtensions
   /// <param name="algorithm"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="bytes"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="EncryptAsync(IEnumerable{byte}, SymmetricAlgorithm, CancellationToken)"/>
   public static byte[] Encrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm) => algorithm.Encrypt(bytes);
 
   /// <summary>
@@ -1022,6 +1057,7 @@ public static class IEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="bytes"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Encrypt(IEnumerable{byte}, SymmetricAlgorithm)"/>
   public static async Task<byte[]> EncryptAsync(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.EncryptAsync(bytes, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -1031,6 +1067,7 @@ public static class IEnumerableExtensions
   /// <param name="algorithm"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="bytes"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DecryptAsync(IEnumerable{byte}, SymmetricAlgorithm, CancellationToken)"/>
   public static byte[] Decrypt(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm) => algorithm.Decrypt(bytes);
 
   /// <summary>
@@ -1041,6 +1078,7 @@ public static class IEnumerableExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="bytes"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Decrypt(IEnumerable{byte}, SymmetricAlgorithm)"/>
   public static async Task<byte[]> DecryptAsync(this IEnumerable<byte> bytes, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.DecryptAsync(bytes, cancellation).ConfigureAwait(false);
 
   /// <summary>

@@ -37,6 +37,7 @@ public static class UriBuilderExtensions
   /// <param name="parameters"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WithQuery(UriBuilder, ValueTuple{string, object}[])"/>
   public static UriBuilder WithQuery(this UriBuilder builder, IReadOnlyDictionary<string, object> parameters)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));
@@ -52,6 +53,7 @@ public static class UriBuilderExtensions
   /// <param name="parameters"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WithQuery(UriBuilder, IReadOnlyDictionary{string, object})"/>
   public static UriBuilder WithQuery(this UriBuilder builder, params (string Name, object Value)[] parameters)
   {
     if (builder is null) throw new ArgumentNullException(nameof(builder));

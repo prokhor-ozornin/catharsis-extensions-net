@@ -58,6 +58,7 @@ public static class ArrayExtensions
   /// <param name="chars">Source array of characters.</param>
   /// <returns>String which is formed from contents of <paramref name="chars"/> array.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="chars"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToText(byte[], Encoding)"/>
   public static string ToText(this char[] chars) => chars is not null ? chars.Length > 0 ? new string(chars) : string.Empty : throw new ArgumentNullException(nameof(chars));
 
   /// <summary>
@@ -67,6 +68,7 @@ public static class ArrayExtensions
   /// <param name="encoding">Encoding to be used for transforming between <see cref="byte"/> at its <see cref="char"/> equivalent. If not specified, uses <see cref="Encoding.UTF8"/> encoding.</param>
   /// <returns>Array of characters as a string which represents <paramref name="bytes"/> array in <paramref name="encoding"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToText(char[])"/>
   public static string ToText(this byte[] bytes, Encoding encoding = null) => bytes is not null ? bytes.Length > 0 ? (encoding ?? Encoding.Default).GetString(bytes) : string.Empty : throw new ArgumentNullException(nameof(bytes));
 
   /// <summary>

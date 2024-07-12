@@ -16,14 +16,16 @@ public static class UdpClientExtensions
   /// </summary>
   /// <param name="udp"></param>
   /// <returns></returns>
+  /// <seealso cref="IsEmpty(UdpClient)"/>
   public static bool IsUnset(this UdpClient udp) => udp is null || udp.IsEmpty();
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="UdpClient"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
   /// </summary>
-  /// <param name="udp"></param>
-  /// <returns></returns>
+  /// <param name="udp">UDP client instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="udp"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset(UdpClient)"/>
   public static bool IsEmpty(this UdpClient udp) => udp?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
@@ -67,6 +69,7 @@ public static class UdpClientExtensions
   /// <param name="close"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToAsyncEnumerable(UdpClient, bool)"/>
   public static IEnumerable<byte[]> ToEnumerable(this UdpClient udp, IPEndPoint endpoint = null, bool close = false) => udp is not null ? new UdpClientEnumerable(udp, endpoint, close) : throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
@@ -76,6 +79,7 @@ public static class UdpClientExtensions
   /// <param name="close"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToEnumerable(UdpClient, IPEndPoint, bool)"/>
   public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this UdpClient udp, bool close = false) => udp is not null ? new UdpClientAsyncEnumerable(udp, close) : throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
@@ -84,6 +88,7 @@ public static class UdpClientExtensions
   /// <param name="udp"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytesAsync(UdpClient)"/>
   public static IEnumerable<byte> ToBytes(this UdpClient udp) => udp?.ReceiveAsync().Result.Buffer ?? throw new ArgumentNullException(nameof(udp));
 
   /// <summary>
@@ -92,6 +97,7 @@ public static class UdpClientExtensions
   /// <param name="udp"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytes(UdpClient)"/>
   public static async IAsyncEnumerable<byte> ToBytesAsync(this UdpClient udp)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
@@ -111,6 +117,7 @@ public static class UdpClientExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTextAsync(UdpClient, Encoding)"/>
   public static string ToText(this UdpClient udp, Encoding encoding = null) => udp.ToBytes().AsArray().ToText(encoding);
 
   /// <summary>
@@ -120,6 +127,7 @@ public static class UdpClientExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToText(UdpClient, Encoding)"/>
   public static async Task<string> ToTextAsync(this UdpClient udp, Encoding encoding = null) => (await udp.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
 
   /// <summary>
@@ -129,6 +137,7 @@ public static class UdpClientExtensions
   /// <param name="bytes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync(UdpClient, IEnumerable{byte}, CancellationToken)"/>
   public static UdpClient WriteBytes(this UdpClient udp, IEnumerable<byte> bytes)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
@@ -149,6 +158,7 @@ public static class UdpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes(UdpClient, IEnumerable{byte})"/>
   public static async Task<UdpClient> WriteBytesAsync(this UdpClient udp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     if (udp is null) throw new ArgumentNullException(nameof(udp));
@@ -174,6 +184,7 @@ public static class UdpClientExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync(UdpClient, string, Encoding, CancellationToken)"/>
   public static UdpClient WriteText(this UdpClient udp, string text, Encoding encoding = null) => udp.WriteBytes(text.ToBytes(encoding));
 
   /// <summary>
@@ -185,6 +196,7 @@ public static class UdpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText(UdpClient, string, Encoding)"/>
   public static async Task<UdpClient> WriteTextAsync(this UdpClient udp, string text, Encoding encoding = null, CancellationToken cancellation = default) => await udp.WriteBytesAsync(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
 
   private sealed class UdpClientEnumerable : IEnumerable<byte[]>

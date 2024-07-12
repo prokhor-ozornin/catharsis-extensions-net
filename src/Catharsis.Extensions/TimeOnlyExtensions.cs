@@ -35,6 +35,7 @@ public static class TimeOnlyExtensions
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
+  /// <seealso cref="AtEndOfHour(TimeOnly)"/>
   public static TimeOnly AtStartOfHour(this TimeOnly time) => new(time.Hour, 0, 0, 0);
 
   /// <summary>
@@ -42,6 +43,7 @@ public static class TimeOnlyExtensions
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
+  /// <seealso cref="AtEndOfMinute(TimeOnly)"/>
   public static TimeOnly AtStartOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 0, 0);
 
   /// <summary>
@@ -49,6 +51,7 @@ public static class TimeOnlyExtensions
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
+  /// <seealso cref="AtEndOfSecond(TimeOnly)"/>
   public static TimeOnly AtStartOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 0);
 
   /// <summary>
@@ -56,6 +59,7 @@ public static class TimeOnlyExtensions
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
+  /// <seealso cref="AtStartOfHour(TimeOnly)"/>
   public static TimeOnly AtEndOfHour(this TimeOnly time) => new(time.Hour, 59, 59, 999);
 
   /// <summary>
@@ -63,6 +67,7 @@ public static class TimeOnlyExtensions
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
+  /// <seealso cref="AtStartOfMinute(TimeOnly)"/>
   public static TimeOnly AtEndOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 59, 999);
 
   /// <summary>
@@ -70,6 +75,7 @@ public static class TimeOnlyExtensions
   /// </summary>
   /// <param name="time"></param>
   /// <returns></returns>
+  /// <seealso cref="AtStartOfSecond(TimeOnly)"/>
   public static TimeOnly AtEndOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 999);
 }
 #endif

@@ -47,6 +47,7 @@ public static class MethodInfoExtensions
   /// <param name="method">The <see cref="MethodInfo"/> describing the static or instance method the delegate is to represent.</param>
   /// <returns>A delegate of the specified type to represent the specified static method.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="method"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToDelegate(MethodInfo, Type)"/>
   public static Delegate ToDelegate<T>(this MethodInfo method) => method.ToDelegate(typeof(T));
 
   /// <summary>
@@ -56,6 +57,7 @@ public static class MethodInfoExtensions
   /// <param name="type">The type of delegate to create.</param>
   /// <returns>A delegate of the specified type to represent the specified static method.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="method"/> or <paramref name="type"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToDelegate{T}(MethodInfo)"/>
   public static Delegate ToDelegate(this MethodInfo method, Type type)
   {
     if (method is null) throw new ArgumentNullException(nameof(method));

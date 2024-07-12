@@ -9,10 +9,10 @@ namespace Catharsis.Extensions;
 public static class PhysicalAddressExtensions
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="PhysicalAddress"/> with the same address bytes as the original.</para>
   /// </summary>
-  /// <param name="address"></param>
-  /// <returns></returns>
+  /// <param name="address">Physical address to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static PhysicalAddress Clone(this PhysicalAddress address) => address is not null ? new PhysicalAddress(address.GetAddressBytes()) : throw new ArgumentNullException(nameof(address));
 

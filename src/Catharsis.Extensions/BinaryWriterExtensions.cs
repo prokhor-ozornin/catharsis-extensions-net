@@ -7,10 +7,10 @@
 public static class BinaryWriterExtensions
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="BinaryWriter"/>, which will write data to the same underlying <see cref="Stream"/>.</para>
   /// </summary>
-  /// <param name="writer"></param>
-  /// <returns></returns>
+  /// <param name="writer">Binary writer instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static BinaryWriter Clone(this BinaryWriter writer) => writer is not null ? new BinaryWriter(writer.BaseStream) : throw new ArgumentNullException(nameof(writer));
 
@@ -20,6 +20,7 @@ public static class BinaryWriterExtensions
   /// <param name="writer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsEnd(BinaryWriter)"/>
   public static bool IsStart(this BinaryWriter writer) => writer?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -28,6 +29,7 @@ public static class BinaryWriterExtensions
   /// <param name="writer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsStart(BinaryWriter)"/>
   public static bool IsEnd(this BinaryWriter writer) => writer?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -35,14 +37,16 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
+  /// <seealso cref="IsEmpty(BinaryWriter)"/>
   public static bool IsUnset(this BinaryWriter writer) => writer is null || writer.IsEmpty();
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="BinaryWriter"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
   /// </summary>
-  /// <param name="writer"></param>
-  /// <returns></returns>
+  /// <param name="writer">Binary writer instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="writer"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset(BinaryWriter)"/>
   public static bool IsEmpty(this BinaryWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
@@ -97,6 +101,7 @@ public static class BinaryWriterExtensions
   /// <param name="bytes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText(BinaryWriter, string)"/>
   public static BinaryWriter WriteBytes(this BinaryWriter destination, IEnumerable<byte> bytes)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));
@@ -114,6 +119,7 @@ public static class BinaryWriterExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes(BinaryWriter, IEnumerable{byte})"/>
   public static BinaryWriter WriteText(this BinaryWriter destination, string text)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));

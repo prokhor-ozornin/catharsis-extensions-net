@@ -13,6 +13,8 @@ public static class TaskExtensions
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Await<T>(this Task<T> task, TimeSpan? timeout = null, CancellationToken cancellation = default)"/>
+  /// <seealso cref="Await<T>(this Task<T> task, out T result, TimeSpan? timeout = null, CancellationToken cancellation = default)"/>
   public static Task Await(this Task task, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
     if (task is null) throw new ArgumentNullException(nameof(task));
@@ -45,6 +47,8 @@ public static class TaskExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Await(this Task task, TimeSpan? timeout = null, CancellationToken cancellation = default)"/>
+  /// <seealso cref="Await<T>(this Task<T> task, out T result, TimeSpan? timeout = null, CancellationToken cancellation = default)"/>
   public static T Await<T>(this Task<T> task, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
     if (task is null) throw new ArgumentNullException(nameof(task));
@@ -78,6 +82,8 @@ public static class TaskExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Await(this Task task, TimeSpan? timeout = null, CancellationToken cancellation = default)"/>
+  /// <seealso cref="Await<T>(this Task<T> task, TimeSpan? timeout = null, CancellationToken cancellation = default)"/>
   public static Task<T> Await<T>(this Task<T> task, out T result, TimeSpan? timeout = null, CancellationToken cancellation = default)
   {
     if (task is null) throw new ArgumentNullException(nameof(task));

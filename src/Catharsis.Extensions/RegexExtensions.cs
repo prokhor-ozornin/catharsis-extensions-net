@@ -10,10 +10,10 @@ namespace Catharsis.Extensions;
 public static class RegexExtensions
 {
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="Regex"/> with the same pattern and options as the original.</para>
   /// </summary>
-  /// <param name="regex"></param>
-  /// <returns></returns>
+  /// <param name="regex">Regular expression to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="regex"/> is <see langword="null"/>.</exception>
   public static Regex Clone(this Regex regex) => regex is not null ? new Regex(regex.ToString(), regex.Options, regex.MatchTimeout) : throw new ArgumentNullException(nameof(regex));
 

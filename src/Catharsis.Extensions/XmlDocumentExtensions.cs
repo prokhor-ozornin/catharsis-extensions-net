@@ -16,6 +16,7 @@ public static class XmlDocumentExtensions
   /// <param name="nodes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(XmlDocument, XmlNode[])"/>
   public static XmlDocument With(this XmlDocument document, IEnumerable<XmlNode> nodes)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -35,6 +36,7 @@ public static class XmlDocumentExtensions
   /// <param name="document"></param>
   /// <param name="nodes"></param>
   /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(XmlDocument, IEnumerable{XmlNode})"/>
   public static XmlDocument With(this XmlDocument document, params XmlNode[] nodes) => document.With(nodes as IEnumerable<XmlNode>);
 
   /// <summary>
@@ -44,6 +46,7 @@ public static class XmlDocumentExtensions
   /// <param name="nodes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(XmlDocument, XmlNode[])"/>
   public static XmlDocument Without(this XmlDocument document, IEnumerable<XmlNode> nodes)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
@@ -64,6 +67,7 @@ public static class XmlDocumentExtensions
   /// <param name="nodes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(XmlDocument, IEnumerable{XmlNode})"/>
   public static XmlDocument Without(this XmlDocument document, params XmlNode[] nodes) => document.Without(nodes as IEnumerable<XmlNode>);
 
   /// <summary>
@@ -71,13 +75,14 @@ public static class XmlDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <returns></returns>
+  /// <seealso cref="IsEmpty(XmlDocument)"/>
   public static bool IsUnset(this XmlDocument document) => document is null || document.IsEmpty();
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <see cref="XmlDocument"/> instance can be considered "empty", meaning it has no child nodes.</para>
   /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
+  /// <param name="document">XML document instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="document"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static bool IsEmpty(this XmlDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 
