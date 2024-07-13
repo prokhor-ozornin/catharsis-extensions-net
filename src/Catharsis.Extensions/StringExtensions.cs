@@ -966,6 +966,7 @@ public static class StringExtensions
   /// <returns>The <see cref="double"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="double.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref=""/>
   public static double ToDouble(this string text, IFormatProvider format = null) => text is not null ? double.Parse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -986,6 +987,7 @@ public static class StringExtensions
   /// <returns>The <see cref="decimal"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="decimal.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToDecimal(string, out decimal?, IFormatProvider)"/>
   public static decimal ToDecimal(this string text, IFormatProvider format = null) => text is not null ? decimal.Parse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -996,6 +998,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="decimal.TryParse(string, out decimal)"/>
+  /// <seealso cref="ToDecimal(string, IFormatProvider)"/>
   public static bool ToDecimal(this string text, out decimal? result, IFormatProvider format = null) => (result = decimal.TryParse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -1005,6 +1008,7 @@ public static class StringExtensions
   /// <param name="text">String to be converted.</param>
   /// <returns>Element of enumeration of <typeparamref name="T"/> type, to which string <paramref name="text"/> was converted.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToEnum{T}(string, out T?)"/>
   public static T ToEnum<T>(this string text) where T : struct => text is not null ? Enum.Parse<T>(text, true) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1014,6 +1018,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="result"></param>
   /// <returns></returns>
+  /// <seealso cref="ToEnum{T}(string)"/>
   public static bool ToEnum<T>(this string text, out T? result) where T : struct
   {
     try
@@ -1034,6 +1039,7 @@ public static class StringExtensions
   /// <param name="text">String to be converted.</param>
   /// <returns>The <see cref="Guid"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToGuid(string, out Guid?)"/>
   public static Guid ToGuid(this string text) => text is not null ? Guid.Parse(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1042,6 +1048,7 @@ public static class StringExtensions
   /// <param name="text">String to be converted.</param>
   /// <param name="result">The <see cref="Guid"/> value to which string <paramref name="text"/> was converted.</param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
+  /// <seealso cref="ToGuid(string)"/>
   public static bool ToGuid(this string text, out Guid? result) => (result = Guid.TryParse(text, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -1051,6 +1058,7 @@ public static class StringExtensions
   /// <returns>The <see cref="Uri"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="ToUri(string, out Uri)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToUri(string, out Uri)"/>
   public static Uri ToUri(this string text) => text is not null ? new Uri(text, UriKind.RelativeOrAbsolute) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1068,6 +1076,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToType(string, out Type)"/>
   public static Type ToType(this string text) => text is not null ? Type.GetType(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1076,6 +1085,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="result"></param>
   /// <returns></returns>
+  /// <seealso cref="ToType(string)"/>
   public static bool ToType(this string text, out Type result)
   {
     try
@@ -1098,6 +1108,7 @@ public static class StringExtensions
   /// <returns>The <see cref="DateTime"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="DateTime.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToDateTime(string, out DateTime?, IFormatProvider)"/>
   public static DateTime ToDateTime(this string text, IFormatProvider format = null) => text is not null ? DateTime.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1117,6 +1128,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToDateTimeOffset(string, out DateTimeOffset?, IFormatProvider)"/>
   public static DateTimeOffset ToDateTimeOffset(this string text, IFormatProvider format = null) => text is not null ? DateTimeOffset.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1126,6 +1138,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <seealso cref="ToDateTimeOffset(string, IFormatProvider)"/>
   public static bool ToDateTimeOffset(this string text, out DateTimeOffset? result, IFormatProvider format = null) => (result = DateTimeOffset.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -1134,6 +1147,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToFile(string, out FileInfo)"/>
   public static FileInfo ToFile(this string text) => text is not null ? new FileInfo(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1142,6 +1156,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="result"></param>
   /// <returns></returns>
+  /// <seealso cref="ToFile(string)"/>
   public static bool ToFile(this string text, out FileInfo result)
   {
     try
@@ -1162,6 +1177,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToDirectory(string, out DirectoryInfo)"/>
   public static DirectoryInfo ToDirectory(this string text) => text is not null ? new DirectoryInfo(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1170,6 +1186,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="result"></param>
   /// <returns></returns>
+  /// <seealso cref="ToDirectory(string)"/>
   public static bool ToDirectory(this string text, out DirectoryInfo result)
   {
     try
@@ -1198,6 +1215,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToIpAddress(string, out IPAddress)"/>
   public static IPAddress ToIpAddress(this string text) => text is not null ? IPAddress.Parse(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1206,6 +1224,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <param name="result"></param>
   /// <returns></returns>
+  /// <seealso cref="ToIpAddress(string)"/>
   public static bool ToIpAddress(this string text, out IPAddress result) => IPAddress.TryParse(text, out result);
 
   /// <summary>
@@ -1295,6 +1314,7 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToXDocumentAsync(string, CancellationToken)"/>
   public static XDocument ToXDocument(this string text) => text is not null ? XDocument.Parse(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1304,6 +1324,7 @@ public static class StringExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToXDocument(string)"/>
   public static async Task<XDocument> ToXDocumentAsync(this string text, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1345,6 +1366,7 @@ public static class StringExtensions
   /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, TextWriter, CancellationToken)"/>
   public static string WriteTo(this string text, TextWriter to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1363,6 +1385,7 @@ public static class StringExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, TextWriter)"/>
   public static async Task<string> WriteToAsync(this string text, TextWriter to, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1399,6 +1422,7 @@ public static class StringExtensions
   /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, XmlWriter)"/>
   public static string WriteTo(this string text, XmlWriter to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1416,6 +1440,7 @@ public static class StringExtensions
   /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, XmlWriter)"/>
   public static async Task<string> WriteToAsync(this string text, XmlWriter to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1434,6 +1459,7 @@ public static class StringExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, FileInfo, Encoding, CancellationToken)"/>
   public static string WriteTo(this string text, FileInfo to, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1453,6 +1479,7 @@ public static class StringExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, FileInfo, Encoding)"/>
   public static async Task<string> WriteToAsync(this string text, FileInfo to, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1472,6 +1499,7 @@ public static class StringExtensions
   /// <param name="to"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, Process, CancellationToken)"/>
   public static string WriteTo(this string text, Process to)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1490,6 +1518,7 @@ public static class StringExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, Process)"/>
   public static async Task<string> WriteToAsync(this string text, Process to, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1510,6 +1539,7 @@ public static class StringExtensions
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, Uri, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
   public static string WriteTo(this string text, Uri to, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1531,6 +1561,7 @@ public static class StringExtensions
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/>
   public static async Task<string> WriteToAsync(this string text, Uri to, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1551,6 +1582,7 @@ public static class StringExtensions
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/>, <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, HttpClient, Uri, CancellationToken)"/>
   public static HttpContent WriteTo(this string text, HttpClient client, Uri uri) => client.WriteText(text, uri);
 
   /// <summary>
@@ -1562,6 +1594,7 @@ public static class StringExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/>, <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, HttpClient, Uri)"/>
   public static async Task<HttpContent> WriteToAsync(this string text, HttpClient client, Uri uri, CancellationToken cancellation = default) => await client.WriteTextAsync(text, uri, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -1572,6 +1605,7 @@ public static class StringExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, TcpClient, Encoding, CancellationToken)"/>
   public static string WriteTo(this string text, TcpClient to, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1591,6 +1625,7 @@ public static class StringExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, TcpClient, Encoding)"/>
   public static async Task<string> WriteToAsync(this string text, TcpClient to, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1611,6 +1646,7 @@ public static class StringExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, UdpClient, Encoding, CancellationToken)"/>
   public static string WriteTo(this string text, UdpClient to, Encoding encoding = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1630,6 +1666,7 @@ public static class StringExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, UdpClient, Encoding)"/>
   public static async Task<string> WriteToAsync(this string text, UdpClient to, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
@@ -1797,6 +1834,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToDateOnly(string, out DateOnly?, IFormatProvider)"/>
   public static DateOnly ToDateOnly(this string text, IFormatProvider format = null) => text is not null ? DateOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1806,6 +1844,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <seealso cref="ToDateOnly(string, IFormatProvider)"/>
   public static bool ToDateOnly(this string text, out DateOnly? result, IFormatProvider format = null) => (result = DateOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -1815,6 +1854,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTimeOnly(string, out TimeOnly?, IFormatProvider)"/>
   public static TimeOnly ToTimeOnly(this string text, IFormatProvider format = null) => text is not null ? TimeOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1824,6 +1864,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <seealso cref="ToTimeOnly(string, IFormatProvider)"/>
   public static bool ToTimeOnly(this string text, out TimeOnly? result, IFormatProvider format = null) => (result = TimeOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
   #endif
 }
