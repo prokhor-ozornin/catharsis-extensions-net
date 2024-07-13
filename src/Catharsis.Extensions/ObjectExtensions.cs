@@ -160,8 +160,6 @@ public static class ObjectExtensions
   /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are considered equal, <c>false</c> otherwise.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Equality{T}(T, T, string[])"/>
-  /// <seealso cref="Equality{T}(T, T, IEnumerable{Expression{Func{T, object}}})"/>
-  /// <seealso cref="Equality{T}(T, T, Expression{Func{T, object}}[])"/>
   public static bool Equality<T>(T left, T right, IEnumerable<string> properties)
   {
     if (properties is null) throw new ArgumentNullException(nameof(properties));
@@ -234,7 +232,8 @@ public static class ObjectExtensions
   /// <param name="right"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
-  public static bool Equality<T>(this T left, T right, params string[] properties) => left.Equality(right, properties as IEnumerable<string>);
+  /// <seealso cref="Equality{T}(T, T, IEnumerable{string})"/>
+  public static bool Equality<T>(this T left, T right, params string[] properties) => Equality(left, right, properties as IEnumerable<string>);
 
   /// <summary>
   ///   <para>Determines whether specified objects are considered equal by comparing values of the given set of properties, represented as expression trees, on each of them.</para>
@@ -254,6 +253,7 @@ public static class ObjectExtensions
   /// <param name="properties">Set of properties in a form of expression trees, whose values are used in equality comparison.</param>
   /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are considered equal, <c>false</c> otherwise.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Equality{T}(T, T, Expression{Func{T, object}}[])"/>
   public static bool Equality<T>(this T left, T right, IEnumerable<Expression<Func<T, object>>> properties)
   {
     if (properties is null) throw new ArgumentNullException(nameof(properties));
@@ -291,6 +291,7 @@ public static class ObjectExtensions
   /// <param name="right"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
+  /// <seealso cref="Equality{T}(T, T, IEnumerable{Expression{Func{T, object}}})"/>
   public static bool Equality<T>(this T left, T right, params Expression<Func<T, object>>[] properties) => left.Equality(right, properties as IEnumerable<Expression<Func<T, object>>>);
 
   /// <summary>
@@ -307,6 +308,7 @@ public static class ObjectExtensions
   /// <param name="properties">Collection of properties names, whose values are to be used in hash code's calculation.</param>
   /// <returns>Hash code for <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="HashCode{T}(T, string[])"/>
   public static int HashCode<T>(this T instance, IEnumerable<string> properties)
   {
     if (properties is null) throw new ArgumentNullException(nameof(properties));
@@ -341,6 +343,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
+  /// <seealso cref="HashCode{T}(T, IEnumerable{string})"/>
   public static int HashCode<T>(this T instance, params string[] properties) => instance.HashCode(properties as IEnumerable<string>);
 
   /// <summary>
@@ -398,6 +401,7 @@ public static class ObjectExtensions
   /// <param name="finalizer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryFinally{TSubject, TResult}(TSubject, Func{TSubject, TResult}, Action{TSubject})"/>
   public static T TryFinally<T>(this T instance, Action<T> action, Action<T> finalizer = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -420,6 +424,7 @@ public static class ObjectExtensions
   /// <param name="finalizer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="function"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryFinally{T}(T, Action{T}, Action{T})"/>
   public static TResult TryFinally<TSubject, TResult>(this TSubject instance, Func<TSubject, TResult> function, Action<TSubject> finalizer = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -445,6 +450,7 @@ public static class ObjectExtensions
   /// <param name="finalizer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryCatchFinally{T, TException}(T, Action{T}, Action{T}, Action{T})"/>
   public static Exception TryCatchFinally<T>(this T instance, Action<T> action, Action<T> exception = null, Action<T> finalizer = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -464,6 +470,7 @@ public static class ObjectExtensions
   /// <param name="finalizer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="function"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryCatchFinally{T}(T, Action{T}, Action{T}, Action{T})"/>
   public static TException TryCatchFinally<T, TException>(this T instance, Action<T> function, Action<T> exception = null, Action<T> finalizer = null) where TException : Exception
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -495,6 +502,7 @@ public static class ObjectExtensions
   /// <param name="finalizer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryFinallyDispose{TSubject, TResult}(TSubject, Func{TSubject, TResult}, Action{TSubject})"/>
   public static T TryFinallyDispose<T>(this T instance, Action<T> action, Action<T> finalizer = null) where T : IDisposable
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -517,6 +525,7 @@ public static class ObjectExtensions
   /// <param name="finalizer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="function"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="TryFinallyDispose{T}(T, Action{T}, Action{T})"/>
   public static TResult TryFinallyDispose<TSubject, TResult>(this TSubject instance, Func<TSubject, TResult> function, Action<TSubject> finalizer = null) where TSubject : IDisposable
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -540,6 +549,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="PrintAsync{T}(T, CancellationToken)"/>
   public static T Print<T>(this T instance)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -557,6 +567,7 @@ public static class ObjectExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Print{T}(T)"/>
   public static async Task<T> PrintAsync<T>(this T instance, CancellationToken cancellation = default)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -577,6 +588,7 @@ public static class ObjectExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="PrintAsync{T}(T, Stream, Encoding, CancellationToken)"/>
   public static T Print<T>(this T instance, Stream destination, Encoding encoding = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -596,6 +608,7 @@ public static class ObjectExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Print{T}(T, Stream, Encoding)"/>
   public static async Task<T> PrintAsync<T>(this T instance, Stream destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -616,6 +629,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="PrintAsync{T}(T, TextWriter, CancellationToken)"/>
   public static T Print<T>(this T instance, TextWriter destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -634,6 +648,7 @@ public static class ObjectExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Print{T}(T, TextWriter)"/>
   public static async Task<T> PrintAsync<T>(this T instance, TextWriter destination, CancellationToken cancellation = default)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -654,6 +669,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="PrintAsync{T}(T, XmlWriter)"/>
   public static T Print<T>(this T instance, XmlWriter destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -671,6 +687,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Print{T}(T, XmlWriter)"/>
   public static async Task<T> PrintAsync<T>(this T instance, XmlWriter destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -708,6 +725,7 @@ public static class ObjectExtensions
   /// <param name="encoding"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="PrintAsync{T}(T, FileInfo, Encoding, CancellationToken)"/>
   public static T Print<T>(this T instance, FileInfo destination, Encoding encoding = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -727,6 +745,7 @@ public static class ObjectExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Print{T}(T, FileInfo, Encoding)"/>
   public static async Task<T> PrintAsync<T>(this T instance, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -750,6 +769,7 @@ public static class ObjectExtensions
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="PrintAsync{T}(T, Uri, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
   public static T Print<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -772,6 +792,7 @@ public static class ObjectExtensions
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Print{T}(T, Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/>
   public static async Task<T> PrintAsync<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -792,6 +813,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="PrintAsync{T}(T, Process, CancellationToken)"/>
   public static T Print<T>(this T instance, Process destination)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -808,6 +830,7 @@ public static class ObjectExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Print{T}(T, Process)"/>
   public static async Task<T> PrintAsync<T>(this T instance, Process destination, CancellationToken cancellation = default) => await instance.PrintAsync(destination.StandardInput, cancellation).ConfigureAwait(false);
 
   /// <summary>
@@ -817,6 +840,7 @@ public static class ObjectExtensions
   /// <param name="properties"></param>
   /// <returns>Dictionary of name - value pairs for public properties of <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetState{T}(T, IEnumerable{Expression{Func{T, object}}})"/>
   public static IEnumerable<(string Name, object Value)> GetState(this object instance, IEnumerable<string> properties = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -835,6 +859,7 @@ public static class ObjectExtensions
   /// <param name="properties"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetState(object, IEnumerable{string})"/>
   public static IEnumerable<(string Name, object Value)> GetState<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -850,6 +875,7 @@ public static class ObjectExtensions
   /// <param name="properties">Object whose public properties are to be used for setting matched ones on target object.</param>
   /// <returns>Back reference to the current target object.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="SetState{T}(T, object)"/>
   public static T SetState<T>(this T instance, IEnumerable<(string Name, object Value)> properties)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -868,6 +894,7 @@ public static class ObjectExtensions
   /// <param name="properties"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="SetState{T}(T, IEnumerable{ValueTuple{string, object}})"/>
   public static T SetState<T>(this T instance, object properties)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -927,6 +954,7 @@ public static class ObjectExtensions
   /// <returns>Value of property <paramref name="name"/> for <paramref name="instance"/> instance, or a <c>null</c> reference in case this property does not exists for <paramref name="instance"/>'s type.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="SetPropertyValue{T}(T, string, object)"/>
   public static T GetPropertyValue<T>(this object instance, string name)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -951,6 +979,7 @@ public static class ObjectExtensions
   /// <param name="value">New value of object's property.</param>
   /// <returns>Back reference to the current target object.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetPropertyValue{T}(object, string)"/>
   public static T SetPropertyValue<T>(this T instance, string name, object value)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -979,6 +1008,7 @@ public static class ObjectExtensions
   /// <param name="parameters"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CallMethod{T}(object, string, object[])"/>
   public static T CallMethod<T>(this object instance, string name, IEnumerable<object> parameters = null)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
@@ -1003,6 +1033,7 @@ public static class ObjectExtensions
   /// <param name="parameters">Optional set of parameters to be passed to invoked method, if it requires some.</param>
   /// <returns>An object containing the return value of the invoked method.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CallMethod{T}(object, string, IEnumerable{object})"/>
   public static T CallMethod<T>(this object instance, string name, params object[] parameters) => instance.CallMethod<T>(name, parameters as IEnumerable<object>);
 
   /// <summary>
@@ -1057,6 +1088,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
+  /// <seealso cref="ToStateString(object, string[])"/>
   public static string ToStateString(this object instance, IEnumerable<string> properties = null)
   {
     if (instance is null)
@@ -1080,6 +1112,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
+  /// <seealso cref="ToStateString(object, IEnumerable{string})"/>
   public static string ToStateString(this object instance, params string[] properties) => instance.ToStateString(properties as IEnumerable<string>);
 
   /// <summary>
@@ -1089,6 +1122,7 @@ public static class ObjectExtensions
   /// <param name="instance">Object to be converted to string representation.</param>
   /// <param name="properties">Set of properties, whose values are used for string representation of <paramref name="instance"/>. Each property is represented as a lambda expression.</param>
   /// <returns>String representation of <paramref name="instance"/>. Property name is separated from value by colon character, name-value pairs are separated by comma and immediately following space characters, and all content is placed in square brackets afterwards.</returns>
+  /// <seealso cref="ToStateString{T}(T, Expression{Func{T, object}}[])"/>
   public static string ToStateString<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
   {
     if (instance is null)
@@ -1113,6 +1147,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="properties"></param>
   /// <returns></returns>
+  /// <seealso cref="ToStateString{T}(T, IEnumerable{Expression{Func{T, object}}})"/>
   public static string ToStateString<T>(this T instance, params Expression<Func<T, object>>[] properties) => instance.ToStateString(properties as IEnumerable<Expression<Func<T, object>>>);
 
   /// <summary>

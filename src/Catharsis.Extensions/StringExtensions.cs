@@ -774,6 +774,7 @@ public static class StringExtensions
   /// <returns><c>true</c> if <paramref name="text"/> is equivalent to <see cref="bool.TrueString"/>, <c>false otherwise</c>.</returns>
   /// <seealso cref="bool.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBoolean(string, out bool?)"/>
   public static bool ToBoolean(this string text) => text is not null ? bool.Parse(text) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -784,6 +785,7 @@ public static class StringExtensions
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="bool.TryParse(string, out bool)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBoolean(string)"/>
   public static bool ToBoolean(this string text, out bool? result) => (result = bool.TryParse(text, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -793,6 +795,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToSbyte(string, out sbyte?, IFormatProvider)"/>
   public static sbyte ToSbyte(this string text, IFormatProvider format = null) => text is not null ? sbyte.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -802,6 +805,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <seealso cref="ToSbyte(string, IFormatProvider)"/>
   public static bool ToSbyte(this string text, out sbyte? result, IFormatProvider format = null) => (result = sbyte.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -812,6 +816,7 @@ public static class StringExtensions
   /// <returns>The <see cref="byte"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="byte.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToByte(string, out byte?, IFormatProvider)"/>
   public static byte ToByte(this string text, IFormatProvider format = null) => text is not null ? byte.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -822,6 +827,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="byte.TryParse(string, out byte)"/>
+  /// <seealso cref="ToByte(string, IFormatProvider)"/>
   public static bool ToByte(this string text, out byte? result, IFormatProvider format = null) => (result = byte.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -832,6 +838,7 @@ public static class StringExtensions
   /// <returns>The <see cref="short"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="short.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToShort(string, out short?, IFormatProvider)"/>
   public static short ToShort(this string text, IFormatProvider format = null) => text is not null ? short.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -842,6 +849,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="short.TryParse(string, out short)"/>
+  /// <seealso cref="ToShort(string, IFormatProvider)"/>
   public static bool ToShort(this string text, out short? result, IFormatProvider format = null) => (result = short.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -851,6 +859,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToUshort(string, out ushort?, IFormatProvider)"/>
   public static ushort ToUshort(this string text, IFormatProvider format = null) => text is not null ? ushort.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -860,6 +869,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <seealso cref="ToUshort(string, IFormatProvider)"/>
   public static bool ToUshort(this string text, out ushort? result, IFormatProvider format = null) => (result = ushort.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -870,6 +880,7 @@ public static class StringExtensions
   /// <returns>The <see cref="int"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="int.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToInt(string, out int?, IFormatProvider)"/>
   public static int ToInt(this string text, IFormatProvider format = null) => text is not null ? int.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -880,6 +891,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="int.TryParse(string, out int)"/>
+  /// <seealso cref="ToInt(string, IFormatProvider)"/>
   public static bool ToInt(this string text, out int? result, IFormatProvider format = null) => (result = int.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -889,6 +901,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToUint(string, out uint?, IFormatProvider)"/>
   public static uint ToUint(this string text, IFormatProvider format = null) => text is not null ? uint.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -898,6 +911,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <seealso cref="ToUint(string, IFormatProvider)"/>
   public static bool ToUint(this string text, out uint? result, IFormatProvider format = null) => (result = uint.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -906,8 +920,9 @@ public static class StringExtensions
   /// <param name="text">String to be converted.</param>
   /// <param name="format"></param>
   /// <returns>The <see cref="long"/> value to which string <paramref name="text"/> was converted.</returns>
-  /// <seealso cref="long.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="long.Parse(string)"/>
+  /// <seealso cref="ToLong(string, out long?, IFormatProvider)"/>
   public static long ToLong(this string text, IFormatProvider format = null) => text is not null ? long.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -918,6 +933,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="long.TryParse(string, out long)"/>
+  /// <seealso cref="ToLong(string, IFormatProvider)"/>
   public static bool ToLong(this string text, out long? result, IFormatProvider format = null) => (result = long.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -927,6 +943,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToUlong(string, out ulong?, IFormatProvider)"/>
   public static ulong ToUlong(this string text, IFormatProvider format = null) => text is not null ? ulong.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -936,6 +953,7 @@ public static class StringExtensions
   /// <param name="result"></param>
   /// <param name="format"></param>
   /// <returns></returns>
+  /// <seealso cref="ToUlong(string, IFormatProvider)"/>
   public static bool ToUlong(this string text, out ulong? result, IFormatProvider format = null) => (result = ulong.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -946,6 +964,7 @@ public static class StringExtensions
   /// <returns>The <see cref="float"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="float.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToFloat(string, out float?, IFormatProvider)"/>
   public static float ToFloat(this string text, IFormatProvider format = null) => text is not null ? float.Parse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -956,6 +975,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="float.TryParse(string, out float)"/>
+  /// <seealso cref="ToFloat(string, IFormatProvider)"/>
   public static bool ToFloat(this string text, out float? result, IFormatProvider format = null) => (result = float.TryParse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -966,7 +986,7 @@ public static class StringExtensions
   /// <returns>The <see cref="double"/> value to which string <paramref name="text"/> was converted.</returns>
   /// <seealso cref="double.Parse(string)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref=""/>
+  /// <seealso cref="ToDouble(string, out double?, IFormatProvider)"/>
   public static double ToDouble(this string text, IFormatProvider format = null) => text is not null ? double.Parse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -977,6 +997,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns><c>true</c> if <paramref name="text"/> was successfully converted, <c>false</c> otherwise.</returns>
   /// <seealso cref="double.TryParse(string, out double)"/>
+  /// <seealso cref="ToDouble(string, IFormatProvider)"/>
   public static bool ToDouble(this string text, out double? result, IFormatProvider format = null) => (result = double.TryParse(text, NumberStyles.Float, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
