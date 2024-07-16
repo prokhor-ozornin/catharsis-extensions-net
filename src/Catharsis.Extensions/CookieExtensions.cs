@@ -9,24 +9,6 @@ namespace Catharsis.Extensions;
 public static class CookieExtensions
 {
   /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="Cookie"/> with the same properties as the original.</para>
-  /// </summary>
-  /// <param name="cookie">Cookie to be cloned.</param>
-  /// <returns>Cloning result.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="cookie"/> is <see langword="null"/>.</exception>
-  public static Cookie Clone(this Cookie cookie) => cookie is not null ? new Cookie(cookie.Name, cookie.Value, cookie.Path, cookie.Domain) 
-  {
-    Secure = cookie.Secure,
-    HttpOnly = cookie.HttpOnly,
-    Port = cookie.Port,
-    Expires = cookie.Expires,
-    Version = cookie.Version,
-    Comment = cookie.Comment,
-    CommentUri = cookie.CommentUri,
-    Discard = cookie.Discard
-  } : throw new ArgumentNullException(nameof(cookie));
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="cookie"></param>
@@ -42,4 +24,22 @@ public static class CookieExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="cookie"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsUnset(Cookie)"/>
   public static bool IsEmpty(this Cookie cookie) => cookie is not null ? cookie.Name.IsUnset() || cookie.Value.IsUnset() : throw new ArgumentNullException(nameof(cookie));
+
+  /// <summary>
+  ///   <para>Creates a copy of the specified <see cref="Cookie"/> with the same properties as the original.</para>
+  /// </summary>
+  /// <param name="cookie">Cookie to be cloned.</param>
+  /// <returns>Cloning result.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="cookie"/> is <see langword="null"/>.</exception>
+  public static Cookie Clone(this Cookie cookie) => cookie is not null ? new Cookie(cookie.Name, cookie.Value, cookie.Path, cookie.Domain)
+  {
+    Secure = cookie.Secure,
+    HttpOnly = cookie.HttpOnly,
+    Port = cookie.Port,
+    Expires = cookie.Expires,
+    Version = cookie.Version,
+    Comment = cookie.Comment,
+    CommentUri = cookie.CommentUri,
+    Discard = cookie.Discard
+  } : throw new ArgumentNullException(nameof(cookie));
 }

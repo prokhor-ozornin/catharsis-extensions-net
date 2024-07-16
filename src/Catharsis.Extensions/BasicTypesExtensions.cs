@@ -7,6 +7,171 @@
 public static class BasicTypesExtensions
 {
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="number"></param>
+  /// <returns></returns>
+  /// <seealso cref="Math.Abs(sbyte)"/>
+  public static short Abs(this sbyte number) => Math.Abs(number);
+
+  /// <summary>
+  ///   <para>Returns the absolute value of 16-bit signed integer.</para>
+  /// </summary>
+  /// <param name="number">Source number.</param>
+  /// <returns>Absolute value of <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Abs(short)"/>
+  public static short Abs(this short number) => Math.Abs(number);
+
+  /// <summary>
+  ///   <para>Returns the absolute value of 32-bit signed integer.</para>
+  /// </summary>
+  /// <param name="number">Source number.</param>
+  /// <returns>Absolute value of <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Abs(int)"/>
+  public static int Abs(this int number) => Math.Abs(number);
+
+  /// <summary>
+  ///   <para>Returns the absolute value of 64-bit signed integer.</para>
+  /// </summary>
+  /// <param name="number">Source number.</param>
+  /// <returns>Absolute value of <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Abs(long)"/>
+  public static long Abs(this long number) => Math.Abs(number);
+
+  /// <summary>
+  ///   <para>Returns the absolute value of single-precision floating-point number.</para>
+  /// </summary>
+  /// <param name="number">Source number.</param>
+  /// <returns>Absolute value of <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Abs(float)"/>
+  public static float Abs(this float number) => Math.Abs(number);
+
+  /// <summary>
+  ///   <para>Returns the absolute value of double-precision floating-point number.</para>
+  /// </summary>
+  /// <param name="number">Source number.</param>
+  /// <returns>Absolute value of <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Abs(double)"/>
+  public static double Abs(this double number) => Math.Abs(number);
+
+  /// <summary>
+  ///   <para>Returns the absolute value of a <see cref="decimal"/> number.</para>
+  /// </summary>
+  /// <param name="number">Source number.</param>
+  /// <returns>Absolute value of <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Abs(decimal)"/>
+  public static decimal Abs(this decimal number) => Math.Abs(number);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="number"></param>
+  /// <returns></returns>
+  public static float Ceil(this float number) => (float) Math.Ceiling(number);
+
+  /// <summary>
+  ///   <para>Returns the smallest integer greater than or equal to the specified number.</para>
+  /// </summary>
+  /// <param name="number">A double-precision floating-point number.</param>
+  /// <returns>The smallest integral value that is greater than or equal to <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Ceiling(double)"/>
+  public static double Ceil(this double number) => Math.Ceiling(number);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="number"></param>
+  /// <returns></returns>
+  public static decimal Ceil(this decimal number) => Math.Ceiling(number);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="number"></param>
+  /// <returns></returns>
+  public static float Floor(this float number) => (float) Math.Floor(number);
+
+  /// <summary>
+  ///   <para>Returns the largest integer less than or equal to the specified number.</para>
+  /// </summary>
+  /// <param name="number">A double-precision floating-point number.</param>
+  /// <returns>The largest integer less than or equal to <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Floor(double)"/>
+  public static double Floor(this double number) => Math.Floor(number);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="number"></param>
+  /// <returns></returns>
+  public static decimal Floor(this decimal number) => Math.Floor(number);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="number"></param>
+  /// <param name="digits"></param>
+  /// <returns></returns>
+  /// <seealso cref="Math.Round(double)"/>
+  /// <seealso cref="Round(double, int?)"/>
+  /// <seealso cref="Round(decimal, int?)"/>
+  public static float Round(this float number, int? digits = null) => (float) (digits is not null ? Math.Round(number, digits.Value) : Math.Round(number));
+
+  /// <summary>
+  ///   <para>Rounds a double-precision floating-point value to the nearest integral value.</para>
+  /// </summary>
+  /// <param name="number">A double-precision floating-point number to be rounded.</param>
+  /// <param name="digits"></param>
+  /// <returns>The integer nearest <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Round(double)"/>
+  /// <seealso cref="Round(float, int?)"/>
+  /// <seealso cref="Round(decimal, int?)"/>
+  public static double Round(this double number, int? digits = null) => digits is not null ? Math.Round(number, digits.Value) : Math.Round(number);
+
+  /// <summary>
+  ///   <para>Rounds a decimal value to the nearest integral value.</para>
+  /// </summary>
+  /// <param name="number">A decimal number to be rounded.</param>
+  /// <param name="digits"></param>
+  /// <returns>The integer nearest <paramref name="number"/>.</returns>
+  /// <seealso cref="Math.Round(decimal)"/>
+  /// <seealso cref="Round(float, int?)"/>
+  /// <seealso cref="Round(double, int?)"/>
+  public static decimal Round(this decimal number, int? digits = null) => digits is not null ? Math.Round(number, digits.Value) : Math.Round(number);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="number"></param>
+  /// <param name="power"></param>
+  /// <returns></returns>
+  /// <seealso cref="Math.Pow(double, double)"/>
+  /// <seealso cref="Power(double, double)"/>
+  /// <seealso cref="Power(decimal, decimal)"/>
+  public static float Power(this float number, float power) => (float) Math.Pow(number, power);
+
+  /// <summary>
+  ///   <para>Returns a specified number raised to the specified power.</para>
+  /// </summary>
+  /// <param name="number">A double-precision floating-point number to be raised to a power.</param>
+  /// <param name="power">A double-precision floating-point number that specifies a power.</param>
+  /// <returns>The number <paramref name="number"/> raised to the power <paramref name="power"/>.</returns>
+  /// <seealso cref="Math.Pow(double, double)"/>
+  /// <seealso cref="Power(float, float)"/>
+  /// <seealso cref="Power(decimal, decimal)"/>
+  public static double Power(this double number, double power) => Math.Pow(number, power);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="number"></param>
+  /// <param name="power"></param>
+  /// <returns></returns>
+  /// <seealso cref="Power(float, float)"/>
+  /// <seealso cref="Power(double, double)"/>
+  public static decimal Power(this decimal number, decimal power) => (decimal) Math.Pow((double) number, (double) power);
+  
+  /// <summary>
   ///   <para>Returns a string created by repeating a specified character given number of times.</para>
   /// </summary>
   /// <param name="character">Character to repeat.</param>
@@ -162,169 +327,4 @@ public static class BasicTypesExtensions
   /// <param name="count"></param>
   /// <returns></returns>
   public static TimeSpan Ticks(this long count) => new(count);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="number"></param>
-  /// <param name="digits"></param>
-  /// <returns></returns>
-  /// <seealso cref="Math.Round(double)"/>
-  /// <seealso cref="Round(double, int?)"/>
-  /// <seealso cref="Round(decimal, int?)"/>
-  public static float Round(this float number, int? digits = null) => (float) (digits is not null ? Math.Round(number, digits.Value) : Math.Round(number));
-
-  /// <summary>
-  ///   <para>Rounds a double-precision floating-point value to the nearest integral value.</para>
-  /// </summary>
-  /// <param name="number">A double-precision floating-point number to be rounded.</param>
-  /// <param name="digits"></param>
-  /// <returns>The integer nearest <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Round(double)"/>
-  /// <seealso cref="Round(float, int?)"/>
-  /// <seealso cref="Round(decimal, int?)"/>
-  public static double Round(this double number, int? digits = null) => digits is not null ? Math.Round(number, digits.Value) : Math.Round(number);
-
-  /// <summary>
-  ///   <para>Rounds a decimal value to the nearest integral value.</para>
-  /// </summary>
-  /// <param name="number">A decimal number to be rounded.</param>
-  /// <param name="digits"></param>
-  /// <returns>The integer nearest <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Round(decimal)"/>
-  /// <seealso cref="Round(float, int?)"/>
-  /// <seealso cref="Round(double, int?)"/>
-  public static decimal Round(this decimal number, int? digits = null) => digits is not null ? Math.Round(number, digits.Value) : Math.Round(number);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="number"></param>
-  /// <param name="power"></param>
-  /// <returns></returns>
-  /// <seealso cref="Math.Pow(double, double)"/>
-  /// <seealso cref="Power(double, double)"/>
-  /// <seealso cref="Power(decimal, decimal)"/>
-  public static float Power(this float number, float power) => (float) Math.Pow(number, power);
-
-  /// <summary>
-  ///   <para>Returns a specified number raised to the specified power.</para>
-  /// </summary>
-  /// <param name="number">A double-precision floating-point number to be raised to a power.</param>
-  /// <param name="power">A double-precision floating-point number that specifies a power.</param>
-  /// <returns>The number <paramref name="number"/> raised to the power <paramref name="power"/>.</returns>
-  /// <seealso cref="Math.Pow(double, double)"/>
-  /// <seealso cref="Power(float, float)"/>
-  /// <seealso cref="Power(decimal, decimal)"/>
-  public static double Power(this double number, double power) => Math.Pow(number, power);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="number"></param>
-  /// <param name="power"></param>
-  /// <returns></returns>
-  /// <seealso cref="Power(float, float)"/>
-  /// <seealso cref="Power(double, double)"/>
-  public static decimal Power(this decimal number, decimal power) => (decimal) Math.Pow((double) number, (double) power);
-  
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="number"></param>
-  /// <returns></returns>
-  /// <seealso cref="Math.Abs(sbyte)"/>
-  public static short Abs(this sbyte number) => Math.Abs(number);
-  
-  /// <summary>
-  ///   <para>Returns the absolute value of 16-bit signed integer.</para>
-  /// </summary>
-  /// <param name="number">Source number.</param>
-  /// <returns>Absolute value of <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Abs(short)"/>
-  public static short Abs(this short number) => Math.Abs(number);
-
-  /// <summary>
-  ///   <para>Returns the absolute value of 32-bit signed integer.</para>
-  /// </summary>
-  /// <param name="number">Source number.</param>
-  /// <returns>Absolute value of <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Abs(int)"/>
-  public static int Abs(this int number) => Math.Abs(number);
-
-  /// <summary>
-  ///   <para>Returns the absolute value of 64-bit signed integer.</para>
-  /// </summary>
-  /// <param name="number">Source number.</param>
-  /// <returns>Absolute value of <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Abs(long)"/>
-  public static long Abs(this long number) => Math.Abs(number);
-
-  /// <summary>
-  ///   <para>Returns the absolute value of single-precision floating-point number.</para>
-  /// </summary>
-  /// <param name="number">Source number.</param>
-  /// <returns>Absolute value of <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Abs(float)"/>
-  public static float Abs(this float number) => Math.Abs(number);
-
-  /// <summary>
-  ///   <para>Returns the absolute value of double-precision floating-point number.</para>
-  /// </summary>
-  /// <param name="number">Source number.</param>
-  /// <returns>Absolute value of <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Abs(double)"/>
-  public static double Abs(this double number) => Math.Abs(number);
-
-  /// <summary>
-  ///   <para>Returns the absolute value of a <see cref="decimal"/> number.</para>
-  /// </summary>
-  /// <param name="number">Source number.</param>
-  /// <returns>Absolute value of <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Abs(decimal)"/>
-  public static decimal Abs(this decimal number) => Math.Abs(number);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="number"></param>
-  /// <returns></returns>
-  public static float Ceil(this float number) => (float) Math.Ceiling(number);
-
-  /// <summary>
-  ///   <para>Returns the smallest integer greater than or equal to the specified number.</para>
-  /// </summary>
-  /// <param name="number">A double-precision floating-point number.</param>
-  /// <returns>The smallest integral value that is greater than or equal to <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Ceiling(double)"/>
-  public static double Ceil(this double number) => Math.Ceiling(number);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="number"></param>
-  /// <returns></returns>
-  public static decimal Ceil(this decimal number) => Math.Ceiling(number);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="number"></param>
-  /// <returns></returns>
-  public static float Floor(this float number) => (float) Math.Floor(number);
-
-  /// <summary>
-  ///   <para>Returns the largest integer less than or equal to the specified number.</para>
-  /// </summary>
-  /// <param name="number">A double-precision floating-point number.</param>
-  /// <returns>The largest integer less than or equal to <paramref name="number"/>.</returns>
-  /// <seealso cref="Math.Floor(double)"/>
-  public static double Floor(this double number) => Math.Floor(number);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="number"></param>
-  /// <returns></returns>
-  public static decimal Floor(this decimal number) => Math.Floor(number);
 }

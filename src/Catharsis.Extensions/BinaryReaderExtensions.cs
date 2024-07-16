@@ -7,12 +7,21 @@
 public static class BinaryReaderExtensions
 {
   /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="BinaryReader"/>, which will read data from the same underlying <see cref="Stream"/>.</para>
+  ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance is either <see langword="null"/> or "empty".</para>
   /// </summary>
-  /// <param name="reader">Binary reader instance to be cloned.</param>
-  /// <returns>Cloning result.</returns>
+  /// <param name="reader"></param>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static BinaryReader Clone(this BinaryReader reader) => reader is not null ? new BinaryReader(reader.BaseStream) : throw new ArgumentNullException(nameof(reader));
+  /// <seealso cref="IsEmpty(BinaryReader)"/>
+  public static bool IsUnset(this BinaryReader reader) => reader is null || reader.IsEmpty();
+
+  /// <summary>
+  ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
+  /// </summary>
+  /// <param name="reader">Binary reader instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="reader"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset(BinaryReader)"/>
+  public static bool IsEmpty(this BinaryReader reader) => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
   ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the starting position, meaning the position within it's underlying <seealso cref="Stream"/> is zero.</para>
@@ -31,24 +40,15 @@ public static class BinaryReaderExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsStart(BinaryReader)"/>
   public static bool IsEnd(this BinaryReader reader) => reader?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(reader));
-
+  
   /// <summary>
-  ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance is either <see langword="null"/> or "empty".</para>
+  ///   <para>Creates a copy of the specified <see cref="BinaryReader"/>, which will read data from the same underlying <see cref="Stream"/>.</para>
   /// </summary>
-  /// <param name="reader"></param>
+  /// <param name="reader">Binary reader instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsEmpty(BinaryReader)"/>
-  public static bool IsUnset(this BinaryReader reader) => reader is null || reader.IsEmpty();
-
-  /// <summary>
-  ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
-  /// </summary>
-  /// <param name="reader">Binary reader instance for evaluation.</param>
-  /// <returns>If the specified <paramref name="reader"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsUnset(BinaryReader)"/>
-  public static bool IsEmpty(this BinaryReader reader) => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
-
+  public static BinaryReader Clone(this BinaryReader reader) => reader is not null ? new BinaryReader(reader.BaseStream) : throw new ArgumentNullException(nameof(reader));
+  
   /// <summary>
   ///   <para>"Empties" a specified <seealso cref="BinaryReader"/> by setting the length of its underlying <seealso cref="Stream"/> to zero.</para>
   /// </summary>

@@ -11,10 +11,495 @@ namespace Catharsis.Extensions.Tests;
 public sealed class BasicTypesExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(sbyte)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Sbyte_Abs_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        ((float) -1.0).Abs().Should().Be((float) 1.0);
+        ((float) 0.0).Abs().Should().Be((float) 0);
+        ((float) 1.0).Abs().Should().Be((float) 1.0);
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(sbyte original, short result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(short)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Short_Abs_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        ((short) -1).Abs().Should().Be(1);
+        ((short) 0).Abs().Should().Be(0);
+        ((short) 1).Abs().Should().Be(1);
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(short original, short result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Int_Abs_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        ((int) -1).Abs().Should().Be(1);
+        ((int) 0).Abs().Should().Be(0);
+        ((int) 1).Abs().Should().Be(1);
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(int original, int result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(long)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Long_Abs_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        ((long) -1).Abs().Should().Be(1);
+        ((long) 0).Abs().Should().Be(0);
+        ((long) 1).Abs().Should().Be(1);
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(long original, long result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(float)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Float_Abs_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        ((float) -1.0).Abs().Should().Be((float) 1.0);
+        ((float) 0.0).Abs().Should().Be((float) 0);
+        ((float) 1.0).Abs().Should().Be((float) 1.0);
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(double)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Double_Abs_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        (-1.1).Abs().Should().Be(1.1);
+        (0.0).Abs().Should().Be(0);
+        (1.1).Abs().Should().Be(1.1);
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(decimal)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Decimal_Abs_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        ((decimal) -1.1).Abs().Should().Be((decimal) 1.1);
+        ((decimal) 0.0).Abs().Should().Be(0);
+        ((decimal) 1.1).Abs().Should().Be((decimal) 1.1);
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Ceil(float)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Float_Ceil_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*(-1.4).Ceil().Should().Be(-2);
+        (-1.5).Ceil().Should().Be(-2);
+        (-1.6).Ceil().Should().Be(-2);
+        0.0.Ceil().Should().Be(0);
+        1.4.Ceil().Should().Be(2);
+        1.5.Ceil().Should().Be(2);
+        1.6.Ceil().Should().Be(2);*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Ceil(double)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Double_Ceil_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*(-1.4).Ceil().Should().Be(-2);
+        (-1.5).Ceil().Should().Be(-2);
+        (-1.6).Ceil().Should().Be(-2);
+        0.0.Ceil().Should().Be(0);
+        1.4.Ceil().Should().Be(2);
+        1.5.Ceil().Should().Be(2);
+        1.6.Ceil().Should().Be(2);*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Ceil(decimal)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Decimal_Ceil_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*(-1.4).Ceil().Should().Be(-2);
+        (-1.5).Ceil().Should().Be(-2);
+        (-1.6).Ceil().Should().Be(-2);
+        0.0.Ceil().Should().Be(0);
+        1.4.Ceil().Should().Be(2);
+        1.5.Ceil().Should().Be(2);
+        1.6.Ceil().Should().Be(2);*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Floor(float)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Float_Floor_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*(-1.4).Floor().Should().Be(-1);
+        (-1.5).Floor().Should().Be(-1);
+        (-1.6).Floor().Should().Be(-1);
+        0.0.Floor().Should().Be(0);
+        1.4.Floor().Should().Be(1);
+        1.5.Floor().Should().Be(1);
+        1.6.Floor().Should().Be(1);*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Floor(double)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Double_Floor_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*(-1.4).Floor().Should().Be(-1);
+        (-1.5).Floor().Should().Be(-1);
+        (-1.6).Floor().Should().Be(-1);
+        0.0.Floor().Should().Be(0);
+        1.4.Floor().Should().Be(1);
+        1.5.Floor().Should().Be(1);
+        1.6.Floor().Should().Be(1);*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Floor(decimal)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Decimal_Floor_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*(-1.4).Floor().Should().Be(-1);
+        (-1.5).Floor().Should().Be(-1);
+        (-1.6).Floor().Should().Be(-1);
+        0.0.Floor().Should().Be(0);
+        1.4.Floor().Should().Be(1);
+        1.5.Floor().Should().Be(1);
+        1.6.Floor().Should().Be(1);*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Round(float, int?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Float_Round_Method()
+  {
+    using (new AssertionScope())
+    {
+      float.MinValue.Round().Should().Be((float) Math.Round(float.MinValue));
+      float.MaxValue.Round().Should().Be((float) Math.Round(float.MaxValue));
+      float.Epsilon.Round().Should().Be(0);
+      float.NaN.Round().Should().Be(float.NaN);
+      float.NegativeInfinity.Round().Should().Be(float.NegativeInfinity);
+      float.PositiveInfinity.Round().Should().Be(float.PositiveInfinity);
+
+      ((float) -1.4).Round().Should().Be(-1);
+      ((float) -1.5).Round().Should().Be(-2);
+      ((float) 0).Round().Should().Be(0);
+      ((float) 1.4).Round().Should().Be(1);
+      ((float) 1.5).Round().Should().Be(2);
+    }
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Round(double, int?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Double_Round_Method()
+  {
+    using (new AssertionScope())
+    {
+      double.MinValue.Round().Should().Be((double) Math.Round(double.MinValue));
+      double.MaxValue.Round().Should().Be((double) Math.Round(double.MaxValue));
+      double.Epsilon.Round().Should().Be(0);
+      double.NaN.Round().Should().Be(double.NaN);
+      double.NegativeInfinity.Round().Should().Be(double.NegativeInfinity);
+      double.PositiveInfinity.Round().Should().Be(double.PositiveInfinity);
+
+      ((double) -1.4).Round().Should().Be(-1);
+      ((double) -1.5).Round().Should().Be(-2);
+      ((double) 0).Round().Should().Be(0);
+      ((double) 1.4).Round().Should().Be(1);
+      ((double) 1.5).Round().Should().Be(2);
+    }
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Round(decimal, int?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Decimal_Round_Method()
+  {
+    using (new AssertionScope())
+    {
+      decimal.MinValue.Round().Should().Be((decimal) Math.Round(decimal.MinValue));
+      decimal.MaxValue.Round().Should().Be((decimal) Math.Round(decimal.MaxValue));
+      decimal.Zero.Round().Should().Be(decimal.Zero);
+      decimal.MinusOne.Round().Should().Be(-1);
+      decimal.One.Round().Should().Be(1);
+
+      ((decimal) -1.4).Round().Should().Be(-1);
+      ((decimal) -1.5).Round().Should().Be(-2);
+      ((decimal) 0).Round().Should().Be(0);
+      ((decimal) 1.4).Round().Should().Be(1);
+      ((decimal) 1.5).Round().Should().Be(2);
+    }
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Power(float, float)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Float_Power_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        0.0.Power(1).Should().Be(0);
+        1.0.Power(0).Should().Be(1);
+        2.0.Power(2).Should().Be(4);
+        5.0.Power(3).Should().Be(Math.Pow(5, 3));
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(float original, float result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Power(double, double)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Double_Power_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        0.0.Power(1).Should().Be(0);
+        1.0.Power(0).Should().Be(1);
+        2.0.Power(2).Should().Be(4);
+        5.0.Power(3).Should().Be(Math.Pow(5, 3));
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(double original, double result)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Power(decimal, decimal)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Decimal_Power_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*
+        0.0.Power(1).Should().Be(0);
+        1.0.Power(0).Should().Be(1);
+        2.0.Power(2).Should().Be(4);
+        5.0.Power(3).Should().Be(Math.Pow(5, 3));
+        */
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(decimal original, decimal result)
+    {
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="BasicTypesExtensions.Repeat(char, int)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Char_Repeat_Method()
+  public void Repeat_Method()
   {
     using (new AssertionScope())
     {
@@ -397,490 +882,5 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       ticks.TotalMilliseconds.Should().Be(count / (double) TimeSpan.TicksPerMillisecond);
       ticks.Ticks.Should().Be(count);
       }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Round(float, int?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Float_Round_Method()
-  {
-    using (new AssertionScope())
-    {
-      float.MinValue.Round().Should().Be((float)Math.Round(float.MinValue));
-      float.MaxValue.Round().Should().Be((float)Math.Round(float.MaxValue));
-      float.Epsilon.Round().Should().Be(0);
-      float.NaN.Round().Should().Be(float.NaN);
-      float.NegativeInfinity.Round().Should().Be(float.NegativeInfinity);
-      float.PositiveInfinity.Round().Should().Be(float.PositiveInfinity);
-
-      ((float)-1.4).Round().Should().Be(-1);
-      ((float)-1.5).Round().Should().Be(-2);
-      ((float)0).Round().Should().Be(0);
-      ((float)1.4).Round().Should().Be(1);
-      ((float)1.5).Round().Should().Be(2);
-    }
-
-    return;
-
-    static void Validate(float original, float result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Round(double, int?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Double_Round_Method()
-  {
-    using (new AssertionScope())
-    {
-      double.MinValue.Round().Should().Be((double) Math.Round(double.MinValue));
-      double.MaxValue.Round().Should().Be((double) Math.Round(double.MaxValue));
-      double.Epsilon.Round().Should().Be(0);
-      double.NaN.Round().Should().Be(double.NaN);
-      double.NegativeInfinity.Round().Should().Be(double.NegativeInfinity);
-      double.PositiveInfinity.Round().Should().Be(double.PositiveInfinity);
-
-      ((double) -1.4).Round().Should().Be(-1);
-      ((double) -1.5).Round().Should().Be(-2);
-      ((double) 0).Round().Should().Be(0);
-      ((double) 1.4).Round().Should().Be(1);
-      ((double) 1.5).Round().Should().Be(2);
-    }
-
-    return;
-
-    static void Validate(double original, double result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Round(decimal, int?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Decimal_Round_Method()
-  {
-    using (new AssertionScope())
-    {
-      decimal.MinValue.Round().Should().Be((decimal)Math.Round(decimal.MinValue));
-      decimal.MaxValue.Round().Should().Be((decimal)Math.Round(decimal.MaxValue));
-      decimal.Zero.Round().Should().Be(decimal.Zero);
-      decimal.MinusOne.Round().Should().Be(-1);
-      decimal.One.Round().Should().Be(1);
-
-      ((decimal)-1.4).Round().Should().Be(-1);
-      ((decimal)-1.5).Round().Should().Be(-2);
-      ((decimal)0).Round().Should().Be(0);
-      ((decimal)1.4).Round().Should().Be(1);
-      ((decimal)1.5).Round().Should().Be(2);
-    }
-
-    return;
-
-    static void Validate(decimal original, decimal result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Power(float, float)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Float_Power_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        0.0.Power(1).Should().Be(0);
-        1.0.Power(0).Should().Be(1);
-        2.0.Power(2).Should().Be(4);
-        5.0.Power(3).Should().Be(Math.Pow(5, 3));
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(float original, float result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Power(double, double)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Double_Power_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        0.0.Power(1).Should().Be(0);
-        1.0.Power(0).Should().Be(1);
-        2.0.Power(2).Should().Be(4);
-        5.0.Power(3).Should().Be(Math.Pow(5, 3));
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(double original, double result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Power(decimal, decimal)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Decimal_Power_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        0.0.Power(1).Should().Be(0);
-        1.0.Power(0).Should().Be(1);
-        2.0.Power(2).Should().Be(4);
-        5.0.Power(3).Should().Be(Math.Pow(5, 3));
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(decimal original, decimal result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(sbyte)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Sbyte_Abs_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        ((float) -1.0).Abs().Should().Be((float) 1.0);
-        ((float) 0.0).Abs().Should().Be((float) 0);
-        ((float) 1.0).Abs().Should().Be((float) 1.0);
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(sbyte original, short result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(short)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Short_Abs_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        ((short) -1).Abs().Should().Be(1);
-        ((short) 0).Abs().Should().Be(0);
-        ((short) 1).Abs().Should().Be(1);
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(short original, short result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(int)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Int_Abs_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        ((int) -1).Abs().Should().Be(1);
-        ((int) 0).Abs().Should().Be(0);
-        ((int) 1).Abs().Should().Be(1);
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(int original, int result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(long)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Long_Abs_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        ((long) -1).Abs().Should().Be(1);
-        ((long) 0).Abs().Should().Be(0);
-        ((long) 1).Abs().Should().Be(1);
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(long original, long result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(float)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Float_Abs_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        ((float) -1.0).Abs().Should().Be((float) 1.0);
-        ((float) 0.0).Abs().Should().Be((float) 0);
-        ((float) 1.0).Abs().Should().Be((float) 1.0);
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(float original, float result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(double)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Double_Abs_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        (-1.1).Abs().Should().Be(1.1);
-        (0.0).Abs().Should().Be(0);
-        (1.1).Abs().Should().Be(1.1);
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(double original, double result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(decimal)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Decimal_Abs_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*
-        ((decimal) -1.1).Abs().Should().Be((decimal) 1.1);
-        ((decimal) 0.0).Abs().Should().Be(0);
-        ((decimal) 1.1).Abs().Should().Be((decimal) 1.1);
-        */
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(decimal original, decimal result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Ceil(float)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Float_Ceil_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*(-1.4).Ceil().Should().Be(-2);
-        (-1.5).Ceil().Should().Be(-2);
-        (-1.6).Ceil().Should().Be(-2);
-        0.0.Ceil().Should().Be(0);
-        1.4.Ceil().Should().Be(2);
-        1.5.Ceil().Should().Be(2);
-        1.6.Ceil().Should().Be(2);*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(float original, float result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Ceil(double)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Double_Ceil_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*(-1.4).Ceil().Should().Be(-2);
-        (-1.5).Ceil().Should().Be(-2);
-        (-1.6).Ceil().Should().Be(-2);
-        0.0.Ceil().Should().Be(0);
-        1.4.Ceil().Should().Be(2);
-        1.5.Ceil().Should().Be(2);
-        1.6.Ceil().Should().Be(2);*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(double original, double result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Ceil(decimal)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Decimal_Ceil_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*(-1.4).Ceil().Should().Be(-2);
-        (-1.5).Ceil().Should().Be(-2);
-        (-1.6).Ceil().Should().Be(-2);
-        0.0.Ceil().Should().Be(0);
-        1.4.Ceil().Should().Be(2);
-        1.5.Ceil().Should().Be(2);
-        1.6.Ceil().Should().Be(2);*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(decimal original, decimal result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Floor(float)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Float_Floor_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*(-1.4).Floor().Should().Be(-1);
-        (-1.5).Floor().Should().Be(-1);
-        (-1.6).Floor().Should().Be(-1);
-        0.0.Floor().Should().Be(0);
-        1.4.Floor().Should().Be(1);
-        1.5.Floor().Should().Be(1);
-        1.6.Floor().Should().Be(1);*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(float original, float result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Floor(double)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Double_Floor_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*(-1.4).Floor().Should().Be(-1);
-        (-1.5).Floor().Should().Be(-1);
-        (-1.6).Floor().Should().Be(-1);
-        0.0.Floor().Should().Be(0);
-        1.4.Floor().Should().Be(1);
-        1.5.Floor().Should().Be(1);
-        1.6.Floor().Should().Be(1);*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(double original, double result)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Floor(decimal)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Decimal_Floor_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*(-1.4).Floor().Should().Be(-1);
-        (-1.5).Floor().Should().Be(-1);
-        (-1.6).Floor().Should().Be(-1);
-        0.0.Floor().Should().Be(0);
-        1.4.Floor().Should().Be(1);
-        1.5.Floor().Should().Be(1);
-        1.6.Floor().Should().Be(1);*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(decimal original, decimal result)
-    {
-    }
   }
 }

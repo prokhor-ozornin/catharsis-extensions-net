@@ -11,40 +11,6 @@ namespace Catharsis.Extensions.Tests;
 public sealed class DateOnlyExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.Range(DateOnly, DateOnly, TimeSpan)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Range_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(DateTime.Now.ToDateOnly());
-      Validate(DateTime.UtcNow.ToDateOnly());
-    }
-
-    return;
-
-    static void Validate(DateOnly date)
-    {
-      date.Range(date, default).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
-      date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
-      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
-
-      date.Range(date.AddDays(1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
-
-      date.Range(date.AddDays(1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
-
-      date.Range(date.AddDays(2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
-      date.Range(date.AddDays(-2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
-
-      date.Range(date.AddDays(3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
-      date.Range(date.AddDays(-3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="DateOnlyExtensions.IsWeekday(DateOnly)"/> method.</para>
   /// </summary>
   [Fact]
@@ -114,25 +80,6 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtStartOfMonth(DateOnly)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfMonth_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(DateOnly.MinValue);
-      Validate(DateOnly.MaxValue);
-      Validate(DateTime.Now.ToDateOnly());
-      Validate(DateTime.UtcNow.ToDateOnly());
-    }
-
-    return;
-
-    static void Validate(DateOnly date) => date.AtStartOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtEndOfYear(DateOnly)"/> method.</para>
   /// </summary>
   [Fact]
@@ -152,6 +99,25 @@ public sealed class DateOnlyExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtStartOfMonth(DateOnly)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void AtStartOfMonth_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(DateOnly.MinValue);
+      Validate(DateOnly.MaxValue);
+      Validate(DateTime.Now.ToDateOnly());
+      Validate(DateTime.UtcNow.ToDateOnly());
+    }
+
+    return;
+
+    static void Validate(DateOnly date) => date.AtStartOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtEndOfMonth(DateOnly)"/> method.</para>
   /// </summary>
   [Fact]
@@ -168,6 +134,40 @@ public sealed class DateOnlyExtensionsTest : UnitTest
     return;
 
     static void Validate(DateOnly date) => date.AtEndOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.Range(DateOnly, DateOnly, TimeSpan)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Range_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(DateTime.Now.ToDateOnly());
+      Validate(DateTime.UtcNow.ToDateOnly());
+    }
+
+    return;
+
+    static void Validate(DateOnly date)
+    {
+      date.Range(date, default).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
+
+      date.Range(date.AddDays(1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+
+      date.Range(date.AddDays(1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+
+      date.Range(date.AddDays(2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
+      date.Range(date.AddDays(-2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
+
+      date.Range(date.AddDays(3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
+      date.Range(date.AddDays(-3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
+    }
   }
 
   /// <summary>

@@ -12,33 +12,59 @@ namespace Catharsis.Extensions.Tests;
 public sealed class BinaryReaderExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.Clone(BinaryReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.IsUnset(BinaryReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Clone_Method()
+  public void IsUnset_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => BinaryReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryReader().IsUnset()).ThrowExactly<ArgumentException>();
 
-      Validate(Stream.Null.ToBinaryReader());
-      Validate(Attributes.EmptyStream().ToBinaryReader());
-      Validate(Attributes.RandomStream().ToBinaryReader());
+      Validate(true, null);
+      Validate(true, Stream.Null.ToBinaryReader());
+      Validate(true, Attributes.EmptyStream().ToBinaryReader());
+      Validate(false, Attributes.RandomStream().ToBinaryReader());
+      Validate(false, Attributes.RandomReadOnlyStream().ToBinaryReader());
+      Validate(false, Attributes.RandomReadOnlyForwardStream().ToBinaryReader());
     }
 
     return;
 
-    static void Validate(BinaryReader original)
+    static void Validate(bool result, BinaryReader reader)
     {
-      using (original)
+      using (reader)
       {
-        var clone = original.Clone();
-        
-        using (clone)
-        {
-          clone.Should().BeOfType<BinaryReader>().And.NotBeSameAs(original).And.NotBe(original);
-          clone.BaseStream.Should().BeSameAs(original.BaseStream).And.HavePosition(original.BaseStream.Position);
-        }
+        reader.IsUnset().Should().Be(result);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.IsEmpty(BinaryReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsEmpty_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((BinaryReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryReader().IsEmpty()).ThrowExactly<ArgumentException>();
+
+      Validate(true, Stream.Null.ToBinaryReader());
+      Validate(true, Attributes.EmptyStream().ToBinaryReader());
+      Validate(false, Attributes.RandomStream().ToBinaryReader());
+      Validate(false, Attributes.RandomReadOnlyStream().ToBinaryReader());
+      Validate(false, Attributes.RandomReadOnlyForwardStream().ToBinaryReader());
+    }
+
+    return;
+
+    static void Validate(bool result, BinaryReader reader)
+    {
+      using (reader)
+      {
+        reader.IsEmpty().Should().Be(result);
       }
     }
   }
@@ -89,7 +115,7 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       Validate(Attributes.RandomStream().ToBinaryReader());
       Validate(Attributes.RandomReadOnlyStream().ToBinaryReader());
     }
-    
+
     return;
 
     static void Validate(BinaryReader reader)
@@ -104,64 +130,45 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
     }
   }
 
+
+
+
+
+
+
+
   /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.IsUnset(BinaryReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.Clone(BinaryReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsUnset_Method()
+  public void Clone_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryReader().IsUnset()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => BinaryReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Validate(true, null);
-      Validate(true, Stream.Null.ToBinaryReader());
-      Validate(true, Attributes.EmptyStream().ToBinaryReader());
-      Validate(false, Attributes.RandomStream().ToBinaryReader());
-      Validate(false, Attributes.RandomReadOnlyStream().ToBinaryReader());
-      Validate(false, Attributes.RandomReadOnlyForwardStream().ToBinaryReader());
+      Validate(Stream.Null.ToBinaryReader());
+      Validate(Attributes.EmptyStream().ToBinaryReader());
+      Validate(Attributes.RandomStream().ToBinaryReader());
     }
 
     return;
 
-    static void Validate(bool result, BinaryReader reader)
+    static void Validate(BinaryReader original)
     {
-      using (reader)
+      using (original)
       {
-        reader.IsUnset().Should().Be(result);
+        var clone = original.Clone();
+        
+        using (clone)
+        {
+          clone.Should().BeOfType<BinaryReader>().And.NotBeSameAs(original).And.NotBe(original);
+          clone.BaseStream.Should().BeSameAs(original.BaseStream).And.HavePosition(original.BaseStream.Position);
+        }
       }
     }
   }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.IsEmpty(BinaryReader)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsEmpty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((BinaryReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryReader().IsEmpty()).ThrowExactly<ArgumentException>();
-
-      Validate(true, Stream.Null.ToBinaryReader());
-      Validate(true, Attributes.EmptyStream().ToBinaryReader());
-      Validate(false, Attributes.RandomStream().ToBinaryReader());
-      Validate(false, Attributes.RandomReadOnlyStream().ToBinaryReader());
-      Validate(false, Attributes.RandomReadOnlyForwardStream().ToBinaryReader());
-    }
-    
-    return;
-
-    static void Validate(bool result, BinaryReader reader)
-    {
-      using (reader)
-      {
-        reader.IsEmpty().Should().Be(result);
-      }
-    }
-  }
-
+  
   /// <summary>
   ///   <para>Performs testing of <see cref="BinaryReaderExtensions.Empty(BinaryReader)"/> method.</para>
   /// </summary>

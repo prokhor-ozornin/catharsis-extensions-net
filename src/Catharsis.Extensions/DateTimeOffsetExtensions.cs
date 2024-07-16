@@ -11,6 +11,38 @@ public static class DateTimeOffsetExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  /// <seealso cref="IsFuture(DateTimeOffset)"/>
+  public static bool IsPast(this DateTimeOffset date) => date < DateTimeOffset.UtcNow;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  /// <seealso cref="IsPast(DateTimeOffset)"/>
+  public static bool IsFuture(this DateTimeOffset date) => date > DateTimeOffset.UtcNow;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  /// <seealso cref="IsWeekend(DateTimeOffset)"/>
+  public static bool IsWeekday(this DateTimeOffset date) => !date.IsWeekend();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  /// <seealso cref="IsWeekday(DateTimeOffset)"/>
+  public static bool IsWeekend(this DateTimeOffset date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
@@ -48,39 +80,7 @@ public static class DateTimeOffsetExtensions
       yield return date;
     }
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  /// <seealso cref="IsFuture(DateTimeOffset)"/>
-  public static bool IsPast(this DateTimeOffset date) => date < DateTimeOffset.UtcNow;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  /// <seealso cref="IsPast(DateTimeOffset)"/>
-  public static bool IsFuture(this DateTimeOffset date) => date > DateTimeOffset.UtcNow;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  /// <seealso cref="IsWeekend(DateTimeOffset)"/>
-  public static bool IsWeekday(this DateTimeOffset date) => !date.IsWeekend();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  /// <seealso cref="IsWeekday(DateTimeOffset)"/>
-  public static bool IsWeekend(this DateTimeOffset date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
-
+  
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -94,6 +94,14 @@ public static class DateTimeOffsetExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
+  /// <seealso cref="AtStartOfYear(DateTimeOffset)"/>
+  public static DateTimeOffset AtEndOfYear(this DateTimeOffset date) => new(date.Year, 12, 31, 23, 59, 59, 999, date.Offset);
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
   /// <seealso cref="AtEndOfMonth(DateTimeOffset)"/>
   public static DateTimeOffset AtStartOfMonth(this DateTimeOffset date) => new(date.Year, date.Month, 1, 0, 0, 0, date.Offset);
 
@@ -102,48 +110,16 @@ public static class DateTimeOffsetExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
-  /// <seealso cref="AtEndOfDay(DateTimeOffset)"/>
-  public static DateTimeOffset AtStartOfDay(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtEndOfHour(DateTimeOffset)"/>
-  public static DateTimeOffset AtStartOfHour(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Offset);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtEndOfMinute(DateTimeOffset)"/>
-  public static DateTimeOffset AtStartOfMinute(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Offset);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtEndOfSecond(DateTimeOffset)"/>
-  public static DateTimeOffset AtStartOfSecond(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Offset);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtStartOfYear(DateTimeOffset)"/>
-  public static DateTimeOffset AtEndOfYear(this DateTimeOffset date) => new(date.Year, 12, 31, 23, 59, 59, 999, date.Offset);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
   /// <seealso cref="AtStartOfMonth(DateTimeOffset)"/>
   public static DateTimeOffset AtEndOfMonth(this DateTimeOffset date) => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Offset);
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  /// <seealso cref="AtEndOfDay(DateTimeOffset)"/>
+  public static DateTimeOffset AtStartOfDay(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset);
 
   /// <summary>
   ///   <para></para>
@@ -158,8 +134,24 @@ public static class DateTimeOffsetExtensions
   /// </summary>
   /// <param name="date"></param>
   /// <returns></returns>
+  /// <seealso cref="AtEndOfHour(DateTimeOffset)"/>
+  public static DateTimeOffset AtStartOfHour(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Offset);
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
   /// <seealso cref="AtStartOfHour(DateTimeOffset)"/>
   public static DateTimeOffset AtEndOfHour(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Offset);
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  /// <seealso cref="AtEndOfMinute(DateTimeOffset)"/>
+  public static DateTimeOffset AtStartOfMinute(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Offset);
 
   /// <summary>
   ///   <para></para>
@@ -168,7 +160,15 @@ public static class DateTimeOffsetExtensions
   /// <returns></returns>
   /// <seealso cref="AtStartOfMinute(DateTimeOffset)"/>
   public static DateTimeOffset AtEndOfMinute(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Offset);
-
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  /// <seealso cref="AtEndOfSecond(DateTimeOffset)"/>
+  public static DateTimeOffset AtStartOfSecond(this DateTimeOffset date) => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Offset);
+  
   /// <summary>
   ///   <para></para>
   /// </summary>

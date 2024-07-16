@@ -38,46 +38,46 @@ public static class ArrayExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="chars"></param>
+  /// <param name="array"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="chars"/> is <see langword="null"/>.</exception>
-  public static byte[] FromBase64(this char[] chars) => chars is not null ? Convert.FromBase64CharArray(chars, 0, chars.Length) : throw new ArgumentNullException(nameof(chars));
+  /// <exception cref="ArgumentNullException">If <paramref name="array"/> is <see langword="null"/>.</exception>
+  public static byte[] FromBase64(this char[] array) => array is not null ? Convert.FromBase64CharArray(array, 0, array.Length) : throw new ArgumentNullException(nameof(array));
 
   /// <summary>
   ///   <para>Converts array of characters into array of bytes, using specified encoding.</para>
   /// </summary>
-  /// <param name="chars">Source array of characters.</param>
+  /// <param name="array">Source array of characters.</param>
   /// <param name="encoding">Encoding to be used for transforming between <see cref="char"/> at its <see cref="byte"/> equivalent. If not specified, uses <see cref="Encoding.Default"/> encoding.</param>
-  /// <returns>Array of bytes which represents <paramref name="chars"/> array in <paramref name="encoding"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="chars"/> is <see langword="null"/>.</exception>
-  public static byte[] ToBytes(this char[] chars, Encoding encoding = null) => chars is not null ? chars.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(chars) : [] : throw new ArgumentNullException(nameof(chars));
-
-  /// <summary>
-  ///   <para>Returns string representation of specified array of characters.</para>
-  /// </summary>
-  /// <param name="chars">Source array of characters.</param>
-  /// <returns>String which is formed from contents of <paramref name="chars"/> array.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="chars"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToText(byte[], Encoding)"/>
-  public static string ToText(this char[] chars) => chars is not null ? chars.Length > 0 ? new string(chars) : string.Empty : throw new ArgumentNullException(nameof(chars));
-
-  /// <summary>
-  ///   <para>Converts array of bytes into a string, using specified encoding.</para>
-  /// </summary>
-  /// <param name="bytes">Source array of bytes.</param>
-  /// <param name="encoding">Encoding to be used for transforming between <see cref="byte"/> at its <see cref="char"/> equivalent. If not specified, uses <see cref="Encoding.UTF8"/> encoding.</param>
-  /// <returns>Array of characters as a string which represents <paramref name="bytes"/> array in <paramref name="encoding"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToText(char[])"/>
-  public static string ToText(this byte[] bytes, Encoding encoding = null) => bytes is not null ? bytes.Length > 0 ? (encoding ?? Encoding.Default).GetString(bytes) : string.Empty : throw new ArgumentNullException(nameof(bytes));
+  /// <returns>Array of bytes which represents <paramref name="array"/> array in <paramref name="encoding"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="array"/> is <see langword="null"/>.</exception>
+  public static byte[] ToBytes(this char[] array, Encoding encoding = null) => array is not null ? array.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(array) : [] : throw new ArgumentNullException(nameof(array));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
+  /// <param name="array"></param>
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  public static ByteArrayContent ToByteArrayContent(this byte[] bytes, int? offset = null, int? count = null) => bytes is not null ? new ByteArrayContent(bytes, offset.GetValueOrDefault(), count.GetValueOrDefault(bytes.Length)) : throw new ArgumentNullException(nameof(bytes));
+  /// <exception cref="ArgumentNullException">If <paramref name="array"/> is <see langword="null"/>.</exception>
+  public static ByteArrayContent ToByteArrayContent(this byte[] array, int? offset = null, int? count = null) => array is not null ? new ByteArrayContent(array, offset.GetValueOrDefault(), count.GetValueOrDefault(array.Length)) : throw new ArgumentNullException(nameof(array));
+
+  /// <summary>
+  ///   <para>Returns string representation of specified array of characters.</para>
+  /// </summary>
+  /// <param name="array">Source array of characters.</param>
+  /// <returns>String which is formed from contents of <paramref name="array"/> array.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="array"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToText(byte[], Encoding)"/>
+  public static string ToText(this char[] array) => array is not null ? array.Length > 0 ? new string(array) : string.Empty : throw new ArgumentNullException(nameof(array));
+
+  /// <summary>
+  ///   <para>Converts array of bytes into a string, using specified encoding.</para>
+  /// </summary>
+  /// <param name="array">Source array of bytes.</param>
+  /// <param name="encoding">Encoding to be used for transforming between <see cref="byte"/> at its <see cref="char"/> equivalent. If not specified, uses <see cref="Encoding.UTF8"/> encoding.</param>
+  /// <returns>Array of characters as a string which represents <paramref name="array"/> array in <paramref name="encoding"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="array"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToText(char[])"/>
+  public static string ToText(this byte[] array, Encoding encoding = null) => array is not null ? array.Length > 0 ? (encoding ?? Encoding.Default).GetString(array) : string.Empty : throw new ArgumentNullException(nameof(array));
 }

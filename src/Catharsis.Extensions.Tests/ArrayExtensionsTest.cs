@@ -39,7 +39,7 @@ public sealed class ArrayExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="ArrayExtensions.FromBase64(char[])"/> method.</para>
   /// </summary>
   [Fact]
-  public void CharArray_FromBase64_Method()
+  public void FromBase64_Method()
   {
     using (new AssertionScope())
     {
@@ -65,7 +65,7 @@ public sealed class ArrayExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="ArrayExtensions.ToBytes(char[], Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void CharArray_ToBytes_Method()
+  public void ToBytes_Method()
   {
     using (new AssertionScope())
     {
@@ -86,6 +86,32 @@ public sealed class ArrayExtensionsTest : UnitTest
 
       var bytes = chars.ToBytes(encoding);
       bytes.Should().BeOfType<byte[]>().And.HaveCount((encoding ?? Encoding.Default).GetByteCount(chars)).And.Equal((encoding ?? Encoding.Default).GetBytes(chars));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ArrayExtensions.ToByteArrayContent(byte[], int?, int?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToByteArrayContent_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+
+      Validate([]);
+      Validate(Attributes.RandomBytes());
+    }
+
+    return;
+
+    static void Validate(byte[] bytes)
+    {
+      using var content = bytes.ToByteArrayContent();
+
+      content.Should().BeOfType<ByteArrayContent>();
+      content.Headers.Should().BeEmpty();
+      content.ReadAsByteArrayAsync().Await().Should().Equal(bytes);
     }
   }
 
@@ -137,32 +163,6 @@ public sealed class ArrayExtensionsTest : UnitTest
     {
       Array.Empty<byte>().ToText(encoding).Should().BeOfType<string>().And.BeSameAs(Array.Empty<byte>().ToText(encoding)).And.BeEmpty();
       bytes.ToText(encoding).Should().BeOfType<string>().And.HaveLength((encoding ?? Encoding.Default).GetCharCount(bytes)).And.Be((encoding ?? Encoding.Default).GetString(bytes));
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ArrayExtensions.ToByteArrayContent(byte[], int?, int?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ByteArray_ToByteArrayContent_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-
-      Validate([]);
-      Validate(Attributes.RandomBytes());
-    }
-
-    return;
-
-    static void Validate(byte[] bytes)
-    {
-      using var content = bytes.ToByteArrayContent();
-      
-      content.Should().BeOfType<ByteArrayContent>();
-      content.Headers.Should().BeEmpty();
-      content.ReadAsByteArrayAsync().Await().Should().Equal(bytes);
     }
   }
 }
