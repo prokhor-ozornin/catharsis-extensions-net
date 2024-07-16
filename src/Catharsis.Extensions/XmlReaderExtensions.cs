@@ -17,7 +17,7 @@ public static class XmlReaderExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <param name="count"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static XmlReader Skip(this XmlReader reader, int count)

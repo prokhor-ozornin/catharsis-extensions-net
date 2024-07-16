@@ -59,7 +59,7 @@ public static class TextReaderExtensions
   /// <typeparam name="TReader"></typeparam>
   /// <param name="reader"></param>
   /// <param name="count"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static TReader Skip<TReader>(this TReader reader, int count) where TReader : TextReader

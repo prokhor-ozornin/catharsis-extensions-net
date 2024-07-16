@@ -11,10 +11,10 @@ public static class HttpClientExtensions
   /// </summary>
   /// <param name="http"></param>
   /// <param name="headers"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="http"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="headers"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WithHeaders(HttpClient, (string Name, object Value)[])"/>
-  /// <seealso cref="WithHeaders(this HttpClient http, IReadOnlyDictionary<string, object> headers)"/>
+  /// <seealso cref="WithHeaders(HttpClient, ValueTuple{string, object}[])"/>
+  /// <seealso cref="WithHeaders(HttpClient, IReadOnlyDictionary{string, object})"/>
   public static HttpClient WithHeaders(this HttpClient http, IEnumerable<(string Name, object Value)> headers)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -30,10 +30,10 @@ public static class HttpClientExtensions
   /// </summary>
   /// <param name="http"></param>
   /// <param name="headers"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="http"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="http"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WithHeaders(this HttpClient http, IEnumerable<(string Name, object Value)> headers)"/>
-  /// <seealso cref="WithHeaders(this HttpClient http, IReadOnlyDictionary<string, object> headers)"/>
+  /// <seealso cref="WithHeaders(HttpClient, IEnumerable{ValueTuple{string, object}})"/>
+  /// <seealso cref="WithHeaders(HttpClient, IReadOnlyDictionary{string, object})"/>
   public static HttpClient WithHeaders(this HttpClient http, params (string Name, object Value)[] headers) => http.WithHeaders(headers as IEnumerable<(string Name, object Value)>);
 
   /// <summary>
@@ -41,10 +41,10 @@ public static class HttpClientExtensions
   /// </summary>
   /// <param name="http"></param>
   /// <param name="headers"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="http"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="headers"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WithHeaders(this HttpClient http, IEnumerable<(string Name, object Value)> headers)"/>
-  /// <seealso cref="WithHeaders(this HttpClient http, params (string Name, object Value)[] headers)"/>
+  /// <seealso cref="WithHeaders(HttpClient, IEnumerable{ValueTuple{string, object}})"/>
+  /// <seealso cref="WithHeaders(HttpClient, ValueTuple{string, object}[])"/>
   public static HttpClient WithHeaders(this HttpClient http, IReadOnlyDictionary<string, object> headers)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -60,7 +60,7 @@ public static class HttpClientExtensions
   /// </summary>
   /// <param name="http"></param>
   /// <param name="timeout"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="http"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="http"/> is <see langword="null"/>.</exception>
   public static HttpClient WithTimeout(this HttpClient http, TimeSpan? timeout)
   {
@@ -160,7 +160,7 @@ public static class HttpClientExtensions
   /// <param name="content"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
-  /// <seealso cref=""/>
+  /// <seealso cref="ExecutePostAsync(HttpClient, Uri, HttpContent, CancellationToken)"/>
   public static HttpContent ExecutePost(this HttpClient http, Uri uri, HttpContent content = null)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -178,6 +178,7 @@ public static class HttpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ExecutePost(HttpClient, Uri, HttpContent)"/>
   public static async Task<HttpContent> ExecutePostAsync(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -200,6 +201,7 @@ public static class HttpClientExtensions
   /// <param name="content"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ExecutePutAsync(HttpClient, Uri, HttpContent, CancellationToken)"/>
   public static HttpContent ExecutePut(this HttpClient http, Uri uri, HttpContent content = null)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -217,6 +219,7 @@ public static class HttpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ExecutePut(HttpClient, Uri, HttpContent)"/>
   public static async Task<HttpContent> ExecutePutAsync(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -239,6 +242,7 @@ public static class HttpClientExtensions
   /// <param name="content"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ExecutePatchAsync(HttpClient, Uri, HttpContent, CancellationToken)"/>
   public static HttpContent ExecutePatch(this HttpClient http, Uri uri, HttpContent content = null)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -256,6 +260,7 @@ public static class HttpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ExecutePatch(HttpClient, Uri, HttpContent)"/>
   public static async Task<HttpContent> ExecutePatchAsync(this HttpClient http, Uri uri, HttpContent content = null, CancellationToken cancellation = default)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -277,6 +282,7 @@ public static class HttpClientExtensions
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ExecuteDeleteAsync(HttpClient, Uri, CancellationToken)"/>
   public static HttpContent ExecuteDelete(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -293,6 +299,7 @@ public static class HttpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ExecuteDelete(HttpClient, Uri)"/>
   public static async Task<HttpContent> ExecuteDeleteAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -314,6 +321,7 @@ public static class HttpClientExtensions
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToStreamAsync(HttpClient, Uri, CancellationToken)"/>
   public static Stream ToStream(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -330,6 +338,7 @@ public static class HttpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToStream(HttpClient, Uri)"/>
   public static async Task<Stream> ToStreamAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -351,6 +360,7 @@ public static class HttpClientExtensions
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytesAsync(HttpClient, Uri)"/>
   public static IEnumerable<byte> ToBytes(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -366,6 +376,7 @@ public static class HttpClientExtensions
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToBytes(HttpClient, Uri)"/>
   public static async IAsyncEnumerable<byte> ToBytesAsync(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -388,6 +399,7 @@ public static class HttpClientExtensions
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTextAsync(HttpClient, Uri, CancellationToken)"/>
   public static string ToText(this HttpClient http, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -404,6 +416,7 @@ public static class HttpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToText(HttpClient, Uri)"/>
   public static async Task<string> ToTextAsync(this HttpClient http, Uri uri, CancellationToken cancellation = default)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -426,6 +439,7 @@ public static class HttpClientExtensions
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/>, <paramref name="bytes"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync(HttpClient, IEnumerable{byte}, Uri, CancellationToken)"/>
   public static HttpContent WriteBytes(this HttpClient http, IEnumerable<byte> bytes, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -444,6 +458,7 @@ public static class HttpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/>, <paramref name="bytes"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes(HttpClient, IEnumerable{byte}, Uri)"/>
   public static async Task<HttpContent> WriteBytesAsync(this HttpClient http, IEnumerable<byte> bytes, Uri uri, CancellationToken cancellation = default)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -465,6 +480,7 @@ public static class HttpClientExtensions
   /// <param name="uri"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/>, <paramref name="text"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync(this HttpClient http, string text, Uri uri, CancellationToken cancellation = default)"/>
   public static HttpContent WriteText(this HttpClient http, string text, Uri uri)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));
@@ -483,6 +499,7 @@ public static class HttpClientExtensions
   /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="http"/>, <paramref name="text"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText(HttpClient, string, Uri)"/>
   public static async Task<HttpContent> WriteTextAsync(this HttpClient http, string text, Uri uri, CancellationToken cancellation = default)
   {
     if (http is null) throw new ArgumentNullException(nameof(http));

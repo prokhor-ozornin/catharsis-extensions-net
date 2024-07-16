@@ -15,7 +15,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With(StringBuilder, object[])"/>
   public static StringBuilder With(this StringBuilder builder, IEnumerable<object> elements)
@@ -36,6 +36,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <param name="elements"></param>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With(StringBuilder, IEnumerable{object})"/>
   public static StringBuilder With(this StringBuilder builder, params object[] elements) => builder.With(elements as IEnumerable<object>);
@@ -45,7 +46,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <param name="positions"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without(StringBuilder, int[])"/>
   public static StringBuilder Without(this StringBuilder builder, IEnumerable<int> positions)
@@ -66,7 +67,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <param name="positions"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without(StringBuilder, IEnumerable{int})"/>
   public static StringBuilder Without(this StringBuilder builder, params int[] positions) => builder.Without(positions as IEnumerable<int>);
@@ -100,8 +101,8 @@ public static class StringBuilderExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="builder"></param>
-  /// <returns></returns>
+  /// <param name="builder">String builder to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static StringBuilder Empty(this StringBuilder builder) => builder?.Clear() ?? throw new ArgumentNullException(nameof(builder));
 
@@ -161,7 +162,7 @@ public static class StringBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static StringBuilder TryFinallyClear(this StringBuilder builder, Action<StringBuilder> action)
   {

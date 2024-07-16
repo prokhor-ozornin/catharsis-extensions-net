@@ -13,7 +13,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <param name="timeout"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="process"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   public static Process Run(this Process process, TimeSpan? timeout = null)
   {
@@ -50,7 +50,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <param name="timeout"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="process"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   /// <seealso cref="FinishAsync(Process, CancellationToken)"/>
   public static Process Finish(this Process process, TimeSpan? timeout = null)
@@ -77,7 +77,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="process"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="process"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="process"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static Process TryFinallyKill(this Process process, Action<Process> action)
   {
@@ -146,7 +146,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytesAsync(Process, IEnumerable{byte}, CancellationToken)"/>
   public static Process WriteBytes(this Process destination, IEnumerable<byte> bytes)
@@ -183,7 +183,7 @@ public static class ProcessExtensions
   /// </summary>
   /// <param name="destination"></param>
   /// <param name="text"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteTextAsync(Process, string, CancellationToken)"/>
   public static Process WriteText(this Process destination, string text)
@@ -192,6 +192,7 @@ public static class ProcessExtensions
     if (text is null) throw new ArgumentNullException(nameof(text));
 
     destination.StandardInput.WriteText(text);
+
     return destination;
   }
 
@@ -201,7 +202,7 @@ public static class ProcessExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <param name="cancellation"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteText(Process, string)"/>
   public static async Task<Process> WriteTextAsync(this Process destination, string text, CancellationToken cancellation = default)

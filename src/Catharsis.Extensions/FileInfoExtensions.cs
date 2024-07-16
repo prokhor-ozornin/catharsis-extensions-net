@@ -38,8 +38,8 @@ public static class FileInfoExtensions
   /// <summary>
   ///   <para>Erases all content from a file, making it a zero-length one.</para>
   /// </summary>
-  /// <param name="file">File to truncate.</param>
-  /// <returns>Back reference to the current file.</returns>
+  /// <param name="file">File to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
   public static FileInfo Empty(this FileInfo file)
   {
@@ -56,7 +56,7 @@ public static class FileInfoExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="file"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
   public static FileInfo CreateWithPath(this FileInfo file)
   {
@@ -119,7 +119,7 @@ public static class FileInfoExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <seealso cref="TryFinallyDelete(FileInfo, Action{FileInfo})"/>
   public static FileInfo TryFinallyClear(this FileInfo file, Action<FileInfo> action)
@@ -139,7 +139,7 @@ public static class FileInfoExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <seealso cref="TryFinallyClear(FileInfo, Action{FileInfo})"/>
   public static FileInfo TryFinallyDelete(this FileInfo file, Action<FileInfo> action)
@@ -165,7 +165,7 @@ public static class FileInfoExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="file"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
   public static FileInfo AsReadOnly(this FileInfo file)
   {
@@ -374,7 +374,7 @@ public static class FileInfoExtensions
   /// </summary>
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytesAsync(FileInfo, IEnumerable{byte}, CancellationToken)"/>
   public static FileInfo WriteBytes(this FileInfo destination, IEnumerable<byte> bytes)
@@ -432,7 +432,7 @@ public static class FileInfoExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteTextAsync(FileInfo, string, Encoding, CancellationToken)"/>
   public static FileInfo WriteText(this FileInfo destination, string text, Encoding encoding = null)

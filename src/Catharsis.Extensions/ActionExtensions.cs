@@ -12,7 +12,7 @@ public static class ActionExtensions
   /// </summary>
   /// <param name="action">Action to execute.</param>
   /// <param name="condition">Condition of execution.</param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="action"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="action"/> or <paramref name="condition"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Execute{T}(Action{T}, Predicate{T}, T)"/>
   public static Action Execute(this Action action, Func<bool> condition)
@@ -35,7 +35,7 @@ public static class ActionExtensions
   /// <param name="action"></param>
   /// <param name="condition"></param>
   /// <param name="instance"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="action"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="action"/> or <paramref name="condition"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Execute(Action, Func{bool})"/>
   public static Action<T> Execute<T>(this Action<T> action, Predicate<T> condition, T instance)

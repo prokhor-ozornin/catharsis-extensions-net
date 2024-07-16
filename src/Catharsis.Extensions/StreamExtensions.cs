@@ -90,7 +90,7 @@ public static class StreamExtensions
   /// </summary>
   /// <typeparam name="TStream"></typeparam>
   /// <param name="stream"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="stream"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   public static TStream Empty<TStream>(this TStream stream) where TStream : Stream
   {
@@ -167,7 +167,7 @@ public static class StreamExtensions
   /// <typeparam name="TStream"></typeparam>
   /// <param name="stream"></param>
   /// <param name="offset"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="stream"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   public static TStream MoveBy<TStream>(this TStream stream, long offset) where TStream : Stream
   {
@@ -184,7 +184,7 @@ public static class StreamExtensions
   /// <typeparam name="TStream"></typeparam>
   /// <param name="stream"></param>
   /// <param name="position"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="stream"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   public static TStream MoveTo<TStream>(this TStream stream, long position) where TStream : Stream
   {
@@ -200,7 +200,7 @@ public static class StreamExtensions
   /// </summary>
   /// <typeparam name="TStream">Type of source stream.</typeparam>
   /// <param name="stream">Source stream.</param>
-  /// <returns>Back reference to <paramref name="stream"/> stream.</returns>
+  /// <returns>Back self-reference to the given <paramref name="stream"/>.</returns>
   /// <seealso cref="Stream.Seek(long, SeekOrigin)"/>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <seealso cref="MoveToEnd{TStream}(TStream)"/>
@@ -218,7 +218,7 @@ public static class StreamExtensions
   /// </summary>
   /// <typeparam name="TStream"></typeparam>
   /// <param name="stream"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="stream"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <seealso cref="MoveToStart{TStream}(TStream)"/>
   public static TStream MoveToEnd<TStream>(this TStream stream) where TStream : Stream
@@ -273,7 +273,7 @@ public static class StreamExtensions
   /// <typeparam name="TStream"></typeparam>
   /// <param name="stream"></param>
   /// <param name="count"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="stream"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static TStream Skip<TStream>(this TStream stream, int count) where TStream : Stream
@@ -303,7 +303,7 @@ public static class StreamExtensions
   /// </summary>
   /// <param name="stream"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="stream"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static TStream TryFinallyClear<TStream>(this TStream stream, Action<TStream> action) where TStream : Stream
   {
@@ -414,7 +414,7 @@ public static class StreamExtensions
   /// <typeparam name="TStream"></typeparam>
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytesAsync{TStream}(TStream, IEnumerable{byte}, CancellationToken)"/>
   public static TStream WriteBytes<TStream>(this TStream destination, IEnumerable<byte> bytes) where TStream : Stream
@@ -462,7 +462,7 @@ public static class StreamExtensions
   /// <param name="destination"></param>
   /// <param name="text"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteTextAsync{TStream}(TStream, string, Encoding, CancellationToken)"/>
   public static TStream WriteText<TStream>(this TStream destination, string text, Encoding encoding = null) where TStream : Stream
@@ -507,7 +507,7 @@ public static class StreamExtensions
   /// </summary>
   /// <param name="sequence"></param>
   /// <param name="to"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(IEnumerable{byte}, Stream, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, Stream to)
@@ -547,7 +547,7 @@ public static class StreamExtensions
   /// <param name="text"></param>
   /// <param name="to"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="text"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(string, Stream, Encoding, CancellationToken)"/>
   public static string WriteTo(this string text, Stream to, Encoding encoding = null)

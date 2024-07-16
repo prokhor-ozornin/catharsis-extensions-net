@@ -13,7 +13,7 @@ public static class SmtpClientExtensions
   /// </summary>
   /// <param name="smtp"></param>
   /// <param name="timeout"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="smtp"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="smtp"/> is <see langword="null"/>.</exception>
   public static SmtpClient WithTimeout(this SmtpClient smtp, TimeSpan timeout)
   {

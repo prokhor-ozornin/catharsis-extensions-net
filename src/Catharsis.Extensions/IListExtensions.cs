@@ -16,7 +16,7 @@ public static class IListExtensions
   /// <param name="list"></param>
   /// <param name="position"></param>
   /// <param name="element"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="list"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With{T}(IList{T}, int, IEnumerable{T})"/>
   /// <seealso cref="With{T}(IList{T}, int, T[])"/>
@@ -37,7 +37,7 @@ public static class IListExtensions
   /// <param name="to"></param>
   /// <param name="offset"></param>
   /// <param name="from"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="to"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="to"/> or <paramref name="from"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="With{T}(IList{T}, int, T)"/>
@@ -60,7 +60,7 @@ public static class IListExtensions
   /// <param name="to"></param>
   /// <param name="offset"></param>
   /// <param name="from"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="to"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="With{T}(IList{T}, int, T)"/>
@@ -73,7 +73,7 @@ public static class IListExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="list"></param>
   /// <param name="positions"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="list"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="list"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without{T}(IList{T}, int[])"/>
   /// <seealso cref="Without{T}(IList{T}, int, int?, Predicate{T})"/>
@@ -96,6 +96,7 @@ public static class IListExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="list"></param>
   /// <param name="positions"></param>
+  /// <returns>Back self-reference to the given <paramref name="list"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without{T}(IList{T}, IEnumerable{int})"/>
   /// <seealso cref="Without{T}(IList{T}, int, int?, Predicate{T})"/>
@@ -109,7 +110,7 @@ public static class IListExtensions
   /// <param name="offset"></param>
   /// <param name="count"></param>
   /// <param name="condition"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="list"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Without{T}(IList{T}, IEnumerable{int})"/>
@@ -139,7 +140,7 @@ public static class IListExtensions
   /// <param name="filler"></param>
   /// <param name="offset"></param>
   /// <param name="count"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="list"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="list"/> or <paramref name="filler"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Fill{T}(IList{T}, Func{int, T}, int?, int?)"/>
@@ -153,7 +154,7 @@ public static class IListExtensions
   /// <param name="filler"></param>
   /// <param name="offset"></param>
   /// <param name="count"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="list"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="list"/> or <paramref name="filler"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Fill{T}(IList{T}, Func{T}, int?, int?)"/>
@@ -181,7 +182,7 @@ public static class IListExtensions
   /// <param name="list"></param>
   /// <param name="firstIndex"></param>
   /// <param name="secondIndex"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="list"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IList<T> Swap<T>(this IList<T> list, int firstIndex, int secondIndex)
@@ -201,7 +202,7 @@ public static class IListExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="list"></param>
   /// <param name="random"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="list"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="list"/> is <see langword="null"/>.</exception>
   public static IList<T> Randomize<T>(this IList<T> list, Random random = null)
   {

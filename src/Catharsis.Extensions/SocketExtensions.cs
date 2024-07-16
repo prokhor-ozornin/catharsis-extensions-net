@@ -13,7 +13,7 @@ public static class SocketExtensions
   /// </summary>
   /// <param name="socket"></param>
   /// <param name="timeout"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="socket"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="socket"/> is <see langword="null"/>.</exception>
   public static Socket WithTimeout(this Socket socket, TimeSpan? timeout)
   {
@@ -35,7 +35,7 @@ public static class SocketExtensions
   /// </summary>
   /// <param name="socket"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="socket"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="socket"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static Socket TryFinallyDisconnect(this Socket socket, Action<Socket> action)
   {

@@ -12,7 +12,7 @@ public static class ICollectionExtensions
   /// <typeparam name="T">Type of collection's elements.</typeparam>
   /// <param name="collection">Collection to which elements are added.</param>
   /// <param name="elements">Elements enumerator that provide elements for addition to the collection <paramref name="collection"/>.</param>
-  /// <returns>Reference to the supplied collection <paramref name="collection"/>.</returns>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With{T}(ICollection{T}, T[])"/>
   public static ICollection<T> With<T>(this ICollection<T> collection, IEnumerable<T> elements)
@@ -34,7 +34,7 @@ public static class ICollectionExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="collection"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With{T}(ICollection{T}, IEnumerable{T})"/>
   public static ICollection<T> With<T>(this ICollection<T> collection, params T[] elements) => collection.With(elements as IEnumerable<T>);
@@ -45,6 +45,7 @@ public static class ICollectionExtensions
   /// <typeparam name="T">Type of collection's elements.</typeparam>
   /// <param name="collection">Collection from which elements are removed.</param>
   /// <param name="elements">Elements enumerator that provider elements for removal from the collection <see cref="collection"/>.</param>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <seealso cref="ICollection{T}.Remove(T)"/>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without{T}(ICollection{T}, T[])"/>
@@ -67,7 +68,7 @@ public static class ICollectionExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="collection"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without{T}(ICollection{T}, IEnumerable{T})"/>
   public static ICollection<T> Without<T>(this ICollection<T> collection, params T[] elements) => collection.Without(elements as IEnumerable<T>);
@@ -77,7 +78,7 @@ public static class ICollectionExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="collection"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static ICollection<T> Empty<T>(this ICollection<T> collection)
   {
@@ -94,7 +95,7 @@ public static class ICollectionExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="collection"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static ICollection<T> TryFinallyClear<T>(this ICollection<T> collection, Action<ICollection<T>> action)
   {

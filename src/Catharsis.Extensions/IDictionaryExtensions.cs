@@ -18,7 +18,7 @@ public static class IDictionaryExtensions
   /// <param name="dictionary"></param>
   /// <param name="key"></param>
   /// <param name="value"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="dictionary"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{ValueTuple{TKey, TValue}})"/>
   /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, ValueTuple{TKey, TValue}[])"/>
@@ -38,7 +38,7 @@ public static class IDictionaryExtensions
   /// <typeparam name="TValue"></typeparam>
   /// <param name="dictionary"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="dictionary"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="dictionary"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
   /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, ValueTuple{TKey, TValue}[])"/>
@@ -62,7 +62,7 @@ public static class IDictionaryExtensions
   /// <typeparam name="TValue"></typeparam>
   /// <param name="dictionary"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="dictionary"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
   /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{ValueTuple{TKey, TValue}})"/>
@@ -75,7 +75,7 @@ public static class IDictionaryExtensions
   /// <typeparam name="TValue"></typeparam>
   /// <param name="dictionary"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="dictionary"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="dictionary"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without{TKey, TValue}(IDictionary{TKey, TValue}, TKey[])"/>
   public static IDictionary<TKey, TValue> Without<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IEnumerable<TKey> elements) where TKey : notnull
@@ -98,7 +98,7 @@ public static class IDictionaryExtensions
   /// <typeparam name="TValue"></typeparam>
   /// <param name="dictionary"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="dictionary"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{TKey})"/>
   public static IDictionary<TKey, TValue> Without<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, params TKey[] elements) where TKey : notnull => dictionary.Without(elements as IEnumerable<TKey>);

@@ -15,7 +15,7 @@ public static class XDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <param name="nodes"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
   public static XDocument With(this XDocument document, IEnumerable<object> nodes)
   {
@@ -32,6 +32,7 @@ public static class XDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <param name="nodes"></param>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static XDocument With(this XDocument document, params object[] nodes) => document.With(nodes as IEnumerable<object>);
 
@@ -62,8 +63,8 @@ public static class XDocumentExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
+  /// <param name="document">XML document to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
   public static XDocument Empty(this XDocument document)
   {
@@ -79,7 +80,7 @@ public static class XDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static XDocument TryFinallyClear(this XDocument document, Action<XDocument> action)
   {
@@ -192,7 +193,7 @@ public static class XDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <param name="destination"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static XDocument Serialize(this XDocument document, XmlWriter destination)
   {
@@ -209,7 +210,7 @@ public static class XDocumentExtensions
   /// </summary>
   /// <param name="document"></param>
   /// <param name="destination"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static XDocument Serialize(this XDocument document, TextWriter destination)
   {
@@ -227,7 +228,7 @@ public static class XDocumentExtensions
   /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static XDocument Serialize(this XDocument document, Stream destination, Encoding encoding = null)
   {
@@ -245,7 +246,7 @@ public static class XDocumentExtensions
   /// <param name="document"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static XDocument Serialize(this XDocument document, FileInfo destination, Encoding encoding = null)
   {

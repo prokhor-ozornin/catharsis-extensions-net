@@ -74,7 +74,7 @@ public static class IEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="reversed"></param>
   /// <param name="comparer"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="reversed"/> is <see langword="null"/>.</exception>
   public static bool IsReversed<T>(this IEnumerable<T> sequence, IEnumerable<T> reversed, IEqualityComparer<T> comparer = null)
   {
@@ -101,7 +101,7 @@ public static class IEnumerableExtensions
   /// <typeparam name="T">Type of elements in a sequence.</typeparam>
   /// <param name="sequence">Source sequence for iteration.</param>
   /// <param name="action">Delegate to be called for each element in a sequence.</param>
-  /// <returns>Back reference to the current sequence.</returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ForEach{T}(IEnumerable{T}, Action{T})"/>
   public static IEnumerable<T> ForEach<T>(this IEnumerable<T> sequence, Action<int, T> action)
@@ -383,7 +383,7 @@ public static class IEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="sequence"></param>
   /// <param name="random"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="sequence"/> is <see langword="null"/>.</exception>
   public static IEnumerable<T> Randomize<T>(this IEnumerable<T> sequence, Random random = null)
   {
@@ -715,7 +715,7 @@ public static class IEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="to"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(IEnumerable{byte}, TextWriter, Encoding)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, TextWriter to, Encoding encoding = null)
@@ -752,7 +752,7 @@ public static class IEnumerableExtensions
   /// </summary>
   /// <param name="sequence"></param>
   /// <param name="to"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, BinaryWriter to)
   {
@@ -770,7 +770,7 @@ public static class IEnumerableExtensions
   /// <param name="sequence"></param>
   /// <param name="to"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(IEnumerable{byte}, XmlWriter, Encoding)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, XmlWriter to, Encoding encoding = null)
@@ -807,7 +807,7 @@ public static class IEnumerableExtensions
   /// </summary>
   /// <param name="sequence"></param>
   /// <param name="to"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(IEnumerable{byte}, FileInfo, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, FileInfo to)
@@ -848,7 +848,7 @@ public static class IEnumerableExtensions
   /// <param name="to"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(IEnumerable{byte}, Uri, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, Uri to, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
@@ -889,7 +889,7 @@ public static class IEnumerableExtensions
   /// </summary>
   /// <param name="sequence"></param>
   /// <param name="to"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(IEnumerable{byte}, Process, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, Process to)
@@ -949,7 +949,7 @@ public static class IEnumerableExtensions
   /// </summary>
   /// <param name="sequence"></param>
   /// <param name="client"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="client"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(IEnumerable{byte}, TcpClient, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, TcpClient client)
@@ -988,7 +988,7 @@ public static class IEnumerableExtensions
   /// </summary>
   /// <param name="sequence"></param>
   /// <param name="to"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="sequence"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="sequence"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(IEnumerable{byte}, UdpClient, CancellationToken)"/>
   public static IEnumerable<byte> WriteTo(this IEnumerable<byte> sequence, UdpClient to)
@@ -1027,7 +1027,7 @@ public static class IEnumerableExtensions
   /// </summary>
   /// <param name="text"></param>
   /// <param name="to"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="text"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
   public static IEnumerable<char> WriteTo(this IEnumerable<char> text, SecureString to)
   {

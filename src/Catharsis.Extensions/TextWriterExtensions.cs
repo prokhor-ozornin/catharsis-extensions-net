@@ -42,7 +42,7 @@ public static class TextWriterExtensions
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytesAsync{TWriter}(TWriter, IEnumerable{byte}, Encoding, CancellationToken)"/>
   public static TWriter WriteBytes<TWriter>(this TWriter destination, IEnumerable<byte> bytes, Encoding encoding = null) where TWriter : TextWriter
@@ -78,7 +78,7 @@ public static class TextWriterExtensions
   /// <typeparam name="TWriter"></typeparam>
   /// <param name="destination"></param>
   /// <param name="text"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteTextAsync{TWriter}(TWriter, string, CancellationToken)"/>
   public static TWriter WriteText<TWriter>(this TWriter destination, string text) where TWriter : TextWriter

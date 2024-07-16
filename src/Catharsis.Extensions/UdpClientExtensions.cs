@@ -33,7 +33,7 @@ public static class UdpClientExtensions
   /// </summary>
   /// <param name="udp"></param>
   /// <param name="timeout"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="udp"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
   public static UdpClient WithTimeout(this UdpClient udp, TimeSpan? timeout)
   {
@@ -49,7 +49,7 @@ public static class UdpClientExtensions
   /// </summary>
   /// <param name="udp"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="udp"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static UdpClient TryFinallyDisconnect(this UdpClient udp, Action<UdpClient> action)
   {
@@ -135,7 +135,7 @@ public static class UdpClientExtensions
   /// </summary>
   /// <param name="udp"></param>
   /// <param name="bytes"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="udp"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytesAsync(UdpClient, IEnumerable{byte}, CancellationToken)"/>
   public static UdpClient WriteBytes(this UdpClient udp, IEnumerable<byte> bytes)
@@ -182,7 +182,7 @@ public static class UdpClientExtensions
   /// <param name="udp"></param>
   /// <param name="text"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="udp"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteTextAsync(UdpClient, string, Encoding, CancellationToken)"/>
   public static UdpClient WriteText(this UdpClient udp, string text, Encoding encoding = null) => udp.WriteBytes(text.ToBytes(encoding));

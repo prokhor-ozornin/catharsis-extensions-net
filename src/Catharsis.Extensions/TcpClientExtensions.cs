@@ -31,7 +31,7 @@ public static class TcpClientExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <param name="timeout"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="tcp"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="tcp"/> is <see langword="null"/>.</exception>
   public static TcpClient WithTimeout(this TcpClient tcp, TimeSpan? timeout)
   {
@@ -51,7 +51,7 @@ public static class TcpClientExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="tcp"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="tcp"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static TcpClient TryFinallyDisconnect(this TcpClient tcp, Action<TcpClient> action)
   {
@@ -156,7 +156,7 @@ public static class TcpClientExtensions
   /// </summary>
   /// <param name="tcp"></param>
   /// <param name="bytes"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="tcp"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="tcp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytesAsync(TcpClient, IEnumerable{byte}, CancellationToken)"/>
   public static TcpClient WriteBytes(this TcpClient tcp, IEnumerable<byte> bytes)
@@ -196,7 +196,7 @@ public static class TcpClientExtensions
   /// <param name="tcp"></param>
   /// <param name="text"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="tcp"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteTextAsync(TcpClient, string, Encoding, CancellationToken)"/>
   public static TcpClient WriteText(this TcpClient tcp, string text, Encoding encoding = null) => tcp.WriteBytes(text.ToBytes(encoding));

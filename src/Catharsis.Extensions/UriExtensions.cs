@@ -143,7 +143,7 @@ public static class UriExtensions
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
   /// <param name="headers"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="uri"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="uri"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static Uri TryFinallyDelete(this Uri uri, Action<Uri> action, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
   {
@@ -510,7 +510,7 @@ public static class UriExtensions
   /// <param name="bytes"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytesAsync(Uri, IEnumerable{byte}, TimeSpan?, CancellationToken, ValueTuple{string, object}[] headers)"/>
   public static Uri WriteBytes(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
@@ -565,7 +565,7 @@ public static class UriExtensions
   /// <param name="encoding"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteTextAsync(Uri, string, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
   public static Uri WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)

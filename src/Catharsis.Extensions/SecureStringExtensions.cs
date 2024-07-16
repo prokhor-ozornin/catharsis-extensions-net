@@ -15,7 +15,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <param name="characters"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="secure"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="secure"/> or <paramref name="characters"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With(SecureString, char[])"/>
   public static SecureString With(this SecureString secure, IEnumerable<char> characters)
@@ -36,6 +36,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <param name="characters"></param>
+  /// <returns>Back self-reference to the given <paramref name="secure"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With(SecureString, IEnumerable{char})"/>
   public static SecureString With(this SecureString secure, params char[] characters) => secure.With(characters as IEnumerable<char>);
@@ -45,7 +46,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <param name="positions"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="secure"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="secure"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without(SecureString, int[])"/>
   public static SecureString Without(this SecureString secure, IEnumerable<int> positions)
@@ -66,6 +67,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <param name="positions"></param>
+  /// <returns>Back self-reference to the given <paramref name="secure"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without(SecureString, IEnumerable{int})"/>
   public static SecureString Without(this SecureString secure, params int[] positions) => secure.Without(positions as IEnumerable<int>);
@@ -90,8 +92,8 @@ public static class SecureStringExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="secure"></param>
-  /// <returns></returns>
+  /// <param name="secure">Secure string to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="secure"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   public static SecureString Empty(this SecureString secure)
   {
@@ -158,7 +160,7 @@ public static class SecureStringExtensions
   /// </summary>
   /// <param name="secure"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="secure"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="secure"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static SecureString TryFinallyClear(this SecureString secure, Action<SecureString> action)
   {
@@ -172,7 +174,7 @@ public static class SecureStringExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="secure"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="secure"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="secure"/> is <see langword="null"/>.</exception>
   public static SecureString AsReadOnly(this SecureString secure)
   {

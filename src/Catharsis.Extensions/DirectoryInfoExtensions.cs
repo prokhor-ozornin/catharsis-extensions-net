@@ -19,7 +19,7 @@ public static class DirectoryInfoExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <param name="entries"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="directory"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="directory"/> or <paramref name="entries"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With(DirectoryInfo, FileSystemInfo[])"/>
   public static DirectoryInfo With(this DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
@@ -40,7 +40,7 @@ public static class DirectoryInfoExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <param name="entries"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="directory"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With(DirectoryInfo, IEnumerable{FileSystemInfo})"/>
   public static DirectoryInfo With(this DirectoryInfo directory, params FileSystemInfo[] entries) => directory.With(entries as IEnumerable<FileSystemInfo>);
@@ -50,7 +50,7 @@ public static class DirectoryInfoExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <param name="entries"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="directory"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="directory"/> or <paramref name="entries"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without(DirectoryInfo, FileSystemInfo[])"/>
   public static DirectoryInfo Without(this DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
@@ -71,6 +71,7 @@ public static class DirectoryInfoExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <param name="entries"></param>
+  /// <returns>Back self-reference to the given <paramref name="directory"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without(DirectoryInfo, IEnumerable{FileSystemInfo})"/>
   public static DirectoryInfo Without(this DirectoryInfo directory, params FileSystemInfo[] entries) => directory.Without(entries as IEnumerable<FileSystemInfo>);
@@ -93,10 +94,10 @@ public static class DirectoryInfoExtensions
   public static bool IsEmpty(this DirectoryInfo directory) => directory is not null ? !directory.Exists || directory.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(directory));
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>"Empties" a specified <seealso cref="BinaryWriter"/> by setting the length of its underlying <seealso cref="Stream"/> to zero.</para>
   /// </summary>
-  /// <param name="directory"></param>
-  /// <returns></returns>
+  /// <param name="directory">Directory to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="directory"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="directory"/>   is <see langword="null"/>.</exception>
   public static DirectoryInfo Empty(this DirectoryInfo directory)
   {
@@ -113,7 +114,7 @@ public static class DirectoryInfoExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="directory"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="directory"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <seealso cref="TryFinallyDelete(DirectoryInfo, Action{DirectoryInfo})"/>
   public static DirectoryInfo TryFinallyClear(this DirectoryInfo directory, Action<DirectoryInfo> action)
@@ -133,7 +134,7 @@ public static class DirectoryInfoExtensions
   /// </summary>
   /// <param name="directory"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="directory"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="directory"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <seealso cref="TryFinallyClear(DirectoryInfo, Action{DirectoryInfo})"/>
   public static DirectoryInfo TryFinallyDelete(this DirectoryInfo directory, Action<DirectoryInfo> action)

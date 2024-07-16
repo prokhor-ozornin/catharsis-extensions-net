@@ -21,7 +21,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With(NameValueCollection, ValueTuple{string, object}[])"/>
   public static NameValueCollection With(this NameValueCollection collection, IEnumerable<(string Name, object Value)> elements)
@@ -42,7 +42,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With(NameValueCollection, IEnumerable{ValueTuple{string, object}})"/>
   public static NameValueCollection With(this NameValueCollection collection, params (string Name, object Value)[] elements) => collection.With(elements as IEnumerable<(string Name, object Value)>);
@@ -52,7 +52,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <param name="elements"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without(NameValueCollection, string[])"/>
   public static NameValueCollection Without(this NameValueCollection collection, IEnumerable<string> elements)
@@ -73,6 +73,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <param name="elements"></param>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without(NameValueCollection, IEnumerable{string})"/>
   public static NameValueCollection Without(this NameValueCollection collection, params string[] elements) => collection.Without(elements as IEnumerable<string>);
@@ -80,8 +81,8 @@ public static class NameValueCollectionExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="collection"></param>
-  /// <returns></returns>
+  /// <param name="collection">Collection to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static NameValueCollection Empty(this NameValueCollection collection)
   {
@@ -97,7 +98,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static NameValueCollection TryFinallyClear(this NameValueCollection collection, Action<NameValueCollection> action)
   {

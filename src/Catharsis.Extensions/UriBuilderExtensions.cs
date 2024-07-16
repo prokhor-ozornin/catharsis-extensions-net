@@ -11,8 +11,8 @@ public static class UriBuilderExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="builder"></param>
-  /// <returns></returns>
+  /// <param name="builder">URI builder to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static UriBuilder Empty(this UriBuilder builder)
   {
@@ -35,7 +35,7 @@ public static class UriBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <param name="parameters"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WithQuery(UriBuilder, ValueTuple{string, object}[])"/>
   public static UriBuilder WithQuery(this UriBuilder builder, IReadOnlyDictionary<string, object> parameters)
@@ -51,7 +51,7 @@ public static class UriBuilderExtensions
   /// </summary>
   /// <param name="builder"></param>
   /// <param name="parameters"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WithQuery(UriBuilder, IReadOnlyDictionary{string, object})"/>
   public static UriBuilder WithQuery(this UriBuilder builder, params (string Name, object Value)[] parameters)

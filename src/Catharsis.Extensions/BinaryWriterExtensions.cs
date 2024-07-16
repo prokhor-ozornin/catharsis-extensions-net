@@ -50,10 +50,10 @@ public static class BinaryWriterExtensions
   public static bool IsEmpty(this BinaryWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>"Empties" a specified <seealso cref="BinaryWriter"/> by setting the length of its underlying <seealso cref="Stream"/> to zero.</para>
   /// </summary>
-  /// <param name="writer"></param>
-  /// <returns></returns>
+  /// <param name="writer">Binary writer to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static BinaryWriter Empty(this BinaryWriter writer)
   {
@@ -68,7 +68,7 @@ public static class BinaryWriterExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static BinaryWriter Rewind(this BinaryWriter writer)
   {
@@ -84,7 +84,7 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static BinaryWriter TryFinallyClear(this BinaryWriter writer, Action<BinaryWriter> action)
   {
@@ -99,7 +99,7 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteText(BinaryWriter, string)"/>
   public static BinaryWriter WriteBytes(this BinaryWriter destination, IEnumerable<byte> bytes)
@@ -117,7 +117,7 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="destination"></param>
   /// <param name="text"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytes(BinaryWriter, IEnumerable{byte})"/>
   public static BinaryWriter WriteText(this BinaryWriter destination, string text)

@@ -23,7 +23,7 @@ public static class XmlWriterExtensions
   /// <param name="destination"></param>
   /// <param name="bytes"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytesAsync(XmlWriter, IEnumerable{byte}, Encoding)"/>
   public static XmlWriter WriteBytes(this XmlWriter destination, IEnumerable<byte> bytes, Encoding encoding = null)
@@ -56,7 +56,7 @@ public static class XmlWriterExtensions
   /// </summary>
   /// <param name="destination"></param>
   /// <param name="text"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteTextAsync(XmlWriter, string)"/>
   public static XmlWriter WriteText(this XmlWriter destination, string text)

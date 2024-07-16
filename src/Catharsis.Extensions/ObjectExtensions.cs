@@ -102,7 +102,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="action"></param>
   /// <param name="condition"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static T With<T>(this T instance, Action<T> action, Predicate<T> condition = null)
   {
@@ -128,7 +128,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="condition"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/>, <paramref name="condition"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static T While<T>(this T instance, Predicate<T> condition, Action<T> action)
   {
@@ -399,7 +399,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="action"></param>
   /// <param name="finalizer"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <seealso cref="TryFinally{TSubject, TResult}(TSubject, Func{TSubject, TResult}, Action{TSubject})"/>
   public static T TryFinally<T>(this T instance, Action<T> action, Action<T> finalizer = null)
@@ -500,7 +500,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="action"></param>
   /// <param name="finalizer"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <seealso cref="TryFinallyDispose{TSubject, TResult}(TSubject, Func{TSubject, TResult}, Action{TSubject})"/>
   public static T TryFinallyDispose<T>(this T instance, Action<T> action, Action<T> finalizer = null) where T : IDisposable
@@ -547,7 +547,7 @@ public static class ObjectExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
   /// <seealso cref="PrintAsync{T}(T, CancellationToken)"/>
   public static T Print<T>(this T instance)
@@ -586,7 +586,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   /// <seealso cref="PrintAsync{T}(T, Stream, Encoding, CancellationToken)"/>
   public static T Print<T>(this T instance, Stream destination, Encoding encoding = null)
@@ -627,7 +627,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <param name="destination"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   /// <seealso cref="PrintAsync{T}(T, TextWriter, CancellationToken)"/>
   public static T Print<T>(this T instance, TextWriter destination)
@@ -667,7 +667,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <param name="destination"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   /// <seealso cref="PrintAsync{T}(T, XmlWriter)"/>
   public static T Print<T>(this T instance, XmlWriter destination)
@@ -704,7 +704,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <param name="destination"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T Print<T>(this T instance, BinaryWriter destination)
   {
@@ -723,7 +723,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   /// <seealso cref="PrintAsync{T}(T, FileInfo, Encoding, CancellationToken)"/>
   public static T Print<T>(this T instance, FileInfo destination, Encoding encoding = null)
@@ -767,7 +767,7 @@ public static class ObjectExtensions
   /// <param name="encoding"></param>
   /// <param name="timeout"></param>
   /// <param name="headers"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   /// <seealso cref="PrintAsync{T}(T, Uri, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
   public static T Print<T>(this T instance, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
@@ -811,7 +811,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <param name="destination"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   /// <seealso cref="PrintAsync{T}(T, Process, CancellationToken)"/>
   public static T Print<T>(this T instance, Process destination)
@@ -873,7 +873,7 @@ public static class ObjectExtensions
   /// <typeparam name="T">Type of target object.</typeparam>
   /// <param name="instance">Target object whose properties are to be changed.</param>
   /// <param name="properties">Object whose public properties are to be used for setting matched ones on target object.</param>
-  /// <returns>Back reference to the current target object.</returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
   /// <seealso cref="SetState{T}(T, object)"/>
   public static T SetState<T>(this T instance, IEnumerable<(string Name, object Value)> properties)
@@ -892,7 +892,7 @@ public static class ObjectExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="instance"></param>
   /// <param name="properties"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
   /// <seealso cref="SetState{T}(T, IEnumerable{ValueTuple{string, object}})"/>
   public static T SetState<T>(this T instance, object properties)
@@ -977,7 +977,7 @@ public static class ObjectExtensions
   /// <param name="instance">Target object whose property is to be changed.</param>
   /// <param name="name">Name of property to change.</param>
   /// <param name="value">New value of object's property.</param>
-  /// <returns>Back reference to the current target object.</returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
   /// <seealso cref="GetPropertyValue{T}(object, string)"/>
   public static T SetPropertyValue<T>(this T instance, string name, object value)
@@ -1157,7 +1157,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <param name="types"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsDataContract<T>(this T instance, XmlWriter destination, params Type[] types)
   {
@@ -1178,7 +1178,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <param name="types"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsDataContract<T>(this T instance, TextWriter destination, params Type[] types)
   {
@@ -1198,7 +1198,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <param name="types"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsDataContract<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
   {
@@ -1218,7 +1218,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <param name="types"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsDataContract<T>(this T instance, FileInfo destination, Encoding encoding = null, params Type[] types)
   {
@@ -1255,7 +1255,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <param name="types"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsXml<T>(this T instance, XmlWriter destination, params Type[] types)
   {
@@ -1276,7 +1276,7 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="destination"></param>
   /// <param name="types"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsXml<T>(this T instance, TextWriter destination, params Type[] types)
   {
@@ -1296,7 +1296,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <param name="types"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsXml<T>(this T instance, Stream destination, Encoding encoding = null, params Type[] types)
   {
@@ -1316,7 +1316,7 @@ public static class ObjectExtensions
   /// <param name="destination"></param>
   /// <param name="encoding"></param>
   /// <param name="types"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   public static T SerializeAsXml<T>(this T instance, FileInfo destination, Encoding encoding = null, params Type[] types)
   {

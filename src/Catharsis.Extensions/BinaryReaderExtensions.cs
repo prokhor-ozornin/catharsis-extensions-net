@@ -15,19 +15,19 @@ public static class BinaryReaderExtensions
   public static BinaryReader Clone(this BinaryReader reader) => reader is not null ? new BinaryReader(reader.BaseStream) : throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the starting position, meaning the position within it's underlying <seealso cref="Stream"/> is zero.</para>
   /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
+  /// <param name="reader">Binary reader instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="reader"/> is at the starting position, return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsEnd(BinaryReader)"/>
   public static bool IsStart(this BinaryReader reader) => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the final position, meaning it's currently at the end of its underlying <seealso cref="Stream"/>.</para>
   /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
+  /// <param name="reader">Binary reader instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="reader"/> is at the final position, return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsStart(BinaryReader)"/>
   public static bool IsEnd(this BinaryReader reader) => reader?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(reader));
@@ -50,10 +50,10 @@ public static class BinaryReaderExtensions
   public static bool IsEmpty(this BinaryReader reader) => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>"Empties" a specified <seealso cref="BinaryReader"/> by setting the length of its underlying <seealso cref="Stream"/> to zero.</para>
   /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
+  /// <param name="reader">Binary reader to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   public static BinaryReader Empty(this BinaryReader reader)
   {
@@ -68,7 +68,7 @@ public static class BinaryReaderExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   public static BinaryReader Rewind(this BinaryReader reader)
   {
@@ -84,7 +84,7 @@ public static class BinaryReaderExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <param name="count"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static BinaryReader Skip(this BinaryReader reader, int count)
@@ -108,7 +108,7 @@ public static class BinaryReaderExtensions
   /// </summary>
   /// <param name="reader"></param>
   /// <param name="action"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="reader"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   public static BinaryReader TryFinallyClear(this BinaryReader reader, Action<BinaryReader> action)
   {

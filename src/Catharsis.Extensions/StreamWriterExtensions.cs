@@ -35,8 +35,8 @@ public static class StreamWriterExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="writer"></param>
-  /// <returns></returns>
+  /// <param name="writer">Stream writer to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static StreamWriter Empty(this StreamWriter writer)
   {
@@ -51,7 +51,7 @@ public static class StreamWriterExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="writer"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   public static StreamWriter Rewind(this StreamWriter writer)
   {

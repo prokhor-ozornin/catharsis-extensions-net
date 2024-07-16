@@ -42,8 +42,8 @@ public static class StreamReaderExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
+  /// <param name="reader">Stream reader to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   public static StreamReader Empty(this StreamReader reader)
   {
@@ -58,7 +58,7 @@ public static class StreamReaderExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="reader"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   public static StreamReader Rewind(this StreamReader reader)
   {

@@ -12,6 +12,7 @@ public static class ValueTaskExtensions
   /// <param name="task"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
+  /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
   /// <seealso cref="Await{T}(ValueTask{T}, TimeSpan?, CancellationToken)"/>
   /// <seealso cref="Await{T}(ValueTask{T}, out T, TimeSpan?, CancellationToken)"/>
   public static ValueTask Await(this ValueTask task, TimeSpan? timeout = null, CancellationToken cancellation = default)
@@ -58,7 +59,7 @@ public static class ValueTaskExtensions
   /// <param name="result"></param>
   /// <param name="timeout"></param>
   /// <param name="cancellation"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
   /// <seealso cref="Await(ValueTask, TimeSpan?, CancellationToken)"/>
   /// <seealso cref="Await{T}(ValueTask{T}, TimeSpan?, CancellationToken)"/>
   public static ValueTask<T> Await<T>(this ValueTask<T> task, out T result, TimeSpan? timeout = null, CancellationToken cancellation = default)
@@ -83,7 +84,7 @@ public static class ValueTaskExtensions
   /// <param name="success"></param>
   /// <param name="failure"></param>
   /// <param name="cancellation"></param>
-  /// <returns></returns>
+  /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
   /// <seealso cref="ExecuteAsync(ValueTask, Action{ValueTask}, Action{ValueTask}, Action{ValueTask})"/>
   public static ValueTask Execute(this ValueTask task, Action<ValueTask> success = null, Action<ValueTask> failure = null, Action<ValueTask> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
 
