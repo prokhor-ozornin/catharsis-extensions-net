@@ -102,7 +102,41 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     static void Validate(bool result, DateTime date) => date.IsWeekend().Should().Be(result);
   }
-  
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.Range(DateTime, DateTime, TimeSpan)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Range_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(DateTime.Now);
+      Validate(DateTime.UtcNow);
+    }
+
+    return;
+
+    static void Validate(DateTime date)
+    {
+      date.Range(date, default).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
+      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
+
+      date.Range(date.AddDays(1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+
+      date.Range(date.AddDays(1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+
+      date.Range(date.AddDays(2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
+      date.Range(date.AddDays(-2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
+
+      date.Range(date.AddDays(3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
+      date.Range(date.AddDays(-3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
+    }
+  }
+
   /// <summary>
   ///   <para>Performs testing of <see cref="DateTimeExtensions.EqualsByDate(DateTime, DateTime)"/> method.</para>
   /// </summary>
@@ -152,41 +186,6 @@ public sealed class DateTimeExtensionsTest : UnitTest
 
     static void Validate(bool result, DateTime left, DateTime right) => left.EqualsByTime(right).Should().Be(result);
   }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.Range(DateTime, DateTime, TimeSpan)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Range_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(DateTime.Now);
-      Validate(DateTime.UtcNow);
-    }
-
-    return;
-
-    static void Validate(DateTime date)
-    {
-      date.Range(date, default).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
-      date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
-      date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
-
-      date.Range(date.AddDays(1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
-
-      date.Range(date.AddDays(1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
-
-      date.Range(date.AddDays(2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
-      date.Range(date.AddDays(-2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
-
-      date.Range(date.AddDays(3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
-      date.Range(date.AddDays(-3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
-    }
-  }
-
 
   /// <summary>
   ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfYear(DateTime)"/> method.</para>

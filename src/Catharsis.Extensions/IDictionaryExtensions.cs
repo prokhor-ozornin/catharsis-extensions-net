@@ -18,6 +18,49 @@ public static class IDictionaryExtensions
   /// <param name="dictionary"></param>
   /// <param name="key"></param>
   /// <param name="value"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="SetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
+  public static TValue GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
+  {
+    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+
+    return dictionary.TryGetValue(key, out var result) ? result : value;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="key"></param>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
+  public static TValue SetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
+  {
+    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+
+    if (dictionary.TryGetValue(key, out var result))
+    {
+      return result;
+    }
+
+    dictionary[key] = value;
+
+    return value;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="key"></param>
+  /// <param name="value"></param>
   /// <returns>Back self-reference to the given <paramref name="dictionary"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{ValueTuple{TKey, TValue}})"/>
@@ -102,49 +145,6 @@ public static class IDictionaryExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{TKey})"/>
   public static IDictionary<TKey, TValue> Without<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, params TKey[] elements) where TKey : notnull => dictionary.Without(elements as IEnumerable<TKey>);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TKey"></typeparam>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="dictionary"></param>
-  /// <param name="key"></param>
-  /// <param name="value"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="SetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
-  public static TValue GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
-  {
-    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
-
-    return dictionary.TryGetValue(key, out var result) ? result : value;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TKey"></typeparam>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="dictionary"></param>
-  /// <param name="key"></param>
-  /// <param name="value"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
-  public static TValue SetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
-  {
-    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
-
-    if (dictionary.TryGetValue(key, out var result))
-    {
-      return result;
-    }
-
-    dictionary[key] = value;
-
-    return value;
-  }
 
   /// <summary>
   ///   <para></para>

@@ -13,63 +13,23 @@ namespace Catharsis.Extensions.Tests;
 public sealed class MemberInfoExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsEvent(MemberInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsConstructor(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEvent_Method()
+  public void IsConstructor_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.IsEvent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => MemberInfoExtensions.IsConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
-      //typeof(TestObject).Event("PublicEvent").As<MemberInfo>().IsEvent().Should().BeTrue();
+      //typeof(TestObject).Constructor().As<MemberInfo>().IsConstructor().Should().BeTrue();
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Validate(bool result, MemberInfo member) => member.IsEvent().Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsField(MemberInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsField_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => MemberInfoExtensions.IsField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
-
-      //typeof(TestObject).Field("PublicField").As<MemberInfo>().IsField().Should().BeTrue();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(bool result, MemberInfo member) => member.IsField().Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsProperty(MemberInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsProperty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => MemberInfoExtensions.IsProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
-
-      //typeof(TestObject).Property("PublicProperty").As<MemberInfo>().IsProperty().Should().BeTrue();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(bool result, MemberInfo member) => member.IsProperty().Should().Be(result);
+    static void Validate(bool result, MemberInfo member) => member.IsConstructor().Should().Be(result);
   }
 
   /// <summary>
@@ -93,23 +53,63 @@ public sealed class MemberInfoExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsConstructor(MemberInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsProperty(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsConstructor_Method()
+  public void IsProperty_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.IsConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
-      
-      //typeof(TestObject).Constructor().As<MemberInfo>().IsConstructor().Should().BeTrue();
+      AssertionExtensions.Should(() => MemberInfoExtensions.IsProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+
+      //typeof(TestObject).Property("PublicProperty").As<MemberInfo>().IsProperty().Should().BeTrue();
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Validate(bool result, MemberInfo member) => member.IsConstructor().Should().Be(result);
+    static void Validate(bool result, MemberInfo member) => member.IsProperty().Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsField(MemberInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsField_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MemberInfoExtensions.IsField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+
+      //typeof(TestObject).Field("PublicField").As<MemberInfo>().IsField().Should().BeTrue();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, MemberInfo member) => member.IsField().Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsEvent(MemberInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsEvent_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => MemberInfoExtensions.IsEvent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+
+      //typeof(TestObject).Event("PublicEvent").As<MemberInfo>().IsEvent().Should().BeTrue();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, MemberInfo member) => member.IsEvent().Should().Be(result);
   }
 
   /// <summary>

@@ -14,6 +14,120 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StringBuilderExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsUnset(StringBuilder)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(true, null);
+      Validate(true, new StringBuilder());
+      Validate(true, new StringBuilder().Append(string.Empty));
+      Validate(false, new StringBuilder().Append(char.MinValue));
+    }
+
+    return;
+
+    static void Validate(bool result, StringBuilder builder) => builder.IsUnset().Should().Be(builder is null || builder.IsEmpty()).And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsEmpty(StringBuilder)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsEmpty_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((StringBuilder) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+
+      Validate(true, new StringBuilder());
+      Validate(true, new StringBuilder().Append(string.Empty));
+      Validate(false, new StringBuilder().Append(char.MinValue));
+    }
+
+    return;
+
+    static void Validate(bool result, StringBuilder builder) => builder.IsEmpty().Should().Be(builder.Length == 0).And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.Empty(StringBuilder)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Empty_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((StringBuilder) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+
+      Validate(new StringBuilder());
+      Validate(Attributes.RandomString().ToStringBuilder());
+    }
+
+    return;
+
+    static void Validate(StringBuilder builder)
+    {
+      builder.Empty().Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
+      builder.IsEmpty().Should().BeTrue();
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.Clone(StringBuilder)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringBuilderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+
+      Validate(new StringBuilder());
+      Validate(Attributes.RandomString().ToStringBuilder());
+    }
+
+    return;
+
+    static void Validate(StringBuilder original)
+    {
+      var clone = original.Clone();
+
+      clone.Should().BeOfType<StringBuilder>().And.NotBeSameAs(original);
+      clone.ToString().Should().Be(original.ToString());
+      clone.Length.Should().Be(original.Length);
+      clone.Capacity.Should().Be(original.Capacity);
+      clone.MaxCapacity.Should().Be(original.MaxCapacity);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.TryFinallyClear(StringBuilder, Action{StringBuilder})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TryFinallyClear_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringBuilderExtensions.TryFinallyClear(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => new StringBuilder().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+
+      Validate(string.Empty.ToStringBuilder());
+      Validate(Attributes.RandomString().ToStringBuilder());
+    }
+
+    return;
+
+    static void Validate(StringBuilder builder)
+    {
+      builder.TryFinallyClear(builder => builder.With(char.MinValue, char.MaxValue)).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
+      builder.IsEmpty().Should().BeTrue();
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="StringBuilderExtensions.With(StringBuilder, IEnumerable{object})"/></description></item>
@@ -98,97 +212,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       }
     }
   }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringBuilderExtensions.Clone(StringBuilder)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Clone_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringBuilderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
-
-      Validate(new StringBuilder());
-      Validate(Attributes.RandomString().ToStringBuilder());
-    }
-
-    return;
-
-    static void Validate(StringBuilder original)
-    {
-      var clone = original.Clone();
-
-      clone.Should().BeOfType<StringBuilder>().And.NotBeSameAs(original);
-      clone.ToString().Should().Be(original.ToString());
-      clone.Length.Should().Be(original.Length);
-      clone.Capacity.Should().Be(original.Capacity);
-      clone.MaxCapacity.Should().Be(original.MaxCapacity);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsUnset(StringBuilder)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsUnset_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(true, null);
-      Validate(true, new StringBuilder());
-      Validate(true, new StringBuilder().Append(string.Empty));
-      Validate(false, new StringBuilder().Append(char.MinValue));
-    }
-
-    return;
-
-    static void Validate(bool result, StringBuilder builder) => builder.IsUnset().Should().Be(builder is null || builder.IsEmpty()).And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsEmpty(StringBuilder)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsEmpty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StringBuilder) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
-
-      Validate(true, new StringBuilder());
-      Validate(true, new StringBuilder().Append(string.Empty));
-      Validate(false, new StringBuilder().Append(char.MinValue));
-    }
-
-    return;
-
-    static void Validate(bool result, StringBuilder builder) => builder.IsEmpty().Should().Be(builder.Length == 0).And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringBuilderExtensions.Empty(StringBuilder)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Empty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StringBuilder) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
-
-      Validate(new StringBuilder());
-      Validate(Attributes.RandomString().ToStringBuilder());
-    }
-
-    return;
-
-    static void Validate(StringBuilder builder)
-    {
-      builder.Empty().Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
-      builder.IsEmpty().Should().BeTrue();
-    }
-  }
-
+  
   /// <summary>
   ///   <para>Performs testing of <see cref="StringBuilderExtensions.Min(StringBuilder, StringBuilder)"/> method.</para>
   /// </summary>
@@ -250,30 +274,6 @@ public sealed class StringBuilderExtensionsTest : UnitTest
     return;
 
     static void Validate(StringBuilder min, StringBuilder max) => min.MinMax(max).Should().Be((min, max));
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringBuilderExtensions.TryFinallyClear(StringBuilder, Action{StringBuilder})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TryFinallyClear_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringBuilderExtensions.TryFinallyClear(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
-      AssertionExtensions.Should(() => new StringBuilder().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
-
-      Validate(string.Empty.ToStringBuilder());
-      Validate(Attributes.RandomString().ToStringBuilder());
-    }
-
-    return;
-
-    static void Validate(StringBuilder builder)
-    {
-      builder.TryFinallyClear(builder => builder.With(char.MinValue, char.MaxValue)).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
-      builder.IsEmpty().Should().BeTrue();
-    }
   }
 
   /// <summary>

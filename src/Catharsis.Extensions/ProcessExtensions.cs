@@ -72,6 +72,29 @@ public static class ProcessExtensions
     return process;
   }
 
+#if NET8_0
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Finish(Process, TimeSpan?)"/>
+  public static async Task<Process> FinishAsync(this Process process, CancellationToken cancellation = default)
+  {
+    if (process is null) throw new ArgumentNullException(nameof(process));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    cancellation.Register(process.Kill);
+
+    await process.WaitForExitAsync(cancellation).ConfigureAwait(false);
+
+    return process;
+  }
+#endif
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -86,6 +109,98 @@ public static class ProcessExtensions
 
     return process.TryFinally(action, x => x.Kill());
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <param name="bytes"></param>
+  /// <returns>Back self-reference to the given <paramref name="process"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="process"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync(Process, IEnumerable{byte}, CancellationToken)"/>
+  public static Process WriteBytes(this Process process, IEnumerable<byte> bytes)
+  {
+    if (process is null) throw new ArgumentNullException(nameof(process));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    process.StandardInput.BaseStream.WriteBytes(bytes);
+
+    return process;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <param name="bytes"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="process"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes(Process, IEnumerable{byte})"/>
+  public static async Task<Process> WriteBytesAsync(this Process process, IEnumerable<byte> bytes, CancellationToken cancellation = default)
+  {
+    if (process is null) throw new ArgumentNullException(nameof(process));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    await process.StandardInput.BaseStream.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+
+    return process;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <param name="text"></param>
+  /// <returns>Back self-reference to the given <paramref name="process"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="process"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync(Process, string, CancellationToken)"/>
+  public static Process WriteText(this Process process, string text)
+  {
+    if (process is null) throw new ArgumentNullException(nameof(process));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    process.StandardInput.WriteText(text);
+
+    return process;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <param name="text"></param>
+  /// <param name="cancellation"></param>
+  /// <returns>Back self-reference to the given <paramref name="process"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="process"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText(Process, string)"/>
+  public static async Task<Process> WriteTextAsync(this Process process, string text, CancellationToken cancellation = default)
+  {
+    if (process is null) throw new ArgumentNullException(nameof(process));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    await process.StandardInput.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+
+    return process;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToErrorTextAsync(Process)"/>
+  public static string ToErrorText(this Process process) => process?.StandardError.ToText() ?? throw new ArgumentNullException(nameof(process));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="process"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToErrorText(Process)"/>
+  public static async Task<string> ToErrorTextAsync(this Process process) => process is not null ? await process.StandardError.ToTextAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(process));
 
   /// <summary>
   ///   <para></para>
@@ -122,119 +237,4 @@ public static class ProcessExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToText(Process)"/>
   public static async Task<string> ToTextAsync(this Process process) => process is not null ? await process.StandardOutput.ToTextAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(process));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="process"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToErrorTextAsync(Process)"/>
-  public static string ToErrorText(this Process process) => process?.StandardError.ToText() ?? throw new ArgumentNullException(nameof(process));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="process"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToErrorText(Process)"/>
-  public static async Task<string> ToErrorTextAsync(this Process process) => process is not null ? await process.StandardError.ToTextAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(process));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="bytes"></param>
-  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytesAsync(Process, IEnumerable{byte}, CancellationToken)"/>
-  public static Process WriteBytes(this Process destination, IEnumerable<byte> bytes)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    destination.StandardInput.BaseStream.WriteBytes(bytes);
-
-    return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="bytes"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytes(Process, IEnumerable{byte})"/>
-  public static async Task<Process> WriteBytesAsync(this Process destination, IEnumerable<byte> bytes, CancellationToken cancellation = default)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    await destination.StandardInput.BaseStream.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
-
-    return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTextAsync(Process, string, CancellationToken)"/>
-  public static Process WriteText(this Process destination, string text)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    destination.StandardInput.WriteText(text);
-
-    return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <param name="cancellation"></param>
-  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteText(Process, string)"/>
-  public static async Task<Process> WriteTextAsync(this Process destination, string text, CancellationToken cancellation = default)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    await destination.StandardInput.WriteTextAsync(text, cancellation).ConfigureAwait(false);
-
-    return destination;
-  }
-
-#if NET8_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="process"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Finish(Process, TimeSpan?)"/>
-  public static async Task<Process> FinishAsync(this Process process, CancellationToken cancellation = default)
-  {
-    if (process is null) throw new ArgumentNullException(nameof(process));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    cancellation.Register(process.Kill);
-
-    await process.WaitForExitAsync(cancellation).ConfigureAwait(false);
-
-    return process;
-  }
-  #endif
 }

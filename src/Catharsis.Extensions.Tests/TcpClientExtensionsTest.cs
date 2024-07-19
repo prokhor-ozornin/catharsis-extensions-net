@@ -43,7 +43,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
     }
 
     throw new NotImplementedException();
@@ -67,24 +67,24 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).WithTimeout(null)).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).WithTimeout(null)).ThrowExactly<ArgumentNullException>().WithParameterName("client");
 
-      using var tcp = new TcpClient();
+      using var client = new TcpClient();
 
-      var receiveTimeout = tcp.ReceiveTimeout;
-      var sendTimeout = tcp.SendTimeout;
-      receiveTimeout.Should().Be(tcp.Client.ReceiveTimeout).And.Be(0);
-      sendTimeout.Should().Be(tcp.Client.SendTimeout).And.Be(0);
+      var receiveTimeout = client.ReceiveTimeout;
+      var sendTimeout = client.SendTimeout;
+      receiveTimeout.Should().Be(client.Client.ReceiveTimeout).And.Be(0);
+      sendTimeout.Should().Be(client.Client.SendTimeout).And.Be(0);
 
-      tcp.WithTimeout(null).Should().BeOfType<TcpClient>().And.BeSameAs(Attributes.Tcp());
-      tcp.ReceiveTimeout.Should().Be(tcp.Client.ReceiveTimeout).And.Be(receiveTimeout);
-      tcp.SendTimeout.Should().Be(tcp.Client.SendTimeout).And.Be(sendTimeout);
+      client.WithTimeout(null).Should().BeOfType<TcpClient>().And.BeSameAs(Attributes.Tcp());
+      client.ReceiveTimeout.Should().Be(client.Client.ReceiveTimeout).And.Be(receiveTimeout);
+      client.SendTimeout.Should().Be(client.Client.SendTimeout).And.Be(sendTimeout);
 
       new[] { TimeSpan.MinValue, TimeSpan.Zero, TimeSpan.MaxValue }.ForEach(timespan =>
       {
-        tcp.WithTimeout(timespan).Should().BeOfType<TcpClient>().And.BeSameAs(Attributes.Tcp());
-        tcp.ReceiveTimeout.Should().Be(tcp.Client.ReceiveTimeout).And.Be((int) timespan.TotalMilliseconds);
-        tcp.SendTimeout.Should().Be(tcp.Client.SendTimeout).And.Be((int) timespan.TotalMilliseconds);
+        client.WithTimeout(timespan).Should().BeOfType<TcpClient>().And.BeSameAs(Attributes.Tcp());
+        client.ReceiveTimeout.Should().Be(client.Client.ReceiveTimeout).And.Be((int) timespan.TotalMilliseconds);
+        client.SendTimeout.Should().Be(client.Client.SendTimeout).And.Be((int) timespan.TotalMilliseconds);
       });
     }
 
@@ -107,7 +107,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).TryFinallyDisconnect(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).TryFinallyDisconnect(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Attributes.Tcp().TryFinallyDisconnect(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     }
 
@@ -136,7 +136,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
 
       static void Validate(TcpClient client)
       {
@@ -149,7 +149,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("client");
 
       static void Validate(TcpClient client)
       {
@@ -175,7 +175,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).ToAsyncEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).ToAsyncEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
 
       static void Validate(TcpClient client)
       {
@@ -188,7 +188,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("client");
 
       static void Validate(TcpClient client)
       {
@@ -210,7 +210,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
     }
 
     throw new NotImplementedException();
@@ -234,7 +234,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+      AssertionExtensions.Should(() => ((TcpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
     }
 
     throw new NotImplementedException();
@@ -258,7 +258,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
     }
 
     throw new NotImplementedException();
@@ -282,7 +282,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+      AssertionExtensions.Should(() => ((TcpClient) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
     }
 
     throw new NotImplementedException();
@@ -308,7 +308,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).WriteBytes(Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).WriteBytes([])).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Attributes.Tcp().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
@@ -333,9 +333,9 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).WriteBytesAsync(Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+      AssertionExtensions.Should(() => ((TcpClient) null).WriteBytesAsync([])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Attributes.Tcp().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => Attributes.Tcp().WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Attributes.Tcp().WriteBytesAsync([], Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -359,7 +359,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).WriteText(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((TcpClient) null).WriteText(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Attributes.Tcp().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
@@ -384,7 +384,7 @@ public sealed class TcpClientExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).WriteTextAsync(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+      AssertionExtensions.Should(() => ((TcpClient) null).WriteTextAsync(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Attributes.Tcp().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
       AssertionExtensions.Should(() => Attributes.Tcp().WriteTextAsync(string.Empty, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }

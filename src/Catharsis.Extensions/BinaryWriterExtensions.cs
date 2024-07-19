@@ -11,23 +11,6 @@ public static class BinaryWriterExtensions
   /// </summary>
   /// <param name="writer"></param>
   /// <returns></returns>
-  /// <seealso cref="IsEmpty(BinaryWriter)"/>
-  public static bool IsUnset(this BinaryWriter writer) => writer is null || writer.IsEmpty();
-
-  /// <summary>
-  ///   <para>Determines whether the specified <see cref="BinaryWriter"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
-  /// </summary>
-  /// <param name="writer">Binary writer instance for evaluation.</param>
-  /// <returns>If the specified <paramref name="writer"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsUnset(BinaryWriter)"/>
-  public static bool IsEmpty(this BinaryWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsEnd(BinaryWriter)"/>
   public static bool IsStart(this BinaryWriter writer) => writer?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(writer));
@@ -40,6 +23,39 @@ public static class BinaryWriterExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsStart(BinaryWriter)"/>
   public static bool IsEnd(this BinaryWriter writer) => writer?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(writer));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="writer"></param>
+  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+  public static BinaryWriter Rewind(this BinaryWriter writer)
+  {
+    if (writer is null)
+      throw new ArgumentNullException(nameof(writer));
+
+    writer.BaseStream.MoveToStart();
+
+    return writer;
+  }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="writer"></param>
+  /// <returns></returns>
+  /// <seealso cref="IsEmpty(BinaryWriter)"/>
+  public static bool IsUnset(this BinaryWriter writer) => writer is null || writer.IsEmpty();
+
+  /// <summary>
+  ///   <para>Determines whether the specified <see cref="BinaryWriter"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
+  /// </summary>
+  /// <param name="writer">Binary writer instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="writer"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset(BinaryWriter)"/>
+  public static bool IsEmpty(this BinaryWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
   /// <summary>
   ///   <para>Creates a copy of the specified <see cref="BinaryWriter"/>, which will write data to the same underlying <see cref="Stream"/>.</para>
@@ -60,22 +76,7 @@ public static class BinaryWriterExtensions
     if (writer is null) throw new ArgumentNullException(nameof(writer));
 
     writer.BaseStream.Empty();
-    
-    return writer;
-  }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  public static BinaryWriter Rewind(this BinaryWriter writer)
-  {
-    if (writer is null) throw new ArgumentNullException(nameof(writer));
-
-    writer.BaseStream.MoveToStart();
-    
     return writer;
   }
 

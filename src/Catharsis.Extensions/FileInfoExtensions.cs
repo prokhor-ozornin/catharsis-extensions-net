@@ -11,14 +11,6 @@ namespace Catharsis.Extensions;
 public static class FileInfoExtensions
 {
   /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="FileInfo"/> that will point to the same file as the original.</para>
-  /// </summary>
-  /// <param name="file">File instance to be cloned.</param>
-  /// <returns>Cloning result.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static FileInfo Clone(this FileInfo file) => file is not null ? new FileInfo(file.ToString()) : throw new ArgumentNullException(nameof(file));
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="file"></param>
@@ -36,20 +28,18 @@ public static class FileInfoExtensions
   public static bool IsEmpty(this FileInfo file) => file is not null ? !file.Exists || file.Length == 0 : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
-  ///   <para>Erases all content from a file, making it a zero-length one.</para>
+  ///   <para></para>
   /// </summary>
-  /// <param name="file">File to be cleared.</param>
-  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static FileInfo Empty(this FileInfo file)
+  /// <param name="file"></param>
+  /// <param name="directory"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="directory"/> is <see langword="null"/>.</exception>
+  public static bool InDirectory(this FileInfo file, DirectoryInfo directory)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
+    if (directory is null) throw new ArgumentNullException(nameof(directory));
 
-    using var stream = file.Create();
-
-    file.Refresh();
-
-    return file;
+    return directory.Files(null, true).Contains(file);
   }
 
   /// <summary>
@@ -118,6 +108,46 @@ public static class FileInfoExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="file"></param>
+  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static FileInfo AsReadOnly(this FileInfo file)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+
+    file.IsReadOnly = true;
+
+    return file;
+  }
+
+  /// <summary>
+  ///   <para>Creates a copy of the specified <see cref="FileInfo"/> that will point to the same file as the original.</para>
+  /// </summary>
+  /// <param name="file">File instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static FileInfo Clone(this FileInfo file) => file is not null ? new FileInfo(file.ToString()) : throw new ArgumentNullException(nameof(file));
+
+  /// <summary>
+  ///   <para>Erases all content from a file, making it a zero-length one.</para>
+  /// </summary>
+  /// <param name="file">File to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static FileInfo Empty(this FileInfo file)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+
+    using var stream = file.Create();
+
+    file.Refresh();
+
+    return file;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
   /// <param name="action"></param>
   /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
@@ -164,74 +194,151 @@ public static class FileInfoExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
   /// <param name="file"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static T DeserializeAsDataContract<T>(this FileInfo file, params Type[] types)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+
+    using var reader = file.ToXmlReader();
+
+    return reader.DeserializeAsDataContract<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="file"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static T DeserializeAsXml<T>(this FileInfo file, params Type[] types)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+
+    using var reader = file.ToXmlReader();
+
+    return reader.DeserializeAsXml<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <param name="bytes"></param>
   /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static FileInfo AsReadOnly(this FileInfo file)
+  /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync(FileInfo, IEnumerable{byte}, CancellationToken)"/>
+  public static FileInfo WriteBytes(this FileInfo file, IEnumerable<byte> bytes)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
-    file.IsReadOnly = true;
-   
-    return file;
+    try
+    {
+      using var stream = file.ToWriteOnlyStream();
+
+      stream.WriteBytes(bytes);
+
+      return file;
+    }
+    finally
+    {
+      file.Refresh();
+    }
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="file"></param>
-  /// <param name="directory"></param>
+  /// <param name="bytes"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="directory"/> is <see langword="null"/>.</exception>
-  public static bool InDirectory(this FileInfo file, DirectoryInfo directory)
+  /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes(FileInfo, IEnumerable{byte})"/>
+  public static async Task<FileInfo> WriteBytesAsync(this FileInfo file, IEnumerable<byte> bytes, CancellationToken cancellation = default)
   {
     if (file is null) throw new ArgumentNullException(nameof(file));
-    if (directory is null) throw new ArgumentNullException(nameof(directory));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
-    return directory.Files(null, true).Contains(file);
+    cancellation.ThrowIfCancellationRequested();
+
+    try
+    {
+      await using var stream = file.ToWriteOnlyStream();
+
+      await stream.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+
+      return file;
+    }
+    finally
+    {
+      file.Refresh();
+    }
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="file"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static FileStream ToStream(this FileInfo file) => file?.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="file"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static FileStream ToReadOnlyStream(this FileInfo file) => file?.Open(FileMode.Open, FileAccess.Read, FileShare.Read) ?? throw new ArgumentNullException(nameof(file));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="file"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static FileStream ToWriteOnlyStream(this FileInfo file) => file?.Open(FileMode.Append, FileAccess.Write, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="file"></param>
+  /// <param name="text"></param>
   /// <param name="encoding"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static StreamReader ToStreamReader(this FileInfo file, Encoding encoding = null) => file is not null ? new StreamReader(file.FullName, encoding ?? Encoding.Default) : throw new ArgumentNullException(nameof(file));
+  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync(FileInfo, string, Encoding, CancellationToken)"/>
+  public static FileInfo WriteText(this FileInfo file, string text, Encoding encoding = null)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    try
+    {
+      using var writer = file.ToStreamWriter(encoding);
+      writer.WriteText(text);
+
+      return file;
+    }
+    finally
+    {
+      file.Refresh();
+    }
+  }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="file"></param>
+  /// <param name="text"></param>
   /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static StreamWriter ToStreamWriter(this FileInfo file, Encoding encoding = null) => file is not null ? new StreamWriter(file.FullName, true, encoding ?? Encoding.Default, 1024) : throw new ArgumentNullException(nameof(file));
+  /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText(FileInfo, string, Encoding)"/>
+  public static async Task<FileInfo> WriteTextAsync(this FileInfo file, string text, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    try
+    {
+      await using var writer = file.ToStreamWriter(encoding);
+
+      await writer.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+
+      return file;
+    }
+    finally
+    {
+      file.Refresh();
+    }
+  }
 
   /// <summary>
   ///   <para></para>
@@ -284,6 +391,48 @@ public static class FileInfoExtensions
 
     return await reader.ToTextAsync().ConfigureAwait(false);
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static FileStream ToStream(this FileInfo file) => file?.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static FileStream ToReadOnlyStream(this FileInfo file) => file?.Open(FileMode.Open, FileAccess.Read, FileShare.Read) ?? throw new ArgumentNullException(nameof(file));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static FileStream ToWriteOnlyStream(this FileInfo file) => file?.Open(FileMode.Append, FileAccess.Write, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static StreamReader ToStreamReader(this FileInfo file, Encoding encoding = null) => file is not null ? new StreamReader(file.FullName, encoding ?? Encoding.Default) : throw new ArgumentNullException(nameof(file));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
+  public static StreamWriter ToStreamWriter(this FileInfo file, Encoding encoding = null) => file is not null ? new StreamWriter(file.FullName, true, encoding ?? Encoding.Default, 1024) : throw new ArgumentNullException(nameof(file));
 
   /// <summary>
   ///   <para></para>
@@ -367,154 +516,5 @@ public static class FileInfoExtensions
     using var reader = file.ToXmlReader();
 
     return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="bytes"></param>
-  /// <returns>Back self-reference to the given <paramref name="file"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytesAsync(FileInfo, IEnumerable{byte}, CancellationToken)"/>
-  public static FileInfo WriteBytes(this FileInfo destination, IEnumerable<byte> bytes)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    try
-    {
-      using var stream = destination.ToWriteOnlyStream();
-
-      stream.WriteBytes(bytes);
-
-      return destination;
-    }
-    finally
-    {
-      destination.Refresh();
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="bytes"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytes(FileInfo, IEnumerable{byte})"/>
-  public static async Task<FileInfo> WriteBytesAsync(this FileInfo destination, IEnumerable<byte> bytes, CancellationToken cancellation = default)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    try
-    {
-      await using var stream = destination.ToWriteOnlyStream();
-
-      await stream.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
-
-      return destination;
-    }
-    finally
-    {
-      destination.Refresh();
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <param name="encoding"></param>
-  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTextAsync(FileInfo, string, Encoding, CancellationToken)"/>
-  public static FileInfo WriteText(this FileInfo destination, string text, Encoding encoding = null)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    try
-    {
-      using var writer = destination.ToStreamWriter(encoding);
-      writer.WriteText(text);
-
-      return destination;
-    }
-    finally
-    {
-      destination.Refresh();
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteText(FileInfo, string, Encoding)"/>
-  public static async Task<FileInfo> WriteTextAsync(this FileInfo destination, string text, Encoding encoding = null, CancellationToken cancellation = default)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    try
-    {
-      await using var writer = destination.ToStreamWriter(encoding);
-
-      await writer.WriteTextAsync(text, cancellation).ConfigureAwait(false);
-
-      return destination;
-    }
-    finally
-    {
-      destination.Refresh();
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="file"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static T DeserializeAsDataContract<T>(this FileInfo file, params Type[] types)
-  {
-    if (file is null) throw new ArgumentNullException(nameof(file));
-
-    using var reader = file.ToXmlReader();
-
-    return reader.DeserializeAsDataContract<T>(types);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="file"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-  public static T DeserializeAsXml<T>(this FileInfo file, params Type[] types)
-  {
-    if (file is null) throw new ArgumentNullException(nameof(file));
-
-    using var reader = file.ToXmlReader();
-
-    return reader.DeserializeAsXml<T>(types);
   }
 }

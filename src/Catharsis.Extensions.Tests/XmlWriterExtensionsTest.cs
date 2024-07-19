@@ -13,30 +13,6 @@ namespace Catharsis.Extensions.Tests;
 public sealed class XmlWriterExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlWriterExtensions.ToXmlDictionaryWriter(XmlWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToXmlDictionaryWriter_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XmlWriter) null).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(XmlWriter writer)
-    {
-      using (writer)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="XmlWriterExtensions.WriteBytes(XmlWriter, IEnumerable{byte}, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
@@ -44,7 +20,7 @@ public sealed class XmlWriterExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlWriterExtensions.WriteBytes(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => XmlWriterExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
       AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
@@ -69,7 +45,7 @@ public sealed class XmlWriterExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlWriterExtensions.WriteBytesAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => XmlWriterExtensions.WriteBytesAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
       AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     }
 
@@ -128,6 +104,30 @@ public sealed class XmlWriterExtensionsTest : UnitTest
     return;
 
     static void Validate(XmlWriter writer, string text)
+    {
+      using (writer)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlWriterExtensions.ToXmlDictionaryWriter(XmlWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXmlDictionaryWriter_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XmlWriter) null).ToXmlDictionaryWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlWriter writer)
     {
       using (writer)
       {

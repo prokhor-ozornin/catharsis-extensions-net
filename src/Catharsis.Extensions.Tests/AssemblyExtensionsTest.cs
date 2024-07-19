@@ -15,7 +15,7 @@ public sealed class AssemblyExtensionsTest : UnitTest
   ///   <para>Performs testing of <see cref="AssemblyExtensions.Resource(Assembly, string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Assembly_Resource_Method()
+  public void Resource_Method()
   {
     using (new AssertionScope())
     {

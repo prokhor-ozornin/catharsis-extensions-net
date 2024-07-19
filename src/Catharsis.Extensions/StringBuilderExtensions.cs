@@ -14,6 +14,55 @@ public static class StringBuilderExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="builder"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsEmpty(StringBuilder)"/>
+  public static bool IsUnset(this StringBuilder builder) => builder is null || builder.IsEmpty();
+
+  /// <summary>
+  ///   <para>Determines whether the specified <see cref="StringBuilder"/> instance can be considered "empty", meaning its length is zero.</para>
+  /// </summary>
+  /// <param name="builder">String builder instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="builder"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsUnset(StringBuilder)"/>
+  public static bool IsEmpty(this StringBuilder builder) => builder is not null ? builder.Length == 0 : throw new ArgumentNullException(nameof(builder));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder">String builder to be cleared.</param>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
+  public static StringBuilder Empty(this StringBuilder builder) => builder?.Clear() ?? throw new ArgumentNullException(nameof(builder));
+
+  /// <summary>
+  ///   <para>Creates a copy of the specified <see cref="StringBuilder"/> with the same text contents and capacity.</para>
+  /// </summary>
+  /// <param name="builder">String builder instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
+  public static StringBuilder Clone(this StringBuilder builder) => builder is not null ? new StringBuilder(builder.ToString(), builder.Capacity) : throw new ArgumentNullException(nameof(builder));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder"></param>
+  /// <param name="action"></param>
+  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  public static StringBuilder TryFinallyClear(this StringBuilder builder, Action<StringBuilder> action)
+  {
+    if (builder is null) throw new ArgumentNullException(nameof(builder));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return builder.TryFinally(action, x => x.Empty());
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder"></param>
   /// <param name="elements"></param>
   /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
@@ -71,41 +120,7 @@ public static class StringBuilderExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without(StringBuilder, IEnumerable{int})"/>
   public static StringBuilder Without(this StringBuilder builder, params int[] positions) => builder.Without(positions as IEnumerable<int>);
-
-  /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="StringBuilder"/> with the same text contents and capacity.</para>
-  /// </summary>
-  /// <param name="builder">String builder instance to be cloned.</param>
-  /// <returns>Cloning result.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
-  public static StringBuilder Clone(this StringBuilder builder) => builder is not null ? new StringBuilder(builder.ToString(), builder.Capacity) : throw new ArgumentNullException(nameof(builder));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsEmpty(StringBuilder)"/>
-  public static bool IsUnset(this StringBuilder builder) => builder is null || builder.IsEmpty();
-
-  /// <summary>
-  ///   <para>Determines whether the specified <see cref="StringBuilder"/> instance can be considered "empty", meaning its length is zero.</para>
-  /// </summary>
-  /// <param name="builder">String builder instance for evaluation.</param>
-  /// <returns>If the specified <paramref name="builder"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsUnset(StringBuilder)"/>
-  public static bool IsEmpty(this StringBuilder builder) => builder is not null ? builder.Length == 0 : throw new ArgumentNullException(nameof(builder));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder">String builder to be cleared.</param>
-  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
-  public static StringBuilder Empty(this StringBuilder builder) => builder?.Clear() ?? throw new ArgumentNullException(nameof(builder));
-
+  
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -155,21 +170,6 @@ public static class StringBuilderExtensions
     if (right is null) throw new ArgumentNullException(nameof(right));
 
     return left.Length <= right.Length ? (left, right) : (right, left);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <param name="action"></param>
-  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
-  public static StringBuilder TryFinallyClear(this StringBuilder builder, Action<StringBuilder> action)
-  {
-    if (builder is null) throw new ArgumentNullException(nameof(builder));
-    if (action is null) throw new ArgumentNullException(nameof(action));
-
-    return builder.TryFinally(action, x => x.Empty());
   }
 
   /// <summary>

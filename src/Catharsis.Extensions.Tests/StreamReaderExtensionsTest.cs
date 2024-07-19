@@ -11,39 +11,6 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StreamReaderExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamReaderExtensions.Clone(StreamReader)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Clone_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StreamReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-      Validate(Stream.Null.ToStreamReader());
-      Validate(Attributes.EmptyStream().ToStreamReader());
-      Validate(Attributes.RandomStream().ToStreamReader());
-    }
-
-    return;
-
-    static void Validate(StreamReader original)
-    {
-      using (original)
-      {
-        var clone = original.Clone();
-
-        using (clone)
-        {
-          clone.Should().BeOfType<StreamReader>().And.NotBeSameAs(original);
-          clone.BaseStream.Should().BeSameAs(original.BaseStream);
-          clone.CurrentEncoding.Should().BeSameAs(original.CurrentEncoding);
-        }
-      }
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="StreamReaderExtensions.IsStart(StreamReader)"/> method.</para>
   /// </summary>
   [Fact]
@@ -70,6 +37,33 @@ public sealed class StreamReaderExtensionsTest : UnitTest
         reader.IsStart().Should().BeTrue();
         reader.BaseStream.MoveToEnd();
         reader.IsStart().Should().Be(reader.BaseStream.Length == 0);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamReaderExtensions.Rewind(StreamReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Rewind_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((StreamReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      Validate(Stream.Null.ToStreamReader());
+      Validate(Attributes.RandomStream().ToStreamReader());
+    }
+
+    return;
+
+    static void Validate(StreamReader reader)
+    {
+      using (reader)
+      {
+        reader.ToBytesAsync().Await();
+        reader.Rewind().Should().BeOfType<StreamReader>().And.BeSameAs(reader);
+        reader.BaseStream.Should().HavePosition(0);
       }
     }
   }
@@ -157,28 +151,34 @@ public sealed class StreamReaderExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamReaderExtensions.Rewind(StreamReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamReaderExtensions.Clone(StreamReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Rewind_Method()
+  public void Clone_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((StreamReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => StreamReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       Validate(Stream.Null.ToStreamReader());
+      Validate(Attributes.EmptyStream().ToStreamReader());
       Validate(Attributes.RandomStream().ToStreamReader());
     }
 
     return;
 
-    static void Validate(StreamReader reader)
+    static void Validate(StreamReader original)
     {
-      using (reader)
+      using (original)
       {
-        reader.ToBytesAsync().Await();
-        reader.Rewind().Should().BeOfType<StreamReader>().And.BeSameAs(reader);
-        reader.BaseStream.Should().HavePosition(0);
+        var clone = original.Clone();
+
+        using (clone)
+        {
+          clone.Should().BeOfType<StreamReader>().And.NotBeSameAs(original);
+          clone.BaseStream.Should().BeSameAs(original.BaseStream);
+          clone.CurrentEncoding.Should().BeSameAs(original.CurrentEncoding);
+        }
       }
     }
   }

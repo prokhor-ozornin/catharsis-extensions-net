@@ -13,6 +13,134 @@ namespace Catharsis.Extensions.Tests;
 public sealed class SecureStringExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.AsReadOnly(SecureString)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void AsReadOnly_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.AsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+
+      Validate(Attributes.EmptySecureString());
+      Validate(Attributes.RandomSecureString());
+    }
+
+    return;
+
+    static void Validate(SecureString secure)
+    {
+      using (secure)
+      {
+        secure.AsReadOnly().Should().BeOfType<SecureString>().And.BeSameAs(secure);
+        secure.IsReadOnly().Should().BeTrue();
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.IsUnset(SecureString)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(true, null);
+      Validate(true, Attributes.EmptySecureString());
+      Validate(false, Attributes.RandomSecureString());
+    }
+
+    return;
+
+    static void Validate(bool result, SecureString secure)
+    {
+      using (secure)
+      {
+        secure.IsUnset().Should().Be(secure is null || secure.IsEmpty()).And.Be(result);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.IsEmpty(SecureString)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsEmpty_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.IsEmpty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+
+      Validate(true, Attributes.EmptySecureString());
+      Validate(false, Attributes.RandomSecureString());
+    }
+
+    return;
+
+    static void Validate(bool result, SecureString secure)
+    {
+      using (secure)
+      {
+        secure.IsEmpty().Should().Be(secure.Length == 0).And.Be(result);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.Empty(SecureString)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Empty_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+
+      Validate(Attributes.EmptySecureString());
+      Validate(Attributes.RandomSecureString());
+    }
+
+    return;
+
+    static void Validate(SecureString secure)
+    {
+      using (secure)
+      {
+        secure.Empty().Should().BeOfType<SecureString>().And.BeSameAs(secure);
+        secure.IsEmpty().Should().BeTrue();
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.TryFinallyClear(SecureString, Action{SecureString})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TryFinallyClear_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => SecureStringExtensions.TryFinallyClear(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+      AssertionExtensions.Should(() => Attributes.EmptySecureString().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+
+      Validate(Attributes.EmptySecureString());
+      Validate(Attributes.RandomSecureString());
+    }
+
+    return;
+
+    static void Validate(SecureString secure)
+    {
+      using (secure)
+      {
+        secure.TryFinallyClear(secure => secure.With(char.MinValue, char.MaxValue)).Should().BeOfType<SecureString>().And.BeSameAs(secure);
+        secure.IsEmpty().Should().BeTrue();
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="SecureStringExtensions.With(SecureString, IEnumerable{char})"/></description></item>
@@ -111,80 +239,6 @@ public sealed class SecureStringExtensionsTest : UnitTest
     }
   }
 
-  /// <summary>
-  ///   <para>Performs testing of <see cref="SecureStringExtensions.IsUnset(SecureString)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsUnset_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(true, null);
-      Validate(true, Attributes.EmptySecureString());
-      Validate(false, Attributes.RandomSecureString());
-    }
-
-    return;
-
-    static void Validate(bool result, SecureString secure)
-    {
-      using (secure)
-      {
-        secure.IsUnset().Should().Be(secure is null || secure.IsEmpty()).And.Be(result);
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="SecureStringExtensions.IsEmpty(SecureString)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsEmpty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => SecureStringExtensions.IsEmpty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
-
-      Validate(true, Attributes.EmptySecureString());
-      Validate(false, Attributes.RandomSecureString());
-    }
-
-    return;
-
-    static void Validate(bool result, SecureString secure)
-    {
-      using (secure)
-      {
-        secure.IsEmpty().Should().Be(secure.Length == 0).And.Be(result);
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="SecureStringExtensions.Empty(SecureString)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Empty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => SecureStringExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
-
-      Validate(Attributes.EmptySecureString());
-      Validate(Attributes.RandomSecureString());
-    }
-
-    return;
-
-    static void Validate(SecureString secure)
-    {
-      using (secure)
-      {
-        secure.Empty().Should().BeOfType<SecureString>().And.BeSameAs(secure);
-        secure.IsEmpty().Should().BeTrue();
-      }
-    }
-  }
 
   /// <summary>
   ///   <para>Performs testing of <see cref="SecureStringExtensions.Min(SecureString, SecureString)"/> method.</para>
@@ -262,59 +316,6 @@ public sealed class SecureStringExtensionsTest : UnitTest
     return;
 
     static void Validate(SecureString min, SecureString max) => min.MinMax(max).Should().Be((min, max));
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="SecureStringExtensions.TryFinallyClear(SecureString, Action{SecureString})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TryFinallyClear_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => SecureStringExtensions.TryFinallyClear(null, _ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
-      AssertionExtensions.Should(() => Attributes.EmptySecureString().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
-
-      Validate(Attributes.EmptySecureString());
-      Validate(Attributes.RandomSecureString());
-    }
-
-    return;
-
-    static void Validate(SecureString secure)
-    {
-      using (secure)
-      {
-        secure.TryFinallyClear(secure => secure.With(char.MinValue, char.MaxValue)).Should().BeOfType<SecureString>().And.BeSameAs(secure);
-        secure.IsEmpty().Should().BeTrue();
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="SecureStringExtensions.AsReadOnly(SecureString)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AsReadOnly_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => SecureStringExtensions.AsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
-
-      Validate(Attributes.EmptySecureString());
-      Validate(Attributes.RandomSecureString());
-    }
-
-    return;
-
-    static void Validate(SecureString secure)
-    {
-      using (secure)
-      {
-        secure.AsReadOnly().Should().BeOfType<SecureString>().And.BeSameAs(secure);
-        secure.IsReadOnly().Should().BeTrue();
-      }
-    }
   }
 
   /// <summary>

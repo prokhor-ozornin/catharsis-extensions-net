@@ -33,6 +33,40 @@ public static class XmlReaderExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="reader"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  public static T DeserializeAsDataContract<T>(this XmlReader reader, params Type[] types)
+  {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+    var serializer = new DataContractSerializer(typeof(T), types);
+
+    return (T) serializer.ReadObject(reader);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="reader"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  public static T DeserializeAsXml<T>(this XmlReader reader, params Type[] types)
+  {
+    if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+    var serializer = new XmlSerializer(typeof(T), types);
+
+    return (T) serializer.Deserialize(reader);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <param name="reader"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
@@ -119,37 +153,4 @@ public static class XmlReaderExtensions
     return await XDocument.LoadAsync(reader, LoadOptions.None, cancellation).ConfigureAwait(false);
   }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="reader"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static T DeserializeAsDataContract<T>(this XmlReader reader, params Type[] types)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    var serializer = new DataContractSerializer(typeof(T), types);
-
-    return (T) serializer.ReadObject(reader);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="reader"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static T DeserializeAsXml<T>(this XmlReader reader, params Type[] types)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    var serializer = new XmlSerializer(typeof(T), types);
-
-    return (T) serializer.Deserialize(reader);
-  }
 }

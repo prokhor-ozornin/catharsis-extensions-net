@@ -20,32 +20,260 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StringExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="StringExtensions.With(string, IEnumerable{char})"/></description></item>
-  ///     <item><description><see cref="StringExtensions.With(string, char[])"/></description></item>
-  ///   </list>
+  ///   <para>Performs testing of <see cref="StringExtensions.Compare(string, string, CultureInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void With_Methods()
+  public void Compare_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.With(null, Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.With((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
-
-      static void Validate<T>(string text, IEnumerable<char> characters)
+      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
+        string.Empty.Compare(string.Empty, culture).Should().Be(0);
+        string.Empty.Compare(char.MinValue.ToString(culture), culture).Should().Be(0);
+        string.Empty.Compare(char.MaxValue.ToString(culture), culture).Should().BeNegative();
+
+        char.MinValue.ToString(culture).Compare(char.MinValue.ToString(), culture).Should().Be(0);
+        char.MinValue.ToString(culture).Compare(string.Empty, culture).Should().Be(0);
+
+        char.MaxValue.ToString(culture).Compare(char.MaxValue.ToString(), culture).Should().Be(0);
+        char.MaxValue.ToString(culture).Compare(string.Empty, culture).Should().BePositive();
+      });
+    }
+
+    return;
+
+    static void Validate(string lesser, string bigger, CultureInfo culture = null)
+    {
+      string.Empty.Compare(string.Empty, culture).Should().Be(0);
+      string.Empty.Compare(char.MinValue.ToString(culture), culture).Should().Be(0);
+      string.Empty.Compare(char.MaxValue.ToString(culture), culture).Should().BeNegative();
+
+      char.MinValue.ToString(culture).Compare(char.MinValue.ToString(), culture).Should().Be(0);
+      char.MinValue.ToString(culture).Compare(string.Empty, culture).Should().Be(0);
+
+      char.MaxValue.ToString(culture).Compare(char.MaxValue.ToString(), culture).Should().Be(0);
+      char.MaxValue.ToString(culture).Compare(string.Empty, culture).Should().BePositive();
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.CompareAsNumber(string, string, IFormatProvider)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void CompareAsNumber_Method()
+  {
+    using (new AssertionScope())
+    {
+      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
+      {
+        Validate(null);
+        Validate(culture);
+      });
+    }
+
+    return;
+
+    static void Validate(IFormatProvider format)
+    {
+      format = format ?? CultureInfo.InvariantCulture;
+
+      AssertionExtensions.Should(() => string.Empty.CompareAsNumber(byte.MinValue.ToString(format), format)).ThrowExactly<FormatException>();
+      AssertionExtensions.Should(() => byte.MinValue.ToString(format).CompareAsNumber(string.Empty, format)).ThrowExactly<FormatException>();
+
+      sbyte.MinValue.ToString(format).CompareAsNumber(sbyte.MinValue.ToString(format), format).Should().Be(0);
+      sbyte.MaxValue.ToString(format).CompareAsNumber(sbyte.MaxValue.ToString(format), format).Should().Be(0);
+      sbyte.MinValue.ToString(format).CompareAsNumber(sbyte.MaxValue.ToString(format), format).Should().BeNegative();
+
+      byte.MinValue.ToString(format).CompareAsNumber(byte.MinValue.ToString(format), format).Should().Be(0);
+      byte.MaxValue.ToString(format).CompareAsNumber(byte.MaxValue.ToString(format), format).Should().Be(0);
+      byte.MinValue.ToString(format).CompareAsNumber(byte.MaxValue.ToString(format), format).Should().BeNegative();
+
+      short.MinValue.ToString(format).CompareAsNumber(short.MinValue.ToString(format), format).Should().Be(0);
+      short.MaxValue.ToString(format).CompareAsNumber(short.MaxValue.ToString(format), format).Should().Be(0);
+      short.MinValue.ToString(format).CompareAsNumber(short.MaxValue.ToString(format), format).Should().BeNegative();
+
+      ushort.MinValue.ToString(format).CompareAsNumber(ushort.MinValue.ToString(format), format).Should().Be(0);
+      ushort.MaxValue.ToString(format).CompareAsNumber(ushort.MaxValue.ToString(format), format).Should().Be(0);
+      ushort.MinValue.ToString(format).CompareAsNumber(ushort.MaxValue.ToString(format), format).Should().BeNegative();
+
+      int.MinValue.ToString(format).CompareAsNumber(int.MinValue.ToString(format), format).Should().Be(0);
+      int.MaxValue.ToString(format).CompareAsNumber(int.MaxValue.ToString(format), format).Should().Be(0);
+      int.MinValue.ToString(format).CompareAsNumber(int.MaxValue.ToString(format), format).Should().BeNegative();
+
+      uint.MinValue.ToString(format).CompareAsNumber(uint.MinValue.ToString(format), format).Should().Be(0);
+      uint.MaxValue.ToString(format).CompareAsNumber(uint.MaxValue.ToString(format), format).Should().Be(0);
+      uint.MinValue.ToString(format).CompareAsNumber(uint.MaxValue.ToString(format), format).Should().BeNegative();
+
+      long.MinValue.ToString(format).CompareAsNumber(long.MinValue.ToString(format), format).Should().Be(0);
+      long.MaxValue.ToString(format).CompareAsNumber(long.MaxValue.ToString(format), format).Should().Be(0);
+      long.MinValue.ToString(format).CompareAsNumber(long.MaxValue.ToString(format), format).Should().BeNegative();
+
+      ulong.MinValue.ToString(format).CompareAsNumber(ulong.MinValue.ToString(format), format).Should().Be(0);
+      ulong.MaxValue.ToString(format).CompareAsNumber(ulong.MaxValue.ToString(format), format).Should().Be(0);
+      ulong.MinValue.ToString(format).CompareAsNumber(ulong.MaxValue.ToString(format), format).Should().BeNegative();
+
+      float.MinValue.ToString(format).CompareAsNumber(float.MinValue.ToString(format), format).Should().Be(0);
+      float.MaxValue.ToString(format).CompareAsNumber(float.MaxValue.ToString(format), format).Should().Be(0);
+      float.MinValue.ToString(format).CompareAsNumber(float.MaxValue.ToString(format), format).Should().BeNegative();
+      float.NaN.ToString(format).CompareAsNumber(float.NaN.ToString(format), format).Should().Be(0);
+      float.Epsilon.ToString(format).CompareAsNumber(float.Epsilon.ToString(format), format).Should().Be(0);
+      float.NegativeInfinity.ToString(format).CompareAsNumber(float.NegativeInfinity.ToString(format), format).Should().Be(0);
+      float.PositiveInfinity.ToString(format).CompareAsNumber(float.PositiveInfinity.ToString(format), format).Should().Be(0);
+
+      double.MinValue.ToString(format).CompareAsNumber(double.MinValue.ToString(format), format).Should().Be(0);
+      double.MaxValue.ToString(format).CompareAsNumber(double.MaxValue.ToString(format), format).Should().Be(0);
+      double.MinValue.ToString(format).CompareAsNumber(double.MaxValue.ToString(format), format).Should().BeNegative();
+      double.NaN.ToString(format).CompareAsNumber(double.NaN.ToString(format), format).Should().Be(0);
+      double.Epsilon.ToString(format).CompareAsNumber(double.Epsilon.ToString(format), format).Should().Be(0);
+      double.NegativeInfinity.ToString(format).CompareAsNumber(double.NegativeInfinity.ToString(format), format).Should().Be(0);
+      double.PositiveInfinity.ToString(format).CompareAsNumber(double.PositiveInfinity.ToString(format), format).Should().Be(0);
+
+      decimal.MinValue.ToString(format).CompareAsNumber(decimal.MinValue.ToString(format), format).Should().Be(0);
+      decimal.MaxValue.ToString(format).CompareAsNumber(decimal.MaxValue.ToString(format), format).Should().Be(0);
+      decimal.MinValue.ToString(format).CompareAsNumber(decimal.MaxValue.ToString(format), format).Should().BeNegative();
+      decimal.MinusOne.ToString(format).CompareAsNumber(decimal.MinusOne.ToString(format), format).Should().Be(0);
+      decimal.Zero.ToString(format).CompareAsNumber(decimal.Zero.ToString(format), format).Should().Be(0);
+      decimal.One.ToString(format).CompareAsNumber(decimal.One.ToString(format), format).Should().Be(0);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.CompareAsDate(string, string, IFormatProvider)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void CompareAsDate_Method()
+  {
+    using (new AssertionScope())
+    {
+      /*new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
+        {
+          Validate(date, null);
+          Validate(date, culture);
+        });*/
+    }
+
+    return;
+
+    static void Validate(DateTimeOffset date, IFormatProvider format)
+    {
+      AssertionExtensions.Should(() => string.Empty.CompareAsDate(date.ToString(format), format)).ThrowExactly<FormatException>();
+      AssertionExtensions.Should(() => date.ToString(format).CompareAsDate(string.Empty, format)).ThrowExactly<FormatException>();
+
+      date.ToString("o", format).CompareAsDate(date.ToString("o", format), format).Should().Be(0);
+      date.AddMilliseconds(1).ToString("o", format).CompareAsDate(date.ToString("o", format), format).Should().BePositive();
+      date.AddMilliseconds(-1).ToString("o", format).CompareAsDate(date.ToString("o", format), format).Should().BeNegative();
+
+      date.ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.AtStartOfDay().AddMilliseconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.AtStartOfDay().AddSeconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.AtStartOfDay().AddMinutes(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.AtStartOfDay().AddHours(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.AtStartOfDay().AddDays(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
+      date.AtStartOfDay().AddMonths(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
+      date.AtStartOfDay().AddYears(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
+
+      date.ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
+      date.AddMilliseconds(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
+      date.AddSeconds(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().BePositive();
+      date.AddMinutes(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().BePositive();
+      date.AddHours(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().BePositive();
+      date.AddDays(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
+      date.AddMonths(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
+      date.AddYears(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Append(string, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Append_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(string.Empty, null, null);
+      Validate(string.Empty, string.Empty, string.Empty);
+      Validate("value", "value", null);
+    }
+
+    return;
+
+    static void Validate(string result, string text, string postfix) => text.Append(postfix).Should().BeOfType<string>().And.Be(text + postfix).And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Prepend(string, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Prepend_Method()
+  {
+    using (new AssertionScope())
+    {
+      StringExtensions.Prepend(null, null).Should().BeOfType<string>().And.BeEmpty();
+      string.Empty.Prepend(null).Should().BeOfType<string>().And.BeEmpty();
+      string.Empty.Prepend(string.Empty).Should().BeOfType<string>().And.BeEmpty();
+
+      "\r\n".Prepend("\t").Should().BeOfType<string>().And.BeNullOrWhiteSpace();
+      "value".Prepend(null).Should().BeOfType<string>().And.Be("value");
+      "second".Prepend(" & ").Prepend("first").Should().BeOfType<string>().And.Be("first & second");
+    }
+
+    return;
+
+    static void Validate(string result, string text, string prefix) => text.Prepend(prefix).Should().BeOfType<string>().And.Be(prefix + text).And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StringExtensions.Replace(string, IEnumerable{ValueTuple{string, object}})"/></description></item>
+  ///     <item><description><see cref="StringExtensions.Replace(string, ValueTuple{string, object?}[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Replace_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Replace(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Replace((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("replacements");
+
+      /*string.Empty.Replace(new object()).Should().BeEmpty();
+      string.Empty.Replace(new
+      {
+      }).Should().BeEmpty();
+
+      const string value = "The quick brown fox jumped over the lazy dog";
+
+      value.Replace(new
+      {
+        quick = "slow",
+        dog = "bear",
+        brown = "hazy"
+      }).Should().Be("The slow hazy fox jumped over the lazy bear");*/
+
+      static void Validate(string text)
+      {
+
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.With(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
+      AssertionExtensions.Should(() => StringExtensions.Replace(null, []!)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Replace(null)).ThrowExactly<ArgumentNullException>().WithParameterName("replacements");
 
-      static void Validate<T>(string text, params char[] characters)
+      /*string.Empty.Replace().Should().BeEmpty();
+      string.Empty.Replace(("quick", "slow")).Should().BeEmpty();
+
+      const string value = "The quick brown fox jumped over the lazy dog";
+
+      value.Replace(("quick", "slow"), ("dog", "bear"), ("brown", "hazy"), ("UNSPECIFIED", string.Empty)).Should().Be("The slow hazy fox jumped over the lazy bear");*/
+
+      static void Validate(string text)
       {
+
       }
     }
 
@@ -53,39 +281,367 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="StringExtensions.Without(string, IEnumerable{int})"/></description></item>
-  ///     <item><description><see cref="StringExtensions.Without(string, int[])"/></description></item>
-  ///     <item><description><see cref="StringExtensions.Without(string, int, int?, Predicate{char})"/></description></item>
-  ///   </list>
+  ///   <para>Performs testing of <see cref="StringExtensions.Reverse(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Without_Methods()
+  public void Reverse_Method()
   {
     using (new AssertionScope())
     {
-      static void Validate(string text, IEnumerable<int> positions)
-      {
-      }
+      AssertionExtensions.Should(() => StringExtensions.Reverse(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      string.Empty.Reverse().Should().BeOfType<string>().And.BeSameAs(string.Empty.Reverse()).And.BeEmpty();
+
+      var text = Attributes.RandomString();
+      var reversed = text.Reverse();
+      reversed.Should().BeOfType<string>().And.Be(reversed.ToCharArray().ToText());
     }
 
+    return;
+
+    static void Validate(string result, string text)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Repeat(string, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Repeat_Method()
+  {
     using (new AssertionScope())
     {
-      static void Validate(string text, int[] positions)
-      {
-      }
+      AssertionExtensions.Should(() => StringExtensions.Repeat(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Repeat(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      string.Empty.Repeat(0).Should().BeOfType<string>().And.BeSameAs(string.Empty.Repeat(0)).And.BeEmpty();
+      string.Empty.Repeat(1).Should().BeOfType<string>().And.BeSameAs(string.Empty.Repeat(1)).And.BeEmpty();
+
+      const int count = 1000;
+
+      var repeated = char.MinValue.ToString().Repeat(count);
+      repeated.Should().BeOfType<string>().And.HaveLength(count);
+      repeated.ToCharArray().Should().BeOfType<char[]>().And.AllBeEquivalentTo(char.MinValue);
+
+      repeated = char.MaxValue.ToString().Repeat(count);
+      repeated.Should().BeOfType<string>().And.HaveLength(count);
+      repeated.ToCharArray().Should().BeOfType<char[]>().And.AllBeEquivalentTo(char.MinValue);
+
+      "*".Repeat(0).Should().BeOfType<string>().And.BeEmpty();
+      "*".Repeat(1).Should().BeOfType<string>().And.Be("*");
+      "xyz".Repeat(2).Should().BeOfType<string>().And.Be("xyzxyz");
     }
 
+    return;
+
+    static void Validate(string result, string text, int count) => text.Repeat(count).Should().BeOfType<string>().And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Lines(string, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Lines_Method()
+  {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Without(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.Without(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
-      AssertionExtensions.Should(() => string.Empty.Without(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => StringExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      static void Validate(string text)
+      string.Empty.Lines().Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines()).And.BeEmpty();
+      string.Empty.Lines("\t").Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines("\t")).And.BeEmpty();
+
+      var text = Attributes.RandomString();
+      text.Lines().Should().BeOfType<string[]>().And.HaveCount(1).And.HaveElementAt(0, text);
+
+      var strings = 10.Objects(() => Attributes.RandomString()).AsArray();
+      text = strings.Join(Environment.NewLine);
+      var lines = text.Lines();
+      lines.Should().BeOfType<string[]>().And.HaveCount(strings.Length).And.Equal(strings);
+    }
+
+    return;
+
+    static void Validate(IEnumerable<string> result, string text, string separator = null) => text.Lines(separator).Should().BeOfType<string[]>().And.Equal(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.SwapCase(string, CultureInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void SwapCase_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.SwapCase(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      var builder = new StringBuilder();
+
+      for (var i = 'a'; i <= 'z'; i++)
       {
+        builder.Append(i);
       }
+      for (var i = 'а'; i <= 'я'; i++)
+      {
+        builder.Append(i);
+      }
+
+      var value = builder.ToString();
+
+      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
+      {
+        value.SwapCase(culture).Should().BeOfType<string>().And.BeUpperCased();
+        value.SwapCase(culture).SwapCase(culture).Should().BeOfType<string>().And.BeLowerCased();
+      });
+    }
+
+    return;
+
+    static void Validate(string result, string text, CultureInfo culture = null)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Capitalize(string, CultureInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Capitalize_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Capitalize(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
+      {
+        string.Empty.Capitalize(culture).Should().BeOfType<string>().And.BeEmpty();
+
+        "Word & Deed".Capitalize(culture).Should().BeOfType<string>().And.Be("Word & Deed");
+        "word & deed".Capitalize(culture).Should().BeOfType<string>().And.Be("Word & deed");
+        "wORD & deed".Capitalize(culture).Should().BeOfType<string>().And.Be("WORD & deed");
+
+        "Слово & Дело".Capitalize(culture).Should().BeOfType<string>().And.Be("Слово & Дело");
+        "слово & дело".Capitalize(culture).Should().BeOfType<string>().And.Be("Слово & дело");
+        "сЛОВО & дело".Capitalize(culture).Should().BeOfType<string>().And.Be("СЛОВО & дело");
+      });
+    }
+
+    return;
+
+    static void Validate(string result, string text, CultureInfo culture = null)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.CapitalizeAll(string, CultureInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void CapitalizeAll_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.CapitalizeAll(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      string.Empty.CapitalizeAll().Should().BeOfType<string>().And.BeEmpty();
+
+      "Word & Deed".CapitalizeAll().Should().BeOfType<string>().And.Be("Word & Deed");
+      "word & deed".CapitalizeAll().Should().BeOfType<string>().And.Be("Word & Deed");
+      "wORD & deed".CapitalizeAll().Should().BeOfType<string>().And.Be("Word & Deed");
+
+      "Слово & Дело".CapitalizeAll().Should().BeOfType<string>().And.Be("Слово & Дело");
+      "слово & дело".CapitalizeAll().Should().BeOfType<string>().And.Be("Слово & Дело");
+      "сЛОВО & дело".CapitalizeAll().Should().BeOfType<string>().And.Be("Слово & Дело");
+    }
+
+    return;
+
+    static void Validate(string result, string text, CultureInfo culture = null) => text.CapitalizeAll(culture).Should().BeOfType<string>().And.Be((culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text)).And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Indent(string, char, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Indent_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Indent(null, char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Indent(char.MinValue, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      const int count = 2;
+
+      string.Empty.Indent('*', 0).Should().BeOfType<string>().And.BeEmpty();
+      string.Empty.Indent('*').Should().BeOfType<string>().And.Be("*");
+      string.Empty.Indent('*', count).Should().BeOfType<string>().And.HaveLength(count).And.Be('*'.Repeat(count));
+
+      "***".Indent(' ', count).Should().BeOfType<string>().And.HaveLength(count + 3).And.Be(' '.Repeat(count) + "***");
+      $" 1.{Environment.NewLine} 2. ".Indent('*', count).Should().BeOfType<string>().And.HaveLength(count * 2 + 4 + Environment.NewLine.Length).And.Be('*'.Repeat(count) + "1." + Environment.NewLine + '*'.Repeat(count) + "2.");
+    }
+
+    return;
+
+    static void Validate(string result, string text, char character, int count) => text.Indent(character, count).Should().BeOfType<string>().And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Unindent(string, char)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Unindent_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Unindent(null, char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, string text, char value) => text.Unindent(value).Should().BeOfType<string>().And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Spacify(string, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Spacify_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Spacify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Spacify(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      const int count = 2;
+
+      Validate(string.Empty, string.Empty, 0);
+      Validate(" ", string.Empty, 1);
+      Validate(' '.Repeat(count), string.Empty, count);
+      Validate(' '.Repeat(count) + "***", "***", count);
+      Validate(' '.Repeat(count) + "1." + Environment.NewLine + ' '.Repeat(count) + "2.", $" 1.{Environment.NewLine} 2. ", count);
+    }
+
+    return;
+
+    static void Validate(string result, string text, int? count = null)
+    {
+
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Unspacify(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Unspacify_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Unspacify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, string result) => text.Unspacify().Should().BeOfType<string>().And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Tabify(string, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Tabify_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Tabify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Tabify(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      const int count = 2;
+
+      string.Empty.Tabify(0).Should().BeOfType<string>().And.BeEmpty();
+      string.Empty.Tabify().Should().BeOfType<string>().And.Be("\t");
+      string.Empty.Tabify(count).Should().BeOfType<string>().And.HaveLength(count).And.Be('\t'.Repeat(count));
+
+      "***".Tabify(count).Should().BeOfType<string>().And.HaveLength(count + 3).And.Be('\t'.Repeat(count) + "***");
+      $" 1.{Environment.NewLine} 2. ".Tabify(count).Should().BeOfType<string>().And.HaveLength(count * 2 + 4 + Environment.NewLine.Length).And.Be('\t'.Repeat(count) + "1." + Environment.NewLine + '\t'.Repeat(count) + "2.");
+    }
+
+    return;
+
+    static void Validate(string result, string text, int? count = null)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Untabify(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Untabify_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Untabify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, string text) => text.Untabify().Should().BeOfType<string>().And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsMatch(string, string, RegexOptions?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsMatch_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.IsMatch(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.IsMatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
+
+      Validate(true, string.Empty, string.Empty);
+      Validate(false, string.Empty, "anything");
+      Validate(true, "ab4Zg95kf", "[a-zA-z0-9]");
+      Validate(false, "~#$%", "[a-zA-z0-9]");
+    }
+
+    return;
+
+    static void Validate(bool result, string text, string pattern, RegexOptions? options = null) => text.IsMatch(pattern, options).Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Matches(string, string, RegexOptions?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Matches_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Matches(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Matches(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
+
+      /*string.Empty.Matches("anything").Should().BeEmpty();
+      var matches = "ab#1".Matches("[a-zA-z0-9]");
+      matches.Should().HaveCount(3);
+      matches.ElementAt(0).Value.Should().Be("a");
+      matches.ElementAt(1).Value.Should().Be("b");
+      matches.ElementAt(2).Value.Should().Be("1");*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, string pattern, RegexOptions? options = null)
+    {
     }
   }
 
@@ -587,6 +1143,56 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDateOnly(string, IFormatProvider)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDateOnly_Method()
+  {
+    using (new AssertionScope())
+    {
+      new[] { null, CultureInfo.InvariantCulture }.ForEach(culture =>
+      {
+        Validate(false, null, culture);
+        Validate(false, string.Empty, culture);
+        Validate(false, "invalid", culture);
+        Validate(true, $" {DateOnly.MinValue.ToString("D", culture)} ", culture);
+        Validate(true, $" {DateOnly.MaxValue.ToString("D", culture)} ", culture);
+        Validate(true, $" {DateOnly.FromDateTime(DateTime.UtcNow).ToString("D", culture)} ", culture);
+        Validate(true, $" {DateOnly.FromDateTime(DateTime.Now).ToString("D", culture)} ", culture);
+      });
+    }
+
+    return;
+
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsDateOnly(format).Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsTimeOnly(string, IFormatProvider)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsTimeOnly_Method()
+  {
+    using (new AssertionScope())
+    {
+      new[] { null, CultureInfo.InvariantCulture }.ForEach(culture =>
+      {
+        Validate(false, null, culture);
+        Validate(false, string.Empty, culture);
+        Validate(false, "invalid", culture);
+        Validate(true, $" {TimeOnly.MinValue.ToString("T", culture)} ", culture);
+        Validate(true, $" {TimeOnly.MaxValue.ToString("T", culture)} ", culture);
+        Validate(true, $" {TimeOnly.FromDateTime(DateTime.UtcNow).ToString("T", culture)} ", culture);
+        Validate(true, $" {TimeOnly.FromDateTime(DateTime.Now).ToString("T", culture)} ", culture);
+      });
+    }
+
+    return;
+
+    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsTimeOnly(format).Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.IsFile(string)"/> method.</para>
   /// </summary>
   [Fact]
@@ -651,325 +1257,56 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Min(string, string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Min_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => string.Empty.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
-
-      Validate(string.Empty, string.Empty);
-      Validate(string.Empty, char.MinValue.ToString());
-      Validate(char.MaxValue.ToString(), char.MinValue.ToString());
-      Validate(char.MaxValue.ToString(), char.MinValue.Repeat(2));
-    }
-
-    return;
-
-    static void Validate(string min, string max) => min.Min(max).Should().BeOfType<string>().And.Be(min);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Max(string, string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Max_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
-      AssertionExtensions.Should(() => string.Empty.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
-
-      Validate(string.Empty, string.Empty);
-      Validate(string.Empty, char.MinValue.ToString());
-      Validate(char.MaxValue.ToString(), char.MinValue.ToString());
-      Validate(char.MaxValue.ToString(), char.MinValue.Repeat(2));
-    }
-
-    return;
-
-    static void Validate(string min, string max) => min.Max(max).Should().BeOfType<string>().And.Be(max);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.MinMax(string, string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void MinMax_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
-      AssertionExtensions.Should(() => string.Empty.MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string min, string max) => min.MinMax(max).Should().Be((min, max));
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Compare(string, string, CultureInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Compare_Method()
-  {
-    using (new AssertionScope())
-    {
-      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
-      {
-        string.Empty.Compare(string.Empty, culture).Should().Be(0);
-        string.Empty.Compare(char.MinValue.ToString(culture), culture).Should().Be(0);
-        string.Empty.Compare(char.MaxValue.ToString(culture), culture).Should().BeNegative();
-
-        char.MinValue.ToString(culture).Compare(char.MinValue.ToString(), culture).Should().Be(0);
-        char.MinValue.ToString(culture).Compare(string.Empty, culture).Should().Be(0);
-
-        char.MaxValue.ToString(culture).Compare(char.MaxValue.ToString(), culture).Should().Be(0);
-        char.MaxValue.ToString(culture).Compare(string.Empty, culture).Should().BePositive();
-      });
-    }
-
-    return;
-
-    static void Validate(string lesser, string bigger, CultureInfo culture = null)
-    {
-      string.Empty.Compare(string.Empty, culture).Should().Be(0);
-      string.Empty.Compare(char.MinValue.ToString(culture), culture).Should().Be(0);
-      string.Empty.Compare(char.MaxValue.ToString(culture), culture).Should().BeNegative();
-
-      char.MinValue.ToString(culture).Compare(char.MinValue.ToString(), culture).Should().Be(0);
-      char.MinValue.ToString(culture).Compare(string.Empty, culture).Should().Be(0);
-
-      char.MaxValue.ToString(culture).Compare(char.MaxValue.ToString(), culture).Should().Be(0);
-      char.MaxValue.ToString(culture).Compare(string.Empty, culture).Should().BePositive();
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.CompareAsNumber(string, string, IFormatProvider)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void CompareAsNumber_Method()
-  {
-    using (new AssertionScope())
-    {
-      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
-      {
-        Validate(null);
-        Validate(culture);
-      });
-    }
-
-    return;
-
-    static void Validate(IFormatProvider format)
-    {
-      format = format ?? CultureInfo.InvariantCulture;
-
-      AssertionExtensions.Should(() => string.Empty.CompareAsNumber(byte.MinValue.ToString(format), format)).ThrowExactly<FormatException>();
-      AssertionExtensions.Should(() => byte.MinValue.ToString(format).CompareAsNumber(string.Empty, format)).ThrowExactly<FormatException>();
-
-      sbyte.MinValue.ToString(format).CompareAsNumber(sbyte.MinValue.ToString(format), format).Should().Be(0);
-      sbyte.MaxValue.ToString(format).CompareAsNumber(sbyte.MaxValue.ToString(format), format).Should().Be(0);
-      sbyte.MinValue.ToString(format).CompareAsNumber(sbyte.MaxValue.ToString(format), format).Should().BeNegative();
-
-      byte.MinValue.ToString(format).CompareAsNumber(byte.MinValue.ToString(format), format).Should().Be(0);
-      byte.MaxValue.ToString(format).CompareAsNumber(byte.MaxValue.ToString(format), format).Should().Be(0);
-      byte.MinValue.ToString(format).CompareAsNumber(byte.MaxValue.ToString(format), format).Should().BeNegative();
-
-      short.MinValue.ToString(format).CompareAsNumber(short.MinValue.ToString(format), format).Should().Be(0);
-      short.MaxValue.ToString(format).CompareAsNumber(short.MaxValue.ToString(format), format).Should().Be(0);
-      short.MinValue.ToString(format).CompareAsNumber(short.MaxValue.ToString(format), format).Should().BeNegative();
-
-      ushort.MinValue.ToString(format).CompareAsNumber(ushort.MinValue.ToString(format), format).Should().Be(0);
-      ushort.MaxValue.ToString(format).CompareAsNumber(ushort.MaxValue.ToString(format), format).Should().Be(0);
-      ushort.MinValue.ToString(format).CompareAsNumber(ushort.MaxValue.ToString(format), format).Should().BeNegative();
-
-      int.MinValue.ToString(format).CompareAsNumber(int.MinValue.ToString(format), format).Should().Be(0);
-      int.MaxValue.ToString(format).CompareAsNumber(int.MaxValue.ToString(format), format).Should().Be(0);
-      int.MinValue.ToString(format).CompareAsNumber(int.MaxValue.ToString(format), format).Should().BeNegative();
-
-      uint.MinValue.ToString(format).CompareAsNumber(uint.MinValue.ToString(format), format).Should().Be(0);
-      uint.MaxValue.ToString(format).CompareAsNumber(uint.MaxValue.ToString(format), format).Should().Be(0);
-      uint.MinValue.ToString(format).CompareAsNumber(uint.MaxValue.ToString(format), format).Should().BeNegative();
-
-      long.MinValue.ToString(format).CompareAsNumber(long.MinValue.ToString(format), format).Should().Be(0);
-      long.MaxValue.ToString(format).CompareAsNumber(long.MaxValue.ToString(format), format).Should().Be(0);
-      long.MinValue.ToString(format).CompareAsNumber(long.MaxValue.ToString(format), format).Should().BeNegative();
-
-      ulong.MinValue.ToString(format).CompareAsNumber(ulong.MinValue.ToString(format), format).Should().Be(0);
-      ulong.MaxValue.ToString(format).CompareAsNumber(ulong.MaxValue.ToString(format), format).Should().Be(0);
-      ulong.MinValue.ToString(format).CompareAsNumber(ulong.MaxValue.ToString(format), format).Should().BeNegative();
-
-      float.MinValue.ToString(format).CompareAsNumber(float.MinValue.ToString(format), format).Should().Be(0);
-      float.MaxValue.ToString(format).CompareAsNumber(float.MaxValue.ToString(format), format).Should().Be(0);
-      float.MinValue.ToString(format).CompareAsNumber(float.MaxValue.ToString(format), format).Should().BeNegative();
-      float.NaN.ToString(format).CompareAsNumber(float.NaN.ToString(format), format).Should().Be(0);
-      float.Epsilon.ToString(format).CompareAsNumber(float.Epsilon.ToString(format), format).Should().Be(0);
-      float.NegativeInfinity.ToString(format).CompareAsNumber(float.NegativeInfinity.ToString(format), format).Should().Be(0);
-      float.PositiveInfinity.ToString(format).CompareAsNumber(float.PositiveInfinity.ToString(format), format).Should().Be(0);
-
-      double.MinValue.ToString(format).CompareAsNumber(double.MinValue.ToString(format), format).Should().Be(0);
-      double.MaxValue.ToString(format).CompareAsNumber(double.MaxValue.ToString(format), format).Should().Be(0);
-      double.MinValue.ToString(format).CompareAsNumber(double.MaxValue.ToString(format), format).Should().BeNegative();
-      double.NaN.ToString(format).CompareAsNumber(double.NaN.ToString(format), format).Should().Be(0);
-      double.Epsilon.ToString(format).CompareAsNumber(double.Epsilon.ToString(format), format).Should().Be(0);
-      double.NegativeInfinity.ToString(format).CompareAsNumber(double.NegativeInfinity.ToString(format), format).Should().Be(0);
-      double.PositiveInfinity.ToString(format).CompareAsNumber(double.PositiveInfinity.ToString(format), format).Should().Be(0);
-
-      decimal.MinValue.ToString(format).CompareAsNumber(decimal.MinValue.ToString(format), format).Should().Be(0);
-      decimal.MaxValue.ToString(format).CompareAsNumber(decimal.MaxValue.ToString(format), format).Should().Be(0);
-      decimal.MinValue.ToString(format).CompareAsNumber(decimal.MaxValue.ToString(format), format).Should().BeNegative();
-      decimal.MinusOne.ToString(format).CompareAsNumber(decimal.MinusOne.ToString(format), format).Should().Be(0);
-      decimal.Zero.ToString(format).CompareAsNumber(decimal.Zero.ToString(format), format).Should().Be(0);
-      decimal.One.ToString(format).CompareAsNumber(decimal.One.ToString(format), format).Should().Be(0);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.CompareAsDate(string, string, IFormatProvider)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void CompareAsDate_Method()
-  {
-    using (new AssertionScope())
-    {
-      /*new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
-        {
-          Validate(date, null);
-          Validate(date, culture);
-        });*/
-    }
-
-    return;
-
-    static void Validate(DateTimeOffset date, IFormatProvider format)
-    {
-      AssertionExtensions.Should(() => string.Empty.CompareAsDate(date.ToString(format), format)).ThrowExactly<FormatException>();
-      AssertionExtensions.Should(() => date.ToString(format).CompareAsDate(string.Empty, format)).ThrowExactly<FormatException>();
-
-      date.ToString("o", format).CompareAsDate(date.ToString("o", format), format).Should().Be(0);
-      date.AddMilliseconds(1).ToString("o", format).CompareAsDate(date.ToString("o", format), format).Should().BePositive();
-      date.AddMilliseconds(-1).ToString("o", format).CompareAsDate(date.ToString("o", format), format).Should().BeNegative();
-
-      date.ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddMilliseconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddSeconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddMinutes(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddHours(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddDays(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
-      date.AtStartOfDay().AddMonths(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
-      date.AtStartOfDay().AddYears(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
-
-      date.ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
-      date.AddMilliseconds(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
-      date.AddSeconds(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().BePositive();
-      date.AddMinutes(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().BePositive();
-      date.AddHours(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().BePositive();
-      date.AddDays(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
-      date.AddMonths(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
-      date.AddYears(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Append(string, string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Append_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(string.Empty, null, null);
-      Validate(string.Empty, string.Empty, string.Empty);
-      Validate("value", "value", null);
-    }
-
-    return;
-
-    static void Validate(string result, string text, string postfix) => text.Append(postfix).Should().BeOfType<string>().And.Be(text + postfix).And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Prepend(string, string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Prepend_Method()
-  {
-    using (new AssertionScope())
-    {
-      StringExtensions.Prepend(null, null).Should().BeOfType<string>().And.BeEmpty();
-      string.Empty.Prepend(null).Should().BeOfType<string>().And.BeEmpty();
-      string.Empty.Prepend(string.Empty).Should().BeOfType<string>().And.BeEmpty();
-
-      "\r\n".Prepend("\t").Should().BeOfType<string>().And.BeNullOrWhiteSpace();
-      "value".Prepend(null).Should().BeOfType<string>().And.Be("value");
-      "second".Prepend(" & ").Prepend("first").Should().BeOfType<string>().And.Be("first & second");
-    }
-
-    return;
-
-    static void Validate(string result, string text, string prefix) => text.Prepend(prefix).Should().BeOfType<string>().And.Be(prefix + text).And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Reverse(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Reverse_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Reverse(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      string.Empty.Reverse().Should().BeOfType<string>().And.BeSameAs(string.Empty.Reverse()).And.BeEmpty();
-
-      var text = Attributes.RandomString();
-      var reversed = text.Reverse();
-      reversed.Should().BeOfType<string>().And.Be(reversed.ToCharArray().ToText());
-    }
-
-    return;
-
-    static void Validate(string result, string text)
-    {
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="StringExtensions.Replace(string, IEnumerable{ValueTuple{string, object}})"/></description></item>
-  ///     <item><description><see cref="StringExtensions.Replace(string, ValueTuple{string, object?}[])"/></description></item>
+  ///     <item><description><see cref="StringExtensions.Execute(string, IEnumerable{string})"/></description></item>
+  ///     <item><description><see cref="StringExtensions.Execute(string, string[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Replace_Methods()
+  public void Execute_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Replace(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.Replace((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("replacements");
+      AssertionExtensions.Should(() => StringExtensions.Execute(null)).ThrowExactly<ArgumentNullException>().WithParameterName("command");
+      AssertionExtensions.Should(() => string.Empty.Execute()).ThrowExactly<InvalidOperationException>();
 
-      /*string.Empty.Replace(new object()).Should().BeEmpty();
-      string.Empty.Replace(new
-      {
-      }).Should().BeEmpty();
+      string[] arguments = ["dir"];
 
-      const string value = "The quick brown fox jumped over the lazy dog";
+      var process = Attributes.ShellCommand().Execute(arguments);
 
-      value.Replace(new
-      {
-        quick = "slow",
-        dog = "bear",
-        brown = "hazy"
-      }).Should().Be("The slow hazy fox jumped over the lazy bear");*/
+      process.Finish(TimeSpan.FromSeconds(5));
+
+      process.Should().BeOfType<Process>();
+
+      process.Id.Should().BePositive();
+      process.HasExited.Should().BeTrue();
+      process.ExitCode.Should().Be(-1);
+      process.StartTime.Should().BeBefore(DateTime.Now);
+      process.ExitTime.Should().BeBefore(DateTime.Now);
+
+      process.StartInfo.FileName.Should().Be(Attributes.ShellCommand());
+      process.StartInfo.ArgumentList.Should().Equal(arguments);
+      process.StartInfo.Arguments.Should().BeEmpty();
+      process.StartInfo.CreateNoWindow.Should().BeTrue();
+      process.StartInfo.Domain.Should().BeEmpty();
+      process.StartInfo.Environment.Should().NotBeNullOrEmpty().And.HaveCount(Environment.GetEnvironmentVariables().Count);
+      process.StartInfo.ErrorDialog.Should().BeFalse();
+      process.StartInfo.ErrorDialogParentHandle.Should().Be(0);
+      process.StartInfo.LoadUserProfile.Should().BeFalse();
+      process.StartInfo.Password.Should().BeNull();
+      process.StartInfo.PasswordInClearText.Should().BeNull();
+      process.StartInfo.RedirectStandardError.Should().BeTrue();
+      process.StartInfo.RedirectStandardInput.Should().BeTrue();
+      process.StartInfo.RedirectStandardOutput.Should().BeTrue();
+      process.StartInfo.StandardErrorEncoding.Should().BeNull();
+      process.StartInfo.StandardInputEncoding.Should().BeNull();
+      process.StartInfo.StandardOutputEncoding.Should().BeNull();
+      process.StartInfo.UserName.Should().BeEmpty();
+      process.StartInfo.UseShellExecute.Should().BeFalse();
+      process.StartInfo.Verb.Should().BeEmpty();
+      process.StartInfo.WindowStyle.Should().Be(ProcessWindowStyle.Normal);
+      process.StartInfo.WorkingDirectory.Should().BeEmpty();
 
       static void Validate(string text)
       {
@@ -979,15 +1316,8 @@ public sealed class StringExtensionsTest : UnitTest
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Replace(null, []!)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.Replace(null)).ThrowExactly<ArgumentNullException>().WithParameterName("replacements");
-
-      /*string.Empty.Replace().Should().BeEmpty();
-      string.Empty.Replace(("quick", "slow")).Should().BeEmpty();
-
-      const string value = "The quick brown fox jumped over the lazy dog";
-
-      value.Replace(("quick", "slow"), ("dog", "bear"), ("brown", "hazy"), ("UNSPECIFIED", string.Empty)).Should().Be("The slow hazy fox jumped over the lazy bear");*/
+      AssertionExtensions.Should(() => StringExtensions.Execute(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("command");
+      AssertionExtensions.Should(() => string.Empty.Execute([])).ThrowExactly<InvalidOperationException>();
 
       static void Validate(string text)
       {
@@ -998,211 +1328,6 @@ public sealed class StringExtensionsTest : UnitTest
     throw new NotImplementedException();
   }
 
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.SwapCase(string, CultureInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void SwapCase_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.SwapCase(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      var builder = new StringBuilder();
-
-      for (var i = 'a'; i <= 'z'; i++)
-      {
-        builder.Append(i);
-      }
-      for (var i = 'а'; i <= 'я'; i++)
-      {
-        builder.Append(i);
-      }
-
-      var value = builder.ToString();
-
-      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
-      {
-        value.SwapCase(culture).Should().BeOfType<string>().And.BeUpperCased();
-        value.SwapCase(culture).SwapCase(culture).Should().BeOfType<string>().And.BeLowerCased();
-      });
-    }
-
-    return;
-
-    static void Validate(string result, string text, CultureInfo culture = null)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Capitalize(string, CultureInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Capitalize_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Capitalize(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
-      {
-        string.Empty.Capitalize(culture).Should().BeOfType<string>().And.BeEmpty();
-
-        "Word & Deed".Capitalize(culture).Should().BeOfType<string>().And.Be("Word & Deed");
-        "word & deed".Capitalize(culture).Should().BeOfType<string>().And.Be("Word & deed");
-        "wORD & deed".Capitalize(culture).Should().BeOfType<string>().And.Be("WORD & deed");
-
-        "Слово & Дело".Capitalize(culture).Should().BeOfType<string>().And.Be("Слово & Дело");
-        "слово & дело".Capitalize(culture).Should().BeOfType<string>().And.Be("Слово & дело");
-        "сЛОВО & дело".Capitalize(culture).Should().BeOfType<string>().And.Be("СЛОВО & дело");
-      });
-    }
-
-    return;
-
-    static void Validate(string result, string text, CultureInfo culture = null)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.CapitalizeAll(string, CultureInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void CapitalizeAll_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.CapitalizeAll(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      string.Empty.CapitalizeAll().Should().BeOfType<string>().And.BeEmpty();
-
-      "Word & Deed".CapitalizeAll().Should().BeOfType<string>().And.Be("Word & Deed");
-      "word & deed".CapitalizeAll().Should().BeOfType<string>().And.Be("Word & Deed");
-      "wORD & deed".CapitalizeAll().Should().BeOfType<string>().And.Be("Word & Deed");
-
-      "Слово & Дело".CapitalizeAll().Should().BeOfType<string>().And.Be("Слово & Дело");
-      "слово & дело".CapitalizeAll().Should().BeOfType<string>().And.Be("Слово & Дело");
-      "сЛОВО & дело".CapitalizeAll().Should().BeOfType<string>().And.Be("Слово & Дело");
-    }
-
-    return;
-
-    static void Validate(string result, string text, CultureInfo culture = null) => text.CapitalizeAll(culture).Should().BeOfType<string>().And.Be((culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text)).And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Repeat(string, int)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Repeat_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Repeat(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.Repeat(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-
-      string.Empty.Repeat(0).Should().BeOfType<string>().And.BeSameAs(string.Empty.Repeat(0)).And.BeEmpty();
-      string.Empty.Repeat(1).Should().BeOfType<string>().And.BeSameAs(string.Empty.Repeat(1)).And.BeEmpty();
-
-      const int count = 1000;
-
-      var repeated = char.MinValue.ToString().Repeat(count);
-      repeated.Should().BeOfType<string>().And.HaveLength(count);
-      repeated.ToCharArray().Should().BeOfType<char[]>().And.AllBeEquivalentTo(char.MinValue);
-
-      repeated = char.MaxValue.ToString().Repeat(count);
-      repeated.Should().BeOfType<string>().And.HaveLength(count);
-      repeated.ToCharArray().Should().BeOfType<char[]>().And.AllBeEquivalentTo(char.MinValue);
-
-      "*".Repeat(0).Should().BeOfType<string>().And.BeEmpty();
-      "*".Repeat(1).Should().BeOfType<string>().And.Be("*");
-      "xyz".Repeat(2).Should().BeOfType<string>().And.Be("xyzxyz");
-    }
-
-    return;
-
-    static void Validate(string result, string text, int count) => text.Repeat(count).Should().BeOfType<string>().And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Lines(string, string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Lines_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      string.Empty.Lines().Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines()).And.BeEmpty();
-      string.Empty.Lines("\t").Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines("\t")).And.BeEmpty();
-
-      var text = Attributes.RandomString();
-      text.Lines().Should().BeOfType<string[]>().And.HaveCount(1).And.HaveElementAt(0, text);
-
-      var strings = 10.Objects(() => Attributes.RandomString()).AsArray();
-      text = strings.Join(Environment.NewLine);
-      var lines = text.Lines();
-      lines.Should().BeOfType<string[]>().And.HaveCount(strings.Length).And.Equal(strings);
-    }
-
-    return;
-
-    static void Validate(IEnumerable<string> result, string text, string separator = null) => text.Lines(separator).Should().BeOfType<string[]>().And.Equal(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsMatch(string, string, RegexOptions?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsMatch_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.IsMatch(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.IsMatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
-
-      Validate(true, string.Empty, string.Empty);
-      Validate(false, string.Empty, "anything");
-      Validate(true, "ab4Zg95kf", "[a-zA-z0-9]");
-      Validate(false, "~#$%", "[a-zA-z0-9]");
-    }
-
-    return;
-
-    static void Validate(bool result, string text, string pattern, RegexOptions? options = null) => text.IsMatch(pattern, options).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Matches(string, string, RegexOptions?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Matches_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Matches(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.Matches(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
-
-      /*string.Empty.Matches("anything").Should().BeEmpty();
-      var matches = "ab#1".Matches("[a-zA-z0-9]");
-      matches.Should().HaveCount(3);
-      matches.ElementAt(0).Value.Should().Be("a");
-      matches.ElementAt(1).Value.Should().Be("b");
-      matches.ElementAt(2).Value.Should().Be("1");*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, string pattern, RegexOptions? options = null)
-    {
-    }
-  }
-  
   /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.FromBase64(string)"/> method.</para>
   /// </summary>
@@ -1222,6 +1347,27 @@ public sealed class StringExtensionsTest : UnitTest
     return;
 
     static void Validate(byte[] result, string text) => text.FromBase64().Should().BeOfType<byte[]>().And.Equal(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.FromHex(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FromHex_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.FromHex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      string.Empty.FromHex().Should().BeOfType<byte[]>().And.BeSameAs(string.Empty.FromHex()).And.BeEmpty();
+
+      var bytes = Attributes.RandomBytes();
+      bytes.ToHex().Should().BeOfType<string>().And.Be(System.Convert.ToHexString(bytes));
+    }
+
+    return;
+
+    static void Validate(byte[] result, string text) => text.FromHex().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -1301,211 +1447,807 @@ public sealed class StringExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Indent(string, char, int)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.Hash(string, HashAlgorithm)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Indent_Method()
+  public void Hash_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Indent(null, char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.Indent(char.MinValue, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => string.Empty.Hash(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
 
-      const int count = 2;
-      
-      string.Empty.Indent('*', 0).Should().BeOfType<string>().And.BeEmpty();
-      string.Empty.Indent('*').Should().BeOfType<string>().And.Be("*");
-      string.Empty.Indent('*', count).Should().BeOfType<string>().And.HaveLength(count).And.Be('*'.Repeat(count));
+      using var algorithm = MD5.Create();
 
-      "***".Indent(' ', count).Should().BeOfType<string>().And.HaveLength(count + 3).And.Be(' '.Repeat(count) + "***");
-      $" 1.{Environment.NewLine} 2. ".Indent('*', count).Should().BeOfType<string>().And.HaveLength(count * 2 + 4 + Environment.NewLine.Length).And.Be('*'.Repeat(count) + "1." + Environment.NewLine + '*'.Repeat(count) + "2.");
+      AssertionExtensions.Should(() => ((string) null).Hash(Attributes.HashAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      algorithm.Should().BeOfType<MD5>();
+
+      string[] texts = [string.Empty, Attributes.RandomString()];
+
+      texts.ForEach(text =>
+      {
+        text.Hash(Attributes.HashAlgorithm()).Should().BeOfType<string>().And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+      });
     }
 
     return;
 
-    static void Validate(string result, string text, char character, int count) => text.Indent(character, count).Should().BeOfType<string>().And.Be(result);
+    static void Validate()
+    {
+
+    }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Unindent(string, char)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashMd5(string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Unindent_Method()
+  public void HashMd5_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Unindent(null, char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      Validate(string.Empty);
+      Validate(Attributes.RandomString());
+    }
+
+    return;
+
+    static void Validate(string text)
+    {
+      using var algorithm = MD5.Create();
+      text.HashMd5().Should().BeOfType<string>().And.HaveLength(32).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashSha1(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HashSha1_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      Validate(string.Empty);
+      Validate(Attributes.RandomString());
+    }
+
+    return;
+
+    static void Validate(string text)
+    {
+      using var algorithm = SHA1.Create();
+      text.HashSha1().Should().BeOfType<string>().And.HaveLength(40).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashSha256(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HashSha256_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      Validate(string.Empty);
+      Validate(Attributes.RandomString());
+    }
+
+    return;
+
+    static void Validate(string text)
+    {
+      using var algorithm = SHA256.Create();
+      text.HashSha256().Should().BeOfType<string>().And.HaveLength(64).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashSha384(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HashSha384_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      Validate(string.Empty);
+      Validate(Attributes.RandomString());
+    }
+
+    return;
+
+    static void Validate(string text)
+    {
+      using var algorithm = SHA384.Create();
+      text.HashSha384().Should().BeOfType<string>().And.HaveLength(96).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.HashSha512(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HashSha512_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      Validate(string.Empty);
+      Validate(Attributes.RandomString());
+    }
+
+    return;
+
+    static void Validate(string text)
+    {
+      using var algorithm = SHA512.Create();
+      text.HashSha512().Should().BeOfType<string>().And.HaveLength(128).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Min(string, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Min_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+      AssertionExtensions.Should(() => string.Empty.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+
+      Validate(string.Empty, string.Empty);
+      Validate(string.Empty, char.MinValue.ToString());
+      Validate(char.MaxValue.ToString(), char.MinValue.ToString());
+      Validate(char.MaxValue.ToString(), char.MinValue.Repeat(2));
+    }
+
+    return;
+
+    static void Validate(string min, string max) => min.Min(max).Should().BeOfType<string>().And.Be(min);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.Max(string, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Max_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
+      AssertionExtensions.Should(() => string.Empty.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
+
+      Validate(string.Empty, string.Empty);
+      Validate(string.Empty, char.MinValue.ToString());
+      Validate(char.MaxValue.ToString(), char.MinValue.ToString());
+      Validate(char.MaxValue.ToString(), char.MinValue.Repeat(2));
+    }
+
+    return;
+
+    static void Validate(string min, string max) => min.Max(max).Should().BeOfType<string>().And.Be(max);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.MinMax(string, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MinMax_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
+      AssertionExtensions.Should(() => string.Empty.MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Validate(string result, string text, char value) => text.Unindent(value).Should().BeOfType<string>().And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Spacify(string, int)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Spacify_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Spacify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.Spacify(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-
-      const int count = 2;
-
-      Validate(string.Empty, string.Empty, 0);
-      Validate(" ", string.Empty, 1);
-      Validate(' '.Repeat(count), string.Empty, count);
-      Validate(' '.Repeat(count) + "***", "***", count);
-      Validate(' '.Repeat(count) + "1." + Environment.NewLine + ' '.Repeat(count) + "2.", $" 1.{Environment.NewLine} 2. ", count);
-    }
-
-    return;
-
-    static void Validate(string result, string text, int? count = null)
-    {
-
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Unspacify(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Unspacify_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Unspacify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, string result) => text.Unspacify().Should().BeOfType<string>().And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Tabify(string, int)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Tabify_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Tabify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.Tabify(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-
-      const int count = 2;
-
-      string.Empty.Tabify(0).Should().BeOfType<string>().And.BeEmpty();
-      string.Empty.Tabify().Should().BeOfType<string>().And.Be("\t");
-      string.Empty.Tabify(count).Should().BeOfType<string>().And.HaveLength(count).And.Be('\t'.Repeat(count));
-
-      "***".Tabify(count).Should().BeOfType<string>().And.HaveLength(count + 3).And.Be('\t'.Repeat(count) + "***");
-      $" 1.{Environment.NewLine} 2. ".Tabify(count).Should().BeOfType<string>().And.HaveLength(count * 2 + 4 + Environment.NewLine.Length).And.Be('\t'.Repeat(count) + "1." + Environment.NewLine + '\t'.Repeat(count) + "2.");
-    }
-
-    return;
-
-    static void Validate(string result, string text, int? count = null)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Untabify(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Untabify_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.Untabify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string result, string text) => text.Untabify().Should().BeOfType<string>().And.Be(result);
+    static void Validate(string min, string max) => min.MinMax(max).Should().Be((min, max));
   }
 
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="StringExtensions.Execute(string, IEnumerable{string})"/></description></item>
-  ///     <item><description><see cref="StringExtensions.Execute(string, string[])"/></description></item>
+  ///     <item><description><see cref="StringExtensions.With(string, IEnumerable{char})"/></description></item>
+  ///     <item><description><see cref="StringExtensions.With(string, char[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Execute_Methods()
+  public void With_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Execute(null)).ThrowExactly<ArgumentNullException>().WithParameterName("command");
-      AssertionExtensions.Should(() => string.Empty.Execute()).ThrowExactly<InvalidOperationException>();
+      AssertionExtensions.Should(() => StringExtensions.With(null, Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.With((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
-      string[] arguments = ["dir"];
-
-      var process = Attributes.ShellCommand().Execute(arguments);
-
-      process.Finish(TimeSpan.FromSeconds(5));
-
-      process.Should().BeOfType<Process>();
-
-      process.Id.Should().BePositive();
-      process.HasExited.Should().BeTrue();
-      process.ExitCode.Should().Be(-1);
-      process.StartTime.Should().BeBefore(DateTime.Now);
-      process.ExitTime.Should().BeBefore(DateTime.Now);
-
-      process.StartInfo.FileName.Should().Be(Attributes.ShellCommand());
-      process.StartInfo.ArgumentList.Should().Equal(arguments);
-      process.StartInfo.Arguments.Should().BeEmpty();
-      process.StartInfo.CreateNoWindow.Should().BeTrue();
-      process.StartInfo.Domain.Should().BeEmpty();
-      process.StartInfo.Environment.Should().NotBeNullOrEmpty().And.HaveCount(Environment.GetEnvironmentVariables().Count);
-      process.StartInfo.ErrorDialog.Should().BeFalse();
-      process.StartInfo.ErrorDialogParentHandle.Should().Be(0);
-      process.StartInfo.LoadUserProfile.Should().BeFalse();
-      process.StartInfo.Password.Should().BeNull();
-      process.StartInfo.PasswordInClearText.Should().BeNull();
-      process.StartInfo.RedirectStandardError.Should().BeTrue();
-      process.StartInfo.RedirectStandardInput.Should().BeTrue();
-      process.StartInfo.RedirectStandardOutput.Should().BeTrue();
-      process.StartInfo.StandardErrorEncoding.Should().BeNull();
-      process.StartInfo.StandardInputEncoding.Should().BeNull();
-      process.StartInfo.StandardOutputEncoding.Should().BeNull();
-      process.StartInfo.UserName.Should().BeEmpty();
-      process.StartInfo.UseShellExecute.Should().BeFalse();
-      process.StartInfo.Verb.Should().BeEmpty();
-      process.StartInfo.WindowStyle.Should().Be(ProcessWindowStyle.Normal);
-      process.StartInfo.WorkingDirectory.Should().BeEmpty();
-
-      static void Validate(string text)
+      static void Validate<T>(string text, IEnumerable<char> characters)
       {
-
       }
     }
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Execute(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("command");
-      AssertionExtensions.Should(() => string.Empty.Execute([])).ThrowExactly<InvalidOperationException>();
+      AssertionExtensions.Should(() => StringExtensions.With(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
-      static void Validate(string text)
+      static void Validate<T>(string text, params char[] characters)
       {
-
       }
     }
 
     throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StringExtensions.Without(string, IEnumerable{int})"/></description></item>
+  ///     <item><description><see cref="StringExtensions.Without(string, int[])"/></description></item>
+  ///     <item><description><see cref="StringExtensions.Without(string, int, int?, Predicate{char})"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void Without_Methods()
+  {
+    using (new AssertionScope())
+    {
+      static void Validate(string text, IEnumerable<int> positions)
+      {
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      static void Validate(string text, int[] positions)
+      {
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.Without(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Without(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
+      AssertionExtensions.Should(() => string.Empty.Without(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      static void Validate(string text)
+      {
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.DeserializeAsDataContract{T}(string, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsDataContract_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, params Type[] types)
+    {
+
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.DeserializeAsXml{T}(string, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsXml_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      /*var subject = Guid.Empty;
+      subject.AsXml().AsXml<Guid>().Should().Be(subject);*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, params Type[] types)
+    {
+
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, Stream, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_Stream_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(Stream stream, string text, Encoding encoding = null)
+    {
+      using (stream)
+      {
+        text.WriteTo(stream, encoding).Should().BeOfType<string>().And.BeSameAs(text);
+        //
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, Stream, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_Stream_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(Stream stream, string text, Encoding encoding = null)
+    {
+      using (stream)
+      {
+        var task = text.WriteToAsync(stream, encoding);
+        task.Should().BeAssignableTo<Task<string>>();
+        task.Await().Should().BeOfType<string>();
+        //
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, TextWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_TextWriter_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, TextWriter to)
+    {
+      using (to)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, TextWriter, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_TextWriter_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync((TextWriter) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, TextWriter to)
+    {
+      using (to)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_BinaryWriter_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+
+      Validate(string.Empty, Stream.Null.ToBinaryWriter());
+      Validate(Attributes.RandomString(), Attributes.EmptyStream().ToBinaryWriter());
+    }
+
+    return;
+
+    static void Validate(string text, BinaryWriter to)
+    {
+      using (to)
+      {
+        text.WriteTo(to).Should().BeOfType<string>().And.BeSameAs(text);
+
+        using (var reader = to.BaseStream.MoveToStart().ToBinaryReader())
+        {
+          reader.ToText().Should().BeOfType<string>().And.Be(text);
+        }
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, XmlWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_XmlWriter_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.WriteTo(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, XmlWriter to)
+    {
+      using (to)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, XmlWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_XmlWriter_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.WriteToAsync(null, Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, XmlWriter to)
+    {
+      using (to)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, FileInfo, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_FileInfo_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, FileInfo to, Encoding encoding = null)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, FileInfo, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_FileInfo_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.RandomFakeFile())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.RandomFakeFile(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, FileInfo to, Encoding encoding = null)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_Process_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Process.GetCurrentProcess())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo((Process) null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, Process to)
+    {
+      using (to)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, Process, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_Process_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Process.GetCurrentProcess())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync((Process) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
+      //AssertionExtensions.Should(() => string.Empty.WriteToAsync(ShellProcess)).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, Process to)
+    {
+      using (to)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_Uri_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, Uri to, Encoding encoding = null)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, Uri, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_Uri_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync((Uri) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.LocalHost(), null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, Uri to, Encoding encoding = null)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, HttpClient, Uri)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_HttpClient_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.Http(), Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
+      AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Http(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, HttpClient client, Uri uri)
+    {
+      using (client)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, HttpClient, Uri, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_HttpClient_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.Http(), Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Http(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Http(), Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, HttpClient client, Uri uri)
+    {
+      using (client)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, TcpClient, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_TcpClient_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, TcpClient to, Encoding encoding = null)
+    {
+      using (to)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, TcpClient, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_TcpClient_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Tcp(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, TcpClient to, Encoding encoding = null)
+    {
+      using (to)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, UdpClient, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTo_UdpClient_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, UdpClient to, Encoding encoding = null)
+    {
+      using (to)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, UdpClient, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteToAsync_UdpClient_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Udp(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string text, UdpClient to, Encoding encoding = null)
+    {
+      using (to)
+      {
+
+      }
+    }
   }
 
   /// <summary>
@@ -2931,6 +3673,122 @@ public sealed class StringExtensionsTest : UnitTest
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
+  ///     <item><description><see cref="StringExtensions.ToDateOnly(string, IFormatProvider)"/></description></item>
+  ///     <item><description><see cref="StringExtensions.ToDateOnly(string, out DateOnly?, IFormatProvider)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void ToDateOnly_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.ToDateOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() }.ForEach(date =>
+      {
+        Validate(date, null);
+        Validate(date, CultureInfo.InvariantCulture);
+      });
+
+      static void Validate(DateOnly date, IFormatProvider format)
+      {
+        format ??= CultureInfo.InvariantCulture;
+
+        AssertionExtensions.Should(() => string.Empty.ToDateOnly(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToDateOnly(format)).ThrowExactly<FormatException>();
+
+        $" {date.ToString("D", format)} ".ToDateOnly(format).Should().Be(date);
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() }.ForEach(date =>
+      {
+        Validate(date, null);
+        Validate(date, CultureInfo.InvariantCulture);
+      });
+
+      static void Validate(DateOnly date, IFormatProvider format)
+      {
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToDateOnly(null, out var result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        string.Empty.ToDateOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        "invalid".ToDateOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        $" {date.ToString("D", format)} ".ToDateOnly(out result, format).Should().BeTrue();
+        result.Should().Be(date);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="StringExtensions.ToTimeOnly(string, IFormatProvider)"/></description></item>
+  ///     <item><description><see cref="StringExtensions.ToTimeOnly(string, out TimeOnly?, IFormatProvider)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void ToTimeOnly_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => StringExtensions.ToTimeOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+
+      new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() }.ForEach(time =>
+      {
+        Validate(time, null);
+        Validate(time, CultureInfo.InvariantCulture);
+      });
+
+      static void Validate(TimeOnly time, IFormatProvider format)
+      {
+        format ??= CultureInfo.InvariantCulture;
+
+        AssertionExtensions.Should(() => string.Empty.ToTimeOnly(format)).ThrowExactly<FormatException>();
+        AssertionExtensions.Should(() => "invalid".ToTimeOnly(format)).ThrowExactly<FormatException>();
+
+        $" {time.ToString("T", format)} ".ToTimeOnly(format).Should().Be(time.AtStartOfSecond());
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() }.ForEach(date =>
+      {
+        Validate(date, null);
+        Validate(date, CultureInfo.InvariantCulture);
+      });
+
+      static void Validate(TimeOnly time, IFormatProvider format)
+      {
+        format ??= CultureInfo.InvariantCulture;
+
+        StringExtensions.ToTimeOnly(null, out var result, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        string.Empty.ToTimeOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        "invalid".ToTimeOnly(out _, format).Should().BeFalse();
+        result.Should().BeNull();
+
+        $" {time.ToString("T", format)} ".ToTimeOnly(out result, format).Should().BeTrue();
+        result.Should().Be(time.AtStartOfSecond());
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
   ///     <item><description><see cref="StringExtensions.ToFile(string)"/></description></item>
   ///     <item><description><see cref="StringExtensions.ToFile(string, out FileInfo)"/></description></item>
   ///   </list>
@@ -3407,809 +4265,6 @@ public sealed class StringExtensionsTest : UnitTest
       process.StartInfo.Verb.Should().BeEmpty();
       process.StartInfo.WindowStyle.Should().Be(ProcessWindowStyle.Normal);
       process.StartInfo.WorkingDirectory.Should().BeEmpty();
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, TextWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTo_TextWriter_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, TextWriter to)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, TextWriter, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteToAsync_TextWriter_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync((TextWriter) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, TextWriter to)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, BinaryWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTo_BinaryWriter_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-
-      Validate(string.Empty, Stream.Null.ToBinaryWriter());
-      Validate(Attributes.RandomString(), Attributes.EmptyStream().ToBinaryWriter());
-    }
-
-    return;
-
-    static void Validate(string text, BinaryWriter to)
-    {
-      using (to)
-      {
-        text.WriteTo(to).Should().BeOfType<string>().And.BeSameAs(text);
-
-        using (var reader = to.BaseStream.MoveToStart().ToBinaryReader())
-        {
-          reader.ToText().Should().BeOfType<string>().And.Be(text);
-        }
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, XmlWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTo_XmlWriter_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.WriteTo(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, XmlWriter to)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, XmlWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteToAsync_XmlWriter_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.WriteToAsync(null, Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, XmlWriter to)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, FileInfo, Encoding)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTo_FileInfo_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, FileInfo to, Encoding encoding = null)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, FileInfo, Encoding, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteToAsync_FileInfo_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.RandomFakeFile())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.RandomFakeFile(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, FileInfo to, Encoding encoding = null)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTo_Process_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Process.GetCurrentProcess())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo((Process) null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, Process to)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, Process, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteToAsync_Process_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Process.GetCurrentProcess())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync((Process) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
-      //AssertionExtensions.Should(() => string.Empty.WriteToAsync(ShellProcess)).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, Process to)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTo_Uri_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo((Uri) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, Uri to, Encoding encoding = null)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, Uri, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteToAsync_Uri_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync((Uri) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.LocalHost(), null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, Uri to, Encoding encoding = null)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, HttpClient, Uri)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTo_HttpClient_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.Http(), Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo(null, Attributes.LocalHost())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-      AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Http(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, HttpClient client, Uri uri)
-    {
-      using (client)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, HttpClient, Uri, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteToAsync_HttpClient_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.Http(), Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(null, Attributes.LocalHost())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Http(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Http(), Attributes.LocalHost(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, HttpClient client, Uri uri)
-    {
-      using (client)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, TcpClient, Encoding)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTo_TcpClient_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, TcpClient to, Encoding encoding = null)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, TcpClient, Encoding, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteToAsync_TcpClient_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Tcp(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, TcpClient to, Encoding encoding = null)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteTo(string, UdpClient, Encoding)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTo_UdpClient_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo(Attributes.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, UdpClient to, Encoding encoding = null)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.WriteToAsync(string, UdpClient, Encoding, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteToAsync_UdpClient_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Attributes.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Attributes.Udp(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, UdpClient to, Encoding encoding = null)
-    {
-      using (to)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.DeserializeAsDataContract{T}(string, Type[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DeserializeAsDataContract_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, params Type[] types)
-    {
-
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.DeserializeAsXml{T}(string, IEnumerable{Type})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DeserializeAsXml_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      /*var subject = Guid.Empty;
-      subject.AsXml().AsXml<Guid>().Should().Be(subject);*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string text, params Type[] types)
-    {
-
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Hash(string, HashAlgorithm)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Hash_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => string.Empty.Hash(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
-
-      using var algorithm = MD5.Create();
-
-      AssertionExtensions.Should(() => ((string) null).Hash(Attributes.HashAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      
-      algorithm.Should().BeOfType<MD5>();
-
-      string[] texts = [string.Empty, Attributes.RandomString()];
-
-      texts.ForEach(text =>
-      {
-        text.Hash(Attributes.HashAlgorithm()).Should().BeOfType<string>().And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
-      });
-    }
-
-    return;
-
-    static void Validate()
-    {
-
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.HashMd5(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HashMd5_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      Validate(string.Empty);
-      Validate(Attributes.RandomString());
-    }
-
-    return;
-
-    static void Validate(string text)
-    {
-      using var algorithm = MD5.Create();
-      text.HashMd5().Should().BeOfType<string>().And.HaveLength(32).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.HashSha1(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HashSha1_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      Validate(string.Empty);
-      Validate(Attributes.RandomString());
-    }
-
-    return;
-
-    static void Validate(string text)
-    {
-      using var algorithm = SHA1.Create();
-      text.HashSha1().Should().BeOfType<string>().And.HaveLength(40).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.HashSha256(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HashSha256_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      Validate(string.Empty);
-      Validate(Attributes.RandomString());
-    }
-
-    return;
-
-    static void Validate(string text)
-    {
-      using var algorithm = SHA256.Create();
-      text.HashSha256().Should().BeOfType<string>().And.HaveLength(64).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.HashSha384(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HashSha384_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      Validate(string.Empty);
-      Validate(Attributes.RandomString());
-    }
-
-    return;
-
-    static void Validate(string text)
-    {
-      using var algorithm = SHA384.Create();
-      text.HashSha384().Should().BeOfType<string>().And.HaveLength(96).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.HashSha512(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HashSha512_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      Validate(string.Empty);
-      Validate(Attributes.RandomString());
-    }
-
-    return;
-
-    static void Validate(string text)
-    {
-      using var algorithm = SHA512.Create();
-      text.HashSha512().Should().BeOfType<string>().And.HaveLength(128).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDateOnly(string, IFormatProvider)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsDateOnly_Method()
-  {
-    using (new AssertionScope())
-    {
-      new[] { null, CultureInfo.InvariantCulture }.ForEach(culture =>
-      {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, $" {DateOnly.MinValue.ToString("D", culture)} ", culture);
-        Validate(true, $" {DateOnly.MaxValue.ToString("D", culture)} ", culture);
-        Validate(true, $" {DateOnly.FromDateTime(DateTime.UtcNow).ToString("D", culture)} ", culture);
-        Validate(true, $" {DateOnly.FromDateTime(DateTime.Now).ToString("D", culture)} ", culture);
-      });
-    }
-
-    return;
-
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsDateOnly(format).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsTimeOnly(string, IFormatProvider)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsTimeOnly_Method()
-  {
-    using (new AssertionScope())
-    {
-      new[] { null, CultureInfo.InvariantCulture }.ForEach(culture =>
-      {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, $" {TimeOnly.MinValue.ToString("T", culture)} ", culture);
-        Validate(true, $" {TimeOnly.MaxValue.ToString("T", culture)} ", culture);
-        Validate(true, $" {TimeOnly.FromDateTime(DateTime.UtcNow).ToString("T", culture)} ", culture);
-        Validate(true, $" {TimeOnly.FromDateTime(DateTime.Now).ToString("T", culture)} ", culture);
-      });
-    }
-
-    return;
-
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsTimeOnly(format).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.FromHex(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void FromHex_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.FromHex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      string.Empty.FromHex().Should().BeOfType<byte[]>().And.BeSameAs(string.Empty.FromHex()).And.BeEmpty();
-
-      var bytes = Attributes.RandomBytes();
-      bytes.ToHex().Should().BeOfType<string>().And.Be(System.Convert.ToHexString(bytes));
-    }
-
-    return;
-
-    static void Validate(byte[] result, string text) => text.FromHex().Should().BeOfType<byte[]>().And.Equal(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="StringExtensions.ToDateOnly(string, IFormatProvider)"/></description></item>
-  ///     <item><description><see cref="StringExtensions.ToDateOnly(string, out DateOnly?, IFormatProvider)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void ToDateOnly_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.ToDateOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() }.ForEach(date =>
-      {
-        Validate(date, null);
-        Validate(date, CultureInfo.InvariantCulture);
-      });
-
-      static void Validate(DateOnly date, IFormatProvider format)
-      {
-        format ??= CultureInfo.InvariantCulture;
-
-        AssertionExtensions.Should(() => string.Empty.ToDateOnly(format)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToDateOnly(format)).ThrowExactly<FormatException>();
-
-        $" {date.ToString("D", format)} ".ToDateOnly(format).Should().Be(date);
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() }.ForEach(date =>
-      {
-        Validate(date, null);
-        Validate(date, CultureInfo.InvariantCulture);
-      });
-
-      static void Validate(DateOnly date, IFormatProvider format)
-      {
-        format ??= CultureInfo.InvariantCulture;
-
-        StringExtensions.ToDateOnly(null, out var result, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        string.Empty.ToDateOnly(out _, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        "invalid".ToDateOnly(out _, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        $" {date.ToString("D", format)} ".ToDateOnly(out result, format).Should().BeTrue();
-        result.Should().Be(date);
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="StringExtensions.ToTimeOnly(string, IFormatProvider)"/></description></item>
-  ///     <item><description><see cref="StringExtensions.ToTimeOnly(string, out TimeOnly?, IFormatProvider)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void ToTimeOnly_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => StringExtensions.ToTimeOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-
-      new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() }.ForEach(time =>
-      {
-        Validate(time, null);
-        Validate(time, CultureInfo.InvariantCulture);
-      });
-
-      static void Validate(TimeOnly time, IFormatProvider format)
-      {
-        format ??= CultureInfo.InvariantCulture;
-
-        AssertionExtensions.Should(() => string.Empty.ToTimeOnly(format)).ThrowExactly<FormatException>();
-        AssertionExtensions.Should(() => "invalid".ToTimeOnly(format)).ThrowExactly<FormatException>();
-
-        $" {time.ToString("T", format)} ".ToTimeOnly(format).Should().Be(time.AtStartOfSecond());
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() }.ForEach(date =>
-      {
-        Validate(date, null);
-        Validate(date, CultureInfo.InvariantCulture);
-      });
-
-      static void Validate(TimeOnly time, IFormatProvider format)
-      {
-        format ??= CultureInfo.InvariantCulture;
-
-        StringExtensions.ToTimeOnly(null, out var result, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        string.Empty.ToTimeOnly(out _, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        "invalid".ToTimeOnly(out _, format).Should().BeFalse();
-        result.Should().BeNull();
-
-        $" {time.ToString("T", format)} ".ToTimeOnly(out result, format).Should().BeTrue();
-        result.Should().Be(time.AtStartOfSecond());
-      }
     }
   }
 }

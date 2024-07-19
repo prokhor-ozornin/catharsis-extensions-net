@@ -17,78 +17,338 @@ namespace Catharsis.Extensions;
 public static class StringExtensions
 {
   /// <summary>
+  ///   <para>Compares two specified strings and returns an integer that indicates their relative position in the sort order.</para>
+  /// </summary>
+  /// <param name="left">The current string to compare with the second.</param>
+  /// <param name="right">The second string to compare with the current.</param>
+  /// <param name="culture"></param>
+  /// <returns>Integer value that indicates the lexical relationship between the two comparands.</returns>
+  /// <seealso cref="string.Compare(string, string, StringComparison)"/>
+  public static int Compare(this string left, string right, CultureInfo culture = null) => string.Compare(left, right, true, culture ?? CultureInfo.InvariantCulture);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  /// <seealso cref="CompareAsDate(string, string, IFormatProvider)"/>
+  public static int CompareAsNumber(this string left, string right, IFormatProvider format = null) => left is not null && right is not null ? left.ToDouble(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDouble(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  /// <seealso cref="CompareAsNumber(string, string, IFormatProvider)"/>
+  public static int CompareAsDate(this string left, string right, IFormatProvider format = null) => left is not null && right is not null ? left.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  /// <seealso cref="Prepend(string, string)"/>
+  public static string Append(this string left, string right) => left + right;
+
+  /// <summary>
+  ///   <para>Prepends specified string to the target one, concatenating both of them.</para>
+  /// </summary>
+  /// <param name="left">Source string.</param>
+  /// <param name="right">String to prepend.</param>
+  /// <returns>Concatenated result of <paramref name="right"/> and <paramref name="left"/> string.</returns>
+  /// <seealso cref="Append(string, string)"/>
+  public static string Prepend(this string left, string right) => right + left;
+  
+  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="characters"></param>
+  /// <param name="replacements"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="characters"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="With(string, char[])"/>
-  public static string With(this string text, IEnumerable<char> characters)
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="replacements"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Replace(string, ValueTuple{string, object}[])"/>
+  public static string Replace(this string text, IEnumerable<(string Name, object Value)> replacements)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (characters is null) throw new ArgumentNullException(nameof(characters));
+    if (replacements is null) throw new ArgumentNullException(nameof(replacements));
 
-    return text + characters.ToText();
+    if (text.Length == 0)
+    {
+      return text;
+    }
+
+    var result = new StringBuilder(text);
+
+    replacements.ForEach(replacement => result.Replace(replacement.Name, replacement.Value?.ToInvariantString() ?? string.Empty));
+
+    return result.ToString();
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="characters"></param>
+  /// <param name="replacements"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="With(string, IEnumerable{char})"/>
-  public static string With(this string text, params char[] characters) => text.With(characters as IEnumerable<char>);
+  /// <seealso cref="Replace(string, IEnumerable{ValueTuple{string, object}})"/>
+  public static string Replace(this string text, params (string Name, object Value)[] replacements) => text.Replace(replacements as IEnumerable<(string Name, object Value)>);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="positions"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Without(string, int[])"/>
-  /// <seealso cref="Without(string, int, int?, Predicate{char})"/>
-  public static string Without(this string text, IEnumerable<int> positions)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (positions is null) throw new ArgumentNullException(nameof(positions));
-
-    return text.ToStringBuilder().Without(positions).ToString();
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="positions"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Without(string, IEnumerable{int})"/>
-  /// <seealso cref="Without(string, int, int?, Predicate{char})"/>
-  public static string Without(this string text, params int[] positions) => text.Without(positions as IEnumerable<int>);
+  public static string Reverse(this string text) => text is not null ? text.Length > 0 ? text.Reverse<char>().ToArray().ToText() : string.Empty : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
-  ///   <para>Removes specified number of characters from the beginning of a string.</para>
+  ///   <para>Multiplies/repeats value of source string given number of times, returning resulting string.</para>
   /// </summary>
-  /// <param name="text">String to be altered.</param>
-  /// <param name="offset"></param>
-  /// <param name="count">Number of characters to drop.</param>
-  /// <param name="condition"></param>
-  /// <returns>Resulting string with removed characters.</returns>
+  /// <param name="text">String to repeat.</param>
+  /// <param name="count">Number of repeats.</param>
+  /// <returns>Resulting string, consisting of <paramref name="text"/>'s data that has been repeated <paramref name="count"/> times.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
-  /// <seealso cref="Without(string, IEnumerable{int})"/>
-  /// <seealso cref="Without(string, int[])"/>
-  public static string Without(this string text, int offset, int? count = null, Predicate<char> condition = null)
+  public static string Repeat(this string text, int count)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
-    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-    return condition is not null ? text.Skip(offset).Where(character => condition(character)).AsArray().ToText() : count is not null ? text.Remove(offset, count.Value) : text.Remove(offset);
+    if (text.Length == 0 || count == 0)
+    {
+      return string.Empty;
+    }
+
+    var result = new StringBuilder(text.Length * count);
+
+    count.Times(() => result.Append(text));
+
+    return result.ToString();
+  }
+
+  /// <summary>
+  ///   <para>Splits given string on a newline (<see cref="Environment.NewLine"/>) character into array of strings.</para>
+  ///   <para>If source string is <see cref="string.Empty"/>, empty array is returned.</para>
+  /// </summary>
+  /// <param name="text">Source string to be split.</param>
+  /// <param name="separator"></param>
+  /// <returns>Target array of strings, which are part of <paramref name="text"/> string.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  public static string[] Lines(this string text, string separator = null) => text is not null ? text.Length > 0 ? text.Split(separator ?? Environment.NewLine) : [] : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para>Alters case of all characters inside a string, using provided culture.</para>
+  ///   <para>Upper-case characters are converted to lower-case and vice versa.</para>
+  /// </summary>
+  /// <param name="text">Source string to be converted.</param>
+  /// <param name="culture"></param>
+  /// <returns>Result string with swapped case of characters from <paramref name="text"/> string.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  public static string SwapCase(this string text, CultureInfo culture = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    if (text.Length == 0)
+    {
+      return text;
+    }
+
+    var result = new StringBuilder(text.Length);
+
+    foreach (var character in text)
+    {
+      result.Append(char.IsUpper(character) ? culture is not null ? char.ToLower(character, culture) : char.ToLower(character) : culture is not null ? char.ToUpper(character, culture) : char.ToUpper(character));
+    }
+
+    return result.ToString();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="culture"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CapitalizeAll(string, CultureInfo)"/>
+  public static string Capitalize(this string text, CultureInfo culture = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    if (text.Length == 0 || char.IsUpper(text, 0))
+    {
+      return text;
+    }
+
+    var chars = text.ToCharArray();
+
+    chars[0] = culture is not null ? char.ToUpper(chars[0], culture) : char.ToUpper(chars[0]);
+
+    return chars.ToText();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="culture"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Capitalize(string, CultureInfo)"/>
+  public static string CapitalizeAll(this string text, CultureInfo culture = null) => text is not null ? text.Length > 0 ? (culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text) : string.Empty : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="value"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="Unindent(string, char)"/>
+  public static string Indent(this string text, char value, int count = 1)
+  {
+    if (text is null)
+      throw new ArgumentNullException(nameof(text));
+    if (count < 0)
+      throw new ArgumentOutOfRangeException(nameof(count));
+
+    if (count == 0)
+    {
+      return text;
+    }
+
+    var indent = value.Repeat(count);
+
+    if (text.Length == 0)
+    {
+      return indent;
+    }
+
+    var result = new StringBuilder();
+
+    var lines = text.Lines().AsArray();
+
+    lines.ForEach((index, line) =>
+    {
+      result.Append(indent);
+      result.Append(line.Trim());
+
+      if (index < lines.Length - 1)
+      {
+        result.AppendLine();
+      }
+    });
+
+    return result.ToString();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Indent(string, char, int)"/>
+  public static string Unindent(this string text, char value)
+  {
+    if (text is null)
+      throw new ArgumentNullException(nameof(text));
+
+    if (text.Length == 0)
+    {
+      return text;
+    }
+
+    var result = new StringBuilder(text);
+
+    foreach (var line in text.Lines())
+    {
+      result.AppendLine(line.SkipWhile(character => character == value).ToArray().ToText());
+    }
+
+    return result.ToString();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="Unspacify(string)"/>
+  public static string Spacify(this string text, int count = 1) => text.Indent(' ', count);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Spacify(string, int)"/>
+  public static string Unspacify(this string text) => text.Unindent(' ');
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="count"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
+  /// <seealso cref="Untabify(string)"/>
+  public static string Tabify(this string text, int count = 1) => text.Indent('\t', count);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Tabify(string, int)"/>
+  public static string Untabify(this string text) => text.Unindent('\t');
+
+  /// <summary>
+  ///   <para>Determines whether a string matches specified regular expression.</para>
+  /// </summary>
+  /// <param name="text">The string to search for a match.</param>
+  /// <param name="pattern">The regular expression pattern to match.</param>
+  /// <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
+  /// <returns><c>true</c> if <paramref name="text"/> matches <paramref name="pattern"/> regular expression, <c>false</c> if not.</returns>
+  /// <seealso cref="Regex.IsMatch(string, string)"/>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="pattern"/> is <see langword="null"/>.</exception>
+  public static bool IsMatch(this string text, string pattern, RegexOptions? options = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (pattern is null) throw new ArgumentNullException(nameof(pattern));
+
+    return options is not null ? Regex.IsMatch(text, pattern, options.Value) : Regex.IsMatch(text, pattern);
+  }
+
+  /// <summary>
+  ///   <para>Searches source input string for all occurrences of a specified regular expression, using the specified matching options.</para>
+  /// </summary>
+  /// <param name="text">The string to search for a match.</param>
+  /// <param name="pattern">The regular expression pattern to match.</param>
+  /// <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
+  /// <returns>A collection of the <see cref="Match"/> objects found by the search. If no matches are found, the method returns an empty collection object.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="pattern"/> is <see langword="null"/>.</exception>
+  public static IEnumerable<Match> Matches(this string text, string pattern, RegexOptions? options = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (pattern is null) throw new ArgumentNullException(nameof(pattern));
+
+    return options is not null ? Regex.Matches(text, pattern, options.Value) : Regex.Matches(text, pattern);
   }
 
   /// <summary>
@@ -267,6 +527,24 @@ public static class StringExtensions
   /// <returns></returns>
   public static bool IsDateTimeOffset(this string text, IFormatProvider format = null) => text.ToDateTimeOffset(out _, format);
 
+#if NET8_0
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static bool IsDateOnly(this string text, IFormatProvider format = null) => text.ToDateOnly(out _, format);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static bool IsTimeOnly(this string text, IFormatProvider format = null) => text.ToTimeOnly(out _, format);
+#endif
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -287,6 +565,192 @@ public static class StringExtensions
   /// <param name="text"></param>
   /// <returns></returns>
   public static bool IsIpAddress(this string text) => text.ToIpAddress(out _);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="command"></param>
+  /// <param name="arguments"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="command"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Execute(string, string[])"/>
+  public static Process Execute(this string command, IEnumerable<string> arguments = null)
+  {
+    if (command is null)
+      throw new ArgumentNullException(nameof(command));
+
+    var process = command.ToProcess();
+
+    if (arguments is not null)
+    {
+      process.StartInfo.ArgumentList.With(arguments);
+    }
+    process.StartInfo.CreateNoWindow = true;
+    process.StartInfo.RedirectStandardError = true;
+    process.StartInfo.RedirectStandardInput = true;
+    process.StartInfo.RedirectStandardOutput = true;
+    process.StartInfo.UseShellExecute = false;
+
+    process.Start();
+
+    return process;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="command"></param>
+  /// <param name="arguments"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="command"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Execute(string, IEnumerable{string})"/>
+  public static Process Execute(this string command, params string[] arguments) => command.Execute(arguments as IEnumerable<string>);
+
+  /// <summary>
+  ///   <para>Converts a BASE64-encoded string to an equivalent 8-bit unsigned integer array.</para>
+  /// </summary>
+  /// <param name="text">BASE64-encoded string to be converted to binary form.</param>
+  /// <returns>An array of 8-bit unsigned integers that is equivalent to <paramref name="text"/>.</returns>
+  /// <seealso cref="System.Convert.FromBase64String(string)"/>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  public static byte[] FromBase64(this string text) => text is not null ? text.Length > 0 ? Convert.FromBase64String(text) : [] : throw new ArgumentNullException(nameof(text));
+
+#if NET8_0
+  /// <summary>
+  ///   <para>Converts HEX-encoded string into a sequence of bytes.</para>
+  /// </summary>
+  /// <param name="text">HEX-encoded string to be converted to byte sequence.</param>
+  /// <returns>Decoded data from HEX-encoded <paramref name="text"/> string.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  public static byte[] FromHex(this string text) => text is not null ? text.Length > 0 ? Convert.FromHexString(text) : [] : throw new ArgumentNullException(nameof(text));
+#endif
+
+  /// <summary>
+  ///   <para>URL-encodes string.</para>
+  /// </summary>
+  /// <param name="text">String to encode.</param>
+  /// <returns>Encoded string.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="UrlDecode(string)"/>
+  public static string UrlEncode(this string text) => text is not null ? text.Length > 0 ? Uri.EscapeDataString(text) : string.Empty : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para>Decodes URL-encoded string.</para>
+  /// </summary>
+  /// <param name="text">String to decode.</param>
+  /// <returns>Decoded string.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="UrlEncode(string)"/>
+  public static string UrlDecode(this string text) => text is not null ? text.Length > 0 ? Uri.UnescapeDataString(text) : string.Empty : throw new ArgumentNullException(nameof(text));
+  
+  /// <summary>
+  ///   <para>Converts a string to an HTML-encoded string.</para>
+  /// </summary>
+  /// <param name="text">String to convert to HTML-encoded version.</param>
+  /// <returns>HTML-encoded version of <paramref name="text"/>.</returns>
+  /// <seealso cref="WebUtility.HtmlEncode(string)"/>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="HtmlDecode(string)"/>
+  public static string HtmlEncode(this string text) => text is not null ? text.Length > 0 ? WebUtility.HtmlEncode(text) : string.Empty : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para>Converts a string that has been HTML-encoded for HTTP transmission into a decoded string.</para>
+  /// </summary>
+  /// <param name="text">HTML-encoded version of string.</param>
+  /// <returns>HTML-decoded version of <paramref name="text"/>.</returns>
+  /// <seealso cref="WebUtility.HtmlDecode(string)"/>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="HtmlEncode(string)"/>
+  public static string HtmlDecode(this string text) => text is not null ? text.Length > 0 ? WebUtility.HtmlDecode(text) : string.Empty : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="algorithm"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+  public static string Hash(this string text, HashAlgorithm algorithm) => text.ToBytes(Encoding.UTF8).Hash(algorithm).ToHex();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashMd5(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = MD5.Create();
+
+    return text.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashSha1(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = SHA1.Create();
+
+    return text.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashSha256(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = SHA256.Create();
+
+    return text.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashSha384(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = SHA384.Create();
+
+    return text.Hash(algorithm);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static string HashSha512(this string text)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    using var algorithm = SHA512.Create();
+
+    return text.Hash(algorithm);
+  }
 
   /// <summary>
   ///   <para></para>
@@ -340,422 +804,476 @@ public static class StringExtensions
   }
 
   /// <summary>
-  ///   <para>Compares two specified strings and returns an integer that indicates their relative position in the sort order.</para>
-  /// </summary>
-  /// <param name="left">The current string to compare with the second.</param>
-  /// <param name="right">The second string to compare with the current.</param>
-  /// <param name="culture"></param>
-  /// <returns>Integer value that indicates the lexical relationship between the two comparands.</returns>
-  /// <seealso cref="string.Compare(string, string, StringComparison)"/>
-  public static int Compare(this string left, string right, CultureInfo culture = null) => string.Compare(left, right, true, culture ?? CultureInfo.InvariantCulture);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  /// <seealso cref="CompareAsDate(string, string, IFormatProvider)"/>
-  public static int CompareAsNumber(this string left, string right, IFormatProvider format = null) => left is not null && right is not null ? left.ToDouble(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDouble(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  /// <seealso cref="CompareAsNumber(string, string, IFormatProvider)"/>
-  public static int CompareAsDate(this string left, string right, IFormatProvider format = null) => left is not null && right is not null ? left.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture).CompareTo(right.ToDateTimeOffset(format ?? CultureInfo.InvariantCulture)) : left.Compare(right);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  /// <seealso cref="Prepend(string, string)"/>
-  public static string Append(this string left, string right) => left + right;
-
-  /// <summary>
-  ///   <para>Prepends specified string to the target one, concatenating both of them.</para>
-  /// </summary>
-  /// <param name="left">Source string.</param>
-  /// <param name="right">String to prepend.</param>
-  /// <returns>Concatenated result of <paramref name="right"/> and <paramref name="left"/> string.</returns>
-  /// <seealso cref="Append(string, string)"/>
-  public static string Prepend(this string left, string right) => right + left;
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
+  /// <param name="characters"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  public static string Reverse(this string text) => text is not null ? text.Length > 0 ? text.Reverse<char>().ToArray().ToText() : string.Empty : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="replacements"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="replacements"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Replace(string, ValueTuple{string, object}[])"/>
-  public static string Replace(this string text, IEnumerable<(string Name, object Value)> replacements)
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="characters"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="With(string, char[])"/>
+  public static string With(this string text, IEnumerable<char> characters)
   {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (replacements is null) throw new ArgumentNullException(nameof(replacements));
+    if (text is null)
+      throw new ArgumentNullException(nameof(text));
+    if (characters is null)
+      throw new ArgumentNullException(nameof(characters));
 
-    if (text.Length == 0)
-    {
-      return text;
-    }
-
-    var result = new StringBuilder(text);
-
-    replacements.ForEach(replacement => result.Replace(replacement.Name, replacement.Value?.ToInvariantString() ?? string.Empty));
-
-    return result.ToString();
+    return text + characters.ToText();
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="replacements"></param>
+  /// <param name="characters"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Replace(string, IEnumerable{ValueTuple{string, object}})"/>
-  public static string Replace(this string text, params (string Name, object Value)[] replacements) => text.Replace(replacements as IEnumerable<(string Name, object Value)>);
+  /// <seealso cref="With(string, IEnumerable{char})"/>
+  public static string With(this string text, params char[] characters) => text.With(characters as IEnumerable<char>);
 
   /// <summary>
-  ///   <para>Alters case of all characters inside a string, using provided culture.</para>
-  ///   <para>Upper-case characters are converted to lower-case and vice versa.</para>
+  ///   <para></para>
   /// </summary>
-  /// <param name="text">Source string to be converted.</param>
-  /// <param name="culture"></param>
-  /// <returns>Result string with swapped case of characters from <paramref name="text"/> string.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  public static string SwapCase(this string text, CultureInfo culture = null)
+  /// <param name="text"></param>
+  /// <param name="positions"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="positions"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="Without(string, int[])"/>
+  /// <seealso cref="Without(string, int, int?, Predicate{char})"/>
+  public static string Without(this string text, IEnumerable<int> positions)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
+    if (positions is null) throw new ArgumentNullException(nameof(positions));
 
-    if (text.Length == 0)
-    {
-      return text;
-    }
-
-    var result = new StringBuilder(text.Length);
-
-    foreach (var character in text)
-    {
-      result.Append(char.IsUpper(character) ? culture is not null ? char.ToLower(character, culture) : char.ToLower(character) : culture is not null ? char.ToUpper(character, culture) : char.ToUpper(character));
-    }
-
-    return result.ToString();
+    return text.ToStringBuilder().Without(positions).ToString();
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="text"></param>
-  /// <param name="culture"></param>
+  /// <param name="positions"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="CapitalizeAll(string, CultureInfo)"/>
-  public static string Capitalize(this string text, CultureInfo culture = null)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    if (text.Length == 0 || char.IsUpper(text, 0))
-    {
-      return text;
-    }
-
-    var chars = text.ToCharArray();
-
-    chars[0] = culture is not null ? char.ToUpper(chars[0], culture) : char.ToUpper(chars[0]);
-
-    return chars.ToText();
-  }
+  /// <seealso cref="Without(string, IEnumerable{int})"/>
+  /// <seealso cref="Without(string, int, int?, Predicate{char})"/>
+  public static string Without(this string text, params int[] positions) => text.Without(positions as IEnumerable<int>);
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Removes specified number of characters from the beginning of a string.</para>
   /// </summary>
-  /// <param name="text"></param>
-  /// <param name="culture"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Capitalize(string, CultureInfo)"/>
-  public static string CapitalizeAll(this string text, CultureInfo culture = null) => text is not null ? text.Length > 0 ? (culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text) : string.Empty : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para>Multiplies/repeats value of source string given number of times, returning resulting string.</para>
-  /// </summary>
-  /// <param name="text">String to repeat.</param>
-  /// <param name="count">Number of repeats.</param>
-  /// <returns>Resulting string, consisting of <paramref name="text"/>'s data that has been repeated <paramref name="count"/> times.</returns>
+  /// <param name="text">String to be altered.</param>
+  /// <param name="offset"></param>
+  /// <param name="count">Number of characters to drop.</param>
+  /// <param name="condition"></param>
+  /// <returns>Resulting string with removed characters.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static string Repeat(this string text, int count)
+  /// <seealso cref="Without(string, IEnumerable{int})"/>
+  /// <seealso cref="Without(string, int[])"/>
+  public static string Without(this string text, int offset, int? count = null, Predicate<char> condition = null)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
-    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+    if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-    if (text.Length == 0 || count == 0)
-    {
-      return string.Empty;
-    }
-
-    var result = new StringBuilder(text.Length * count);
-
-    count.Times(() => result.Append(text));
-
-    return result.ToString();
-  }
-
-  /// <summary>
-  ///   <para>Splits given string on a newline (<see cref="Environment.NewLine"/>) character into array of strings.</para>
-  ///   <para>If source string is <see cref="string.Empty"/>, empty array is returned.</para>
-  /// </summary>
-  /// <param name="text">Source string to be split.</param>
-  /// <param name="separator"></param>
-  /// <returns>Target array of strings, which are part of <paramref name="text"/> string.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  public static string[] Lines(this string text, string separator = null) => text is not null ? text.Length > 0 ? text.Split(separator ?? Environment.NewLine) : [] : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para>Determines whether a string matches specified regular expression.</para>
-  /// </summary>
-  /// <param name="text">The string to search for a match.</param>
-  /// <param name="pattern">The regular expression pattern to match.</param>
-  /// <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
-  /// <returns><c>true</c> if <paramref name="text"/> matches <paramref name="pattern"/> regular expression, <c>false</c> if not.</returns>
-  /// <seealso cref="Regex.IsMatch(string, string)"/>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="pattern"/> is <see langword="null"/>.</exception>
-  public static bool IsMatch(this string text, string pattern, RegexOptions? options = null)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (pattern is null) throw new ArgumentNullException(nameof(pattern));
-
-    return options is not null ? Regex.IsMatch(text, pattern, options.Value) : Regex.IsMatch(text, pattern);
-  }
-
-  /// <summary>
-  ///   <para>Searches source input string for all occurrences of a specified regular expression, using the specified matching options.</para>
-  /// </summary>
-  /// <param name="text">The string to search for a match.</param>
-  /// <param name="pattern">The regular expression pattern to match.</param>
-  /// <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
-  /// <returns>A collection of the <see cref="Match"/> objects found by the search. If no matches are found, the method returns an empty collection object.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="pattern"/> is <see langword="null"/>.</exception>
-  public static IEnumerable<Match> Matches(this string text, string pattern, RegexOptions? options = null)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (pattern is null) throw new ArgumentNullException(nameof(pattern));
-
-    return options is not null ? Regex.Matches(text, pattern, options.Value) : Regex.Matches(text, pattern);
-  }
-
-  /// <summary>
-  ///   <para>Converts a BASE64-encoded string to an equivalent 8-bit unsigned integer array.</para>
-  /// </summary>
-  /// <param name="text">BASE64-encoded string to be converted to binary form.</param>
-  /// <returns>An array of 8-bit unsigned integers that is equivalent to <paramref name="text"/>.</returns>
-  /// <seealso cref="System.Convert.FromBase64String(string)"/>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  public static byte[] FromBase64(this string text) => text is not null ? text.Length > 0 ? Convert.FromBase64String(text) : [] : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para>URL-encodes string.</para>
-  /// </summary>
-  /// <param name="text">String to encode.</param>
-  /// <returns>Encoded string.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="UrlDecode(string)"/>
-  public static string UrlEncode(this string text) => text is not null ? text.Length > 0 ? Uri.EscapeDataString(text) : string.Empty : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para>Decodes URL-encoded string.</para>
-  /// </summary>
-  /// <param name="text">String to decode.</param>
-  /// <returns>Decoded string.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="UrlEncode(string)"/>
-  public static string UrlDecode(this string text) => text is not null ? text.Length > 0 ? Uri.UnescapeDataString(text) : string.Empty : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para>Converts a string to an HTML-encoded string.</para>
-  /// </summary>
-  /// <param name="text">String to convert to HTML-encoded version.</param>
-  /// <returns>HTML-encoded version of <paramref name="text"/>.</returns>
-  /// <seealso cref="WebUtility.HtmlEncode(string)"/>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="HtmlDecode(string)"/>
-  public static string HtmlEncode(this string text) => text is not null ? text.Length > 0 ? WebUtility.HtmlEncode(text) : string.Empty : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para>Converts a string that has been HTML-encoded for HTTP transmission into a decoded string.</para>
-  /// </summary>
-  /// <param name="text">HTML-encoded version of string.</param>
-  /// <returns>HTML-decoded version of <paramref name="text"/>.</returns>
-  /// <seealso cref="WebUtility.HtmlDecode(string)"/>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="HtmlEncode(string)"/>
-  public static string HtmlDecode(this string text) => text is not null ? text.Length > 0 ? WebUtility.HtmlDecode(text) : string.Empty : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="value"></param>
-  /// <param name="count"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  /// <seealso cref="Unindent(string, char)"/>
-  public static string Indent(this string text, char value, int count = 1)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    if (count == 0)
-    {
-      return text;
-    }
-
-    var indent = value.Repeat(count);
-
-    if (text.Length == 0)
-    {
-      return indent;
-    }
-
-    var result = new StringBuilder();
-
-    var lines = text.Lines().AsArray();
-
-    lines.ForEach((index, line) =>
-    {
-      result.Append(indent);
-      result.Append(line.Trim());
-
-      if (index < lines.Length - 1)
-      {
-        result.AppendLine();
-      }
-    });
-
-    return result.ToString();
+    return condition is not null ? text.Skip(offset).Where(character => condition(character)).AsArray().ToText() : count is not null ? text.Remove(offset, count.Value) : text.Remove(offset);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
   /// <param name="text"></param>
-  /// <param name="value"></param>
+  /// <param name="types"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Indent(string, char, int)"/>
-  public static string Unindent(this string text, char value)
+  public static T DeserializeAsDataContract<T>(this string text, params Type[] types)
   {
     if (text is null) throw new ArgumentNullException(nameof(text));
 
-    if (text.Length == 0)
-    {
-      return text;
-    }
+    using var reader = text.ToXmlReader();
 
-    var result = new StringBuilder(text);
-
-    foreach (var line in text.Lines())
-    {
-      result.AppendLine(line.SkipWhile(character => character == value).ToArray().ToText());
-    }
-
-    return result.ToString();
+    return reader.DeserializeAsDataContract<T>(types);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
   /// <param name="text"></param>
-  /// <param name="count"></param>
+  /// <param name="types"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  /// <seealso cref="Unspacify(string)"/>
-  public static string Spacify(this string text, int count = 1) => text.Indent(' ', count);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Spacify(string, int)"/>
-  public static string Unspacify(this string text) => text.Unindent(' ');
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="count"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  /// <seealso cref="Untabify(string)"/>
-  public static string Tabify(this string text, int count = 1) => text.Indent('\t', count);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Tabify(string, int)"/>
-  public static string Untabify(this string text) => text.Unindent('\t');
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="command"></param>
-  /// <param name="arguments"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="command"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Execute(string, string[])"/>
-  public static Process Execute(this string command, IEnumerable<string> arguments = null)
+  public static T DeserializeAsXml<T>(this string text, params Type[] types)
   {
-    if (command is null) throw new ArgumentNullException(nameof(command));
+    if (text is null) throw new ArgumentNullException(nameof(text));
 
-    var process = command.ToProcess();
+    using var reader = text.ToXmlReader();
 
-    if (arguments is not null)
-    {
-      process.StartInfo.ArgumentList.With(arguments);
-    }
-    process.StartInfo.CreateNoWindow = true;
-    process.StartInfo.RedirectStandardError = true;
-    process.StartInfo.RedirectStandardInput = true;
-    process.StartInfo.RedirectStandardOutput = true;
-    process.StartInfo.UseShellExecute = false;
-
-    process.Start();
-
-    return process;
+    return reader.DeserializeAsXml<T>(types);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="command"></param>
-  /// <param name="arguments"></param>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <returns>Back self-reference to the given <paramref name="text"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, Stream, Encoding, CancellationToken)"/>
+  public static string WriteTo(this string text, Stream destination, Encoding encoding = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text, encoding);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="command"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Execute(string, IEnumerable{string})"/>
-  public static Process Execute(this string command, params string[] arguments) => command.Execute(arguments as IEnumerable<string>);
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, Stream, Encoding)"/>
+  public static async Task<string> WriteToAsync(this string text, Stream destination, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, TextWriter, CancellationToken)"/>
+  public static string WriteTo(this string text, TextWriter destination)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, TextWriter)"/>
+  public static async Task<string> WriteToAsync(this string text, TextWriter destination, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  public static string WriteTo(this string text, BinaryWriter destination)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, XmlWriter)"/>
+  public static string WriteTo(this string text, XmlWriter destination)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, XmlWriter)"/>
+  public static async Task<string> WriteToAsync(this string text, XmlWriter destination)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    await destination.WriteTextAsync(text).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, FileInfo, Encoding, CancellationToken)"/>
+  public static string WriteTo(this string text, FileInfo destination, Encoding encoding = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text, encoding);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, FileInfo, Encoding)"/>
+  public static async Task<string> WriteToAsync(this string text, FileInfo destination, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, Process, CancellationToken)"/>
+  public static string WriteTo(this string text, Process destination)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, Process)"/>
+  public static async Task<string> WriteToAsync(this string text, Process destination, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    await destination.WriteTextAsync(text, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, Uri, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
+  public static string WriteTo(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteBytes(text.ToBytes(encoding), timeout, headers);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/>
+  public static async Task<string> WriteToAsync(this string text, Uri destination, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteBytesAsync(text.ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="client"></param>
+  /// <param name="destination"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/>, <paramref name="client"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, HttpClient, Uri, CancellationToken)"/>
+  public static HttpContent WriteTo(this string text, HttpClient client, Uri destination) => client.WriteText(text, destination);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="client"></param>
+  /// <param name="destination"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/>, <paramref name="client"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, HttpClient, Uri)"/>
+  public static async Task<HttpContent> WriteToAsync(this string text, HttpClient client, Uri destination, CancellationToken cancellation = default) => await client.WriteTextAsync(text, destination, cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, TcpClient, Encoding, CancellationToken)"/>
+  public static string WriteTo(this string text, TcpClient destination, Encoding encoding = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text, encoding);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, TcpClient, Encoding)"/>
+  public static async Task<string> WriteToAsync(this string text, TcpClient destination, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteToAsync(string, UdpClient, Encoding, CancellationToken)"/>
+  public static string WriteTo(this string text, UdpClient destination, Encoding encoding = null)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    destination.WriteText(text, encoding);
+
+    return text;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTo(string, UdpClient, Encoding)"/>
+  public static async Task<string> WriteToAsync(this string text, UdpClient destination, Encoding encoding = null, CancellationToken cancellation = default)
+  {
+    if (text is null) throw new ArgumentNullException(nameof(text));
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await destination.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+
+    return text;
+  }
 
   /// <summary>
   ///   <para>Converts string to a sequence of bytes, using specified <see cref="Encoding"/>.</para>
@@ -1162,6 +1680,48 @@ public static class StringExtensions
   /// <seealso cref="ToDateTimeOffset(string, IFormatProvider)"/>
   public static bool ToDateTimeOffset(this string text, out DateTimeOffset? result, IFormatProvider format = null) => (result = DateTimeOffset.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) is not null;
 
+#if NET8_0
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToDateOnly(string, out DateOnly?, IFormatProvider)"/>
+  public static DateOnly ToDateOnly(this string text, IFormatProvider format = null) => text is not null ? DateOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="result"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  /// <seealso cref="ToDateOnly(string, IFormatProvider)"/>
+  public static bool ToDateOnly(this string text, out DateOnly? result, IFormatProvider format = null) => (result = DateOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTimeOnly(string, out TimeOnly?, IFormatProvider)"/>
+  public static TimeOnly ToTimeOnly(this string text, IFormatProvider format = null) => text is not null ? TimeOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="result"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  /// <seealso cref="ToTimeOnly(string, IFormatProvider)"/>
+  public static bool ToTimeOnly(this string text, out TimeOnly? result, IFormatProvider format = null) => (result = TimeOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
+#endif
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -1379,513 +1939,4 @@ public static class StringExtensions
 
     return process;
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteToAsync(string, TextWriter, CancellationToken)"/>
-  public static string WriteTo(this string text, TextWriter to)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    to.WriteText(text);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTo(string, TextWriter)"/>
-  public static async Task<string> WriteToAsync(this string text, TextWriter to, CancellationToken cancellation = default)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await to.WriteTextAsync(text, cancellation).ConfigureAwait(false);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  public static string WriteTo(this string text, BinaryWriter to)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    to.WriteText(text);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteToAsync(string, XmlWriter)"/>
-  public static string WriteTo(this string text, XmlWriter to)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    to.WriteText(text);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTo(string, XmlWriter)"/>
-  public static async Task<string> WriteToAsync(this string text, XmlWriter to)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    await to.WriteTextAsync(text).ConfigureAwait(false);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteToAsync(string, FileInfo, Encoding, CancellationToken)"/>
-  public static string WriteTo(this string text, FileInfo to, Encoding encoding = null)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    to.WriteText(text, encoding);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTo(string, FileInfo, Encoding)"/>
-  public static async Task<string> WriteToAsync(this string text, FileInfo to, Encoding encoding = null, CancellationToken cancellation = default)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await to.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteToAsync(string, Process, CancellationToken)"/>
-  public static string WriteTo(this string text, Process to)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    to.WriteText(text);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTo(string, Process)"/>
-  public static async Task<string> WriteToAsync(this string text, Process to, CancellationToken cancellation = default)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    await to.WriteTextAsync(text, cancellation).ConfigureAwait(false);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="encoding"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteToAsync(string, Uri, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
-  public static string WriteTo(this string text, Uri to, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    to.WriteBytes(text.ToBytes(encoding), timeout, headers);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="encoding"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTo(string, Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/>
-  public static async Task<string> WriteToAsync(this string text, Uri to, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await to.WriteBytesAsync(text.ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="client"></param>
-  /// <param name="uri"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/>, <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteToAsync(string, HttpClient, Uri, CancellationToken)"/>
-  public static HttpContent WriteTo(this string text, HttpClient client, Uri uri) => client.WriteText(text, uri);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="client"></param>
-  /// <param name="uri"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/>, <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTo(string, HttpClient, Uri)"/>
-  public static async Task<HttpContent> WriteToAsync(this string text, HttpClient client, Uri uri, CancellationToken cancellation = default) => await client.WriteTextAsync(text, uri, cancellation).ConfigureAwait(false);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteToAsync(string, TcpClient, Encoding, CancellationToken)"/>
-  public static string WriteTo(this string text, TcpClient to, Encoding encoding = null)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    to.WriteText(text, encoding);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTo(string, TcpClient, Encoding)"/>
-  public static async Task<string> WriteToAsync(this string text, TcpClient to, Encoding encoding = null, CancellationToken cancellation = default)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await to.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteToAsync(string, UdpClient, Encoding, CancellationToken)"/>
-  public static string WriteTo(this string text, UdpClient to, Encoding encoding = null)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    to.WriteText(text, encoding);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="to"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="to"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTo(string, UdpClient, Encoding)"/>
-  public static async Task<string> WriteToAsync(this string text, UdpClient to, Encoding encoding = null, CancellationToken cancellation = default)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-    if (to is null) throw new ArgumentNullException(nameof(to));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await to.WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
-
-    return text;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="text"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  public static T DeserializeAsDataContract<T>(this string text, params Type[] types)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    using var reader = text.ToXmlReader();
-
-    return reader.DeserializeAsDataContract<T>(types);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="text"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  public static T DeserializeAsXml<T>(this string text, params Type[] types)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    using var reader = text.ToXmlReader();
-
-    return reader.DeserializeAsXml<T>(types);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="algorithm"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
-  public static string Hash(this string text, HashAlgorithm algorithm) => text.ToBytes(Encoding.UTF8).Hash(algorithm).ToHex();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static string HashMd5(this string text)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    using var algorithm = MD5.Create();
-
-    return text.Hash(algorithm);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static string HashSha1(this string text)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    using var algorithm = SHA1.Create();
-
-    return text.Hash(algorithm);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static string HashSha256(this string text)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    using var algorithm = SHA256.Create();
-
-    return text.Hash(algorithm);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static string HashSha384(this string text)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    using var algorithm = SHA384.Create();
-
-    return text.Hash(algorithm);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static string HashSha512(this string text)
-  {
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    using var algorithm = SHA512.Create();
-
-    return text.Hash(algorithm);
-  }
-
-#if NET8_0
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static bool IsDateOnly(this string text, IFormatProvider format = null) => text.ToDateOnly(out _, format);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static bool IsTimeOnly(this string text, IFormatProvider format = null) => text.ToTimeOnly(out _, format);
-
-  /// <summary>
-  ///   <para>Converts HEX-encoded string into a sequence of bytes.</para>
-  /// </summary>
-  /// <param name="text">HEX-encoded string to be converted to byte sequence.</param>
-  /// <returns>Decoded data from HEX-encoded <paramref name="text"/> string.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  public static byte[] FromHex(this string text) => text is not null ? text.Length > 0 ? Convert.FromHexString(text) : [] : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToDateOnly(string, out DateOnly?, IFormatProvider)"/>
-  public static DateOnly ToDateOnly(this string text, IFormatProvider format = null) => text is not null ? DateOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="result"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  /// <seealso cref="ToDateOnly(string, IFormatProvider)"/>
-  public static bool ToDateOnly(this string text, out DateOnly? result, IFormatProvider format = null) => (result = DateOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToTimeOnly(string, out TimeOnly?, IFormatProvider)"/>
-  public static TimeOnly ToTimeOnly(this string text, IFormatProvider format = null) => text is not null ? TimeOnly.Parse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces) : throw new ArgumentNullException(nameof(text));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="result"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  /// <seealso cref="ToTimeOnly(string, IFormatProvider)"/>
-  public static bool ToTimeOnly(this string text, out TimeOnly? result, IFormatProvider format = null) => (result = TimeOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
-  #endif
 }

@@ -45,24 +45,6 @@ public static class DateTimeExtensions
   public static bool IsWeekend(this DateTime date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
 
   /// <summary>
-  ///   <para>Determines whether two <see cref="DateTime"/> object instances represent the same date (have same year/month/day values).</para>
-  /// </summary>
-  /// <param name="left">Current date to compare with the second.</param>
-  /// <param name="right">Second date to compare with the current.</param>
-  /// <returns><c>true</c> if both <paramref name="left"/> and <paramref name="right"/> have equals date component.</returns>
-  /// <seealso cref="EqualsByTime(DateTime, DateTime)"/>
-  public static bool EqualsByDate(this DateTime left, DateTime right) => left.Year == right.Year && left.Month == right.Month && left.Day == right.Day;
-
-  /// <summary>
-  ///   <para>Determines whether two <see cref="DateTime"/> object instances represent the same time (have same hour/minute/second values).</para>
-  /// </summary>
-  /// <param name="left">Current date to compare with the second.</param>
-  /// <param name="right">Second date to compare with the current.</param>
-  /// <returns><c>true</c> if both <paramref name="left"/> and <paramref name="right"/> have equal time component.</returns>
-  /// <seealso cref="EqualsByDate(DateTime, DateTime)"/>
-  public static bool EqualsByTime(this DateTime left, DateTime right) => left.Hour == right.Hour && left.Minute == right.Minute && left.Second == right.Second && left.Millisecond == right.Millisecond;
-  
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="from"></param>
@@ -84,6 +66,24 @@ public static class DateTimeExtensions
       yield return date;
     }
   }
+
+  /// <summary>
+  ///   <para>Determines whether two <see cref="DateTime"/> object instances represent the same date (have same year/month/day values).</para>
+  /// </summary>
+  /// <param name="left">Current date to compare with the second.</param>
+  /// <param name="right">Second date to compare with the current.</param>
+  /// <returns><c>true</c> if both <paramref name="left"/> and <paramref name="right"/> have equals date component.</returns>
+  /// <seealso cref="EqualsByTime(DateTime, DateTime)"/>
+  public static bool EqualsByDate(this DateTime left, DateTime right) => left.Year == right.Year && left.Month == right.Month && left.Day == right.Day;
+
+  /// <summary>
+  ///   <para>Determines whether two <see cref="DateTime"/> object instances represent the same time (have same hour/minute/second values).</para>
+  /// </summary>
+  /// <param name="left">Current date to compare with the second.</param>
+  /// <param name="right">Second date to compare with the current.</param>
+  /// <returns><c>true</c> if both <paramref name="left"/> and <paramref name="right"/> have equal time component.</returns>
+  /// <seealso cref="EqualsByDate(DateTime, DateTime)"/>
+  public static bool EqualsByTime(this DateTime left, DateTime right) => left.Hour == right.Hour && left.Minute == right.Minute && left.Second == right.Second && left.Millisecond == right.Millisecond;
   
   /// <summary>
   ///   <para>For a given date/time instance returns a new date/time, representing the start of year.</para>
@@ -189,22 +189,6 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset ToDateTimeOffset(this DateTime date) => new(date.ToUniversalTime());
 
-  /// <summary>
-  ///   <para>Formats given date/time instance according to ISO 8601 specification and returns formatted date as a string.</para>
-  /// </summary>
-  /// <param name="date">Date/time object instance.</param>
-  /// <returns>Formatted date/time value as a string.</returns>
-  /// <seealso cref="ToRfcString(DateTime)"/>
-  public static string ToIsoString(this DateTime date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
-
-  /// <summary>
-  ///   <para>Formats given date/time instance according to RFC 1123 specification and returns formatted date as a string.</para>
-  /// </summary>
-  /// <param name="date">Date/time object instance.</param>
-  /// <returns>Formatted date/time value as a string.</returns>
-  /// <seealso cref="ToIsoString(DateTime)"/>
-  public static string ToRfcString(this DateTime date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
-
 #if NET8_0
   /// <summary>
   ///   <para></para>
@@ -220,4 +204,20 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static TimeOnly ToTimeOnly(this DateTime date) => TimeOnly.FromDateTime(date);
 #endif
+
+  /// <summary>
+  ///   <para>Formats given date/time instance according to ISO 8601 specification and returns formatted date as a string.</para>
+  /// </summary>
+  /// <param name="date">Date/time object instance.</param>
+  /// <returns>Formatted date/time value as a string.</returns>
+  /// <seealso cref="ToRfcString(DateTime)"/>
+  public static string ToIsoString(this DateTime date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
+
+  /// <summary>
+  ///   <para>Formats given date/time instance according to RFC 1123 specification and returns formatted date as a string.</para>
+  /// </summary>
+  /// <param name="date">Date/time object instance.</param>
+  /// <returns>Formatted date/time value as a string.</returns>
+  /// <seealso cref="ToIsoString(DateTime)"/>
+  public static string ToRfcString(this DateTime date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
 }

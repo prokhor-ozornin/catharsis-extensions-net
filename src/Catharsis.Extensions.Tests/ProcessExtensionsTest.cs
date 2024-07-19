@@ -95,6 +95,31 @@ public sealed class ProcessExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.FinishAsync(Process, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FinishAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ProcessExtensions.FinishAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
+      AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(Process process)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="ProcessExtensions.TryFinallyKill(Process, Action{Process})"/> method.</para>
   /// </summary>
   [Fact]
@@ -117,6 +142,54 @@ public sealed class ProcessExtensionsTest : UnitTest
     return;
 
     static void Validate(Process process)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.ToErrorText(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToErrorText_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ProcessExtensions.ToErrorText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, Process process)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.ToErrorTextAsync(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToErrorTextAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ProcessExtensions.ToErrorTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, Process process)
     {
       using (process)
       {
@@ -222,54 +295,6 @@ public sealed class ProcessExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.ToErrorText(Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToErrorText_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ProcessExtensions.ToErrorText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string result, Process process)
-    {
-      using (process)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.ToErrorTextAsync(Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToErrorTextAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ProcessExtensions.ToErrorTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string result, Process process)
-    {
-      using (process)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="ProcessExtensions.WriteBytes(Process, IEnumerable{byte})"/> method.</para>
   /// </summary>
   [Fact]
@@ -277,7 +302,7 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.WriteBytes(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => ProcessExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
       AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
@@ -302,9 +327,9 @@ public sealed class ProcessExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.WriteBytesAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => ProcessExtensions.WriteBytesAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
       AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => ShellProcess.WriteBytesAsync(Enumerable.Empty<byte>(), Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => ShellProcess.WriteBytesAsync([], Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -363,31 +388,6 @@ public sealed class ProcessExtensionsTest : UnitTest
     return;
 
     static void Validate(Process process, string text)
-    {
-      using (process)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.FinishAsync(Process, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void FinishAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ProcessExtensions.FinishAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
-      AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(Process process)
     {
       using (process)
       {

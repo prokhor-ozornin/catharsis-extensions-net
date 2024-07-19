@@ -11,16 +11,16 @@ public static class SmtpClientExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="smtp"></param>
+  /// <param name="client"></param>
   /// <param name="timeout"></param>
-  /// <returns>Back self-reference to the given <paramref name="smtp"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="smtp"/> is <see langword="null"/>.</exception>
-  public static SmtpClient WithTimeout(this SmtpClient smtp, TimeSpan timeout)
+  /// <returns>Back self-reference to the given <paramref name="client"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
+  public static SmtpClient WithTimeout(this SmtpClient client, TimeSpan timeout)
   {
-    if (smtp is null) throw new ArgumentNullException(nameof(smtp));
+    if (client is null) throw new ArgumentNullException(nameof(client));
 
-    smtp.Timeout = (int) timeout.TotalMilliseconds;
+    client.Timeout = (int) timeout.TotalMilliseconds;
 
-    return smtp;
+    return client;
   }
 }

@@ -10,19 +10,6 @@ namespace Catharsis.Extensions;
 public static class IPHostEntryExtensions
 {
   /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="IPHostEntry"/> with the same properties as the original.</para>
-  /// </summary>
-  /// <param name="host">Host entry to be cloned.</param>
-  /// <returns>Cloning result.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="host"/> is <see langword="null"/>.</exception>
-  public static IPHostEntry Clone(this IPHostEntry host) => host is not null ? new IPHostEntry 
-  {
-    HostName = host.HostName, 
-    AddressList = host.AddressList,
-    Aliases = host.Aliases
-  } : throw new ArgumentNullException(nameof(host));
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="host"></param>
@@ -90,6 +77,19 @@ public static class IPHostEntryExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="host"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsUnset(IPHostEntry)"/>
   public static bool IsEmpty(this IPHostEntry host) => host is not null ? host.HostName.IsUnset() && host.AddressList.IsUnset() : throw new ArgumentNullException(nameof(host));
+
+  /// <summary>
+  ///   <para>Creates a copy of the specified <see cref="IPHostEntry"/> with the same properties as the original.</para>
+  /// </summary>
+  /// <param name="host">Host entry to be cloned.</param>
+  /// <returns>Cloning result.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="host"/> is <see langword="null"/>.</exception>
+  public static IPHostEntry Clone(this IPHostEntry host) => host is not null ? new IPHostEntry
+  {
+    HostName = host.HostName,
+    AddressList = host.AddressList,
+    Aliases = host.Aliases
+  } : throw new ArgumentNullException(nameof(host));
 
   /// <summary>
   ///   <para></para>

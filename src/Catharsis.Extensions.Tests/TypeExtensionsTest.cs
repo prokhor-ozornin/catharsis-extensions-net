@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using System.Reflection;
+﻿using System.Reflection;
 using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -49,6 +48,24 @@ public sealed class TypeExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="TypeExtensions.IsArray{T}(Type)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsArray_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.IsArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate<T>(bool result, Type type) => type.IsArray<T>().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="TypeExtensions.IsAssignableFrom{T}(Type)"/> method.</para>
   /// </summary>
   [Fact]
@@ -89,28 +106,10 @@ public sealed class TypeExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TypeExtensions.IsArray{T}(Type)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsArray_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => TypeExtensions.IsArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate<T>(bool result, Type type) => type.IsArray<T>().Should().Be(result);
-  }
-
-  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="TypeExtensions.HasMethod(Type, string, IEnumerable{Type})"/></description></item>
-  ///     <item><description><see cref="TypeExtensions.HasMethod(Type, string, Type[])"/></description></item>
+  ///     <item><description><see cref="TypeExtensions.IsDerivedFrom(Type, Type)"/></description></item>
+  ///     <item><description><see cref="TypeExtensions.IsDerivedFrom{T}(Type)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -133,7 +132,7 @@ public sealed class TypeExtensionsTest : UnitTest
 
     throw new NotImplementedException();
   }
-
+  
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
@@ -296,6 +295,56 @@ public sealed class TypeExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="TypeExtensions.HasConstructor(Type, IEnumerable{Type})"/></description></item>
+  ///     <item><description><see cref="TypeExtensions.HasConstructor(Type, Type[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void HasConstructor_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.HasConstructor(null, Enumerable.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).HasConstructor()).ThrowExactly<ArgumentNullException>().WithParameterName("arguments");
+
+      static void Validate(bool result, Type type, IEnumerable<Type> arguments = null) => type.HasConstructor(arguments).Should().Be(result);
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.HasConstructor(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => typeof(object).HasConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("arguments");
+
+      static void Validate(bool result, Type type, params Type[] arguments) => type.HasConstructor(arguments).Should().Be(result);
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TypeExtensions.HasDefaultConstructor(Type)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void HasDefaultConstructor_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TypeExtensions.HasDefaultConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+
+      /*typeof(TestObject).Constructor().Should().NotBeNull();
+      typeof(string).Constructor().Should().BeNull();*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, Type type) => type.HasDefaultConstructor().Should().Be(result);
   }
 
   /// <summary>
@@ -494,56 +543,6 @@ public sealed class TypeExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="TypeExtensions.HasConstructor(Type, IEnumerable{Type})"/></description></item>
-  ///     <item><description><see cref="TypeExtensions.HasConstructor(Type, Type[])"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void HasConstructor_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => TypeExtensions.HasConstructor(null, Enumerable.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-      AssertionExtensions.Should(() => typeof(object).HasConstructor()).ThrowExactly<ArgumentNullException>().WithParameterName("arguments");
-
-      static void Validate(bool result, Type type, IEnumerable<Type> arguments = null) => type.HasConstructor(arguments).Should().Be(result);
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => TypeExtensions.HasConstructor(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-      AssertionExtensions.Should(() => typeof(object).HasConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("arguments");
-
-      static void Validate(bool result, Type type, params Type[] arguments) => type.HasConstructor(arguments).Should().Be(result);
-    }
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TypeExtensions.HasDefaultConstructor(Type)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void HasDefaultConstructor_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => TypeExtensions.HasDefaultConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-
-      /*typeof(TestObject).Constructor().Should().NotBeNull();
-      typeof(string).Constructor().Should().BeNull();*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(bool result, Type type) => type.HasDefaultConstructor().Should().Be(result);
   }
 
   /// <summary>

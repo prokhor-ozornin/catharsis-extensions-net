@@ -31,6 +31,15 @@ public static class TypeExtensions
   /// <param name="type"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
+  public static bool IsArray<T>(this Type type) => type is not null ? type == typeof(T[]) : throw new ArgumentNullException(nameof(type));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="type"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsAssignableTo{T}(Type)"/>
   public static bool IsAssignableFrom<T>(this Type type) => type?.IsAssignableFrom(typeof(T)) ?? throw new ArgumentNullException(nameof(type));
 
@@ -43,16 +52,7 @@ public static class TypeExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsAssignableFrom{T}(Type)"/>
   public static bool IsAssignableTo<T>(this Type type) => type is not null ? typeof(T).IsAssignableFrom(type) : throw new ArgumentNullException(nameof(type));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="type"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
-  public static bool IsArray<T>(this Type type) => type is not null ? type == typeof(T[]) : throw new ArgumentNullException(nameof(type));
-
+  
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -209,6 +209,43 @@ public static class TypeExtensions
   public static bool HasMethod(this Type type, string name, params Type[] arguments) => AnyMethod(type, name, arguments) is not null;
 
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="type"></param>
+  /// <param name="arguments"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="HasConstructor(Type, Type[])"/>
+  /// <seealso cref="HasDefaultConstructor(Type)"/>
+  public static bool HasConstructor(this Type type, IEnumerable<Type> arguments = null)
+  {
+    if (type is null) throw new ArgumentNullException(nameof(type));
+
+    return type.GetConstructor(arguments?.AsArray() ?? []) is not null;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="type"></param>
+  /// <param name="arguments"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="HasConstructor(Type, IEnumerable{Type})"/>
+  /// <seealso cref="HasDefaultConstructor(Type)"/>
+  public static bool HasConstructor(this Type type, params Type[] arguments) => type.HasConstructor(arguments as IEnumerable<Type>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="type"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="HasConstructor(Type, IEnumerable{Type})"/>
+  /// <seealso cref="HasConstructor(Type, Type[])"/>
+  public static bool HasDefaultConstructor(this Type type) => type.HasConstructor();
+
+  /// <summary>
   ///   <para>Searches for a named event, declared within a specified <paramref name="type"/>.</para>
   ///   <para>Returns <see cref="EventInfo"/> object, representing either instance or static event with either private or public access level.</para>
   /// </summary>
@@ -286,43 +323,6 @@ public static class TypeExtensions
   /// <exception cref="ArgumentNullException">If either <paramref name="type"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
   /// <seealso cref="AnyMethod(Type, string, IEnumerable{Type})"/>
   public static MethodInfo AnyMethod(this Type type, string name, params Type[] arguments) => type.AnyMethod(name, arguments as IEnumerable<Type>);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="type"></param>
-  /// <param name="arguments"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="HasConstructor(Type, Type[])"/>
-  /// <seealso cref="HasDefaultConstructor(Type)"/>
-  public static bool HasConstructor(this Type type, IEnumerable<Type> arguments = null)
-  {
-    if (type is null) throw new ArgumentNullException(nameof(type));
-
-    return type.GetConstructor(arguments?.AsArray() ?? []) is not null;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="type"></param>
-  /// <param name="arguments"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="HasConstructor(Type, IEnumerable{Type})"/>
-  /// <seealso cref="HasDefaultConstructor(Type)"/>
-  public static bool HasConstructor(this Type type, params Type[] arguments) => type.HasConstructor(arguments as IEnumerable<Type>);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="type"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="HasConstructor(Type, IEnumerable{Type})"/>
-  /// <seealso cref="HasConstructor(Type, Type[])"/>
-  public static bool HasDefaultConstructor(this Type type) => type.HasConstructor();
 
   /// <summary>
   ///   <para></para>

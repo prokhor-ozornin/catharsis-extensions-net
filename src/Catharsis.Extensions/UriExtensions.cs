@@ -15,14 +15,6 @@ namespace Catharsis.Extensions;
 public static class UriExtensions
 {
   /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="Uri"/> with the same address as the original.</para>
-  /// </summary>
-  /// <param name="uri">URI address to be cloned.</param>
-  /// <returns>Cloning result.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-  public static Uri Clone(this Uri uri) => uri is not null ? new Uri(uri.OriginalString) : throw new ArgumentNullException(nameof(uri));
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="uri"></param>
@@ -136,6 +128,14 @@ public static class UriExtensions
   }
 
   /// <summary>
+  ///   <para>Creates a copy of the specified <see cref="Uri"/> with the same address as the original.</para>
+  /// </summary>
+  /// <param name="uri">URI address to be cloned.</param>
+  /// <returns>Cloning result.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
+  public static Uri Clone(this Uri uri) => uri is not null ? new Uri(uri.OriginalString) : throw new ArgumentNullException(nameof(uri));
+
+  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="uri"></param>
@@ -170,6 +170,165 @@ public static class UriExtensions
     }
 
     return uri.TryFinally(action, finalizer);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DeserializeAsDataContractAsync{T}(Uri, TimeSpan?, IEnumerable{ValueTuple{string, object}}, Type[])"/>
+  public static T DeserializeAsDataContract<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsDataContractAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="uri"></param>
+  /// <param name="types"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DeserializeAsDataContract{T}(Uri, TimeSpan?, IEnumerable{ValueTuple{string, object}}, Type[])"/>
+  public static async Task<T> DeserializeAsDataContractAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  {
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers?.AsArray()).ConfigureAwait(false);
+
+    return reader.DeserializeAsDataContract<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <param name="types"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DeserializeAsXmlAsync{T}(Uri, TimeSpan?, IEnumerable{ValueTuple{string, object}}, Type[])"/>
+  public static T DeserializeAsXml<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsXmlAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="uri"></param>
+  /// <param name="types"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="DeserializeAsXml{T}(Uri, TimeSpan?, IEnumerable{ValueTuple{string, object}}, Type[])"/>
+  public static async Task<T> DeserializeAsXmlAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
+  {
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    using var reader = await uri.ToXmlReaderAsync(timeout, headers?.AsArray()).ConfigureAwait(false);
+
+    return reader.DeserializeAsXml<T>(types);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync(Uri, IEnumerable{byte}, TimeSpan?, CancellationToken, ValueTuple{string, object}[] headers)"/>
+  public static Uri WriteBytes(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    return destination.WriteBytesAsync(bytes, timeout, default, headers).Result;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="bytes"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes(Uri, IEnumerable{byte}, TimeSpan?, ValueTuple{string, object}[])"/>
+  public static async Task<Uri> WriteBytesAsync(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    if (destination.IsFile)
+    {
+      await destination.LocalPath.ToFile().WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+    }
+    else if (destination.Scheme == Uri.UriSchemeNetTcp)
+    {
+      using var tcp = new TcpClient(destination.Host, destination.Port).WithTimeout(timeout);
+      await tcp.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+    }
+    else if (destination.Scheme == Uri.UriSchemeHttp || destination.Scheme == Uri.UriSchemeHttps)
+    {
+      using var http = new HttpClient().WithTimeout(timeout).WithHeaders(headers);
+      await http.WriteBytesAsync(bytes, destination, cancellation).ConfigureAwait(false);
+    }
+
+    return destination;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="destination"></param>
+  /// <param name="text"></param>
+  /// <param name="encoding"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync(Uri, string, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
+  public static Uri WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    return destination.WriteTextAsync(text, encoding, timeout, default, headers).Result;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  /// <param name="destination"></param>
+  /// <param name="encoding"></param>
+  /// <param name="timeout"></param>
+  /// <param name="cancellation"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText(Uri, string, Encoding, TimeSpan?, ValueTuple{string, object}[])"/>
+  public static async Task<Uri> WriteTextAsync(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
+  {
+    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    if (text is null) throw new ArgumentNullException(nameof(text));
+
+    return await destination.WriteBytesAsync(text.AsArray().ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
   }
 
   /// <summary>
@@ -249,50 +408,6 @@ public static class UriExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
   public static UriBuilder ToUriBuilder(this Uri uri) => uri is not null ? new UriBuilder(uri) : throw new ArgumentNullException(nameof(uri));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="uri"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToStreamAsync(Uri, TimeSpan?, ValueTuple{string, object}[])"/>
-  public static Stream ToStream(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToStreamAsync(timeout, headers).Result : throw new ArgumentNullException(nameof(uri));
-
-  /// <summary>
-  ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
-  /// </summary>
-  /// <param name="uri">The URI from which to download the data.</param>
-  /// <param name="timeout"></param>
-  /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
-  /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToStream(Uri, TimeSpan?, ValueTuple{string, object}[])"/>
-  public static async Task<Stream> ToStreamAsync(this Uri uri, TimeSpan? timeout = null,params (string Name, object Value)[] headers)
-  {
-    if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-    if (uri.IsFile)
-    {
-      return uri.LocalPath.ToFile().ToReadOnlyStream();
-    }
-
-    if (uri.Scheme == Uri.UriSchemeNetTcp)
-    {
-      using var tcp = new TcpClient(uri.Host, uri.Port).WithTimeout(timeout);
-      return tcp.GetStream();
-    }
-
-    if (uri.Scheme == Uri.UriSchemeHttp && uri.Scheme == Uri.UriSchemeHttps)
-    {
-      using var http = new HttpClient().WithTimeout(timeout).WithHeaders(headers);
-      return await http.ToStreamAsync(uri).ConfigureAwait(false);
-    }
-
-    throw new InvalidOperationException($"Unsupported URI scheme: {uri.Scheme}");
-  }
 
   /// <summary>
   ///   <para></para>
@@ -406,6 +521,50 @@ public static class UriExtensions
   /// <param name="headers"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToStreamAsync(Uri, TimeSpan?, ValueTuple{string, object}[])"/>
+  public static Stream ToStream(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToStreamAsync(timeout, headers).Result : throw new ArgumentNullException(nameof(uri));
+
+  /// <summary>
+  ///   <para>Opens a readable stream for the data downloaded from a resource with the specified <see cref="Uri"/>.</para>
+  /// </summary>
+  /// <param name="uri">The URI from which to download the data.</param>
+  /// <param name="timeout"></param>
+  /// <param name="headers">Optional set of additional headers to send alongside with request (names/values).</param>
+  /// <returns><see cref="System.IO.Stream"/> to read web server's response data from HTTP connection.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToStream(Uri, TimeSpan?, ValueTuple{string, object}[])"/>
+  public static async Task<Stream> ToStreamAsync(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+  {
+    if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+    if (uri.IsFile)
+    {
+      return uri.LocalPath.ToFile().ToReadOnlyStream();
+    }
+
+    if (uri.Scheme == Uri.UriSchemeNetTcp)
+    {
+      using var tcp = new TcpClient(uri.Host, uri.Port).WithTimeout(timeout);
+      return tcp.GetStream();
+    }
+
+    if (uri.Scheme == Uri.UriSchemeHttp && uri.Scheme == Uri.UriSchemeHttps)
+    {
+      using var http = new HttpClient().WithTimeout(timeout).WithHeaders(headers);
+      return await http.ToStreamAsync(uri).ConfigureAwait(false);
+    }
+
+    throw new InvalidOperationException($"Unsupported URI scheme: {uri.Scheme}");
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="uri"></param>
+  /// <param name="timeout"></param>
+  /// <param name="headers"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToXmlReaderAsync(Uri, TimeSpan?, ValueTuple{string, object}[])"/>
   public static XmlReader ToXmlReader(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri.ToStream(timeout, headers).ToXmlReader();
 
@@ -501,164 +660,5 @@ public static class UriExtensions
     using var reader = await uri.ToXmlReaderAsync(timeout, headers).ConfigureAwait(false);
 
     return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="bytes"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytesAsync(Uri, IEnumerable{byte}, TimeSpan?, CancellationToken, ValueTuple{string, object}[] headers)"/>
-  public static Uri WriteBytes(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    return destination.WriteBytesAsync(bytes, timeout, default, headers).Result;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="bytes"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytes(Uri, IEnumerable{byte}, TimeSpan?, ValueTuple{string, object}[])"/>
-  public static async Task<Uri> WriteBytesAsync(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    if (destination.IsFile)
-    {
-      await destination.LocalPath.ToFile().WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
-    }
-    else if (destination.Scheme == Uri.UriSchemeNetTcp)
-    {
-      using var tcp = new TcpClient(destination.Host, destination.Port).WithTimeout(timeout);
-      await tcp.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
-    }
-    else if (destination.Scheme == Uri.UriSchemeHttp || destination.Scheme == Uri.UriSchemeHttps)
-    {
-      using var http = new HttpClient().WithTimeout(timeout).WithHeaders(headers);
-      await http.WriteBytesAsync(bytes, destination, cancellation).ConfigureAwait(false);
-    }
-
-    return destination;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="destination"></param>
-  /// <param name="text"></param>
-  /// <param name="encoding"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTextAsync(Uri, string, Encoding, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
-  public static Uri WriteText(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    return destination.WriteTextAsync(text, encoding, timeout, default, headers).Result;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="text"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteText(Uri, string, Encoding, TimeSpan?, ValueTuple{string, object}[])"/>
-  public static async Task<Uri> WriteTextAsync(this Uri destination, string text, Encoding encoding = null, TimeSpan? timeout = null, CancellationToken cancellation = default, params (string Name, object Value)[] headers)
-  {
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
-    if (text is null) throw new ArgumentNullException(nameof(text));
-
-    return await destination.WriteBytesAsync(text.AsArray().ToBytes(encoding), timeout, cancellation, headers).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="uri"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="DeserializeAsDataContractAsync{T}(Uri, TimeSpan?, IEnumerable{ValueTuple{string, object}}, Type[])"/>
-  public static T DeserializeAsDataContract<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsDataContractAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="uri"></param>
-  /// <param name="types"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="DeserializeAsDataContract{T}(Uri, TimeSpan?, IEnumerable{ValueTuple{string, object}}, Type[])"/>
-  public static async Task<T> DeserializeAsDataContractAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
-  {
-    if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-    using var reader = await uri.ToXmlReaderAsync(timeout, headers?.AsArray()).ConfigureAwait(false);
-
-    return reader.DeserializeAsDataContract<T>(types);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="uri"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="DeserializeAsXmlAsync{T}(Uri, TimeSpan?, IEnumerable{ValueTuple{string, object}}, Type[])"/>
-  public static T DeserializeAsXml<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types) => uri is not null ? uri.DeserializeAsXmlAsync<T>(timeout, headers, types).Result : throw new ArgumentNullException(nameof(uri));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="uri"></param>
-  /// <param name="types"></param>
-  /// <param name="timeout"></param>
-  /// <param name="headers"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="DeserializeAsXml{T}(Uri, TimeSpan?, IEnumerable{ValueTuple{string, object}}, Type[])"/>
-  public static async Task<T> DeserializeAsXmlAsync<T>(this Uri uri, TimeSpan? timeout = null, IEnumerable<(string Name, object Value)> headers = null, params Type[] types)
-  {
-    if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-    using var reader = await uri.ToXmlReaderAsync(timeout, headers?.AsArray()).ConfigureAwait(false);
-
-    return reader.DeserializeAsXml<T>(types);
   }
 }

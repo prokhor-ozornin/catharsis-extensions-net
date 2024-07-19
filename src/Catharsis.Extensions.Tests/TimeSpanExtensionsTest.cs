@@ -11,6 +11,73 @@ namespace Catharsis.Extensions.Tests;
 public sealed class TimeSpanExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="TimeSpanExtensions.InThePast(TimeSpan)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void InThePast_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(TimeSpan.Zero);
+      Validate(TimeSpan.FromTicks(1));
+      Validate(TimeSpan.FromMicroseconds(1));
+      Validate(TimeSpan.FromMilliseconds(1));
+      Validate(TimeSpan.FromSeconds(1));
+      Validate(TimeSpan.FromMinutes(1));
+      Validate(TimeSpan.FromHours(1));
+      Validate(TimeSpan.FromDays(1));
+    }
+
+    return;
+
+    static void Validate(TimeSpan timespan) => timespan.InThePast().Should().BeCloseTo(DateTimeOffset.UtcNow - timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TimeSpanExtensions.InTheFuture(TimeSpan)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void InTheFuture_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(TimeSpan.Zero);
+      Validate(TimeSpan.FromTicks(1));
+      Validate(TimeSpan.FromMicroseconds(1));
+      Validate(TimeSpan.FromMilliseconds(1));
+      Validate(TimeSpan.FromSeconds(1));
+      Validate(TimeSpan.FromMinutes(1));
+      Validate(TimeSpan.FromHours(1));
+      Validate(TimeSpan.FromDays(1));
+    }
+
+    return;
+
+    static void Validate(TimeSpan timespan) => timespan.InTheFuture().Should().BeCloseTo(DateTimeOffset.UtcNow + timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TimeSpanExtensions.IsEmpty(TimeSpan)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsEmpty_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(false, TimeSpan.MinValue);
+      Validate(true, TimeSpan.Zero);
+      Validate(false, TimeSpan.MaxValue);
+      Validate(false, TimeSpan.FromTicks(long.MinValue));
+      Validate(false, TimeSpan.FromTicks(long.MaxValue));
+      Validate(true, TimeSpan.FromTicks(0));
+    }
+
+    return;
+
+    static void Validate(bool result, TimeSpan span) => span.IsEmpty().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="TimeSpanExtensions.With(TimeSpan, TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
@@ -58,72 +125,5 @@ public sealed class TimeSpanExtensionsTest : UnitTest
     return;
 
     static void Validate(TimeSpan timespan, TimeSpan offset) => timespan.Subtract(offset).Should().Be(timespan.Subtract(offset));
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TimeSpanExtensions.IsEmpty(TimeSpan)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsEmpty_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(false, TimeSpan.MinValue);
-      Validate(true, TimeSpan.Zero);
-      Validate(false, TimeSpan.MaxValue);
-      Validate(false, TimeSpan.FromTicks(long.MinValue));
-      Validate(false, TimeSpan.FromTicks(long.MaxValue));
-      Validate(true, TimeSpan.FromTicks(0));
-    }
-
-    return;
-
-    static void Validate(bool result, TimeSpan span) => span.IsEmpty().Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TimeSpanExtensions.InThePast(TimeSpan)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void InThePast_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(TimeSpan.Zero);
-      Validate(TimeSpan.FromTicks(1));
-      Validate(TimeSpan.FromMicroseconds(1));
-      Validate(TimeSpan.FromMilliseconds(1));
-      Validate(TimeSpan.FromSeconds(1));
-      Validate(TimeSpan.FromMinutes(1));
-      Validate(TimeSpan.FromHours(1));
-      Validate(TimeSpan.FromDays(1));
-    }
-
-    return;
-
-    static void Validate(TimeSpan timespan) => timespan.InThePast().Should().BeCloseTo(DateTimeOffset.UtcNow - timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TimeSpanExtensions.InTheFuture(TimeSpan)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void InTheFuture_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(TimeSpan.Zero);
-      Validate(TimeSpan.FromTicks(1));
-      Validate(TimeSpan.FromMicroseconds(1));
-      Validate(TimeSpan.FromMilliseconds(1));
-      Validate(TimeSpan.FromSeconds(1));
-      Validate(TimeSpan.FromMinutes(1));
-      Validate(TimeSpan.FromHours(1));
-      Validate(TimeSpan.FromDays(1));
-    }
-
-    return;
-
-    static void Validate(TimeSpan timespan) => timespan.InTheFuture().Should().BeCloseTo(DateTimeOffset.UtcNow + timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
   }
 }

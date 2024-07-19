@@ -72,7 +72,7 @@ public static class ITestAttributesExtensions
   /// <param name="attributes"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="attributes"/> is <see langword="null"/>.</exception>
-  public static SecureString RandomSecureString(this ITestAttributes attributes) => attributes is not null ? attributes.Retrieve(nameof(RandomSecureString), new Random().SecureStringInRange(short.MaxValue, 'a'..'z', 'A'..'Z')) : throw new ArgumentNullException(nameof(attributes));
+  public static SecureString RandomSecureString(this ITestAttributes attributes) => attributes is not null ? attributes.Retrieve(nameof(RandomSecureString), new Random().SecureString(short.MaxValue, new [] {'a'..'z', 'A'..'Z'})) : throw new ArgumentNullException(nameof(attributes));
 
   /// <summary>
   ///   <para></para>

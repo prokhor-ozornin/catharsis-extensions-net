@@ -10,27 +10,27 @@ public static class IComparableExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
+  /// <param name="comparable"></param>
   /// <returns></returns>
   /// <seealso cref="IsNegative{T}(T)"/>
-  public static bool IsPositive<T>(this T instance) where T : struct, IComparable<T> => instance.CompareTo(default) > 0;
+  public static bool IsPositive<T>(this T comparable) where T : struct, IComparable<T> => comparable.CompareTo(default) > 0;
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
+  /// <param name="comparable"></param>
   /// <returns></returns>
   /// <seealso cref="IsPositive{T}(T)"/>
-  public static bool IsNegative<T>(this T instance) where T : struct, IComparable<T> => instance.CompareTo(default) < 0;
+  public static bool IsNegative<T>(this T comparable) where T : struct, IComparable<T> => comparable.CompareTo(default) < 0;
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
+  /// <param name="comparable"></param>
   /// <returns></returns>
-  public static bool IsDefault<T>(this T instance) where T : struct, IComparable<T> => instance.CompareTo(default) == 0;
+  public static bool IsDefault<T>(this T comparable) where T : struct, IComparable<T> => comparable.CompareTo(default) == 0;
 
   /// <summary>
   ///   <para></para>

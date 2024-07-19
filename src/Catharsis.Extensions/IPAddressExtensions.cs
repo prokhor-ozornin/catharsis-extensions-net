@@ -11,12 +11,22 @@ namespace Catharsis.Extensions;
 public static class IPAddressExtensions
 {
   /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="IPAddress"/> with the same address bytes as the original.</para>
+  ///   <para></para>
   /// </summary>
-  /// <param name="address">IP address to be cloned.</param>
-  /// <returns>Cloning result.</returns>
+  /// <param name="address"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
-  public static IPAddress Clone(this IPAddress address) => address is not null ? new IPAddress(address.GetAddressBytes()) : throw new ArgumentNullException(nameof(address));
+  /// <seealso cref="IsV6(IPAddress)"/>
+  public static bool IsV4(this IPAddress address) => address is not null ? address.AddressFamily == AddressFamily.InterNetwork : throw new ArgumentNullException(nameof(address));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="address"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsV4(IPAddress)"/>
+  public static bool IsV6(this IPAddress address) => address is not null ? address.AddressFamily == AddressFamily.InterNetworkV6 : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
   ///   <para></para>
@@ -56,6 +66,14 @@ public static class IPAddressExtensions
     return reply.Status == IPStatus.Success;
   }
 
+  /// <summary>
+  ///   <para>Creates a copy of the specified <see cref="IPAddress"/> with the same address bytes as the original.</para>
+  /// </summary>
+  /// <param name="address">IP address to be cloned.</param>
+  /// <returns>Cloning result.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
+  public static IPAddress Clone(this IPAddress address) => address is not null ? new IPAddress(address.GetAddressBytes()) : throw new ArgumentNullException(nameof(address));
+  
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -107,23 +125,6 @@ public static class IPAddressExtensions
     return left.Address <= right.Address ? (left, right) : (right, left);
   }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="address"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsV6(IPAddress)"/>
-  public static bool IsV4(this IPAddress address) => address is not null ? address.AddressFamily == AddressFamily.InterNetwork : throw new ArgumentNullException(nameof(address));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="address"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsV4(IPAddress)"/>
-  public static bool IsV6(this IPAddress address) => address is not null ? address.AddressFamily == AddressFamily.InterNetworkV6 : throw new ArgumentNullException(nameof(address));
 
   /// <summary>
   ///   <para></para>

@@ -41,7 +41,7 @@ public static class HttpContentExtensions
     #if NET8_0
       return await content.ReadAsStreamAsync(cancellation).ConfigureAwait(false);
     #else
-      return await content.ReadAsStreamAsync().ConfigureAwait(false);
+        return await content.ReadAsStreamAsync().ConfigureAwait(false);
     #endif
   }
 
@@ -97,7 +97,7 @@ public static class HttpContentExtensions
     cancellation.ThrowIfCancellationRequested();
 
     #if NET8_0
-    return await content.ReadAsStringAsync(cancellation).ConfigureAwait(false);
+      return await content.ReadAsStringAsync(cancellation).ConfigureAwait(false);
     #else
       return await content.ReadAsStringAsync().ConfigureAwait(false);
     #endif

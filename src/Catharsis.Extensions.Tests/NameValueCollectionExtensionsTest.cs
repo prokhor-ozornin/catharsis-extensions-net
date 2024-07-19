@@ -12,6 +12,30 @@ namespace Catharsis.Extensions.Tests;
 public sealed class NameValueCollectionExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="NameValueCollectionExtensions.Empty(NameValueCollection)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Empty_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+
+      Validate([]);
+      Validate(new NameValueCollection().With(Attributes.RandomObjects().Select(element => (element.GetType().FullName, element))));
+    }
+
+    return;
+
+    static void Validate(NameValueCollection collection)
+    {
+      collection.Empty().Should().BeOfType<NameValueCollection>().And.BeSameAs(collection);
+      collection.Count.Should().Be(0);
+      collection.AllKeys.Should().BeEmpty();
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="NameValueCollectionExtensions.Clone(NameValueCollection)"/> method.</para>
   /// </summary>
   [Fact]
@@ -34,6 +58,29 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
       clone.Should().BeOfType<NameValueCollection>().And.NotBeSameAs(original);
       clone.AllKeys.Should().Equal(original.AllKeys);
       clone.Count.Should().Be(original.Count);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NameValueCollectionExtensions.TryFinallyClear(NameValueCollection, Action{NameValueCollection})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TryFinallyClear_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((NameValueCollection) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => new NameValueCollection().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+
+      var collection = new NameValueCollection();
+      collection.TryFinallyClear(collection => collection.Add("key", "value")).Should().BeOfType<NameValueCollection>().And.BeSameAs(collection);
+      collection.Count.Should().Be(0);
+    }
+
+    return;
+
+    static void Validate(NameValueCollection collection)
+    {
     }
   }
 
@@ -101,53 +148,6 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NameValueCollectionExtensions.Empty(NameValueCollection)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Empty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
-
-      Validate([]);
-      Validate(new NameValueCollection().With(Attributes.RandomObjects().Select(element => (element.GetType().FullName, element))));
-    }
-
-    return;
-
-    static void Validate(NameValueCollection collection)
-    {
-      collection.Empty().Should().BeOfType<NameValueCollection>().And.BeSameAs(collection);
-      collection.Count.Should().Be(0);
-      collection.AllKeys.Should().BeEmpty();
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="NameValueCollectionExtensions.TryFinallyClear(NameValueCollection, Action{NameValueCollection})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TryFinallyClear_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((NameValueCollection) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
-      AssertionExtensions.Should(() => new NameValueCollection().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
-
-      var collection = new NameValueCollection();
-      collection.TryFinallyClear(collection => collection.Add("key", "value")).Should().BeOfType<NameValueCollection>().And.BeSameAs(collection);
-      collection.Count.Should().Be(0);
-    }
-
-    return;
-
-    static void Validate(NameValueCollection collection)
-    {
-    }
   }
 
   /// <summary>

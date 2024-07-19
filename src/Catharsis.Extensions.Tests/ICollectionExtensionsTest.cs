@@ -11,6 +11,46 @@ namespace Catharsis.Extensions.Tests;
 public sealed class ICollectionExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="ICollectionExtensions.Empty{T}(ICollection{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Empty_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ICollectionExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
+
+      Validate(Array.Empty<object>().ToList());
+      Validate(Attributes.RandomObjects().ToList());
+    }
+
+    return;
+
+    static void Validate<T>(ICollection<T> collection) => collection.Empty().Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ICollectionExtensions.TryFinallyClear{T}(ICollection{T}, Action{ICollection{T}})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TryFinallyClear_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((ICollection<object>) null).TryFinallyClear(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
+
+      Validate(new List<object>(), new object());
+    }
+
+    return;
+
+    static void Validate<T>(ICollection<T> collection, params T[] elements) => collection.TryFinallyClear(collection => collection.With(elements)).Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="ICollectionExtensions.With{T}(ICollection{T}, IEnumerable{T})"/></description></item>
@@ -65,17 +105,17 @@ public sealed class ICollectionExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((ICollection<object>) null).Without(Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("from");
-      AssertionExtensions.Should(() => Array.Empty<object>().Without((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => Array.Empty<object>().Without((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
       var collection = new List<object>();
       collection.Without(Enumerable.Empty<object>()).Should().BeOfType<List<object>>().And.BeSameAs(collection).And.Equal(collection);
 
       var elements = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
 
-      collection = [..elements];
+      collection = [.. elements];
       collection.Without(Enumerable.Empty<object>()).Should().BeOfType<List<object>>().And.BeSameAs(collection).And.Equal(elements);
 
-      collection = [..elements];
+      collection = [.. elements];
       collection.Without(elements).Should().BeOfType<List<object>>().And.BeSameAs(collection).And.BeEmpty();
 
       static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
@@ -86,7 +126,7 @@ public sealed class ICollectionExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((ICollection<object>) null).Without([])).ThrowExactly<ArgumentNullException>().WithParameterName("from");
-      AssertionExtensions.Should(() => Array.Empty<object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("sequence");
+      AssertionExtensions.Should(() => Array.Empty<object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
       static void Validate<T>(ICollection<T> collection, params T[] elements)
       {
@@ -94,45 +134,5 @@ public sealed class ICollectionExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ICollectionExtensions.Empty{T}(ICollection{T})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Empty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ICollectionExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
-      AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
-
-      Validate(Array.Empty<object>().ToList());
-      Validate(Attributes.RandomObjects().ToList());
-    }
-
-    return;
-
-    static void Validate<T>(ICollection<T> collection) => collection.Empty().Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ICollectionExtensions.TryFinallyClear{T}(ICollection{T}, Action{ICollection{T}})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void TryFinallyClear_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((ICollection<object>) null).TryFinallyClear(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
-      AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
-      AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
-
-      Validate(new List<object>(), new object());
-    }
-
-    return;
-
-    static void Validate<T>(ICollection<T> collection, params T[] elements) => collection.TryFinallyClear(collection => collection.With(elements)).Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
   }
 }

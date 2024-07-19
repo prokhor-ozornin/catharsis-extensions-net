@@ -51,6 +51,108 @@ public sealed class TextWriterExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="TextWriterExtensions.WriteBytes{TWriter}(TWriter, IEnumerable{byte}, Encoding)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteBytes_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TextWriterExtensions.WriteBytes<TextWriter>(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytes<TextWriter>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
+    {
+      using (writer)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextWriterExtensions.WriteBytesAsync{TWriter}(TWriter, IEnumerable{byte}, Encoding, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteBytesAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TextWriterExtensions.WriteBytesAsync<TextWriter>(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>([], null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
+    {
+      using (writer)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextWriterExtensions.WriteText{TWriter}(TWriter, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteText_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TextWriterExtensions.WriteText<TextWriter>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteText<TextWriter>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer, string text)
+    {
+      using (writer)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextWriterExtensions.WriteTextAsync{TWriter}(TWriter, string, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void WriteTextAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => TextWriterExtensions.WriteTextAsync<TextWriter>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(string.Empty, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextWriter writer, string text)
+    {
+      using (writer)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="TextWriterExtensions.ToXmlWriter(TextWriter, bool)"/> method.</para>
   /// </summary>
   [Fact]
@@ -113,108 +215,6 @@ public sealed class TextWriterExtensionsTest : UnitTest
     return;
 
     static void Validate(TextWriter writer)
-    {
-      using (writer)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextWriterExtensions.WriteBytes{TWriter}(TWriter, IEnumerable{byte}, Encoding)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteBytes_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => TextWriterExtensions.WriteBytes<TextWriter>(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytes<TextWriter>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
-    {
-      using (writer)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextWriterExtensions.WriteBytesAsync{TWriter}(TWriter, IEnumerable{byte}, Encoding, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteBytesAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => TextWriterExtensions.WriteBytesAsync<TextWriter>(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>(Enumerable.Empty<byte>(), null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
-    {
-      using (writer)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextWriterExtensions.WriteText{TWriter}(TWriter, string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteText_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => TextWriterExtensions.WriteText<TextWriter>(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteText<TextWriter>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TextWriter writer, string text)
-    {
-      using (writer)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextWriterExtensions.WriteTextAsync{TWriter}(TWriter, string, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void WriteTextAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => TextWriterExtensions.WriteTextAsync<TextWriter>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(string.Empty, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TextWriter writer, string text)
     {
       using (writer)
       {

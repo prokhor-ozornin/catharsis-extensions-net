@@ -7,12 +7,19 @@
 public static class StreamWriterExtensions
 {
   /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="StreamWriter"/>, which will write data to the same underlying <see cref="Stream"/>.</para>
+  ///   <para></para>
   /// </summary>
-  /// <param name="writer">Stream writer instance to be cloned.</param>
-  /// <returns>Cloning result.</returns>
+  /// <param name="writer"></param>
+  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  public static StreamWriter Clone(this StreamWriter writer) => writer is not null ? new StreamWriter(writer.BaseStream, writer.Encoding) { AutoFlush = writer.AutoFlush, NewLine = writer.NewLine } : throw new ArgumentNullException(nameof(writer));
+  public static StreamWriter Rewind(this StreamWriter writer)
+  {
+    if (writer is null) throw new ArgumentNullException(nameof(writer));
+
+    writer.BaseStream.MoveToStart();
+
+    return writer;
+  }
 
   /// <summary>
   ///   <para></para>
@@ -48,17 +55,10 @@ public static class StreamWriterExtensions
   }
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="StreamWriter"/>, which will write data to the same underlying <see cref="Stream"/>.</para>
   /// </summary>
-  /// <param name="writer"></param>
-  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
+  /// <param name="writer">Stream writer instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  public static StreamWriter Rewind(this StreamWriter writer)
-  {
-    if (writer is null) throw new ArgumentNullException(nameof(writer));
-
-    writer.BaseStream.MoveToStart();
-
-    return writer;
-  }
+  public static StreamWriter Clone(this StreamWriter writer) => writer is not null ? new StreamWriter(writer.BaseStream, writer.Encoding) { AutoFlush = writer.AutoFlush, NewLine = writer.NewLine } : throw new ArgumentNullException(nameof(writer));
 }

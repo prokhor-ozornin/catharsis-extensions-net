@@ -11,37 +11,29 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StreamWriterExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamWriterExtensions.Clone(StreamWriter)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamWriterExtensions.Rewind(StreamWriter)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Clone_Method()
+  public void Rewind_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
-      Validate(Stream.Null.ToStreamWriter());
-      Validate(Attributes.EmptyStream().ToStreamWriter());
-      Validate(Attributes.RandomStream().ToStreamWriter());
+      Validate(Stream.Null.ToStreamWriter(), Attributes.RandomBytes());
+      Validate(Attributes.RandomStream().ToStreamWriter(), Attributes.RandomBytes());
     }
 
     return;
 
-    static void Validate(StreamWriter original)
+    static void Validate(StreamWriter writer, IEnumerable<byte> bytes)
     {
-      using (original)
+      using (writer)
       {
-        var clone = original.Clone();
-
-        using (clone)
-        {
-          clone.Should().BeOfType<StreamWriter>().And.NotBeSameAs(original);
-          clone.AutoFlush.Should().Be(original.AutoFlush);
-          clone.BaseStream.Should().BeSameAs(original.BaseStream);
-          clone.Encoding.Should().BeSameAs(original.Encoding);
-          clone.NewLine.Should().Be(original.NewLine);
-          clone.FormatProvider.Should().BeSameAs(original.FormatProvider);
-        }
+        bytes.WriteToAsync(writer).Await();
+        writer.Flush();
+        writer.Rewind().Should().BeOfType<StreamWriter>().And.BeSameAs(writer);
+        writer.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0);
       }
     }
   }
@@ -118,29 +110,37 @@ public sealed class StreamWriterExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamWriterExtensions.Rewind(StreamWriter)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamWriterExtensions.Clone(StreamWriter)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Rewind_Method()
+  public void Clone_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => StreamWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
-      Validate(Stream.Null.ToStreamWriter(), Attributes.RandomBytes());
-      Validate(Attributes.RandomStream().ToStreamWriter(), Attributes.RandomBytes());
+      Validate(Stream.Null.ToStreamWriter());
+      Validate(Attributes.EmptyStream().ToStreamWriter());
+      Validate(Attributes.RandomStream().ToStreamWriter());
     }
 
     return;
 
-    static void Validate(StreamWriter writer, IEnumerable<byte> bytes)
+    static void Validate(StreamWriter original)
     {
-      using (writer)
+      using (original)
       {
-        bytes.WriteToAsync(writer).Await();
-        writer.Flush();
-        writer.Rewind().Should().BeOfType<StreamWriter>().And.BeSameAs(writer);
-        writer.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0);
+        var clone = original.Clone();
+
+        using (clone)
+        {
+          clone.Should().BeOfType<StreamWriter>().And.NotBeSameAs(original);
+          clone.AutoFlush.Should().Be(original.AutoFlush);
+          clone.BaseStream.Should().BeSameAs(original.BaseStream);
+          clone.Encoding.Should().BeSameAs(original.Encoding);
+          clone.NewLine.Should().Be(original.NewLine);
+          clone.FormatProvider.Should().BeSameAs(original.FormatProvider);
+        }
       }
     }
   }

@@ -12,36 +12,6 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IPHostEntryExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.Clone(IPHostEntry)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Clone_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IPHostEntryExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("host");
-
-      Validate(new IPHostEntry());
-      Validate(new IPHostEntry { HostName = string.Empty, AddressList = [] });
-      Validate(new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
-      Validate(new IPHostEntry { AddressList = [IPAddress.Loopback] });
-    }
-
-    return;
-
-    static void Validate(IPHostEntry original)
-    {
-      var clone = original.Clone();
-
-      clone.Should().BeOfType<IPHostEntry>().And.NotBeSameAs(original);
-      clone.ToString().Should().Be(original.ToString());
-      clone.AddressList.Should().Equal(original.AddressList);
-      clone.Aliases.Should().Equal(original.Aliases);
-      clone.HostName.Should().Be(original.HostName);
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsAvailable(IPHostEntry, TimeSpan?)"/> method.</para>
   /// </summary>
   [Fact]
@@ -99,7 +69,7 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
       Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() });
       Validate(true, new IPHostEntry { HostName = IPAddress.IPv6Loopback.ToString() }, TimeSpan.FromMilliseconds(1));
     }
-    
+
     return;
 
     static void Validate(bool result, IPHostEntry host, TimeSpan? timeout = null)
@@ -109,7 +79,7 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
       task.Await().Should().Be(result);
     }
   }
-
+  
   /// <summary>
   ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsUnset(IPHostEntry)"/> method.</para>
   /// </summary>
@@ -149,6 +119,36 @@ public sealed class IPHostEntryExtensionsTest : UnitTest
     return;
 
     static void Validate(bool result, IPHostEntry host) => host.IsEmpty().Should().Be(host.HostName.IsUnset() && host.AddressList.IsUnset()).And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.Clone(IPHostEntry)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IPHostEntryExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("host");
+
+      Validate(new IPHostEntry());
+      Validate(new IPHostEntry { HostName = string.Empty, AddressList = [] });
+      Validate(new IPHostEntry { HostName = IPAddress.Loopback.ToString() });
+      Validate(new IPHostEntry { AddressList = [IPAddress.Loopback] });
+    }
+
+    return;
+
+    static void Validate(IPHostEntry original)
+    {
+      var clone = original.Clone();
+
+      clone.Should().BeOfType<IPHostEntry>().And.NotBeSameAs(original);
+      clone.ToString().Should().Be(original.ToString());
+      clone.AddressList.Should().Equal(original.AddressList);
+      clone.Aliases.Should().Equal(original.Aliases);
+      clone.HostName.Should().Be(original.HostName);
+    }
   }
 
   /// <summary>

@@ -7,6 +7,38 @@ namespace Catharsis.Extensions;
 public static class ICollectionExtensions
 {
   /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="collection"></param>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+  public static ICollection<T> Empty<T>(this ICollection<T> collection)
+  {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+
+    collection.Clear();
+
+    return collection;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="collection"></param>
+  /// <param name="action"></param>
+  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  public static ICollection<T> TryFinallyClear<T>(this ICollection<T> collection, Action<ICollection<T>> action)
+  {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+    if (action is null) throw new ArgumentNullException(nameof(action));
+
+    return collection.TryFinally(action, x => x.Clear());
+  }
+
+  /// <summary>
   ///   <para>Sequentially adds all elements, returned by the enumerator, to the specified collection.</para>
   /// </summary>
   /// <typeparam name="T">Type of collection's elements.</typeparam>
@@ -24,7 +56,7 @@ public static class ICollectionExtensions
     {
       collection.Add(element);
     }
-    
+
     return collection;
   }
 
@@ -58,7 +90,7 @@ public static class ICollectionExtensions
     {
       collection.Remove(element);
     }
-    
+
     return collection;
   }
 
@@ -72,36 +104,4 @@ public static class ICollectionExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Without{T}(ICollection{T}, IEnumerable{T})"/>
   public static ICollection<T> Without<T>(this ICollection<T> collection, params T[] elements) => collection.Without(elements as IEnumerable<T>);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="collection"></param>
-  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-  public static ICollection<T> Empty<T>(this ICollection<T> collection)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-
-    collection.Clear();
-
-    return collection;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="collection"></param>
-  /// <param name="action"></param>
-  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
-  public static ICollection<T> TryFinallyClear<T>(this ICollection<T> collection, Action<ICollection<T>> action)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-    if (action is null) throw new ArgumentNullException(nameof(action));
-
-    return collection.TryFinally(action, x => x.Clear());
-  }
 }

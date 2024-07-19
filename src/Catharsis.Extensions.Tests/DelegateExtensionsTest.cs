@@ -26,6 +26,31 @@ public sealed class DelegateExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="DelegateExtensions.Not(Delegate, Delegate)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Not_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => DelegateExtensions.Not(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
+      AssertionExtensions.Should(() => IncrementDelegate.Not(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+      AssertionExtensions.Should(() => IncrementDelegate.Not(DecrementDelegate)).ThrowExactly<ArgumentException>();
+
+      /*IncrementDelegate.Not(null).Should().BeSameAs(IncrementDelegate);
+      IncrementDelegate.Not(IncrementDelegate).Should().BeNull();*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="DelegateExtensions.And(Delegate, Delegate)"/> method.</para>
   /// </summary>
   [Fact]
@@ -43,31 +68,6 @@ public sealed class DelegateExtensionsTest : UnitTest
       andDelegate.Target.Should().BeNull();
       andDelegate.GetInvocationList().Should().Equal(IncrementDelegate, IncrementDelegate);
       andDelegate.DynamicInvoke(0).As<int>().Should().Be(1);*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate()
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DelegateExtensions.Not(Delegate, Delegate)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Not_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => DelegateExtensions.Not(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => IncrementDelegate.Not(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
-      AssertionExtensions.Should(() => IncrementDelegate.Not(DecrementDelegate)).ThrowExactly<ArgumentException>();
-
-      /*IncrementDelegate.Not(null).Should().BeSameAs(IncrementDelegate);
-      IncrementDelegate.Not(IncrementDelegate).Should().BeNull();*/
     }
 
     throw new NotImplementedException();

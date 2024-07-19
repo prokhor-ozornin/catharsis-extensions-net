@@ -7,29 +7,6 @@ namespace Catharsis.Extensions;
 public static class TimeSpanExtensions
 {
   /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="timespan"></param>
-  /// <param name="offset"></param>
-  /// <returns></returns>
-  public static TimeSpan With(this TimeSpan timespan, TimeSpan offset) => timespan.Add(offset);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="timespan"></param>
-  /// <param name="offset"></param>
-  /// <returns></returns>
-  public static TimeSpan Without(this TimeSpan timespan, TimeSpan offset) => timespan.Subtract(offset);
-
-  /// <summary>
-  ///   <para>Determines whether the specified <see cref="TimeSpan"/> instance can be considered "empty", meaning that it's equal to <see cref="TimeSpan.Zero"/>.</para>
-  /// </summary>
-  /// <param name="timespan">Time span instance for evaluation.</param>
-  /// <returns>If the specified <paramref name="timespan"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
-  public static bool IsEmpty(this TimeSpan timespan) => timespan == TimeSpan.Zero;
-
-  /// <summary>
   ///   <para>Returns a new date/time instance, representing a point in time lesser than the current by specified <see cref="TimeSpan"/>.</para>
   /// </summary>
   /// <param name="offset">Time span to subtract from current date/time.</param>
@@ -44,4 +21,27 @@ public static class TimeSpanExtensions
   /// <returns>Current date/time, incremented by the <paramref name="offset"/>, expressed as a local time.</returns>
   /// <seealso cref="InThePast(TimeSpan)"/>
   public static DateTimeOffset InTheFuture(this TimeSpan offset) => DateTimeOffset.UtcNow + offset;
+
+  /// <summary>
+  ///   <para>Determines whether the specified <see cref="TimeSpan"/> instance can be considered "empty", meaning that it's equal to <see cref="TimeSpan.Zero"/>.</para>
+  /// </summary>
+  /// <param name="timespan">Time span instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="timespan"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
+  public static bool IsEmpty(this TimeSpan timespan) => timespan == TimeSpan.Zero;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="timespan"></param>
+  /// <param name="offset"></param>
+  /// <returns></returns>
+  public static TimeSpan With(this TimeSpan timespan, TimeSpan offset) => timespan.Add(offset);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="timespan"></param>
+  /// <param name="offset"></param>
+  /// <returns></returns>
+  public static TimeSpan Without(this TimeSpan timespan, TimeSpan offset) => timespan.Subtract(offset);
 }

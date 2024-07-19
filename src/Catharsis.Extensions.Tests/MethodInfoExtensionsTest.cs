@@ -93,7 +93,7 @@ public sealed class MethodInfoExtensionsTest : UnitTest
   ///   </list>
   /// </summary>
   [Fact]
-  public void MethodInfo_ToDelegate_Methods()
+  public void ToDelegate_Methods()
   {
     using (new AssertionScope())
     {

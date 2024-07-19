@@ -39,24 +39,6 @@ public static class DateTimeOffsetExtensions
   /// <returns></returns>
   /// <seealso cref="IsWeekday(DateTimeOffset)"/>
   public static bool IsWeekend(this DateTimeOffset date) => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
-  
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  /// <seealso cref="EqualsByTime(DateTimeOffset, DateTimeOffset)"/>
-  public static bool EqualsByDate(this DateTimeOffset left, DateTimeOffset right) => left.Year == right.Year && left.Month == right.Month && left.Day == right.Day;
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  /// <seealso cref="EqualsByDate(DateTimeOffset, DateTimeOffset)"/>
-  public static bool EqualsByTime(this DateTimeOffset left, DateTimeOffset right) => left.Hour == right.Hour && left.Minute == right.Minute && left.Second == right.Second && left.Millisecond == right.Millisecond;
 
   /// <summary>
   ///   <para></para>
@@ -80,7 +62,25 @@ public static class DateTimeOffsetExtensions
       yield return date;
     }
   }
-  
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  /// <seealso cref="EqualsByTime(DateTimeOffset, DateTimeOffset)"/>
+  public static bool EqualsByDate(this DateTimeOffset left, DateTimeOffset right) => left.Year == right.Year && left.Month == right.Month && left.Day == right.Day;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  /// <seealso cref="EqualsByDate(DateTimeOffset, DateTimeOffset)"/>
+  public static bool EqualsByTime(this DateTimeOffset left, DateTimeOffset right) => left.Hour == right.Hour && left.Minute == right.Minute && left.Second == right.Second && left.Millisecond == right.Millisecond;
+
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -184,21 +184,6 @@ public static class DateTimeOffsetExtensions
   /// <returns></returns>
   public static DateTime ToDateTime(this DateTimeOffset date) => date.UtcDateTime;
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="date"></param>
-  /// <returns></returns>
-  /// <seealso cref="ToRfcString(DateTimeOffset)"/>
-  public static string ToIsoString(this DateTimeOffset date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <returns></returns>
-  /// <seealso cref="ToIsoString(DateTimeOffset)"/>
-  public static string ToRfcString(this DateTimeOffset date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
-
 #if NET8_0
   /// <summary>
   ///   <para></para>
@@ -214,4 +199,19 @@ public static class DateTimeOffsetExtensions
   /// <returns></returns>
   public static TimeOnly ToTimeOnly(this DateTimeOffset date) => TimeOnly.FromDateTime(date.DateTime);
 #endif
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="date"></param>
+  /// <returns></returns>
+  /// <seealso cref="ToRfcString(DateTimeOffset)"/>
+  public static string ToIsoString(this DateTimeOffset date) => date.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  /// <seealso cref="ToIsoString(DateTimeOffset)"/>
+  public static string ToRfcString(this DateTimeOffset date) => date.ToUniversalTime().ToString("r", CultureInfo.InvariantCulture);
 }

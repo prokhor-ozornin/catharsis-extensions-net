@@ -11,6 +11,22 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IComparableExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.IsDefault{T}(T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDefault_Method()
+  {
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
+
+    return;
+
+    static void Validate<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsDefault().Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IComparableExtensions.IsPositive{T}(T)"/> method.</para>
   /// </summary>
   [Fact]
@@ -40,22 +56,6 @@ public sealed class IComparableExtensionsTest : UnitTest
     return;
 
     static void Validate<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsNegative().Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IComparableExtensions.IsDefault{T}(T)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsDefault_Method()
-  {
-    using (new AssertionScope())
-    {
-      throw new NotImplementedException();
-    }
-
-    return;
-
-    static void Validate<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsDefault().Should().Be(result);
   }
 
   /// <summary>

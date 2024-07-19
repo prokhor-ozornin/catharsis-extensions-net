@@ -11,62 +11,6 @@ namespace Catharsis.Extensions.Tests;
 public sealed class BinaryWriterExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsUnset(BinaryWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsUnset_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().IsUnset()).ThrowExactly<ArgumentException>();
-
-      Validate(true, null);
-      Validate(true, Stream.Null.ToBinaryWriter());
-      Validate(true, Attributes.EmptyStream().ToBinaryWriter());
-      Validate(false, Attributes.RandomStream().ToBinaryWriter());
-      Validate(true, Attributes.WriteOnlyStream().ToBinaryWriter());
-    }
-
-    return;
-
-    static void Validate(bool result, BinaryWriter writer)
-    {
-      using (writer)
-      {
-        writer.IsUnset().Should().Be(result);
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsEmpty(BinaryWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsEmpty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().IsEmpty()).ThrowExactly<ArgumentException>();
-
-      Validate(true, Stream.Null.ToBinaryWriter());
-      Validate(true, Attributes.EmptyStream().ToBinaryWriter());
-      Validate(false, Attributes.RandomStream().ToBinaryWriter());
-      Validate(true, Attributes.WriteOnlyStream().ToBinaryWriter());
-    }
-
-    return;
-
-    static void Validate(bool result, BinaryWriter writer)
-    {
-      using (writer)
-      {
-        writer.IsEmpty().Should().Be(result);
-      }
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsStart(BinaryWriter)"/> method.</para>
   /// </summary>
   [Fact]
@@ -124,6 +68,91 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
         writer.IsEnd().Should().Be(writer.BaseStream.IsEmpty());
         writer.BaseStream.MoveToEnd();
         writer.IsEnd().Should().BeTrue();
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.Rewind(BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Rewind_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((BinaryWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().Rewind()).ThrowExactly<NotSupportedException>();
+
+      Validate(Attributes.EmptyStream().ToBinaryWriter());
+      Validate(Attributes.RandomStream().ToBinaryWriter());
+      Validate(Attributes.WriteOnlyStream().ToBinaryWriter());
+    }
+
+    return;
+
+    static void Validate(BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.BaseStream.MoveToEnd();
+        writer.Rewind().Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
+        writer.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsUnset(BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().IsUnset()).ThrowExactly<ArgumentException>();
+
+      Validate(true, null);
+      Validate(true, Stream.Null.ToBinaryWriter());
+      Validate(true, Attributes.EmptyStream().ToBinaryWriter());
+      Validate(false, Attributes.RandomStream().ToBinaryWriter());
+      Validate(true, Attributes.WriteOnlyStream().ToBinaryWriter());
+    }
+
+    return;
+
+    static void Validate(bool result, BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.IsUnset().Should().Be(result);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsEmpty(BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsEmpty_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().IsEmpty()).ThrowExactly<ArgumentException>();
+
+      Validate(true, Stream.Null.ToBinaryWriter());
+      Validate(true, Attributes.EmptyStream().ToBinaryWriter());
+      Validate(false, Attributes.RandomStream().ToBinaryWriter());
+      Validate(true, Attributes.WriteOnlyStream().ToBinaryWriter());
+    }
+
+    return;
+
+    static void Validate(bool result, BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.IsEmpty().Should().Be(result);
       }
     }
   }
@@ -189,35 +218,6 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.Rewind(BinaryWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Rewind_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToBinaryWriter().Rewind()).ThrowExactly<NotSupportedException>();
-
-      Validate(Attributes.EmptyStream().ToBinaryWriter());
-      Validate(Attributes.RandomStream().ToBinaryWriter());
-      Validate(Attributes.WriteOnlyStream().ToBinaryWriter());
-    }
-
-    return;
-
-    static void Validate(BinaryWriter writer)
-    {
-      using (writer)
-      {
-        writer.BaseStream.MoveToEnd();
-        writer.Rewind().Should().BeOfType<BinaryWriter>().And.BeSameAs(writer);
-        writer.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0);
-      }
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="BinaryWriterExtensions.TryFinallyClear(BinaryWriter, Action{BinaryWriter})"/> method.</para>
   /// </summary>
   [Fact]
@@ -254,7 +254,7 @@ public sealed class BinaryWriterExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => BinaryWriterExtensions.WriteBytes(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => BinaryWriterExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
       AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       
       Validate([]);

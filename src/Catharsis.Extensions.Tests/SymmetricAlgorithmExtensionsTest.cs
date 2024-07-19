@@ -19,7 +19,7 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Encrypt(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Encrypt(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
       AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Encrypt((IEnumerable<byte>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
@@ -69,7 +69,7 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.EncryptAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.EncryptAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().Await();
       AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
       AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().EncryptAsync(Attributes.RandomBytes(), Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
 
@@ -172,7 +172,7 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Decrypt(null, Enumerable.Empty<byte>())).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.Decrypt(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
       AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().Decrypt((IEnumerable<byte>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
@@ -222,7 +222,7 @@ public sealed class SymmetricAlgorithmExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.DecryptAsync(null, Enumerable.Empty<byte>())).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => SymmetricAlgorithmExtensions.DecryptAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().Await();
       AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
       AssertionExtensions.Should(() => Attributes.SymmetricAlgorithm().DecryptAsync(Attributes.RandomBytes(), Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
     }

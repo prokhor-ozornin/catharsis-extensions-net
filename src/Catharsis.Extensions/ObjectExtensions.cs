@@ -14,70 +14,6 @@ namespace Catharsis.Extensions;
 public static class ObjectExtensions
 {
   /// <summary>
-  ///   <para>Determines if the object is compatible with the given type, as specified by the <c>is</c> operator.</para>
-  /// </summary>
-  /// <typeparam name="T">Type of object.</typeparam>
-  /// <param name="instance">Object whose type compatibility with <typeparamref name="T"/> is to be determined.</param>
-  /// <returns><c>true</c> if <paramref name="instance"/> is type-compatible with <typeparamref name="T"/>, <c>false</c> if not.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
-  public static bool Is<T>(this object instance) => instance is not null ? instance is T : throw new ArgumentNullException(nameof(instance));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  public static bool IsSameAs(this object left, object right) => ReferenceEquals(left, right);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="instance"></param>
-  /// <returns></returns>
-  public static bool IsNull(this object instance)
-  {
-    return instance switch
-    {
-      WeakReference reference => !reference.IsAlive || reference.Target is null,
-      _ => instance is null
-    };
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <returns></returns>
-  public static bool IsUnset<T>(this T? instance) where T : struct => instance is null || instance.IsEmpty();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <returns></returns>
-  public static bool IsUnset<T>(this Lazy<T> instance) => instance is null || instance.IsEmpty();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <returns></returns>
-  public static bool IsEmpty<T>(this T? instance) where T : struct => !instance.HasValue || instance.Value.ToString().IsUnset();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
-  public static bool IsEmpty<T>(this Lazy<T> instance) => instance is not null ? !instance.IsValueCreated || instance.Value is null || instance.Value.ToString().IsUnset() : throw new ArgumentNullException(nameof(instance));
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
@@ -140,7 +76,273 @@ public static class ObjectExtensions
 
     return instance;
   }
+  
+  /// <summary>
+  ///   <para>Determines if the object is compatible with the given type, as specified by the <c>is</c> operator.</para>
+  /// </summary>
+  /// <typeparam name="T">Type of object.</typeparam>
+  /// <param name="instance">Object whose type compatibility with <typeparamref name="T"/> is to be determined.</param>
+  /// <returns><c>true</c> if <paramref name="instance"/> is type-compatible with <typeparamref name="T"/>, <c>false</c> if not.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
+  public static bool Is<T>(this object instance) => instance is not null ? instance is T : throw new ArgumentNullException(nameof(instance));
 
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static bool IsNull(this object instance)
+  {
+    return instance switch
+    {
+      WeakReference reference => !reference.IsAlive || reference.Target is null,
+      _ => instance is null
+    };
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static bool IsSameAs(this object left, object right) => ReferenceEquals(left, right);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static bool IsUnset<T>(this T? instance) where T : struct => instance is null || instance.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static bool IsUnset<T>(this Lazy<T> instance) => instance is null || instance.IsEmpty();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  public static bool IsEmpty<T>(this T? instance) where T : struct => !instance.HasValue || instance.Value.ToString().IsUnset();
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
+  public static bool IsEmpty<T>(this Lazy<T> instance) => instance is not null ? !instance.IsValueCreated || instance.Value is null || instance.Value.ToString().IsUnset() : throw new ArgumentNullException(nameof(instance));
+
+  /// <summary>
+  ///   <para>Returns the value of a member on a target object, using expression tree to specify type's member.</para>
+  /// </summary>
+  /// <typeparam name="T">Type of target object.</typeparam>
+  /// <typeparam name="TResult">Type of <paramref name="instance"/>'s member.</typeparam>
+  /// <param name="instance">Target object, whose member's value is to be returned.</param>
+  /// <param name="expression">Lambda expression that represents a member of <typeparamref name="T"/> type, whose value for <paramref name="instance"/> instance is to be returned. Generally it should represents either a public property/field or no-arguments method.</param>
+  /// <returns>Value of member of <typeparamref name="T"/> type on a <paramref name="instance"/> instance.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="expression"/> is <see langword="null"/>.</exception>
+  public static TResult GetMember<T, TResult>(this T instance, Expression<Func<T, TResult>> expression)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (expression is null) throw new ArgumentNullException(nameof(expression));
+
+    return expression.Compile()(instance);
+  }
+
+  /// <summary>
+  ///   <para>Returns the value of object's field with a specified name.</para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance">Object whose field's value is to be returned.</param>
+  /// <param name="name">Name of field of <paramref name="instance"/>'s type.</param>
+  /// <returns>Value of <paramref name="instance"/>'s field with a given <paramref name="name"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  public static T GetFieldValue<T>(this object instance, string name)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (name is null) throw new ArgumentNullException(nameof(name));
+
+    var field = instance.GetType().AnyField(name);
+
+    if (field is null)
+    {
+      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no field named \"{name}\"");
+    }
+
+    return (T) field.GetValue(instance);
+  }
+
+  /// <summary>
+  ///   <para>Returns the value of given property for specified target object.</para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance">Target object, whose property's value is to be returned.</param>
+  /// <param name="name">Name of property to inspect.</param>
+  /// <returns>Value of property <paramref name="name"/> for <paramref name="instance"/> instance, or a <c>null</c> reference in case this property does not exists for <paramref name="instance"/>'s type.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+  /// <exception cref="InvalidOperationException"></exception>
+  /// <seealso cref="SetPropertyValue{T}(T, string, object)"/>
+  public static T GetPropertyValue<T>(this object instance, string name)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (name is null) throw new ArgumentNullException(nameof(name));
+
+    var property = instance.GetType().AnyProperty(name);
+
+    if (property is null)
+    {
+      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no property named \"{name}\"");
+    }
+
+    return property.CanRead ? (T) property.GetValue(instance, null) : default;
+  }
+
+  /// <summary>
+  ///   <para>Sets the value of given property on specified target object.</para>
+  /// </summary>
+  /// <typeparam name="T">Type of target object.</typeparam>
+  /// <param name="instance">Target object whose property is to be changed.</param>
+  /// <param name="name">Name of property to change.</param>
+  /// <param name="value">New value of object's property.</param>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetPropertyValue{T}(object, string)"/>
+  public static T SetPropertyValue<T>(this T instance, string name, object value)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (name is null) throw new ArgumentNullException(nameof(name));
+
+    var property = instance.GetType().AnyProperty(name);
+
+    if (property is null)
+    {
+      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no property named \"{name}\"");
+    }
+
+    if (property.CanWrite)
+    {
+      property.SetValue(instance, value, null);
+    }
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="name"></param>
+  /// <param name="parameters"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CallMethod{T}(object, string, object[])"/>
+  public static T CallMethod<T>(this object instance, string name, IEnumerable<object> parameters = null)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (name is null) throw new ArgumentNullException(nameof(name));
+
+    var method = instance.GetType().AnyMethod(name);
+
+    if (method is null)
+    {
+      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no method named \"{name}\"");
+    }
+
+    return (T) method.Invoke(instance, parameters?.AsArray());
+  }
+
+  /// <summary>
+  ///   <para>Calls/invokes instance method on a target object, passing specified parameters.</para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance">The object on which to invoke the method.</param>
+  /// <param name="name">Name of the method to be invoked.</param>
+  /// <param name="parameters">Optional set of parameters to be passed to invoked method, if it requires some.</param>
+  /// <returns>An object containing the return value of the invoked method.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="CallMethod{T}(object, string, IEnumerable{object})"/>
+  public static T CallMethod<T>(this object instance, string name, params object[] parameters) => instance.CallMethod<T>(name, parameters as IEnumerable<object>);
+
+  /// <summary>
+  ///   <para>Creates and returns a dictionary from the values of public properties of target object.</para>
+  /// </summary>
+  /// <param name="instance">Target object whose properties values are returned.</param>
+  /// <param name="properties"></param>
+  /// <returns>Dictionary of name - value pairs for public properties of <paramref name="instance"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetState{T}(T, IEnumerable{Expression{Func{T, object}}})"/>
+  public static IEnumerable<(string Name, object Value)> GetState(this object instance, IEnumerable<string> properties = null)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
+    var type = instance.GetType();
+    var typeProperties = properties?.Select(property => type.AnyProperty(property)) ?? instance.GetType().GetProperties();
+
+    return typeProperties.Select(property => (property.Name, instance.GetPropertyValue<object>(property.Name)));
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="properties"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetState(object, IEnumerable{string})"/>
+  public static IEnumerable<(string Name, object Value)> GetState<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+
+    return properties is null ? instance.GetState((IEnumerable<string>) null) : properties.Select(property => (property.Body.To<UnaryExpression>().Operand.To<MemberExpression>().Member.Name, property.Compile()(instance)));
+  }
+
+  /// <summary>
+  ///   <para>Sets values of several properties on specified target object.</para>
+  /// </summary>
+  /// <typeparam name="T">Type of target object.</typeparam>
+  /// <param name="instance">Target object whose properties are to be changed.</param>
+  /// <param name="properties">Object whose public properties are to be used for setting matched ones on target object.</param>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="SetState{T}(T, object)"/>
+  public static T SetState<T>(this T instance, IEnumerable<(string Name, object Value)> properties)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (properties is null) throw new ArgumentNullException(nameof(properties));
+
+    properties.ForEach(property => instance.SetPropertyValue(property.Name, property.Value));
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="properties"></param>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="SetState{T}(T, IEnumerable{ValueTuple{string, object}})"/>
+  public static T SetState<T>(this T instance, object properties)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (properties is null) throw new ArgumentNullException(nameof(properties));
+
+    return instance.SetState(properties.GetState());
+  }
+  
   /// <summary>
   ///   <para>Determines whether specified objects are considered equal by comparing values of the given set of properties/fields on each of them.</para>
   ///   <para>The following algorithm is used in equality determination:
@@ -391,7 +593,7 @@ public static class ObjectExtensions
   /// <param name="properties"></param>
   /// <returns></returns>
   public static int HashCode<T>(this T instance, params Expression<Func<T, object>>[] properties) => instance.HashCode(properties as IEnumerable<Expression<Func<T, object>>>);
-
+  
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -834,323 +1036,6 @@ public static class ObjectExtensions
   public static async Task<T> PrintAsync<T>(this T instance, Process destination, CancellationToken cancellation = default) => await instance.PrintAsync(destination.StandardInput, cancellation).ConfigureAwait(false);
 
   /// <summary>
-  ///   <para>Creates and returns a dictionary from the values of public properties of target object.</para>
-  /// </summary>
-  /// <param name="instance">Target object whose properties values are returned.</param>
-  /// <param name="properties"></param>
-  /// <returns>Dictionary of name - value pairs for public properties of <paramref name="instance"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="GetState{T}(T, IEnumerable{Expression{Func{T, object}}})"/>
-  public static IEnumerable<(string Name, object Value)> GetState(this object instance, IEnumerable<string> properties = null)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-
-    var type = instance.GetType();
-    var typeProperties = properties?.Select(property => type.AnyProperty(property)) ?? instance.GetType().GetProperties();
-
-    return typeProperties.Select(property => (property.Name, instance.GetPropertyValue<object>(property.Name)));
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <param name="properties"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="GetState(object, IEnumerable{string})"/>
-  public static IEnumerable<(string Name, object Value)> GetState<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-
-    return properties is null ? instance.GetState((IEnumerable<string>) null) : properties.Select(property => (property.Body.To<UnaryExpression>().Operand.To<MemberExpression>().Member.Name, property.Compile()(instance)));
-  }
-
-  /// <summary>
-  ///   <para>Sets values of several properties on specified target object.</para>
-  /// </summary>
-  /// <typeparam name="T">Type of target object.</typeparam>
-  /// <param name="instance">Target object whose properties are to be changed.</param>
-  /// <param name="properties">Object whose public properties are to be used for setting matched ones on target object.</param>
-  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="SetState{T}(T, object)"/>
-  public static T SetState<T>(this T instance, IEnumerable<(string Name, object Value)> properties)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (properties is null) throw new ArgumentNullException(nameof(properties));
-
-    properties.ForEach(property => instance.SetPropertyValue(property.Name, property.Value));
-
-    return instance;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <param name="properties"></param>
-  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="properties"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="SetState{T}(T, IEnumerable{ValueTuple{string, object}})"/>
-  public static T SetState<T>(this T instance, object properties)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (properties is null) throw new ArgumentNullException(nameof(properties));
-
-    return instance.SetState(properties.GetState());
-  }
-
-
-  /// <summary>
-  ///   <para>Returns the value of a member on a target object, using expression tree to specify type's member.</para>
-  /// </summary>
-  /// <typeparam name="T">Type of target object.</typeparam>
-  /// <typeparam name="TResult">Type of <paramref name="instance"/>'s member.</typeparam>
-  /// <param name="instance">Target object, whose member's value is to be returned.</param>
-  /// <param name="expression">Lambda expression that represents a member of <typeparamref name="T"/> type, whose value for <paramref name="instance"/> instance is to be returned. Generally it should represents either a public property/field or no-arguments method.</param>
-  /// <returns>Value of member of <typeparamref name="T"/> type on a <paramref name="instance"/> instance.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="expression"/> is <see langword="null"/>.</exception>
-  public static TResult GetMember<T, TResult>(this T instance, Expression<Func<T, TResult>> expression)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (expression is null) throw new ArgumentNullException(nameof(expression));
-
-    return expression.Compile()(instance);
-  }
-
-  /// <summary>
-  ///   <para>Returns the value of object's field with a specified name.</para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance">Object whose field's value is to be returned.</param>
-  /// <param name="name">Name of field of <paramref name="instance"/>'s type.</param>
-  /// <returns>Value of <paramref name="instance"/>'s field with a given <paramref name="name"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static T GetFieldValue<T>(this object instance, string name)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (name is null) throw new ArgumentNullException(nameof(name));
-
-    var field = instance.GetType().AnyField(name);
-    
-    if (field is null)
-    {
-      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no field named \"{name}\"");
-    }
-
-    return (T) field.GetValue(instance);
-  }
-
-  /// <summary>
-  ///   <para>Returns the value of given property for specified target object.</para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance">Target object, whose property's value is to be returned.</param>
-  /// <param name="name">Name of property to inspect.</param>
-  /// <returns>Value of property <paramref name="name"/> for <paramref name="instance"/> instance, or a <c>null</c> reference in case this property does not exists for <paramref name="instance"/>'s type.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  /// <seealso cref="SetPropertyValue{T}(T, string, object)"/>
-  public static T GetPropertyValue<T>(this object instance, string name)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (name is null) throw new ArgumentNullException(nameof(name));
-
-    var property = instance.GetType().AnyProperty(name);
-
-    if (property is null)
-    {
-      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no property named \"{name}\"");
-    }
-
-    return property.CanRead ? (T) property.GetValue(instance, null) : default;
-  }
-
-  /// <summary>
-  ///   <para>Sets the value of given property on specified target object.</para>
-  /// </summary>
-  /// <typeparam name="T">Type of target object.</typeparam>
-  /// <param name="instance">Target object whose property is to be changed.</param>
-  /// <param name="name">Name of property to change.</param>
-  /// <param name="value">New value of object's property.</param>
-  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="GetPropertyValue{T}(object, string)"/>
-  public static T SetPropertyValue<T>(this T instance, string name, object value)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (name is null) throw new ArgumentNullException(nameof(name));
-
-    var property = instance.GetType().AnyProperty(name);
-
-    if (property is null)
-    {
-      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no property named \"{name}\"");
-    }
-
-    if (property.CanWrite)
-    {
-      property.SetValue(instance, value, null);
-    }
-
-    return instance;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="instance"></param>
-  /// <param name="name"></param>
-  /// <param name="parameters"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="CallMethod{T}(object, string, object[])"/>
-  public static T CallMethod<T>(this object instance, string name, IEnumerable<object> parameters = null)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (name is null) throw new ArgumentNullException(nameof(name));
-
-    var method = instance.GetType().AnyMethod(name);
-
-    if (method is null)
-    {
-      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no method named \"{name}\"");
-    }
-
-    return (T) method.Invoke(instance, parameters?.AsArray());
-  }
-
-  /// <summary>
-  ///   <para>Calls/invokes instance method on a target object, passing specified parameters.</para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance">The object on which to invoke the method.</param>
-  /// <param name="name">Name of the method to be invoked.</param>
-  /// <param name="parameters">Optional set of parameters to be passed to invoked method, if it requires some.</param>
-  /// <returns>An object containing the return value of the invoked method.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="CallMethod{T}(object, string, IEnumerable{object})"/>
-  public static T CallMethod<T>(this object instance, string name, params object[] parameters) => instance.CallMethod<T>(name, parameters as IEnumerable<object>);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <param name="elements"></param>
-  /// <returns></returns>
-  public static IEnumerable<T> ToSequence<T>(this T instance, params T[] elements)
-  {
-    var collection = new List<T>(elements.Length + 1) {instance};
-
-    collection.AddRange(elements);
-
-    return collection;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="instance"></param>
-  /// <param name="provider"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static string ToFormattedString(this object instance, IFormatProvider provider = null, string format = null)
-  {
-    if (instance is null)
-    {
-      return string.Empty;
-    }
-
-    if (provider is null)
-    {
-      return FormattableString.Invariant($"{instance}");
-    }
-
-    return string.Format(provider, format is null ? "{0}" : $"{{0:{format}}}", instance);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="instance"></param>
-  /// <param name="format"></param>
-  /// <returns></returns>
-  public static string ToInvariantString(this object instance, string format = null) => instance.ToFormattedString(null, format);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="instance"></param>
-  /// <param name="properties"></param>
-  /// <returns></returns>
-  /// <seealso cref="ToStateString(object, string[])"/>
-  public static string ToStateString(this object instance, IEnumerable<string> properties = null)
-  {
-    if (instance is null)
-    {
-      return string.Empty;
-    }
-
-    if (instance is string text)
-    {
-      return text;
-    }
-
-    var state = instance.GetState(properties);
-
-    return $"[{state.Select(property => $"{property.Name}:\"{property.Value?.ToInvariantString()}\"").Join(", ")}]";
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="instance"></param>
-  /// <param name="properties"></param>
-  /// <returns></returns>
-  /// <seealso cref="ToStateString(object, IEnumerable{string})"/>
-  public static string ToStateString(this object instance, params string[] properties) => instance.ToStateString(properties as IEnumerable<string>);
-
-  /// <summary>
-  ///   <para>Returns a generic string representation of object, using values of specified properties in a form of lambda expressions.</para>
-  /// </summary>
-  /// <typeparam name="T">Type of target object.</typeparam>
-  /// <param name="instance">Object to be converted to string representation.</param>
-  /// <param name="properties">Set of properties, whose values are used for string representation of <paramref name="instance"/>. Each property is represented as a lambda expression.</param>
-  /// <returns>String representation of <paramref name="instance"/>. Property name is separated from value by colon character, name-value pairs are separated by comma and immediately following space characters, and all content is placed in square brackets afterwards.</returns>
-  /// <seealso cref="ToStateString{T}(T, Expression{Func{T, object}}[])"/>
-  public static string ToStateString<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
-  {
-    if (instance is null)
-    {
-      return string.Empty;
-    }
-
-    if (instance is string text)
-    {
-      return text;
-    }
-
-    var state = instance.GetState(properties);
-
-    return $"[{state.Select(property => $"{property.Name}:\"{property.Value?.ToInvariantString()}\"").Join(", ")}]";
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="instance"></param>
-  /// <param name="properties"></param>
-  /// <returns></returns>
-  /// <seealso cref="ToStateString{T}(T, IEnumerable{Expression{Func{T, object}}})"/>
-  public static string ToStateString<T>(this T instance, params Expression<Func<T, object>>[] properties) => instance.ToStateString(properties as IEnumerable<Expression<Func<T, object>>>);
-
-  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
@@ -1345,4 +1230,118 @@ public static class ObjectExtensions
 
     return destination.ToString();
   }
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="elements"></param>
+  /// <returns></returns>
+  public static IEnumerable<T> ToEnumerable<T>(this T instance, params T[] elements)
+  {
+    var collection = new List<T>(elements.Length + 1) {instance};
+
+    collection.AddRange(elements);
+
+    return collection;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="provider"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static string ToFormattedString(this object instance, IFormatProvider provider = null, string format = null)
+  {
+    if (instance is null)
+    {
+      return string.Empty;
+    }
+
+    if (provider is null)
+    {
+      return FormattableString.Invariant($"{instance}");
+    }
+
+    return string.Format(provider, format is null ? "{0}" : $"{{0:{format}}}", instance);
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="format"></param>
+  /// <returns></returns>
+  public static string ToInvariantString(this object instance, string format = null) => instance.ToFormattedString(null, format);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="properties"></param>
+  /// <returns></returns>
+  /// <seealso cref="ToStateString(object, string[])"/>
+  public static string ToStateString(this object instance, IEnumerable<string> properties = null)
+  {
+    if (instance is null)
+    {
+      return string.Empty;
+    }
+
+    if (instance is string text)
+    {
+      return text;
+    }
+
+    var state = instance.GetState(properties);
+
+    return $"[{state.Select(property => $"{property.Name}:\"{property.Value?.ToInvariantString()}\"").Join(", ")}]";
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="instance"></param>
+  /// <param name="properties"></param>
+  /// <returns></returns>
+  /// <seealso cref="ToStateString(object, IEnumerable{string})"/>
+  public static string ToStateString(this object instance, params string[] properties) => instance.ToStateString(properties as IEnumerable<string>);
+
+  /// <summary>
+  ///   <para>Returns a generic string representation of object, using values of specified properties in a form of lambda expressions.</para>
+  /// </summary>
+  /// <typeparam name="T">Type of target object.</typeparam>
+  /// <param name="instance">Object to be converted to string representation.</param>
+  /// <param name="properties">Set of properties, whose values are used for string representation of <paramref name="instance"/>. Each property is represented as a lambda expression.</param>
+  /// <returns>String representation of <paramref name="instance"/>. Property name is separated from value by colon character, name-value pairs are separated by comma and immediately following space characters, and all content is placed in square brackets afterwards.</returns>
+  /// <seealso cref="ToStateString{T}(T, Expression{Func{T, object}}[])"/>
+  public static string ToStateString<T>(this T instance, IEnumerable<Expression<Func<T, object>>> properties = null)
+  {
+    if (instance is null)
+    {
+      return string.Empty;
+    }
+
+    if (instance is string text)
+    {
+      return text;
+    }
+
+    var state = instance.GetState(properties);
+
+    return $"[{state.Select(property => $"{property.Name}:\"{property.Value?.ToInvariantString()}\"").Join(", ")}]";
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="properties"></param>
+  /// <returns></returns>
+  /// <seealso cref="ToStateString{T}(T, IEnumerable{Expression{Func{T, object}}})"/>
+  public static string ToStateString<T>(this T instance, params Expression<Func<T, object>>[] properties) => instance.ToStateString(properties as IEnumerable<Expression<Func<T, object>>>);
 }

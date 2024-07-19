@@ -38,6 +38,88 @@ public sealed class XmlReaderExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="XmlReaderExtensions.DeserializeAsDataContract{T}(XmlReader, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsDataContract_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XmlReader) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader, params Type[] types)
+    {
+      using (reader)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlReaderExtensions.DeserializeAsXml{T}(XmlReader, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsXml_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XmlReader) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      /*var serialized = Attributes.RandomString();
+
+      var xml = new StringWriter().Use(writer =>
+      {
+        new XmlSerializer(serialized.GetType()).Serialize(writer, serialized);
+
+        return writer.ToString();
+      });
+
+      var xmlReader = xml.ToStringReader();
+
+      using (var reader = xml.ToXmlReader())
+      {
+        var deserialized = reader.AsXml(new [] {  serialized.GetType() });
+        deserialized.Should().NotBeSameAs(serialized);
+        deserialized.Should().Be(serialized);
+      }
+
+      xmlReader.ReadToEnd();
+      xmlReader.Close();
+
+      xmlReader = xml.ToStringReader();
+
+      using (var reader = xmlReader.ToXmlReader())
+      {
+        var deserialized = reader.AsXml(new { serialized.GetType() });
+        deserialized.Should().NotBeSameAs(serialized);
+        deserialized.Should().Be(serialized);
+        reader.Read().Should().BeFalse();
+        xmlReader.Read().Should().Be(-1);
+      }
+
+      xml.ToStringReader().ToXmlReader().AsXml<string>().Should().Be(serialized);*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XmlReader reader, params Type[] types)
+    {
+      using (reader)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XmlReaderExtensions.ToBytes(XmlReader, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
@@ -221,88 +303,6 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     return;
 
     static void Validate(XmlReader reader)
-    {
-      using (reader)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XmlReaderExtensions.DeserializeAsDataContract{T}(XmlReader, Type[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DeserializeAsDataContract_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XmlReader) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(XmlReader reader, params Type[] types)
-    {
-      using (reader)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XmlReaderExtensions.DeserializeAsXml{T}(XmlReader, Type[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DeserializeAsXml_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XmlReader) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-      /*var serialized = Attributes.RandomString();
-
-      var xml = new StringWriter().Use(writer =>
-      {
-        new XmlSerializer(serialized.GetType()).Serialize(writer, serialized);
-
-        return writer.ToString();
-      });
-
-      var xmlReader = xml.ToStringReader();
-
-      using (var reader = xml.ToXmlReader())
-      {
-        var deserialized = reader.AsXml(new [] {  serialized.GetType() });
-        deserialized.Should().NotBeSameAs(serialized);
-        deserialized.Should().Be(serialized);
-      }
-
-      xmlReader.ReadToEnd();
-      xmlReader.Close();
-
-      xmlReader = xml.ToStringReader();
-
-      using (var reader = xmlReader.ToXmlReader())
-      {
-        var deserialized = reader.AsXml(new { serialized.GetType() });
-        deserialized.Should().NotBeSameAs(serialized);
-        deserialized.Should().Be(serialized);
-        reader.Read().Should().BeFalse();
-        xmlReader.Read().Should().Be(-1);
-      }
-
-      xml.ToStringReader().ToXmlReader().AsXml<string>().Should().Be(serialized);*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(XmlReader reader, params Type[] types)
     {
       using (reader)
       {

@@ -43,6 +43,31 @@ public sealed class TextReaderExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.Skip{TReader}(TReader, int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Skip_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader, int count)
+    {
+      using (reader)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="TextReaderExtensions.Lines(TextReader)"/> method.</para>
   /// </summary>
   [Fact]
@@ -91,31 +116,6 @@ public sealed class TextReaderExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextReaderExtensions.Skip{TReader}(TReader, int)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Skip_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((TextReader) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TextReader reader, int count)
-    {
-      using (reader)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="TextReaderExtensions.AsSynchronized(TextReader)"/> method.</para>
   /// </summary>
   [Fact]
@@ -138,6 +138,148 @@ public sealed class TextReaderExtensionsTest : UnitTest
       synchronized.Should().BeOfType<TextReader>().And.NotBeSameAs(reader);
       synchronized.Peek().Should().Be(reader.Peek());
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.DeserializeAsDataContract{T}(TextReader, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsDataContract_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+      using (reader)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.DeserializeAsXml{T}(TextReader, Type[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DeserializeAsXml_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      /*var subject = Guid.Empty;
+
+      using (var reader = subject.AsXml().ToStringReader())
+      {
+        reader.AsXml<Guid>().Should().Be(subject);
+        reader.ReadLine();
+      }
+
+      using (var reader = subject.AsXml().ToStringReader())
+      {
+        reader.AsXml<Guid>().Should().Be(subject);
+        AssertionExtensions.Should(() => reader.ReadLine()).ThrowExactly<ObjectDisposedException>();
+      }*/
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(TextReader reader)
+    {
+      using (reader)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="TextReaderExtensions.ToEnumerable(TextReader, bool)"/></description></item>
+  ///     <item><description><see cref="TextReaderExtensions.ToEnumerable(TextReader, int, bool)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void ToEnumerable_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      static void Validate(TextReader reader)
+      {
+        using (reader)
+        {
+
+        }
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      static void Validate(TextReader reader, int count)
+      {
+        using (reader)
+        {
+
+        }
+      }
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="TextReaderExtensions.ToAsyncEnumerable(TextReader, bool)"/></description></item>
+  ///     <item><description><see cref="TextReaderExtensions.ToAsyncEnumerable(TextReader, int, bool)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void ToAsyncEnumerable_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+
+      static void Validate(TextReader reader)
+      {
+        using (reader)
+        {
+
+        }
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToAsyncEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+
+      static void Validate(TextReader reader, int count)
+      {
+        using (reader)
+        {
+
+        }
+      }
+    }
+
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -240,86 +382,6 @@ public sealed class TextReaderExtensionsTest : UnitTest
         reader.Read().Should().Be(-1);
       }
     }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="TextReaderExtensions.ToEnumerable(TextReader, bool)"/></description></item>
-  ///     <item><description><see cref="TextReaderExtensions.ToEnumerable(TextReader, int, bool)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void ToEnumerable_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-      static void Validate(TextReader reader)
-      {
-        using (reader)
-        {
-
-        }
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-
-      static void Validate(TextReader reader, int count)
-      {
-        using (reader)
-        {
-
-        }
-      }
-    }
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="TextReaderExtensions.ToAsyncEnumerable(TextReader, bool)"/></description></item>
-  ///     <item><description><see cref="TextReaderExtensions.ToAsyncEnumerable(TextReader, int, bool)"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void ToAsyncEnumerable_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
-
-      static void Validate(TextReader reader)
-      {
-        using (reader)
-        {
-
-        }
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToAsyncEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-
-      static void Validate(TextReader reader, int count)
-      {
-        using (reader)
-        {
-
-        }
-      }
-    }
-
-    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -477,68 +539,6 @@ public sealed class TextReaderExtensionsTest : UnitTest
       {
         reader.ToXDocumentAsync().ToString().Should().Be("<article>text</article>");
         reader.Read().Should().Be(-1);
-      }*/
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TextReader reader)
-    {
-      using (reader)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextReaderExtensions.DeserializeAsDataContract{T}(TextReader, Type[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DeserializeAsDataContract_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((TextReader) null).DeserializeAsDataContract<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(TextReader reader)
-    {
-      using (reader)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TextReaderExtensions.DeserializeAsXml{T}(TextReader, Type[])"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DeserializeAsXml_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((TextReader) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-      /*var subject = Guid.Empty;
-
-      using (var reader = subject.AsXml().ToStringReader())
-      {
-        reader.AsXml<Guid>().Should().Be(subject);
-        reader.ReadLine();
-      }
-
-      using (var reader = subject.AsXml().ToStringReader())
-      {
-        reader.AsXml<Guid>().Should().Be(subject);
-        AssertionExtensions.Should(() => reader.ReadLine()).ThrowExactly<ObjectDisposedException>();
       }*/
     }
 

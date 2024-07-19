@@ -11,6 +11,46 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IDictionaryExtensionsTest : UnitTest
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void GetValueOrDefault_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IDictionaryExtensions.GetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.SetValueOrDefault{TKey,TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void SetValueOrDefault_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IDictionaryExtensions.SetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+    {
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="IDictionaryExtensions.With{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue})"/></description></item>
@@ -84,46 +124,6 @@ public sealed class IDictionaryExtensionsTest : UnitTest
     }
 
     throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IDictionaryExtensions.GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void GetValueOrDefault_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IDictionaryExtensions.GetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IDictionaryExtensions.SetValueOrDefault{TKey,TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void SetValueOrDefault_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IDictionaryExtensions.SetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
-    {
-    }
   }
 
   /// <summary>

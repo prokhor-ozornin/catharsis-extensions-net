@@ -14,40 +14,6 @@ public static class XDocumentExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="document"></param>
-  /// <param name="nodes"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
-  public static XDocument With(this XDocument document, IEnumerable<object> nodes)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-    if (nodes is null) throw new ArgumentNullException(nameof(nodes));
-
-    document.Add(nodes.AsArray());
-
-    return document;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="nodes"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static XDocument With(this XDocument document, params object[] nodes) => document.With(nodes as IEnumerable<object>);
-
-  /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="XDocument"/> that has the same text content as the original.</para>
-  /// </summary>
-  /// <param name="document">XML document instance to be cloned.</param>
-  /// <returns>Cloning result.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static XDocument Clone(this XDocument document) => document is not null ? document.ToString().ToStringReader().TryFinallyDispose(XDocument.Load) : throw new ArgumentNullException(nameof(document));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
   /// <returns></returns>
   /// <seealso cref="IsEmpty(XDocument)"/>
   public static bool IsUnset(this XDocument document) => document is null || document.IsEmpty();
@@ -76,6 +42,14 @@ public static class XDocumentExtensions
   }
 
   /// <summary>
+  ///   <para>Creates a copy of the specified <see cref="XDocument"/> that has the same text content as the original.</para>
+  /// </summary>
+  /// <param name="document">XML document instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  public static XDocument Clone(this XDocument document) => document is not null ? document.ToString().ToStringReader().TryFinallyDispose(XDocument.Load) : throw new ArgumentNullException(nameof(document));
+
+  /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="document"></param>
@@ -89,104 +63,32 @@ public static class XDocumentExtensions
 
     return document.TryFinally(action, x => x.Empty());
   }
-
+  
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="document"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static IEnumerable<XNode> ToEnumerable(this XDocument document) => document?.Nodes() ?? throw new ArgumentNullException(nameof(document));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static XmlReader ToXmlReader(this XDocument document) => document?.CreateReader() ?? throw new ArgumentNullException(nameof(document));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static XmlWriter ToXmlWriter(this XDocument document) => document?.CreateWriter() ?? throw new ArgumentNullException(nameof(document));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static byte[] ToBytes(this XDocument document)
+  /// <param name="nodes"></param>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
+  public static XDocument With(this XDocument document, IEnumerable<object> nodes)
   {
     if (document is null) throw new ArgumentNullException(nameof(document));
+    if (nodes is null) throw new ArgumentNullException(nameof(nodes));
 
-    using var stream = new MemoryStream();
+    document.Add(nodes.AsArray());
 
-    document.Save(stream, SaveOptions.None);
-
-    return stream.ToArray();
+    return document;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <param name="document"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
+  /// <param name="nodes"></param>
+  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static async Task<byte[]> ToBytesAsync(this XDocument document, CancellationToken cancellation = default)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    using var stream = new MemoryStream();
-
-    await document.SaveAsync(stream, SaveOptions.None, cancellation).ConfigureAwait(false);
-
-    return stream.ToArray();
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static string ToText(this XDocument document)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-
-    using var writer = new StringWriter();
-
-    document.Save(writer, SaveOptions.None);
-
-    return writer.ToString();
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static async Task<string> ToTextAsync(this XDocument document, CancellationToken cancellation = default)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    await using var writer = new StringWriter();
-
-    await document.SaveAsync(writer, SaveOptions.None, cancellation).ConfigureAwait(false);
-
-    return writer.ToString();
-  }
+  public static XDocument With(this XDocument document, params object[] nodes) => document.With(nodes as IEnumerable<object>);
 
   /// <summary>
   ///   <para></para>
@@ -274,4 +176,102 @@ public static class XDocumentExtensions
 
     return destination.ToString();
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  public static byte[] ToBytes(this XDocument document)
+  {
+    if (document is null) throw new ArgumentNullException(nameof(document));
+
+    using var stream = new MemoryStream();
+
+    document.Save(stream, SaveOptions.None);
+
+    return stream.ToArray();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  public static async Task<byte[]> ToBytesAsync(this XDocument document, CancellationToken cancellation = default)
+  {
+    if (document is null) throw new ArgumentNullException(nameof(document));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    using var stream = new MemoryStream();
+
+    await document.SaveAsync(stream, SaveOptions.None, cancellation).ConfigureAwait(false);
+
+    return stream.ToArray();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  public static string ToText(this XDocument document)
+  {
+    if (document is null) throw new ArgumentNullException(nameof(document));
+
+    using var writer = new StringWriter();
+
+    document.Save(writer, SaveOptions.None);
+
+    return writer.ToString();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  public static async Task<string> ToTextAsync(this XDocument document, CancellationToken cancellation = default)
+  {
+    if (document is null) throw new ArgumentNullException(nameof(document));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    await using var writer = new StringWriter();
+
+    await document.SaveAsync(writer, SaveOptions.None, cancellation).ConfigureAwait(false);
+
+    return writer.ToString();
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  public static XmlReader ToXmlReader(this XDocument document) => document?.CreateReader() ?? throw new ArgumentNullException(nameof(document));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  public static XmlWriter ToXmlWriter(this XDocument document) => document?.CreateWriter() ?? throw new ArgumentNullException(nameof(document));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="document"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+  public static IEnumerable<XNode> ToEnumerable(this XDocument document) => document?.Nodes() ?? throw new ArgumentNullException(nameof(document));
 }

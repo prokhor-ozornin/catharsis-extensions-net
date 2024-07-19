@@ -7,12 +7,24 @@
 public static class DriveInfoExtensions
 {
   /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="DriveInfo"/> that represents the same drive as the original.</para>
+  ///   <para></para>
   /// </summary>
-  /// <param name="drive">Drive instance to be cloned.</param>
-  /// <returns>Cloning result.</returns>
+  /// <param name="drive"></param>
+  /// <param name="pattern"></param>
+  /// <param name="recursive"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="drive"/> is <see langword="null"/>.</exception>
-  public static DriveInfo Clone(this DriveInfo drive) => drive is not null ? new DriveInfo(drive.Name) : throw new ArgumentNullException(nameof(drive));
+  public static long Size(this DriveInfo drive, string pattern = null, bool recursive = true) => drive?.RootDirectory.Size(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="drive"></param>
+  /// <param name="pattern"></param>
+  /// <param name="recursive"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="drive"/> is <see langword="null"/>.</exception>
+  public static IEnumerable<DirectoryInfo> Directories(this DriveInfo drive, string pattern = null, bool recursive = false) => drive?.RootDirectory.Directories(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
 
   /// <summary>
   ///   <para></para>
@@ -32,22 +44,10 @@ public static class DriveInfoExtensions
   public static bool IsEmpty(this DriveInfo drive) => drive?.RootDirectory.IsEmpty() ?? throw new ArgumentNullException(nameof(drive));
 
   /// <summary>
-  ///   <para></para>
+  ///   <para>Creates a copy of the specified <see cref="DriveInfo"/> that represents the same drive as the original.</para>
   /// </summary>
-  /// <param name="drive"></param>
-  /// <param name="pattern"></param>
-  /// <param name="recursive"></param>
-  /// <returns></returns>
+  /// <param name="drive">Drive instance to be cloned.</param>
+  /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="drive"/> is <see langword="null"/>.</exception>
-  public static IEnumerable<DirectoryInfo> Directories(this DriveInfo drive, string pattern = null, bool recursive = false) => drive?.RootDirectory.Directories(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="drive"></param>
-  /// <param name="pattern"></param>
-  /// <param name="recursive"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="drive"/> is <see langword="null"/>.</exception>
-  public static long Size(this DriveInfo drive, string pattern = null, bool recursive = true) => drive?.RootDirectory.Size(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
+  public static DriveInfo Clone(this DriveInfo drive) => drive is not null ? new DriveInfo(drive.Name) : throw new ArgumentNullException(nameof(drive));
 }

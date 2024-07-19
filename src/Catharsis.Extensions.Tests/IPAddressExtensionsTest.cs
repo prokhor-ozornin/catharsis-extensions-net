@@ -13,40 +13,39 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IPAddressExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPAddressExtensions.Clone(IPAddress)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.IsV4"/> method.</para>
   /// </summary>
   [Fact]
-  public void Clone_Method()
+  public void Ip4_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IPAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
-
-      Validate(IPAddress.Any);
-      Validate(IPAddress.Loopback);
-      Validate(IPAddress.Broadcast);
-      Validate(IPAddress.None);
-      Validate(IPAddress.IPv6Any);
-      Validate(IPAddress.IPv6Loopback);
-      Validate(IPAddress.IPv6None);
+      AssertionExtensions.Should(() => IPAddressExtensions.IsV4(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
     }
+
+    throw new NotImplementedException();
 
     return;
 
-    static void Validate(IPAddress original)
-    {
-      var clone = original.Clone();
+    static void Validate(bool result, IPAddress address) => address.IsV4().Should().Be(result);
+  }
 
-      clone.Should().BeOfType<IPAddress>().And.NotBeSameAs(original).And.Be(original);
-      clone.ToString().Should().Be(original.ToString());
-      clone.AddressFamily.Should().Be(original.AddressFamily);
-      clone.IsIPv4MappedToIPv6.Should().Be(original.IsIPv4MappedToIPv6);
-      clone.IsIPv6LinkLocal.Should().Be(original.IsIPv6LinkLocal);
-      clone.IsIPv6SiteLocal.Should().Be(original.IsIPv6SiteLocal);
-      clone.IsIPv6UniqueLocal.Should().Be(original.IsIPv6UniqueLocal);
-      clone.IsIPv6Multicast.Should().Be(original.IsIPv6Multicast);
-      clone.IsIPv6Teredo.Should().Be(original.IsIPv6Teredo);
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.IsV6"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Ip6_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IPAddressExtensions.IsV6(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
     }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(bool result, IPAddress address) => address.IsV6().Should().Be(result);
   }
 
   /// <summary>
@@ -106,6 +105,43 @@ public sealed class IPAddressExtensionsTest : UnitTest
       task.Dispose();
       task.Should().BeAssignableTo<Task<bool>>();
       task.Await().Should().Be(result);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.Clone(IPAddress)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IPAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+
+      Validate(IPAddress.Any);
+      Validate(IPAddress.Loopback);
+      Validate(IPAddress.Broadcast);
+      Validate(IPAddress.None);
+      Validate(IPAddress.IPv6Any);
+      Validate(IPAddress.IPv6Loopback);
+      Validate(IPAddress.IPv6None);
+    }
+
+    return;
+
+    static void Validate(IPAddress original)
+    {
+      var clone = original.Clone();
+
+      clone.Should().BeOfType<IPAddress>().And.NotBeSameAs(original).And.Be(original);
+      clone.ToString().Should().Be(original.ToString());
+      clone.AddressFamily.Should().Be(original.AddressFamily);
+      clone.IsIPv4MappedToIPv6.Should().Be(original.IsIPv4MappedToIPv6);
+      clone.IsIPv6LinkLocal.Should().Be(original.IsIPv6LinkLocal);
+      clone.IsIPv6SiteLocal.Should().Be(original.IsIPv6SiteLocal);
+      clone.IsIPv6UniqueLocal.Should().Be(original.IsIPv6UniqueLocal);
+      clone.IsIPv6Multicast.Should().Be(original.IsIPv6Multicast);
+      clone.IsIPv6Teredo.Should().Be(original.IsIPv6Teredo);
     }
   }
 
@@ -183,41 +219,6 @@ public sealed class IPAddressExtensionsTest : UnitTest
     static void Validate(IPAddress min, IPAddress max) => min.MinMax(max).Should().Be((min, max));
   }
 
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IPAddressExtensions.IsV4"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Ip4_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IPAddressExtensions.IsV4(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(bool result, IPAddress address) => address.IsV4().Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IPAddressExtensions.IsV6"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Ip6_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IPAddressExtensions.IsV6(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(bool result, IPAddress address) => address.IsV6().Should().Be(result);
-  }
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IPAddressExtensions.ToIpHost(IPAddress)"/> method.</para>

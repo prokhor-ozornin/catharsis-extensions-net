@@ -48,7 +48,7 @@ public sealed class RegexExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => RegexExtensions.ToEnumerable(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
-      AssertionExtensions.Should(() => new Regex(".*").ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => RegexExtensions.ToEnumerable(new Regex(".*"), null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();

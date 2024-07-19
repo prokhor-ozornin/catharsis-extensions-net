@@ -64,44 +64,6 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.AtStartOfMinute(TimeOnly)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfMinute_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(TimeOnly.MinValue);
-      Validate(TimeOnly.MaxValue);
-      Validate(DateTime.Now.ToTimeOnly());
-      Validate(DateTime.UtcNow.ToTimeOnly());
-    }
-
-    return;
-
-    static void Validate(TimeOnly time) => time.AtStartOfMinute().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(0).And.HaveMilliseconds(0);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.AtStartOfSecond(TimeOnly)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfSecond_Method()
-  {
-    using (new AssertionScope())
-    {
-      Validate(TimeOnly.MinValue);
-      Validate(TimeOnly.MaxValue);
-      Validate(DateTime.Now.ToTimeOnly());
-      Validate(DateTime.UtcNow.ToTimeOnly());
-    }
-
-    return;
-
-    static void Validate(TimeOnly time) => time.AtStartOfSecond().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(0);
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="TimeOnlyExtensions.AtEndOfHour(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
@@ -121,6 +83,25 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.AtStartOfMinute(TimeOnly)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void AtStartOfMinute_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+      Validate(DateTime.UtcNow.ToTimeOnly());
+    }
+
+    return;
+
+    static void Validate(TimeOnly time) => time.AtStartOfMinute().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(0).And.HaveMilliseconds(0);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="TimeOnlyExtensions.AtEndOfMinute(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
@@ -137,6 +118,25 @@ public sealed class TimeOnlyExtensionsTest : UnitTest
     return;
 
     static void Validate(TimeOnly time) => time.AtEndOfMinute().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(59).And.HaveMilliseconds(999);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.AtStartOfSecond(TimeOnly)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void AtStartOfSecond_Method()
+  {
+    using (new AssertionScope())
+    {
+      Validate(TimeOnly.MinValue);
+      Validate(TimeOnly.MaxValue);
+      Validate(DateTime.Now.ToTimeOnly());
+      Validate(DateTime.UtcNow.ToTimeOnly());
+    }
+
+    return;
+
+    static void Validate(TimeOnly time) => time.AtStartOfSecond().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(0);
   }
 
   /// <summary>

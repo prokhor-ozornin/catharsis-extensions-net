@@ -7,6 +7,66 @@
 public static class BinaryReaderExtensions
 {
   /// <summary>
+  ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the starting position, meaning the position within it's underlying <seealso cref="Stream"/> is zero.</para>
+  /// </summary>
+  /// <param name="reader">Binary reader instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="reader"/> is at the starting position, return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsEnd(BinaryReader)"/>
+  public static bool IsStart(this BinaryReader reader) => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
+
+  /// <summary>
+  ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the final position, meaning it's currently at the end of its underlying <seealso cref="Stream"/>.</para>
+  /// </summary>
+  /// <param name="reader">Binary reader instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="reader"/> is at the final position, return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="IsStart(BinaryReader)"/>
+  public static bool IsEnd(this BinaryReader reader) => reader?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(reader));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  public static BinaryReader Rewind(this BinaryReader reader)
+  {
+    if (reader is null)
+      throw new ArgumentNullException(nameof(reader));
+
+    reader.BaseStream.MoveToStart();
+
+    return reader;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <param name="count"></param>
+  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
+  public static BinaryReader Skip(this BinaryReader reader, int count)
+  {
+    if (reader is null)
+      throw new ArgumentNullException(nameof(reader));
+    if (count < 0)
+      throw new ArgumentOutOfRangeException(nameof(count));
+
+    try
+    {
+      count.Times(() => reader.ReadByte());
+    }
+    catch (EndOfStreamException)
+    {
+    }
+
+    return reader;
+  }
+
+  /// <summary>
   ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance is either <see langword="null"/> or "empty".</para>
   /// </summary>
   /// <param name="reader"></param>
@@ -24,31 +84,13 @@ public static class BinaryReaderExtensions
   public static bool IsEmpty(this BinaryReader reader) => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
 
   /// <summary>
-  ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the starting position, meaning the position within it's underlying <seealso cref="Stream"/> is zero.</para>
-  /// </summary>
-  /// <param name="reader">Binary reader instance for evaluation.</param>
-  /// <returns>If the specified <paramref name="reader"/> is at the starting position, return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsEnd(BinaryReader)"/>
-  public static bool IsStart(this BinaryReader reader) => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
-
-  /// <summary>
-  ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the final position, meaning it's currently at the end of its underlying <seealso cref="Stream"/>.</para>
-  /// </summary>
-  /// <param name="reader">Binary reader instance for evaluation.</param>
-  /// <returns>If the specified <paramref name="reader"/> is at the final position, return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsStart(BinaryReader)"/>
-  public static bool IsEnd(this BinaryReader reader) => reader?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(reader));
-  
-  /// <summary>
   ///   <para>Creates a copy of the specified <see cref="BinaryReader"/>, which will read data from the same underlying <see cref="Stream"/>.</para>
   /// </summary>
   /// <param name="reader">Binary reader instance to be cloned.</param>
   /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   public static BinaryReader Clone(this BinaryReader reader) => reader is not null ? new BinaryReader(reader.BaseStream) : throw new ArgumentNullException(nameof(reader));
-  
+
   /// <summary>
   ///   <para>"Empties" a specified <seealso cref="BinaryReader"/> by setting the length of its underlying <seealso cref="Stream"/> to zero.</para>
   /// </summary>
@@ -57,48 +99,10 @@ public static class BinaryReaderExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   public static BinaryReader Empty(this BinaryReader reader)
   {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
+    if (reader is null)
+      throw new ArgumentNullException(nameof(reader));
 
     reader.BaseStream.Empty();
-
-    return reader;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static BinaryReader Rewind(this BinaryReader reader)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    reader.BaseStream.MoveToStart();
-    
-    return reader;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="count"></param>
-  /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static BinaryReader Skip(this BinaryReader reader, int count)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    try
-    {
-      count.Times(() => reader.ReadByte());
-    }
-    catch (EndOfStreamException)
-    {
-    }
 
     return reader;
   }

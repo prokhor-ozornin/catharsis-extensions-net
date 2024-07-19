@@ -14,68 +14,6 @@ namespace Catharsis.Extensions.Tests;
 public sealed class XDocumentExtensionsTest : UnitTest
 {
   /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="XDocumentExtensions.With(XDocument, IEnumerable{object})"/></description></item>
-  ///     <item><description><see cref="XDocumentExtensions.With(XDocument, object[])"/></description></item>
-  ///   </list>
-  /// </summary>
-  [Fact]
-  public void With_Methods()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => XDocumentExtensions.With(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
-      AssertionExtensions.Should(() => new XDocument().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
-
-      static void Validate()
-      {
-      }
-    }
-
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => XDocumentExtensions.With(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
-      AssertionExtensions.Should(() => new XDocument().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
-
-      static void Validate()
-      {
-      }
-    }
-
-    throw new NotImplementedException();
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.Clone(XDocument)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Clone_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => XDocumentExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
-      AssertionExtensions.Should(() => new XDocument().Clone()).ThrowExactly<XmlException>();
-
-      Validate(new XDocument().With(new XElement("root", new XAttribute("id", Guid.NewGuid()))));
-    }
-
-    return;
-
-    static void Validate(XDocument original)
-    {
-      var clone = original.Clone();
-
-      clone.Should().BeOfType<XDocument>().And.NotBeSameAs(original).And.NotBe(original);
-      clone.ToString().Should().Be(original.ToString());
-      clone.Root.Should().Be(original.Root);
-      clone.Declaration.Should().Be(original.Declaration);
-      clone.DocumentType.Should().Be(original.DocumentType);
-      clone.NodeType.Should().Be(original.NodeType);
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="XDocumentExtensions.IsUnset(XDocument)"/> method.</para>
   /// </summary>
   [Fact]
@@ -140,6 +78,35 @@ public sealed class XDocumentExtensionsTest : UnitTest
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.Clone(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Clone_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => XDocumentExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => new XDocument().Clone()).ThrowExactly<XmlException>();
+
+      Validate(new XDocument().With(new XElement("root", new XAttribute("id", Guid.NewGuid()))));
+    }
+
+    return;
+
+    static void Validate(XDocument original)
+    {
+      var clone = original.Clone();
+
+      clone.Should().BeOfType<XDocument>().And.NotBeSameAs(original).And.NotBe(original);
+      clone.ToString().Should().Be(original.ToString());
+      clone.Root.Should().Be(original.Root);
+      clone.Declaration.Should().Be(original.Declaration);
+      clone.DocumentType.Should().Be(original.DocumentType);
+      clone.NodeType.Should().Be(original.NodeType);
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XDocumentExtensions.TryFinallyClear(XDocument, Action{XDocument})"/> method.</para>
   /// </summary>
   [Fact]
@@ -163,147 +130,36 @@ public sealed class XDocumentExtensionsTest : UnitTest
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToEnumerable(XDocument)"/> method.</para>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="XDocumentExtensions.With(XDocument, IEnumerable{object})"/></description></item>
+  ///     <item><description><see cref="XDocumentExtensions.With(XDocument, object[])"/></description></item>
+  ///   </list>
   /// </summary>
   [Fact]
-  public void ToEnumerable_Method()
+  public void With_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => XDocumentExtensions.With(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => new XDocument().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
+
+      static void Validate()
+      {
+      }
     }
 
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(XDocument document)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToXmlReader(XDocument)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToXmlReader_Method()
-  {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XDocument) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => XDocumentExtensions.With(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => new XDocument().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
+
+      static void Validate()
+      {
+      }
     }
 
     throw new NotImplementedException();
-
-    return;
-
-    static void Validate(XDocument document)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToXmlWriter(XDocument)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToXmlWriter_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XDocument) null).ToXmlWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(XDocument document)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToBytes(XDocument)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToBytes_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XDocument) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(byte[] result, XDocument document) => document.ToBytes().Should().BeOfType<byte[]>().And.Equal(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToBytesAsync(XDocument, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToBytesAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XDocument) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
-      AssertionExtensions.Should(() => new XDocument().ToBytesAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(byte[] result, XDocument document)
-    {
-      var task = document.ToBytesAsync();
-      task.Should().BeAssignableTo<Task<byte[]>>();
-      task.Await().Should().BeOfType<byte[]>().And.Equal(result);
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToText(XDocument)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToText_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XDocument) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string result, XDocument document) => document.ToText().Should().BeOfType<string>().And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToTextAsync(XDocument, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToTextAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XDocument) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
-      AssertionExtensions.Should(() => new XDocument().ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Validate(string result, XDocument document)
-    {
-      var task = document.ToTextAsync();
-      task.Should().BeAssignableTo<Task<string>>();
-      task.Await().Should().BeOfType<string>().And.Be(result);
-    }
   }
 
   /// <summary>
@@ -399,6 +255,150 @@ public sealed class XDocumentExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XDocument) null).Serialize()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToEnumerable(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToEnumerable_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToBytes(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBytes_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(byte[] result, XDocument document) => document.ToBytes().Should().BeOfType<byte[]>().And.Equal(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToBytesAsync(XDocument, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBytesAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
+      AssertionExtensions.Should(() => new XDocument().ToBytesAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(byte[] result, XDocument document)
+    {
+      var task = document.ToBytesAsync();
+      task.Should().BeAssignableTo<Task<byte[]>>();
+      task.Await().Should().BeOfType<byte[]>().And.Equal(result);
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToText(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToText_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, XDocument document) => document.ToText().Should().BeOfType<string>().And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToTextAsync(XDocument, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToTextAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
+      AssertionExtensions.Should(() => new XDocument().ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(string result, XDocument document)
+    {
+      var task = document.ToTextAsync();
+      task.Should().BeAssignableTo<Task<string>>();
+      task.Await().Should().BeOfType<string>().And.Be(result);
+    }
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToXmlReader(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXmlReader_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null).ToXmlReader()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(XDocument document)
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToXmlWriter(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToXmlWriter_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null).ToXmlWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     }
 
     throw new NotImplementedException();

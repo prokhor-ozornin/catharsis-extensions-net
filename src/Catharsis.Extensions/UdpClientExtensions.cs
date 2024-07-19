@@ -14,95 +14,164 @@ public static class UdpClientExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="udp"></param>
+  /// <param name="client"></param>
   /// <returns></returns>
   /// <seealso cref="IsEmpty(UdpClient)"/>
-  public static bool IsUnset(this UdpClient udp) => udp is null || udp.IsEmpty();
+  public static bool IsUnset(this UdpClient client) => client is null || client.IsEmpty();
 
   /// <summary>
   ///   <para>Determines whether the specified <see cref="UdpClient"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
   /// </summary>
-  /// <param name="udp">UDP client instance for evaluation.</param>
-  /// <returns>If the specified <paramref name="udp"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <param name="client">UDP client instance for evaluation.</param>
+  /// <returns>If the specified <paramref name="client"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsUnset(UdpClient)"/>
-  public static bool IsEmpty(this UdpClient udp) => udp?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(udp));
+  public static bool IsEmpty(this UdpClient client) => client?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(client));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="udp"></param>
+  /// <param name="client"></param>
   /// <param name="timeout"></param>
-  /// <returns>Back self-reference to the given <paramref name="udp"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
-  public static UdpClient WithTimeout(this UdpClient udp, TimeSpan? timeout)
+  /// <returns>Back self-reference to the given <paramref name="client"/>.</returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
+  public static UdpClient WithTimeout(this UdpClient client, TimeSpan? timeout)
   {
-    if (udp is null) throw new ArgumentNullException(nameof(udp));
+    if (client is null) throw new ArgumentNullException(nameof(client));
 
-    udp.Client.WithTimeout(timeout);
+    client.Client.WithTimeout(timeout);
 
-    return udp;
+    return client;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="udp"></param>
+  /// <param name="client"></param>
   /// <param name="action"></param>
-  /// <returns>Back self-reference to the given <paramref name="udp"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
-  public static UdpClient TryFinallyDisconnect(this UdpClient udp, Action<UdpClient> action)
+  /// <returns>Back self-reference to the given <paramref name="client"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+  public static UdpClient TryFinallyDisconnect(this UdpClient client, Action<UdpClient> action)
   {
-    if (udp is null) throw new ArgumentNullException(nameof(udp));
+    if (client is null) throw new ArgumentNullException(nameof(client));
     if (action is null) throw new ArgumentNullException(nameof(action));
 
-    udp.Client.TryFinallyDisconnect(_ => action(udp));
+    client.Client.TryFinallyDisconnect(_ => action(client));
 
-    return udp;
+    return client;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="udp"></param>
+  /// <param name="client"></param>
+  /// <param name="bytes"></param>
+  /// <returns>Back self-reference to the given <paramref name="client"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytesAsync(UdpClient, IEnumerable{byte}, CancellationToken)"/>
+  public static UdpClient WriteBytes(this UdpClient client, IEnumerable<byte> bytes)
+  {
+    if (client is null) throw new ArgumentNullException(nameof(client));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    var datagram = bytes.AsArray();
+
+    client.Send(datagram, datagram.Length);
+
+    return client;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="client"></param>
+  /// <param name="bytes"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteBytes(UdpClient, IEnumerable{byte})"/>
+  public static async Task<UdpClient> WriteBytesAsync(this UdpClient client, IEnumerable<byte> bytes, CancellationToken cancellation = default)
+  {
+    if (client is null) throw new ArgumentNullException(nameof(client));
+    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+    cancellation.ThrowIfCancellationRequested();
+
+    #if NET8_0
+      await client.SendAsync(bytes.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
+#else
+      var datagram = bytes.AsArray();
+      await client.SendAsync(datagram, datagram.Length).ConfigureAwait(false);
+#endif
+
+    return client;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="client"></param>
+  /// <param name="text"></param>
+  /// <param name="encoding"></param>
+  /// <returns>Back self-reference to the given <paramref name="client"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteTextAsync(UdpClient, string, Encoding, CancellationToken)"/>
+  public static UdpClient WriteText(this UdpClient client, string text, Encoding encoding = null) => client.WriteBytes(text.ToBytes(encoding));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="client"></param>
+  /// <param name="text"></param>
+  /// <param name="encoding"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="WriteText(UdpClient, string, Encoding)"/>
+  public static async Task<UdpClient> WriteTextAsync(this UdpClient client, string text, Encoding encoding = null, CancellationToken cancellation = default) => await client.WriteBytesAsync(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="client"></param>
   /// <param name="endpoint"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToAsyncEnumerable(UdpClient, bool)"/>
-  public static IEnumerable<byte[]> ToEnumerable(this UdpClient udp, IPEndPoint endpoint = null, bool close = false) => udp is not null ? new UdpClientEnumerable(udp, endpoint, close) : throw new ArgumentNullException(nameof(udp));
+  public static IEnumerable<byte[]> ToEnumerable(this UdpClient client, IPEndPoint endpoint = null, bool close = false) => client is not null ? new UdpClientEnumerable(client, endpoint, close) : throw new ArgumentNullException(nameof(client));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="udp"></param>
+  /// <param name="client"></param>
   /// <param name="close"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToEnumerable(UdpClient, IPEndPoint, bool)"/>
-  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this UdpClient udp, bool close = false) => udp is not null ? new UdpClientAsyncEnumerable(udp, close) : throw new ArgumentNullException(nameof(udp));
+  public static IAsyncEnumerable<byte[]> ToAsyncEnumerable(this UdpClient client, bool close = false) => client is not null ? new UdpClientAsyncEnumerable(client, close) : throw new ArgumentNullException(nameof(client));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="udp"></param>
+  /// <param name="client"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToBytesAsync(UdpClient)"/>
-  public static IEnumerable<byte> ToBytes(this UdpClient udp) => udp?.ReceiveAsync().Result.Buffer ?? throw new ArgumentNullException(nameof(udp));
+  public static IEnumerable<byte> ToBytes(this UdpClient client) => client?.ReceiveAsync().Result.Buffer ?? throw new ArgumentNullException(nameof(client));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="udp"></param>
+  /// <param name="client"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToBytes(UdpClient)"/>
-  public static async IAsyncEnumerable<byte> ToBytesAsync(this UdpClient udp)
+  public static async IAsyncEnumerable<byte> ToBytesAsync(this UdpClient client)
   {
-    if (udp is null) throw new ArgumentNullException(nameof(udp));
+    if (client is null) throw new ArgumentNullException(nameof(client));
 
-    var result = await udp.ReceiveAsync().ConfigureAwait(false);
+    var result = await client.ReceiveAsync().ConfigureAwait(false);
 
     foreach (var element in result.Buffer)
     {
@@ -113,91 +182,22 @@ public static class UdpClientExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="udp"></param>
+  /// <param name="client"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToTextAsync(UdpClient, Encoding)"/>
-  public static string ToText(this UdpClient udp, Encoding encoding = null) => udp.ToBytes().AsArray().ToText(encoding);
+  public static string ToText(this UdpClient client, Encoding encoding = null) => client.ToBytes().AsArray().ToText(encoding);
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="udp"></param>
+  /// <param name="client"></param>
   /// <param name="encoding"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="udp"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToText(UdpClient, Encoding)"/>
-  public static async Task<string> ToTextAsync(this UdpClient udp, Encoding encoding = null) => (await udp.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="udp"></param>
-  /// <param name="bytes"></param>
-  /// <returns>Back self-reference to the given <paramref name="udp"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytesAsync(UdpClient, IEnumerable{byte}, CancellationToken)"/>
-  public static UdpClient WriteBytes(this UdpClient udp, IEnumerable<byte> bytes)
-  {
-    if (udp is null) throw new ArgumentNullException(nameof(udp));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    var datagram = bytes.AsArray();
-
-    udp.Send(datagram, datagram.Length);
-    
-    return udp;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="udp"></param>
-  /// <param name="bytes"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytes(UdpClient, IEnumerable{byte})"/>
-  public static async Task<UdpClient> WriteBytesAsync(this UdpClient udp, IEnumerable<byte> bytes, CancellationToken cancellation = default)
-  {
-    if (udp is null) throw new ArgumentNullException(nameof(udp));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    #if NET8_0
-      await udp.SendAsync(bytes.ToReadOnlyMemory(), cancellation).ConfigureAwait(false);
-    #else
-      var datagram = bytes.AsArray();
-      await udp.SendAsync(datagram, datagram.Length).ConfigureAwait(false);
-    #endif
-
-    return udp;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="udp"></param>
-  /// <param name="text"></param>
-  /// <param name="encoding"></param>
-  /// <returns>Back self-reference to the given <paramref name="udp"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteTextAsync(UdpClient, string, Encoding, CancellationToken)"/>
-  public static UdpClient WriteText(this UdpClient udp, string text, Encoding encoding = null) => udp.WriteBytes(text.ToBytes(encoding));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="udp"></param>
-  /// <param name="text"></param>
-  /// <param name="encoding"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="udp"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteText(UdpClient, string, Encoding)"/>
-  public static async Task<UdpClient> WriteTextAsync(this UdpClient udp, string text, Encoding encoding = null, CancellationToken cancellation = default) => await udp.WriteBytesAsync(text.ToBytes(encoding), cancellation).ConfigureAwait(false);
+  public static async Task<string> ToTextAsync(this UdpClient client, Encoding encoding = null) => (await client.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
 
   private sealed class UdpClientEnumerable : IEnumerable<byte[]>
   {
