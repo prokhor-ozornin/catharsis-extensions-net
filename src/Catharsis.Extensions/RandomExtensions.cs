@@ -502,7 +502,7 @@ public static class RandomExtensions
     }
   }
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -1173,7 +1173,7 @@ public static class RandomExtensions
     }
   }
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -2245,7 +2245,7 @@ public static class RandomExtensions
     }
   }
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>

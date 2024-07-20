@@ -5,7 +5,7 @@ using System.Xml;
 using System.Diagnostics;
 using System.Security;
 
-#if NET8_0
+#if NET8_0_OR_GREATER
 using System.Collections.Immutable;
 using System.Collections.Frozen;
 #endif
@@ -321,7 +321,7 @@ public static class IEnumerableExtensions
     return enumerable.SequenceEqual(reversed.Reverse(), comparer);
   }
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -391,7 +391,7 @@ public static class IEnumerableExtensions
   {
     if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
 
-  #if NET8_0
+  #if NET8_0_OR_GREATER
     return Convert.ToHexString(enumerable.AsArray());
   #else
     return BitConverter.ToString(enumerable.AsArray()).Replace("-", "");
@@ -1023,7 +1023,7 @@ public static class IEnumerableExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   public static SortedSet<T> ToSortedSet<T>(this IEnumerable<T> enumerable, IComparer<T> comparer = null) => enumerable is not null ? new SortedSet<T>(enumerable, comparer) : throw new ArgumentNullException(nameof(enumerable));
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -1063,7 +1063,7 @@ public static class IEnumerableExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   public static Queue<T> ToQueue<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new Queue<T>(enumerable) : throw new ArgumentNullException(nameof(enumerable));
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>

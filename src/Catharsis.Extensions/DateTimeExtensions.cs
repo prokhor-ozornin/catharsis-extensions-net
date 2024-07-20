@@ -189,7 +189,7 @@ public static class DateTimeExtensions
   /// <returns></returns>
   public static DateTimeOffset ToDateTimeOffset(this DateTime date) => new(date.ToUniversalTime());
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>

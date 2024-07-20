@@ -72,7 +72,7 @@ public static class ProcessExtensions
     return process;
   }
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>

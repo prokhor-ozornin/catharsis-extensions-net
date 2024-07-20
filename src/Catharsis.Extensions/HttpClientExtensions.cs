@@ -467,7 +467,7 @@ public static class HttpClientExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-    #if NET8_0
+    #if NET8_0_OR_GREATER
     return await client.GetStringAsync(uri, cancellation).ConfigureAwait(false);
     #else
       return await client.GetStringAsync(uri).ConfigureAwait(false);
@@ -506,7 +506,7 @@ public static class HttpClientExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-#if NET8_0
+#if NET8_0_OR_GREATER
     return await client.GetStreamAsync(uri, cancellation).ConfigureAwait(false);
 #else
       return await client.GetStreamAsync(uri).ConfigureAwait(false);

@@ -184,7 +184,7 @@ public static class DateTimeOffsetExtensions
   /// <returns></returns>
   public static DateTime ToDateTime(this DateTimeOffset date) => date.UtcDateTime;
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>

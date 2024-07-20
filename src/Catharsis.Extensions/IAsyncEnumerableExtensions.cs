@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Runtime.CompilerServices;
 
-#if NET8_0
+#if NET8_0_OR_GREATER
 using System.Collections.Immutable;
 #endif
 
@@ -635,7 +635,7 @@ public static class IAsyncEnumerableExtensions
     return stream.MoveToStart();
   }
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>

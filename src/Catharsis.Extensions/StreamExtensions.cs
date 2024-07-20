@@ -300,7 +300,7 @@ public static class StreamExtensions
   /// <seealso cref="CompressAsGzip(Stream)"/>
   public static GZipStream DecompressAsGzip(this Stream stream) => stream is not null ? new GZipStream(stream, CompressionMode.Decompress) : throw new ArgumentNullException(nameof(stream));
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para>Writes sequence of bytes into specified stream, using Zlib compression algorithm.</para>
   /// </summary>
@@ -392,7 +392,7 @@ public static class StreamExtensions
     if (stream is null) throw new ArgumentNullException(nameof(stream));
     if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
 
-#if NET8_0
+#if NET8_0_OR_GREATER
     return await algorithm.ComputeHashAsync(stream, cancellation).ConfigureAwait(false);
 #else
       return algorithm.ComputeHash(stream);
@@ -1348,7 +1348,7 @@ public static class StreamExtensions
     }
   }
 
-#if !NET8_0
+#if !NET8_0_OR_GREATER
   public static IEnumerable<TSource[]> Chunk<TSource>(this IEnumerable<TSource> source, int size) => ChunkIterator(source, size);
 
   private static IEnumerable<TSource[]> ChunkIterator<TSource>(IEnumerable<TSource> source, int size)

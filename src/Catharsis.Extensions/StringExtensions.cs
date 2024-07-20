@@ -527,7 +527,7 @@ public static class StringExtensions
   /// <returns></returns>
   public static bool IsDateTimeOffset(this string text, IFormatProvider format = null) => text.ToDateTimeOffset(out _, format);
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -615,7 +615,7 @@ public static class StringExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   public static byte[] FromBase64(this string text) => text is not null ? text.Length > 0 ? Convert.FromBase64String(text) : [] : throw new ArgumentNullException(nameof(text));
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para>Converts HEX-encoded string into a sequence of bytes.</para>
   /// </summary>
@@ -1680,7 +1680,7 @@ public static class StringExtensions
   /// <seealso cref="ToDateTimeOffset(string, IFormatProvider)"/>
   public static bool ToDateTimeOffset(this string text, out DateTimeOffset? result, IFormatProvider format = null) => (result = DateTimeOffset.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) is not null;
 
-#if NET8_0
+#if NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>

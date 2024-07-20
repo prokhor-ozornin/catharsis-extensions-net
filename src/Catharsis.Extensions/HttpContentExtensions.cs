@@ -17,7 +17,7 @@ public static class HttpContentExtensions
   {
     if (content is null) throw new ArgumentNullException(nameof(content));
 
-    #if NET8_0
+    #if NET8_0_OR_GREATER
       return content.ReadAsStream();
     #else
       return content.ReadAsStreamAsync().Result;
@@ -38,7 +38,7 @@ public static class HttpContentExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-    #if NET8_0
+    #if NET8_0_OR_GREATER
       return await content.ReadAsStreamAsync(cancellation).ConfigureAwait(false);
     #else
         return await content.ReadAsStreamAsync().ConfigureAwait(false);
@@ -96,7 +96,7 @@ public static class HttpContentExtensions
 
     cancellation.ThrowIfCancellationRequested();
 
-    #if NET8_0
+    #if NET8_0_OR_GREATER
       return await content.ReadAsStringAsync(cancellation).ConfigureAwait(false);
     #else
       return await content.ReadAsStringAsync().ConfigureAwait(false);
