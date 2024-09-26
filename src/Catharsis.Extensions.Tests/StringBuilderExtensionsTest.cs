@@ -335,4 +335,13 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       builder.ToString().Should().Be(text + $"<?xml version=\"1.0\" encoding=\"utf-16\"?>{xml}");
     }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.ToBoolean(StringBuilder)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Method()
+  {
+    throw new NotImplementedException();
+  }
 }

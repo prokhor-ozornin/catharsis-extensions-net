@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -286,6 +287,13 @@ public static class TextReaderExtensions
 
     return await xmlReader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this TextReader reader) => reader is not null && reader.Peek() >= 0;
 
   private sealed class TextReaderEnumerable : IEnumerable<char[]>
   {

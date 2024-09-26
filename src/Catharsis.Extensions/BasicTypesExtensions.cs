@@ -327,4 +327,88 @@ public static class BasicTypesExtensions
   /// <param name="count"></param>
   /// <returns></returns>
   public static TimeSpan Ticks(this long count) => new(count);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="character"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this char character) => character != char.MinValue;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this sbyte value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this byte value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this short value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this ushort value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this int value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this uint value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this long value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this ulong value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this float value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this double value) => value > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this decimal value) => value > 0;
 }

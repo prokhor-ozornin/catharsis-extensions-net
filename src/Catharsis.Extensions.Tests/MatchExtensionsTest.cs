@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -29,5 +30,14 @@ public sealed class MatchExtensionsTest : UnitTest
     static void Validate(IEnumerable<Capture> result, Match match)
     {
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="MatchExtensions.ToBoolean(Match)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Method()
+  {
+    throw new NotImplementedException();
   }
 }

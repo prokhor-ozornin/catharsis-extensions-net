@@ -507,4 +507,13 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
       }
     }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.ToBoolean(BinaryReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Method()
+  {
+    throw new NotImplementedException();
+  }
 }

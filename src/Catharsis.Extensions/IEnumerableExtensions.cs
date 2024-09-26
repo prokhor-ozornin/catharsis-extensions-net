@@ -1271,4 +1271,12 @@ public static class IEnumerableExtensions
 
     return stream;
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="enumerable"></param>
+  /// <returns></returns>
+  public static bool ToBoolean<T>(this IEnumerable<T> enumerable) => enumerable is not null && !enumerable.IsEmpty();
 }

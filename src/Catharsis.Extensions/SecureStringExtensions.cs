@@ -225,4 +225,10 @@ public static class SecureStringExtensions
       }
     }
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="text"></param>
+  public static bool ToBoolean(this SecureString text) => text is not null && text.Length > 0;
 }

@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Xml.Linq;
+using System.Security;
 
 namespace Catharsis.Extensions;
 
@@ -1093,6 +1094,13 @@ public static class StreamExtensions
 
     return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this Stream stream) => stream is not null && stream.CanSeek && stream.Length > 0;
 
   private class ReadOnlyStream : Stream
   {

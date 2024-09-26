@@ -517,4 +517,11 @@ public static class FileInfoExtensions
 
     return await reader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="file"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this FileInfo file) => file is not null && file.Exists;
 }

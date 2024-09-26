@@ -1861,4 +1861,13 @@ public sealed class IEnumerableExtensionsTest : UnitTest
 
     throw new NotImplementedException();
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToBoolean(IEnumerable{T})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Method()
+  {
+    throw new NotImplementedException();
+  }
 }

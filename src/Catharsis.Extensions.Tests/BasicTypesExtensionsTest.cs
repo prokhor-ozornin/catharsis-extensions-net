@@ -883,4 +883,27 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       ticks.Ticks.Should().Be(count);
       }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(char)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(sbyte)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(byte)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(short)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(ushort)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(int)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(uint)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(long)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(ulong)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(float)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(double)"/></description></item>
+  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(decimal)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Methods()
+  {
+    throw new NotImplementedException();
+  }
 }

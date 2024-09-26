@@ -370,4 +370,13 @@ public sealed class SecureStringExtensionsTest : UnitTest
       }
     }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.ToBoolean(SecureString)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Method()
+  {
+    throw new NotImplementedException();
+  }
 }

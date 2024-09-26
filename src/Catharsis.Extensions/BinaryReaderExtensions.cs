@@ -201,4 +201,11 @@ public static class BinaryReaderExtensions
       return string.Empty;
     }
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="reader"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this BinaryReader reader) => reader is not null && reader.PeekChar() >= 0;
 }

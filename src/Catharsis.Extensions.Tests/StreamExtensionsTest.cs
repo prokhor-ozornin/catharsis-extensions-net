@@ -2441,4 +2441,13 @@ public sealed class StreamExtensionsTest : UnitTest
       }
     }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToBoolean(Stream)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Method()
+  {
+    throw new NotImplementedException();
+  }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Security;
 using System.Text;
 using System.Xml;
 
@@ -188,4 +189,11 @@ public static class StringBuilderExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
   public static XmlWriter ToXmlWriter(this StringBuilder builder) => builder is not null ? XmlWriter.Create(builder, new XmlWriterSettings { Indent = true }) : throw new ArgumentNullException(nameof(builder));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="builder"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this StringBuilder builder) => builder is not null && builder.Length > 0;
 }

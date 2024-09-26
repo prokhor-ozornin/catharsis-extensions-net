@@ -1,4 +1,5 @@
-﻿using Catharsis.Commons;
+﻿using System.Security;
+using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -333,5 +334,14 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
     static void Validate(DirectoryInfo directory, string pattern = null, bool recursive = false)
     {
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.ToBoolean(DirectoryInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Method()
+  {
+    throw new NotImplementedException();
   }
 }

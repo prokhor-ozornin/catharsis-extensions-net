@@ -3,6 +3,7 @@ using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
+using System.Text.RegularExpressions;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -553,5 +554,14 @@ public sealed class TextReaderExtensionsTest : UnitTest
 
       }
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.ToBoolean(TextReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Method()
+  {
+    throw new NotImplementedException();
   }
 }

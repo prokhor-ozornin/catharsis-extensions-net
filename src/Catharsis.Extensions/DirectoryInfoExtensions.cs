@@ -209,4 +209,11 @@ public static class DirectoryInfoExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
   public static IEnumerable<FileSystemInfo> ToEnumerable(this DirectoryInfo directory, string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateFileSystemInfos(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : [] : throw new ArgumentNullException(nameof(directory));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="directory"></param>
+  /// <returns></returns>
+  public static bool ToBoolean(this DirectoryInfo directory) => directory is not null && directory.Exists;
 }

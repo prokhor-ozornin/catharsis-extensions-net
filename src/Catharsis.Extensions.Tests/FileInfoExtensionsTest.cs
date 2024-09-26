@@ -766,4 +766,13 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
     }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.ToBoolean(FileInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBoolean_Method()
+  {
+    throw new NotImplementedException();
+  }
 }
