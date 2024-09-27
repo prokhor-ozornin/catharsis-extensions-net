@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Reflection;
+using System.Text;
 using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -773,6 +775,15 @@ public sealed class FileInfoExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      Validate(false, null);
+      Validate(false, Attributes.RandomFakeFile());
+      Validate(true, Assembly.GetExecutingAssembly().Location.ToFile());
+    }
+
+    return;
+
+    static void Validate(bool result, FileInfo file) => file.ToBoolean().Should().Be(result);
   }
 }

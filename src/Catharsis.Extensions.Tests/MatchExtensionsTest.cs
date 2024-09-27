@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿using System.Net;
 using System.Text.RegularExpressions;
 using Catharsis.Commons;
 using FluentAssertions;
@@ -38,6 +38,15 @@ public sealed class MatchExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      Validate(false, null);
+      Validate(false, Match.Empty);
+      Validate(true, Regex.Match(Attributes.RandomName(), ".*"));
+    }
+
+    return;
+
+    static void Validate(bool result, Match match) => match.ToBoolean().Should().Be(result);
   }
 }

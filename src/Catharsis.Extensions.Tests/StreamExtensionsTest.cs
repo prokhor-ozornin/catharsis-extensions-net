@@ -1,4 +1,5 @@
 ﻿using System.IO.Compression;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using Catharsis.Commons;
@@ -2448,6 +2449,22 @@ public sealed class StreamExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      Validate(false, null);
+      Validate(false, Stream.Null);
+      Validate(false, Attributes.EmptyStream());
+      Validate(true, Attributes.RandomStream());
+    }
+
+    return;
+
+    static void Validate(bool result, Stream stream)
+    {
+      using (stream)
+      {
+        stream.ToBoolean().Should().Be(result);
+      }
+    }
   }
 }

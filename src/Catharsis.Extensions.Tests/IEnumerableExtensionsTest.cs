@@ -1868,6 +1868,15 @@ public sealed class IEnumerableExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      Validate<object>(false, null);
+      Validate(false, Enumerable.Empty<object>());
+      Validate(true, new object[] { new() });
+    }
+
+    return;
+
+    static void Validate<T>(bool result, IEnumerable<T> enumerable) => enumerable.ToBoolean().Should().Be(result);
   }
 }

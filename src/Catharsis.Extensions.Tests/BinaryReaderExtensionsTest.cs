@@ -3,6 +3,7 @@ using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
+using System.Net;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -514,6 +515,22 @@ public sealed class BinaryReaderExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      Validate(false, null);
+      Validate(false, Stream.Null.ToBinaryReader());
+      Validate(false, Attributes.EmptyStream().ToBinaryReader());
+      Validate(true, Attributes.RandomStream().ToBinaryReader());
+    }
+
+    return;
+
+    static void Validate(bool result, BinaryReader reader)
+    {
+      using (reader)
+      {
+        reader.ToBoolean().Should().Be(result);
+      }
+    }
   }
 }

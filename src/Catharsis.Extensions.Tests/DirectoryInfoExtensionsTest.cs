@@ -1,4 +1,4 @@
-﻿using System.Security;
+﻿using System.Net;
 using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -342,6 +342,15 @@ public sealed class DirectoryInfoExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      Validate(false, null);
+      Validate(false, Attributes.RandomFakeDirectory());
+      Validate(true, Environment.SystemDirectory.ToDirectory());
+    }
+
+    return;
+
+    static void Validate(bool result, DirectoryInfo directory) => directory.ToBoolean().Should().Be(result);
   }
 }

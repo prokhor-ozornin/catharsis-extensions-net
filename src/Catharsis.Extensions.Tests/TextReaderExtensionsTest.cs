@@ -3,7 +3,7 @@ using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
-using System.Text.RegularExpressions;
+using System.Net;
 
 namespace Catharsis.Extensions.Tests;
 
@@ -562,6 +562,21 @@ public sealed class TextReaderExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      Validate(false, null);
+      Validate(false, string.Empty.ToStringReader());
+      Validate(true, new StringReader(char.MinValue.ToString()));
+    }
+
+    return;
+
+    static void Validate(bool result, TextReader reader)
+    {
+      using (reader)
+      {
+        reader.ToBoolean().Should().Be(result);
+      }
+    }
   }
 }

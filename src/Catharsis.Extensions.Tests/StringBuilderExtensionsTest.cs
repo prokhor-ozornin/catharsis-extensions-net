@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Net;
 using System.Text;
 using System.Xml;
 using Catharsis.Commons;
@@ -342,6 +343,16 @@ public sealed class StringBuilderExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      Validate(false, null);
+      Validate(false, new StringBuilder());
+      Validate(false, new StringBuilder(string.Empty));
+      Validate(true, new StringBuilder(char.MinValue.ToString()));
+    }
+
+    return;
+
+    static void Validate(bool result, StringBuilder builder) => builder.ToBoolean().Should().Be(result);
   }
 }

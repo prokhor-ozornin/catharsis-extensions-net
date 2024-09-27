@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using System.Net;
+using System.Security;
 using System.Text;
 using Catharsis.Commons;
 using FluentAssertions;
@@ -28,12 +29,12 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(SecureString secure)
+    static void Validate(SecureString text)
     {
-      using (secure)
+      using (text)
       {
-        secure.AsReadOnly().Should().BeOfType<SecureString>().And.BeSameAs(secure);
-        secure.IsReadOnly().Should().BeTrue();
+        text.AsReadOnly().Should().BeOfType<SecureString>().And.BeSameAs(text);
+        text.IsReadOnly().Should().BeTrue();
       }
     }
   }
@@ -53,11 +54,11 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool result, SecureString secure)
+    static void Validate(bool result, SecureString text)
     {
-      using (secure)
+      using (text)
       {
-        secure.IsUnset().Should().Be(secure is null || secure.IsEmpty()).And.Be(result);
+        text.IsUnset().Should().Be(text is null || text.IsEmpty()).And.Be(result);
       }
     }
   }
@@ -78,11 +79,11 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(bool result, SecureString secure)
+    static void Validate(bool result, SecureString text)
     {
-      using (secure)
+      using (text)
       {
-        secure.IsEmpty().Should().Be(secure.Length == 0).And.Be(result);
+        text.IsEmpty().Should().Be(text.Length == 0).And.Be(result);
       }
     }
   }
@@ -103,12 +104,12 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(SecureString secure)
+    static void Validate(SecureString text)
     {
-      using (secure)
+      using (text)
       {
-        secure.Empty().Should().BeOfType<SecureString>().And.BeSameAs(secure);
-        secure.IsEmpty().Should().BeTrue();
+        text.Empty().Should().BeOfType<SecureString>().And.BeSameAs(text);
+        text.IsEmpty().Should().BeTrue();
       }
     }
   }
@@ -130,12 +131,12 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(SecureString secure)
+    static void Validate(SecureString text)
     {
-      using (secure)
+      using (text)
       {
-        secure.TryFinallyClear(secure => secure.With(char.MinValue, char.MaxValue)).Should().BeOfType<SecureString>().And.BeSameAs(secure);
-        secure.IsEmpty().Should().BeTrue();
+        text.TryFinallyClear(secure => secure.With(char.MinValue, char.MaxValue)).Should().BeOfType<SecureString>().And.BeSameAs(text);
+        text.IsEmpty().Should().BeTrue();
       }
     }
   }
@@ -362,11 +363,11 @@ public sealed class SecureStringExtensionsTest : UnitTest
 
     return;
 
-    static void Validate(string result, SecureString secure)
+    static void Validate(string result, SecureString text)
     {
-      using (secure)
+      using (text)
       {
-        secure.ToText().Should().BeOfType<string>().And.Be(result);
+        text.ToText().Should().BeOfType<string>().And.Be(result);
       }
     }
   }
@@ -377,6 +378,21 @@ public sealed class SecureStringExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Method()
   {
-    throw new NotImplementedException();
+    using (new AssertionScope())
+    {
+      Validate(false, null);
+      Validate(false, new SecureString());
+      Validate(true, new SecureString().With(char.MinValue));
+    }
+
+    return;
+
+    static void Validate(bool result, SecureString text)
+    {
+      using (text)
+      {
+        text.ToBoolean().Should().Be(result);
+      }
+    }
   }
 }

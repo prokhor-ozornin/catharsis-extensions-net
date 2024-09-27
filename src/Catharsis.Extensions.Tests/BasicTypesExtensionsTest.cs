@@ -881,7 +881,7 @@ public sealed class BasicTypesExtensionsTest : UnitTest
       ticks.TotalSeconds.Should().Be(count / (double) TimeSpan.TicksPerSecond);
       ticks.TotalMilliseconds.Should().Be(count / (double) TimeSpan.TicksPerMillisecond);
       ticks.Ticks.Should().Be(count);
-      }
+    }
   }
 
   /// <summary>
@@ -904,6 +904,62 @@ public sealed class BasicTypesExtensionsTest : UnitTest
   [Fact]
   public void ToBoolean_Methods()
   {
-    throw new NotImplementedException();
+    char.MinValue.ToBoolean().Should().BeFalse();
+    char.MaxValue.ToBoolean().Should().BeTrue();
+    ((char) 0).ToBoolean().Should().BeFalse();
+
+    sbyte.MinValue.ToBoolean().Should().BeFalse();
+    sbyte.MaxValue.ToBoolean().Should().BeTrue();
+    ((sbyte) 0).ToBoolean().Should().BeFalse();
+
+    byte.MinValue.ToBoolean().Should().BeFalse();
+    byte.MaxValue.ToBoolean().Should().BeTrue();
+    ((byte) 0).ToBoolean().Should().BeFalse();
+
+    short.MinValue.ToBoolean().Should().BeFalse();
+    short.MaxValue.ToBoolean().Should().BeTrue();
+    ((short) 0).ToBoolean().Should().BeFalse();
+
+    ushort.MinValue.ToBoolean().Should().BeFalse();
+    ushort.MaxValue.ToBoolean().Should().BeTrue();
+    ((ushort) 0).ToBoolean().Should().BeFalse();
+
+    int.MinValue.ToBoolean().Should().BeFalse();
+    int.MaxValue.ToBoolean().Should().BeTrue();
+    0.ToBoolean().Should().BeFalse();
+
+    uint.MinValue.ToBoolean().Should().BeFalse();
+    uint.MaxValue.ToBoolean().Should().BeTrue();
+    ((uint) 0).ToBoolean().Should().BeFalse();
+
+    long.MinValue.ToBoolean().Should().BeFalse();
+    long.MaxValue.ToBoolean().Should().BeTrue();
+    ((long) 0).ToBoolean().Should().BeFalse();
+
+    ulong.MinValue.ToBoolean().Should().BeFalse();
+    ulong.MaxValue.ToBoolean().Should().BeTrue();
+    ((ulong) 0).ToBoolean().Should().BeFalse();
+
+    float.MinValue.ToBoolean().Should().BeFalse();
+    float.MaxValue.ToBoolean().Should().BeTrue();
+    ((float) 0.0).ToBoolean().Should().BeFalse();
+    float.NaN.ToBoolean().Should().BeFalse();
+    float.Epsilon.ToBoolean().Should().BeTrue();
+    float.NegativeInfinity.ToBoolean().Should().BeFalse();
+    float.PositiveInfinity.ToBoolean().Should().BeTrue();
+
+    double.MinValue.ToBoolean().Should().BeFalse();
+    double.MaxValue.ToBoolean().Should().BeTrue();
+    0.0.ToBoolean().Should().BeFalse();
+    double.NaN.ToBoolean().Should().BeFalse();
+    double.Epsilon.ToBoolean().Should().BeTrue();
+    double.NegativeInfinity.ToBoolean().Should().BeFalse();
+    double.PositiveInfinity.ToBoolean().Should().BeTrue();
+
+    decimal.MinValue.ToBoolean().Should().BeFalse();
+    decimal.MaxValue.ToBoolean().Should().BeTrue();
+    decimal.Zero.ToBoolean().Should().BeFalse();
+    decimal.MinusOne.ToBoolean().Should().BeFalse();
+    decimal.One.ToBoolean().Should().BeTrue();
   }
 }
