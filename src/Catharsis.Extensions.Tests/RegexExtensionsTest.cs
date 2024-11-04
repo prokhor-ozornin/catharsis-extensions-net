@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="RegexExtensions"/>.</para>
 /// </summary>
-public sealed class RegexExtensionsTest : UnitTest
+public sealed class RegexExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="RegexExtensions.Clone(Regex)"/> method.</para>

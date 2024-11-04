@@ -1,4 +1,3 @@
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IDictionaryExtensions"/>.</para>
 /// </summary>
-public sealed class IDictionaryExtensionsTest : UnitTest
+public sealed class IDictionaryExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IDictionaryExtensions.GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>

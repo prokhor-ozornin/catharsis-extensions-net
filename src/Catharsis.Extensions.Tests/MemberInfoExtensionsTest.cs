@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -10,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="MemberInfoExtensions"/>.</para>
 /// </summary>
-public sealed class MemberInfoExtensionsTest : UnitTest
+public sealed class MemberInfoExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsConstructor(MemberInfo)"/> method.</para>

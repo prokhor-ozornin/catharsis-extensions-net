@@ -1,4 +1,3 @@
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IListExtensions"/>.</para>
 /// </summary>
-public sealed class IListExtensionsTest : UnitTest
+public sealed class IListExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IListExtensions.Randomize{T}(IList{T}, Random)"/> method.</para>

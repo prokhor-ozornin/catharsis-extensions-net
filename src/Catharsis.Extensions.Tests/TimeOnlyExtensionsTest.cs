@@ -1,4 +1,3 @@
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TimeOnlyExtensions"/>.</para>
 /// </summary>
-public sealed class TimeOnlyExtensionsTest : UnitTest
+public sealed class TimeOnlyExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TimeOnlyExtensions.Range(TimeOnly, TimeOnly, TimeSpan)"/> method.</para>

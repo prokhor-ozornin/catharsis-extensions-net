@@ -1,6 +1,5 @@
 ﻿using System.Security;
 using System.Text;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -10,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="RandomExtensions"/>.</para>
 /// </summary>
-public sealed class RandomExtensionsTest : UnitTest
+public sealed class RandomExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
@@ -2066,7 +2065,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
       static void Validate(FileInfo file, string path, int size, byte? min, byte? max)
       {
-        //AssertionExtensions.Should(() => new Random().BinaryFileAsync(0, min, max, path.ToDirectory(), Attributes.CancellationToken())).ThrowExactlyAsync<TaskCanceledException>().Await();
+        //AssertionExtensions.Should(() => new Random().BinaryFileAsync(0, min, max, path.ToDirectory())).ThrowExactlyAsync<TaskCanceledException>().Await();
 
         size = Math.Max(0, size);
 
@@ -2103,7 +2102,7 @@ public sealed class RandomExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
       AssertionExtensions.Should(() => new Random().BinaryFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
-      //AssertionExtensions.Should(() => new Random().BinaryFileAsync(0, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      //AssertionExtensions.Should(() => new Random().BinaryFileAsync(0, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       const int size = 4096;
 
@@ -2513,11 +2512,11 @@ public sealed class RandomExtensionsTest : UnitTest
       const int count = 1000;
 
       new Random().MemoryStreamAsync(0).Await().Length.Should().Be(0);
-      new Random().MemoryStreamAsync(0, null, null, Attributes.CancellationToken()).Await().Length.Should().Be(0);
+      new Random().MemoryStreamAsync(0, null, null).Await().Length.Should().Be(0);
 
       using (var stream = new Random().MemoryStreamAsync(count).Await())
       {
-        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Validate(stream, count);
 
@@ -2526,7 +2525,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
       using (var stream = new Random().MemoryStreamAsync(count, 0, 100).Await())
       {
-        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Validate(stream, count);
 
@@ -2535,7 +2534,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
       using (var stream = new Random().MemoryStreamAsync(count, 0, 0).Await())
       {
-        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Validate(stream, count);
 
@@ -2561,11 +2560,10 @@ public sealed class RandomExtensionsTest : UnitTest
       AssertionExtensions.Should(() => RandomExtensions.MemoryStreamAsync(null, 0, new[] {1..2})).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
 
       new Random().MemoryStreamAsync(0, new[] {Range.All}).Await().Length.Should().Be(0);
-      new Random().MemoryStreamAsync(0, new[] {Range.All}, Attributes.CancellationToken()).Await().Length.Should().Be(0);
 
       using (var stream = new Random().MemoryStreamAsync(count, new [] {Range.All}).Await())
       {
-        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, new [] {Range.All}, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, new [] {Range.All})).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Validate(stream, count);
 
@@ -2574,7 +2572,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
       using (var stream = new Random().MemoryStreamAsync(count, new[] {..100}).Await())
       {
-        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, new[] {Range.All}, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, new[] {Range.All})).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Validate(stream, count);
 
@@ -2583,7 +2581,7 @@ public sealed class RandomExtensionsTest : UnitTest
 
       using (var stream = new Random().MemoryStreamAsync(count, new[] {..0}).Await())
       {
-        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, new[] {Range.All}, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().MemoryStreamAsync(count, new[] {Range.All})).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Validate(stream, count);
 

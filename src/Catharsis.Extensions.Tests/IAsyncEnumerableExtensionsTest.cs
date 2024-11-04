@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IAsyncEnumerableExtensions"/>.</para>
 /// </summary>
-public sealed class IAsyncEnumerableExtensionsTest : UnitTest
+public sealed class IAsyncEnumerableExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
@@ -24,9 +23,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).ForEach(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ForEach((Action<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ForEach((Action<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      Validate(Attributes.EmptyAsyncEnumerable(), []);
+      Validate(this.EmptyAsyncEnumerable(), []);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
@@ -55,9 +54,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       }
 
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).ForEach((_, _) => { })).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ForEach((Action<int, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ForEach((Action<int, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      Validate(Attributes.EmptyAsyncEnumerable(), []);
+      Validate(this.EmptyAsyncEnumerable(), []);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
@@ -77,10 +76,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).ForEachAsync(_ => { })).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ForEachAsync((Action<object>) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ForEachAsync(_ => { }, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ForEachAsync((Action<object>) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ForEachAsync(_ => { })).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate(Attributes.EmptyAsyncEnumerable(), []);
+      Validate(this.EmptyAsyncEnumerable(), []);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
@@ -99,10 +98,10 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).ForEachAsync((_, _) => { })).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ForEachAsync((Action<int, object>) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ForEachAsync((_, _) => { }, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ForEachAsync((Action<int, object>) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ForEachAsync((_, _) => { })).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate(Attributes.EmptyAsyncEnumerable(), []);
+      Validate(this.EmptyAsyncEnumerable(), []);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects);
@@ -128,7 +127,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).WithEnforcedCancellation(default)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().WithEnforcedCancellation(Attributes.CancellationToken())).ThrowExactly<OperationCanceledException>();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().WithEnforcedCancellation(new CancellationToken())).ThrowExactly<OperationCanceledException>();
     }
 
     throw new NotImplementedException();
@@ -143,7 +142,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       Validate<object>(true, null);
-      Validate(true, Attributes.EmptyAsyncEnumerable());
+      Validate(true, this.EmptyAsyncEnumerable());
       Validate(true, Array.Empty<object>().ToAsyncEnumerable());
       Validate(false, new Random().GuidSequence(1).ToAsyncEnumerable());
     }
@@ -163,7 +162,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate(true, Attributes.EmptyAsyncEnumerable());
+      Validate(true, this.EmptyAsyncEnumerable());
       Validate(true, Array.Empty<object>().ToAsyncEnumerable());
       Validate(false, new Random().GuidSequence(1).ToAsyncEnumerable());
     }
@@ -182,9 +181,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).IsEmptyAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().IsEmptyAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().IsEmptyAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate(true, Attributes.EmptyAsyncEnumerable());
+      Validate(true, this.EmptyAsyncEnumerable());
       Validate(true, Array.Empty<object>().ToAsyncEnumerable());
       Validate(false, new Random().GuidSequence(1).ToAsyncEnumerable());
     }
@@ -209,7 +208,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToEnumerable<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -230,7 +229,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -250,9 +249,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToArrayAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToArrayAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToArrayAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -278,7 +277,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -298,9 +297,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToListAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToListAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToListAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -326,7 +325,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToLinkedList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -346,9 +345,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToLinkedListAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToLinkedListAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToLinkedListAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -414,7 +413,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToHashSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -439,9 +438,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToHashSetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToHashSetAsync(null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToHashSetAsync(null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -468,7 +467,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToSortedSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -493,9 +492,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToSortedSetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToSortedSetAsync(null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToSortedSetAsync(null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -523,7 +522,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
       AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToDictionary<object, byte>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
-      Validate([], Attributes.EmptyAsyncEnumerable(), value => value);
+      Validate([], this.EmptyAsyncEnumerable(), value => value);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable(), value => value);
@@ -549,9 +548,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToDictionaryAsync<object, object>(null, _ => new object())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
       AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToDictionaryAsync<object, byte>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("key").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToDictionaryAsync(value => value, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToDictionaryAsync(value => value, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable(), value => value);
+      Validate([], this.EmptyAsyncEnumerable(), value => value);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable(), value => value);
@@ -577,7 +576,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToReadOnlyDictionary<object, object>(null, value => value)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToReadOnlyDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToReadOnlyDictionary<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
     }
 
     throw new NotImplementedException();
@@ -598,7 +597,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToReadOnlyDictionaryAsync<object, object>(null, value => value)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToReadOnlyDictionaryAsync<object, object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("key").Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToReadOnlyDictionaryAsync<object, object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("key").Await();
     }
 
     throw new NotImplementedException();
@@ -632,7 +631,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToValueTuple<object, object>(null, value => value)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToValueTuple<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToValueTuple<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
       static void Validate()
       {
@@ -664,7 +663,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToValueTupleAsync<object, object>(null, value => value)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToValueTupleAsync<object, object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("key").Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToValueTupleAsync<object, object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("key").Await();
 
       static void Validate()
       {
@@ -684,7 +683,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToStack<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray().Reverse();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -704,9 +703,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToStackAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToStackAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToStackAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray().Reverse();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -732,7 +731,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -752,9 +751,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToQueueAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToQueueAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToQueueAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -786,7 +785,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
 
       Validate(Enumerable.Empty<byte>().ToAsyncEnumerable(), []);
 
-      var bytes = Attributes.RandomBytes();
+      var bytes = this.RandomBytes();
       Validate(bytes.ToAsyncEnumerable(), bytes);
 
       static void Validate(IAsyncEnumerable<byte> enumerable, byte[] bytes)
@@ -804,7 +803,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
 
       Validate(Enumerable.Empty<byte[]>().ToAsyncEnumerable(), []);
 
-      var bytes = Attributes.RandomBytes();
+      var bytes = this.RandomBytes();
       Validate(bytes.Chunk(byte.MaxValue).ToAsyncEnumerable(), bytes);
 
       static void Validate(IAsyncEnumerable<byte[]> enumerable, byte[] bytes)
@@ -830,11 +829,11 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<byte>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToAsyncEnumerable().ToMemoryStreamAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToAsyncEnumerable().ToMemoryStreamAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       Validate(Enumerable.Empty<byte>().ToAsyncEnumerable(), []);
 
-      var bytes = Attributes.RandomBytes();
+      var bytes = this.RandomBytes();
       Validate(bytes.ToAsyncEnumerable(), bytes);
 
       static void Validate(IAsyncEnumerable<byte> enumerable, byte[] bytes)
@@ -850,11 +849,11 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IAsyncEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte[]>().ToAsyncEnumerable().ToMemoryStreamAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte[]>().ToAsyncEnumerable().ToMemoryStreamAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       Validate(Enumerable.Empty<byte[]>().ToAsyncEnumerable(), []);
 
-      var bytes = Attributes.RandomBytes();
+      var bytes = this.RandomBytes();
       Validate(bytes.Chunk(byte.MaxValue).ToAsyncEnumerable(), bytes);
 
       static void Validate(IAsyncEnumerable<byte[]> enumerable, byte[] bytes)
@@ -945,7 +944,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToPriorityQueueAsync<object, object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<(object, object)>().ToAsyncEnumerable().ToQueueAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<(object, object)>().ToAsyncEnumerable().ToQueueAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       Validate([], Enumerable.Empty<(object, object)>().ToAsyncEnumerable());
 
@@ -976,7 +975,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableArray<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -996,9 +995,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableArrayAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToImmutableArrayAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToImmutableArrayAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -1024,7 +1023,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableList<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -1044,9 +1043,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableListAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToImmutableListAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToImmutableListAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -1072,7 +1071,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableHashSet<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -1097,9 +1096,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableHashSetAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToImmutableHashSetAsync(null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToImmutableHashSetAsync(null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -1167,7 +1166,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
       AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToImmutableDictionary<object, byte>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
-      Validate([], Attributes.EmptyAsyncEnumerable(), value => value);
+      Validate([], this.EmptyAsyncEnumerable(), value => value);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable(), value => value);
@@ -1194,9 +1193,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableDictionaryAsync<object, object>(null, _ => new object())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
       AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToImmutableDictionaryAsync<object, byte>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("key").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToImmutableDictionaryAsync(value => value, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToImmutableDictionaryAsync(value => value, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable(), value => value);
+      Validate([], this.EmptyAsyncEnumerable(), value => value);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable(), value => value);
@@ -1225,7 +1224,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableSortedDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
       AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToImmutableSortedDictionary<object, byte>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
-      Validate([], Attributes.EmptyAsyncEnumerable(), value => value);
+      Validate([], this.EmptyAsyncEnumerable(), value => value);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable(), value => value);
@@ -1252,9 +1251,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableSortedDictionaryAsync<object, object>(null, _ => new object())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
       AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable().ToImmutableSortedDictionaryAsync<object, byte>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("key").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToImmutableSortedDictionaryAsync(value => value, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToImmutableSortedDictionaryAsync(value => value, null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate(Attributes.EmptyAsyncEnumerable(), [], value => value);
+      Validate(this.EmptyAsyncEnumerable(), [], value => value);
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects.ToAsyncEnumerable(), objects, value => value);
@@ -1282,7 +1281,7 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableQueue<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());
@@ -1302,9 +1301,9 @@ public sealed class IAsyncEnumerableExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableQueueAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Attributes.EmptyAsyncEnumerable().ToImmutableQueueAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToImmutableQueueAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      Validate([], Attributes.EmptyAsyncEnumerable());
+      Validate([], this.EmptyAsyncEnumerable());
 
       var objects = new Random().GuidSequence(1000).ToArray();
       Validate(objects, objects.ToAsyncEnumerable());

@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Xml;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -10,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="XmlDocumentExtensions"/>.</para>
 /// </summary>
-public sealed class XmlDocumentExtensionsTest : UnitTest
+public sealed class XmlDocumentExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="XmlDocumentExtensions.IsUnset(XmlDocument)"/> method.</para>
@@ -276,7 +275,7 @@ public sealed class XmlDocumentExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(this.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
       AssertionExtensions.Should(() => new XmlDocument().Serialize((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 

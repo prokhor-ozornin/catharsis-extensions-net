@@ -1,5 +1,4 @@
-﻿using Catharsis.Commons;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ValueTaskExtensions"/>.</para>
 /// </summary>
-public sealed class ValueTaskExtensionsTest : UnitTest
+public sealed class ValueTaskExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
@@ -23,8 +22,8 @@ public sealed class ValueTaskExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ValueTask.CompletedTask.Await(null, Attributes.CancellationToken())).NotThrow<OperationCanceledException>();
-      AssertionExtensions.Should(() => ValueTask.FromCanceled(Attributes.CancellationToken()).Await()).NotThrow<OperationCanceledException>();
+      AssertionExtensions.Should(() => ValueTask.CompletedTask.Await()).NotThrow<OperationCanceledException>();
+      AssertionExtensions.Should(() => ValueTask.FromCanceled(new CancellationToken()).Await()).NotThrow<OperationCanceledException>();
 
       static void Validate()
       {

@@ -1,5 +1,4 @@
-﻿using Catharsis.Commons;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TaskExtensions"/>.</para>
 /// </summary>
-public sealed class TaskExtensionsTest : UnitTest
+public sealed class TaskExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>

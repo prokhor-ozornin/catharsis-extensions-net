@@ -1,5 +1,4 @@
-﻿using Catharsis.Commons;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StreamWriterExtensions"/>.</para>
 /// </summary>
-public sealed class StreamWriterExtensionsTest : UnitTest
+public sealed class StreamWriterExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="StreamWriterExtensions.Rewind(StreamWriter)"/> method.</para>
@@ -20,8 +19,8 @@ public sealed class StreamWriterExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
-      Validate(Stream.Null.ToStreamWriter(), Attributes.RandomBytes());
-      Validate(Attributes.RandomStream().ToStreamWriter(), Attributes.RandomBytes());
+      Validate(Stream.Null.ToStreamWriter(), this.RandomBytes());
+      Validate(this.RandomStream().ToStreamWriter(), this.RandomBytes());
     }
 
     return;
@@ -63,11 +62,11 @@ public sealed class StreamWriterExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => Attributes.WriteOnlyForwardStream().ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
 
-      Validate(Attributes.EmptyStream().ToStreamWriter());
-      Validate(Attributes.RandomStream().ToStreamWriter());
-      Validate(Attributes.WriteOnlyStream().ToStreamWriter());
+      Validate(this.EmptyStream().ToStreamWriter());
+      Validate(this.RandomStream().ToStreamWriter());
+      Validate(this.WriteOnlyStream().ToStreamWriter());
     }
 
     return;
@@ -94,7 +93,7 @@ public sealed class StreamWriterExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((StreamWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
       Validate(Stream.Null.ToStreamWriter());
-      Validate(Attributes.RandomStream().ToStreamWriter());
+      Validate(this.RandomStream().ToStreamWriter());
     }
 
     return;
@@ -120,8 +119,8 @@ public sealed class StreamWriterExtensionsTest : UnitTest
       AssertionExtensions.Should(() => StreamWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
       Validate(Stream.Null.ToStreamWriter());
-      Validate(Attributes.EmptyStream().ToStreamWriter());
-      Validate(Attributes.RandomStream().ToStreamWriter());
+      Validate(this.EmptyStream().ToStreamWriter());
+      Validate(this.RandomStream().ToStreamWriter());
     }
 
     return;

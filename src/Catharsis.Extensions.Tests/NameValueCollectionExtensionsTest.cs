@@ -1,5 +1,4 @@
 using System.Collections.Specialized;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="NameValueCollectionExtensions"/>.</para>
 /// </summary>
-public sealed class NameValueCollectionExtensionsTest : UnitTest
+public sealed class NameValueCollectionExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="NameValueCollectionExtensions.Empty(NameValueCollection)"/> method.</para>
@@ -22,7 +21,7 @@ public sealed class NameValueCollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
       Validate([]);
-      Validate(new NameValueCollection().With(Attributes.RandomObjects().Select(element => (element.GetType().FullName, element))));
+      Validate(new NameValueCollection().With(this.RandomObjects().Select(element => (element.GetType().FullName, element))));
     }
 
     return;

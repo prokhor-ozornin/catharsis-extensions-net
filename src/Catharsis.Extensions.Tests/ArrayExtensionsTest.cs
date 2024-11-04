@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -10,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ArrayExtensions"/>.</para>
 /// </summary>
-public sealed class ArrayExtensionsTest : UnitTest
+public sealed class ArrayExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="ArrayExtensions.Range{T}(T[], int?, int?)"/> method.</para>
@@ -46,7 +45,7 @@ public sealed class ArrayExtensionsTest : UnitTest
 
       AssertionExtensions.Should(() => ArrayExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
 
-      var bytes = Attributes.RandomBytes();
+      var bytes = this.RandomBytes();
 
       Enumerable.Empty<byte>().ToBase64().Should().BeOfType<string>().And.BeEmpty();
       bytes.ToBase64().Should().BeOfType<string>().And.Be(Convert.ToBase64String(bytes));
@@ -72,8 +71,8 @@ public sealed class ArrayExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>()
         .WithParameterName("chars");
 
-      //Validate(Attributes.RandomChars());
-      //Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomChars(), encoding.GetEncoding()));
+      //Validate(this.RandomChars());
+      //Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomChars(), encoding.GetEncoding()));
     }
 
     throw new NotImplementedException();
@@ -100,7 +99,7 @@ public sealed class ArrayExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
       Validate([]);
-      Validate(Attributes.RandomBytes());
+      Validate(this.RandomBytes());
     }
 
     return;
@@ -127,7 +126,7 @@ public sealed class ArrayExtensionsTest : UnitTest
 
       Array.Empty<char>().ToText().Should().BeOfType<char[]>().And.BeSameAs(Array.Empty<char>().ToText()).And.BeEmpty();
 
-      var text = Attributes.RandomString();
+      var text = this.RandomString();
       var chars = text.ToCharArray();
       chars.ToText().Should().BeOfType<string>().And.Be(text);
     }
@@ -151,8 +150,8 @@ public sealed class ArrayExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      //Validate(Attributes.RandomBytes(), null);
-      //Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomBytes(), encoding.GetEncoding()));
+      //Validate(this.RandomBytes(), null);
+      //Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomBytes(), encoding.GetEncoding()));
     }
 
     throw new NotImplementedException();

@@ -1,5 +1,4 @@
-﻿using Catharsis.Commons;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="FileSystemInfoExtensions"/>.</para>
 /// </summary>
-public sealed class FileSystemInfoExtensionsTest : UnitTest
+public sealed class FileSystemInfoExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="FileSystemInfoExtensions.ToUri(FileSystemInfo)"/> method.</para>
@@ -20,8 +19,8 @@ public sealed class FileSystemInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileSystemInfoExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entry");
 
-      Validate(Attributes.RandomFakeFile());
-      Validate(Attributes.RandomFakeDirectory());
+      Validate(this.RandomFakeFile());
+      Validate(this.RandomFakeDirectory());
     }
 
     return;

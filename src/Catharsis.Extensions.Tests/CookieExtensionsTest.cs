@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="CookieExtensions"/>.</para>
 /// </summary>
-public sealed class CookieExtensionsTest : UnitTest
+public sealed class CookieExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="CookieExtensions.IsUnset(Cookie)"/> method.</para>

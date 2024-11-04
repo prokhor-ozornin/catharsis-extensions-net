@@ -1,7 +1,5 @@
-﻿using System.Net;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -11,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="FileInfoExtensions"/>.</para>
 /// </summary>
-public sealed class FileInfoExtensionsTest : UnitTest
+public sealed class FileInfoExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="FileInfoExtensions.IsUnset(FileInfo)"/> method.</para>
@@ -40,13 +38,13 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((FileInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      var file = Attributes.RandomFakeFile();
+      var file = this.RandomFakeFile();
       file.Exists.Should().BeFalse();
       file.IsEmpty().Should().BeTrue();
 
       var bytes = new Random().ByteSequence(1).ToArray();
 
-      Attributes.RandomEmptyFile().TryFinallyDelete(info =>
+      this.RandomEmptyFile().TryFinallyDelete(info =>
       {
         info.Exists.Should().BeTrue();
         info.Length.Should().Be(0);
@@ -70,8 +68,8 @@ public sealed class FileInfoExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((FileInfo) null).InDirectory(Attributes.RandomFakeDirectory())).ThrowExactly<ArgumentNullException>().WithParameterName("file");
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().InDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+      AssertionExtensions.Should(() => ((FileInfo) null).InDirectory(this.RandomFakeDirectory())).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => this.RandomFakeFile().InDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
     }
 
     throw new NotImplementedException();
@@ -111,8 +109,8 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      Validate(Attributes.RandomEmptyFile());
-      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
+      Validate(this.RandomEmptyFile());
+      Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomEmptyFile(), encoding.GetEncoding()));
     }
 
     return;
@@ -141,8 +139,8 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
-      Validate(Attributes.RandomEmptyFile());
-      Encoding.GetEncodings().ForEach(encoding => Validate(Attributes.RandomEmptyFile(), encoding.GetEncoding()));
+      Validate(this.RandomEmptyFile());
+      Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomEmptyFile(), encoding.GetEncoding()));
     }
 
     return;
@@ -192,8 +190,8 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      Validate(Attributes.RandomEmptyFile());
-      Validate(Attributes.RandomNonEmptyFile());
+      Validate(this.RandomEmptyFile());
+      Validate(this.RandomNonEmptyFile());
     }
 
     return;
@@ -230,14 +228,14 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((FileInfo) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      var file = Attributes.RandomFakeFile();
+      var file = this.RandomFakeFile();
       file.Exists.Should().BeFalse();
       file.Empty().Should().BeOfType<FileInfo>().And.BeSameAs(file);
       file.Exists.Should().BeTrue();
       file.Length.Should().Be(0);
       file.CreationTimeUtc.Should().BeOnOrBefore(DateTime.UtcNow);
 
-      Attributes.RandomNonEmptyFile().TryFinallyDelete(info =>
+      this.RandomNonEmptyFile().TryFinallyDelete(info =>
       {
         info.Length.Should().BePositive();
         info.Empty().Should().BeOfType<FileInfo>().And.BeSameAs(info);
@@ -264,7 +262,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((FileInfo) null).TryFinallyClear(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("file");
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => this.RandomFakeFile().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     }
 
     throw new NotImplementedException();
@@ -285,11 +283,11 @@ public sealed class FileInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((FileInfo) null).TryFinallyDelete(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("file");
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => this.RandomFakeFile().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      Validate(Attributes.RandomFakeFile(), Attributes.RandomBytes());
-      Validate(Attributes.RandomEmptyFile(), Attributes.RandomBytes());
-      Validate(Attributes.RandomNonEmptyFile(), Attributes.RandomBytes());
+      Validate(this.RandomFakeFile(), this.RandomBytes());
+      Validate(this.RandomEmptyFile(), this.RandomBytes());
+      Validate(this.RandomNonEmptyFile(), this.RandomBytes());
     }
 
     return;
@@ -356,7 +354,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => FileInfoExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => this.RandomFakeFile().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
     throw new NotImplementedException();
@@ -377,8 +375,8 @@ public sealed class FileInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => FileInfoExtensions.WriteBytesAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteBytesAsync([], Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.RandomFakeFile().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => this.RandomFakeFile().WriteBytesAsync([])).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -399,7 +397,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => FileInfoExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => this.RandomFakeFile().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -420,8 +418,8 @@ public sealed class FileInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => FileInfoExtensions.WriteTextAsync(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().WriteTextAsync(string.Empty, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.RandomFakeFile().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => this.RandomFakeFile().WriteTextAsync(string.Empty, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -461,15 +459,15 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.ToBytesAsync(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      var bytes = Attributes.RandomBytes();
+      var bytes = this.RandomBytes();
 
-      Attributes.RandomEmptyFile().TryFinallyDelete(file =>
+      this.RandomEmptyFile().TryFinallyDelete(file =>
       {
         bytes.WriteToAsync(file).Await();
         file.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(bytes);
       });
 
-      // Attributes.CancellationToken() & offset
+      // this.CancellationToken() & offset
     }
 
     throw new NotImplementedException();
@@ -507,10 +505,10 @@ public sealed class FileInfoExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
-      ValidateFile(Attributes.RandomEmptyFile(), Attributes.RandomString(), null);
-      Encoding.GetEncodings().ForEach(encoding => ValidateFile(Attributes.RandomEmptyFile(), Attributes.RandomString(), encoding.GetEncoding()));
+      ValidateFile(this.RandomEmptyFile(), this.RandomString(), null);
+      Encoding.GetEncodings().ForEach(encoding => ValidateFile(this.RandomEmptyFile(), this.RandomString(), encoding.GetEncoding()));
 
-      // Attributes.CancellationToken() & offset
+      // this.CancellationToken() & offset
     }
 
     return;
@@ -757,7 +755,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((FileInfo) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
-      AssertionExtensions.Should(() => Attributes.RandomFakeFile().ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => this.RandomFakeFile().ToXDocumentAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -778,7 +776,7 @@ public sealed class FileInfoExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       Validate(false, null);
-      Validate(false, Attributes.RandomFakeFile());
+      Validate(false, this.RandomFakeFile());
       Validate(true, Assembly.GetExecutingAssembly().Location.ToFile());
     }
 

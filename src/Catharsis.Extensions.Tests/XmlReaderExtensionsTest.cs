@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Xml;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -10,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="XmlReaderExtensions"/>.</para>
 /// </summary>
-public sealed class XmlReaderExtensionsTest : UnitTest
+public sealed class XmlReaderExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="XmlReaderExtensions.Skip(XmlReader, int)"/> method.</para>
@@ -71,7 +70,7 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((XmlReader) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      /*var serialized = Attributes.RandomString();
+      /*var serialized = this.RandomString();
 
       var xml = new StringWriter().Use(writer =>
       {
@@ -295,7 +294,7 @@ public sealed class XmlReaderExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XmlReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToXmlReader().ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Stream.Null.ToXmlReader().ToXDocumentAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

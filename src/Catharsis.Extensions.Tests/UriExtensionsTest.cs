@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="UriExtensions"/>.</para>
 /// </summary>
-public sealed class UriExtensionsTest : UnitTest
+public sealed class UriExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="UriExtensions.IsAvailable(Uri, TimeSpan?)"/> method.</para>
@@ -38,7 +37,7 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.IsAvailableAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-      AssertionExtensions.Should(() => Attributes.LocalHost().IsAvailableAsync(null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => "localhost".ToUri().IsAvailableAsync(null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -180,7 +179,7 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.TryFinallyDelete(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
-      AssertionExtensions.Should(() => Attributes.LocalHost().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => "localhost".ToUri().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     }
 
     throw new NotImplementedException();
@@ -281,7 +280,7 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-      AssertionExtensions.Should(() => Attributes.LocalHost().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => "localhost".ToUri().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
     throw new NotImplementedException();
@@ -302,8 +301,8 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.WriteBytesAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Attributes.LocalHost().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => Attributes.LocalHost().WriteBytesAsync([], null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => "localhost".ToUri().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => "localhost".ToUri().WriteBytesAsync([], null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -324,7 +323,7 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-      AssertionExtensions.Should(() => Attributes.LocalHost().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => "localhost".ToUri().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -345,8 +344,8 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.WriteTextAsync(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Attributes.LocalHost().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => Attributes.LocalHost().WriteTextAsync(string.Empty, null, null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => "localhost".ToUri().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => "localhost".ToUri().WriteTextAsync(string.Empty, null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -380,7 +379,7 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.ToEnumerable(null, 1)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-      AssertionExtensions.Should(() => Attributes.LocalHost().ToEnumerable(0)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
+      AssertionExtensions.Should(() => "localhost".ToUri().ToEnumerable(0)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
 
       static void Validate(Uri uri)
       {
@@ -412,7 +411,7 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null, 1).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-      AssertionExtensions.Should(() => Attributes.LocalHost().ToAsyncEnumerable(0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
+      AssertionExtensions.Should(() => "localhost".ToUri().ToAsyncEnumerable(0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
 
       static void Validate(Uri uri)
       {
@@ -739,7 +738,7 @@ public sealed class UriExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Uri) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-      AssertionExtensions.Should(() => Attributes.LocalHost().ToXDocumentAsync(null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => "localhost".ToUri().ToXDocumentAsync(null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

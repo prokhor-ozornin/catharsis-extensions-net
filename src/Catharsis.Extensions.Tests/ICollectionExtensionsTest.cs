@@ -1,4 +1,3 @@
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ICollectionExtensions"/>.</para>
 /// </summary>
-public sealed class ICollectionExtensionsTest : UnitTest
+public sealed class ICollectionExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="ICollectionExtensions.Empty{T}(ICollection{T})"/> method.</para>
@@ -22,7 +21,7 @@ public sealed class ICollectionExtensionsTest : UnitTest
       AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
 
       Validate(Array.Empty<object>().ToList());
-      Validate(Attributes.RandomObjects().ToList());
+      Validate(this.RandomObjects().ToList());
     }
 
     return;

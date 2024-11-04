@@ -1,5 +1,4 @@
-﻿using Catharsis.Commons;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="BasicTypesExtensions"/>.</para>
 /// </summary>
-public sealed class BasicTypesExtensionsTest : UnitTest
+public sealed class BasicTypesExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(sbyte)"/> method.</para>

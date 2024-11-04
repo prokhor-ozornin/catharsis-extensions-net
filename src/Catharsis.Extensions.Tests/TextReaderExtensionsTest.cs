@@ -1,16 +1,14 @@
 ﻿using System.Text;
-using Catharsis.Commons;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
-using System.Net;
 
 namespace Catharsis.Extensions.Tests;
 
 /// <summary>
 ///   <para>Tests set for class <see cref="TextReaderExtensions"/>.</para>
 /// </summary>
-public sealed class TextReaderExtensionsTest : UnitTest
+public sealed class TextReaderExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TextReaderExtensions.IsEnd(TextReader)"/> method.</para>
@@ -21,12 +19,12 @@ public sealed class TextReaderExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Attributes.RandomReadOnlyForwardStream().ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
 
       Validate(Stream.Null.ToStreamReader());
-      Validate(Attributes.EmptyStream().ToStreamReader());
-      Validate(Attributes.RandomStream().ToStreamReader());
-      Validate(Attributes.RandomReadOnlyStream().ToStreamReader());
+      Validate(this.EmptyStream().ToStreamReader());
+      Validate(this.RandomStream().ToStreamReader());
+      Validate(this.RandomReadOnlyStream().ToStreamReader());
     }
 
     return;
@@ -126,8 +124,8 @@ public sealed class TextReaderExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((TextReader) null).AsSynchronized()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Validate(Attributes.EmptyTextReader());
-      Validate(Attributes.RandomString().ToStringReader());
+      Validate(this.EmptyTextReader());
+      Validate(this.RandomString().ToStringReader());
     }
 
     return;
@@ -367,8 +365,8 @@ public sealed class TextReaderExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
-      Validate(string.Empty, Attributes.EmptyTextReader());
-      Attributes.RandomString().With(text => Validate(text, text.ToStringReader()));
+      Validate(string.Empty, this.EmptyTextReader());
+      this.RandomString().With(text => Validate(text, text.ToStringReader()));
     }
 
     return;
@@ -526,7 +524,7 @@ public sealed class TextReaderExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToXDocumentAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToXDocumentAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       /*const string Xml = "<?xml version=\"1.0\"?><article>text</article>";
 

@@ -1,5 +1,4 @@
 using System.Globalization;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DateTimeExtensions"/>.</para>
 /// </summary>
-public sealed class DateTimeExtensionsTest : UnitTest
+public sealed class DateTimeExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="DateTimeExtensions.IsPast(DateTime)"/> method.</para>

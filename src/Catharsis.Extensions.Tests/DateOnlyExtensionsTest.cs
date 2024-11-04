@@ -1,4 +1,3 @@
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DateOnlyExtensions"/>.</para>
 /// </summary>
-public sealed class DateOnlyExtensionsTest : UnitTest
+public sealed class DateOnlyExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="DateOnlyExtensions.IsWeekday(DateOnly)"/> method.</para>

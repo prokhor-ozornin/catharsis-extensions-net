@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -11,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="XDocumentExtensions"/>.</para>
 /// </summary>
-public sealed class XDocumentExtensionsTest : UnitTest
+public sealed class XDocumentExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="XDocumentExtensions.IsUnset(XDocument)"/> method.</para>
@@ -233,7 +232,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XDocument) null).Serialize(Attributes.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XDocument) null).Serialize(this.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().Serialize((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -313,7 +312,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XDocument) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
-      AssertionExtensions.Should(() => new XDocument().ToBytesAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new XDocument().ToBytesAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -355,7 +354,7 @@ public sealed class XDocumentExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XDocument) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
-      AssertionExtensions.Should(() => new XDocument().ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new XDocument().ToTextAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

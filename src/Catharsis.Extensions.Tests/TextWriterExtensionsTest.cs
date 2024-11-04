@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TextWriterExtensions"/>.</para>
 /// </summary>
-public sealed class TextWriterExtensionsTest : UnitTest
+public sealed class TextWriterExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TextWriterExtensions.AsSynchronized(TextWriter)"/> method.</para>
@@ -23,7 +22,7 @@ public sealed class TextWriterExtensionsTest : UnitTest
 
       using var writer = new StringWriter();
 
-      var value = Attributes.RandomString();
+      var value = this.RandomString();
 
       var synchronized = writer.AsSynchronized();
 
@@ -85,7 +84,7 @@ public sealed class TextWriterExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => TextWriterExtensions.WriteBytesAsync<TextWriter>(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
       AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>([], null, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteBytesAsync<TextWriter>([], null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -136,7 +135,7 @@ public sealed class TextWriterExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => TextWriterExtensions.WriteTextAsync<TextWriter>(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
       AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(string.Empty, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Stream.Null.ToStreamWriter().WriteTextAsync<TextWriter>(string.Empty)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

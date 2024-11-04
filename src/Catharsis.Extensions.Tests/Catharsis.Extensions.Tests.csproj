@@ -24,10 +24,4 @@
     <ProjectReference Include="..\Catharsis.Extensions.Core\Catharsis.Extensions.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Catharsis.Commons">
-      <HintPath>..\..\..\Catharsis.Commons\Catharsis.Commons.Core\bin\Release\net8.0\Catharsis.Commons.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

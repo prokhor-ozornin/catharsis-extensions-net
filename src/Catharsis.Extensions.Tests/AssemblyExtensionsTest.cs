@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="AssemblyExtensions"/>.</para>
 /// </summary>
-public sealed class AssemblyExtensionsTest : UnitTest
+public sealed class AssemblyExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="AssemblyExtensions.Resource(Assembly, string)"/> method.</para>

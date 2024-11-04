@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Text.RegularExpressions;
-using Catharsis.Commons;
+﻿using System.Text.RegularExpressions;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -10,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="MatchExtensions"/>.</para>
 /// </summary>
-public sealed class MatchExtensionsTest : UnitTest
+public sealed class MatchExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="MatchExtensions.ToEnumerable(Match)"/> method.</para>
@@ -42,7 +40,7 @@ public sealed class MatchExtensionsTest : UnitTest
     {
       Validate(false, null);
       Validate(false, Match.Empty);
-      Validate(true, Regex.Match(Attributes.RandomName(), ".*"));
+      Validate(true, Regex.Match(this.RandomName(), ".*"));
     }
 
     return;

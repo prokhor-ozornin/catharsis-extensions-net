@@ -1,5 +1,4 @@
-﻿using Catharsis.Commons;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="HttpContentExtensions"/>.</para>
 /// </summary>
-public sealed class HttpContentExtensionsTest : UnitTest
+public sealed class HttpContentExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="HttpContentExtensions.ToStream(HttpContent)"/> method.</para>
@@ -43,7 +42,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => HttpContentExtensions.ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
-      AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -69,7 +68,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((HttpContent) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
-      new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
+      new[] { [], this.RandomBytes() }.ForEach(bytes =>
       {
         Validate(bytes, new ByteArrayContent(bytes));
       });
@@ -96,7 +95,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
 
-      new[] { [], Attributes.RandomBytes() }.ForEach(bytes =>
+      new[] { [], this.RandomBytes() }.ForEach(bytes =>
       {
         Validate(bytes, new ByteArrayContent(bytes));
       });
@@ -125,7 +124,7 @@ public sealed class HttpContentExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ((HttpContent) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
-      new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
+      new[] { string.Empty, this.RandomString() }.ForEach(text =>
       {
         Validate(text, new StringContent(text));
       });
@@ -151,9 +150,9 @@ public sealed class HttpContentExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((HttpContent) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
-      AssertionExtensions.Should(() => new StringContent(string.Empty).ToTextAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new StringContent(string.Empty).ToTextAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      new[] { string.Empty, Attributes.RandomString() }.ForEach(text =>
+      new[] { string.Empty, this.RandomString() }.ForEach(text =>
       {
         Validate(text, new StringContent(text));
       });

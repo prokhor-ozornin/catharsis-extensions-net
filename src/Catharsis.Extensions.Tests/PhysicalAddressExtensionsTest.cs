@@ -1,5 +1,4 @@
 ﻿using System.Net.NetworkInformation;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="PhysicalAddressExtensions"/>.</para>
 /// </summary>
-public sealed class PhysicalAddressExtensionsTest : UnitTest
+public sealed class PhysicalAddressExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="PhysicalAddressExtensions.Clone(PhysicalAddress)"/> method.</para>
@@ -22,7 +21,7 @@ public sealed class PhysicalAddressExtensionsTest : UnitTest
       AssertionExtensions.Should(() => PhysicalAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
       Validate(PhysicalAddress.None);
-      Validate(new PhysicalAddress(Attributes.RandomBytes()));
+      Validate(new PhysicalAddress(this.RandomBytes()));
     }
 
     return;
@@ -48,7 +47,7 @@ public sealed class PhysicalAddressExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((PhysicalAddress) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
       Validate(PhysicalAddress.None, []);
-      Attributes.RandomBytes().With(bytes => Validate(new PhysicalAddress(bytes), bytes));
+      this.RandomBytes().With(bytes => Validate(new PhysicalAddress(bytes), bytes));
     }
 
     return;

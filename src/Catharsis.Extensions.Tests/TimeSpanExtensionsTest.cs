@@ -1,4 +1,3 @@
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TimeSpanExtensions"/>.</para>
 /// </summary>
-public sealed class TimeSpanExtensionsTest : UnitTest
+public sealed class TimeSpanExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TimeSpanExtensions.InThePast(TimeSpan)"/> method.</para>

@@ -1,5 +1,4 @@
-﻿using Catharsis.Commons;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -8,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DelegateExtensions"/>.</para>
 /// </summary>
-public sealed class DelegateExtensionsTest : UnitTest
+public sealed class DelegateExtensionsTest : ITestable
 {
   private delegate int Increment(int value);
   private delegate int Decrement(int value);

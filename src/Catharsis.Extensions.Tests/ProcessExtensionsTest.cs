@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -9,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ProcessExtensions"/>.</para>
 /// </summary>
-public sealed class ProcessExtensionsTest : UnitTest
+public sealed class ProcessExtensionsTest : ITestable
 {
   private Process ShellProcess { get; }
 
@@ -18,7 +17,7 @@ public sealed class ProcessExtensionsTest : UnitTest
   /// </summary>
   public ProcessExtensionsTest()
   {
-    ShellProcess = Attributes.ShellCommand().ToProcess(new ProcessStartInfo { RedirectStandardError = true, RedirectStandardInput = true, RedirectStandardOutput = true });
+    ShellProcess = this.ShellCommand().ToProcess(new ProcessStartInfo { RedirectStandardError = true, RedirectStandardInput = true, RedirectStandardOutput = true });
     ShellProcess.Start();
   }
 
@@ -103,7 +102,7 @@ public sealed class ProcessExtensionsTest : UnitTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ProcessExtensions.FinishAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
-      AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -129,7 +128,7 @@ public sealed class ProcessExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ProcessExtensions.TryFinallyKill(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("process");
       
-      var process = Attributes.ShellCommand().ToProcess();
+      var process = this.ShellCommand().ToProcess();
       
       AssertionExtensions.Should(() => process.TryFinallyKill(_ => { })).ThrowExactly<InvalidOperationException>();
 
@@ -329,7 +328,7 @@ public sealed class ProcessExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ProcessExtensions.WriteBytesAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
       AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => ShellProcess.WriteBytesAsync([], Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => ShellProcess.WriteBytesAsync([])).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -380,7 +379,7 @@ public sealed class ProcessExtensionsTest : UnitTest
     {
       AssertionExtensions.Should(() => ProcessExtensions.WriteTextAsync(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
       AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
-      AssertionExtensions.Should(() => ShellProcess.WriteTextAsync(string.Empty, Attributes.CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => ShellProcess.WriteTextAsync(string.Empty)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -399,7 +398,7 @@ public sealed class ProcessExtensionsTest : UnitTest
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public override void Dispose()
+  public void Dispose()
   {
     ShellProcess.Kill();
   }

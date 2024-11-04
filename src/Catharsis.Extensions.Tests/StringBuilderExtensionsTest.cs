@@ -1,8 +1,6 @@
 ﻿using System.Globalization;
-using System.Net;
 using System.Text;
 using System.Xml;
-using Catharsis.Commons;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -12,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StringBuilderExtensions"/>.</para>
 /// </summary>
-public sealed class StringBuilderExtensionsTest : UnitTest
+public sealed class StringBuilderExtensionsTest : ITestable
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsUnset(StringBuilder)"/> method.</para>
@@ -64,7 +62,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => ((StringBuilder) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
       Validate(new StringBuilder());
-      Validate(Attributes.RandomString().ToStringBuilder());
+      Validate(this.RandomString().ToStringBuilder());
     }
 
     return;
@@ -87,7 +85,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => StringBuilderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
       Validate(new StringBuilder());
-      Validate(Attributes.RandomString().ToStringBuilder());
+      Validate(this.RandomString().ToStringBuilder());
     }
 
     return;
@@ -116,7 +114,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => new StringBuilder().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
       Validate(string.Empty.ToStringBuilder());
-      Validate(Attributes.RandomString().ToStringBuilder());
+      Validate(this.RandomString().ToStringBuilder());
     }
 
     return;
@@ -144,7 +142,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => string.Empty.ToStringBuilder().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       Validate(new StringBuilder(), []);
-      Validate(new StringBuilder(), [string.Empty, Attributes.RandomString()]);
+      Validate(new StringBuilder(), [string.Empty, this.RandomString()]);
 
       static void Validate(StringBuilder builder, IEnumerable<object> elements)
       {
@@ -160,7 +158,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => string.Empty.ToStringBuilder().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       Validate(new StringBuilder(), []);
-      Validate(new StringBuilder(), [string.Empty, Attributes.RandomString()]);
+      Validate(new StringBuilder(), [string.Empty, this.RandomString()]);
 
       static void Validate(StringBuilder builder, params object[] elements)
       {
@@ -187,7 +185,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => string.Empty.ToStringBuilder().Without((IEnumerable<int>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("positions");
 
       Validate(new StringBuilder(), []);
-      Attributes.RandomString().ToStringBuilder().With(text => Validate(text, new int[text.Length].Fill(_ => 0)));
+      this.RandomString().ToStringBuilder().With(text => Validate(text, new int[text.Length].Fill(_ => 0)));
 
       static void Validate(StringBuilder builder, IEnumerable<int> positions)
       {
@@ -203,7 +201,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => Array.Empty<object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("positions");
 
       Validate(new StringBuilder(), []);
-      Attributes.RandomString().ToStringBuilder().With(text => Validate(text, new int[text.Length].Fill(_ => 0).AsArray()));
+      this.RandomString().ToStringBuilder().With(text => Validate(text, new int[text.Length].Fill(_ => 0).AsArray()));
 
       static void Validate(StringBuilder builder, params int[] positions)
       {
@@ -315,7 +313,7 @@ public sealed class StringBuilderExtensionsTest : UnitTest
       AssertionExtensions.Should(() => StringBuilderExtensions.ToXmlWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
       Validate(new StringBuilder(), string.Empty);
-      Validate(new StringBuilder(), Attributes.RandomString());
+      Validate(new StringBuilder(), this.RandomString());
     }
 
     return;
