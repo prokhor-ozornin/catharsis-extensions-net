@@ -2601,15 +2601,14 @@ public static class RandomExtensions
 
   private sealed class RandomStream : Stream
   {
-    private readonly byte? min;
-    private readonly byte? max;
-
+    private byte? Min { get; }
+    private byte? Max { get; }
     private Random Randomizer { get; } = new();
 
     public RandomStream(byte? min = null, byte? max = null)
     {
-      this.min = min;
-      this.max = max;
+      Min = min;
+      Max = max;
     }
 
     public override bool CanRead => true;
@@ -2630,7 +2629,7 @@ public static class RandomExtensions
 
     public override int Read(byte[] buffer, int offset, int count)
     {
-      buffer.Fill(() => Randomizer.Byte(min, max), offset, count);
+      buffer.Fill(() => Randomizer.Byte(Min, Max), offset, count);
       return count;
     }
 
@@ -2650,11 +2649,10 @@ public static class RandomExtensions
 
   private sealed class RandomRangeStream : Stream
   {
-    private readonly IEnumerable<int> range;
-
+    private IEnumerable<int> Range { get; }
     private Random Randomizer { get; } = new();
 
-    public RandomRangeStream(IEnumerable<Range> ranges) => range = ranges.ToRange();
+    public RandomRangeStream(IEnumerable<Range> ranges) => Range = ranges.ToRange();
 
     public override bool CanRead => true;
 
@@ -2674,7 +2672,7 @@ public static class RandomExtensions
 
     public override int Read(byte[] buffer, int offset, int count)
     {
-      buffer.Fill(() => range.Any() ? (byte) range.Random() : Randomizer.Byte(), offset, count);
+      buffer.Fill(() => Range.Any() ? (byte) Range.Random() : Randomizer.Byte(), offset, count);
       return count;
     }
 

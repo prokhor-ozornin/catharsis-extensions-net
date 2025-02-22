@@ -1104,44 +1104,44 @@ public static class StreamExtensions
 
   private class ReadOnlyStream : Stream
   {
-    private readonly Stream stream;
+    private Stream Stream { get; }
 
     public ReadOnlyStream(Stream stream)
     {
       if (stream is null) throw new ArgumentNullException(nameof(stream));
       if (!stream.CanRead) throw new NotSupportedException();
 
-      this.stream = stream;
+      Stream = stream;
     }
 
-    public override bool CanRead => stream.CanRead;
+    public override bool CanRead => Stream.CanRead;
 
     public override bool CanWrite => false;
 
-    public override bool CanSeek => stream.CanSeek;
+    public override bool CanSeek => Stream.CanSeek;
 
-    public override long Length => stream.Length;
+    public override long Length => Stream.Length;
 
     public override long Position
     {
-      get => stream.Position;
-      set => stream.Position = value;
+      get => Stream.Position;
+      set => Stream.Position = value;
     }
 
-    public override int Read(byte[] buffer, int offset, int count) => stream.Read(buffer, offset, count);
+    public override int Read(byte[] buffer, int offset, int count) => Stream.Read(buffer, offset, count);
 
     public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
 
-    public override long Seek(long offset, SeekOrigin origin) => stream.Seek(offset, origin);
+    public override long Seek(long offset, SeekOrigin origin) => Stream.Seek(offset, origin);
 
     public override void SetLength(long value)
     {
-      stream.SetLength(value);
+      Stream.SetLength(value);
     }
 
     public override void Flush()
     {
-      stream.Flush();
+      Stream.Flush();
     }
 
     protected override void Dispose(bool disposing)
@@ -1151,7 +1151,7 @@ public static class StreamExtensions
         return;
       }
 
-      stream.Dispose();
+      Stream.Dispose();
     }
   }
 
@@ -1178,44 +1178,44 @@ public static class StreamExtensions
 
   private class WriteOnlyStream : Stream
   {
-    private readonly Stream stream;
+    private Stream Stream { get; }
 
     public WriteOnlyStream(Stream stream)
     {
       if (stream is null) throw new ArgumentNullException(nameof(stream));
       if (!stream.CanWrite) throw new NotSupportedException();
 
-      this.stream = stream;
+      Stream = stream;
     }
 
     public override bool CanRead => false;
 
-    public override bool CanWrite => stream.CanWrite;
+    public override bool CanWrite => Stream.CanWrite;
 
-    public override bool CanSeek => stream.CanSeek;
+    public override bool CanSeek => Stream.CanSeek;
 
-    public override long Length => stream.Length;
+    public override long Length => Stream.Length;
 
     public override long Position
     {
-      get => stream.Position;
-      set => stream.Position = value;
+      get => Stream.Position;
+      set => Stream.Position = value;
     }
 
     public override int Read(byte[] buffer, int offset, int count) => throw new NotSupportedException();
 
-    public override void Write(byte[] buffer, int offset, int count) => stream.Write(buffer, offset, count);
+    public override void Write(byte[] buffer, int offset, int count) => Stream.Write(buffer, offset, count);
 
-    public override long Seek(long offset, SeekOrigin origin) => stream.Seek(offset, origin);
+    public override long Seek(long offset, SeekOrigin origin) => Stream.Seek(offset, origin);
 
     public override void SetLength(long value)
     {
-      stream.SetLength(value);
+      Stream.SetLength(value);
     }
 
     public override void Flush()
     {
-      stream.Flush();
+      Stream.Flush();
     }
 
     protected override void Dispose(bool disposing)
@@ -1225,7 +1225,7 @@ public static class StreamExtensions
         return;
       }
 
-      stream.Dispose();
+      Stream.Dispose();
     }
   }
 
@@ -1252,17 +1252,17 @@ public static class StreamExtensions
 
   private sealed class StreamEnumerable : IEnumerable<byte[]>
   {
-    private readonly Stream stream;
-    private readonly int count;
-    private readonly bool close;
+    private Stream Stream { get; }
+    private int Count { get; }
+    private bool Close { get; }
 
     public StreamEnumerable(Stream stream, int count, bool close)
     {
       if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
-      this.count = count;
-      this.close = close;
+      Stream = stream ?? throw new ArgumentNullException(nameof(stream));
+      Count = count;
+      Close = close;
     }
 
     public IEnumerator<byte[]> GetEnumerator() => new Enumerator(this);
@@ -1271,24 +1271,24 @@ public static class StreamExtensions
 
     private sealed class Enumerator : IEnumerator<byte[]>
     {
-      private readonly StreamEnumerable parent;
-      private readonly byte[] buffer;
+      private StreamEnumerable Parent { get; }
+      private byte[] Buffer { get; }
 
       public Enumerator(StreamEnumerable parent)
       {
-        this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
-        buffer = new byte[parent.count];
+        Parent = parent ?? throw new ArgumentNullException(nameof(parent));
+        Buffer = new byte[parent.Count];
       }
 
       public byte[] Current { get; private set; } = [];
 
       public bool MoveNext()
       {
-        var count = parent.stream.Read(buffer, 0, parent.count);
+        var count = Parent.Stream.Read(Buffer, 0, Parent.Count);
 
         if (count > 0)
         {
-          Current = buffer.Range(0, count);
+          Current = Buffer.Range(0, count);
         }
 
         return count > 0;
@@ -1298,9 +1298,9 @@ public static class StreamExtensions
 
       public void Dispose()
       {
-        if (parent.close)
+        if (Parent.Close)
         {
-          parent.stream.Dispose();
+          Parent.Stream.Dispose();
         }
       }
 
@@ -1310,45 +1310,45 @@ public static class StreamExtensions
 
   private sealed class StreamAsyncEnumerable : IAsyncEnumerable<byte[]>
   {
-    private readonly Stream stream;
-    private readonly int count;
-    private readonly bool close;
+    private Stream Stream { get; }
+    private int Count { get; }
+    private bool Close { get; }
 
     public StreamAsyncEnumerable(Stream stream, int count, bool close)
     {
       if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
-      this.count = count;
-      this.close = close;
+      Stream = stream ?? throw new ArgumentNullException(nameof(stream));
+      Count = count;
+      Close = close;
     }
 
     public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this, cancellation);
 
     private sealed class Enumerator : IAsyncEnumerator<byte[]>
     {
-      private readonly StreamAsyncEnumerable parent;
-      private readonly CancellationToken cancellation;
-      private readonly byte[] buffer;
+      private StreamAsyncEnumerable Parent { get; }
+      private CancellationToken Cancellation { get; }
+      private byte[] Buffer { get; }
 
       public Enumerator(StreamAsyncEnumerable parent, CancellationToken cancellation)
       {
-        this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
-        this.cancellation = cancellation;
-        buffer = new byte[parent.count];
+        Parent = parent ?? throw new ArgumentNullException(nameof(parent));
+        Cancellation = cancellation;
+        Buffer = new byte[parent.Count];
       }
 
-      public ValueTask DisposeAsync() => parent.close ? parent.stream.DisposeAsync() : default;
+      public ValueTask DisposeAsync() => Parent.Close ? Parent.Stream.DisposeAsync() : default;
 
       public byte[] Current { get; private set; } = [];
 
       public async ValueTask<bool> MoveNextAsync()
       {
-        var count = await parent.stream.ReadAsync(buffer, 0, parent.count, cancellation).ConfigureAwait(false);
+        var count = await Parent.Stream.ReadAsync(Buffer, 0, Parent.Count, Cancellation).ConfigureAwait(false);
 
         if (count > 0)
         {
-          Current = buffer.Range(0, count);
+          Current = Buffer.Range(0, count);
         }
 
         return count > 0;

@@ -899,13 +899,13 @@ public static class IAsyncEnumerableExtensions
 
   private sealed class AsyncEnumerable<T> : IEnumerable<T>
   {
-    private readonly IAsyncEnumerator<T> enumerator;
+    private IAsyncEnumerator<T> EnumeratorProperty { get; }
 
     public AsyncEnumerable(IAsyncEnumerable<T> enumerable)
     {
       if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
 
-      enumerator = enumerable.GetAsyncEnumerator();
+      EnumeratorProperty = enumerable.GetAsyncEnumerator();
     }
 
     public IEnumerator<T> GetEnumerator() => new Enumerator(this);
@@ -914,17 +914,17 @@ public static class IAsyncEnumerableExtensions
 
     private sealed class Enumerator : IEnumerator<T>
     {
-      private readonly AsyncEnumerable<T> parent;
+      private AsyncEnumerable<T> Parent { get; }
 
-      public Enumerator(AsyncEnumerable<T> parent) => this.parent = parent;
+      public Enumerator(AsyncEnumerable<T> parent) => Parent = parent;
 
-      public T Current => parent.enumerator.Current;
+      public T Current => Parent.EnumeratorProperty.Current;
 
-      public bool MoveNext() => parent.enumerator.MoveNextAsync().Result;
+      public bool MoveNext() => Parent.EnumeratorProperty.MoveNextAsync().Result;
 
       public void Reset() => throw new NotSupportedException();
 
-      public async void Dispose() { await parent.enumerator.DisposeAsync().ConfigureAwait(false); }
+      public async void Dispose() { await Parent.EnumeratorProperty.DisposeAsync().ConfigureAwait(false); }
 
       object IEnumerator.Current => Current;
     }

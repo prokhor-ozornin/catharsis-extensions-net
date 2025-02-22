@@ -297,17 +297,17 @@ public static class TextReaderExtensions
 
   private sealed class TextReaderEnumerable : IEnumerable<char[]>
   {
-    private readonly TextReader reader;
-    private readonly int count;
-    private readonly bool close;
+    private TextReader Reader { get; }
+    private int Count { get; }
+    private bool Close { get; }
 
     public TextReaderEnumerable(TextReader reader, int count, bool close)
     {
       if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
-      this.count = count;
-      this.close = close;
+      Reader = reader ?? throw new ArgumentNullException(nameof(reader));
+      Count = count;
+      Close = close;
     }
 
     public IEnumerator<char[]> GetEnumerator() => new Enumerator(this);
@@ -316,24 +316,24 @@ public static class TextReaderExtensions
 
     private sealed class Enumerator : IEnumerator<char[]>
     {
-      private readonly TextReaderEnumerable parent;
-      private readonly char[] buffer;
+      private TextReaderEnumerable Parent { get; }
+      private char[] Buffer { get; }
 
       public Enumerator(TextReaderEnumerable parent)
       {
-        this.parent = parent ?? throw new ArgumentOutOfRangeException(nameof(parent));
-        buffer = new char[parent.count];
+        Parent = parent ?? throw new ArgumentOutOfRangeException(nameof(parent));
+        Buffer = new char[parent.Count];
       }
 
       public char[] Current { get; private set; } = [];
 
       public bool MoveNext()
       {
-        var count = parent.reader.Read(buffer, 0, parent.count);
+        var count = Parent.Reader.Read(Buffer, 0, Parent.Count);
 
         if (count > 0)
         {
-          Current = buffer.Range(0, count);
+          Current = Buffer.Range(0, count);
         }
 
         return count > 0;
@@ -343,9 +343,9 @@ public static class TextReaderExtensions
 
       public void Dispose()
       {
-        if (parent.close)
+        if (Parent.Close)
         {
-          parent.reader.Dispose();
+          Parent.Reader.Dispose();
         }
       }
 
@@ -355,37 +355,37 @@ public static class TextReaderExtensions
 
   private sealed class TextReaderAsyncEnumerable : IAsyncEnumerable<char[]>
   {
-    private readonly TextReader reader;
-    private readonly int count;
-    private readonly bool close;
+    private TextReader Reader { get; }
+    private int Count { get; }
+    private bool Close { get;}
 
     public TextReaderAsyncEnumerable(TextReader reader, int count, bool close)
     {
       if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      this.reader = reader ?? throw new ArgumentNullException(nameof(reader));
-      this.count = count;
-      this.close = close;
+      Reader = reader ?? throw new ArgumentNullException(nameof(reader));
+      Count = count;
+      Close = close;
     }
 
     public IAsyncEnumerator<char[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this);
 
     private sealed class Enumerator : IAsyncEnumerator<char[]>
     {
-      private readonly TextReaderAsyncEnumerable parent;
-      private readonly char[] buffer;
+      private TextReaderAsyncEnumerable Parent { get; }
+      private char[] Buffer { get; }
 
       public Enumerator(TextReaderAsyncEnumerable parent)
       {
-        this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
-        buffer = new char[parent.count];
+        Parent = parent ?? throw new ArgumentNullException(nameof(parent));
+        Buffer = new char[parent.Count];
       }
 
       public async ValueTask DisposeAsync()
       {
-        if (parent.close)
+        if (Parent.Close)
         {
-          parent.reader.Dispose();
+          Parent.Reader.Dispose();
         }
 
         await Task.Yield();
@@ -395,11 +395,11 @@ public static class TextReaderExtensions
 
       public async ValueTask<bool> MoveNextAsync()
       {
-        var count = await parent.reader.ReadAsync(buffer, 0, parent.count).ConfigureAwait(false);
+        var count = await Parent.Reader.ReadAsync(Buffer, 0, Parent.Count).ConfigureAwait(false);
 
         if (count > 0)
         {
-          Current = buffer.Range(0, count);
+          Current = Buffer.Range(0, count);
         }
 
         return count > 0;

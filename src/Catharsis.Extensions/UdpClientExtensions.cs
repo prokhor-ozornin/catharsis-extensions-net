@@ -201,15 +201,15 @@ public static class UdpClientExtensions
 
   private sealed class UdpClientEnumerable : IEnumerable<byte[]>
   {
-    private readonly UdpClient client;
     private IPEndPoint endpoint;
-    private readonly bool close;
+    private UdpClient Client { get; }
+    private bool Close { get; }
 
     public UdpClientEnumerable(UdpClient client, IPEndPoint endpoint, bool close)
     {
-      this.client = client ?? throw new ArgumentNullException(nameof(client));
+      Client = client ?? throw new ArgumentNullException(nameof(client));
       this.endpoint = endpoint;
-      this.close = close;
+      Close = close;
     }
 
     public IEnumerator<byte[]> GetEnumerator() => new Enumerator(this);
@@ -218,15 +218,15 @@ public static class UdpClientExtensions
 
     private sealed class Enumerator : IEnumerator<byte[]>
     {
-      private readonly UdpClientEnumerable parent;
+      private UdpClientEnumerable Parent { get; }
 
-      public Enumerator(UdpClientEnumerable parent) => this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
+      public Enumerator(UdpClientEnumerable parent) => Parent = parent ?? throw new ArgumentNullException(nameof(parent));
 
       public byte[] Current { get; private set; } = [];
 
       public bool MoveNext()
       {
-        var buffer = parent.client.Receive(ref parent.endpoint);
+        var buffer = Parent.Client.Receive(ref Parent.endpoint);
 
         if (buffer.Length > 0)
         {
@@ -240,9 +240,9 @@ public static class UdpClientExtensions
 
       public void Dispose()
       {
-        if (parent.close)
+        if (Parent.Close)
         {
-          parent.client.Dispose();
+          Parent.Client.Dispose();
         }
       }
 
@@ -252,33 +252,33 @@ public static class UdpClientExtensions
 
   private sealed class UdpClientAsyncEnumerable : IAsyncEnumerable<byte[]>
   {
-    private readonly UdpClient client;
-    private readonly bool close;
+    private UdpClient Client { get; }
+    private bool Close { get; }
 
     public UdpClientAsyncEnumerable(UdpClient client, bool close)
     {
-      this.client = client ?? throw new ArgumentNullException(nameof(client));
-      this.close = close;
+      Client = client ?? throw new ArgumentNullException(nameof(client));
+      Close = close;
     }
 
     public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this, cancellation);
 
     private sealed class Enumerator : IAsyncEnumerator<byte[]>
     {
-      private readonly UdpClientAsyncEnumerable parent;
-      private readonly CancellationToken cancellation;
+      private UdpClientAsyncEnumerable Parent { get; }
+      private CancellationToken Cancellation { get; }
 
       public Enumerator(UdpClientAsyncEnumerable parent, CancellationToken cancellation)
       {
-        this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
-        this.cancellation = cancellation;
+        Parent = parent ?? throw new ArgumentNullException(nameof(parent));
+        Cancellation = cancellation;
       }
 
       public async ValueTask DisposeAsync()
       {
-        if (parent.close)
+        if (Parent.Close)
         {
-          parent.client.Dispose();
+          Parent.Client.Dispose();
         }
 
         await Task.Yield();
@@ -289,9 +289,9 @@ public static class UdpClientExtensions
       public async ValueTask<bool> MoveNextAsync()
       {
         #if NET8_0_OR_GREATER
-          var buffer = (await parent.client.ReceiveAsync(cancellation).ConfigureAwait(false)).Buffer;
+          var buffer = (await Parent.Client.ReceiveAsync(Cancellation).ConfigureAwait(false)).Buffer;
         #else
-          var buffer = (await parent.client.ReceiveAsync().ConfigureAwait(false)).Buffer;
+          var buffer = (await Parent.Client.ReceiveAsync().ConfigureAwait(false)).Buffer;
         #endif
 
         if (buffer.Length > 0)

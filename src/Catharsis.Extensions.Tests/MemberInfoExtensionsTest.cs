@@ -273,7 +273,7 @@ public sealed class MemberInfoExtensionsTest : ITestable
 
     protected event ProtectedDelegate ProtectedEvent;
 
-    private event PrivateDelegate PrivateEvent;
+    private event PrivateDelegate PrivteEvent;
 
     public TestObject()
     {
