@@ -1587,14 +1587,23 @@
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IDictionaryExtensions"/>.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IDictionaryExtensionsTest.GetValueOrDefault_Method">
+        <member name="M:Catharsis.Extensions.Tests.IDictionaryExtensionsTest.Get_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IDictionaryExtensions.GetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IDictionaryExtensions.Get``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IDictionaryExtensionsTest.SetValueOrDefault_Method">
+        <member name="M:Catharsis.Extensions.Tests.IDictionaryExtensionsTest.Set_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IDictionaryExtensions.SetValueOrDefault``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IDictionaryExtensions.Set``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.IDictionaryExtensionsTest.GetOrSet_Methods">
+            <summary>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.IDictionaryExtensions.GetOrSet``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.IDictionaryExtensions.GetOrSet``2(System.Collections.Generic.IDictionary{``0,``1},``0,System.Func{``1})"/></description></item>
+              </list>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IDictionaryExtensionsTest.With_Methods">

@@ -20,8 +20,8 @@ public static class IDictionaryExtensions
   /// <param name="value"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="SetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
-  public static TValue GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
+  /// <seealso cref="Set{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
+  public static TValue Get<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
@@ -37,9 +37,29 @@ public static class IDictionaryExtensions
   /// <param name="key"></param>
   /// <param name="value"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <seealso cref="Get{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
+  public static IDictionary<TKey, TValue> Set<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
+  {
+    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+
+    dictionary[key] = value;
+
+    return dictionary;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="key"></param>
+  /// <param name="value"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
-  public static TValue SetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
+  /// <seealso cref="GetOrSet{TKey,TValue}(IDictionary{TKey, TValue}, TKey, Func{TValue})"/>
+  public static TValue GetOrSet<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
@@ -47,6 +67,33 @@ public static class IDictionaryExtensions
     {
       return result;
     }
+
+    dictionary[key] = value;
+
+    return value;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="key"></param>
+  /// <param name="function"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetOrSet{TKey,TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
+  public static TValue GetOrSet<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TValue> function) where TKey : notnull
+  {
+    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+
+    if (dictionary.TryGetValue(key, out var result))
+    {
+      return result;
+    }
+    
+    var value = function();
 
     dictionary[key] = value;
 

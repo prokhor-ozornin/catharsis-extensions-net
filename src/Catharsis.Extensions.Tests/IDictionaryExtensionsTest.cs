@@ -10,14 +10,14 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IDictionaryExtensionsTest : ITestable
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="IDictionaryExtensions.GetValueOrDefault{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.Get{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
   /// </summary>
   [Fact]
-  public void GetValueOrDefault_Method()
+  public void Get_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IDictionaryExtensions.GetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+      AssertionExtensions.Should(() => IDictionaryExtensions.Get<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
     }
 
     throw new NotImplementedException();
@@ -30,14 +30,14 @@ public sealed class IDictionaryExtensionsTest : ITestable
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IDictionaryExtensions.SetValueOrDefault{TKey,TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.Set{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>
   /// </summary>
   [Fact]
-  public void SetValueOrDefault_Method()
+  public void Set_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IDictionaryExtensions.SetValueOrDefault<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+      AssertionExtensions.Should(() => IDictionaryExtensions.Set<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
     }
 
     throw new NotImplementedException();
@@ -47,6 +47,19 @@ public sealed class IDictionaryExtensionsTest : ITestable
     static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
     {
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="IDictionaryExtensions.GetOrSet{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/></description></item>
+  ///     <item><description><see cref="IDictionaryExtensions.GetOrSet{TKey, TValue}(IDictionary{TKey, TValue}, TKey, Func{TValue})"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void GetOrSet_Methods()
+  {
+    throw new NotImplementedException();
   }
 
   /// <summary>
