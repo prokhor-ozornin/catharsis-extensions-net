@@ -188,4 +188,24 @@ public sealed class NameValueCollectionExtensionsTest : ITestable
     {
     }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="NameValueCollectionExtensions.ToTuple(NameValueCollection)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToTuple_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => NameValueCollectionExtensions.ToTuple(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate(NameValueCollection collection)
+    {
+    }
+  }
 }

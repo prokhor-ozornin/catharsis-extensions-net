@@ -674,6 +674,70 @@ public sealed class IAsyncEnumerableExtensionsTest : ITestable
   }
 
   /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="IAsyncEnumerableExtensions.ToTuple{T}(IAsyncEnumerable{T})"/></description></item>
+  ///     <item><description><see cref="IAsyncEnumerableExtensions.ToTuple{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IComparer{TKey})"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void ToTuple_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToTuple<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+
+      static void Validate()
+      {
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToTuple<object, object>(null, value => value)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToTuple<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
+
+      static void Validate()
+      {
+      }
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="IAsyncEnumerableExtensions.ToTupleAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="IAsyncEnumerableExtensions.ToTupleAsync{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IComparer{TKey}, CancellationToken)"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void ToTupleAsync_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToTupleAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
+
+      static void Validate()
+      {
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToTupleAsync<object, object>(null, value => value)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
+      AssertionExtensions.Should(() => this.EmptyAsyncEnumerable().ToTupleAsync<object, object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("key").Await();
+
+      static void Validate()
+      {
+      }
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToStack{T}(IAsyncEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]

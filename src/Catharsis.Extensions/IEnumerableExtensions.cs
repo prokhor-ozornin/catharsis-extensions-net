@@ -1168,6 +1168,33 @@ public static class IEnumerableExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="enumerable"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IEnumerable<Tuple<T, int>> ToTuple<T>(this IEnumerable<T> enumerable) => enumerable?.Select((item, index) => new Tuple<T, int>(item, index)) ?? throw new ArgumentNullException(nameof(enumerable));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="enumerable"></param>
+  /// <param name="key"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="key"/> is <see langword="null"/>.</exception>
+  public static IEnumerable<Tuple<TKey, TValue>> ToTuple<TKey, TValue>(this IEnumerable<TValue> enumerable, Func<TValue, TKey> key, IComparer<TKey> comparer = null) where TKey : notnull
+  {
+    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return comparer is not null ? enumerable.OrderBy(key, comparer).Select(tuple => new Tuple<TKey, TValue>(key(tuple), tuple)) : enumerable.Select(tuple => new Tuple<TKey, TValue>(key(tuple), tuple));
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <typeparam name="TKey"></typeparam>
   /// <typeparam name="TValue"></typeparam>
   /// <param name="enumerable"></param>

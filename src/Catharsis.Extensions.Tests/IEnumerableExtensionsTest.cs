@@ -445,15 +445,15 @@ public sealed class IEnumerableExtensionsTest : ITestable
       first.Min(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
       first = [];
-      second = new object[] { null };
+      second = [null];
       first.Min(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
-      first = new object[] { string.Empty };
-      second = new object[] { null };
+      first = [string.Empty];
+      second = [null];
       first.Min(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
-      first = new object[] { string.Empty };
-      second = new object[] { null, string.Empty };
+      first = [string.Empty];
+      second = [null, string.Empty];
       first.Min(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
     }
 
@@ -478,15 +478,15 @@ public sealed class IEnumerableExtensionsTest : ITestable
       first.Max(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
       first = [];
-      second = new object[] { null };
+      second = [null];
       first.Max(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(second);
 
-      first = new object[] { string.Empty };
-      second = new object[] { null };
+      first = [string.Empty];
+      second = [null];
       first.Max(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(first);
 
-      first = new object[] { string.Empty };
-      second = new object[] { null, string.Empty };
+      first = [string.Empty];
+      second = [null, string.Empty];
       first.Max(second).Should().BeOfType<IEnumerable<object>>().And.BeSameAs(second);
     }
 
@@ -1377,7 +1377,7 @@ public sealed class IEnumerableExtensionsTest : ITestable
 
       Enumerable.Empty<object>().ToLinkedList().Should().BeOfType<LinkedList<object>>().And.BeEmpty();
 
-      IEnumerable<int?> enumerable = new int?[] {1, null, 2, null, 3};
+      IEnumerable<int?> enumerable = [1, null, 2, null, 3];
       enumerable.ToLinkedList().Should().BeOfType<LinkedList<int?>>().And.Equal(enumerable);
     }
 
@@ -1420,7 +1420,7 @@ public sealed class IEnumerableExtensionsTest : ITestable
 
       Enumerable.Empty<object>().ToSortedSet().Should().BeOfType<SortedSet<object>>().And.BeEmpty();
 
-      IEnumerable<int?> enumerable = new int?[] {1, null, 2, null, 3, null, 3, 2, 1};
+      IEnumerable<int?> enumerable = [1, null, 2, null, 3, null, 3, 2, 1];
       enumerable.ToSortedSet().Should().BeOfType<SortedSet<int?>>().And.Equal(null, 1, 2, 3);
       enumerable.ToSortedSet(Comparer<int?>.Create((x, y) => x.GetValueOrDefault() < y.GetValueOrDefault() ? 1 : x.GetValueOrDefault() > y.GetValueOrDefault() ? -1 : 0)).Should().BeOfType<SortedSet<int?>>().And.Equal(3, 2, 1, null);
     }
@@ -1480,7 +1480,7 @@ public sealed class IEnumerableExtensionsTest : ITestable
 
       Enumerable.Empty<object>().ToStack().Should().BeOfType<Stack<object>>().And.BeEmpty();
 
-      IEnumerable<int?> enumerable = new int?[] { null, 1, null, 2, null, 3, null };
+      IEnumerable<int?> enumerable = [null, 1, null, 2, null, 3, null];
       enumerable.ToStack().Should().BeOfType<Stack<int?>>().And.Equal(enumerable.Reverse());
     }
 
@@ -1512,7 +1512,7 @@ public sealed class IEnumerableExtensionsTest : ITestable
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToPriorityQueue{TElement, TPriority}(IEnumerable{(TElement Element, TPriority Priority)}, IComparer{TPriority})"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToPriorityQueue{TElement, TPriority}(IEnumerable{ValueTuple{TElement, TPriority}, IComparer{TPriority})"/> method.</para>
   /// </summary>
   [Fact]
   public void ToPriorityQueue_Method()
@@ -1738,7 +1738,39 @@ public sealed class IEnumerableExtensionsTest : ITestable
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToDictionary{TKey, TValue}(IEnumerable{(TKey Key, TValue Value)}, IEqualityComparer{TKey})"/> method.</para>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="IEnumerableExtensions.ToTuple{T}(IEnumerable{T})"/></description></item>
+  ///     <item><description><see cref="IEnumerableExtensions.ToTuple{TKey, TValue}(IEnumerable{TValue}, Func{TValue, TKey}, IComparer{TKey})"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void ToTuple_Methods()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IEnumerableExtensions.ToTuple<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+
+      static void Validate()
+      {
+      }
+    }
+
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => IEnumerableExtensions.ToTuple<object, object>(null, element => element)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+      AssertionExtensions.Should(() => Enumerable.Empty<object>().ToTuple<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
+
+      static void Validate()
+      {
+      }
+    }
+
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToDictionary{TKey, TValue}(IEnumerable{ValueTuple{TKey, TValue}, IEqualityComparer{TKey})"/> method.</para>
   /// </summary>
   [Fact]
   public void ToDictionary_Method()
@@ -1758,7 +1790,7 @@ public sealed class IEnumerableExtensionsTest : ITestable
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToReadOnlyDictionary{TKey, TValue}(IEnumerable{(TKey Key, TValue Value)}, IEqualityComparer{TKey})"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToReadOnlyDictionary{TKey, TValue}(IEnumerable{TKey, TValue, IEqualityComparer{TKey})"/> method.</para>
   /// </summary>
   [Fact]
   public void ToReadOnlyDictionary_Method()
@@ -1841,7 +1873,7 @@ public sealed class IEnumerableExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       static void Validate()
       {
@@ -1851,7 +1883,7 @@ public sealed class IEnumerableExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       static void Validate()
       {
@@ -1862,7 +1894,7 @@ public sealed class IEnumerableExtensionsTest : ITestable
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToBoolean(IEnumerable{T})"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToBoolean{T}(IEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]
   public void ToBoolean_Method()

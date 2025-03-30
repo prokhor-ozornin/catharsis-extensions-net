@@ -2601,6 +2601,54 @@
             <exception cref="T:System.ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="key"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToValueTuple``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})"/>
         </member>
+        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTuple``1(System.Collections.Generic.IAsyncEnumerable{``0})">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="enumerable"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTupleAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTuple``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="enumerable"></param>
+            <param name="key"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="key"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTupleAsync``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0},System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTupleAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="enumerable"></param>
+            <param name="cancellation"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTuple``1(System.Collections.Generic.IAsyncEnumerable{``0})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTupleAsync``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0},System.Threading.CancellationToken)">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="enumerable"></param>
+            <param name="key"></param>
+            <param name="comparer"></param>
+            <param name="cancellation"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="key"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTuple``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})"/>
+        </member>
         <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToStack``1(System.Collections.Generic.IAsyncEnumerable{``0})">
             <summary>
               <para></para>
@@ -3966,6 +4014,27 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="key"/> is <see langword="null"/>.</exception>
         </member>
+        <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToTuple``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="enumerable"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToTuple``2(System.Collections.Generic.IEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="enumerable"></param>
+            <param name="key"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="key"/> is <see langword="null"/>.</exception>
+        </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToDictionary``2(System.Collections.Generic.IEnumerable{System.ValueTuple{``0,``1}},System.Collections.Generic.IEqualityComparer{``0})">
             <summary>
               <para></para>
@@ -4363,6 +4432,41 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
         </member>
+        <member name="M:Catharsis.Extensions.IReadOnlyDictionaryExtensions.ToTuple``2(System.Collections.Generic.IReadOnlyDictionary{``0,``1},System.Collections.Generic.IComparer{``0})">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="dictionary"></param>
+            <param name="comparer"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Catharsis.Extensions.KeyValuePairExtensions">
+            <summary>
+              <para></para>
+            </summary>
+            <seealso cref="T:System.Collections.Generic.KeyValuePair`2"/>
+        </member>
+        <member name="M:Catharsis.Extensions.KeyValuePairExtensions.ToValueTuple``2(System.Collections.Generic.KeyValuePair{``0,``1})">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="pair"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Catharsis.Extensions.KeyValuePairExtensions.ToTuple``2(System.Collections.Generic.KeyValuePair{``0,``1})">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="pair"></param>
+            <returns></returns>
+        </member>
         <member name="T:Catharsis.Extensions.MatchExtensions">
             <summary>
               <para>Extension methods for regular expressions/matches types.</para>
@@ -4621,6 +4725,14 @@
             <param name="collection"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+        </member>
+        <member name="M:Catharsis.Extensions.NameValueCollectionExtensions.ToTuple(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="collection"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="T:Catharsis.Extensions.ObjectExtensions">
             <summary>

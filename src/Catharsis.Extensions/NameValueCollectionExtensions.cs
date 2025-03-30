@@ -153,4 +153,25 @@ public static class NameValueCollectionExtensions
       }
     }
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="collection"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IEnumerable<Tuple<string, string>> ToTuple(this NameValueCollection collection)
+  {
+    if (collection is null) throw new ArgumentNullException(nameof(collection));
+
+    for (var i = 0; i < collection.Count; i++)
+    {
+      var key = collection.GetKey(i);
+
+      if (key is not null)
+      {
+        yield return new Tuple<string, string>(key, collection.Get(i));
+      }
+    }
+  }
 }

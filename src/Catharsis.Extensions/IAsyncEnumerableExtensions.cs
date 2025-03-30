@@ -497,6 +497,67 @@ public static class IAsyncEnumerableExtensions
     return (await enumerable.ToListAsync(cancellation).ConfigureAwait(false)).ToValueTuple(key, comparer);
   }
 
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="enumerable"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTupleAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/>
+  public static IEnumerable<Tuple<T, int>> ToTuple<T>(this IAsyncEnumerable<T> enumerable) => enumerable?.ToTupleAsync().Result ?? throw new ArgumentNullException(nameof(enumerable));
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="enumerable"></param>
+  /// <param name="key"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="key"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTupleAsync{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IComparer{TKey}, CancellationToken)"/>
+  public static IEnumerable<Tuple<TKey, TValue>> ToTuple<TKey, TValue>(this IAsyncEnumerable<TValue> enumerable, Func<TValue, TKey> key, IComparer<TKey> comparer = null) where TKey : notnull
+  {
+    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return enumerable.ToTupleAsync(key, comparer).Result;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="enumerable"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTuple{T}(IAsyncEnumerable{T})"/>
+  public static async Task<IEnumerable<Tuple<T, int>>> ToTupleAsync<T>(this IAsyncEnumerable<T> enumerable, CancellationToken cancellation = default) => enumerable is not null ? (await enumerable.ToListAsync(cancellation).ConfigureAwait(false)).ToTuple() : throw new ArgumentNullException(nameof(enumerable));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="enumerable"></param>
+  /// <param name="key"></param>
+  /// <param name="comparer"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="key"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTuple{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IComparer{TKey})"/>
+  public static async Task<IEnumerable<Tuple<TKey, TValue>>> ToTupleAsync<TKey, TValue>(this IAsyncEnumerable<TValue> enumerable, Func<TValue, TKey> key, IComparer<TKey> comparer = null, CancellationToken cancellation = default) where TKey : notnull
+  {
+    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+    if (key is null) throw new ArgumentNullException(nameof(key));
+
+    return (await enumerable.ToListAsync(cancellation).ConfigureAwait(false)).ToTuple(key, comparer);
+  }
+
   /// <summary>
   ///   <para></para>
   /// </summary>

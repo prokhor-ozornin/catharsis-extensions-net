@@ -21,12 +21,7 @@ public static class IDictionaryExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Set{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/>
-  public static TValue Get<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull
-  {
-    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
-
-    return dictionary.TryGetValue(key, out var result) ? result : value;
-  }
+  public static TValue Get<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value = default) where TKey : notnull => dictionary is not null ? dictionary.TryGetValue(key, out var result) ? result : value : throw new ArgumentNullException(nameof(dictionary));
 
   /// <summary>
   ///   <para></para>

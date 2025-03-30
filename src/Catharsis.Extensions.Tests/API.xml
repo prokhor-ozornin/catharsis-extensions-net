@@ -1386,6 +1386,24 @@
               </list>
             </summary>
         </member>
+        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToTuple_Methods">
+            <summary>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTuple``1(System.Collections.Generic.IAsyncEnumerable{``0})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTuple``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})"/></description></item>
+              </list>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToTupleAsync_Methods">
+            <summary>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTupleAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTupleAsync``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0},System.Threading.CancellationToken)"/></description></item>
+              </list>
+            </summary>
+        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToStack_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToStack``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
@@ -1971,7 +1989,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToPriorityQueue_Method">
             <summary>
-              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToPriorityQueue&lt;TElement, TPriority&gt;(IEnumerable&lt;(TElement Element, TPriority Priority)&gt;, IComparer&lt;TPriority&gt;)"/> method.</para>
+              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToPriorityQueue&lt;TElement, TPriority&gt;(IEnumerable&lt;ValueTuple&lt;TElement, TPriority&gt;, IComparer&lt;TPriority&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToImmutableQueue_Method">
@@ -2018,14 +2036,23 @@
               </list>
             </summary>
         </member>
+        <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToTuple_Methods">
+            <summary>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToTuple``1(System.Collections.Generic.IEnumerable{``0})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToTuple``2(System.Collections.Generic.IEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})"/></description></item>
+              </list>
+            </summary>
+        </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToDictionary_Method">
             <summary>
-              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToDictionary&lt;TKey, TValue&gt;(IEnumerable&lt;(TKey Key, TValue Value)&gt;, IEqualityComparer&lt;TKey&gt;)"/> method.</para>
+              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToDictionary&lt;TKey, TValue&gt;(IEnumerable&lt;ValueTuple&lt;TKey, TValue&gt;, IEqualityComparer&lt;TKey&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToReadOnlyDictionary_Method">
             <summary>
-              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToReadOnlyDictionary&lt;TKey, TValue&gt;(IEnumerable&lt;(TKey Key, TValue Value)&gt;, IEqualityComparer&lt;TKey&gt;)"/> method.</para>
+              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToReadOnlyDictionary&lt;TKey, TValue&gt;(IEnumerable&lt;TKey, TValue, IEqualityComparer&lt;TKey&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToText_Method">
@@ -2053,7 +2080,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToBoolean_Method">
             <summary>
-              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToBoolean(IEnumerable&lt;T&gt;)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToBoolean``1(System.Collections.Generic.IEnumerable{``0})"/> method.</para>
             </summary>
         </member>
         <member name="T:Catharsis.Extensions.Tests.IListExtensionsTest">
@@ -2205,6 +2232,26 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IReadOnlyDictionaryExtensions.ToValueTuple``2(System.Collections.Generic.IReadOnlyDictionary{``0,``1},System.Collections.Generic.IComparer{``0})"/> method.</para>
             </summary>
         </member>
+        <member name="M:Catharsis.Extensions.Tests.IReadOnlyDictionaryExtensionsTest.ToTuple_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IReadOnlyDictionaryExtensions.ToTuple``2(System.Collections.Generic.IReadOnlyDictionary{``0,``1},System.Collections.Generic.IComparer{``0})"/> method.</para>
+            </summary>
+        </member>
+        <member name="T:Catharsis.Extensions.Tests.KeyValuePairExtensionsTest">
+            <summary>
+              <para>Tests set for class <see cref="T:Catharsis.Extensions.KeyValuePairExtensions"/>.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.KeyValuePairExtensionsTest.ToValueTuple_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.KeyValuePairExtensions.ToValueTuple``2(System.Collections.Generic.KeyValuePair{``0,``1})"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.KeyValuePairExtensionsTest.ToTuple_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.KeyValuePairExtensions.ToTuple``2(System.Collections.Generic.KeyValuePair{``0,``1})"/> method.</para>
+            </summary>
+        </member>
         <member name="T:Catharsis.Extensions.Tests.MatchExtensionsTest">
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.MatchExtensions"/>.</para>
@@ -2348,6 +2395,11 @@
         <member name="M:Catharsis.Extensions.Tests.NameValueCollectionExtensionsTest.ToValueTuple_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.NameValueCollectionExtensions.ToValueTuple(System.Collections.Specialized.NameValueCollection)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.NameValueCollectionExtensionsTest.ToTuple_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.NameValueCollectionExtensions.ToTuple(System.Collections.Specialized.NameValueCollection)"/> method.</para>
             </summary>
         </member>
         <member name="T:Catharsis.Extensions.Tests.ObjectExtensionsTest">

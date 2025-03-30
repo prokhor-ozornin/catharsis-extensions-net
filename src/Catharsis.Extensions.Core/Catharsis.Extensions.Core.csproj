@@ -57,6 +57,7 @@
     <Compile Include="..\Catharsis.Extensions\IPAddressExtensions.cs" Link="IPAddressExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\IPHostEntryExtensions.cs" Link="IPHostEntryExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\IReadOnlyDictionaryExtensions.cs" Link="IReadOnlyDictionaryExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\KeyValuePairExtensions.cs" Link="KeyValuePairExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\MatchExtensions.cs" Link="MatchExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\MemberInfoExtensions.cs" Link="MemberInfoExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\MethodInfoExtensions.cs" Link="MethodInfoExtensions.cs" />

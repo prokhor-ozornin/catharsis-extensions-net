@@ -28,4 +28,24 @@ public sealed class IReadOnlyDictionaryExtensionsTest : ITestable
     {
     }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IReadOnlyDictionaryExtensions.ToTuple{TKey, TValue}(IReadOnlyDictionary{TKey, TValue}, IComparer{TKey})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToTuple_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IReadOnlyDictionary<object, object>) null).ToTuple()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
 }

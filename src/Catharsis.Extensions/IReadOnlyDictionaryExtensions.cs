@@ -19,6 +19,22 @@ public static class IReadOnlyDictionaryExtensions
   {
     if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
-    return comparer is not null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => (pair.Key, pair.Value)) : dictionary.Select(pair => (pair.Key, pair.Value));
+    return comparer is not null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => pair.ToValueTuple()) : dictionary.Select(pair => pair.ToValueTuple());
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="TKey"></typeparam>
+  /// <typeparam name="TValue"></typeparam>
+  /// <param name="dictionary"></param>
+  /// <param name="comparer"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static IEnumerable<Tuple<TKey, TValue>> ToTuple<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer = null) where TKey : notnull
+  {
+    if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+
+    return comparer is not null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => pair.ToTuple()) : dictionary.Select(pair => pair.ToTuple());
   }
 }
