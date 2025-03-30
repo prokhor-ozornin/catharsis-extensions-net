@@ -197,4 +197,44 @@ public sealed class IDictionaryExtensionsTest : ITestable
     {
     }
   }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.ToValueTuple{TKey, TValue}(IDictionary{TKey, TValue}, IComparer{TKey})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToValueTuple_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IDictionary<object, object>) null).ToValueTuple()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.ToTuple{TKey, TValue}(IDictionary{TKey, TValue}, IComparer{TKey})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToTuple_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IDictionary<object, object>) null).ToTuple()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Validate()
+    {
+    }
+  }
 }

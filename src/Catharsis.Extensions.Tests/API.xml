@@ -1658,6 +1658,16 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IDictionaryExtensions.ToFrozenDictionary``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
             </summary>
         </member>
+        <member name="M:Catharsis.Extensions.Tests.IDictionaryExtensionsTest.ToValueTuple_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IDictionaryExtensions.ToValueTuple``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IComparer{``0})"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.IDictionaryExtensionsTest.ToTuple_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IDictionaryExtensions.ToTuple``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IComparer{``0})"/> method.</para>
+            </summary>
+        </member>
         <member name="T:Catharsis.Extensions.Tests.IEnumerableExtensionsTest">
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IEnumerableExtensions"/>.</para>
