@@ -118,7 +118,7 @@ public sealed class DateTimeExtensionsTest : ITestable
 
     static void Validate(DateTime date)
     {
-      date.Range(date, default).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
+      date.Range(date, TimeSpan.Zero).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
       date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
       date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
 

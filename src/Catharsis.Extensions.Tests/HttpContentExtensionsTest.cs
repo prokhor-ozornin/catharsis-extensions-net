@@ -42,7 +42,7 @@ public sealed class HttpContentExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => HttpContentExtensions.ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
-      AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -150,7 +150,7 @@ public sealed class HttpContentExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((HttpContent) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
-      AssertionExtensions.Should(() => new StringContent(string.Empty).ToTextAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new StringContent(string.Empty).ToTextAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       new[] { string.Empty, this.RandomString() }.ForEach(text =>
       {

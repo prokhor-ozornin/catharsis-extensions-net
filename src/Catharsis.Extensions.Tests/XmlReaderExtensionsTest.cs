@@ -294,7 +294,7 @@ public sealed class XmlReaderExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XmlReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToXmlReader().ToXDocumentAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Stream.Null.ToXmlReader().ToXDocumentAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

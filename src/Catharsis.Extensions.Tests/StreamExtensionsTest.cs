@@ -1082,7 +1082,7 @@ public sealed class StreamExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Stream) null).HashMd5Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
-      AssertionExtensions.Should(() => Stream.Null.HashMd5Async(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>();
+      AssertionExtensions.Should(() => Stream.Null.HashMd5Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
       Validate(Stream.Null);
       Validate(this.RandomStream());
@@ -1139,7 +1139,7 @@ public sealed class StreamExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Stream) null).HashSha1Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
-      AssertionExtensions.Should(() => Stream.Null.HashSha1Async(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>();
+      AssertionExtensions.Should(() => Stream.Null.HashSha1Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
       Validate(Stream.Null);
       Validate(this.RandomStream());
@@ -1196,7 +1196,7 @@ public sealed class StreamExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Stream) null).HashSha256Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
-      AssertionExtensions.Should(() => Stream.Null.HashSha256Async(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>();
+      AssertionExtensions.Should(() => Stream.Null.HashSha256Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
       Validate(Stream.Null);
       Validate(this.RandomStream());
@@ -1253,7 +1253,7 @@ public sealed class StreamExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Stream) null).HashSha384Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
-      AssertionExtensions.Should(() => Stream.Null.HashSha384Async(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>();
+      AssertionExtensions.Should(() => Stream.Null.HashSha384Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
       Validate(Stream.Null);
       Validate(this.RandomStream());
@@ -1310,7 +1310,7 @@ public sealed class StreamExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Stream) null).HashSha512Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
-      AssertionExtensions.Should(() => Stream.Null.HashSha512Async(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>();
+      AssertionExtensions.Should(() => Stream.Null.HashSha512Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
       Validate(Stream.Null);
       Validate(this.RandomStream());
@@ -2404,7 +2404,7 @@ public sealed class StreamExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Stream) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToXDocumentAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Stream.Null.ToXDocumentAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       /*const string Xml = "<?xml version=\"1.0\" encoding=\"utf-16\"?><article>text</article>";
 

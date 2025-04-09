@@ -253,7 +253,7 @@ public static class UriExtensions
     if (destination is null) throw new ArgumentNullException(nameof(destination));
     if (bytes is null) throw new ArgumentNullException(nameof(bytes));
 
-    return destination.WriteBytesAsync(bytes, timeout, default, headers).Result;
+    return destination.WriteBytesAsync(bytes, timeout, CancellationToken.None, headers).Result;
   }
 
   /// <summary>
@@ -308,7 +308,7 @@ public static class UriExtensions
     if (destination is null) throw new ArgumentNullException(nameof(destination));
     if (text is null) throw new ArgumentNullException(nameof(text));
 
-    return destination.WriteTextAsync(text, encoding, timeout, default, headers).Result;
+    return destination.WriteTextAsync(text, encoding, timeout, CancellationToken.None, headers).Result;
   }
 
   /// <summary>
@@ -639,7 +639,7 @@ public static class UriExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToXDocumentAsync(Uri, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
-  public static XDocument ToXDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToXDocumentAsync(timeout, default, headers).Result : throw new ArgumentNullException(nameof(uri));
+  public static XDocument ToXDocument(this Uri uri, TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri is not null ? uri.ToXDocumentAsync(timeout, CancellationToken.None, headers).Result : throw new ArgumentNullException(nameof(uri));
 
   /// <summary>
   ///   <para></para>

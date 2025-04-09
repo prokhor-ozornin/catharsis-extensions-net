@@ -16,7 +16,7 @@ public static class TimeOnlyExtensions
   /// <returns></returns>
   public static IEnumerable<TimeOnly> Range(this TimeOnly from, TimeOnly to, TimeSpan offset)
   {
-    if (from == to || offset == default)
+    if (from == to || offset == TimeSpan.Zero)
     {
       yield break;
     }

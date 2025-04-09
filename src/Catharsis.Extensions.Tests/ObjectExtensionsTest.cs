@@ -873,7 +873,7 @@ public sealed class ObjectExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
-      AssertionExtensions.Should(() => new object().PrintAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

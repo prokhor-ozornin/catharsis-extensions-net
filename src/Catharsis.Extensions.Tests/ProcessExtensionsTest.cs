@@ -102,7 +102,7 @@ public sealed class ProcessExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ProcessExtensions.FinishAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
-      AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

@@ -75,7 +75,7 @@ public sealed class DateOnlyExtensionsTest : ITestable
 
     static void Validate(DateOnly date)
     {
-      date.Range(date, default).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
+      date.Range(date, TimeSpan.Zero).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
       date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
       date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
 
@@ -212,7 +212,7 @@ public sealed class DateOnlyExtensionsTest : ITestable
     static void Validate(DateOnly date, DateTimeKind kind)
     {
       var result = date.ToDateTimeOffset(kind);
-      result.Should().HaveOffset(kind != DateTimeKind.Utc ? TimeZoneInfo.Local.GetUtcOffset(result) : default).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(default);
+      result.Should().HaveOffset(kind != DateTimeKind.Utc ? TimeZoneInfo.Local.GetUtcOffset(result) : TimeSpan.Zero).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(TimeSpan.Zero);
     }
   }
 }

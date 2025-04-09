@@ -2121,7 +2121,7 @@ public sealed class RandomExtensionsTest : ITestable
 
       static void Validate(int size, params Range[] ranges)
       {
-        var file = new Random().BinaryFileAsync(size, ranges, null, default).Await();
+        var file = new Random().BinaryFileAsync(size, ranges, null, CancellationToken.None).Await();
 
         size = Math.Max(0, size);
 

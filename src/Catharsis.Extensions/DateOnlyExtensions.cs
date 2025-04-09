@@ -32,7 +32,7 @@ public static class DateOnlyExtensions
   /// <returns></returns>
   public static IEnumerable<DateOnly> Range(this DateOnly from, DateOnly to, TimeSpan offset)
   {
-    if (from == to || offset == default)
+    if (from == to || offset == TimeSpan.Zero)
     {
       yield break;
     }

@@ -312,7 +312,7 @@ public sealed class XDocumentExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XDocument) null).ToBytesAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
-      AssertionExtensions.Should(() => new XDocument().ToBytesAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new XDocument().ToBytesAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -354,7 +354,7 @@ public sealed class XDocumentExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XDocument) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("document").Await();
-      AssertionExtensions.Should(() => new XDocument().ToTextAsync(new CancellationToken())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new XDocument().ToTextAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

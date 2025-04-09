@@ -164,7 +164,7 @@ public sealed class IListExtensionsTest : ITestable
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.With<object>(null, default, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => IListExtensions.With<object>(null, 0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().With(-1, null)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
 
       static void Validate<T>(IList<T> list)
@@ -197,7 +197,7 @@ public sealed class IListExtensionsTest : ITestable
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.Without<object>(null, default)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => IListExtensions.Without<object>(null, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().Without(new[] { -1 })).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
 
       static void Validate<T>(IList<T> list)

@@ -23,7 +23,7 @@ public sealed class ValueTaskExtensionsTest : ITestable
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ValueTask.CompletedTask.Await()).NotThrow<OperationCanceledException>();
-      AssertionExtensions.Should(() => ValueTask.FromCanceled(new CancellationToken()).Await()).NotThrow<OperationCanceledException>();
+      AssertionExtensions.Should(() => ValueTask.FromCanceled(CancellationToken.None).Await()).NotThrow<OperationCanceledException>();
 
       static void Validate()
       {

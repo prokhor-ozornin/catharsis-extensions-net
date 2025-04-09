@@ -118,7 +118,7 @@ public sealed class DateTimeOffsetExtensionsTest : ITestable
 
     static void Validate(DateTimeOffset date)
     {
-      date.Range(date, default).Should().BeAssignableTo<IEnumerable<DateTimeOffset>>().And.BeEmpty();
+      date.Range(date, TimeSpan.Zero).Should().BeAssignableTo<IEnumerable<DateTimeOffset>>().And.BeEmpty();
       date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateTimeOffset>>().And.BeEmpty();
       date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateTimeOffset>>().And.BeEmpty();
 

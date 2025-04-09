@@ -377,8 +377,8 @@ public sealed class IEnumerableExtensionsTest : ITestable
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IEnumerableExtensions.WithCancellation<object>(null, default)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
-      AssertionExtensions.Should(() => IEnumerableExtensions.WithCancellation<object>(null, new CancellationToken())).ThrowExactly<OperationCanceledException>();
+      AssertionExtensions.Should(() => IEnumerableExtensions.WithCancellation<object>(null, CancellationToken.None)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+      AssertionExtensions.Should(() => IEnumerableExtensions.WithCancellation<object>(null, CancellationToken.None)).ThrowExactly<OperationCanceledException>();
     }
 
     throw new NotImplementedException();
