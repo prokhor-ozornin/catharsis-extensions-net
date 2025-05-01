@@ -42,6 +42,7 @@
     <Compile Include="..\Catharsis.Extensions\HttpClientExtensions.cs" Link="HttpClientExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\HttpContentExtensions.cs" Link="HttpContentExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\IAsyncEnumerableExtensions.cs" Link="IAsyncEnumerableExtensions.cs" />
+    <Compile Include="..\Catharsis.Extensions\ICloneableExtensions.cs" Link="ICloneableExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\ICollectionExtensions.cs" Link="ICollectionExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\IComparableExtensions.cs" Link="IComparableExtensions.cs" />
     <Compile Include="..\Catharsis.Extensions\IDictionaryExtensions.cs" Link="IDictionaryExtensions.cs" />

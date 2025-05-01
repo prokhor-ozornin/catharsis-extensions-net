@@ -2624,6 +2624,19 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToMemoryStream(System.Collections.Generic.IAsyncEnumerable{System.Byte[]})"/>
         </member>
+        <member name="T:Catharsis.Extensions.ICloneableExtensions">
+            <summary>
+              <para>A set of extension methods for the <see cref="T:System.ICloneable"/> interface.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.ICloneableExtensions.Clone``1(System.ICloneable)">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cloneable"></param>
+            <returns></returns>
+        </member>
         <member name="T:Catharsis.Extensions.ICollectionExtensions">
             <summary>
               <para>Extension methods for collections of various types.</para>

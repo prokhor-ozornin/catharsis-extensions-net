@@ -1532,6 +1532,16 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableQueueAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
+        <member name="T:Catharsis.Extensions.Tests.ICloneableExtensionsTest">
+            <summary>
+              <para>Tests set for class <see cref="T:Catharsis.Extensions.ICloneableExtensions"/>.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.ICloneableExtensionsTest.Cloneable_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ICloneableExtensions.Clone``1(System.ICloneable)"/> method.</para>
+            </summary>
+        </member>
         <member name="T:Catharsis.Extensions.Tests.ICollectionExtensionsTest">
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.ICollectionExtensions"/>.</para>
