@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="UriExtensions"/>.</para>
 /// </summary>
-public sealed class UriExtensionsTest : ITestable
+public sealed class UriExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="UriExtensions.IsAvailable(Uri, TimeSpan?)"/> method.</para>

@@ -9,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="XmlReaderExtensions"/>.</para>
 /// </summary>
-public sealed class XmlReaderExtensionsTest : ITestable
+public sealed class XmlReaderExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="XmlReaderExtensions.Skip(XmlReader, int)"/> method.</para>
@@ -70,7 +70,7 @@ public sealed class XmlReaderExtensionsTest : ITestable
     {
       AssertionExtensions.Should(() => ((XmlReader) null).DeserializeAsXml<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      /*var serialized = this.RandomString();
+      /*var serialized = Fixture.Create<string>();
 
       var xml = new StringWriter().Use(writer =>
       {

@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="PhysicalAddressExtensions"/>.</para>
 /// </summary>
-public sealed class PhysicalAddressExtensionsTest : ITestable
+public sealed class PhysicalAddressExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="PhysicalAddressExtensions.Clone(PhysicalAddress)"/> method.</para>

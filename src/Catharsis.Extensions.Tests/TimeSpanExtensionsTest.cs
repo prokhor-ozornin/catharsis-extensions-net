@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TimeSpanExtensions"/>.</para>
 /// </summary>
-public sealed class TimeSpanExtensionsTest : ITestable
+public sealed class TimeSpanExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TimeSpanExtensions.InThePast(TimeSpan)"/> method.</para>

@@ -9,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="FileInfoExtensions"/>.</para>
 /// </summary>
-public sealed class FileInfoExtensionsTest : ITestable
+public sealed class FileInfoExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="FileInfoExtensions.IsUnset(FileInfo)"/> method.</para>
@@ -505,8 +505,8 @@ public sealed class FileInfoExtensionsTest : ITestable
     {
       AssertionExtensions.Should(() => FileInfoExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
-      ValidateFile(this.RandomEmptyFile(), this.RandomString(), null);
-      Encoding.GetEncodings().ForEach(encoding => ValidateFile(this.RandomEmptyFile(), this.RandomString(), encoding.GetEncoding()));
+      ValidateFile(this.RandomEmptyFile(), Fixture.Create<string>(), null);
+      Encoding.GetEncodings().ForEach(encoding => ValidateFile(this.RandomEmptyFile(), Fixture.Create<string>(), encoding.GetEncoding()));
 
       // this.CancellationToken() & offset
     }

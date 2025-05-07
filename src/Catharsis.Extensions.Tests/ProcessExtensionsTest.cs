@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ProcessExtensions"/>.</para>
 /// </summary>
-public sealed class ProcessExtensionsTest : ITestable
+public sealed class ProcessExtensionsTest
 {
   private Process ShellProcess { get; }
 

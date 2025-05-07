@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="HttpClientExtensions"/>.</para>
 /// </summary>
-public sealed class HttpClientExtensionsTest : ITestable
+public sealed class HttpClientExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="HttpClientExtensions.WithTimeout(HttpClient, TimeSpan?)"/> method.</para>

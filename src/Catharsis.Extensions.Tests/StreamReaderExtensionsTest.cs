@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StreamReaderExtensions"/>.</para>
 /// </summary>
-public sealed class StreamReaderExtensionsTest : ITestable
+public sealed class StreamReaderExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="StreamReaderExtensions.IsStart(StreamReader)"/> method.</para>

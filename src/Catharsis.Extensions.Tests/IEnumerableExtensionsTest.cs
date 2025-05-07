@@ -15,7 +15,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IEnumerableExtensions"/>.</para>
 /// </summary>
-public sealed class IEnumerableExtensionsTest : ITestable
+public sealed class IEnumerableExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
@@ -137,7 +137,7 @@ public sealed class IEnumerableExtensionsTest : ITestable
       var element = new object();
       new[] { element }.Random().Should().BeOfType<object>().And.BeSameAs(element);
 
-      string[] elements = ["first", "second"];
+      string[] elements = ["1", "2"];
       elements.Should().Contain(elements.Random());
     }
 

@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="MatchExtensions"/>.</para>
 /// </summary>
-public sealed class MatchExtensionsTest : ITestable
+public sealed class MatchExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="MatchExtensions.ToEnumerable(Match)"/> method.</para>

@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TimeOnlyExtensions"/>.</para>
 /// </summary>
-public sealed class TimeOnlyExtensionsTest : ITestable
+public sealed class TimeOnlyExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TimeOnlyExtensions.Range(TimeOnly, TimeOnly, TimeSpan)"/> method.</para>

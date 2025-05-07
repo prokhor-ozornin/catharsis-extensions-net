@@ -9,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="RandomExtensions"/>.</para>
 /// </summary>
-public sealed class RandomExtensionsTest : ITestable
+public sealed class RandomExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>

@@ -11,7 +11,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StreamExtensions"/>.</para>
 /// </summary>
-public sealed class StreamExtensionsTest : ITestable
+public sealed class StreamExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="StreamExtensions.IsStart(Stream)"/> method.</para>
@@ -1885,8 +1885,8 @@ public sealed class StreamExtensionsTest : ITestable
         Validate(string.Empty, Stream.Null, encoding);
         //Validate(string.Empty, this.EmptyStream(), encoding, true);
 
-        this.RandomString().With(text => Validate(text, new MemoryStream().WriteText(text, encoding), encoding));
-        //this.RandomString().With(text => Validate(text, new MemoryStream().WriteText(text, encoding), encoding));
+        Fixture.Create<string>().With(text => Validate(text, new MemoryStream().WriteText(text, encoding), encoding));
+        //Fixture.Create<string>().With(text => Validate(text, new MemoryStream().WriteText(text, encoding), encoding));
       });
     }
 
@@ -2111,8 +2111,8 @@ public sealed class StreamExtensionsTest : ITestable
     {
       AssertionExtensions.Should(() => StreamExtensions.ToStreamWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(this.RandomString());
-      Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomString(), encoding.GetEncoding()));
+      Validate(Fixture.Create<string>());
+      Encoding.GetEncodings().ForEach(encoding => Validate(Fixture.Create<string>(), encoding.GetEncoding()));
     }
 
     return;

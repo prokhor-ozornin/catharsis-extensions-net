@@ -9,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="XmlDocumentExtensions"/>.</para>
 /// </summary>
-public sealed class XmlDocumentExtensionsTest : ITestable
+public sealed class XmlDocumentExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="XmlDocumentExtensions.IsUnset(XmlDocument)"/> method.</para>

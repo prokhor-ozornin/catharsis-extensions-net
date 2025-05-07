@@ -9,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TcpClientExtensions"/>.</para>
 /// </summary>
-public sealed class TcpClientExtensionsTest : ITestable
+public sealed class TcpClientExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TcpClientExtensions.IsUnset(TcpClient)"/> method.</para>

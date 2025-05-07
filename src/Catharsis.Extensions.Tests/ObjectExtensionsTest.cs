@@ -12,7 +12,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ObjectExtensions"/>.</para>
 /// </summary>
-public sealed class ObjectExtensionsTest : ITestable
+public sealed class ObjectExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="ObjectExtensions.As{T}(object)"/> method.</para>
@@ -305,7 +305,7 @@ public sealed class ObjectExtensionsTest : ITestable
       //AssertionExtensions.Should(() => ObjectExtensions.GetMember(null, Enumerable.Empty<Expression<Func<object, object>>>().First())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       //AssertionExtensions.Should(() => new object().GetMember<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("expression");
 
-      var text = this.RandomString();
+      var text = Fixture.Create<string>();
       text.GetMember(instance => instance.Length).Should().Be(text.Length);
       text.GetMember(instance => instance.ToString(CultureInfo.InvariantCulture)).Should().BeOfType<string>().And.Be(text);
       DateTime.UtcNow.GetMember(instance => instance.Ticks <= DateTime.UtcNow.Ticks).Should().BeTrue();
@@ -369,7 +369,7 @@ public sealed class ObjectExtensionsTest : ITestable
 
       subject.Property("PublicProperty", null).Should().BeSameAs(subject);
 
-      var property = this.RandomString();
+      var property = Fixture.Create<string>();
 
       subject.Property("ReadOnlyProperty", property);
       subject.Property("ReadOnlyProperty").Should().BeNull();
@@ -471,7 +471,7 @@ public sealed class ObjectExtensionsTest : ITestable
       AssertionExtensions.Should(() => ObjectExtensions.GetState(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
       /*var subject = new TestObject();
-      var property = this.RandomString();
+      var property = Fixture.Create<string>();
 
       subject.Properties(new Dictionary<string, object> { { "PublicProperty", property }, { "property", new object() } }).Should().BeSameAs(subject);
       subject.Property("PublicProperty").Should().Be(property);
@@ -763,7 +763,7 @@ public sealed class ObjectExtensionsTest : ITestable
       AssertionExtensions.Should(() => ObjectExtensions.TryFinally<object, bool>(null, _ => true)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().TryFinally((Func<object, bool>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("function");
 
-      var text = this.RandomString();
+      var text = Fixture.Create<string>();
       //AssertionExtensions.Should(() => text.ToStringReader().TryFinally(reader => { reader.TryFinally(reader => reader.ReadToEnd().Should().Be(text)); }).Read()).ThrowExactly<ObjectDisposedException>();
 
       var list = new List<string>().TryFinally(list => list.Add(text));
@@ -1048,7 +1048,7 @@ public sealed class ObjectExtensionsTest : ITestable
       AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().Print((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Validate(this.EmptyStream().ToBinaryWriter(), this.RandomString());
+      Validate(this.EmptyStream().ToBinaryWriter(), Fixture.Create<string>());
     }
 
     return;
@@ -1377,7 +1377,7 @@ public sealed class ObjectExtensionsTest : ITestable
       AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().SerializeAsXml((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      /*var subject = this.RandomString();
+      /*var subject = Fixture.Create<string>();
 
       var xml = subject.AsXml();
       var stringWriter = new StringWriter();

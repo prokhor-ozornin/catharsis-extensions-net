@@ -10,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="UdpClientExtensions"/>.</para>
 /// </summary>
-public sealed class UdpClientExtensionsTest : ITestable
+public sealed class UdpClientExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="UdpClientExtensions.IsUnset(UdpClient)"/> method.</para>

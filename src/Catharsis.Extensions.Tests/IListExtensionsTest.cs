@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IListExtensions"/>.</para>
 /// </summary>
-public sealed class IListExtensionsTest : ITestable
+public sealed class IListExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IListExtensions.Randomize{T}(IList{T}, Random)"/> method.</para>

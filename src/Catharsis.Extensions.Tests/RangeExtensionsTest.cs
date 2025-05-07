@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="RangeExtensions"/>.</para>
 /// </summary>
-public sealed class RangeExtensionsTest : ITestable
+public sealed class RangeExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="RangeExtensions.ToEnumerable(Range)"/> method.</para>

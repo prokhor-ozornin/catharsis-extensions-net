@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using AutoFixture;
+using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TextWriterExtensions"/>.</para>
 /// </summary>
-public sealed class TextWriterExtensionsTest : ITestable
+public sealed class TextWriterExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TextWriterExtensions.AsSynchronized(TextWriter)"/> method.</para>
@@ -22,7 +23,7 @@ public sealed class TextWriterExtensionsTest : ITestable
 
       using var writer = new StringWriter();
 
-      var value = this.RandomString();
+      var value = Fixture.Create<string>();
 
       var synchronized = writer.AsSynchronized();
 

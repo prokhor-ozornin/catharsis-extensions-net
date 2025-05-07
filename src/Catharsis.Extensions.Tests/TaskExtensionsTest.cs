@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TaskExtensions"/>.</para>
 /// </summary>
-public sealed class TaskExtensionsTest : ITestable
+public sealed class TaskExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>

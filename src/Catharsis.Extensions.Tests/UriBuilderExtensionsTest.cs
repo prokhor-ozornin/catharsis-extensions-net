@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="UriBuilderExtensions"/>.</para>
 /// </summary>
-public sealed class UriBuilderExtensionsTest : ITestable
+public sealed class UriBuilderExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="UriBuilderExtensions.Empty(UriBuilder)"/> method.</para>

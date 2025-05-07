@@ -9,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="MemberInfoExtensions"/>.</para>
 /// </summary>
-public sealed class MemberInfoExtensionsTest : ITestable
+public sealed class MemberInfoExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsConstructor(MemberInfo)"/> method.</para>

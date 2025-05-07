@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="HttpContentExtensions"/>.</para>
 /// </summary>
-public sealed class HttpContentExtensionsTest : ITestable
+public sealed class HttpContentExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="HttpContentExtensions.ToStream(HttpContent)"/> method.</para>
@@ -124,7 +124,7 @@ public sealed class HttpContentExtensionsTest : ITestable
     {
       AssertionExtensions.Should(() => ((HttpContent) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
-      new[] { string.Empty, this.RandomString() }.ForEach(text =>
+      new[] { string.Empty, Fixture.Create<string>() }.ForEach(text =>
       {
         Validate(text, new StringContent(text));
       });
@@ -152,7 +152,7 @@ public sealed class HttpContentExtensionsTest : ITestable
       AssertionExtensions.Should(() => ((HttpContent) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
       AssertionExtensions.Should(() => new StringContent(string.Empty).ToTextAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      new[] { string.Empty, this.RandomString() }.ForEach(text =>
+      new[] { string.Empty, Fixture.Create<string>() }.ForEach(text =>
       {
         Validate(text, new StringContent(text));
       });

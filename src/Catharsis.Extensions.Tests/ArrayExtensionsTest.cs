@@ -9,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ArrayExtensions"/>.</para>
 /// </summary>
-public sealed class ArrayExtensionsTest : ITestable
+public sealed class ArrayExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="ArrayExtensions.Range{T}(T[], int?, int?)"/> method.</para>
@@ -125,7 +125,7 @@ public sealed class ArrayExtensionsTest : ITestable
 
       Array.Empty<char>().ToText().Should().BeOfType<char[]>().And.BeSameAs(Array.Empty<char>().ToText()).And.BeEmpty();
 
-      var text = this.RandomString();
+      var text = Fixture.Create<string>();
       var chars = text.ToCharArray();
       chars.ToText().Should().BeOfType<string>().And.Be(text);
     }

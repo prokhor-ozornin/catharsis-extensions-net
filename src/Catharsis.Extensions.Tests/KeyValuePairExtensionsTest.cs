@@ -5,7 +5,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="KeyValuePairExtensions"/>.</para>
 /// </summary>
-public sealed class KeyValuePairExtensionsTest : ITestable
+public sealed class KeyValuePairExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="KeyValuePairExtensions.ToValueTuple{TKey, TValue}(KeyValuePair{TKey, TValue})"/> method.</para>

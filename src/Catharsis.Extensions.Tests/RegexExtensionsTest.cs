@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="RegexExtensions"/>.</para>
 /// </summary>
-public sealed class RegexExtensionsTest : ITestable
+public sealed class RegexExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="RegexExtensions.Clone(Regex)"/> method.</para>

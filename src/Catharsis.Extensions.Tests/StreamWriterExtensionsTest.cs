@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StreamWriterExtensions"/>.</para>
 /// </summary>
-public sealed class StreamWriterExtensionsTest : ITestable
+public sealed class StreamWriterExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="StreamWriterExtensions.Rewind(StreamWriter)"/> method.</para>

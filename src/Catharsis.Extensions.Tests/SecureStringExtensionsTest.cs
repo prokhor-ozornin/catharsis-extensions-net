@@ -9,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="SecureStringExtensions"/>.</para>
 /// </summary>
-public sealed class SecureStringExtensionsTest : ITestable
+public sealed class SecureStringExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="SecureStringExtensions.AsReadOnly(SecureString)"/> method.</para>
@@ -155,7 +155,7 @@ public sealed class SecureStringExtensionsTest : ITestable
       AssertionExtensions.Should(() => this.EmptySecureString().With((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
       Validate(new SecureString(), []);
-      Validate(new SecureString(), this.RandomString());
+      Validate(new SecureString(), Fixture.Create<string>());
 
       static void Validate(SecureString secure, IEnumerable<char> characters)
       {
@@ -174,7 +174,7 @@ public sealed class SecureStringExtensionsTest : ITestable
       AssertionExtensions.Should(() => this.EmptySecureString().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
       Validate(new SecureString(), []);
-      Validate(new SecureString(), this.RandomString().AsArray());
+      Validate(new SecureString(), Fixture.Create<string>().AsArray());
 
       static void Validate(SecureString secure, params char[] characters)
       {
@@ -205,7 +205,7 @@ public sealed class SecureStringExtensionsTest : ITestable
       AssertionExtensions.Should(() => this.EmptySecureString().Without([0])).ThrowExactly<ArgumentOutOfRangeException>();
 
       Validate(new SecureString(), []);
-      new SecureString().With(this.RandomString()).With(secure => Validate(secure, new int[secure.Length].Fill(_ => 0)));
+      new SecureString().With(Fixture.Create<string>()).With(secure => Validate(secure, new int[secure.Length].Fill(_ => 0)));
 
       static void Validate(SecureString secure, IEnumerable<int> positions)
       {
@@ -224,7 +224,7 @@ public sealed class SecureStringExtensionsTest : ITestable
       AssertionExtensions.Should(() => this.EmptySecureString().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("positions");
 
       Validate(new SecureString(), []);
-      new SecureString().With(this.RandomString()).With(secure => Validate(secure, new int[secure.Length].Fill(_ => 0).ToArray()));
+      new SecureString().With(Fixture.Create<string>()).With(secure => Validate(secure, new int[secure.Length].Fill(_ => 0).ToArray()));
 
       static void Validate(SecureString secure, params int[] positions)
       {
@@ -330,7 +330,7 @@ public sealed class SecureStringExtensionsTest : ITestable
       Encoding.GetEncodings().Select(encoding => encoding.GetEncoding()).ForEach(encoding =>
       {
         Validate(string.Empty, new SecureString(), encoding);
-        this.RandomString().With(text => Validate(text, new SecureString().With(text), encoding));
+        Fixture.Create<string>().With(text => Validate(text, new SecureString().With(text), encoding));
       });
     }
 
@@ -356,7 +356,7 @@ public sealed class SecureStringExtensionsTest : ITestable
       AssertionExtensions.Should(() => SecureStringExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
 
       Validate(string.Empty, this.EmptySecureString());
-      this.RandomString().With(text => Validate(text, new SecureString().With(text)));
+      Fixture.Create<string>().With(text => Validate(text, new SecureString().With(text)));
     }
 
     return;

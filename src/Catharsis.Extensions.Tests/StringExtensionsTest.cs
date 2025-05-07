@@ -16,7 +16,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StringExtensions"/>.</para>
 /// </summary>
-public sealed class StringExtensionsTest : ITestable
+public sealed class StringExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.Compare(string, string, CultureInfo)"/> method.</para>
@@ -291,7 +291,7 @@ public sealed class StringExtensionsTest : ITestable
 
       string.Empty.Reverse().Should().BeOfType<string>().And.BeSameAs(string.Empty.Reverse()).And.BeEmpty();
 
-      var text = this.RandomString();
+      var text = Fixture.Create<string>();
       var reversed = text.Reverse();
       reversed.Should().BeOfType<string>().And.Be(reversed.ToCharArray().ToText());
     }
@@ -350,10 +350,10 @@ public sealed class StringExtensionsTest : ITestable
       string.Empty.Lines().Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines()).And.BeEmpty();
       string.Empty.Lines("\t").Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines("\t")).And.BeEmpty();
 
-      var text = this.RandomString();
+      var text = Fixture.Create<string>();
       text.Lines().Should().BeOfType<string[]>().And.HaveCount(1).And.HaveElementAt(0, text);
 
-      var strings = 10.Objects(() => this.RandomString()).AsArray();
+      var strings = 10.Objects(() => Fixture.Create<string>()).AsArray();
       text = strings.Join(Environment.NewLine);
       var lines = text.Lines();
       lines.Should().BeOfType<string[]>().And.HaveCount(strings.Length).And.Equal(strings);
@@ -1461,7 +1461,7 @@ public sealed class StringExtensionsTest : ITestable
 
       algorithm.Should().BeOfType<MD5>();
 
-      string[] texts = [string.Empty, this.RandomString()];
+      string[] texts = [string.Empty, Fixture.Create<string>()];
 
       texts.ForEach(text =>
       {
@@ -1488,7 +1488,7 @@ public sealed class StringExtensionsTest : ITestable
       AssertionExtensions.Should(() => ((string) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Validate(string.Empty);
-      Validate(this.RandomString());
+      Validate(Fixture.Create<string>());
     }
 
     return;
@@ -1511,7 +1511,7 @@ public sealed class StringExtensionsTest : ITestable
       AssertionExtensions.Should(() => ((string) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Validate(string.Empty);
-      Validate(this.RandomString());
+      Validate(Fixture.Create<string>());
     }
 
     return;
@@ -1534,7 +1534,7 @@ public sealed class StringExtensionsTest : ITestable
       AssertionExtensions.Should(() => ((string) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Validate(string.Empty);
-      Validate(this.RandomString());
+      Validate(Fixture.Create<string>());
     }
 
     return;
@@ -1557,7 +1557,7 @@ public sealed class StringExtensionsTest : ITestable
       AssertionExtensions.Should(() => ((string) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Validate(string.Empty);
-      Validate(this.RandomString());
+      Validate(Fixture.Create<string>());
     }
 
     return;
@@ -1580,7 +1580,7 @@ public sealed class StringExtensionsTest : ITestable
       AssertionExtensions.Should(() => ((string) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Validate(string.Empty);
-      Validate(this.RandomString());
+      Validate(Fixture.Create<string>());
     }
 
     return;
@@ -1888,7 +1888,7 @@ public sealed class StringExtensionsTest : ITestable
       AssertionExtensions.Should(() => string.Empty.WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
       Validate(string.Empty, Stream.Null.ToBinaryWriter());
-      Validate(this.RandomString(), this.EmptyStream().ToBinaryWriter());
+      Validate(Fixture.Create<string>(), this.EmptyStream().ToBinaryWriter());
     }
 
     return;
@@ -2259,8 +2259,8 @@ public sealed class StringExtensionsTest : ITestable
     {
       AssertionExtensions.Should(() => StringExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(this.RandomString());
-      Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomString(), encoding.GetEncoding()));
+      Validate(Fixture.Create<string>());
+      Encoding.GetEncodings().ForEach(encoding => Validate(Fixture.Create<string>(), encoding.GetEncoding()));
     }
 
     return;
@@ -4035,7 +4035,7 @@ public sealed class StringExtensionsTest : ITestable
       AssertionExtensions.Should(() => StringExtensions.ToStringBuilder(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Validate(string.Empty);
-      Validate(this.RandomString());
+      Validate(Fixture.Create<string>());
     }
 
     return;
@@ -4063,7 +4063,7 @@ public sealed class StringExtensionsTest : ITestable
       AssertionExtensions.Should(() => StringExtensions.ToStringReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Validate(string.Empty);
-      Validate(this.RandomString());
+      Validate(Fixture.Create<string>());
     }
 
     return;
@@ -4089,7 +4089,7 @@ public sealed class StringExtensionsTest : ITestable
       Encoding.GetEncodings().ForEach(encoding =>
       {
         Validate(string.Empty);
-        Validate(this.RandomString(), encoding.GetEncoding(), "application/json");
+        Validate(Fixture.Create<string>(), encoding.GetEncoding(), "application/json");
       });
     }
 

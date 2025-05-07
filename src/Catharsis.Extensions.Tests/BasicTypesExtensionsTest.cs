@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="BasicTypesExtensions"/>.</para>
 /// </summary>
-public sealed class BasicTypesExtensionsTest : ITestable
+public sealed class BasicTypesExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="BasicTypesExtensions.Abs(sbyte)"/> method.</para>

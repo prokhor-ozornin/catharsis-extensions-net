@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="AssemblyExtensions"/>.</para>
 /// </summary>
-public sealed class AssemblyExtensionsTest : ITestable
+public sealed class AssemblyExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="AssemblyExtensions.Resource(Assembly, string)"/> method.</para>

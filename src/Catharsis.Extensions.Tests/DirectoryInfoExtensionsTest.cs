@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DirectoryInfoExtensions"/>.</para>
 /// </summary>
-public sealed class DirectoryInfoExtensionsTest : ITestable
+public sealed class DirectoryInfoExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.Size(DirectoryInfo, string, bool)"/> method.</para>

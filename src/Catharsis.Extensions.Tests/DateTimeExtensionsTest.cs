@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DateTimeExtensions"/>.</para>
 /// </summary>
-public sealed class DateTimeExtensionsTest : ITestable
+public sealed class DateTimeExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="DateTimeExtensions.IsPast(DateTime)"/> method.</para>

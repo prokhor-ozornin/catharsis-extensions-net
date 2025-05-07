@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="SmtpClientExtensions"/>.</para>
 /// </summary>
-public sealed class SmtpClientExtensionsTest : ITestable
+public sealed class SmtpClientExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="SmtpClientExtensions.WithTimeout(SmtpClient, TimeSpan)"/> method.</para>

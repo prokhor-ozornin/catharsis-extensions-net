@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="SocketExtensions"/>.</para>
 /// </summary>
-public sealed class SocketExtensionsTest : ITestable
+public sealed class SocketExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="SocketExtensions.WithTimeout(Socket, TimeSpan?)"/> method.</para>

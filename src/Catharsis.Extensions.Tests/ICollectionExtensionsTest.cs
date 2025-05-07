@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ICollectionExtensions"/>.</para>
 /// </summary>
-public sealed class ICollectionExtensionsTest : ITestable
+public sealed class ICollectionExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="ICollectionExtensions.Empty{T}(ICollection{T})"/> method.</para>

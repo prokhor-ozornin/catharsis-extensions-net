@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IDictionaryExtensions"/>.</para>
 /// </summary>
-public sealed class IDictionaryExtensionsTest : ITestable
+public sealed class IDictionaryExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IDictionaryExtensions.Get{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>

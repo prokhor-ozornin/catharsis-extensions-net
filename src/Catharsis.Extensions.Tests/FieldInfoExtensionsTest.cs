@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="FieldInfoExtensions"/>.</para>
 /// </summary>
-public sealed class FieldInfoExtensionsTest : ITestable
+public sealed class FieldInfoExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="FieldInfoExtensions.IsOfType{T}(FieldInfo)"/> method.</para>

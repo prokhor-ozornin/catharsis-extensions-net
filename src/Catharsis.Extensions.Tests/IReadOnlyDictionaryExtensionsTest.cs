@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IReadOnlyDictionaryExtensions"/>.</para>
 /// </summary>
-public sealed class IReadOnlyDictionaryExtensionsTest : ITestable
+public sealed class IReadOnlyDictionaryExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IReadOnlyDictionaryExtensions.ToValueTuple{TKey, TValue}(IReadOnlyDictionary{TKey, TValue}, IComparer{TKey})"/> method.</para>

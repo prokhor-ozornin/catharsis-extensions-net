@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="BinaryWriterExtensions"/>.</para>
 /// </summary>
-public sealed class BinaryWriterExtensionsTest : ITestable
+public sealed class BinaryWriterExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsStart(BinaryWriter)"/> method.</para>
@@ -284,7 +284,7 @@ public sealed class BinaryWriterExtensionsTest : ITestable
       AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Validate(string.Empty);
-      Validate(this.RandomString());
+      Validate(Fixture.Create<string>());
     }
 
     throw new NotImplementedException();

@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="BinaryReaderExtensions"/>.</para>
 /// </summary>
-public sealed class BinaryReaderExtensionsTest : ITestable
+public sealed class BinaryReaderExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="BinaryReaderExtensions.IsStart(BinaryReader)"/> method.</para>
@@ -486,7 +486,7 @@ public sealed class BinaryReaderExtensionsTest : ITestable
       Validate(string.Empty, Stream.Null.ToBinaryReader());
       Validate(string.Empty, this.EmptyStream().ToBinaryReader());
 
-      var text = this.RandomString();
+      var text = Fixture.Create<string>();
       Encoding.GetEncodings().Select(encoding => encoding.GetEncoding()).ForEach(encoding =>
       {
         using var stream = new MemoryStream();

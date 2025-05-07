@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="MethodInfoExtensions"/>.</para>
 /// </summary>
-public sealed class MethodInfoExtensionsTest : ITestable
+public sealed class MethodInfoExtensionsTest
 {
   private delegate string AsString(object subject);
 

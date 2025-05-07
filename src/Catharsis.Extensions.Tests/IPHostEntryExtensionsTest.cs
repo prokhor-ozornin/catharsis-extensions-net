@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IPHostEntryExtensions"/>.</para>
 /// </summary>
-public sealed class IPHostEntryExtensionsTest : ITestable
+public sealed class IPHostEntryExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsAvailable(IPHostEntry, TimeSpan?)"/> method.</para>

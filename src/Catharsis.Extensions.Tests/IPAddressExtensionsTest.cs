@@ -9,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IPAddressExtensions"/>.</para>
 /// </summary>
-public sealed class IPAddressExtensionsTest : ITestable
+public sealed class IPAddressExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IPAddressExtensions.IsV4"/> method.</para>

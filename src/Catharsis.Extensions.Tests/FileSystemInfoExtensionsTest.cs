@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="FileSystemInfoExtensions"/>.</para>
 /// </summary>
-public sealed class FileSystemInfoExtensionsTest : ITestable
+public sealed class FileSystemInfoExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="FileSystemInfoExtensions.ToUri(FileSystemInfo)"/> method.</para>

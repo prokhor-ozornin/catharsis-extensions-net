@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="SymmetricAlgorithmExtensions"/>.</para>
 /// </summary>
-public sealed class SymmetricAlgorithmExtensionsTest : ITestable
+public sealed class SymmetricAlgorithmExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="SymmetricAlgorithmExtensions.Encrypt(SymmetricAlgorithm, IEnumerable{byte})"/> method.</para>

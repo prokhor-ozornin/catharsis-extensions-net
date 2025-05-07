@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DateOnlyExtensions"/>.</para>
 /// </summary>
-public sealed class DateOnlyExtensionsTest : ITestable
+public sealed class DateOnlyExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="DateOnlyExtensions.IsWeekday(DateOnly)"/> method.</para>

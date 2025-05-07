@@ -8,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TextReaderExtensions"/>.</para>
 /// </summary>
-public sealed class TextReaderExtensionsTest : ITestable
+public sealed class TextReaderExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TextReaderExtensions.IsEnd(TextReader)"/> method.</para>
@@ -125,7 +125,7 @@ public sealed class TextReaderExtensionsTest : ITestable
       AssertionExtensions.Should(() => ((TextReader) null).AsSynchronized()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       Validate(this.EmptyTextReader());
-      Validate(this.RandomString().ToStringReader());
+      Validate(Fixture.Create<string>().ToStringReader());
     }
 
     return;
@@ -366,7 +366,7 @@ public sealed class TextReaderExtensionsTest : ITestable
       AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
       Validate(string.Empty, this.EmptyTextReader());
-      this.RandomString().With(text => Validate(text, text.ToStringReader()));
+      Fixture.Create<string>().With(text => Validate(text, text.ToStringReader()));
     }
 
     return;

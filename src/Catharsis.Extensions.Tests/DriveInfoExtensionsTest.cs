@@ -7,7 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DriveInfoExtensions"/>.</para>
 /// </summary>
-public sealed class DriveInfoExtensionsTest : ITestable
+public sealed class DriveInfoExtensionsTest
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="DriveInfoExtensions.Size(DriveInfo, string, bool)"/> method.</para>
