@@ -31,7 +31,7 @@ public sealed class AssemblyExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, Assembly assembly, string name)
+    static void Test(byte[] result, Assembly assembly, string name)
     {
     }
   }

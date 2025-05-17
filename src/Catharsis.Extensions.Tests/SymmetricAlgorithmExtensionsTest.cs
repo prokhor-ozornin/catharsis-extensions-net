@@ -26,7 +26,7 @@ public sealed class SymmetricAlgorithmExtensionsTest
 
     return;
 
-    static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
+    static void Test(SymmetricAlgorithm algorithm, byte[] bytes)
     {
       using (algorithm)
       {
@@ -51,7 +51,7 @@ public sealed class SymmetricAlgorithmExtensionsTest
 
     return;
 
-    static void Validate(SymmetricAlgorithm algorithm, Stream stream)
+    static void Test(SymmetricAlgorithm algorithm, Stream stream)
     {
       using (algorithm)
       {
@@ -72,12 +72,12 @@ public sealed class SymmetricAlgorithmExtensionsTest
       AssertionExtensions.Should(() => this.SymmetricAlgorithm().EncryptAsync((IEnumerable<byte>) null)).ThrowExactlyAsync<ArgumentNullException>().Await();
       AssertionExtensions.Should(() => this.SymmetricAlgorithm().EncryptAsync(this.RandomBytes())).ThrowExactlyAsync<TaskCanceledException>().Await();
 
-      Validate(this.SymmetricAlgorithm(), this.RandomBytes());
+      Test(this.SymmetricAlgorithm(), this.RandomBytes());
     }
 
     return;
 
-    static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
+    static void Test(SymmetricAlgorithm algorithm, byte[] bytes)
     {
       using (algorithm)
       {
@@ -123,7 +123,7 @@ public sealed class SymmetricAlgorithmExtensionsTest
 
     return;
 
-    static void Validate(SymmetricAlgorithm algorithm, Stream stream)
+    static void Test(SymmetricAlgorithm algorithm, Stream stream)
     {
       /*using (var stream = new MemoryStream(bytes))
       {
@@ -179,7 +179,7 @@ public sealed class SymmetricAlgorithmExtensionsTest
 
     return;
 
-    static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
+    static void Test(SymmetricAlgorithm algorithm, byte[] bytes)
     {
       using (algorithm)
       {
@@ -204,7 +204,7 @@ public sealed class SymmetricAlgorithmExtensionsTest
 
     return;
 
-    static void Validate(SymmetricAlgorithm algorithm, Stream stream)
+    static void Test(SymmetricAlgorithm algorithm, Stream stream)
     {
       using (algorithm)
       {
@@ -230,7 +230,7 @@ public sealed class SymmetricAlgorithmExtensionsTest
 
     return;
 
-    static void Validate(SymmetricAlgorithm algorithm, byte[] bytes)
+    static void Test(SymmetricAlgorithm algorithm, byte[] bytes)
     {
       using (algorithm)
       {
@@ -255,7 +255,7 @@ public sealed class SymmetricAlgorithmExtensionsTest
 
     return;
 
-    static void Validate(SymmetricAlgorithm algorithm, Stream stream)
+    static void Test(SymmetricAlgorithm algorithm, Stream stream)
     {
       using (algorithm)
       {

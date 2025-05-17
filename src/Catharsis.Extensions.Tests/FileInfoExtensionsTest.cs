@@ -25,7 +25,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, FileInfo file) => file.IsUnset().Should().Be(result);
+    static void Test(bool result, FileInfo file) => file.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -57,7 +57,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, FileInfo file) => file.IsEmpty().Should().Be(result);
+    static void Test(bool result, FileInfo file) => file.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -76,7 +76,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, FileInfo file, DirectoryInfo directory) => file.InDirectory(directory).Should().Be(result);
+    static void Test(bool result, FileInfo file, DirectoryInfo directory) => file.InDirectory(directory).Should().Be(result);
   }
 
   /// <summary>
@@ -94,7 +94,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -109,13 +109,13 @@ public sealed class FileInfoExtensionsTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      Validate(this.RandomEmptyFile());
-      Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomEmptyFile(), encoding.GetEncoding()));
+      Test(this.RandomEmptyFile());
+      Encoding.GetEncodings().ForEach(encoding => Test(this.RandomEmptyFile(), encoding.GetEncoding()));
     }
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding = null)
+    static void Test(FileInfo file, Encoding encoding = null)
     {
       file.TryFinallyDelete(file =>
       {
@@ -139,13 +139,13 @@ public sealed class FileInfoExtensionsTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
-      Validate(this.RandomEmptyFile());
-      Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomEmptyFile(), encoding.GetEncoding()));
+      Test(this.RandomEmptyFile());
+      Encoding.GetEncodings().ForEach(encoding => Test(this.RandomEmptyFile(), encoding.GetEncoding()));
     }
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding = null)
+    static void Test(FileInfo file, Encoding encoding = null)
     {
       file.TryFinallyDelete(file =>
       {
@@ -175,7 +175,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -190,13 +190,13 @@ public sealed class FileInfoExtensionsTest
     {
       AssertionExtensions.Should(() => FileInfoExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
-      Validate(this.RandomEmptyFile());
-      Validate(this.RandomNonEmptyFile());
+      Test(this.RandomEmptyFile());
+      Test(this.RandomNonEmptyFile());
     }
 
     return;
 
-    static void Validate(FileInfo original)
+    static void Test(FileInfo original)
     {
       var clone = original.Clone();
 
@@ -248,7 +248,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -269,7 +269,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -285,14 +285,14 @@ public sealed class FileInfoExtensionsTest
       AssertionExtensions.Should(() => ((FileInfo) null).TryFinallyDelete(_ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("file");
       AssertionExtensions.Should(() => this.RandomFakeFile().TryFinallyDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      Validate(this.RandomFakeFile(), this.RandomBytes());
-      Validate(this.RandomEmptyFile(), this.RandomBytes());
-      Validate(this.RandomNonEmptyFile(), this.RandomBytes());
+      Test(this.RandomFakeFile(), this.RandomBytes());
+      Test(this.RandomEmptyFile(), this.RandomBytes());
+      Test(this.RandomNonEmptyFile(), this.RandomBytes());
     }
 
     return;
 
-    static void Validate(FileInfo file, byte[] bytes)
+    static void Test(FileInfo file, byte[] bytes)
     {
       file.Exists.Should().BeFalse();
       file.TryFinallyDelete(info =>
@@ -320,7 +320,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, params Type[] types)
+    static void Test(FileInfo file, params Type[] types)
     {
     }
   }
@@ -340,7 +340,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, params Type[] types)
+    static void Test(FileInfo file, params Type[] types)
     {
     }
   }
@@ -361,7 +361,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, byte[] bytes)
+    static void Test(FileInfo file, byte[] bytes)
     {
     }
   }
@@ -383,7 +383,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, byte[] bytes)
+    static void Test(FileInfo file, byte[] bytes)
     {
     }
   }
@@ -404,7 +404,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, string text, Encoding encoding = null)
+    static void Test(FileInfo file, string text, Encoding encoding = null)
     {
     }
   }
@@ -426,7 +426,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, string text, Encoding encoding = null)
+    static void Test(FileInfo file, string text, Encoding encoding = null)
     {
     }
   }
@@ -446,7 +446,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, FileInfo file) => file.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
+    static void Test(byte[] result, FileInfo file) => file.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
   }
 
   /// <summary>
@@ -474,7 +474,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, FileInfo file) => file.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(result);
+    static void Test(byte[] result, FileInfo file) => file.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -492,7 +492,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(string result, FileInfo file, Encoding encoding = null) => file.ToText(encoding).Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, FileInfo file, Encoding encoding = null) => file.ToText(encoding).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -541,7 +541,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -561,7 +561,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -581,7 +581,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -601,7 +601,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding = null)
+    static void Test(FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -621,7 +621,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding = null)
+    static void Test(FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -641,7 +641,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -661,7 +661,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -681,7 +681,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding = null)
+    static void Test(FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -701,7 +701,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file, Encoding encoding = null)
+    static void Test(FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -721,7 +721,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -741,7 +741,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -762,7 +762,7 @@ public sealed class FileInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo file)
+    static void Test(FileInfo file)
     {
     }
   }
@@ -775,13 +775,13 @@ public sealed class FileInfoExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, this.RandomFakeFile());
-      Validate(true, Assembly.GetExecutingAssembly().Location.ToFile());
+      Test(false, null);
+      Test(false, this.RandomFakeFile());
+      Test(true, Assembly.GetExecutingAssembly().Location.ToFile());
     }
 
     return;
 
-    static void Validate(bool result, FileInfo file) => file.ToBoolean().Should().Be(result);
+    static void Test(bool result, FileInfo file) => file.ToBoolean().Should().Be(result);
   }
 }

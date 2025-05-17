@@ -18,17 +18,17 @@ public sealed class CookieExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(true, null);
-      Validate(true, new Cookie());
-      Validate(true, new Cookie("name", null));
-      Validate(true, new Cookie("name", string.Empty));
-      Validate(true, new Cookie("name", " \t\r\n "));
-      Validate(false, new Cookie("name", "value"));
+      Test(true, null);
+      Test(true, new Cookie());
+      Test(true, new Cookie("name", null));
+      Test(true, new Cookie("name", string.Empty));
+      Test(true, new Cookie("name", " \t\r\n "));
+      Test(false, new Cookie("name", "value"));
     }
 
     return;
 
-    static void Validate(bool result, Cookie cookie) => cookie.IsUnset().Should().Be(result);
+    static void Test(bool result, Cookie cookie) => cookie.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -41,16 +41,16 @@ public sealed class CookieExtensionsTest
     {
       AssertionExtensions.Should(() => ((Cookie) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
 
-      Validate(true, new Cookie());
-      Validate(true, new Cookie("name", null));
-      Validate(true, new Cookie("name", string.Empty));
-      Validate(true, new Cookie("name", " \t\r\n "));
-      Validate(false, new Cookie("name", "value"));
+      Test(true, new Cookie());
+      Test(true, new Cookie("name", null));
+      Test(true, new Cookie("name", string.Empty));
+      Test(true, new Cookie("name", " \t\r\n "));
+      Test(false, new Cookie("name", "value"));
     }
 
     return;
 
-    static void Validate(bool result, Cookie cookie) => cookie.IsEmpty().Should().Be(result);
+    static void Test(bool result, Cookie cookie) => cookie.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -63,9 +63,9 @@ public sealed class CookieExtensionsTest
     {
       AssertionExtensions.Should(() => CookieExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
 
-      Validate(new Cookie("id", string.Empty, "/", "localhost"));
+      Test(new Cookie("id", string.Empty, "/", "localhost"));
       
-      Validate(new Cookie
+      Test(new Cookie
       {
         Name = "id",
         Value = string.Empty,
@@ -85,7 +85,7 @@ public sealed class CookieExtensionsTest
 
     return;
 
-    static void Validate(Cookie original)
+    static void Test(Cookie original)
     {
       var clone = original.Clone();
 

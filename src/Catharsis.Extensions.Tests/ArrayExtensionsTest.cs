@@ -28,7 +28,7 @@ public sealed class ArrayExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -54,7 +54,7 @@ public sealed class ArrayExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, char[] chars)
+    static void Test(byte[] result, char[] chars)
     {
     }
   }
@@ -70,15 +70,15 @@ public sealed class ArrayExtensionsTest
       AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>()
         .WithParameterName("chars");
 
-      //Validate(this.RandomChars());
-      //Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomChars(), encoding.GetEncoding()));
+      //Test(this.RandomChars());
+      //Encoding.GetEncodings().ForEach(encoding => Test(this.RandomChars(), encoding.GetEncoding()));
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Validate(byte[] result, char[] chars, Encoding encoding = null)
+    static void Test(byte[] result, char[] chars, Encoding encoding = null)
     {
       Array.Empty<char>().ToBytes(encoding).Should().BeOfType<char[]>().And.BeSameAs(Array.Empty<char>().ToBytes(encoding)).And.BeEmpty();
 
@@ -97,13 +97,13 @@ public sealed class ArrayExtensionsTest
     {
       AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      Validate([]);
-      Validate(this.RandomBytes());
+      Test([]);
+      Test(this.RandomBytes());
     }
 
     return;
 
-    static void Validate(byte[] bytes)
+    static void Test(byte[] bytes)
     {
       using var content = bytes.ToByteArrayContent();
 
@@ -134,7 +134,7 @@ public sealed class ArrayExtensionsTest
 
     return;
 
-    static void Validate(string result, char[] chars)
+    static void Test(string result, char[] chars)
     {
     }
   }
@@ -149,15 +149,15 @@ public sealed class ArrayExtensionsTest
     {
       AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      //Validate(this.RandomBytes(), null);
-      //Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomBytes(), encoding.GetEncoding()));
+      //Test(this.RandomBytes(), null);
+      //Encoding.GetEncodings().ForEach(encoding => Test(this.RandomBytes(), encoding.GetEncoding()));
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Validate(string result, byte[] bytes, Encoding encoding = null)
+    static void Test(string result, byte[] bytes, Encoding encoding = null)
     {
       Array.Empty<byte>().ToText(encoding).Should().BeOfType<string>().And.BeSameAs(Array.Empty<byte>().ToText(encoding)).And.BeEmpty();
       bytes.ToText(encoding).Should().BeOfType<string>().And.HaveLength((encoding ?? Encoding.Default).GetCharCount(bytes)).And.Be((encoding ?? Encoding.Default).GetString(bytes));

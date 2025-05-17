@@ -19,13 +19,13 @@ public sealed class UriBuilderExtensionsTest
     {
       AssertionExtensions.Should(() => UriBuilderExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
-      Validate(new UriBuilder());
-      Validate(new UriBuilder("https://user:password@192.168.0.1/path?query#id"));
+      Test(new UriBuilder());
+      Test(new UriBuilder("https://user:password@192.168.0.1/path?query#id"));
     }
 
     return;
 
-    static void Validate(UriBuilder builder)
+    static void Test(UriBuilder builder)
     {
       builder.Empty().Should().BeOfType<UriBuilder>().And.BeSameAs(builder);
       builder.Fragment.Should().BeEmpty();
@@ -56,7 +56,7 @@ public sealed class UriBuilderExtensionsTest
       AssertionExtensions.Should(() => UriBuilderExtensions.WithQuery(null, new Dictionary<string, object>())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => new UriBuilder().WithQuery((IReadOnlyDictionary<string, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("parameters");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -66,7 +66,7 @@ public sealed class UriBuilderExtensionsTest
       AssertionExtensions.Should(() => UriBuilderExtensions.WithQuery(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => new UriBuilder().WithQuery(((string Name, object Value)[]) null)).ThrowExactly<ArgumentNullException>().WithParameterName("parameters");
 
-      static void Validate()
+      static void Test()
       {
       }
     }

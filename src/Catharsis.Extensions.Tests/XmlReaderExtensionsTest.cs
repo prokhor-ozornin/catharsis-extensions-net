@@ -27,7 +27,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader)
+    static void Test(XmlReader reader)
     {
       using (reader)
       {
@@ -51,7 +51,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader, params Type[] types)
+    static void Test(XmlReader reader, params Type[] types)
     {
       using (reader)
       {
@@ -109,7 +109,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader, params Type[] types)
+    static void Test(XmlReader reader, params Type[] types)
     {
       using (reader)
       {
@@ -133,7 +133,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader, Encoding encoding = null)
+    static void Test(XmlReader reader, Encoding encoding = null)
     {
       using (reader)
       {
@@ -156,7 +156,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader, Encoding encoding = null)
+    static void Test(XmlReader reader, Encoding encoding = null)
     {
       using (reader)
       {
@@ -180,7 +180,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader, string text)
+    static void Test(XmlReader reader, string text)
     {
       using (reader)
       {
@@ -204,7 +204,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader, string text)
+    static void Test(XmlReader reader, string text)
     {
       using (reader)
       {
@@ -228,7 +228,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader)
+    static void Test(XmlReader reader)
     {
       using (reader)
       {
@@ -252,7 +252,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader)
+    static void Test(XmlReader reader)
     {
       using (reader)
       {
@@ -276,7 +276,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader)
+    static void Test(XmlReader reader)
     {
       using (reader)
       {
@@ -301,7 +301,7 @@ public sealed class XmlReaderExtensionsTest
 
     return;
 
-    static void Validate(XmlReader reader)
+    static void Test(XmlReader reader)
     {
       using (reader)
       {

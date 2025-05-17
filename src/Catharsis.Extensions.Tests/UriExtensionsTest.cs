@@ -25,7 +25,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(bool result, Uri uri) => uri.IsAvailable().Should().Be(result);
+    static void Test(bool result, Uri uri) => uri.IsAvailable().Should().Be(result);
   }
 
   /// <summary>
@@ -44,7 +44,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(bool result, Uri uri)
+    static void Test(bool result, Uri uri)
     {
       var task = uri.IsAvailableAsync();
       task.Should().BeAssignableTo<Task<bool>>();
@@ -67,7 +67,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri, params (string Key, string Value)[] result) => uri.GetQuery().ToValueTuple().Should().Equal(result);
+    static void Test(Uri uri, params (string Key, string Value)[] result) => uri.GetQuery().ToValueTuple().Should().Equal(result);
   }
 
   /// <summary>
@@ -85,7 +85,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(string result, Uri uri) => uri.GetHost().Should().Be(result);
+    static void Test(string result, Uri uri) => uri.GetHost().Should().Be(result);
   }
 
   /// <summary>
@@ -103,7 +103,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(string[] result, Uri uri, Encoding encoding = null) => uri.Lines(encoding).Should().BeOfType<string[]>().And.Equal(result);
+    static void Test(string[] result, Uri uri, Encoding encoding = null) => uri.Lines(encoding).Should().BeOfType<string[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -121,7 +121,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(string[] result, Uri uri, Encoding encoding = null) => uri.LinesAsync(encoding).ToArray().Should().BeOfType<string[]>().And.Equal(result);
+    static void Test(string[] result, Uri uri, Encoding encoding = null) => uri.LinesAsync(encoding).ToArray().Should().BeOfType<string[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -134,13 +134,13 @@ public sealed class UriExtensionsTest
     {
       AssertionExtensions.Should(() => UriExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
-      Validate("https://localhost".ToUri());
-      Validate("https://user:password@localhost:443/path?id=1#hash".ToUri());
+      Test("https://localhost".ToUri());
+      Test("https://user:password@localhost:443/path?id=1#hash".ToUri());
     }
 
     return;
 
-    static void Validate(Uri original)
+    static void Test(Uri original)
     {
       var clone = original.Clone();
 
@@ -186,7 +186,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -206,7 +206,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -226,7 +226,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -246,7 +246,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -266,7 +266,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -287,7 +287,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -309,7 +309,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -330,7 +330,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri, string text, Encoding encoding = null)
+    static void Test(Uri uri, string text, Encoding encoding = null)
     {
     }
   }
@@ -352,7 +352,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri, string text, Encoding encoding = null)
+    static void Test(Uri uri, string text, Encoding encoding = null)
     {
     }
   }
@@ -371,7 +371,7 @@ public sealed class UriExtensionsTest
     {
       AssertionExtensions.Should(() => UriExtensions.ToEnumerable(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
 
-      static void Validate(Uri uri)
+      static void Test(Uri uri)
       {
       }
     }
@@ -381,7 +381,7 @@ public sealed class UriExtensionsTest
       AssertionExtensions.Should(() => UriExtensions.ToEnumerable(null, 1)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => "localhost".ToUri().ToEnumerable(0)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
 
-      static void Validate(Uri uri)
+      static void Test(Uri uri)
       {
       }
     }
@@ -403,7 +403,7 @@ public sealed class UriExtensionsTest
     {
       AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
 
-      static void Validate(Uri uri)
+      static void Test(Uri uri)
       {
       }
     }
@@ -413,7 +413,7 @@ public sealed class UriExtensionsTest
       AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null, 1).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => "localhost".ToUri().ToAsyncEnumerable(0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
 
-      static void Validate(Uri uri)
+      static void Test(Uri uri)
       {
       }
     }
@@ -431,12 +431,12 @@ public sealed class UriExtensionsTest
     {
       AssertionExtensions.Should(() => UriExtensions.ToUriBuilder(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
-      Validate("https://user:password@localhost:8080/path?name=value#id".ToUri());
+      Test("https://user:password@localhost:8080/path?name=value#id".ToUri());
     }
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
       var builder = uri.ToUriBuilder();
 
@@ -467,7 +467,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -487,7 +487,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, Uri uri) => uri.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
+    static void Test(byte[] result, Uri uri) => uri.ToBytes().Should().BeOfType<IEnumerable<byte>>().And.Equal(result);
   }
 
   /// <summary>
@@ -505,7 +505,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, Uri uri) => uri.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(result);
+    static void Test(byte[] result, Uri uri) => uri.ToBytesAsync().ToArray().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -523,7 +523,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(string result, Uri uri, Encoding encoding = null) => uri.ToText(encoding).Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, Uri uri, Encoding encoding = null) => uri.ToText(encoding).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -541,7 +541,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(string result, Uri uri, Encoding encoding = null)
+    static void Test(string result, Uri uri, Encoding encoding = null)
     {
       var task = uri.ToTextAsync(encoding);
       task.Should().BeAssignableTo<Task<string>>();
@@ -564,7 +564,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -584,7 +584,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -604,7 +604,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -624,7 +624,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -644,7 +644,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -664,7 +664,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -684,7 +684,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -704,7 +704,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -724,7 +724,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }
@@ -745,7 +745,7 @@ public sealed class UriExtensionsTest
 
     return;
 
-    static void Validate(Uri uri)
+    static void Test(Uri uri)
     {
     }
   }

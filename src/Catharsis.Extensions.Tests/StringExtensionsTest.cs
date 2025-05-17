@@ -42,7 +42,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string lesser, string bigger, CultureInfo culture = null)
+    static void Test(string lesser, string bigger, CultureInfo culture = null)
     {
       string.Empty.Compare(string.Empty, culture).Should().Be(0);
       string.Empty.Compare(char.MinValue.ToString(culture), culture).Should().Be(0);
@@ -66,14 +66,14 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(null);
-        Validate(culture);
+        Test(null);
+        Test(culture);
       });
     }
 
     return;
 
-    static void Validate(IFormatProvider format)
+    static void Test(IFormatProvider format)
     {
       format = format ?? CultureInfo.InvariantCulture;
 
@@ -147,14 +147,14 @@ public sealed class StringExtensionsTest
     {
       /*new[] { DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
         {
-          Validate(date, null);
-          Validate(date, culture);
+          Test(date, null);
+          Test(date, culture);
         });*/
     }
 
     return;
 
-    static void Validate(DateTimeOffset date, IFormatProvider format)
+    static void Test(DateTimeOffset date, IFormatProvider format)
     {
       AssertionExtensions.Should(() => string.Empty.CompareAsDate(date.ToString(format), format)).ThrowExactly<FormatException>();
       AssertionExtensions.Should(() => date.ToString(format).CompareAsDate(string.Empty, format)).ThrowExactly<FormatException>();
@@ -191,14 +191,14 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(string.Empty, null, null);
-      Validate(string.Empty, string.Empty, string.Empty);
-      Validate("value", "value", null);
+      Test(string.Empty, null, null);
+      Test(string.Empty, string.Empty, string.Empty);
+      Test("value", "value", null);
     }
 
     return;
 
-    static void Validate(string result, string text, string postfix) => text.Append(postfix).Should().BeOfType<string>().And.Be(text + postfix).And.Be(result);
+    static void Test(string result, string text, string postfix) => text.Append(postfix).Should().BeOfType<string>().And.Be(text + postfix).And.Be(result);
   }
 
   /// <summary>
@@ -220,7 +220,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text, string prefix) => text.Prepend(prefix).Should().BeOfType<string>().And.Be(prefix + text).And.Be(result);
+    static void Test(string result, string text, string prefix) => text.Prepend(prefix).Should().BeOfType<string>().And.Be(prefix + text).And.Be(result);
   }
 
   /// <summary>
@@ -252,7 +252,7 @@ public sealed class StringExtensionsTest
         brown = "hazy"
       }).Should().Be("The slow hazy fox jumped over the lazy bear");*/
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -270,7 +270,7 @@ public sealed class StringExtensionsTest
 
       value.Replace(("quick", "slow"), ("dog", "bear"), ("brown", "hazy"), ("UNSPECIFIED", string.Empty)).Should().Be("The slow hazy fox jumped over the lazy bear");*/
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -298,7 +298,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text)
+    static void Test(string result, string text)
     {
     }
   }
@@ -334,7 +334,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text, int count) => text.Repeat(count).Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, string text, int count) => text.Repeat(count).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -361,7 +361,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<string> result, string text, string separator = null) => text.Lines(separator).Should().BeOfType<string[]>().And.Equal(result);
+    static void Test(IEnumerable<string> result, string text, string separator = null) => text.Lines(separator).Should().BeOfType<string[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -396,7 +396,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text, CultureInfo culture = null)
+    static void Test(string result, string text, CultureInfo culture = null)
     {
     }
   }
@@ -427,7 +427,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text, CultureInfo culture = null)
+    static void Test(string result, string text, CultureInfo culture = null)
     {
     }
   }
@@ -455,7 +455,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text, CultureInfo culture = null) => text.CapitalizeAll(culture).Should().BeOfType<string>().And.Be((culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text)).And.Be(result);
+    static void Test(string result, string text, CultureInfo culture = null) => text.CapitalizeAll(culture).Should().BeOfType<string>().And.Be((culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text)).And.Be(result);
   }
 
   /// <summary>
@@ -481,7 +481,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text, char character, int count) => text.Indent(character, count).Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, string text, char character, int count) => text.Indent(character, count).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -499,7 +499,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text, char value) => text.Unindent(value).Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, string text, char value) => text.Unindent(value).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -515,16 +515,16 @@ public sealed class StringExtensionsTest
 
       const int count = 2;
 
-      Validate(string.Empty, string.Empty, 0);
-      Validate(" ", string.Empty, 1);
-      Validate(' '.Repeat(count), string.Empty, count);
-      Validate(' '.Repeat(count) + "***", "***", count);
-      Validate(' '.Repeat(count) + "1." + Environment.NewLine + ' '.Repeat(count) + "2.", $" 1.{Environment.NewLine} 2. ", count);
+      Test(string.Empty, string.Empty, 0);
+      Test(" ", string.Empty, 1);
+      Test(' '.Repeat(count), string.Empty, count);
+      Test(' '.Repeat(count) + "***", "***", count);
+      Test(' '.Repeat(count) + "1." + Environment.NewLine + ' '.Repeat(count) + "2.", $" 1.{Environment.NewLine} 2. ", count);
     }
 
     return;
 
-    static void Validate(string result, string text, int? count = null)
+    static void Test(string result, string text, int? count = null)
     {
 
     }
@@ -545,7 +545,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, string result) => text.Unspacify().Should().BeOfType<string>().And.Be(result);
+    static void Test(string text, string result) => text.Unspacify().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -571,7 +571,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text, int? count = null)
+    static void Test(string result, string text, int? count = null)
     {
     }
   }
@@ -591,7 +591,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text) => text.Untabify().Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, string text) => text.Untabify().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -605,15 +605,15 @@ public sealed class StringExtensionsTest
       AssertionExtensions.Should(() => StringExtensions.IsMatch(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.IsMatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
 
-      Validate(true, string.Empty, string.Empty);
-      Validate(false, string.Empty, "anything");
-      Validate(true, "ab4Zg95kf", "[a-zA-z0-9]");
-      Validate(false, "~#$%", "[a-zA-z0-9]");
+      Test(true, string.Empty, string.Empty);
+      Test(false, string.Empty, "anything");
+      Test(true, "ab4Zg95kf", "[a-zA-z0-9]");
+      Test(false, "~#$%", "[a-zA-z0-9]");
     }
 
     return;
 
-    static void Validate(bool result, string text, string pattern, RegexOptions? options = null) => text.IsMatch(pattern, options).Should().Be(result);
+    static void Test(bool result, string text, string pattern, RegexOptions? options = null) => text.IsMatch(pattern, options).Should().Be(result);
   }
 
   /// <summary>
@@ -639,7 +639,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, string pattern, RegexOptions? options = null)
+    static void Test(string text, string pattern, RegexOptions? options = null)
     {
     }
   }
@@ -652,15 +652,15 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(true, null);
-      Validate(true, string.Empty);
-      Validate(true, " \t\r\n ");
-      Validate(false, " * ");
+      Test(true, null);
+      Test(true, string.Empty);
+      Test(true, " \t\r\n ");
+      Test(false, " * ");
     }
 
     return;
 
-    static void Validate(bool result, string text) => text.IsUnset().Should().Be(result);
+    static void Test(bool result, string text) => text.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -678,7 +678,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(bool result, string text) => text.IsUpperCased().Should().Be(result);
+    static void Test(bool result, string text) => text.IsUpperCased().Should().Be(result);
   }
 
   /// <summary>
@@ -696,7 +696,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(bool result, string text) => text.IsLowerCased().Should().Be(result);
+    static void Test(bool result, string text) => text.IsLowerCased().Should().Be(result);
   }
 
   /// <summary>
@@ -707,20 +707,20 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, string.Empty);
-      Validate(true, bool.FalseString);
-      Validate(true, bool.TrueString);
-      Validate(false, "invalid");
-      Validate(true, "TRUE");
-      Validate(true, "TruE");
-      Validate(true, "true");
-      Validate(true, " true ");
+      Test(false, null);
+      Test(false, string.Empty);
+      Test(true, bool.FalseString);
+      Test(true, bool.TrueString);
+      Test(false, "invalid");
+      Test(true, "TRUE");
+      Test(true, "TruE");
+      Test(true, "true");
+      Test(true, " true ");
     }
 
     return;
 
-    static void Validate(bool result, string text) => text.IsBoolean().Should().Be(result);
+    static void Test(bool result, string text) => text.IsBoolean().Should().Be(result);
   }
 
   /// <summary>
@@ -733,18 +733,18 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, sbyte.MinValue.ToString(culture), culture);
-        Validate(true, sbyte.MaxValue.ToString(culture), culture);
-        Validate(true, $" {sbyte.MinValue.ToString(culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, sbyte.MinValue.ToString(culture), culture);
+        Test(true, sbyte.MaxValue.ToString(culture), culture);
+        Test(true, $" {sbyte.MinValue.ToString(culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
   }
 
   /// <summary>
@@ -757,18 +757,18 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, byte.MinValue.ToString(culture), culture);
-        Validate(true, byte.MaxValue.ToString(culture), culture);
-        Validate(true, $" {byte.MinValue.ToString(culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, byte.MinValue.ToString(culture), culture);
+        Test(true, byte.MaxValue.ToString(culture), culture);
+        Test(true, $" {byte.MinValue.ToString(culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
   }
 
   /// <summary>
@@ -781,18 +781,18 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, short.MinValue.ToString(culture), culture);
-        Validate(true, short.MaxValue.ToString(culture), culture);
-        Validate(true, $" {short.MinValue.ToString(culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, short.MinValue.ToString(culture), culture);
+        Test(true, short.MaxValue.ToString(culture), culture);
+        Test(true, $" {short.MinValue.ToString(culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsShort(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsShort(format).Should().Be(result);
   }
 
   /// <summary>
@@ -805,18 +805,18 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, ushort.MinValue.ToString(culture), culture);
-        Validate(true, ushort.MaxValue.ToString(culture), culture);
-        Validate(true, $" {ushort.MinValue.ToString(culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, ushort.MinValue.ToString(culture), culture);
+        Test(true, ushort.MaxValue.ToString(culture), culture);
+        Test(true, $" {ushort.MinValue.ToString(culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsUshort(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsUshort(format).Should().Be(result);
   }
 
   /// <summary>
@@ -829,18 +829,18 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, int.MinValue.ToString(culture), culture);
-        Validate(true, int.MaxValue.ToString(culture), culture);
-        Validate(true, $" {int.MinValue.ToString(culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, int.MinValue.ToString(culture), culture);
+        Test(true, int.MaxValue.ToString(culture), culture);
+        Test(true, $" {int.MinValue.ToString(culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsInt(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsInt(format).Should().Be(result);
   }
 
   /// <summary>
@@ -853,18 +853,18 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, uint.MinValue.ToString(culture), culture);
-        Validate(true, uint.MaxValue.ToString(culture), culture);
-        Validate(true, $" {uint.MinValue.ToString(culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, uint.MinValue.ToString(culture), culture);
+        Test(true, uint.MaxValue.ToString(culture), culture);
+        Test(true, $" {uint.MinValue.ToString(culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsUint(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsUint(format).Should().Be(result);
   }
 
   /// <summary>
@@ -877,18 +877,18 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, long.MinValue.ToString(culture), culture);
-        Validate(true, long.MaxValue.ToString(culture), culture);
-        Validate(true, $" {long.MinValue.ToString(culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, long.MinValue.ToString(culture), culture);
+        Test(true, long.MaxValue.ToString(culture), culture);
+        Test(true, $" {long.MinValue.ToString(culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsLong(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsLong(format).Should().Be(result);
   }
 
   /// <summary>
@@ -901,18 +901,18 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, ulong.MinValue.ToString(culture), culture);
-        Validate(true, ulong.MaxValue.ToString(culture), culture);
-        Validate(true, $" {ulong.MinValue.ToString(culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, ulong.MinValue.ToString(culture), culture);
+        Test(true, ulong.MaxValue.ToString(culture), culture);
+        Test(true, $" {ulong.MinValue.ToString(culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsUlong(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsUlong(format).Should().Be(result);
   }
 
   /// <summary>
@@ -925,22 +925,22 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, float.MinValue.ToString(culture), culture);
-        Validate(true, float.MaxValue.ToString(culture), culture);
-        Validate(true, $" {float.MinValue.ToString(culture)} ", culture);
-        Validate(true, float.NaN.ToString(culture), culture);
-        Validate(true, float.Epsilon.ToString(culture), culture);
-        Validate(true, float.NegativeInfinity.ToString(culture), culture);
-        Validate(true, float.PositiveInfinity.ToString(culture), culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, float.MinValue.ToString(culture), culture);
+        Test(true, float.MaxValue.ToString(culture), culture);
+        Test(true, $" {float.MinValue.ToString(culture)} ", culture);
+        Test(true, float.NaN.ToString(culture), culture);
+        Test(true, float.Epsilon.ToString(culture), culture);
+        Test(true, float.NegativeInfinity.ToString(culture), culture);
+        Test(true, float.PositiveInfinity.ToString(culture), culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsFloat(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsFloat(format).Should().Be(result);
   }
 
   /// <summary>
@@ -953,22 +953,22 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, double.MinValue.ToString(culture), culture);
-        Validate(true, double.MaxValue.ToString(culture), culture);
-        Validate(true, $" {double.MinValue.ToString(culture)} ", culture);
-        Validate(true, double.NaN.ToString(culture), culture);
-        Validate(true, double.Epsilon.ToString(culture), culture);
-        Validate(true, double.NegativeInfinity.ToString(culture), culture);
-        Validate(true, double.PositiveInfinity.ToString(culture), culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, double.MinValue.ToString(culture), culture);
+        Test(true, double.MaxValue.ToString(culture), culture);
+        Test(true, $" {double.MinValue.ToString(culture)} ", culture);
+        Test(true, double.NaN.ToString(culture), culture);
+        Test(true, double.Epsilon.ToString(culture), culture);
+        Test(true, double.NegativeInfinity.ToString(culture), culture);
+        Test(true, double.PositiveInfinity.ToString(culture), culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsDouble(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDouble(format).Should().Be(result);
   }
 
   /// <summary>
@@ -981,21 +981,21 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, decimal.MinValue.ToString(culture), culture);
-        Validate(true, decimal.MaxValue.ToString(culture), culture);
-        Validate(true, $" {decimal.MinValue.ToString(culture)} ", culture);
-        Validate(true, decimal.MinusOne.ToString(culture), culture);
-        Validate(true, decimal.Zero.ToString(culture), culture);
-        Validate(true, decimal.One.ToString(culture), culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, decimal.MinValue.ToString(culture), culture);
+        Test(true, decimal.MaxValue.ToString(culture), culture);
+        Test(true, $" {decimal.MinValue.ToString(culture)} ", culture);
+        Test(true, decimal.MinusOne.ToString(culture), culture);
+        Test(true, decimal.Zero.ToString(culture), culture);
+        Test(true, decimal.One.ToString(culture), culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsDecimal(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDecimal(format).Should().Be(result);
   }
 
   /// <summary>
@@ -1028,19 +1028,19 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, string.Empty);
-      Validate(false, "invalid");
+      Test(false, null);
+      Test(false, string.Empty);
+      Test(false, "invalid");
 
-      Validate(true, Guid.NewGuid().ToString());
-      Validate(true, Guid.NewGuid().ToString().ToLowerInvariant());
-      Validate(true, Guid.NewGuid().ToString().ToUpperInvariant());
-      Validate(true, Guid.NewGuid().ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty));
+      Test(true, Guid.NewGuid().ToString());
+      Test(true, Guid.NewGuid().ToString().ToLowerInvariant());
+      Test(true, Guid.NewGuid().ToString().ToUpperInvariant());
+      Test(true, Guid.NewGuid().ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty));
     }
 
     return;
 
-    static void Validate(bool result, string text) => text.IsGuid().Should().Be(result);
+    static void Test(bool result, string text) => text.IsGuid().Should().Be(result);
   }
 
   /// <summary>
@@ -1051,17 +1051,17 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(true, string.Empty);
-      Validate(true, "path");
-      Validate(true, "https:");
-      Validate(false, "https://");
-      Validate(true, "https://user:password@localhost:8080/path?query#id");
+      Test(false, null);
+      Test(true, string.Empty);
+      Test(true, "path");
+      Test(true, "https:");
+      Test(false, "https://");
+      Test(true, "https://user:password@localhost:8080/path?query#id");
     }
 
     return;
 
-    static void Validate(bool result, string text) => text.IsUri().Should().Be(result);
+    static void Test(bool result, string text) => text.IsUri().Should().Be(result);
   }
 
   /// <summary>
@@ -1072,23 +1072,23 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, string.Empty);
-      Validate(false, this.RandomName());
-      Validate(false, nameof(Object));
-      Validate(true, typeof(object).FullName);
-      Validate(true, typeof(object).AssemblyQualifiedName);
+      Test(false, null);
+      Test(false, string.Empty);
+      Test(false, this.RandomName());
+      Test(false, nameof(Object));
+      Test(true, typeof(object).FullName);
+      Test(true, typeof(object).AssemblyQualifiedName);
     }
 
     Assembly.GetExecutingAssembly().DefinedTypes.ForEach(type =>
     {
-      Validate(false, nameof(type));
-      Validate(true, type.AssemblyQualifiedName);
+      Test(false, nameof(type));
+      Test(true, type.AssemblyQualifiedName);
     });
 
     return;
 
-    static void Validate(bool result, string text) => text.IsType().Should().Be(result);
+    static void Test(bool result, string text) => text.IsType().Should().Be(result);
   }
 
   /// <summary>
@@ -1101,19 +1101,19 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null);
-        Validate(false, string.Empty);
-        Validate(false, "invalid");
-        Validate(true, $" {DateTime.MinValue.ToString("o", culture)} ");
-        Validate(true, $" {DateTime.MaxValue.ToString("o", culture)} ");
-        Validate(true, $" {DateTime.UtcNow.ToString("o", culture)} ");
-        Validate(true, $" {DateTime.Now.ToString("o", culture)} ");
+        Test(false, null);
+        Test(false, string.Empty);
+        Test(false, "invalid");
+        Test(true, $" {DateTime.MinValue.ToString("o", culture)} ");
+        Test(true, $" {DateTime.MaxValue.ToString("o", culture)} ");
+        Test(true, $" {DateTime.UtcNow.ToString("o", culture)} ");
+        Test(true, $" {DateTime.Now.ToString("o", culture)} ");
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsDateTime(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDateTime(format).Should().Be(result);
   }
 
   /// <summary>
@@ -1126,19 +1126,19 @@ public sealed class StringExtensionsTest
     {
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
-        Validate(false, null);
-        Validate(false, string.Empty);
-        Validate(false, "invalid");
-        Validate(true, $" {DateTimeOffset.MinValue.ToString("o", culture)} ");
-        Validate(true, $" {DateTimeOffset.MaxValue.ToString("o", culture)} ");
-        Validate(true, $" {DateTimeOffset.UtcNow.ToString("o", culture)} ");
-        Validate(true, $" {DateTimeOffset.Now.ToString("o", culture)} ");
+        Test(false, null);
+        Test(false, string.Empty);
+        Test(false, "invalid");
+        Test(true, $" {DateTimeOffset.MinValue.ToString("o", culture)} ");
+        Test(true, $" {DateTimeOffset.MaxValue.ToString("o", culture)} ");
+        Test(true, $" {DateTimeOffset.UtcNow.ToString("o", culture)} ");
+        Test(true, $" {DateTimeOffset.Now.ToString("o", culture)} ");
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsDateTimeOffset(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDateTimeOffset(format).Should().Be(result);
   }
 
   /// <summary>
@@ -1151,19 +1151,19 @@ public sealed class StringExtensionsTest
     {
       new[] { null, CultureInfo.InvariantCulture }.ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, $" {DateOnly.MinValue.ToString("D", culture)} ", culture);
-        Validate(true, $" {DateOnly.MaxValue.ToString("D", culture)} ", culture);
-        Validate(true, $" {DateOnly.FromDateTime(DateTime.UtcNow).ToString("D", culture)} ", culture);
-        Validate(true, $" {DateOnly.FromDateTime(DateTime.Now).ToString("D", culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, $" {DateOnly.MinValue.ToString("D", culture)} ", culture);
+        Test(true, $" {DateOnly.MaxValue.ToString("D", culture)} ", culture);
+        Test(true, $" {DateOnly.FromDateTime(DateTime.UtcNow).ToString("D", culture)} ", culture);
+        Test(true, $" {DateOnly.FromDateTime(DateTime.Now).ToString("D", culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsDateOnly(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDateOnly(format).Should().Be(result);
   }
 
   /// <summary>
@@ -1176,19 +1176,19 @@ public sealed class StringExtensionsTest
     {
       new[] { null, CultureInfo.InvariantCulture }.ForEach(culture =>
       {
-        Validate(false, null, culture);
-        Validate(false, string.Empty, culture);
-        Validate(false, "invalid", culture);
-        Validate(true, $" {TimeOnly.MinValue.ToString("T", culture)} ", culture);
-        Validate(true, $" {TimeOnly.MaxValue.ToString("T", culture)} ", culture);
-        Validate(true, $" {TimeOnly.FromDateTime(DateTime.UtcNow).ToString("T", culture)} ", culture);
-        Validate(true, $" {TimeOnly.FromDateTime(DateTime.Now).ToString("T", culture)} ", culture);
+        Test(false, null, culture);
+        Test(false, string.Empty, culture);
+        Test(false, "invalid", culture);
+        Test(true, $" {TimeOnly.MinValue.ToString("T", culture)} ", culture);
+        Test(true, $" {TimeOnly.MaxValue.ToString("T", culture)} ", culture);
+        Test(true, $" {TimeOnly.FromDateTime(DateTime.UtcNow).ToString("T", culture)} ", culture);
+        Test(true, $" {TimeOnly.FromDateTime(DateTime.Now).ToString("T", culture)} ", culture);
       });
     }
 
     return;
 
-    static void Validate(bool result, string text, IFormatProvider format = null) => text.IsTimeOnly(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsTimeOnly(format).Should().Be(result);
   }
 
   /// <summary>
@@ -1199,16 +1199,16 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, string.Empty);
-      Validate(false, this.RandomName());
-      Validate(false, Environment.SystemDirectory);
-      this.RandomEmptyFile().TryFinallyDelete(file => Validate(true, file.FullName));
+      Test(false, null);
+      Test(false, string.Empty);
+      Test(false, this.RandomName());
+      Test(false, Environment.SystemDirectory);
+      this.RandomEmptyFile().TryFinallyDelete(file => Test(true, file.FullName));
     }
 
     return;
 
-    static void Validate(bool result, string text) => text.IsFile().Should().Be(result);
+    static void Test(bool result, string text) => text.IsFile().Should().Be(result);
   }
 
   /// <summary>
@@ -1219,16 +1219,16 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, string.Empty);
-      Validate(false, this.RandomName());
-      Validate(true, Environment.SystemDirectory);
-      this.RandomDirectory().TryFinallyDelete(directory => Validate(true, directory.FullName));
+      Test(false, null);
+      Test(false, string.Empty);
+      Test(false, this.RandomName());
+      Test(true, Environment.SystemDirectory);
+      this.RandomDirectory().TryFinallyDelete(directory => Test(true, directory.FullName));
     }
 
     return;
 
-    static void Validate(bool result, string text) => text.IsDirectory().Should().Be(result);
+    static void Test(bool result, string text) => text.IsDirectory().Should().Be(result);
   }
 
   /// <summary>
@@ -1239,20 +1239,20 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, string.Empty);
-      Validate(false, "localhost");
+      Test(false, null);
+      Test(false, string.Empty);
+      Test(false, "localhost");
 
       new[]
       {
         IPAddress.None, IPAddress.Any, IPAddress.Loopback, IPAddress.Broadcast, IPAddress.IPv6None, IPAddress.IPv6Any,
         IPAddress.IPv6Loopback
-      }.ForEach(address => Validate(true, address.ToString()));
+      }.ForEach(address => Test(true, address.ToString()));
     }
 
     return;
 
-    static void Validate(bool result, string text) => text.IsIpAddress().Should().Be(result);
+    static void Test(bool result, string text) => text.IsIpAddress().Should().Be(result);
   }
 
   /// <summary>
@@ -1307,7 +1307,7 @@ public sealed class StringExtensionsTest
       process.StartInfo.WindowStyle.Should().Be(ProcessWindowStyle.Normal);
       process.StartInfo.WorkingDirectory.Should().BeEmpty();
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -1318,7 +1318,7 @@ public sealed class StringExtensionsTest
       AssertionExtensions.Should(() => StringExtensions.Execute(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("command");
       AssertionExtensions.Should(() => string.Empty.Execute([])).ThrowExactly<InvalidOperationException>();
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -1345,7 +1345,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, string text) => text.FromBase64().Should().BeOfType<byte[]>().And.Equal(result);
+    static void Test(byte[] result, string text) => text.FromBase64().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -1366,7 +1366,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, string text) => text.FromHex().Should().BeOfType<byte[]>().And.Equal(result);
+    static void Test(byte[] result, string text) => text.FromHex().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -1379,13 +1379,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.UrlEncode(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate("#value?");
+      Test(string.Empty);
+      Test("#value?");
     }
 
     return;
 
-    static void Validate(string text) => text.UrlEncode().Should().BeOfType<string>().And.Be(Uri.EscapeDataString(text));
+    static void Test(string text) => text.UrlEncode().Should().BeOfType<string>().And.Be(Uri.EscapeDataString(text));
   }
 
   /// <summary>
@@ -1398,13 +1398,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.UrlDecode(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate("%23value%3F");
+      Test(string.Empty);
+      Test("%23value%3F");
     }
 
     return;
 
-    static void Validate(string text) => text.UrlDecode().Should().BeOfType<string>().And.Be(Uri.UnescapeDataString(text));
+    static void Test(string text) => text.UrlDecode().Should().BeOfType<string>().And.Be(Uri.UnescapeDataString(text));
   }
 
   /// <summary>
@@ -1417,13 +1417,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.HtmlEncode(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate("<p>word & deed</p>");
+      Test(string.Empty);
+      Test("<p>word & deed</p>");
     }
 
     return;
 
-    static void Validate(string text) => text.HtmlEncode().Should().BeOfType<string>().And.Be(WebUtility.HtmlEncode(text));
+    static void Test(string text) => text.HtmlEncode().Should().BeOfType<string>().And.Be(WebUtility.HtmlEncode(text));
   }
 
   /// <summary>
@@ -1436,13 +1436,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.HtmlDecode(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate("&lt;p&gt;word &amp; deed&lt;/p&gt;");
+      Test(string.Empty);
+      Test("&lt;p&gt;word &amp; deed&lt;/p&gt;");
     }
 
     return;
 
-    static void Validate(string text) => text.HtmlDecode().Should().BeOfType<string>().And.Be(WebUtility.HtmlDecode(text));
+    static void Test(string text) => text.HtmlDecode().Should().BeOfType<string>().And.Be(WebUtility.HtmlDecode(text));
   }
 
   /// <summary>
@@ -1471,7 +1471,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
 
     }
@@ -1487,13 +1487,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => ((string) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate(Fixture.Create<string>());
+      Test(string.Empty);
+      Test(Fixture.Create<string>());
     }
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
       using var algorithm = MD5.Create();
       text.HashMd5().Should().BeOfType<string>().And.HaveLength(32).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
@@ -1510,13 +1510,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => ((string) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate(Fixture.Create<string>());
+      Test(string.Empty);
+      Test(Fixture.Create<string>());
     }
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
       using var algorithm = SHA1.Create();
       text.HashSha1().Should().BeOfType<string>().And.HaveLength(40).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
@@ -1533,13 +1533,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => ((string) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate(Fixture.Create<string>());
+      Test(string.Empty);
+      Test(Fixture.Create<string>());
     }
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
       using var algorithm = SHA256.Create();
       text.HashSha256().Should().BeOfType<string>().And.HaveLength(64).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
@@ -1556,13 +1556,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => ((string) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate(Fixture.Create<string>());
+      Test(string.Empty);
+      Test(Fixture.Create<string>());
     }
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
       using var algorithm = SHA384.Create();
       text.HashSha384().Should().BeOfType<string>().And.HaveLength(96).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
@@ -1579,13 +1579,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => ((string) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate(Fixture.Create<string>());
+      Test(string.Empty);
+      Test(Fixture.Create<string>());
     }
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
       using var algorithm = SHA512.Create();
       text.HashSha512().Should().BeOfType<string>().And.HaveLength(128).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
@@ -1603,15 +1603,15 @@ public sealed class StringExtensionsTest
       AssertionExtensions.Should(() => StringExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
       AssertionExtensions.Should(() => string.Empty.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-      Validate(string.Empty, string.Empty);
-      Validate(string.Empty, char.MinValue.ToString());
-      Validate(char.MaxValue.ToString(), char.MinValue.ToString());
-      Validate(char.MaxValue.ToString(), char.MinValue.Repeat(2));
+      Test(string.Empty, string.Empty);
+      Test(string.Empty, char.MinValue.ToString());
+      Test(char.MaxValue.ToString(), char.MinValue.ToString());
+      Test(char.MaxValue.ToString(), char.MinValue.Repeat(2));
     }
 
     return;
 
-    static void Validate(string min, string max) => min.Min(max).Should().BeOfType<string>().And.Be(min);
+    static void Test(string min, string max) => min.Min(max).Should().BeOfType<string>().And.Be(min);
   }
 
   /// <summary>
@@ -1625,15 +1625,15 @@ public sealed class StringExtensionsTest
       AssertionExtensions.Should(() => StringExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
       AssertionExtensions.Should(() => string.Empty.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
 
-      Validate(string.Empty, string.Empty);
-      Validate(string.Empty, char.MinValue.ToString());
-      Validate(char.MaxValue.ToString(), char.MinValue.ToString());
-      Validate(char.MaxValue.ToString(), char.MinValue.Repeat(2));
+      Test(string.Empty, string.Empty);
+      Test(string.Empty, char.MinValue.ToString());
+      Test(char.MaxValue.ToString(), char.MinValue.ToString());
+      Test(char.MaxValue.ToString(), char.MinValue.Repeat(2));
     }
 
     return;
 
-    static void Validate(string min, string max) => min.Max(max).Should().BeOfType<string>().And.Be(max);
+    static void Test(string min, string max) => min.Max(max).Should().BeOfType<string>().And.Be(max);
   }
 
   /// <summary>
@@ -1652,7 +1652,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string min, string max) => min.MinMax(max).Should().Be((min, max));
+    static void Test(string min, string max) => min.MinMax(max).Should().Be((min, max));
   }
 
   /// <summary>
@@ -1701,14 +1701,14 @@ public sealed class StringExtensionsTest
   {
     using (new AssertionScope())
     {
-      static void Validate(string text, IEnumerable<int> positions)
+      static void Test(string text, IEnumerable<int> positions)
       {
       }
     }
 
     using (new AssertionScope())
     {
-      static void Validate(string text, int[] positions)
+      static void Test(string text, int[] positions)
       {
       }
     }
@@ -1719,7 +1719,7 @@ public sealed class StringExtensionsTest
       AssertionExtensions.Should(() => string.Empty.Without(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
       AssertionExtensions.Should(() => string.Empty.Without(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      static void Validate(string text)
+      static void Test(string text)
       {
       }
     }
@@ -1740,7 +1740,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, params Type[] types)
+    static void Test(string text, params Type[] types)
     {
 
     }
@@ -1764,7 +1764,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, params Type[] types)
+    static void Test(string text, params Type[] types)
     {
 
     }
@@ -1786,7 +1786,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, string text, Encoding encoding = null)
+    static void Test(Stream stream, string text, Encoding encoding = null)
     {
       using (stream)
       {
@@ -1813,7 +1813,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, string text, Encoding encoding = null)
+    static void Test(Stream stream, string text, Encoding encoding = null)
     {
       using (stream)
       {
@@ -1841,7 +1841,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, TextWriter to)
+    static void Test(string text, TextWriter to)
     {
       using (to)
       {
@@ -1867,7 +1867,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, TextWriter to)
+    static void Test(string text, TextWriter to)
     {
       using (to)
       {
@@ -1887,13 +1887,13 @@ public sealed class StringExtensionsTest
       AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Validate(string.Empty, Stream.Null.ToBinaryWriter());
-      Validate(Fixture.Create<string>(), this.EmptyStream().ToBinaryWriter());
+      Test(string.Empty, Stream.Null.ToBinaryWriter());
+      Test(Fixture.Create<string>(), this.EmptyStream().ToBinaryWriter());
     }
 
     return;
 
-    static void Validate(string text, BinaryWriter to)
+    static void Test(string text, BinaryWriter to)
     {
       using (to)
       {
@@ -1923,7 +1923,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, XmlWriter to)
+    static void Test(string text, XmlWriter to)
     {
       using (to)
       {
@@ -1948,7 +1948,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, XmlWriter to)
+    static void Test(string text, XmlWriter to)
     {
       using (to)
       {
@@ -1973,7 +1973,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, FileInfo to, Encoding encoding = null)
+    static void Test(string text, FileInfo to, Encoding encoding = null)
     {
     }
   }
@@ -1995,7 +1995,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, FileInfo to, Encoding encoding = null)
+    static void Test(string text, FileInfo to, Encoding encoding = null)
     {
     }
   }
@@ -2016,7 +2016,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, Process to)
+    static void Test(string text, Process to)
     {
       using (to)
       {
@@ -2042,7 +2042,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, Process to)
+    static void Test(string text, Process to)
     {
       using (to)
       {
@@ -2067,7 +2067,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, Uri to, Encoding encoding = null)
+    static void Test(string text, Uri to, Encoding encoding = null)
     {
     }
   }
@@ -2089,7 +2089,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, Uri to, Encoding encoding = null)
+    static void Test(string text, Uri to, Encoding encoding = null)
     {
     }
   }
@@ -2111,7 +2111,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, HttpClient client, Uri uri)
+    static void Test(string text, HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -2138,7 +2138,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, HttpClient client, Uri uri)
+    static void Test(string text, HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -2163,7 +2163,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, TcpClient to, Encoding encoding = null)
+    static void Test(string text, TcpClient to, Encoding encoding = null)
     {
       using (to)
       {
@@ -2189,7 +2189,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, TcpClient to, Encoding encoding = null)
+    static void Test(string text, TcpClient to, Encoding encoding = null)
     {
       using (to)
       {
@@ -2214,7 +2214,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, UdpClient to, Encoding encoding = null)
+    static void Test(string text, UdpClient to, Encoding encoding = null)
     {
       using (to)
       {
@@ -2240,7 +2240,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text, UdpClient to, Encoding encoding = null)
+    static void Test(string text, UdpClient to, Encoding encoding = null)
     {
       using (to)
       {
@@ -2259,13 +2259,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(Fixture.Create<string>());
-      Encoding.GetEncodings().ForEach(encoding => Validate(Fixture.Create<string>(), encoding.GetEncoding()));
+      Test(Fixture.Create<string>());
+      Encoding.GetEncodings().ForEach(encoding => Test(Fixture.Create<string>(), encoding.GetEncoding()));
     }
 
     return;
 
-    static void Validate(string text, Encoding encoding = null)
+    static void Test(string text, Encoding encoding = null)
     {
       string.Empty.ToBytes(encoding).Should().BeOfType<byte[]>().And.BeSameAs(string.Empty.ToBytes(encoding)).And.BeEmpty();
 
@@ -2304,7 +2304,7 @@ public sealed class StringExtensionsTest
       "false".ToBoolean().Should().BeFalse();
       " false ".ToBoolean().Should().BeFalse();*/
 
-      static void Validate(string text) => text.ToBoolean().Should().Be(bool.Parse(text));
+      static void Test(string text) => text.ToBoolean().Should().Be(bool.Parse(text));
     }
 
     using (new AssertionScope())
@@ -2348,7 +2348,7 @@ public sealed class StringExtensionsTest
       " false ".ToBoolean(out result).Should().BeTrue();
       result.Should().BeFalse();*/
 
-      static void Validate(bool result, string text)
+      static void Test(bool result, string text)
       {
         text.ToBoolean(out var value).Should().Be(result);
 
@@ -2378,10 +2378,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToSbyte(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2394,15 +2394,15 @@ public sealed class StringExtensionsTest
         $" {sbyte.MinValue.ToString(format)} ".ToSbyte(format).Should().Be(sbyte.MinValue);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToSbyte(format).Should().Be(sbyte.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToSbyte(format).Should().Be(sbyte.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2425,7 +2425,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(sbyte.MinValue);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToSbyte(out var value, format).Should().Be(result);
 
@@ -2455,10 +2455,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToByte(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2471,15 +2471,15 @@ public sealed class StringExtensionsTest
         $" {byte.MinValue.ToString(format)} ".ToByte(format).Should().Be(byte.MinValue);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToByte(format).Should().Be(byte.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToByte(format).Should().Be(byte.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2502,7 +2502,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(byte.MinValue);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToByte(out var value, format).Should().Be(result);
 
@@ -2532,10 +2532,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToShort(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2548,15 +2548,15 @@ public sealed class StringExtensionsTest
         $" {short.MinValue.ToString(format)} ".ToShort(format).Should().Be(short.MinValue);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToShort(format).Should().Be(short.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToShort(format).Should().Be(short.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2579,7 +2579,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(short.MinValue);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToShort(out var value, format).Should().Be(result);
 
@@ -2609,10 +2609,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToUshort(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2625,15 +2625,15 @@ public sealed class StringExtensionsTest
         $" {ushort.MinValue.ToString(format)} ".ToUshort(format).Should().Be(ushort.MinValue);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToUshort(format).Should().Be(ushort.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToUshort(format).Should().Be(ushort.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2656,7 +2656,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(ushort.MinValue);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToUshort(out var value, format).Should().Be(result);
 
@@ -2686,10 +2686,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToInt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2702,15 +2702,15 @@ public sealed class StringExtensionsTest
         $" {int.MinValue.ToString(format)} ".ToInt(format).Should().Be(int.MinValue);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToInt(format).Should().Be(int.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToInt(format).Should().Be(int.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2733,7 +2733,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(int.MinValue);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToInt(out var value, format).Should().Be(result);
 
@@ -2763,10 +2763,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToUint(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2779,15 +2779,15 @@ public sealed class StringExtensionsTest
         $" {uint.MinValue.ToString(format)} ".ToUint(format).Should().Be(uint.MinValue);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToUint(format).Should().Be(uint.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToUint(format).Should().Be(uint.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2810,7 +2810,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(uint.MinValue);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToUint(out var value, format).Should().Be(result);
 
@@ -2840,10 +2840,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToLong(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2856,15 +2856,15 @@ public sealed class StringExtensionsTest
         $" {long.MinValue.ToString(format)} ".ToLong(format).Should().Be(long.MinValue);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToLong(format).Should().Be(long.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToLong(format).Should().Be(long.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2887,7 +2887,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(long.MinValue);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToLong(out var value, format).Should().Be(result);
 
@@ -2917,10 +2917,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToUlong(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2933,16 +2933,16 @@ public sealed class StringExtensionsTest
         $" {ulong.MinValue.ToString(format)} ".ToUlong(format).Should().Be(ulong.MinValue);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToUlong(format).Should().Be(ulong.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToUlong(format).Should().Be(ulong.Parse(text));
     }
 
     using (new AssertionScope())
     {
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -2965,7 +2965,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(ulong.MinValue);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToUlong(out var value, format).Should().Be(result);
 
@@ -2995,10 +2995,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToFloat(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3015,15 +3015,15 @@ public sealed class StringExtensionsTest
         float.PositiveInfinity.ToString(format).ToFloat(format).Should().Be(float.PositiveInfinity);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToFloat(format).Should().Be(float.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToFloat(format).Should().Be(float.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3058,7 +3058,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(float.PositiveInfinity);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToFloat(out var value, format).Should().Be(result);
 
@@ -3088,10 +3088,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToDouble(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3108,15 +3108,15 @@ public sealed class StringExtensionsTest
         double.PositiveInfinity.ToString(format).ToDouble(format).Should().Be(double.PositiveInfinity);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToDouble(format).Should().Be(double.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToDouble(format).Should().Be(double.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3151,7 +3151,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(double.PositiveInfinity);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToDouble(out var value, format).Should().Be(result);
 
@@ -3181,10 +3181,10 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToDecimal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3200,15 +3200,15 @@ public sealed class StringExtensionsTest
         decimal.One.ToString(format).ToDecimal(format).Should().Be(decimal.One);
       }*/
 
-      static void Validate(string text, IFormatProvider format = null) => text.ToDecimal(format).Should().Be(decimal.Parse(text));
+      static void Test(string text, IFormatProvider format = null) => text.ToDecimal(format).Should().Be(decimal.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      //Validate(null);
+      //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
 
-      /*static void Validate(IFormatProvider format)
+      /*static void Test(IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3240,7 +3240,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(decimal.One);
       }*/
 
-      static void Validate(bool result, string text, IFormatProvider format = null)
+      static void Test(bool result, string text, IFormatProvider format = null)
       {
         text.ToDecimal(out var value, format).Should().Be(result);
 
@@ -3277,7 +3277,7 @@ public sealed class StringExtensionsTest
       Enum.GetNames<DayOfWeek>().Select(day => day.ToLower().ToEnum<DayOfWeek>()).Should().Equal(Enum.GetValues<DayOfWeek>());
       Enum.GetNames<DayOfWeek>().Select(day => day.ToUpper().ToEnum<DayOfWeek>()).Should().Equal(Enum.GetValues<DayOfWeek>());
 
-      static void Validate()
+      static void Test()
       {
 
       }
@@ -3312,7 +3312,7 @@ public sealed class StringExtensionsTest
         result.Should().Be(Enum.Parse<DayOfWeek>(day));
       });
 
-      static void Validate()
+      static void Test()
       {
 
       }
@@ -3337,29 +3337,29 @@ public sealed class StringExtensionsTest
 
       new[] { Guid.Empty, Guid.NewGuid() }.ForEach(guid =>
       {
-        Validate(guid.ToString());
-        Validate(guid.ToString().ToLowerInvariant());
-        Validate(guid.ToString().ToUpperInvariant());
-        Validate(guid.ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty));
+        Test(guid.ToString());
+        Test(guid.ToString().ToLowerInvariant());
+        Test(guid.ToString().ToUpperInvariant());
+        Test(guid.ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty));
       });
 
-      static void Validate(string text) => text.ToGuid().Should().Be(Guid.Parse(text));
+      static void Test(string text) => text.ToGuid().Should().Be(Guid.Parse(text));
     }
 
     using (new AssertionScope())
     {
-      Validate(false, string.Empty);
-      Validate(false, "invalid");
+      Test(false, string.Empty);
+      Test(false, "invalid");
 
       new[] { Guid.Empty, Guid.NewGuid() }.ForEach(guid =>
       {
-        Validate(true, guid.ToString());
-        Validate(true, guid.ToString().ToLowerInvariant());
-        Validate(true, guid.ToString().ToUpperInvariant());
-        Validate(true, guid.ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty));
+        Test(true, guid.ToString());
+        Test(true, guid.ToString().ToLowerInvariant());
+        Test(true, guid.ToString().ToUpperInvariant());
+        Test(true, guid.ToString().Replace("-", string.Empty).Replace("{", string.Empty).Replace("}", string.Empty));
       });
 
-      static void Validate(bool result, string text)
+      static void Test(bool result, string text)
       {
         text.ToGuid(out var guid).Should().Be(result);
 
@@ -3425,7 +3425,7 @@ public sealed class StringExtensionsTest
       uri.UserEscaped.Should().BeFalse();
       uri.UserInfo.Should().Be("user:password");
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -3476,7 +3476,7 @@ public sealed class StringExtensionsTest
       result.UserEscaped.Should().BeFalse();
       result.UserInfo.Should().Be("user:password");
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -3511,7 +3511,7 @@ public sealed class StringExtensionsTest
         type.AssemblyQualifiedName.ToType().Should().BeOfType<Type>().And.Be(type);
       });
 
-      static void Validate()
+      static void Test()
       {
 
       }
@@ -3546,7 +3546,7 @@ public sealed class StringExtensionsTest
         result.Should().BeOfType<Type>().And.Be(typeInfo);
       });
 
-      static void Validate()
+      static void Test()
       {
 
       }
@@ -3569,11 +3569,11 @@ public sealed class StringExtensionsTest
 
       new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
       {
-        Validate(date, null);
-        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(date, culture));
+        Test(date, null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Test(date, culture));
       });
 
-      static void Validate(DateTime date, IFormatProvider format)
+      static void Test(DateTime date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3588,11 +3588,11 @@ public sealed class StringExtensionsTest
     {
       new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
       {
-        Validate(date, null);
-        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(date, culture));
+        Test(date, null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Test(date, culture));
       });
 
-      static void Validate(DateTime date, IFormatProvider format)
+      static void Test(DateTime date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3627,11 +3627,11 @@ public sealed class StringExtensionsTest
 
       new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
       {
-        Validate(date, null);
-        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(date, culture));
+        Test(date, null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Test(date, culture));
       });
 
-      static void Validate(DateTimeOffset date, IFormatProvider format)
+      static void Test(DateTimeOffset date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3646,11 +3646,11 @@ public sealed class StringExtensionsTest
     {
       new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
       {
-        Validate(date, null);
-        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Validate(date, culture));
+        Test(date, null);
+        CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Test(date, culture));
       });
 
-      static void Validate(DateTimeOffset date, IFormatProvider format)
+      static void Test(DateTimeOffset date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3685,11 +3685,11 @@ public sealed class StringExtensionsTest
 
       new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() }.ForEach(date =>
       {
-        Validate(date, null);
-        Validate(date, CultureInfo.InvariantCulture);
+        Test(date, null);
+        Test(date, CultureInfo.InvariantCulture);
       });
 
-      static void Validate(DateOnly date, IFormatProvider format)
+      static void Test(DateOnly date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3704,11 +3704,11 @@ public sealed class StringExtensionsTest
     {
       new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() }.ForEach(date =>
       {
-        Validate(date, null);
-        Validate(date, CultureInfo.InvariantCulture);
+        Test(date, null);
+        Test(date, CultureInfo.InvariantCulture);
       });
 
-      static void Validate(DateOnly date, IFormatProvider format)
+      static void Test(DateOnly date, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3743,11 +3743,11 @@ public sealed class StringExtensionsTest
 
       new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() }.ForEach(time =>
       {
-        Validate(time, null);
-        Validate(time, CultureInfo.InvariantCulture);
+        Test(time, null);
+        Test(time, CultureInfo.InvariantCulture);
       });
 
-      static void Validate(TimeOnly time, IFormatProvider format)
+      static void Test(TimeOnly time, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3762,11 +3762,11 @@ public sealed class StringExtensionsTest
     {
       new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() }.ForEach(date =>
       {
-        Validate(date, null);
-        Validate(date, CultureInfo.InvariantCulture);
+        Test(date, null);
+        Test(date, CultureInfo.InvariantCulture);
       });
 
-      static void Validate(TimeOnly time, IFormatProvider format)
+      static void Test(TimeOnly time, IFormatProvider format)
       {
         format ??= CultureInfo.InvariantCulture;
 
@@ -3817,7 +3817,7 @@ public sealed class StringExtensionsTest
         file.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
       });
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -3843,7 +3843,7 @@ public sealed class StringExtensionsTest
         info.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
       });
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -3878,7 +3878,7 @@ public sealed class StringExtensionsTest
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
       directory.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -3898,7 +3898,7 @@ public sealed class StringExtensionsTest
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
       directory.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
 
-      static void Validate(string text)
+      static void Test(string text)
       {
 
       }
@@ -3920,7 +3920,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string result, string text)
+    static void Test(string result, string text)
     {
 
     }
@@ -3947,7 +3947,7 @@ public sealed class StringExtensionsTest
         ip.ToString().ToIpAddress().Should().BeOfType<IPAddress>().And.Be(ip);
       });
 
-      static void Validate(string text)
+      static void Test(string text)
       {
       }
     }
@@ -3969,7 +3969,7 @@ public sealed class StringExtensionsTest
         result.Should().BeOfType<IPAddress>().And.Be(ip);
       });
 
-      static void Validate(string text)
+      static void Test(string text)
       {
       }
     }
@@ -3990,7 +3990,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
 
     }
@@ -4006,13 +4006,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToRegex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate("[a-z]*");
+      Test(string.Empty);
+      Test("[a-z]*");
     }
 
     return;
 
-    static void Validate(string text, RegexOptions options = RegexOptions.None)
+    static void Test(string text, RegexOptions options = RegexOptions.None)
     {
       var regex = text.ToRegex(options);
 
@@ -4034,13 +4034,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToStringBuilder(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate(Fixture.Create<string>());
+      Test(string.Empty);
+      Test(Fixture.Create<string>());
     }
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
       var builder = text.ToStringBuilder();
 
@@ -4062,13 +4062,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToStringReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate(Fixture.Create<string>());
+      Test(string.Empty);
+      Test(Fixture.Create<string>());
     }
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
       using var reader = text.ToStringReader();
       reader.Should().BeOfType<StringReader>();
@@ -4088,14 +4088,14 @@ public sealed class StringExtensionsTest
 
       Encoding.GetEncodings().ForEach(encoding =>
       {
-        Validate(string.Empty);
-        Validate(Fixture.Create<string>(), encoding.GetEncoding(), "application/json");
+        Test(string.Empty);
+        Test(Fixture.Create<string>(), encoding.GetEncoding(), "application/json");
       });
     }
 
     return;
 
-    static void Validate(string text, Encoding encoding = null, string contentType = null)
+    static void Test(string text, Encoding encoding = null, string contentType = null)
     {
       using var content = text.ToStringContent(encoding, contentType);
 
@@ -4120,7 +4120,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
 
     }
@@ -4141,7 +4141,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
 
     }
@@ -4171,7 +4171,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
 
     }
@@ -4192,7 +4192,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
 
     }
@@ -4214,7 +4214,7 @@ public sealed class StringExtensionsTest
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
 
     }
@@ -4230,13 +4230,13 @@ public sealed class StringExtensionsTest
     {
       AssertionExtensions.Should(() => StringExtensions.ToProcess(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate(this.ShellCommand());
+      Test(string.Empty);
+      Test(this.ShellCommand());
     }
 
     return;
 
-    static void Validate(string text, ProcessStartInfo info = null)
+    static void Test(string text, ProcessStartInfo info = null)
     {
       using var process = text.ToProcess(info);
 

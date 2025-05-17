@@ -24,7 +24,7 @@ public sealed class HttpContentExtensionsTest
 
     return;
 
-    static void Validate(HttpContent content)
+    static void Test(HttpContent content)
     {
       using (content)
       {
@@ -49,7 +49,7 @@ public sealed class HttpContentExtensionsTest
 
     return;
 
-    static void Validate(HttpContent content)
+    static void Test(HttpContent content)
     {
       using (content)
       {
@@ -70,13 +70,13 @@ public sealed class HttpContentExtensionsTest
 
       new[] { [], this.RandomBytes() }.ForEach(bytes =>
       {
-        Validate(bytes, new ByteArrayContent(bytes));
+        Test(bytes, new ByteArrayContent(bytes));
       });
     }
 
     return;
 
-    static void Validate(IEnumerable<byte> result, HttpContent content)
+    static void Test(IEnumerable<byte> result, HttpContent content)
     {
       using (content)
       {
@@ -97,13 +97,13 @@ public sealed class HttpContentExtensionsTest
 
       new[] { [], this.RandomBytes() }.ForEach(bytes =>
       {
-        Validate(bytes, new ByteArrayContent(bytes));
+        Test(bytes, new ByteArrayContent(bytes));
       });
     }
 
     return;
 
-    static void Validate(IEnumerable<byte> result, HttpContent content)
+    static void Test(IEnumerable<byte> result, HttpContent content)
     {
       using (content)
       {
@@ -126,13 +126,13 @@ public sealed class HttpContentExtensionsTest
 
       new[] { string.Empty, Fixture.Create<string>() }.ForEach(text =>
       {
-        Validate(text, new StringContent(text));
+        Test(text, new StringContent(text));
       });
     }
 
     return;
 
-    static void Validate(string result, HttpContent content)
+    static void Test(string result, HttpContent content)
     {
       using (content)
       {
@@ -154,13 +154,13 @@ public sealed class HttpContentExtensionsTest
 
       new[] { string.Empty, Fixture.Create<string>() }.ForEach(text =>
       {
-        Validate(text, new StringContent(text));
+        Test(text, new StringContent(text));
       });
     }
 
     return;
 
-    static void Validate(string result, HttpContent content)
+    static void Test(string result, HttpContent content)
     {
       using (content)
       {

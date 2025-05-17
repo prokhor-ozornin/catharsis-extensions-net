@@ -21,15 +21,15 @@ public sealed class TextReaderExtensionsTest
       AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
 
-      Validate(Stream.Null.ToStreamReader());
-      Validate(this.EmptyStream().ToStreamReader());
-      Validate(this.RandomStream().ToStreamReader());
-      Validate(this.RandomReadOnlyStream().ToStreamReader());
+      Test(Stream.Null.ToStreamReader());
+      Test(this.EmptyStream().ToStreamReader());
+      Test(this.RandomStream().ToStreamReader());
+      Test(this.RandomReadOnlyStream().ToStreamReader());
     }
 
     return;
 
-    static void Validate(StreamReader reader)
+    static void Test(StreamReader reader)
     {
       using (reader)
       {
@@ -57,7 +57,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(TextReader reader, int count)
+    static void Test(TextReader reader, int count)
     {
       using (reader)
       {
@@ -81,7 +81,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(string[] result, TextReader reader)
+    static void Test(string[] result, TextReader reader)
     {
       using (reader)
       {
@@ -105,7 +105,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(string[] result, TextReader reader)
+    static void Test(string[] result, TextReader reader)
     {
       using (reader)
       {
@@ -124,13 +124,13 @@ public sealed class TextReaderExtensionsTest
     {
       AssertionExtensions.Should(() => ((TextReader) null).AsSynchronized()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Validate(this.EmptyTextReader());
-      Validate(Fixture.Create<string>().ToStringReader());
+      Test(this.EmptyTextReader());
+      Test(Fixture.Create<string>().ToStringReader());
     }
 
     return;
 
-    static void Validate(TextReader reader)
+    static void Test(TextReader reader)
     {
       using var synchronized = reader.AsSynchronized();
 
@@ -154,7 +154,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(TextReader reader)
+    static void Test(TextReader reader)
     {
       using (reader)
       {
@@ -192,7 +192,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(TextReader reader)
+    static void Test(TextReader reader)
     {
       using (reader)
       {
@@ -215,7 +215,7 @@ public sealed class TextReaderExtensionsTest
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      static void Validate(TextReader reader)
+      static void Test(TextReader reader)
       {
         using (reader)
         {
@@ -229,7 +229,7 @@ public sealed class TextReaderExtensionsTest
       AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      static void Validate(TextReader reader, int count)
+      static void Test(TextReader reader, int count)
       {
         using (reader)
         {
@@ -255,7 +255,7 @@ public sealed class TextReaderExtensionsTest
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
-      static void Validate(TextReader reader)
+      static void Test(TextReader reader)
       {
         using (reader)
         {
@@ -269,7 +269,7 @@ public sealed class TextReaderExtensionsTest
       AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToAsyncEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      static void Validate(TextReader reader, int count)
+      static void Test(TextReader reader, int count)
       {
         using (reader)
         {
@@ -296,7 +296,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, TextReader reader, Encoding encoding = null)
+    static void Test(byte[] result, TextReader reader, Encoding encoding = null)
     {
       using (reader)
       {
@@ -320,7 +320,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, TextReader reader, Encoding encoding = null)
+    static void Test(byte[] result, TextReader reader, Encoding encoding = null)
     {
       using (reader)
       {
@@ -346,7 +346,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(string result, TextReader reader)
+    static void Test(string result, TextReader reader)
     {
       using (reader)
       {
@@ -365,13 +365,13 @@ public sealed class TextReaderExtensionsTest
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
-      Validate(string.Empty, this.EmptyTextReader());
-      Fixture.Create<string>().With(text => Validate(text, text.ToStringReader()));
+      Test(string.Empty, this.EmptyTextReader());
+      Fixture.Create<string>().With(text => Test(text, text.ToStringReader()));
     }
 
     return;
 
-    static void Validate(string result, TextReader reader)
+    static void Test(string result, TextReader reader)
     {
       using (reader)
       {
@@ -420,7 +420,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(TextReader reader)
+    static void Test(TextReader reader)
     {
       using (reader)
       {
@@ -444,7 +444,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(TextReader reader)
+    static void Test(TextReader reader)
     {
       using (reader)
       {
@@ -482,7 +482,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(TextReader reader)
+    static void Test(TextReader reader)
     {
       using (reader)
       {
@@ -506,7 +506,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(TextReader reader)
+    static void Test(TextReader reader)
     {
       using (reader)
       {
@@ -545,7 +545,7 @@ public sealed class TextReaderExtensionsTest
 
     return;
 
-    static void Validate(TextReader reader)
+    static void Test(TextReader reader)
     {
       using (reader)
       {
@@ -562,14 +562,14 @@ public sealed class TextReaderExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, string.Empty.ToStringReader());
-      Validate(true, new StringReader(char.MinValue.ToString()));
+      Test(false, null);
+      Test(false, string.Empty.ToStringReader());
+      Test(true, new StringReader(char.MinValue.ToString()));
     }
 
     return;
 
-    static void Validate(bool result, TextReader reader)
+    static void Test(bool result, TextReader reader)
     {
       using (reader)
       {

@@ -20,8 +20,8 @@ public sealed class ICollectionExtensionsTest
       AssertionExtensions.Should(() => ICollectionExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
 
-      Validate(Array.Empty<object>().ToList());
-      Validate(this.RandomObjects().ToList());
+      Test(Array.Empty<object>().ToList());
+      Test(this.RandomObjects().ToList());
     }
 
     return;
@@ -41,7 +41,7 @@ public sealed class ICollectionExtensionsTest
       AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
       AssertionExtensions.Should(() => Array.Empty<object>().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
-      Validate(new List<object>(), new object());
+      Test(new List<object>(), new object());
     }
 
     return;

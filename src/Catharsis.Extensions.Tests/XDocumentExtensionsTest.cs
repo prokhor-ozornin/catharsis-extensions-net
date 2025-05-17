@@ -20,16 +20,16 @@ public sealed class XDocumentExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(true, null);
-      Validate(true, new XDocument());
-      Validate(false, new XDocument(new XComment("comment")));
-      Validate(false, new XDocument(new XProcessingInstruction("target", "data")));
-      Validate(false, new XDocument(new XElement("element")));
+      Test(true, null);
+      Test(true, new XDocument());
+      Test(false, new XDocument(new XComment("comment")));
+      Test(false, new XDocument(new XProcessingInstruction("target", "data")));
+      Test(false, new XDocument(new XElement("element")));
     }
 
     return;
 
-    static void Validate(bool result, XDocument document) => document.IsUnset().Should().Be(document is null || document.IsEmpty()).And.Be(result);
+    static void Test(bool result, XDocument document) => document.IsUnset().Should().Be(document is null || document.IsEmpty()).And.Be(result);
   }
 
   /// <summary>
@@ -42,15 +42,15 @@ public sealed class XDocumentExtensionsTest
     {
       AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
-      Validate(true, new XDocument());
-      Validate(false, new XDocument(new XComment("comment")));
-      Validate(false, new XDocument(new XProcessingInstruction("target", "data")));
-      Validate(false, new XDocument(new XElement("element")));
+      Test(true, new XDocument());
+      Test(false, new XDocument(new XComment("comment")));
+      Test(false, new XDocument(new XProcessingInstruction("target", "data")));
+      Test(false, new XDocument(new XElement("element")));
     }
 
     return;
 
-    static void Validate(bool result, XDocument document) => document.IsEmpty().Should().Be(result);
+    static void Test(bool result, XDocument document) => document.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -63,13 +63,13 @@ public sealed class XDocumentExtensionsTest
     {
       AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
-      Validate(new XDocument());
-      Validate(new XDocument(new XElement("root")));
+      Test(new XDocument());
+      Test(new XDocument(new XElement("root")));
     }
 
     return;
 
-    static void Validate(XDocument document)
+    static void Test(XDocument document)
     {
       document.Empty().Should().BeOfType<XDocument>().And.BeSameAs(document);
       document.Nodes().Should().BeEmpty();
@@ -87,12 +87,12 @@ public sealed class XDocumentExtensionsTest
       AssertionExtensions.Should(() => XDocumentExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().Clone()).ThrowExactly<XmlException>();
 
-      Validate(new XDocument().With(new XElement("root", new XAttribute("id", Guid.NewGuid()))));
+      Test(new XDocument().With(new XElement("root", new XAttribute("id", Guid.NewGuid()))));
     }
 
     return;
 
-    static void Validate(XDocument original)
+    static void Test(XDocument original)
     {
       var clone = original.Clone();
 
@@ -116,12 +116,12 @@ public sealed class XDocumentExtensionsTest
       AssertionExtensions.Should(() => ((XDocument) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      Validate(new XDocument(), new XElement("root"));
+      Test(new XDocument(), new XElement("root"));
     }
 
     return;
 
-    static void Validate(XDocument document, params object[] nodes)
+    static void Test(XDocument document, params object[] nodes)
     {
       document.TryFinallyClear(document => document.With(nodes)).Should().BeOfType<XDocument>().And.BeSameAs(document);
       document.Nodes().Should().BeEmpty();
@@ -143,7 +143,7 @@ public sealed class XDocumentExtensionsTest
       AssertionExtensions.Should(() => XDocumentExtensions.With(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -153,7 +153,7 @@ public sealed class XDocumentExtensionsTest
       AssertionExtensions.Should(() => XDocumentExtensions.With(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -177,7 +177,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(XDocument document)
+    static void Test(XDocument document)
     {
     }
   }
@@ -198,7 +198,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(XDocument document)
+    static void Test(XDocument document)
     {
     }
   }
@@ -219,7 +219,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(XDocument document, Stream stream, Encoding encoding = null)
+    static void Test(XDocument document, Stream stream, Encoding encoding = null)
     {
     }
   }
@@ -240,7 +240,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(XDocument document, FileInfo file, Encoding encoding = null)
+    static void Test(XDocument document, FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -260,7 +260,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(XDocument document)
+    static void Test(XDocument document)
     {
     }
   }
@@ -280,7 +280,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(XDocument document)
+    static void Test(XDocument document)
     {
     }
   }
@@ -300,7 +300,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, XDocument document) => document.ToBytes().Should().BeOfType<byte[]>().And.Equal(result);
+    static void Test(byte[] result, XDocument document) => document.ToBytes().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -319,7 +319,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, XDocument document)
+    static void Test(byte[] result, XDocument document)
     {
       var task = document.ToBytesAsync();
       task.Should().BeAssignableTo<Task<byte[]>>();
@@ -342,7 +342,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(string result, XDocument document) => document.ToText().Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, XDocument document) => document.ToText().Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -361,7 +361,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(string result, XDocument document)
+    static void Test(string result, XDocument document)
     {
       var task = document.ToTextAsync();
       task.Should().BeAssignableTo<Task<string>>();
@@ -384,7 +384,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(XDocument document)
+    static void Test(XDocument document)
     {
     }
   }
@@ -404,7 +404,7 @@ public sealed class XDocumentExtensionsTest
 
     return;
 
-    static void Validate(XDocument document)
+    static void Test(XDocument document)
     {
     }
   }

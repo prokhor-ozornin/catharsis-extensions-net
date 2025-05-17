@@ -46,7 +46,7 @@ public sealed class SocketExtensionsTest
 
     return;
 
-    static void Validate(Socket socket, TimeSpan? timeout = null)
+    static void Test(Socket socket, TimeSpan? timeout = null)
     {
       using (socket)
       {
@@ -75,7 +75,7 @@ public sealed class SocketExtensionsTest
 
     return;
 
-    static void Validate(Socket socket)
+    static void Test(Socket socket)
     {
       using (socket)
       {

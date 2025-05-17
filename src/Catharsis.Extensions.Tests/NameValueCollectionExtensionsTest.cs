@@ -20,13 +20,13 @@ public sealed class NameValueCollectionExtensionsTest
     {
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
-      Validate([]);
-      Validate(new NameValueCollection().With(this.RandomObjects().Select(element => (element.GetType().FullName, element))));
+      Test([]);
+      Test(new NameValueCollection().With(this.RandomObjects().Select(element => (element.GetType().FullName, element))));
     }
 
     return;
 
-    static void Validate(NameValueCollection collection)
+    static void Test(NameValueCollection collection)
     {
       collection.Empty().Should().BeOfType<NameValueCollection>().And.BeSameAs(collection);
       collection.Count.Should().Be(0);
@@ -44,13 +44,13 @@ public sealed class NameValueCollectionExtensionsTest
     {
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
-      Validate([]);
-      Validate(new NameValueCollection().With(("id", Guid.NewGuid())));
+      Test([]);
+      Test(new NameValueCollection().With(("id", Guid.NewGuid())));
     }
 
     return;
 
-    static void Validate(NameValueCollection original)
+    static void Test(NameValueCollection original)
     {
       var clone = original.Clone();
 
@@ -78,7 +78,7 @@ public sealed class NameValueCollectionExtensionsTest
 
     return;
 
-    static void Validate(NameValueCollection collection)
+    static void Test(NameValueCollection collection)
     {
     }
   }
@@ -98,7 +98,7 @@ public sealed class NameValueCollectionExtensionsTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.With(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().With((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate(NameValueCollection collection)
+      static void Test(NameValueCollection collection)
       {
       }
     }
@@ -108,7 +108,7 @@ public sealed class NameValueCollectionExtensionsTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.With(null, Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate(NameValueCollection collection)
+      static void Test(NameValueCollection collection)
       {
       }
     }
@@ -131,7 +131,7 @@ public sealed class NameValueCollectionExtensionsTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Without(null, Enumerable.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().Without((IEnumerable<string>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate(NameValueCollection collection, IEnumerable<string> elements)
+      static void Test(NameValueCollection collection, IEnumerable<string> elements)
       {
       }
     }
@@ -141,7 +141,7 @@ public sealed class NameValueCollectionExtensionsTest
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Without(null, Array.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate(NameValueCollection collection, params string[] elements)
+      static void Test(NameValueCollection collection, params string[] elements)
       {
       }
     }
@@ -164,7 +164,7 @@ public sealed class NameValueCollectionExtensionsTest
 
     return;
 
-    static void Validate(NameValueCollection collection)
+    static void Test(NameValueCollection collection)
     {
     }
   }
@@ -184,7 +184,7 @@ public sealed class NameValueCollectionExtensionsTest
 
     return;
 
-    static void Validate(NameValueCollection collection)
+    static void Test(NameValueCollection collection)
     {
     }
   }
@@ -204,7 +204,7 @@ public sealed class NameValueCollectionExtensionsTest
 
     return;
 
-    static void Validate(NameValueCollection collection)
+    static void Test(NameValueCollection collection)
     {
     }
   }

@@ -20,15 +20,15 @@ public sealed class StreamReaderExtensionsTest
       AssertionExtensions.Should(() => ((StreamReader) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().ToStreamReader().IsStart()).ThrowExactly<NotSupportedException>();
 
-      Validate(Stream.Null.ToStreamReader());
-      Validate(this.EmptyStream().ToStreamReader());
-      Validate(this.RandomStream().ToStreamReader());
-      Validate(this.RandomReadOnlyStream().ToStreamReader());
+      Test(Stream.Null.ToStreamReader());
+      Test(this.EmptyStream().ToStreamReader());
+      Test(this.RandomStream().ToStreamReader());
+      Test(this.RandomReadOnlyStream().ToStreamReader());
     }
 
     return;
 
-    static void Validate(StreamReader reader)
+    static void Test(StreamReader reader)
     {
       using (reader)
       {
@@ -50,13 +50,13 @@ public sealed class StreamReaderExtensionsTest
     {
       AssertionExtensions.Should(() => ((StreamReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Validate(Stream.Null.ToStreamReader());
-      Validate(this.RandomStream().ToStreamReader());
+      Test(Stream.Null.ToStreamReader());
+      Test(this.RandomStream().ToStreamReader());
     }
 
     return;
 
-    static void Validate(StreamReader reader)
+    static void Test(StreamReader reader)
     {
       using (reader)
       {
@@ -75,17 +75,17 @@ public sealed class StreamReaderExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(true, null);
-      Validate(true, Stream.Null.ToStreamReader());
-      Validate(true, this.EmptyStream().ToStreamReader());
-      Validate(false, this.RandomStream().ToStreamReader());
-      Validate(false, this.RandomReadOnlyStream().ToStreamReader());
-      Validate(false, this.RandomReadOnlyForwardStream().ToStreamReader());
+      Test(true, null);
+      Test(true, Stream.Null.ToStreamReader());
+      Test(true, this.EmptyStream().ToStreamReader());
+      Test(false, this.RandomStream().ToStreamReader());
+      Test(false, this.RandomReadOnlyStream().ToStreamReader());
+      Test(false, this.RandomReadOnlyForwardStream().ToStreamReader());
     }
 
     return;
 
-    static void Validate(bool result, StreamReader reader)
+    static void Test(bool result, StreamReader reader)
     {
       using (reader)
       {
@@ -104,16 +104,16 @@ public sealed class StreamReaderExtensionsTest
     {
       AssertionExtensions.Should(() => ((StreamReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Validate(true, Stream.Null.ToStreamReader());
-      Validate(true, this.EmptyStream().ToStreamReader());
-      Validate(false, this.RandomStream().ToStreamReader());
-      Validate(false, this.RandomReadOnlyStream().ToStreamReader());
-      Validate(false, this.RandomReadOnlyForwardStream().ToStreamReader());
+      Test(true, Stream.Null.ToStreamReader());
+      Test(true, this.EmptyStream().ToStreamReader());
+      Test(false, this.RandomStream().ToStreamReader());
+      Test(false, this.RandomReadOnlyStream().ToStreamReader());
+      Test(false, this.RandomReadOnlyForwardStream().ToStreamReader());
     }
 
     return;
 
-    static void Validate(bool result, StreamReader reader)
+    static void Test(bool result, StreamReader reader)
     {
       using (reader)
       {
@@ -132,13 +132,13 @@ public sealed class StreamReaderExtensionsTest
     {
       AssertionExtensions.Should(() => ((StreamReader) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Validate(Stream.Null.ToStreamReader());
-      Validate(this.RandomStream().ToStreamReader());
+      Test(Stream.Null.ToStreamReader());
+      Test(this.RandomStream().ToStreamReader());
     }
 
     return;
 
-    static void Validate(StreamReader reader)
+    static void Test(StreamReader reader)
     {
       using (reader)
       {
@@ -159,14 +159,14 @@ public sealed class StreamReaderExtensionsTest
     {
       AssertionExtensions.Should(() => StreamReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Validate(Stream.Null.ToStreamReader());
-      Validate(this.EmptyStream().ToStreamReader());
-      Validate(this.RandomStream().ToStreamReader());
+      Test(Stream.Null.ToStreamReader());
+      Test(this.EmptyStream().ToStreamReader());
+      Test(this.RandomStream().ToStreamReader());
     }
 
     return;
 
-    static void Validate(StreamReader original)
+    static void Test(StreamReader original)
     {
       using (original)
       {

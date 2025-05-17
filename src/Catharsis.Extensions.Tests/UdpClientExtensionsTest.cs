@@ -26,7 +26,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(bool result, UdpClient client) => client.IsUnset().Should().Be(result);
+    static void Test(bool result, UdpClient client) => client.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -44,7 +44,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(bool result, UdpClient client) => client.IsEmpty().Should().Be(result);
+    static void Test(bool result, UdpClient client) => client.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -84,7 +84,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(UdpClient client, TimeSpan? timespan, TimeSpan? timeout)
+    static void Test(UdpClient client, TimeSpan? timespan, TimeSpan? timeout)
     {
       using (client)
       {
@@ -109,7 +109,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(UdpClient client)
+    static void Test(UdpClient client)
     {
       using (client)
       {
@@ -134,7 +134,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(UdpClient client, byte[] bytes)
+    static void Test(UdpClient client, byte[] bytes)
     {
       using (client)
       {
@@ -160,7 +160,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(UdpClient client, byte[] bytes)
+    static void Test(UdpClient client, byte[] bytes)
     {
       using (client)
       {
@@ -185,7 +185,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(UdpClient client, string text, Encoding encoding = null)
+    static void Test(UdpClient client, string text, Encoding encoding = null)
     {
       using (client)
       {
@@ -211,7 +211,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(UdpClient client, string text, Encoding encoding = null)
+    static void Test(UdpClient client, string text, Encoding encoding = null)
     {
       using (client)
       {
@@ -235,7 +235,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(UdpClient client)
+    static void Test(UdpClient client)
     {
       using (client)
       {
@@ -259,7 +259,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(UdpClient client)
+    static void Test(UdpClient client)
     {
       using (client)
       {
@@ -283,7 +283,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, UdpClient client)
+    static void Test(byte[] result, UdpClient client)
     {
       using (client)
       {
@@ -307,7 +307,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, UdpClient client)
+    static void Test(byte[] result, UdpClient client)
     {
       using (client)
       {
@@ -331,7 +331,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(string result, UdpClient client, Encoding encoding = null)
+    static void Test(string result, UdpClient client, Encoding encoding = null)
     {
       using (client)
       {
@@ -355,7 +355,7 @@ public sealed class UdpClientExtensionsTest
 
     return;
 
-    static void Validate(string result, UdpClient client, Encoding encoding = null)
+    static void Test(string result, UdpClient client, Encoding encoding = null)
     {
       using (client)
       {

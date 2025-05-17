@@ -19,21 +19,21 @@ public sealed class XmlDocumentExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(true, null);
-      Validate(true, new XmlDocument());
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateComment(null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateDocumentType("name", null, null, null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateElement("element"))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateProcessingInstruction("target", "data"))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateSignificantWhitespace(null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateWhitespace(null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateXmlDeclaration("1.0", null, null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateDocumentFragment())));
+      Test(true, null);
+      Test(true, new XmlDocument());
+      Test(true, new XmlDocument().With(document => document.With(document.CreateComment(null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateDocumentType("name", null, null, null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateElement("element"))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateProcessingInstruction("target", "data"))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateSignificantWhitespace(null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateWhitespace(null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateXmlDeclaration("1.0", null, null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateDocumentFragment())));
     }
 
     return;
 
-    static void Validate(bool result, XmlDocument document) => document.IsUnset().Should().Be(document is null || document.IsEmpty()).And.Be(result);
+    static void Test(bool result, XmlDocument document) => document.IsUnset().Should().Be(document is null || document.IsEmpty()).And.Be(result);
   }
 
   /// <summary>
@@ -46,20 +46,20 @@ public sealed class XmlDocumentExtensionsTest
     {
       AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
-      Validate(true, new XmlDocument());
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateComment(null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateDocumentType("name", null, null, null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateElement("element"))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateProcessingInstruction("target", "data"))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateSignificantWhitespace(null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateWhitespace(null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateXmlDeclaration("1.0", null, null))));
-      Validate(true, new XmlDocument().With(document => document.With(document.CreateDocumentFragment())));
+      Test(true, new XmlDocument());
+      Test(true, new XmlDocument().With(document => document.With(document.CreateComment(null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateDocumentType("name", null, null, null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateElement("element"))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateProcessingInstruction("target", "data"))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateSignificantWhitespace(null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateWhitespace(null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateXmlDeclaration("1.0", null, null))));
+      Test(true, new XmlDocument().With(document => document.With(document.CreateDocumentFragment())));
     }
 
     return;
 
-    static void Validate(bool result, XmlDocument document) => document.IsEmpty().Should().Be(result);
+    static void Test(bool result, XmlDocument document) => document.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -72,13 +72,13 @@ public sealed class XmlDocumentExtensionsTest
     {
       AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
-      Validate(new XmlDocument());
-      Validate(new XmlDocument().With(document => document.With(document.CreateElement("root"))));
+      Test(new XmlDocument());
+      Test(new XmlDocument().With(document => document.With(document.CreateElement("root"))));
     }
 
     return;
 
-    static void Validate(XmlDocument document)
+    static void Test(XmlDocument document)
     {
       document.Empty().Should().BeOfType<XmlDocument>().And.BeSameAs(document);
       document.HasChildNodes.Should().BeFalse();
@@ -101,7 +101,7 @@ public sealed class XmlDocumentExtensionsTest
 
     return;
 
-    static void Validate(XmlDocument original)
+    static void Test(XmlDocument original)
     {
       var clone = original.Clone();
 
@@ -126,12 +126,12 @@ public sealed class XmlDocumentExtensionsTest
       AssertionExtensions.Should(() => ((XmlDocument) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
       AssertionExtensions.Should(() => new XmlDocument().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      new XmlDocument().With(document => Validate(document, document.CreateElement("root")));
+      new XmlDocument().With(document => Test(document, document.CreateElement("root")));
     }
 
     return;
 
-    static void Validate(XmlDocument document, params XmlNode[] nodes)
+    static void Test(XmlDocument document, params XmlNode[] nodes)
     {
       document.TryFinallyClear(xml => xml.With(nodes)).Should().BeOfType<XmlDocument>().And.BeSameAs(document);
       document.ChildNodes.Count.Should().Be(0);
@@ -153,7 +153,7 @@ public sealed class XmlDocumentExtensionsTest
       AssertionExtensions.Should(() => XmlDocumentExtensions.With(null, Enumerable.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().With((IEnumerable<XmlNode>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -163,7 +163,7 @@ public sealed class XmlDocumentExtensionsTest
       AssertionExtensions.Should(() => XmlDocumentExtensions.With(null, Array.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -186,7 +186,7 @@ public sealed class XmlDocumentExtensionsTest
       AssertionExtensions.Should(() => XmlDocumentExtensions.Without(null, Enumerable.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().Without((IEnumerable<XmlNode>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -196,7 +196,7 @@ public sealed class XmlDocumentExtensionsTest
       AssertionExtensions.Should(() => XmlDocumentExtensions.Without(null, Array.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -220,7 +220,7 @@ public sealed class XmlDocumentExtensionsTest
 
     return;
 
-    static void Validate(XmlDocument document, XmlWriter writer)
+    static void Test(XmlDocument document, XmlWriter writer)
     {
     }
   }
@@ -241,7 +241,7 @@ public sealed class XmlDocumentExtensionsTest
 
     return;
 
-    static void Validate(XmlDocument document, TextWriter writer)
+    static void Test(XmlDocument document, TextWriter writer)
     {
     }
   }
@@ -262,7 +262,7 @@ public sealed class XmlDocumentExtensionsTest
 
     return;
 
-    static void Validate(XmlDocument document, Stream stream, Encoding encoding = null)
+    static void Test(XmlDocument document, Stream stream, Encoding encoding = null)
     {
     }
   }
@@ -283,7 +283,7 @@ public sealed class XmlDocumentExtensionsTest
 
     return;
 
-    static void Validate(XmlDocument document, FileInfo file, Encoding encoding = null)
+    static void Test(XmlDocument document, FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -303,7 +303,7 @@ public sealed class XmlDocumentExtensionsTest
 
     return;
 
-    static void Validate(XmlDocument document)
+    static void Test(XmlDocument document)
     {
     }
   }
@@ -323,7 +323,7 @@ public sealed class XmlDocumentExtensionsTest
 
     return;
 
-    static void Validate(XmlDocument document)
+    static void Test(XmlDocument document)
     {
     }
   }
@@ -343,7 +343,7 @@ public sealed class XmlDocumentExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, XmlDocument document) => document.ToBytes().Should().BeOfType<byte[]>().And.Equal(result);
+    static void Test(byte[] result, XmlDocument document) => document.ToBytes().Should().BeOfType<byte[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -361,6 +361,6 @@ public sealed class XmlDocumentExtensionsTest
 
     return;
 
-    static void Validate(string result, XmlDocument document) => document.ToText().Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, XmlDocument document) => document.ToText().Should().BeOfType<string>().And.Be(result);
   }
 }

@@ -77,7 +77,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -99,7 +99,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -148,7 +148,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(bool result, object instance) => instance.IsNull().Should().Be(result);
+    static void Test(bool result, object instance) => instance.IsNull().Should().Be(result);
   }
 
   /// <summary>
@@ -165,7 +165,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(bool result, object left, object right) => left.IsSameAs(right).Should().Be(result);
+    static void Test(bool result, object left, object right) => left.IsSameAs(right).Should().Be(result);
   }
 
   /// <summary>
@@ -315,7 +315,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -416,7 +416,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -451,7 +451,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -494,7 +494,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -525,7 +525,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -544,7 +544,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -586,7 +586,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -605,7 +605,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -624,7 +624,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -643,7 +643,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -698,7 +698,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -717,7 +717,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -736,7 +736,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -776,7 +776,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -808,7 +808,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -839,7 +839,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -859,7 +859,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance)
+    static void Test(object instance)
     {
     }
   }
@@ -880,7 +880,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance)
+    static void Test(object instance)
     {
     }
   }
@@ -901,7 +901,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, Stream stream, Encoding encoding = null)
+    static void Test(object instance, Stream stream, Encoding encoding = null)
     {
       using (stream)
       {
@@ -927,7 +927,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, Stream stream, Encoding encoding = null)
+    static void Test(object instance, Stream stream, Encoding encoding = null)
     {
       using (stream)
       {
@@ -952,7 +952,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, TextWriter writer)
+    static void Test(object instance, TextWriter writer)
     {
       using (writer)
       {
@@ -978,7 +978,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, TextWriter writer)
+    static void Test(object instance, TextWriter writer)
     {
       using (writer)
       {
@@ -1003,7 +1003,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, XmlWriter writer)
+    static void Test(object instance, XmlWriter writer)
     {
       using (writer)
       {
@@ -1028,7 +1028,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, XmlWriter writer)
+    static void Test(object instance, XmlWriter writer)
     {
       using (writer)
       {
@@ -1048,12 +1048,12 @@ public sealed class ObjectExtensionsTest
       AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().Print((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Validate(this.EmptyStream().ToBinaryWriter(), Fixture.Create<string>());
+      Test(this.EmptyStream().ToBinaryWriter(), Fixture.Create<string>());
     }
 
     return;
 
-    static void Validate(BinaryWriter writer, string text)
+    static void Test(BinaryWriter writer, string text)
     {
       using (writer)
       {
@@ -1082,7 +1082,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, FileInfo file, Encoding encoding = null)
+    static void Test(object instance, FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -1104,7 +1104,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, FileInfo file, Encoding encoding = null)
+    static void Test(object instance, FileInfo file, Encoding encoding = null)
     {
     }
   }
@@ -1125,7 +1125,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, Uri uri, Encoding encoding = null)
+    static void Test(object instance, Uri uri, Encoding encoding = null)
     {
     }
   }
@@ -1147,7 +1147,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, Uri uri, Encoding encoding = null)
+    static void Test(object instance, Uri uri, Encoding encoding = null)
     {
     }
   }
@@ -1166,7 +1166,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
 
@@ -1190,7 +1190,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, Process process)
+    static void Test(object instance, Process process)
     {
       using (process)
       {
@@ -1215,7 +1215,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, XmlWriter writer, params Type[] types)
+    static void Test(object instance, XmlWriter writer, params Type[] types)
     {
       using (writer)
       {
@@ -1240,7 +1240,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, TextWriter writer, params Type[] types)
+    static void Test(object instance, TextWriter writer, params Type[] types)
     {
       using (writer)
       {
@@ -1265,7 +1265,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, Stream stream, Encoding encoding = null, params Type[] types)
+    static void Test(object instance, Stream stream, Encoding encoding = null, params Type[] types)
     {
       using (stream)
       {
@@ -1290,7 +1290,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, FileInfo file, Encoding encoding = null, params Type[] types)
+    static void Test(object instance, FileInfo file, Encoding encoding = null, params Type[] types)
     {
     }
   }
@@ -1310,7 +1310,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, params Type[] types)
+    static void Test(object instance, params Type[] types)
     {
 
     }
@@ -1332,7 +1332,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, XmlWriter writer, params Type[] types)
+    static void Test(object instance, XmlWriter writer, params Type[] types)
     {
       using (writer)
       {
@@ -1357,7 +1357,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, TextWriter writer, params Type[] types)
+    static void Test(object instance, TextWriter writer, params Type[] types)
     {
       using (writer)
       {
@@ -1419,7 +1419,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, Stream stream, Encoding encoding = null, params Type[] types)
+    static void Test(object instance, Stream stream, Encoding encoding = null, params Type[] types)
     {
       using (stream)
       {
@@ -1444,7 +1444,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, FileInfo file, Encoding encoding = null, params Type[] types)
+    static void Test(object instance, FileInfo file, Encoding encoding = null, params Type[] types)
     {
     }
   }
@@ -1464,7 +1464,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate(object instance, params Type[] types)
+    static void Test(object instance, params Type[] types)
     {
     }
   }
@@ -1483,7 +1483,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1496,14 +1496,14 @@ public sealed class ObjectExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(string.Empty, null);
+      Test(string.Empty, null);
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Validate(string result, object instance, IFormatProvider provider = null, string format = null) => instance.ToFormattedString(provider, format).Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, object instance, IFormatProvider provider = null, string format = null) => instance.ToFormattedString(provider, format).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -1514,14 +1514,14 @@ public sealed class ObjectExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(string.Empty, null);
+      Test(string.Empty, null);
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Validate(string result, object instance, string format = null) => instance.ToInvariantString(format).Should().BeOfType<string>().And.Be(result);
+    static void Test(string result, object instance, string format = null) => instance.ToInvariantString(format).Should().BeOfType<string>().And.Be(result);
   }
 
   /// <summary>
@@ -1576,7 +1576,7 @@ public sealed class ObjectExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }

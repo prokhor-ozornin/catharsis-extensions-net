@@ -35,7 +35,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, TimeSpan? timeout)
+    static void Test(HttpClient client, TimeSpan? timeout)
     {
       using (client)
       {
@@ -79,7 +79,7 @@ public sealed class HttpClientExtensionsTest
         client.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
       }
 
-      static void Validate(HttpClient client)
+      static void Test(HttpClient client)
       {
         using (client)
         {
@@ -109,7 +109,7 @@ public sealed class HttpClientExtensionsTest
         client.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
       }
 
-      static void Validate(HttpClient client)
+      static void Test(HttpClient client)
       {
         using (client)
         {
@@ -138,7 +138,7 @@ public sealed class HttpClientExtensionsTest
         client.DefaultRequestHeaders.GetValues(headerConnection.Name).Should().Equal(headerConnection.Value);
       }
 
-      static void Validate(HttpClient client)
+      static void Test(HttpClient client)
       {
         using (client)
         {
@@ -166,7 +166,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -192,7 +192,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -217,7 +217,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -243,7 +243,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -268,7 +268,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
+    static void Test(HttpClient client, Uri uri, HttpContent content = null)
     {
       using (client)
       {
@@ -294,7 +294,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
+    static void Test(HttpClient client, Uri uri, HttpContent content = null)
     {
       using (client)
       {
@@ -319,7 +319,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
+    static void Test(HttpClient client, Uri uri, HttpContent content = null)
     {
       using (client)
       {
@@ -345,7 +345,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri, HttpContent content)
+    static void Test(HttpClient client, Uri uri, HttpContent content)
     {
       using (client)
       {
@@ -370,7 +370,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -392,7 +392,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -417,7 +417,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
+    static void Test(HttpClient client, Uri uri, HttpContent content = null)
     {
       using (client)
       {
@@ -443,7 +443,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri, HttpContent content = null)
+    static void Test(HttpClient client, Uri uri, HttpContent content = null)
     {
       using (client)
       {
@@ -469,7 +469,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, byte[] bytes, Uri uri)
+    static void Test(HttpClient client, byte[] bytes, Uri uri)
     {
       using (client)
       {
@@ -496,7 +496,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, byte[] bytes, Uri uri)
+    static void Test(HttpClient client, byte[] bytes, Uri uri)
     {
       using (client)
       {
@@ -522,7 +522,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, string text, Uri uri)
+    static void Test(HttpClient client, string text, Uri uri)
     {
       using (client)
       {
@@ -549,7 +549,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, string text, Uri uri)
+    static void Test(HttpClient client, string text, Uri uri)
     {
       using (client)
       {
@@ -574,7 +574,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -599,7 +599,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -624,7 +624,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -650,7 +650,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -675,7 +675,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {
@@ -701,7 +701,7 @@ public sealed class HttpClientExtensionsTest
 
     return;
 
-    static void Validate(HttpClient client, Uri uri)
+    static void Test(HttpClient client, Uri uri)
     {
       using (client)
       {

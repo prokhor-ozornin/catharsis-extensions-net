@@ -27,7 +27,7 @@ public sealed class MethodInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, MethodInfo method) => method.IsOverridable().Should().Be(result);
+    static void Test(bool result, MethodInfo method) => method.IsOverridable().Should().Be(result);
   }
 
   /// <summary>
@@ -45,7 +45,7 @@ public sealed class MethodInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, MethodInfo method) => method.IsProtected().Should().Be(result);
+    static void Test(bool result, MethodInfo method) => method.IsProtected().Should().Be(result);
   }
 
   /// <summary>
@@ -63,7 +63,7 @@ public sealed class MethodInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, MethodInfo method) => method.IsInternal().Should().Be(result);
+    static void Test(bool result, MethodInfo method) => method.IsInternal().Should().Be(result);
   }
 
   /// <summary>
@@ -81,7 +81,7 @@ public sealed class MethodInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, MethodInfo method) => method.IsProtectedInternal().Should().Be(result);
+    static void Test(bool result, MethodInfo method) => method.IsProtectedInternal().Should().Be(result);
   }
 
   /// <summary>
@@ -98,7 +98,7 @@ public sealed class MethodInfoExtensionsTest
     {
       AssertionExtensions.Should(() => MethodInfoExtensions.ToDelegate<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -118,7 +118,7 @@ public sealed class MethodInfoExtensionsTest
       methodDelegate.DynamicInvoke("test").Should().BeOfType<string>().And.Be("test");
       method.ToDelegate(typeof(AsString)).Should().BeOfType<Delegate>().And.Be(method.ToDelegate<AsString>());
 
-      static void Validate()
+      static void Test()
       {
       }
     }

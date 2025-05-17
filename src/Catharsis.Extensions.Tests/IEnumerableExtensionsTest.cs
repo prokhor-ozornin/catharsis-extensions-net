@@ -117,7 +117,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -385,7 +385,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -556,7 +556,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -579,7 +579,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -599,7 +599,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -625,7 +625,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -646,7 +646,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
+    static void Test(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
     {
       using (algorithm)
       {
@@ -672,7 +672,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
+    static void Test(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
     {
       using (algorithm)
       {
@@ -697,7 +697,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
+    static void Test(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
     {
       using (algorithm)
       {
@@ -723,7 +723,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
+    static void Test(IEnumerable<byte> result, IEnumerable<byte> bytes, SymmetricAlgorithm algorithm)
     {
       using (algorithm)
       {
@@ -756,7 +756,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate(byte[] bytes, HashAlgorithm algorithm)
+    static void Test(byte[] bytes, HashAlgorithm algorithm)
     {
       using (algorithm)
       {
@@ -775,13 +775,13 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      Validate(Enumerable.Empty<byte>().ToArray());
-      Validate(this.RandomBytes());
+      Test(Enumerable.Empty<byte>().ToArray());
+      Test(this.RandomBytes());
     }
 
     return;
 
-    static void Validate(byte[] bytes)
+    static void Test(byte[] bytes)
     {
       using var algorithm = MD5.Create();
       bytes.HashMd5().Should().BeOfType<byte[]>().And.HaveCount(16).And.Equal(algorithm.ComputeHash(bytes));
@@ -798,13 +798,13 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      Validate(Enumerable.Empty<byte>().ToArray());
-      Validate(this.RandomBytes());
+      Test(Enumerable.Empty<byte>().ToArray());
+      Test(this.RandomBytes());
     }
 
     return;
 
-    static void Validate(byte[] bytes)
+    static void Test(byte[] bytes)
     {
       using var algorithm = SHA1.Create();
       bytes.HashSha1().Should().BeOfType<byte[]>().And.HaveCount(20).And.Equal(algorithm.ComputeHash(bytes));
@@ -821,13 +821,13 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      Validate(Enumerable.Empty<byte>().ToArray());
-      Validate(this.RandomBytes());
+      Test(Enumerable.Empty<byte>().ToArray());
+      Test(this.RandomBytes());
     }
 
     return;
 
-    static void Validate(byte[] bytes)
+    static void Test(byte[] bytes)
     {
       using var algorithm = SHA256.Create();
       bytes.HashSha256().Should().BeOfType<byte[]>().And.HaveCount(32).And.Equal(algorithm.ComputeHash(bytes));
@@ -844,13 +844,13 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      Validate(Enumerable.Empty<byte>().ToArray());
-      Validate(this.RandomBytes());
+      Test(Enumerable.Empty<byte>().ToArray());
+      Test(this.RandomBytes());
     }
 
     return;
 
-    static void Validate(byte[] bytes)
+    static void Test(byte[] bytes)
     {
       using var algorithm = SHA384.Create();
       bytes.HashSha384().Should().BeOfType<byte[]>().And.HaveCount(48).And.Equal(algorithm.ComputeHash(bytes));
@@ -867,13 +867,13 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      Validate(Enumerable.Empty<byte>().ToArray());
-      Validate(this.RandomBytes());
+      Test(Enumerable.Empty<byte>().ToArray());
+      Test(this.RandomBytes());
     }
 
     return;
 
-    static void Validate(byte[] bytes)
+    static void Test(byte[] bytes)
     {
       using var algorithm = SHA512.Create();
       bytes.HashSha512().Should().BeOfType<byte[]>().And.HaveCount(64).And.Equal(algorithm.ComputeHash(bytes));
@@ -896,7 +896,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, byte[] bytes)
+    static void Test(Stream stream, byte[] bytes)
     {
       using (stream)
       {
@@ -923,7 +923,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, byte[] bytes)
+    static void Test(Stream stream, byte[] bytes)
     {
       using (stream)
       {
@@ -950,7 +950,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -972,7 +972,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -988,13 +988,13 @@ public sealed class IEnumerableExtensionsTest
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Validate(this.EmptyStream().ToBinaryWriter(), this.RandomBytes());
-      Validate(this.RandomStream().ToBinaryWriter(), this.RandomBytes());
+      Test(this.EmptyStream().ToBinaryWriter(), this.RandomBytes());
+      Test(this.RandomStream().ToBinaryWriter(), this.RandomBytes());
     }
 
     return;
 
-    static void Validate(BinaryWriter writer, byte[] bytes)
+    static void Test(BinaryWriter writer, byte[] bytes)
     {
       using (writer)
       {
@@ -1029,7 +1029,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1050,7 +1050,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1071,7 +1071,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1093,7 +1093,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1114,7 +1114,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1136,7 +1136,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1157,7 +1157,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1179,7 +1179,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1201,7 +1201,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1224,7 +1224,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1245,7 +1245,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1267,7 +1267,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1288,7 +1288,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1310,7 +1310,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1331,7 +1331,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<char> text, SecureString destination)
+    static void Test(IEnumerable<char> text, SecureString destination)
     {
       using (destination)
       {
@@ -1350,9 +1350,9 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => IEnumerableExtensions.ToAsyncEnumerable<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Validate(Enumerable.Empty<object>());
-      Validate(Array.Empty<object>());
-      Validate(new Random().ObjectSequence(1000).ToArray());
+      Test(Enumerable.Empty<object>());
+      Test(Array.Empty<object>());
+      Test(new Random().ObjectSequence(1000).ToArray());
     }
 
     return;
@@ -1383,7 +1383,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1403,7 +1403,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1427,7 +1427,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1486,7 +1486,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1506,7 +1506,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1574,7 +1574,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1602,7 +1602,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1630,7 +1630,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1655,7 +1655,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1680,7 +1680,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1700,7 +1700,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1719,7 +1719,7 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => IEnumerableExtensions.ToValueTuple<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -1729,7 +1729,7 @@ public sealed class IEnumerableExtensionsTest
       AssertionExtensions.Should(() => IEnumerableExtensions.ToValueTuple<object, object>(null, element => element)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
       AssertionExtensions.Should(() => Enumerable.Empty<object>().ToValueTuple<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -1751,7 +1751,7 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => IEnumerableExtensions.ToTuple<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -1761,7 +1761,7 @@ public sealed class IEnumerableExtensionsTest
       AssertionExtensions.Should(() => IEnumerableExtensions.ToTuple<object, object>(null, element => element)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
       AssertionExtensions.Should(() => Enumerable.Empty<object>().ToTuple<object, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -1784,7 +1784,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1804,7 +1804,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -1824,7 +1824,7 @@ public sealed class IEnumerableExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<char> characters)
+    static void Test(IEnumerable<char> characters)
     {
     }
   }
@@ -1843,7 +1843,7 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -1852,7 +1852,7 @@ public sealed class IEnumerableExtensionsTest
     {
       AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStream()).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -1875,7 +1875,7 @@ public sealed class IEnumerableExtensionsTest
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -1885,7 +1885,7 @@ public sealed class IEnumerableExtensionsTest
       AssertionExtensions.Should(() => ((IEnumerable<byte[]>) null).ToMemoryStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().ToMemoryStreamAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -1902,8 +1902,8 @@ public sealed class IEnumerableExtensionsTest
     using (new AssertionScope())
     {
       Validate<object>(false, null);
-      Validate(false, Enumerable.Empty<object>());
-      Validate(true, new object[] { new() });
+      Test(false, Enumerable.Empty<object>());
+      Test(true, new object[] { new() });
     }
 
     return;

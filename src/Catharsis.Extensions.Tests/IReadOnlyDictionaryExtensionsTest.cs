@@ -24,7 +24,7 @@ public sealed class IReadOnlyDictionaryExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -44,7 +44,7 @@ public sealed class IReadOnlyDictionaryExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }

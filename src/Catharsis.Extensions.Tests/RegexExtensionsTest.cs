@@ -20,13 +20,13 @@ public sealed class RegexExtensionsTest
     {
       AssertionExtensions.Should(() => RegexExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
 
-      Validate(string.Empty.ToRegex());
-      Validate("anything".ToRegex());
+      Test(string.Empty.ToRegex());
+      Test("anything".ToRegex());
     }
 
     return;
 
-    static void Validate(Regex original)
+    static void Test(Regex original)
     {
       var clone = original.Clone();
 
@@ -54,7 +54,7 @@ public sealed class RegexExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<Match> result, Regex regex, string text)
+    static void Test(IEnumerable<Match> result, Regex regex, string text)
     {
     }
   }

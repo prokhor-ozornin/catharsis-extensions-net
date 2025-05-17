@@ -25,7 +25,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(bool result, TcpClient client)
+    static void Test(bool result, TcpClient client)
     {
       using (client)
       {
@@ -49,7 +49,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(bool result, TcpClient client)
+    static void Test(bool result, TcpClient client)
     {
       using (client)
       {
@@ -89,7 +89,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(TcpClient client, TimeSpan? timeout)
+    static void Test(TcpClient client, TimeSpan? timeout)
     {
       using (client)
       {
@@ -114,7 +114,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(TcpClient client)
+    static void Test(TcpClient client)
     {
       using (client)
       {
@@ -137,7 +137,7 @@ public sealed class TcpClientExtensionsTest
     {
       AssertionExtensions.Should(() => ((TcpClient) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
 
-      static void Validate(TcpClient client)
+      static void Test(TcpClient client)
       {
         using (client)
         {
@@ -150,7 +150,7 @@ public sealed class TcpClientExtensionsTest
     {
       AssertionExtensions.Should(() => ((TcpClient) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("client");
 
-      static void Validate(TcpClient client)
+      static void Test(TcpClient client)
       {
         using (client)
         {
@@ -176,7 +176,7 @@ public sealed class TcpClientExtensionsTest
     {
       AssertionExtensions.Should(() => ((TcpClient) null).ToAsyncEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
 
-      static void Validate(TcpClient client)
+      static void Test(TcpClient client)
       {
         using (client)
         {
@@ -189,7 +189,7 @@ public sealed class TcpClientExtensionsTest
     {
       AssertionExtensions.Should(() => ((TcpClient) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("client");
 
-      static void Validate(TcpClient client)
+      static void Test(TcpClient client)
       {
         using (client)
         {
@@ -216,7 +216,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, TcpClient client)
+    static void Test(byte[] result, TcpClient client)
     {
       using (client)
       {
@@ -240,7 +240,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, TcpClient client)
+    static void Test(byte[] result, TcpClient client)
     {
       using (client)
       {
@@ -264,7 +264,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(string result, TcpClient client, Encoding encoding = null)
+    static void Test(string result, TcpClient client, Encoding encoding = null)
     {
       using (client)
       {
@@ -288,7 +288,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(string result, TcpClient client, Encoding encoding = null)
+    static void Test(string result, TcpClient client, Encoding encoding = null)
     {
       using (client)
       {
@@ -315,7 +315,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(TcpClient client, byte[] bytes)
+    static void Test(TcpClient client, byte[] bytes)
     {
       using (client)
       {
@@ -341,7 +341,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(TcpClient client, byte[] bytes)
+    static void Test(TcpClient client, byte[] bytes)
     {
       using (client)
       {
@@ -366,7 +366,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(TcpClient client, string text, Encoding encoding = null)
+    static void Test(TcpClient client, string text, Encoding encoding = null)
     {
       using (client)
       {
@@ -392,7 +392,7 @@ public sealed class TcpClientExtensionsTest
 
     return;
 
-    static void Validate(TcpClient client, string text, Encoding encoding = null)
+    static void Test(TcpClient client, string text, Encoding encoding = null)
     {
       using (client)
       {

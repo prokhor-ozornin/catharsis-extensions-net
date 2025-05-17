@@ -24,7 +24,7 @@ public sealed class TaskExtensionsTest
     {
       AssertionExtensions.Should(() => ((Task) null).Await()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -33,7 +33,7 @@ public sealed class TaskExtensionsTest
     {
       AssertionExtensions.Should(() => ((Task<object>) null).Await()).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -42,7 +42,7 @@ public sealed class TaskExtensionsTest
     {
       AssertionExtensions.Should(() => ((Task<object>) null).Await(out _)).ThrowExactlyAsync<ArgumentNullException>().Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -64,7 +64,7 @@ public sealed class TaskExtensionsTest
     {
       AssertionExtensions.Should(() => ((Task) null).Execute()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -73,7 +73,7 @@ public sealed class TaskExtensionsTest
     {
       AssertionExtensions.Should(() => ((Task<object>) null).Execute()).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -95,7 +95,7 @@ public sealed class TaskExtensionsTest
     {
       AssertionExtensions.Should(() => ((Task) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -104,7 +104,7 @@ public sealed class TaskExtensionsTest
     {
       AssertionExtensions.Should(() => ((Task<object>) null).ExecuteAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -126,7 +126,7 @@ public sealed class TaskExtensionsTest
     {
       AssertionExtensions.Should(() => TaskExtensions.ToValueTask(null)).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -135,7 +135,7 @@ public sealed class TaskExtensionsTest
     {
       AssertionExtensions.Should(() => TaskExtensions.ToValueTask<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
-      static void Validate()
+      static void Test()
       {
       }
     }

@@ -25,7 +25,7 @@ public sealed class ValueTaskExtensionsTest
       AssertionExtensions.Should(() => ValueTask.CompletedTask.Await()).NotThrow<OperationCanceledException>();
       AssertionExtensions.Should(() => ValueTask.FromCanceled(CancellationToken.None).Await()).NotThrow<OperationCanceledException>();
 
-      static void Validate()
+      static void Test()
       {
 
       }
@@ -33,7 +33,7 @@ public sealed class ValueTaskExtensionsTest
 
     using (new AssertionScope())
     {
-      static void Validate()
+      static void Test()
       {
 
       }
@@ -42,7 +42,7 @@ public sealed class ValueTaskExtensionsTest
 
     using (new AssertionScope())
     {
-      static void Validate()
+      static void Test()
       {
 
       }
@@ -66,7 +66,7 @@ public sealed class ValueTaskExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -85,7 +85,7 @@ public sealed class ValueTaskExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
    

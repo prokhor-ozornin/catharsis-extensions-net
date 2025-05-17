@@ -41,7 +41,7 @@ public sealed class TextWriterExtensionsTest : Test
 
     return;
 
-    static void Validate(TextWriter writer)
+    static void Test(TextWriter writer)
     {
       using (writer)
       {
@@ -66,7 +66,7 @@ public sealed class TextWriterExtensionsTest : Test
 
     return;
 
-    static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
+    static void Test(TextWriter writer, byte[] bytes, Encoding encoding = null)
     {
       using (writer)
       {
@@ -92,7 +92,7 @@ public sealed class TextWriterExtensionsTest : Test
 
     return;
 
-    static void Validate(TextWriter writer, byte[] bytes, Encoding encoding = null)
+    static void Test(TextWriter writer, byte[] bytes, Encoding encoding = null)
     {
       using (writer)
       {
@@ -117,7 +117,7 @@ public sealed class TextWriterExtensionsTest : Test
 
     return;
 
-    static void Validate(TextWriter writer, string text)
+    static void Test(TextWriter writer, string text)
     {
       using (writer)
       {
@@ -143,7 +143,7 @@ public sealed class TextWriterExtensionsTest : Test
 
     return;
 
-    static void Validate(TextWriter writer, string text)
+    static void Test(TextWriter writer, string text)
     {
       using (writer)
       {
@@ -190,7 +190,7 @@ public sealed class TextWriterExtensionsTest : Test
 
     return;
 
-    static void Validate(TextWriter writer)
+    static void Test(TextWriter writer)
     {
       using (writer)
       {
@@ -214,7 +214,7 @@ public sealed class TextWriterExtensionsTest : Test
 
     return;
 
-    static void Validate(TextWriter writer)
+    static void Test(TextWriter writer)
     {
       using (writer)
       {

@@ -24,7 +24,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(long result, DirectoryInfo directory, string pattern = null, bool recursive = true) => directory.Size(pattern, recursive).Should().Be(result);
+    static void Test(long result, DirectoryInfo directory, string pattern = null, bool recursive = true) => directory.Size(pattern, recursive).Should().Be(result);
   }
 
   /// <summary>
@@ -43,7 +43,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, DirectoryInfo directory, DirectoryInfo parent) => directory.InDirectory(parent).Should().Be(result);
+    static void Test(bool result, DirectoryInfo directory, DirectoryInfo parent) => directory.InDirectory(parent).Should().Be(result);
   }
 
   /// <summary>
@@ -61,7 +61,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(FileInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.Files(pattern, recursive).Should().Equal(result);
+    static void Test(FileInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.Files(pattern, recursive).Should().Equal(result);
   }
 
   /// <summary>
@@ -79,7 +79,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(DirectoryInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.Directories(pattern, recursive).Should().Equal(result);
+    static void Test(DirectoryInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.Directories(pattern, recursive).Should().Equal(result);
   }
 
   /// <summary>
@@ -96,7 +96,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, DirectoryInfo directory) => directory.IsUnset().Should().Be(result);
+    static void Test(bool result, DirectoryInfo directory) => directory.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -129,7 +129,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, DirectoryInfo directory) => directory.IsEmpty().Should().Be(result);
+    static void Test(bool result, DirectoryInfo directory) => directory.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -142,13 +142,13 @@ public sealed class DirectoryInfoExtensionsTest
     {
       AssertionExtensions.Should(() => ((DirectoryInfo) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
 
-      Validate(Directory.GetCurrentDirectory().ToDirectory());
-      Validate(this.RandomDirectory());
+      Test(Directory.GetCurrentDirectory().ToDirectory());
+      Test(this.RandomDirectory());
     }
 
     return;
 
-    static void Validate(DirectoryInfo original)
+    static void Test(DirectoryInfo original)
     {
       var clone = original.Clone();
 
@@ -184,7 +184,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(DirectoryInfo directory)
+    static void Test(DirectoryInfo directory)
     {
     }
   }
@@ -205,7 +205,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(DirectoryInfo directory)
+    static void Test(DirectoryInfo directory)
     {
     }
   }
@@ -243,7 +243,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(DirectoryInfo directory)
+    static void Test(DirectoryInfo directory)
     {
     }
   }
@@ -263,7 +263,7 @@ public sealed class DirectoryInfoExtensionsTest
       AssertionExtensions.Should(() => DirectoryInfoExtensions.With(null, Enumerable.Empty<FileSystemInfo>())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
       AssertionExtensions.Should(() => this.RandomDirectory().With((IEnumerable<FileSystemInfo>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("entries");
 
-      static void Validate(DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
+      static void Test(DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
       {
       }
     }
@@ -273,7 +273,7 @@ public sealed class DirectoryInfoExtensionsTest
       AssertionExtensions.Should(() => DirectoryInfoExtensions.With(null, Array.Empty<FileSystemInfo>())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
       AssertionExtensions.Should(() => this.RandomDirectory().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entries");
 
-      static void Validate(DirectoryInfo directory, params FileSystemInfo[] entries)
+      static void Test(DirectoryInfo directory, params FileSystemInfo[] entries)
       {
       }
     }
@@ -296,7 +296,7 @@ public sealed class DirectoryInfoExtensionsTest
       AssertionExtensions.Should(() => DirectoryInfoExtensions.Without(null, Enumerable.Empty<FileSystemInfo>())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
       AssertionExtensions.Should(() => this.RandomDirectory().Without((IEnumerable<FileSystemInfo>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("entries");
 
-      static void Validate(DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
+      static void Test(DirectoryInfo directory, IEnumerable<FileSystemInfo> entries)
       {
       }
     }
@@ -306,7 +306,7 @@ public sealed class DirectoryInfoExtensionsTest
       AssertionExtensions.Should(() => DirectoryInfoExtensions.Without(null, Array.Empty<FileSystemInfo>())).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
       AssertionExtensions.Should(() => this.RandomDirectory().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entries");
 
-      static void Validate(DirectoryInfo directory, params FileSystemInfo[] entries)
+      static void Test(DirectoryInfo directory, params FileSystemInfo[] entries)
       {
       }
     }
@@ -329,7 +329,7 @@ public sealed class DirectoryInfoExtensionsTest
 
     return;
 
-    static void Validate(DirectoryInfo directory, string pattern = null, bool recursive = false)
+    static void Test(DirectoryInfo directory, string pattern = null, bool recursive = false)
     {
     }
   }
@@ -342,13 +342,13 @@ public sealed class DirectoryInfoExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, this.RandomFakeDirectory());
-      Validate(true, Environment.SystemDirectory.ToDirectory());
+      Test(false, null);
+      Test(false, this.RandomFakeDirectory());
+      Test(true, Environment.SystemDirectory.ToDirectory());
     }
 
     return;
 
-    static void Validate(bool result, DirectoryInfo directory) => directory.ToBoolean().Should().Be(result);
+    static void Test(bool result, DirectoryInfo directory) => directory.ToBoolean().Should().Be(result);
   }
 }

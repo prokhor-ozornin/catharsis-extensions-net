@@ -153,7 +153,7 @@ public sealed class IDictionaryExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -173,7 +173,7 @@ public sealed class IDictionaryExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -193,7 +193,7 @@ public sealed class IDictionaryExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -213,7 +213,7 @@ public sealed class IDictionaryExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -233,7 +233,7 @@ public sealed class IDictionaryExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }

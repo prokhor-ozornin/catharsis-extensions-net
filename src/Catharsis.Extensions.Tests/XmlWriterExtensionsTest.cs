@@ -27,7 +27,7 @@ public sealed class XmlWriterExtensionsTest
 
     return;
 
-    static void Validate(XmlWriter writer, byte[] bytes, Encoding encoding = null)
+    static void Test(XmlWriter writer, byte[] bytes, Encoding encoding = null)
     {
       using (writer)
       {
@@ -52,7 +52,7 @@ public sealed class XmlWriterExtensionsTest
 
     return;
 
-    static void Validate(XmlWriter writer, byte[] bytes, Encoding encoding = null)
+    static void Test(XmlWriter writer, byte[] bytes, Encoding encoding = null)
     {
       using (writer)
       {
@@ -77,7 +77,7 @@ public sealed class XmlWriterExtensionsTest
 
     return;
 
-    static void Validate(XmlWriter writer, string text)
+    static void Test(XmlWriter writer, string text)
     {
       using (writer)
       {
@@ -102,7 +102,7 @@ public sealed class XmlWriterExtensionsTest
 
     return;
 
-    static void Validate(XmlWriter writer, string text)
+    static void Test(XmlWriter writer, string text)
     {
       using (writer)
       {
@@ -126,7 +126,7 @@ public sealed class XmlWriterExtensionsTest
 
     return;
 
-    static void Validate(XmlWriter writer)
+    static void Test(XmlWriter writer)
     {
       using (writer)
       {

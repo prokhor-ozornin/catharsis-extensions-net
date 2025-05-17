@@ -43,7 +43,7 @@ public sealed class FieldInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, FieldInfo field) => field.IsProtected().Should().Be(result);
+    static void Test(bool result, FieldInfo field) => field.IsProtected().Should().Be(result);
   }
 
   /// <summary>
@@ -61,7 +61,7 @@ public sealed class FieldInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, FieldInfo field) => field.IsInternal().Should().Be(result);
+    static void Test(bool result, FieldInfo field) => field.IsInternal().Should().Be(result);
   }
 
   /// <summary>
@@ -79,6 +79,6 @@ public sealed class FieldInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, FieldInfo field) => field.IsProtectedInternal().Should().Be(result);
+    static void Test(bool result, FieldInfo field) => field.IsProtectedInternal().Should().Be(result);
   }
 }

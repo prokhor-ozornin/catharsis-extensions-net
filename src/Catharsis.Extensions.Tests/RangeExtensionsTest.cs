@@ -33,7 +33,7 @@ public sealed class RangeExtensionsTest
 
     return;
 
-    static void Validate(Range range)
+    static void Test(Range range)
     {
     }
   }

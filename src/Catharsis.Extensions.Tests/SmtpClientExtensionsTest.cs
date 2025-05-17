@@ -18,12 +18,12 @@ public sealed class SmtpClientExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(new SmtpClient(), TimeSpan.Zero);
+      Test(new SmtpClient(), TimeSpan.Zero);
     }
 
     return;
 
-    static void Validate(SmtpClient client, TimeSpan timeout)
+    static void Test(SmtpClient client, TimeSpan timeout)
     {
       using (client)
       {

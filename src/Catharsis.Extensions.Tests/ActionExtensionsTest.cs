@@ -37,7 +37,7 @@ public sealed class ActionExtensionsTest
       action.Execute(() => counter < count).Should().BeOfType<Action>().And.BeSameAs(action);
       counter.Should().Be(count);
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -67,7 +67,7 @@ public sealed class ActionExtensionsTest
       action.Execute(x => x?.Count < count, null).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
       collection.Should().BeOfType<List<int>>().And.BeEmpty();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -89,7 +89,7 @@ public sealed class ActionExtensionsTest
     {
       AssertionExtensions.Should(() => ActionExtensions.ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -99,7 +99,7 @@ public sealed class ActionExtensionsTest
       AssertionExtensions.Should(() => ((Action<object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
 
 
-      static void Validate()
+      static void Test()
       {
       }
     }

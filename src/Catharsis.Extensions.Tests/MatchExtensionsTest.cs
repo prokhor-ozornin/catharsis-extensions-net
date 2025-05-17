@@ -25,7 +25,7 @@ public sealed class MatchExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<Capture> result, Match match)
+    static void Test(IEnumerable<Capture> result, Match match)
     {
     }
   }
@@ -38,13 +38,13 @@ public sealed class MatchExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, Match.Empty);
-      Validate(true, Regex.Match(this.RandomName(), ".*"));
+      Test(false, null);
+      Test(false, Match.Empty);
+      Test(true, Regex.Match(this.RandomName(), ".*"));
     }
 
     return;
 
-    static void Validate(bool result, Match match) => match.ToBoolean().Should().Be(result);
+    static void Test(bool result, Match match) => match.ToBoolean().Should().Be(result);
   }
 }

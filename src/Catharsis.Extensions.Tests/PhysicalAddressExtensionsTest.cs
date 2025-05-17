@@ -20,13 +20,13 @@ public sealed class PhysicalAddressExtensionsTest
     {
       AssertionExtensions.Should(() => PhysicalAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-      Validate(PhysicalAddress.None);
-      Validate(new PhysicalAddress(this.RandomBytes()));
+      Test(PhysicalAddress.None);
+      Test(new PhysicalAddress(this.RandomBytes()));
     }
 
     return;
 
-    static void Validate(PhysicalAddress original)
+    static void Test(PhysicalAddress original)
     {
       var clone = original.Clone();
       
@@ -46,12 +46,12 @@ public sealed class PhysicalAddressExtensionsTest
     {
       AssertionExtensions.Should(() => ((PhysicalAddress) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-      Validate(PhysicalAddress.None, []);
-      this.RandomBytes().With(bytes => Validate(new PhysicalAddress(bytes), bytes));
+      Test(PhysicalAddress.None, []);
+      this.RandomBytes().With(bytes => Test(new PhysicalAddress(bytes), bytes));
     }
 
     return;
 
-    static void Validate(PhysicalAddress address, IEnumerable<byte> bytes) => address.ToBytes().Should().BeOfType<byte[]>().And.Equal(bytes).And.Equal(address.GetAddressBytes());
+    static void Test(PhysicalAddress address, IEnumerable<byte> bytes) => address.ToBytes().Should().BeOfType<byte[]>().And.Equal(bytes).And.Equal(address.GetAddressBytes());
   }
 }

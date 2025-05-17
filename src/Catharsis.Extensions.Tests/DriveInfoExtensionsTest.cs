@@ -24,7 +24,7 @@ public sealed class DriveInfoExtensionsTest
 
     return;
 
-    static void Validate(long result, DriveInfo drive, string pattern = null, bool recursive = true) => drive.Size(pattern, recursive).Should().Be(result);
+    static void Test(long result, DriveInfo drive, string pattern = null, bool recursive = true) => drive.Size(pattern, recursive).Should().Be(result);
   }
 
   /// <summary>
@@ -42,7 +42,7 @@ public sealed class DriveInfoExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<DirectoryInfo> result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.Directories(pattern, recursive).Should().BeOfType<IEnumerable<DirectoryInfo>>().And.Equal(result);
+    static void Test(IEnumerable<DirectoryInfo> result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.Directories(pattern, recursive).Should().BeOfType<IEnumerable<DirectoryInfo>>().And.Equal(result);
   }
 
   /// <summary>
@@ -59,7 +59,7 @@ public sealed class DriveInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, DriveInfo drive) => drive.IsUnset().Should().Be(result);
+    static void Test(bool result, DriveInfo drive) => drive.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -77,7 +77,7 @@ public sealed class DriveInfoExtensionsTest
 
     return;
 
-    static void Validate(bool result, DriveInfo drive) => drive.IsEmpty().Should().Be(result);
+    static void Test(bool result, DriveInfo drive) => drive.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -95,7 +95,7 @@ public sealed class DriveInfoExtensionsTest
 
     return;
 
-    static void Validate(DriveInfo original)
+    static void Test(DriveInfo original)
     {
       var clone = original.Clone();
 

@@ -20,15 +20,15 @@ public sealed class BinaryWriterExtensionsTest
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToBinaryWriter().IsStart()).ThrowExactly<NotSupportedException>();
 
-      Validate(Stream.Null.ToBinaryWriter());
-      Validate(this.EmptyStream().ToBinaryWriter());
-      Validate(this.RandomStream().ToBinaryWriter());
-      Validate(this.WriteOnlyStream().ToBinaryWriter());
+      Test(Stream.Null.ToBinaryWriter());
+      Test(this.EmptyStream().ToBinaryWriter());
+      Test(this.RandomStream().ToBinaryWriter());
+      Test(this.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
 
-    static void Validate(BinaryWriter writer)
+    static void Test(BinaryWriter writer)
     {
       using (writer)
       {
@@ -51,15 +51,15 @@ public sealed class BinaryWriterExtensionsTest
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToBinaryWriter().IsEnd()).ThrowExactly<ArgumentException>();
 
-      Validate(Stream.Null.ToBinaryWriter());
-      Validate(this.EmptyStream().ToBinaryWriter());
-      Validate(this.RandomStream().ToBinaryWriter());
-      Validate(this.WriteOnlyStream().ToBinaryWriter());
+      Test(Stream.Null.ToBinaryWriter());
+      Test(this.EmptyStream().ToBinaryWriter());
+      Test(this.RandomStream().ToBinaryWriter());
+      Test(this.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
 
-    static void Validate(BinaryWriter writer)
+    static void Test(BinaryWriter writer)
     {
       using (writer)
       {
@@ -82,14 +82,14 @@ public sealed class BinaryWriterExtensionsTest
       AssertionExtensions.Should(() => ((BinaryWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToBinaryWriter().Rewind()).ThrowExactly<NotSupportedException>();
 
-      Validate(this.EmptyStream().ToBinaryWriter());
-      Validate(this.RandomStream().ToBinaryWriter());
-      Validate(this.WriteOnlyStream().ToBinaryWriter());
+      Test(this.EmptyStream().ToBinaryWriter());
+      Test(this.RandomStream().ToBinaryWriter());
+      Test(this.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
 
-    static void Validate(BinaryWriter writer)
+    static void Test(BinaryWriter writer)
     {
       using (writer)
       {
@@ -110,16 +110,16 @@ public sealed class BinaryWriterExtensionsTest
     {
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToBinaryWriter().IsUnset()).ThrowExactly<ArgumentException>();
 
-      Validate(true, null);
-      Validate(true, Stream.Null.ToBinaryWriter());
-      Validate(true, this.EmptyStream().ToBinaryWriter());
-      Validate(false, this.RandomStream().ToBinaryWriter());
-      Validate(true, this.WriteOnlyStream().ToBinaryWriter());
+      Test(true, null);
+      Test(true, Stream.Null.ToBinaryWriter());
+      Test(true, this.EmptyStream().ToBinaryWriter());
+      Test(false, this.RandomStream().ToBinaryWriter());
+      Test(true, this.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
 
-    static void Validate(bool result, BinaryWriter writer)
+    static void Test(bool result, BinaryWriter writer)
     {
       using (writer)
       {
@@ -139,15 +139,15 @@ public sealed class BinaryWriterExtensionsTest
       AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToBinaryWriter().IsEmpty()).ThrowExactly<ArgumentException>();
 
-      Validate(true, Stream.Null.ToBinaryWriter());
-      Validate(true, this.EmptyStream().ToBinaryWriter());
-      Validate(false, this.RandomStream().ToBinaryWriter());
-      Validate(true, this.WriteOnlyStream().ToBinaryWriter());
+      Test(true, Stream.Null.ToBinaryWriter());
+      Test(true, this.EmptyStream().ToBinaryWriter());
+      Test(false, this.RandomStream().ToBinaryWriter());
+      Test(true, this.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
 
-    static void Validate(bool result, BinaryWriter writer)
+    static void Test(bool result, BinaryWriter writer)
     {
       using (writer)
       {
@@ -167,13 +167,13 @@ public sealed class BinaryWriterExtensionsTest
       AssertionExtensions.Should(() => BinaryWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
     }
 
-    Validate(Stream.Null.ToBinaryWriter());
-    Validate(this.EmptyStream().ToBinaryWriter());
-    Validate(this.RandomStream().ToBinaryWriter());
+    Test(Stream.Null.ToBinaryWriter());
+    Test(this.EmptyStream().ToBinaryWriter());
+    Test(this.RandomStream().ToBinaryWriter());
 
     return;
 
-    static void Validate(BinaryWriter original)
+    static void Test(BinaryWriter original)
     {
       using (original)
       {
@@ -199,14 +199,14 @@ public sealed class BinaryWriterExtensionsTest
       AssertionExtensions.Should(() => ((BinaryWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToBinaryWriter().Empty()).ThrowExactly<NotSupportedException>();
 
-      Validate(this.EmptyStream().ToBinaryWriter());
-      Validate(this.RandomStream().ToBinaryWriter());
-      Validate(this.WriteOnlyStream().ToBinaryWriter());
+      Test(this.EmptyStream().ToBinaryWriter());
+      Test(this.RandomStream().ToBinaryWriter());
+      Test(this.WriteOnlyStream().ToBinaryWriter());
     }
 
     return;
 
-    static void Validate(BinaryWriter writer)
+    static void Test(BinaryWriter writer)
     {
       using (writer)
       {
@@ -228,15 +228,15 @@ public sealed class BinaryWriterExtensionsTest
       AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToBinaryWriter().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
-      Validate(Stream.Null);
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
-      Validate(this.WriteOnlyStream());
+      Test(Stream.Null);
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
+      Test(this.WriteOnlyStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using var writer = stream.ToBinaryWriter();
 
@@ -256,13 +256,13 @@ public sealed class BinaryWriterExtensionsTest
       AssertionExtensions.Should(() => BinaryWriterExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
       AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       
-      Validate([]);
-      Validate(this.RandomBytes());
+      Test([]);
+      Test(this.RandomBytes());
     }
 
     return;
 
-    static void Validate(byte[] bytes)
+    static void Test(byte[] bytes)
     {
       using var stream = new MemoryStream();
       using var writer = new BinaryWriter(stream);
@@ -283,15 +283,15 @@ public sealed class BinaryWriterExtensionsTest
       AssertionExtensions.Should(() => BinaryWriterExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
       AssertionExtensions.Should(() => Stream.Null.ToBinaryWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      Validate(string.Empty);
-      Validate(Fixture.Create<string>());
+      Test(string.Empty);
+      Test(Fixture.Create<string>());
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Validate(string text)
+    static void Test(string text)
     {
       using var stream = new MemoryStream();
       using var writer = new BinaryWriter(stream);

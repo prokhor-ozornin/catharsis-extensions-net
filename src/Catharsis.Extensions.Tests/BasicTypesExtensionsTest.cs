@@ -28,7 +28,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(sbyte original, short result)
+    static void Test(sbyte original, short result)
     {
     }
   }
@@ -52,7 +52,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(short original, short result)
+    static void Test(short original, short result)
     {
     }
   }
@@ -76,7 +76,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(int original, int result)
+    static void Test(int original, int result)
     {
     }
   }
@@ -100,7 +100,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(long original, long result)
+    static void Test(long original, long result)
     {
     }
   }
@@ -124,7 +124,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(float original, float result)
+    static void Test(float original, float result)
     {
     }
   }
@@ -148,7 +148,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(double original, double result)
+    static void Test(double original, double result)
     {
     }
   }
@@ -172,7 +172,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(decimal original, decimal result)
+    static void Test(decimal original, decimal result)
     {
     }
   }
@@ -198,7 +198,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(float original, float result)
+    static void Test(float original, float result)
     {
     }
   }
@@ -224,7 +224,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(double original, double result)
+    static void Test(double original, double result)
     {
     }
   }
@@ -250,7 +250,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(decimal original, decimal result)
+    static void Test(decimal original, decimal result)
     {
     }
   }
@@ -276,7 +276,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(float original, float result)
+    static void Test(float original, float result)
     {
     }
   }
@@ -302,7 +302,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(double original, double result)
+    static void Test(double original, double result)
     {
     }
   }
@@ -328,7 +328,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(decimal original, decimal result)
+    static void Test(decimal original, decimal result)
     {
     }
   }
@@ -357,7 +357,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(float original, float result)
+    static void Test(float original, float result)
     {
     }
   }
@@ -386,7 +386,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(double original, double result)
+    static void Test(double original, double result)
     {
     }
   }
@@ -414,7 +414,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(decimal original, decimal result)
+    static void Test(decimal original, decimal result)
     {
     }
   }
@@ -439,7 +439,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(float original, float result)
+    static void Test(float original, float result)
     {
     }
   }
@@ -464,7 +464,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(double original, double result)
+    static void Test(double original, double result)
     {
     }
   }
@@ -489,7 +489,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(decimal original, decimal result)
+    static void Test(decimal original, decimal result)
     {
     }
   }
@@ -508,13 +508,13 @@ public sealed class BasicTypesExtensionsTest
 
       new[] { char.MinValue, char.MaxValue }.ForEach(character =>
       {
-        Validate(character, count);
+        Test(character, count);
       });
     }
 
     return;
 
-    static void Validate(char character, int count)
+    static void Test(char character, int count)
     {
       var result = character.Repeat(count);
       result.Should().BeOfType<string>().And.HaveLength(count);
@@ -544,7 +544,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(int from, int to)
+    static void Test(int from, int to)
     {
     }
   }
@@ -578,7 +578,7 @@ public sealed class BasicTypesExtensionsTest
       count.Times(() => counter++);
       counter.Should().Be(count);
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -602,7 +602,7 @@ public sealed class BasicTypesExtensionsTest
       count.Times(values.Add);
       values.Should().BeOfType<List<int>>().And.HaveCount(count).And.Equal(Enumerable.Range(0, count));
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -625,7 +625,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(int count)
+    static void Test(int count)
     {
     }
   }
@@ -651,7 +651,7 @@ public sealed class BasicTypesExtensionsTest
       1.Objects<Guid>().Should().BeOfType<IEnumerable<Guid>>().And.Equal(Guid.Empty);
       count.Objects<Guid>().Should().BeOfType<IEnumerable<Guid>>().And.HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
 
-      static void Validate(int count)
+      static void Test(int count)
       {
       }
     }
@@ -667,7 +667,7 @@ public sealed class BasicTypesExtensionsTest
       1.Objects(() => Guid.Empty).Should().BeOfType<IEnumerable<Guid>>().And.Equal(Guid.Empty);
       count.Objects(() => Guid.Empty).Should().BeOfType<IEnumerable<Guid>>().And.HaveCount(count).And.AllBeEquivalentTo(Guid.Empty);
 
-      static void Validate(int count)
+      static void Test(int count)
       {
       }
     }
@@ -683,7 +683,7 @@ public sealed class BasicTypesExtensionsTest
       1.Objects(index => index).Should().BeOfType<IEnumerable<int>>().And.Equal(0);
       count.Objects(index => index).Should().BeOfType<IEnumerable<int>>().And.Equal(Enumerable.Range(0, count));
 
-      static void Validate(int count)
+      static void Test(int count)
       {
       }
     }
@@ -707,7 +707,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(int count)
+    static void Test(int count)
     {
       var days = count.Days();
 
@@ -741,7 +741,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(int count)
+    static void Test(int count)
     {
       var hours = count.Hours();
 
@@ -772,7 +772,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(int count)
+    static void Test(int count)
     {
       var hours = count.Minutes();
 
@@ -803,7 +803,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(int count)
+    static void Test(int count)
     {
       var seconds = count.Seconds();
 
@@ -834,7 +834,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(int count)
+    static void Test(int count)
     {
       var milliseconds = count.Milliseconds();
 
@@ -865,7 +865,7 @@ public sealed class BasicTypesExtensionsTest
 
     return;
 
-    static void Validate(long count)
+    static void Test(long count)
     {
       var ticks = count.Ticks();
 

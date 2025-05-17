@@ -23,7 +23,7 @@ public sealed class FuncExtensionsTest
     {
       AssertionExtensions.Should(() => ((Func<object>) null).ToTask()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("function").Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }
@@ -32,7 +32,7 @@ public sealed class FuncExtensionsTest
     {
       AssertionExtensions.Should(() => ((Func<object, object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("function").Await();
 
-      static void Validate()
+      static void Test()
       {
       }
     }

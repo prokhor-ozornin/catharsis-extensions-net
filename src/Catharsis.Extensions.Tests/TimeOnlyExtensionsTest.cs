@@ -17,13 +17,13 @@ public sealed class TimeOnlyExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(DateTime.Now.ToTimeOnly());
-      Validate(DateTime.UtcNow.ToTimeOnly());
+      Test(DateTime.Now.ToTimeOnly());
+      Test(DateTime.UtcNow.ToTimeOnly());
     }
 
     return;
 
-    static void Validate(TimeOnly time)
+    static void Test(TimeOnly time)
     {
       time.Range(time, TimeSpan.Zero).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.BeEmpty();
       time.Range(time, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<TimeOnly>>().And.BeEmpty();
@@ -51,15 +51,15 @@ public sealed class TimeOnlyExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(TimeOnly.MinValue);
-      Validate(TimeOnly.MaxValue);
-      Validate(DateTime.Now.ToTimeOnly());
-      Validate(DateTime.UtcNow.ToTimeOnly());
+      Test(TimeOnly.MinValue);
+      Test(TimeOnly.MaxValue);
+      Test(DateTime.Now.ToTimeOnly());
+      Test(DateTime.UtcNow.ToTimeOnly());
     }
 
     return;
 
-    static void Validate(TimeOnly time) => time.AtStartOfHour().Should().HaveHours(time.Hour).And.HaveMinutes(0).And.HaveSeconds(0).And.HaveMilliseconds(0);
+    static void Test(TimeOnly time) => time.AtStartOfHour().Should().HaveHours(time.Hour).And.HaveMinutes(0).And.HaveSeconds(0).And.HaveMilliseconds(0);
   }
 
   /// <summary>
@@ -70,15 +70,15 @@ public sealed class TimeOnlyExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(TimeOnly.MinValue);
-      Validate(TimeOnly.MaxValue);
-      Validate(DateTime.Now.ToTimeOnly());
-      Validate(DateTime.UtcNow.ToTimeOnly());
+      Test(TimeOnly.MinValue);
+      Test(TimeOnly.MaxValue);
+      Test(DateTime.Now.ToTimeOnly());
+      Test(DateTime.UtcNow.ToTimeOnly());
     }
 
     return;
 
-    static void Validate(TimeOnly time) => time.AtEndOfHour().Should().HaveHours(time.Hour).And.HaveMinutes(59).And.HaveSeconds(59).And.HaveMilliseconds(999);
+    static void Test(TimeOnly time) => time.AtEndOfHour().Should().HaveHours(time.Hour).And.HaveMinutes(59).And.HaveSeconds(59).And.HaveMilliseconds(999);
   }
 
   /// <summary>
@@ -89,15 +89,15 @@ public sealed class TimeOnlyExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(TimeOnly.MinValue);
-      Validate(TimeOnly.MaxValue);
-      Validate(DateTime.Now.ToTimeOnly());
-      Validate(DateTime.UtcNow.ToTimeOnly());
+      Test(TimeOnly.MinValue);
+      Test(TimeOnly.MaxValue);
+      Test(DateTime.Now.ToTimeOnly());
+      Test(DateTime.UtcNow.ToTimeOnly());
     }
 
     return;
 
-    static void Validate(TimeOnly time) => time.AtStartOfMinute().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(0).And.HaveMilliseconds(0);
+    static void Test(TimeOnly time) => time.AtStartOfMinute().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(0).And.HaveMilliseconds(0);
   }
 
   /// <summary>
@@ -108,15 +108,15 @@ public sealed class TimeOnlyExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(TimeOnly.MinValue);
-      Validate(TimeOnly.MaxValue);
-      Validate(DateTime.Now.ToTimeOnly());
-      Validate(DateTime.UtcNow.ToTimeOnly());
+      Test(TimeOnly.MinValue);
+      Test(TimeOnly.MaxValue);
+      Test(DateTime.Now.ToTimeOnly());
+      Test(DateTime.UtcNow.ToTimeOnly());
     }
 
     return;
 
-    static void Validate(TimeOnly time) => time.AtEndOfMinute().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(59).And.HaveMilliseconds(999);
+    static void Test(TimeOnly time) => time.AtEndOfMinute().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(59).And.HaveMilliseconds(999);
   }
 
   /// <summary>
@@ -127,15 +127,15 @@ public sealed class TimeOnlyExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(TimeOnly.MinValue);
-      Validate(TimeOnly.MaxValue);
-      Validate(DateTime.Now.ToTimeOnly());
-      Validate(DateTime.UtcNow.ToTimeOnly());
+      Test(TimeOnly.MinValue);
+      Test(TimeOnly.MaxValue);
+      Test(DateTime.Now.ToTimeOnly());
+      Test(DateTime.UtcNow.ToTimeOnly());
     }
 
     return;
 
-    static void Validate(TimeOnly time) => time.AtStartOfSecond().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(0);
+    static void Test(TimeOnly time) => time.AtStartOfSecond().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(0);
   }
 
   /// <summary>
@@ -146,14 +146,14 @@ public sealed class TimeOnlyExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(TimeOnly.MinValue);
-      Validate(TimeOnly.MaxValue);
-      Validate(DateTime.Now.ToTimeOnly());
-      Validate(DateTime.UtcNow.ToTimeOnly());
+      Test(TimeOnly.MinValue);
+      Test(TimeOnly.MaxValue);
+      Test(DateTime.Now.ToTimeOnly());
+      Test(DateTime.UtcNow.ToTimeOnly());
     }
 
     return;
 
-    static void Validate(TimeOnly time) => time.AtEndOfSecond().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(999);
+    static void Test(TimeOnly time) => time.AtEndOfSecond().Should().HaveHours(time.Hour).And.HaveMinutes(time.Minute).And.HaveSeconds(time.Second).And.HaveMilliseconds(999);
   }
 }

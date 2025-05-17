@@ -19,13 +19,13 @@ public sealed class FileSystemInfoExtensionsTest
     {
       AssertionExtensions.Should(() => FileSystemInfoExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entry");
 
-      Validate(this.RandomFakeFile());
-      Validate(this.RandomFakeDirectory());
+      Test(this.RandomFakeFile());
+      Test(this.RandomFakeDirectory());
     }
 
     return;
 
-    static void Validate(FileSystemInfo info)
+    static void Test(FileSystemInfo info)
     {
       var uri = info.ToUri();
 

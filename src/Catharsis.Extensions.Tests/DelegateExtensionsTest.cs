@@ -44,7 +44,7 @@ public sealed class DelegateExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }
@@ -73,7 +73,7 @@ public sealed class DelegateExtensionsTest
 
     return;
 
-    static void Validate()
+    static void Test()
     {
     }
   }

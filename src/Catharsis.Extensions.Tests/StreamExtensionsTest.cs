@@ -25,16 +25,16 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().IsStart()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().IsStart()).ThrowExactly<NotSupportedException>();
 
-      Validate(Stream.Null);
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
-      Validate(this.RandomReadOnlyStream());
-      Validate(this.WriteOnlyStream());
+      Test(Stream.Null);
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
+      Test(this.RandomReadOnlyStream());
+      Test(this.WriteOnlyStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -55,16 +55,16 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => StreamExtensions.IsEnd(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().IsEnd()).ThrowExactly<ArgumentException>();
 
-      Validate(Stream.Null);
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
-      Validate(this.RandomReadOnlyStream());
-      Validate(this.WriteOnlyStream());
+      Test(Stream.Null);
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
+      Test(this.RandomReadOnlyStream());
+      Test(this.WriteOnlyStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -84,18 +84,18 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.IsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(false, Stream.Null);
-      Validate(false, this.EmptyStream());
-      Validate(false, this.RandomStream());
-      Validate(true, this.RandomReadOnlyStream());
-      Validate(true, this.RandomReadOnlyForwardStream());
-      Validate(false, this.WriteOnlyStream());
-      Validate(false, this.WriteOnlyForwardStream());
+      Test(false, Stream.Null);
+      Test(false, this.EmptyStream());
+      Test(false, this.RandomStream());
+      Test(true, this.RandomReadOnlyStream());
+      Test(true, this.RandomReadOnlyForwardStream());
+      Test(false, this.WriteOnlyStream());
+      Test(false, this.WriteOnlyForwardStream());
     }
 
     return;
 
-    static void Validate(bool result, Stream stream)
+    static void Test(bool result, Stream stream)
     {
       using (stream)
       {
@@ -114,18 +114,18 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.IsWriteOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(false, Stream.Null);
-      Validate(false, this.EmptyStream());
-      Validate(false, this.RandomStream());
-      Validate(false, this.RandomReadOnlyStream());
-      Validate(false, this.RandomReadOnlyForwardStream());
-      Validate(true, this.WriteOnlyStream());
-      Validate(true, this.WriteOnlyForwardStream());
+      Test(false, Stream.Null);
+      Test(false, this.EmptyStream());
+      Test(false, this.RandomStream());
+      Test(false, this.RandomReadOnlyStream());
+      Test(false, this.RandomReadOnlyForwardStream());
+      Test(true, this.WriteOnlyStream());
+      Test(true, this.WriteOnlyForwardStream());
     }
 
     return;
 
-    static void Validate(bool result, Stream stream)
+    static void Test(bool result, Stream stream)
     {
       using (stream)
       {
@@ -144,18 +144,18 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.IsOperable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(true, Stream.Null);
-      Validate(true, this.EmptyStream());
-      Validate(true, this.RandomStream());
-      Validate(true, this.RandomReadOnlyStream());
-      Validate(true, this.RandomReadOnlyForwardStream());
-      Validate(true, this.WriteOnlyStream());
-      Validate(true, this.WriteOnlyForwardStream());
+      Test(true, Stream.Null);
+      Test(true, this.EmptyStream());
+      Test(true, this.RandomStream());
+      Test(true, this.RandomReadOnlyStream());
+      Test(true, this.RandomReadOnlyForwardStream());
+      Test(true, this.WriteOnlyStream());
+      Test(true, this.WriteOnlyForwardStream());
     }
 
     return;
 
-    static void Validate(bool result, Stream stream)
+    static void Test(bool result, Stream stream)
     {
       using (stream)
       {
@@ -179,7 +179,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<string> result, Stream stream, Encoding encoding = null)
+    static void Test(IEnumerable<string> result, Stream stream, Encoding encoding = null)
     {
       using (stream)
       {
@@ -203,7 +203,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(IEnumerable<string> result, Stream stream, Encoding encoding = null)
+    static void Test(IEnumerable<string> result, Stream stream, Encoding encoding = null)
     {
       using (stream)
       {
@@ -228,7 +228,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, int count)
+    static void Test(Stream stream, int count)
     {
       using (stream)
       {
@@ -252,7 +252,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, long offset)
+    static void Test(Stream stream, long offset)
     {
       using (stream)
       {
@@ -276,7 +276,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, long position)
+    static void Test(Stream stream, long position)
     {
       using (stream)
       {
@@ -295,14 +295,14 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(Stream.Null);
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -321,14 +321,14 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.MoveToStart<Stream>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(Stream.Null);
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -347,17 +347,17 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.AsSynchronized(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
-      Validate(this.RandomReadOnlyStream());
-      Validate(this.WriteOnlyStream());
-      Validate(this.RandomReadOnlyForwardStream());
-      Validate(this.WriteOnlyForwardStream());
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
+      Test(this.RandomReadOnlyStream());
+      Test(this.WriteOnlyStream());
+      Test(this.RandomReadOnlyForwardStream());
+      Test(this.WriteOnlyForwardStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (var synchronized = stream.AsSynchronized())
       {
@@ -401,15 +401,15 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => this.WriteOnlyStream().AsReadOnly()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().AsReadOnly()).ThrowExactly<NotSupportedException>();
 
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
-      Validate(this.RandomReadOnlyStream());
-      Validate(this.RandomReadOnlyForwardStream());
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
+      Test(this.RandomReadOnlyStream());
+      Test(this.RandomReadOnlyForwardStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (var readOnly = stream.AsReadOnly())
       {
@@ -453,15 +453,15 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => this.WriteOnlyStream().AsReadOnlyForward()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().AsReadOnlyForward()).ThrowExactly<NotSupportedException>();
 
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
-      Validate(this.RandomReadOnlyStream());
-      Validate(this.RandomReadOnlyForwardStream());
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
+      Test(this.RandomReadOnlyStream());
+      Test(this.RandomReadOnlyForwardStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (var readOnly = stream.AsReadOnlyForward())
       {
@@ -497,15 +497,15 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => this.RandomReadOnlyStream().AsWriteOnly()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().AsWriteOnly()).ThrowExactly<NotSupportedException>();
 
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
-      Validate(this.WriteOnlyStream());
-      Validate(this.WriteOnlyForwardStream());
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
+      Test(this.WriteOnlyStream());
+      Test(this.WriteOnlyForwardStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (var writeOnly = stream.AsWriteOnly())
       {
@@ -549,15 +549,15 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => this.RandomReadOnlyStream().AsWriteOnlyForward()).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().AsWriteOnlyForward()).ThrowExactly<NotSupportedException>();
 
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
-      Validate(this.WriteOnlyStream());
-      Validate(this.WriteOnlyForwardStream());
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
+      Test(this.WriteOnlyStream());
+      Test(this.WriteOnlyForwardStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (var writeOnly = stream.AsWriteOnlyForward())
       {
@@ -594,7 +594,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -620,7 +620,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -687,7 +687,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -711,7 +711,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -778,7 +778,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -802,7 +802,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -826,7 +826,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -850,7 +850,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -875,7 +875,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -900,7 +900,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -925,7 +925,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -950,7 +950,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -989,7 +989,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, HashAlgorithm algorithm)
+    static void Test(Stream stream, HashAlgorithm algorithm)
     {
       using (stream)
       {
@@ -1034,7 +1034,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, HashAlgorithm algorithm)
+    static void Test(Stream stream, HashAlgorithm algorithm)
     {
       using (stream)
       {
@@ -1056,13 +1056,13 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => ((Stream) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1084,13 +1084,13 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => ((Stream) null).HashMd5Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
       AssertionExtensions.Should(() => Stream.Null.HashMd5Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1113,13 +1113,13 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => ((Stream) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1141,13 +1141,13 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => ((Stream) null).HashSha1Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
       AssertionExtensions.Should(() => Stream.Null.HashSha1Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1170,13 +1170,13 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => ((Stream) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1198,13 +1198,13 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => ((Stream) null).HashSha256Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
       AssertionExtensions.Should(() => Stream.Null.HashSha256Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1227,13 +1227,13 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => ((Stream) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1255,13 +1255,13 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => ((Stream) null).HashSha384Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
       AssertionExtensions.Should(() => Stream.Null.HashSha384Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1284,13 +1284,13 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => ((Stream) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1312,13 +1312,13 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => ((Stream) null).HashSha512Async()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
       AssertionExtensions.Should(() => Stream.Null.HashSha512Async(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>();
 
-      Validate(Stream.Null);
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1341,18 +1341,18 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().IsEmpty()).ThrowExactly<ArgumentException>();
 
-      Validate(true, null);
-      Validate(true, Stream.Null);
-      Validate(true, this.EmptyStream());
-      Validate(false, this.RandomStream());
-      Validate(false, this.RandomReadOnlyStream());
-      Validate(false, this.RandomReadOnlyForwardStream());
-      Validate(true, this.WriteOnlyStream());
+      Test(true, null);
+      Test(true, Stream.Null);
+      Test(true, this.EmptyStream());
+      Test(false, this.RandomStream());
+      Test(false, this.RandomReadOnlyStream());
+      Test(false, this.RandomReadOnlyForwardStream());
+      Test(true, this.WriteOnlyStream());
     }
 
     return;
 
-    static void Validate(bool result, Stream stream)
+    static void Test(bool result, Stream stream)
     {
       using (stream)
       {
@@ -1372,17 +1372,17 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => StreamExtensions.IsEmpty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => this.WriteOnlyForwardStream().IsEmpty()).ThrowExactly<ArgumentException>();
 
-      Validate(true, Stream.Null);
-      Validate(true, this.EmptyStream());
-      Validate(false, this.RandomStream());
-      Validate(false, this.RandomReadOnlyStream());
-      Validate(false, this.RandomReadOnlyForwardStream());
-      Validate(true, this.WriteOnlyStream());
+      Test(true, Stream.Null);
+      Test(true, this.EmptyStream());
+      Test(false, this.RandomStream());
+      Test(false, this.RandomReadOnlyStream());
+      Test(false, this.RandomReadOnlyForwardStream());
+      Test(true, this.WriteOnlyStream());
     }
 
     return;
 
-    static void Validate(bool result, Stream stream)
+    static void Test(bool result, Stream stream)
     {
       using (stream)
       {
@@ -1400,19 +1400,19 @@ public sealed class StreamExtensionsTest
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Stream) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
-      AssertionExtensions.Should(() => Validate(this.RandomReadOnlyForwardStream())).ThrowExactly<NotSupportedException>();
-      AssertionExtensions.Should(() => Validate(this.WriteOnlyForwardStream())).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => Test(this.RandomReadOnlyForwardStream())).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => Test(this.WriteOnlyForwardStream())).ThrowExactly<NotSupportedException>();
 
-      Validate(Stream.Null);
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
-      Validate(this.RandomReadOnlyStream());
-      Validate(this.WriteOnlyStream());
+      Test(Stream.Null);
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
+      Test(this.RandomReadOnlyStream());
+      Test(this.WriteOnlyStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -1437,7 +1437,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, IEnumerable<byte> bytes)
+    static void Test(Stream stream, IEnumerable<byte> bytes)
     {
       using (stream)
       {
@@ -1458,18 +1458,18 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => StreamExtensions.Min(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
       AssertionExtensions.Should(() => Stream.Null.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
 
-      Validate(Stream.Null, Stream.Null);
-      Validate(Stream.Null, this.EmptyStream());
-      Validate(Stream.Null, this.RandomStream());
+      Test(Stream.Null, Stream.Null);
+      Test(Stream.Null, this.EmptyStream());
+      Test(Stream.Null, this.RandomStream());
 
-      Validate(this.EmptyStream(), Stream.Null);
-      Validate(this.EmptyStream(), this.EmptyStream());
-      Validate(this.EmptyStream(), this.RandomStream());
+      Test(this.EmptyStream(), Stream.Null);
+      Test(this.EmptyStream(), this.EmptyStream());
+      Test(this.EmptyStream(), this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream min, Stream max)
+    static void Test(Stream min, Stream max)
     {
       using (min)
       {
@@ -1492,18 +1492,18 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => StreamExtensions.Max(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
       AssertionExtensions.Should(() => Stream.Null.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
 
-      Validate(Stream.Null, Stream.Null);
-      Validate(Stream.Null, this.EmptyStream());
-      Validate(Stream.Null, this.RandomStream());
+      Test(Stream.Null, Stream.Null);
+      Test(Stream.Null, this.EmptyStream());
+      Test(Stream.Null, this.RandomStream());
 
-      Validate(this.EmptyStream(), Stream.Null);
-      Validate(this.EmptyStream(), this.EmptyStream());
-      Validate(this.EmptyStream(), this.RandomStream());
+      Test(this.EmptyStream(), Stream.Null);
+      Test(this.EmptyStream(), this.EmptyStream());
+      Test(this.EmptyStream(), this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream min, Stream max)
+    static void Test(Stream min, Stream max)
     {
       using (min)
       {
@@ -1531,7 +1531,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream min, Stream max) => min.MinMax(max).Should().Be((min, max));
+    static void Test(Stream min, Stream max) => min.MinMax(max).Should().Be((min, max));
   }
 
   /// <summary>
@@ -1549,7 +1549,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, params Type[] types)
+    static void Test(Stream stream, params Type[] types)
     {
       using (stream)
       {
@@ -1591,7 +1591,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, params Type[] types)
+    static void Test(Stream stream, params Type[] types)
     {
       using (stream)
       {
@@ -1616,7 +1616,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, byte[] bytes)
+    static void Test(Stream stream, byte[] bytes)
     {
       using (stream)
       {
@@ -1648,7 +1648,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, byte[] bytes)
+    static void Test(Stream stream, byte[] bytes)
     {
       using (stream)
       {
@@ -1680,7 +1680,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, string text, Encoding encoding = null)
+    static void Test(Stream stream, string text, Encoding encoding = null)
     {
       using (stream)
       {
@@ -1705,7 +1705,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, string text, Encoding encoding = null)
+    static void Test(Stream stream, string text, Encoding encoding = null)
     {
       using (stream)
       {
@@ -1728,7 +1728,7 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      static void Validate(Stream stream)
+      static void Test(Stream stream)
       {
         using (stream)
         {
@@ -1742,7 +1742,7 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => StreamExtensions.ToEnumerable(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => Stream.Null.ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      static void Validate(Stream stream)
+      static void Test(Stream stream)
       {
         using (stream)
         {
@@ -1768,7 +1768,7 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToAsyncEnumerable(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
 
-      static void Validate(Stream stream)
+      static void Test(Stream stream)
       {
         using (stream)
         {
@@ -1782,7 +1782,7 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => StreamExtensions.ToAsyncEnumerable(null, 1).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => Stream.Null.ToAsyncEnumerable(0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      static void Validate(Stream stream)
+      static void Test(Stream stream)
       {
         using (stream)
         {
@@ -1805,16 +1805,16 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => StreamExtensions.ToBytes(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => this.WriteOnlyStream().ToBytes().ToArray()).ThrowExactly<NotSupportedException>();
 
-      Validate([], Stream.Null);
-      Validate([], this.EmptyStream(), true);
+      Test([], Stream.Null);
+      Test([], this.EmptyStream(), true);
 
-      this.RandomBytes().With(bytes => Validate(bytes, bytes.ToMemoryStream()));
-      this.RandomBytes().With(bytes => Validate(bytes, bytes.ToMemoryStream(), true));
+      this.RandomBytes().With(bytes => Test(bytes, bytes.ToMemoryStream()));
+      this.RandomBytes().With(bytes => Test(bytes, bytes.ToMemoryStream(), true));
     }
 
     return;
 
-    static void Validate(IEnumerable<byte> result, Stream stream, bool close = false)
+    static void Test(IEnumerable<byte> result, Stream stream, bool close = false)
     {
       using (stream)
       {
@@ -1843,16 +1843,16 @@ public sealed class StreamExtensionsTest
       AssertionExtensions.Should(() => StreamExtensions.ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
       AssertionExtensions.Should(() => this.WriteOnlyStream().ToBytesAsync().ToArray()).ThrowExactly<AggregateException>().WithInnerException<NotSupportedException>();
 
-      Validate([], Stream.Null);
-      Validate([], this.EmptyStream(), true);
+      Test([], Stream.Null);
+      Test([], this.EmptyStream(), true);
 
-      this.RandomBytes().With(bytes => Validate(bytes, bytes.ToMemoryStream()));
-      this.RandomBytes().With(bytes => Validate(bytes, bytes.ToMemoryStream(), true));
+      this.RandomBytes().With(bytes => Test(bytes, bytes.ToMemoryStream()));
+      this.RandomBytes().With(bytes => Test(bytes, bytes.ToMemoryStream(), true));
     }
 
     return;
 
-    static void Validate(IEnumerable<byte> result, Stream stream, bool close = false)
+    static void Test(IEnumerable<byte> result, Stream stream, bool close = false)
     {
       using (stream)
       {
@@ -1882,17 +1882,17 @@ public sealed class StreamExtensionsTest
 
       Encoding.GetEncodings().Select(encoding => encoding.GetEncoding()).ForEach(encoding =>
       {
-        Validate(string.Empty, Stream.Null, encoding);
-        //Validate(string.Empty, this.EmptyStream(), encoding, true);
+        Test(string.Empty, Stream.Null, encoding);
+        //Test(string.Empty, this.EmptyStream(), encoding, true);
 
-        Fixture.Create<string>().With(text => Validate(text, new MemoryStream().WriteText(text, encoding), encoding));
-        //Fixture.Create<string>().With(text => Validate(text, new MemoryStream().WriteText(text, encoding), encoding));
+        Fixture.Create<string>().With(text => Test(text, new MemoryStream().WriteText(text, encoding), encoding));
+        //Fixture.Create<string>().With(text => Test(text, new MemoryStream().WriteText(text, encoding), encoding));
       });
     }
 
     return;
 
-    static void Validate(string result, Stream stream, Encoding encoding = null, bool close = false)
+    static void Test(string result, Stream stream, Encoding encoding = null, bool close = false)
     {
       using (stream)
       {
@@ -1920,7 +1920,7 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => ((Stream) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("stream").Await();
 
-      //Validate(null);
+      //Test(null);
       //Encoding.GetEncodings().ForEach(Validate);
 
       //var bytes = this.RandomBytes();
@@ -1937,7 +1937,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(string result, Stream stream, Encoding encoding = null)
+    static void Test(string result, Stream stream, Encoding encoding = null)
     {
       using (stream)
       {
@@ -1962,18 +1962,18 @@ public sealed class StreamExtensionsTest
 
       new int?[] { null, 1, 4096, 8192 }.ForEach(buffer =>
       {
-        Validate(this.EmptyStream(), buffer);
-        Validate(this.RandomStream(), buffer);
-        Validate(this.RandomReadOnlyStream(), buffer);
-        Validate(this.WriteOnlyStream(), buffer);
-        Validate(this.RandomReadOnlyForwardStream(), buffer);
-        Validate(this.WriteOnlyForwardStream(), buffer);
+        Test(this.EmptyStream(), buffer);
+        Test(this.RandomStream(), buffer);
+        Test(this.RandomReadOnlyStream(), buffer);
+        Test(this.WriteOnlyStream(), buffer);
+        Test(this.RandomReadOnlyForwardStream(), buffer);
+        Test(this.WriteOnlyForwardStream(), buffer);
       });
     }
 
     return;
 
-    static void Validate(Stream stream, int? size)
+    static void Test(Stream stream, int? size)
     {
       using (var buffered = stream.ToBufferedStream(size))
       {
@@ -2017,13 +2017,13 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToBinaryReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(this.RandomStream(), null);
-      Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomStream(), encoding.GetEncoding()));
+      Test(this.RandomStream(), null);
+      Encoding.GetEncodings().ForEach(encoding => Test(this.RandomStream(), encoding.GetEncoding()));
     }
 
     return;
 
-    static void Validate(MemoryStream stream, Encoding encoding)
+    static void Test(MemoryStream stream, Encoding encoding)
     {
       using (stream)
       {
@@ -2050,13 +2050,13 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToBinaryWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(this.RandomBytes());
-      Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomBytes(), encoding.GetEncoding()));
+      Test(this.RandomBytes());
+      Encoding.GetEncodings().ForEach(encoding => Test(this.RandomBytes(), encoding.GetEncoding()));
     }
 
     return;
 
-    static void Validate(byte[] bytes, Encoding encoding = null)
+    static void Test(byte[] bytes, Encoding encoding = null)
     {
       using var stream = new MemoryStream();
 
@@ -2082,13 +2082,13 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToStreamReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(this.RandomStream());
-      Encoding.GetEncodings().ForEach(encoding => Validate(this.RandomStream(), encoding.GetEncoding()));
+      Test(this.RandomStream());
+      Encoding.GetEncodings().ForEach(encoding => Test(this.RandomStream(), encoding.GetEncoding()));
     }
 
     return;
 
-    static void Validate(MemoryStream stream, Encoding encoding = null)
+    static void Test(MemoryStream stream, Encoding encoding = null)
     {
       using (stream)
       {
@@ -2111,13 +2111,13 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToStreamWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(Fixture.Create<string>());
-      Encoding.GetEncodings().ForEach(encoding => Validate(Fixture.Create<string>(), encoding.GetEncoding()));
+      Test(Fixture.Create<string>());
+      Encoding.GetEncodings().ForEach(encoding => Test(Fixture.Create<string>(), encoding.GetEncoding()));
     }
 
     return;
 
-    static void Validate(string text, Encoding encoding = null)
+    static void Test(string text, Encoding encoding = null)
     {
       using var stream = new MemoryStream();
 
@@ -2142,14 +2142,14 @@ public sealed class StreamExtensionsTest
     {
       AssertionExtensions.Should(() => StreamExtensions.ToStreamContent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
-      Validate(Stream.Null);
-      Validate(this.EmptyStream());
-      Validate(this.RandomStream());
+      Test(Stream.Null);
+      Test(this.EmptyStream());
+      Test(this.RandomStream());
     }
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using var content = stream.ToStreamContent();
 
@@ -2199,7 +2199,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -2223,7 +2223,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -2292,7 +2292,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, Encoding encoding = null)
+    static void Test(Stream stream, Encoding encoding = null)
     {
       using (stream)
       {
@@ -2316,7 +2316,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream, Encoding encoding = null)
+    static void Test(Stream stream, Encoding encoding = null)
     {
       using (stream)
       {
@@ -2362,7 +2362,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -2386,7 +2386,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -2433,7 +2433,7 @@ public sealed class StreamExtensionsTest
 
     return;
 
-    static void Validate(Stream stream)
+    static void Test(Stream stream)
     {
       using (stream)
       {
@@ -2450,15 +2450,15 @@ public sealed class StreamExtensionsTest
   {
     using (new AssertionScope())
     {
-      Validate(false, null);
-      Validate(false, Stream.Null);
-      Validate(false, this.EmptyStream());
-      Validate(true, this.RandomStream());
+      Test(false, null);
+      Test(false, Stream.Null);
+      Test(false, this.EmptyStream());
+      Test(true, this.RandomStream());
     }
 
     return;
 
-    static void Validate(bool result, Stream stream)
+    static void Test(bool result, Stream stream)
     {
       using (stream)
       {

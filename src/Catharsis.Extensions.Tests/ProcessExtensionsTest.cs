@@ -36,7 +36,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(Process process)
+    static void Test(Process process)
     {
       using (process)
       {
@@ -60,7 +60,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(Process process)
+    static void Test(Process process)
     {
       using (process)
       {
@@ -84,7 +84,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(Process process)
+    static void Test(Process process)
     {
       using (process)
       {
@@ -109,7 +109,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(Process process)
+    static void Test(Process process)
     {
       using (process)
       {
@@ -140,7 +140,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(Process process)
+    static void Test(Process process)
     {
       using (process)
       {
@@ -164,7 +164,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(string result, Process process)
+    static void Test(string result, Process process)
     {
       using (process)
       {
@@ -188,7 +188,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(string result, Process process)
+    static void Test(string result, Process process)
     {
       using (process)
       {
@@ -212,7 +212,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, Process process)
+    static void Test(byte[] result, Process process)
     {
       using (process)
       {
@@ -236,7 +236,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(byte[] result, Process process)
+    static void Test(byte[] result, Process process)
     {
       using (process)
       {
@@ -260,7 +260,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(string result, Process process)
+    static void Test(string result, Process process)
     {
       using (process)
       {
@@ -284,7 +284,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(string result, Process process)
+    static void Test(string result, Process process)
     {
       using (process)
       {
@@ -309,7 +309,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(Process process, byte[] bytes)
+    static void Test(Process process, byte[] bytes)
     {
       using (process)
       {
@@ -335,7 +335,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(Process process, byte[] bytes)
+    static void Test(Process process, byte[] bytes)
     {
       using (process)
       {
@@ -360,7 +360,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(Process process, string text)
+    static void Test(Process process, string text)
     {
       using (process)
       {
@@ -386,7 +386,7 @@ public sealed class ProcessExtensionsTest
 
     return;
 
-    static void Validate(Process process, string text)
+    static void Test(Process process, string text)
     {
       using (process)
       {
