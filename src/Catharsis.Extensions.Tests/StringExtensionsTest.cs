@@ -1,3 +1,4 @@
+using AutoFixture;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
@@ -16,7 +17,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StringExtensions"/>.</para>
 /// </summary>
-public sealed class StringExtensionsTest
+public sealed class StringExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.Compare(string, string, CultureInfo)"/> method.</para>

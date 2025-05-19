@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using AutoFixture;
+using System.Text;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TextReaderExtensions"/>.</para>
 /// </summary>
-public sealed class TextReaderExtensionsTest
+public sealed class TextReaderExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TextReaderExtensions.IsEnd(TextReader)"/> method.</para>

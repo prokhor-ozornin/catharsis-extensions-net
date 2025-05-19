@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoFixture;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="HttpClientExtensions"/>.</para>
 /// </summary>
-public sealed class HttpClientExtensionsTest
+public sealed class HttpClientExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="HttpClientExtensions.WithTimeout(HttpClient, TimeSpan?)"/> method.</para>

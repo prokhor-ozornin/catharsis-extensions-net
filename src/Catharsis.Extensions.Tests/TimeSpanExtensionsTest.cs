@@ -1,3 +1,4 @@
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -7,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TimeSpanExtensions"/>.</para>
 /// </summary>
-public sealed class TimeSpanExtensionsTest
+public sealed class TimeSpanExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TimeSpanExtensions.InThePast(TimeSpan)"/> method.</para>

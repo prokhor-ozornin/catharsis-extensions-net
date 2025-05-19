@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using AutoFixture;
+using System.Net;
 using System.Net.Sockets;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -9,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IPAddressExtensions"/>.</para>
 /// </summary>
-public sealed class IPAddressExtensionsTest
+public sealed class IPAddressExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IPAddressExtensions.IsV4"/> method.</para>

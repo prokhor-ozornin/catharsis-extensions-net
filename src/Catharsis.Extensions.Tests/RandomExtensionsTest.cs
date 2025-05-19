@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using AutoFixture;
+using System.Security;
 using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -9,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="RandomExtensions"/>.</para>
 /// </summary>
-public sealed class RandomExtensionsTest
+public sealed class RandomExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>

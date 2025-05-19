@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using AutoFixture;
+using System.Text;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="UriExtensions"/>.</para>
 /// </summary>
-public sealed class UriExtensionsTest
+public sealed class UriExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="UriExtensions.IsAvailable(Uri, TimeSpan?)"/> method.</para>

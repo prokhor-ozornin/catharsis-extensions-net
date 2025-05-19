@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using AutoFixture;
+using System.Collections.Immutable;
 using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IAsyncEnumerableExtensions"/>.</para>
 /// </summary>
-public sealed class IAsyncEnumerableExtensionsTest
+public sealed class IAsyncEnumerableExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>

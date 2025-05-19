@@ -1,3 +1,4 @@
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -7,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IDictionaryExtensions"/>.</para>
 /// </summary>
-public sealed class IDictionaryExtensionsTest
+public sealed class IDictionaryExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IDictionaryExtensions.Get{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/> method.</para>

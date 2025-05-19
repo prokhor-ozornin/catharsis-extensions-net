@@ -1,4 +1,5 @@
-﻿using System.Collections.Frozen;
+﻿using AutoFixture;
+using System.Collections.Frozen;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Net.Sockets;
@@ -15,7 +16,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IEnumerableExtensions"/>.</para>
 /// </summary>
-public sealed class IEnumerableExtensionsTest
+public sealed class IEnumerableExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>

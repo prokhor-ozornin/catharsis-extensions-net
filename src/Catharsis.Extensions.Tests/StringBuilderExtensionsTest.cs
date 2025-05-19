@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Text;
 using System.Xml;
-using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -12,7 +11,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StringBuilderExtensions"/>.</para>
 /// </summary>
-public sealed class StringBuilderExtensionsTest
+public sealed class StringBuilderExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsUnset(StringBuilder)"/> method.</para>

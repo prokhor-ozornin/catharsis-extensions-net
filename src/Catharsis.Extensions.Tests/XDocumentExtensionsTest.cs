@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using AutoFixture;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using FluentAssertions;
@@ -10,7 +11,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="XDocumentExtensions"/>.</para>
 /// </summary>
-public sealed class XDocumentExtensionsTest
+public sealed class XDocumentExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="XDocumentExtensions.IsUnset(XDocument)"/> method.</para>

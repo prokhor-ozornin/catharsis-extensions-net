@@ -1,3 +1,4 @@
+using AutoFixture;
 using System.Globalization;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DateTimeExtensions"/>.</para>
 /// </summary>
-public sealed class DateTimeExtensionsTest
+public sealed class DateTimeExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="DateTimeExtensions.IsPast(DateTime)"/> method.</para>

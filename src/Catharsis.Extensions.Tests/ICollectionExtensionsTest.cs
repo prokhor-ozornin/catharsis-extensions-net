@@ -1,3 +1,4 @@
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -7,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ICollectionExtensions"/>.</para>
 /// </summary>
-public sealed class ICollectionExtensionsTest
+public sealed class ICollectionExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="ICollectionExtensions.Empty{T}(ICollection{T})"/> method.</para>

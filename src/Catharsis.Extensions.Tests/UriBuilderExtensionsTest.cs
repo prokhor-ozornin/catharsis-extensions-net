@@ -1,4 +1,5 @@
-﻿using FluentAssertions.Execution;
+﻿using AutoFixture;
+using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="UriBuilderExtensions"/>.</para>
 /// </summary>
-public sealed class UriBuilderExtensionsTest
+public sealed class UriBuilderExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="UriBuilderExtensions.Empty(UriBuilder)"/> method.</para>

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using AutoFixture;
+using System.Text;
 using System.Xml;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -9,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="XmlReaderExtensions"/>.</para>
 /// </summary>
-public sealed class XmlReaderExtensionsTest
+public sealed class XmlReaderExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="XmlReaderExtensions.Skip(XmlReader, int)"/> method.</para>

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using AutoFixture;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using FluentAssertions;
@@ -10,7 +11,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="UdpClientExtensions"/>.</para>
 /// </summary>
-public sealed class UdpClientExtensionsTest
+public sealed class UdpClientExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="UdpClientExtensions.IsUnset(UdpClient)"/> method.</para>

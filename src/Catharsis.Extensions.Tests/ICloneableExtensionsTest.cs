@@ -1,11 +1,12 @@
-﻿using Xunit;
+﻿using AutoFixture;
+using Xunit;
 
 namespace Catharsis.Extensions.Tests
 {
   /// <summary>
   ///   <para>Tests set for class <see cref="ICloneableExtensions"/>.</para>
   /// </summary>
-  public sealed class ICloneableExtensionsTest
+  public sealed class ICloneableExtensionsTest : Test
   {
     /// <summary>
     ///   <para>Performs testing of <see cref="ICloneableExtensions.Clone{T}(ICloneable)"/> method.</para>

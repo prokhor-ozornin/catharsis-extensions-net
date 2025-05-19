@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using AutoFixture;
+using System.Net;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IPHostEntryExtensions"/>.</para>
 /// </summary>
-public sealed class IPHostEntryExtensionsTest
+public sealed class IPHostEntryExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsAvailable(IPHostEntry, TimeSpan?)"/> method.</para>

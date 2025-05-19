@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using AutoFixture;
+using System.ComponentModel;
 using System.Reflection;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -9,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="MemberInfoExtensions"/>.</para>
 /// </summary>
-public sealed class MemberInfoExtensionsTest
+public sealed class MemberInfoExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsConstructor(MemberInfo)"/> method.</para>

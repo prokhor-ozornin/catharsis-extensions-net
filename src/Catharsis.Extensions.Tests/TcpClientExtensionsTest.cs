@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using AutoFixture;
+using System.Net.Sockets;
 using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -9,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="TcpClientExtensions"/>.</para>
 /// </summary>
-public sealed class TcpClientExtensionsTest
+public sealed class TcpClientExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="TcpClientExtensions.IsUnset(TcpClient)"/> method.</para>

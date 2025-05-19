@@ -1,3 +1,4 @@
+using AutoFixture;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -12,7 +13,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ObjectExtensions"/>.</para>
 /// </summary>
-public sealed class ObjectExtensionsTest
+public sealed class ObjectExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="ObjectExtensions.As{T}(object)"/> method.</para>

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using AutoFixture;
+using System.Text.RegularExpressions;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="MatchExtensions"/>.</para>
 /// </summary>
-public sealed class MatchExtensionsTest
+public sealed class MatchExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="MatchExtensions.ToEnumerable(Match)"/> method.</para>

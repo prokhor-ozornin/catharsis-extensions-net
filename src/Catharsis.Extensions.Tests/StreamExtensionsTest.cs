@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using AutoFixture;
+using System.IO.Compression;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StreamExtensions"/>.</para>
 /// </summary>
-public sealed class StreamExtensionsTest
+public sealed class StreamExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="StreamExtensions.IsStart(Stream)"/> method.</para>

@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoFixture;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DriveInfoExtensions"/>.</para>
 /// </summary>
-public sealed class DriveInfoExtensionsTest
+public sealed class DriveInfoExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="DriveInfoExtensions.Size(DriveInfo, string, bool)"/> method.</para>

@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoFixture;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -7,7 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ActionExtensions"/>.</para>
 /// </summary>
-public sealed class ActionExtensionsTest
+public sealed class ActionExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of following methods :</para>

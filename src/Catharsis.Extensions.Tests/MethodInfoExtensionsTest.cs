@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using AutoFixture;
+using System.Reflection;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="MethodInfoExtensions"/>.</para>
 /// </summary>
-public sealed class MethodInfoExtensionsTest
+public sealed class MethodInfoExtensionsTest : Test
 {
   private delegate string AsString(object subject);
 

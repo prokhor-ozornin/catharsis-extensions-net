@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -9,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ArrayExtensions"/>.</para>
 /// </summary>
-public sealed class ArrayExtensionsTest
+public sealed class ArrayExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="ArrayExtensions.Range{T}(T[], int?, int?)"/> method.</para>

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using AutoFixture;
+using System.Reflection;
 using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -9,7 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="FileInfoExtensions"/>.</para>
 /// </summary>
-public sealed class FileInfoExtensionsTest
+public sealed class FileInfoExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="FileInfoExtensions.IsUnset(FileInfo)"/> method.</para>

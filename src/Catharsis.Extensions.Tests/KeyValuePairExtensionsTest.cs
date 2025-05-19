@@ -1,11 +1,12 @@
-﻿using Xunit;
+﻿using AutoFixture;
+using Xunit;
 
 namespace Catharsis.Extensions.Tests;
 
 /// <summary>
 ///   <para>Tests set for class <see cref="KeyValuePairExtensions"/>.</para>
 /// </summary>
-public sealed class KeyValuePairExtensionsTest
+public sealed class KeyValuePairExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="KeyValuePairExtensions.ToValueTuple{TKey, TValue}(KeyValuePair{TKey, TValue})"/> method.</para>

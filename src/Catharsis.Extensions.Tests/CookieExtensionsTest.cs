@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using AutoFixture;
+using System.Net;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="CookieExtensions"/>.</para>
 /// </summary>
-public sealed class CookieExtensionsTest
+public sealed class CookieExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="CookieExtensions.IsUnset(Cookie)"/> method.</para>

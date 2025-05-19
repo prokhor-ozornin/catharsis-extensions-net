@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using AutoFixture;
+using System.Diagnostics;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ProcessExtensions"/>.</para>
 /// </summary>
-public sealed class ProcessExtensionsTest
+public sealed class ProcessExtensionsTest : Test
 {
   private Process ShellProcess { get; }
 

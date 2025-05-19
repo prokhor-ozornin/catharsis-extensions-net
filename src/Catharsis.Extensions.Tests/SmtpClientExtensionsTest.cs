@@ -1,4 +1,5 @@
-﻿using System.Net.Mail;
+﻿using AutoFixture;
+using System.Net.Mail;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -8,7 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="SmtpClientExtensions"/>.</para>
 /// </summary>
-public sealed class SmtpClientExtensionsTest
+public sealed class SmtpClientExtensionsTest : Test
 {
   /// <summary>
   ///   <para>Performs testing of <see cref="SmtpClientExtensions.WithTimeout(SmtpClient, TimeSpan)"/> method.</para>
