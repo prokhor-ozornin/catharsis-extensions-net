@@ -1,4 +1,3 @@
-using AutoFixture;
 using System.Globalization;
 using FluentAssertions;
 using FluentAssertions.Execution;

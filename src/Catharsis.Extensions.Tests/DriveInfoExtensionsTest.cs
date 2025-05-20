@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -91,7 +90,7 @@ public sealed class DriveInfoExtensionsTest : Test
     {
       AssertionExtensions.Should(() => DriveInfoExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
 
-      DriveInfo.GetDrives().ForEach(Validate);
+      DriveInfo.GetDrives().ForEach(Test);
     }
 
     return;

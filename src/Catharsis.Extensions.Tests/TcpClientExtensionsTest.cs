@@ -76,13 +76,13 @@ public sealed class TcpClientExtensionsTest : Test
       receiveTimeout.Should().Be(client.Client.ReceiveTimeout).And.Be(0);
       sendTimeout.Should().Be(client.Client.SendTimeout).And.Be(0);
 
-      client.WithTimeout(null).Should().BeOfType<TcpClient>().And.BeSameAs(this.Tcp());
+      client.WithTimeout(null).Should().BeOfType<TcpClient>().And.BeSameAs(Fixture.Create<TcpClient>());
       client.ReceiveTimeout.Should().Be(client.Client.ReceiveTimeout).And.Be(receiveTimeout);
       client.SendTimeout.Should().Be(client.Client.SendTimeout).And.Be(sendTimeout);
 
       new[] { TimeSpan.MinValue, TimeSpan.Zero, TimeSpan.MaxValue }.ForEach(timespan =>
       {
-        client.WithTimeout(timespan).Should().BeOfType<TcpClient>().And.BeSameAs(this.Tcp());
+        client.WithTimeout(timespan).Should().BeOfType<TcpClient>().And.BeSameAs(Fixture.Create<TcpClient>());
         client.ReceiveTimeout.Should().Be(client.Client.ReceiveTimeout).And.Be((int) timespan.TotalMilliseconds);
         client.SendTimeout.Should().Be(client.Client.SendTimeout).And.Be((int) timespan.TotalMilliseconds);
       });
@@ -108,7 +108,7 @@ public sealed class TcpClientExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TcpClient) null).TryFinallyDisconnect(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("client");
-      AssertionExtensions.Should(() => this.Tcp().TryFinallyDisconnect(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => Fixture.Create<TcpClient>().TryFinallyDisconnect(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     }
 
     throw new NotImplementedException();
@@ -309,7 +309,7 @@ public sealed class TcpClientExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TcpClient) null).WriteBytes([])).ThrowExactly<ArgumentNullException>().WithParameterName("client");
-      AssertionExtensions.Should(() => this.Tcp().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => Fixture.Create<TcpClient>().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
     throw new NotImplementedException();
@@ -334,8 +334,8 @@ public sealed class TcpClientExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TcpClient) null).WriteBytesAsync([])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
-      AssertionExtensions.Should(() => this.Tcp().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => this.Tcp().WriteBytesAsync([])).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Fixture.Create<TcpClient>().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => Fixture.Create<TcpClient>().WriteBytesAsync([])).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -360,7 +360,7 @@ public sealed class TcpClientExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TcpClient) null).WriteText(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("client");
-      AssertionExtensions.Should(() => this.Tcp().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => Fixture.Create<TcpClient>().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -385,8 +385,8 @@ public sealed class TcpClientExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TcpClient) null).WriteTextAsync(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
-      AssertionExtensions.Should(() => this.Tcp().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => this.Tcp().WriteTextAsync(string.Empty, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Fixture.Create<TcpClient>().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => Fixture.Create<TcpClient>().WriteTextAsync(string.Empty, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

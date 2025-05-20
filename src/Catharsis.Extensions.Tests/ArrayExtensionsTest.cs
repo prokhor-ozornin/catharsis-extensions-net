@@ -45,7 +45,7 @@ public sealed class ArrayExtensionsTest : Test
 
       AssertionExtensions.Should(() => ArrayExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
 
-      var bytes = this.RandomBytes();
+      var bytes = Bytes;
 
       Enumerable.Empty<byte>().ToBase64().Should().BeOfType<string>().And.BeEmpty();
       bytes.ToBase64().Should().BeOfType<string>().And.Be(Convert.ToBase64String(bytes));
@@ -99,7 +99,7 @@ public sealed class ArrayExtensionsTest : Test
       AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
       Test([]);
-      Test(this.RandomBytes());
+      Test(Bytes);
     }
 
     return;
@@ -150,8 +150,8 @@ public sealed class ArrayExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      //Test(this.RandomBytes(), null);
-      //Encoding.GetEncodings().ForEach(encoding => Test(this.RandomBytes(), encoding.GetEncoding()));
+      //Test(Bytes, null);
+      //Encoding.GetEncodings().ForEach(encoding => Test(Bytes, encoding.GetEncoding()));
     }
 
     throw new NotImplementedException();

@@ -1,4 +1,3 @@
-using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -33,7 +32,7 @@ public sealed class IListExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IList<T> list)
+    static void Test<T>(IList<T> list)
     {
     }
   }
@@ -57,7 +56,7 @@ public sealed class IListExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IList<T> list)
+    static void Test<T>(IList<T> list)
     {
     }
   }
@@ -81,7 +80,7 @@ public sealed class IListExtensionsTest : Test
       AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, 0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
       AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, 0, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
 
-      static void Validate<T>(IList<T> list)
+      static void Test<T>(IList<T> list)
       {
       }
     }
@@ -91,7 +90,7 @@ public sealed class IListExtensionsTest : Test
       AssertionExtensions.Should(() => IListExtensions.Fill(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().Fill((Func<int, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("filler");
 
-      static void Validate<T>(IList<T> list)
+      static void Test<T>(IList<T> list)
       {
       }
     }
@@ -127,7 +126,7 @@ public sealed class IListExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IList<T> list)
+    static void Test<T>(IList<T> list)
     {
     }
   }
@@ -145,7 +144,7 @@ public sealed class IListExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      static void Validate<T>(IList<T> list)
+      static void Test<T>(IList<T> list)
       {
 
       }
@@ -157,7 +156,7 @@ public sealed class IListExtensionsTest : Test
       AssertionExtensions.Should(() => Array.Empty<object>().With(0, (IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
       AssertionExtensions.Should(() => Array.Empty<object>().With(-1, Enumerable.Empty<object>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
 
-      static void Validate<T>(IList<T> list)
+      static void Test<T>(IList<T> list)
       {
 
       }
@@ -168,7 +167,7 @@ public sealed class IListExtensionsTest : Test
       AssertionExtensions.Should(() => IListExtensions.With<object>(null, 0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().With(-1, null)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
 
-      static void Validate<T>(IList<T> list)
+      static void Test<T>(IList<T> list)
       {
 
       }
@@ -190,7 +189,7 @@ public sealed class IListExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      static void Validate<T>(IList<T> list)
+      static void Test<T>(IList<T> list)
       {
 
       }
@@ -201,7 +200,7 @@ public sealed class IListExtensionsTest : Test
       AssertionExtensions.Should(() => IListExtensions.Without<object>(null, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().Without(new[] { -1 })).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
 
-      static void Validate<T>(IList<T> list)
+      static void Test<T>(IList<T> list)
       {
 
       }
@@ -209,7 +208,7 @@ public sealed class IListExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      static void Validate<T>(IList<T> list)
+      static void Test<T>(IList<T> list)
       {
 
       }

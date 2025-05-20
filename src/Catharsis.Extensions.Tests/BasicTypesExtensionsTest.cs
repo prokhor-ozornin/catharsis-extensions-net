@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -703,7 +702,7 @@ public sealed class BasicTypesExtensionsTest : Test
       AssertionExtensions.Should(() => int.MinValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
       AssertionExtensions.Should(() => int.MaxValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
 
-      new[] { -1, 0, 1 }.ForEach(Validate);
+      new[] { -1, 0, 1 }.ForEach(Test);
     }
 
     return;
@@ -737,7 +736,7 @@ public sealed class BasicTypesExtensionsTest : Test
       AssertionExtensions.Should(() => int.MinValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
       AssertionExtensions.Should(() => int.MaxValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
 
-      new[] { -1, 0, 1 }.ForEach(Validate);
+      new[] { -1, 0, 1 }.ForEach(Test);
     }
 
     return;
@@ -768,7 +767,7 @@ public sealed class BasicTypesExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      new[] { -1, 0, 1 }.ForEach(Validate);
+      new[] { -1, 0, 1 }.ForEach(Test);
     }
 
     return;
@@ -799,7 +798,7 @@ public sealed class BasicTypesExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      new[] { -1, 0, 1 }.ForEach(Validate);
+      new[] { -1, 0, 1 }.ForEach(Test);
     }
 
     return;
@@ -830,7 +829,7 @@ public sealed class BasicTypesExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      new[] { -1, 0, 1 }.ForEach(Validate);
+      new[] { -1, 0, 1 }.ForEach(Test);
     }
 
     return;
@@ -861,7 +860,7 @@ public sealed class BasicTypesExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      new long[] { -1, 0, 1 }.ForEach(Validate);
+      new long[] { -1, 0, 1 }.ForEach(Test);
     }
 
     return;

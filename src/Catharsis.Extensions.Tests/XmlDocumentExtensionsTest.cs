@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -213,7 +212,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
       AssertionExtensions.Should(() => new XmlDocument().Serialize((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -234,7 +233,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(System.IO.Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
       AssertionExtensions.Should(() => new XmlDocument().Serialize((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -255,7 +254,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(System.IO.Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
       AssertionExtensions.Should(() => new XmlDocument().Serialize((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -276,7 +275,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(this.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(FakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
       AssertionExtensions.Should(() => new XmlDocument().Serialize((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 

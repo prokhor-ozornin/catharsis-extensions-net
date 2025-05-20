@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using FluentAssertions.Execution;
+﻿using FluentAssertions.Execution;
 using FluentAssertions;
 using Xunit;
 
@@ -64,8 +63,8 @@ public sealed class UriBuilderExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriBuilderExtensions.WithQuery(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
-      AssertionExtensions.Should(() => new UriBuilder().WithQuery(((string Name, object Value)[]) null)).ThrowExactly<ArgumentNullException>().WithParameterName("parameters");
+      AssertionExtensions.Should(() => UriBuilderExtensions.WithQuery(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => new UriBuilder().WithQuery()).ThrowExactly<ArgumentNullException>().WithParameterName("parameters");
 
       static void Test()
       {

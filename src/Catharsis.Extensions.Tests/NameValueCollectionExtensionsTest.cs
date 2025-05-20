@@ -1,4 +1,3 @@
-using AutoFixture;
 using System.Collections.Specialized;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -22,7 +21,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
       AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
       Test([]);
-      Test(new NameValueCollection().With(this.RandomObjects().Select(element => (element.GetType().FullName, element))));
+      Test(new NameValueCollection().With(Objects.Select(element => (element.GetType().FullName, element))));
     }
 
     return;

@@ -1,4 +1,3 @@
-using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -22,12 +21,12 @@ public sealed class ICollectionExtensionsTest : Test
       AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
 
       Test(Array.Empty<object>().ToList());
-      Test(this.RandomObjects().ToList());
+      Test(Objects.ToList());
     }
 
     return;
 
-    static void Validate<T>(ICollection<T> collection) => collection.Empty().Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
+    static void Test<T>(ICollection<T> collection) => collection.Empty().Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
   }
 
   /// <summary>
@@ -47,7 +46,7 @@ public sealed class ICollectionExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(ICollection<T> collection, params T[] elements) => collection.TryFinallyClear(collection => collection.With(elements)).Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
+    static void Test<T>(ICollection<T> collection, params T[] elements) => collection.TryFinallyClear(collection => collection.With(elements)).Should().BeOfType<ICollection<T>>().And.BeSameAs(collection).And.BeEmpty();
   }
 
   /// <summary>
@@ -74,7 +73,7 @@ public sealed class ICollectionExtensionsTest : Test
       collection.With(elements).Should().BeOfType<object[]>().And.BeSameAs(collection).And.Equal(elements);
       collection.With(elements).Should().BeOfType<object[]>().And.BeSameAs(collection).And.Equal(elements.Concat(elements));
 
-      static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
+      static void Test<T>(ICollection<T> collection, IEnumerable<T> elements)
       {
       }
     }
@@ -84,7 +83,7 @@ public sealed class ICollectionExtensionsTest : Test
       AssertionExtensions.Should(() => ICollectionExtensions.With<object>(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("to");
       AssertionExtensions.Should(() => ICollectionExtensions.With(Array.Empty<object>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
-      static void Validate<T>(ICollection<T> collection, params T[] elements)
+      static void Test<T>(ICollection<T> collection, params T[] elements)
       {
       }
     }
@@ -118,7 +117,7 @@ public sealed class ICollectionExtensionsTest : Test
       collection = [.. elements];
       collection.Without(elements).Should().BeOfType<List<object>>().And.BeSameAs(collection).And.BeEmpty();
 
-      static void Validate<T>(ICollection<T> collection, IEnumerable<T> elements)
+      static void Test<T>(ICollection<T> collection, IEnumerable<T> elements)
       {
       }
     }
@@ -128,7 +127,7 @@ public sealed class ICollectionExtensionsTest : Test
       AssertionExtensions.Should(() => ((ICollection<object>) null).Without([])).ThrowExactly<ArgumentNullException>().WithParameterName("from");
       AssertionExtensions.Should(() => Array.Empty<object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      static void Validate<T>(ICollection<T> collection, params T[] elements)
+      static void Test<T>(ICollection<T> collection, params T[] elements)
       {
       }
     }

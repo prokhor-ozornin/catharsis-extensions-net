@@ -30,7 +30,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(object instance) where T : class
+    static void Test<T>(object instance) where T : class
     {
     }
   }
@@ -57,7 +57,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(object instance)
+    static void Test<T>(object instance)
     {
     }
   }
@@ -115,14 +115,14 @@ public sealed class ObjectExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ObjectExtensions.Is<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
 
-      Validate<object>(true, new object());
-      Validate<string>(false, new object());
-      Validate<IEnumerable<char>>(true, string.Empty);
+      Test<object>(true, new object());
+      Test<string>(false, new object());
+      Test<IEnumerable<char>>(true, string.Empty);
     }
     
     return;
 
-    static void Validate<T>(bool result, object instance) => instance.Is<T>().Should().Be(result);
+    static void Test<T>(bool result, object instance) => instance.Is<T>().Should().Be(result);
   }
 
   /// <summary>
@@ -183,7 +183,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, T? nullable) where T : struct => nullable.IsUnset().Should().Be(result);
+    static void Test<T>(bool result, T? nullable) where T : struct => nullable.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -200,7 +200,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, Lazy<T> lazy) => lazy.IsUnset().Should().Be(result);
+    static void Test<T>(bool result, Lazy<T> lazy) => lazy.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -252,7 +252,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, T? nullable) where T : struct => nullable.IsEmpty().Should().Be(result);
+    static void Test<T>(bool result, T? nullable) where T : struct => nullable.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -292,7 +292,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, Lazy<T> lazy) => lazy.IsEmpty().Should().Be(result);
+    static void Test<T>(bool result, Lazy<T> lazy) => lazy.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -342,7 +342,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(T result, object instance, string name) => instance.GetFieldValue<T>(name).Should().BeOfType<T>().And.BeSameAs(result);
+    static void Test<T>(T result, object instance, string name) => instance.GetFieldValue<T>(name).Should().BeOfType<T>().And.BeSameAs(result);
   }
 
   /// <summary>
@@ -398,7 +398,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(T result, object instance, string name) => instance.GetPropertyValue<T>(name).Should().BeOfType<T>().And.BeSameAs(result);
+    static void Test<T>(T result, object instance, string name) => instance.GetPropertyValue<T>(name).Should().BeOfType<T>().And.BeSameAs(result);
   }
 
   /// <summary>
@@ -827,13 +827,13 @@ public sealed class ObjectExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ObjectExtensions.TryFinallyDispose<Stream>(null, _ => {})).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-      AssertionExtensions.Should(() => Stream.Null.TryFinallyDispose(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.TryFinallyDispose(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
     }
 
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ObjectExtensions.TryFinallyDispose<IDisposable, bool>(null, _ => true)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
-      AssertionExtensions.Should(() => Stream.Null.TryFinallyDispose((Func<Stream, bool>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("function");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.TryFinallyDispose((Func<Stream, bool>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("function");
     }
 
     throw new NotImplementedException();
@@ -894,7 +894,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, System.IO.Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().Print((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -919,9 +919,9 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, System.IO.Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
       AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(System.IO.Stream.Null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -945,7 +945,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, System.IO.Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().Print((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -970,9 +970,9 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, System.IO.Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
       AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => new object().PrintAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(System.IO.Stream.Null.ToStreamWriter())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -996,7 +996,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().Print((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1021,7 +1021,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, System.IO.Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
       AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     }
 
@@ -1046,10 +1046,10 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, System.IO.Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().Print((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Test(this.EmptyStream().ToBinaryWriter(), Fixture.Create<string>());
+      Test(EmptyStream.ToBinaryWriter(), Fixture.Create<string>());
     }
 
     return;
@@ -1075,7 +1075,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, this.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.Print<object>(null, FakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().Print((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1096,9 +1096,9 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, this.RandomFakeFile())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
+      AssertionExtensions.Should(() => ObjectExtensions.PrintAsync<object>(null, FakeFile)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("instance").Await();
       AssertionExtensions.Should(() => new object().PrintAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => new object().PrintAsync(this.RandomFakeFile(), null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => new object().PrintAsync(FakeFile, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -1208,7 +1208,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().SerializeAsDataContract((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1233,7 +1233,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, System.IO.Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().SerializeAsDataContract((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1258,7 +1258,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, System.IO.Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().SerializeAsDataContract((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1283,7 +1283,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, this.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsDataContract<object>(null, FakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().SerializeAsDataContract((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1325,7 +1325,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().SerializeAsXml((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1350,7 +1350,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, System.IO.Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().SerializeAsXml((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1375,7 +1375,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, System.IO.Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().SerializeAsXml((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
       /*var subject = Fixture.Create<string>();
@@ -1437,7 +1437,7 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, this.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
+      AssertionExtensions.Should(() => ObjectExtensions.SerializeAsXml<object>(null, FakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("instance");
       AssertionExtensions.Should(() => new object().SerializeAsXml((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 

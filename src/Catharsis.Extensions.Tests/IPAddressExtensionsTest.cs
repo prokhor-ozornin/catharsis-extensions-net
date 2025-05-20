@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -230,7 +229,7 @@ public sealed class IPAddressExtensionsTest : Test
     {
       AssertionExtensions.Should(() => IPAddressExtensions.ToIpHost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-      new[] { IPAddress.Any, IPAddress.Broadcast, IPAddress.Loopback, IPAddress.None, IPAddress.IPv6Any, IPAddress.IPv6Loopback, IPAddress.None }.ForEach(Validate);
+      new[] { IPAddress.Any, IPAddress.Broadcast, IPAddress.Loopback, IPAddress.None, IPAddress.IPv6Any, IPAddress.IPv6Loopback, IPAddress.None }.ForEach(Test);
     }
 
     return;

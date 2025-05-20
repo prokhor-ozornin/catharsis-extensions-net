@@ -1,4 +1,6 @@
-﻿using AutoFixture;
+﻿using System.Security;
+using System.Security.Cryptography;
+using AutoFixture;
 using FluentAssertions;
 
 namespace Catharsis.Extensions.Tests;
@@ -7,6 +9,26 @@ public class Test : IDisposable
 {
   protected IFixture Fixture { get; } = new Fixture();
   protected Random Random { get; } = new();
+  protected byte[] Bytes { get; } = new Random().ByteSequence(short.MaxValue).AsArray();
+  protected object[] Objects { get; } = new Random().ObjectSequence(short.MaxValue).AsArray();
+  protected string Shell => "cmd.exe";
+  protected IAsyncEnumerable<object> EmptyAsyncEnumerable { get; } = Enumerable.Empty<object>().ToAsyncEnumerable();
+  protected SecureString EmptySecureString { get; } = new();
+  protected SecureString RandomSecureString { get; } = new Random().SecureString(short.MaxValue, ['a'..'z', 'A'..'Z']);
+  protected SymmetricAlgorithm SymmetricAlgorithm { get; } = Aes.Create();
+  protected HashAlgorithm HashAlgorithm { get; } = SHA512.Create();
+  protected TextReader EmptyTextReader { get; } = string.Empty.ToStringReader();
+  protected Stream EmptyStream { get; } = new MemoryStream();
+  protected MemoryStream Stream { get; } = new Random().MemoryStreamAsync(short.MaxValue).Await();
+  protected Stream ReadOnlyStream { get; } = new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnly();
+  protected Stream ReadOnlyForwardStream { get; } = new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnlyForward();
+  protected Stream WriteOnlyStream { get; } = new MemoryStream().AsWriteOnly();
+  protected Stream WriteOnlyForwardStream { get; } = new MemoryStream().AsWriteOnlyForward();
+  protected FileInfo FakeFile { get; } = new Random().FilePath().ToFile();
+  protected FileInfo EmptyFile { get; } = new Random().File();
+  protected FileInfo NonEmptyFile { get; } = new Random().TextFileAsync(short.MaxValue).Await();
+  protected DirectoryInfo Directory { get; } = new Random().Directory();
+  protected DirectoryInfo FakeDirectory { get; } = new Random().DirectoryPath().ToDirectory();
 
   protected Test()
   {
@@ -14,6 +36,19 @@ public class Test : IDisposable
 
   public virtual void Dispose()
   {
+    EmptySecureString.Dispose();
+    EmptyTextReader.Dispose();
+    RandomSecureString.Dispose();
+    EmptyStream.Dispose();
+    Stream.Dispose();
+    ReadOnlyStream.Dispose();
+    ReadOnlyForwardStream.Dispose();
+    WriteOnlyStream.Dispose();
+    WriteOnlyForwardStream.Dispose();
+    EmptyFile.Delete();
+    NonEmptyFile.Delete();
+    Directory.Delete();
+    SymmetricAlgorithm.Dispose();
   }
 
   protected void TestCompareTo<TClass, TProperty>(string property, TProperty lower, TProperty greater, Func<TClass> constructor = null)

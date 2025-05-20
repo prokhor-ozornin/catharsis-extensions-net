@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -23,7 +22,7 @@ public sealed class IComparableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsDefault().Should().Be(result);
+    static void Test<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsDefault().Should().Be(result);
   }
 
   /// <summary>
@@ -39,7 +38,7 @@ public sealed class IComparableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsPositive().Should().Be(result);
+    static void Test<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsPositive().Should().Be(result);
   }
 
   /// <summary>
@@ -55,7 +54,7 @@ public sealed class IComparableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsNegative().Should().Be(result);
+    static void Test<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsNegative().Should().Be(result);
   }
 
   /// <summary>
@@ -73,7 +72,7 @@ public sealed class IComparableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(T min, T max) where T : IComparable => min.Min(max).Should().BeSameAs(min);
+    static void Test<T>(T min, T max) where T : IComparable => min.Min(max).Should().BeSameAs(min);
   }
 
   /// <summary>
@@ -91,7 +90,7 @@ public sealed class IComparableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(T min, T max) where T : IComparable => min.Max(max).Should().BeSameAs(max);
+    static void Test<T>(T min, T max) where T : IComparable => min.Max(max).Should().BeSameAs(max);
   }
 
   /// <summary>
@@ -109,6 +108,6 @@ public sealed class IComparableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(T min, T max) where T : IComparable => min.MinMax(max).Should().Be((min, max));
+    static void Test<T>(T min, T max) where T : IComparable => min.MinMax(max).Should().Be((min, max));
   }
 }

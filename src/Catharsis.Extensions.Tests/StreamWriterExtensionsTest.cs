@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -20,8 +19,8 @@ public sealed class StreamWriterExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((StreamWriter) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
-      Test(Stream.Null.ToStreamWriter(), this.RandomBytes());
-      Test(this.RandomStream().ToStreamWriter(), this.RandomBytes());
+      Test(System.IO.Stream.Null.ToStreamWriter(), Bytes);
+      Test(Stream.ToStreamWriter(), Bytes);
     }
 
     return;
@@ -63,11 +62,11 @@ public sealed class StreamWriterExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
 
-      Test(this.EmptyStream().ToStreamWriter());
-      Test(this.RandomStream().ToStreamWriter());
-      Test(this.WriteOnlyStream().ToStreamWriter());
+      Test(EmptyStream.ToStreamWriter());
+      Test(Stream.ToStreamWriter());
+      Test(WriteOnlyStream.ToStreamWriter());
     }
 
     return;
@@ -93,8 +92,8 @@ public sealed class StreamWriterExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((StreamWriter) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
-      Test(Stream.Null.ToStreamWriter());
-      Test(this.RandomStream().ToStreamWriter());
+      Test(System.IO.Stream.Null.ToStreamWriter());
+      Test(Stream.ToStreamWriter());
     }
 
     return;
@@ -119,9 +118,9 @@ public sealed class StreamWriterExtensionsTest : Test
     {
       AssertionExtensions.Should(() => StreamWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
-      Test(Stream.Null.ToStreamWriter());
-      Test(this.EmptyStream().ToStreamWriter());
-      Test(this.RandomStream().ToStreamWriter());
+      Test(System.IO.Stream.Null.ToStreamWriter());
+      Test(EmptyStream.ToStreamWriter());
+      Test(Stream.ToStreamWriter());
     }
 
     return;

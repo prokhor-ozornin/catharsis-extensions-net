@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -21,7 +20,7 @@ public sealed class XmlWriterExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => XmlWriterExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-      AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
     throw new NotImplementedException();
@@ -46,7 +45,7 @@ public sealed class XmlWriterExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => XmlWriterExtensions.WriteBytesAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlWriter().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     }
 
     throw new NotImplementedException();
@@ -71,7 +70,7 @@ public sealed class XmlWriterExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => XmlWriterExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
-      AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -96,7 +95,7 @@ public sealed class XmlWriterExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => XmlWriterExtensions.WriteTextAsync(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToXmlWriter().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlWriter().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
     }
 
     throw new NotImplementedException();

@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using Xunit;
+﻿using Xunit;
 
 namespace Catharsis.Extensions.Tests;
 

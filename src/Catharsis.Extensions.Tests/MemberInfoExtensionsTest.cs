@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Reflection;
 using FluentAssertions;
 using FluentAssertions.Execution;

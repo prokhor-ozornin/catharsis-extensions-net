@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;

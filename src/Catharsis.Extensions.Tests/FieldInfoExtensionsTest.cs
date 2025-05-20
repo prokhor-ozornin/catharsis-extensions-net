@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Reflection;
+﻿using System.Reflection;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -26,7 +25,7 @@ public sealed class FieldInfoExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, FieldInfo field) => field.IsOfType<T>().Should().Be(result);
+    static void Test<T>(bool result, FieldInfo field) => field.IsOfType<T>().Should().Be(result);
   }
 
   /// <summary>

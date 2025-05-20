@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Net.NetworkInformation;
+﻿using System.Net.NetworkInformation;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -22,7 +21,7 @@ public sealed class PhysicalAddressExtensionsTest : Test
       AssertionExtensions.Should(() => PhysicalAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
       Test(PhysicalAddress.None);
-      Test(new PhysicalAddress(this.RandomBytes()));
+      Test(new PhysicalAddress(Bytes));
     }
 
     return;
@@ -48,7 +47,7 @@ public sealed class PhysicalAddressExtensionsTest : Test
       AssertionExtensions.Should(() => ((PhysicalAddress) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
       Test(PhysicalAddress.None, []);
-      this.RandomBytes().With(bytes => Test(new PhysicalAddress(bytes), bytes));
+      Bytes.With(bytes => Test(new PhysicalAddress(bytes), bytes));
     }
 
     return;

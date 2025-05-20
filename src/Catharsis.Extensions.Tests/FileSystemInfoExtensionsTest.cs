@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -20,8 +19,8 @@ public sealed class FileSystemInfoExtensionsTest : Test
     {
       AssertionExtensions.Should(() => FileSystemInfoExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entry");
 
-      Test(this.RandomFakeFile());
-      Test(this.RandomFakeDirectory());
+      Test(FakeFile);
+      Test(FakeDirectory);
     }
 
     return;

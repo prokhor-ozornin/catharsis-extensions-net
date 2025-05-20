@@ -41,7 +41,7 @@ public sealed class MatchExtensionsTest : Test
     {
       Test(false, null);
       Test(false, Match.Empty);
-      Test(true, Regex.Match(this.RandomName(), ".*"));
+      Test(true, Regex.Match(Fixture.Create<string>(), ".*"));
     }
 
     return;

@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -21,7 +20,7 @@ public sealed class XmlReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => XmlReaderExtensions.Skip(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Stream.Null.ToXmlReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
     }
 
     throw new NotImplementedException();
@@ -295,7 +294,7 @@ public sealed class XmlReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XmlReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToXmlReader().ToXDocumentAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlReader().ToXDocumentAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();

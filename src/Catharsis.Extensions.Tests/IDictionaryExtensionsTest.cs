@@ -1,4 +1,3 @@
-using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -25,7 +24,7 @@ public sealed class IDictionaryExtensionsTest : Test
 
     return;
 
-    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+    static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
     {
     }
   }
@@ -45,7 +44,7 @@ public sealed class IDictionaryExtensionsTest : Test
 
     return;
 
-    static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+    static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
     {
     }
   }
@@ -78,7 +77,7 @@ public sealed class IDictionaryExtensionsTest : Test
     {
       AssertionExtensions.Should(() => IDictionaryExtensions.With<string, object>(null, string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
 
-      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
+      static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
       {
       }
     }
@@ -88,7 +87,7 @@ public sealed class IDictionaryExtensionsTest : Test
       AssertionExtensions.Should(() => IDictionaryExtensions.With(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().With((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
+      static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
       {
       }
     }
@@ -98,7 +97,7 @@ public sealed class IDictionaryExtensionsTest : Test
       AssertionExtensions.Should(() => IDictionaryExtensions.With(null, Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, params (TKey key, TValue value)[] elements)
+      static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, params (TKey key, TValue value)[] elements)
       {
       }
     }
@@ -121,7 +120,7 @@ public sealed class IDictionaryExtensionsTest : Test
       AssertionExtensions.Should(() => ((IDictionary<string, object>) null).Without(Enumerable.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().Without((IEnumerable<string>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
+      static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
       {
       }
     }
@@ -131,7 +130,7 @@ public sealed class IDictionaryExtensionsTest : Test
       AssertionExtensions.Should(() => ((IDictionary<string, object>) null).Without(Array.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
-      static void Validate<TKey, TValue>(IDictionary<TKey, TValue> dictionary, params (TKey key, TValue value)[] elements)
+      static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, params (TKey key, TValue value)[] elements)
       {
       }
     }

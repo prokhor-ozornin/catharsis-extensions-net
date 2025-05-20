@@ -69,7 +69,7 @@ public sealed class HttpContentExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((HttpContent) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
-      new[] { [], this.RandomBytes() }.ForEach(bytes =>
+      new[] { [], Bytes }.ForEach(bytes =>
       {
         Test(bytes, new ByteArrayContent(bytes));
       });
@@ -96,7 +96,7 @@ public sealed class HttpContentExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
 
-      new[] { [], this.RandomBytes() }.ForEach(bytes =>
+      new[] { [], Bytes }.ForEach(bytes =>
       {
         Test(bytes, new ByteArrayContent(bytes));
       });

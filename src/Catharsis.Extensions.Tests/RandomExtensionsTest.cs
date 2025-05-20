@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Security;
+﻿using System.Security;
 using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -1750,7 +1749,7 @@ public sealed class RandomExtensionsTest : Test
       path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().FilePath()).And.Be(Path.Combine(Path.GetTempPath(), file));
       file.Should().BeOfType<string>().And.MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+      var currentDirectory = System.IO.Directory.GetCurrentDirectory().ToDirectory();
       path = new Random().FilePath(currentDirectory);
       file = Path.GetFileName(path);
       path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().FilePath(currentDirectory)).And.Be(Path.Combine(currentDirectory.FullName, file));
@@ -1780,7 +1779,7 @@ public sealed class RandomExtensionsTest : Test
       new Random().FilePathSequence(0).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
       new Random().FilePathSequence(count).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(path => Test(path, Path.GetTempPath()));
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+      var currentDirectory = System.IO.Directory.GetCurrentDirectory().ToDirectory();
       new Random().FilePathSequence(count, currentDirectory).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(path => Test(path, currentDirectory.FullName));
     }
 
@@ -1809,7 +1808,7 @@ public sealed class RandomExtensionsTest : Test
       path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().DirectoryPath()).And.Be(Path.Combine(Path.GetTempPath(), file));
       file.Should().BeOfType<string>().And.HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+      var currentDirectory = System.IO.Directory.GetCurrentDirectory().ToDirectory();
       path = new Random().DirectoryPath(currentDirectory);
       file = Path.GetFileName(path);
       path.Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.NotBe(new Random().DirectoryPath(currentDirectory)).And.Be(Path.Combine(currentDirectory.FullName, file));
@@ -1840,7 +1839,7 @@ public sealed class RandomExtensionsTest : Test
 
       new Random().DirectoryPathSequence(count).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(path => Test(Path.GetTempPath(), path));
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+      var currentDirectory = System.IO.Directory.GetCurrentDirectory().ToDirectory();
       new Random().DirectoryPathSequence(count, currentDirectory).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(path => Test(currentDirectory.FullName, path));
     }
 
@@ -1866,7 +1865,7 @@ public sealed class RandomExtensionsTest : Test
 
       Test(new Random().Directory(), Path.GetTempPath());
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+      var currentDirectory = System.IO.Directory.GetCurrentDirectory().ToDirectory();
       Test(currentDirectory, currentDirectory.FullName);
     }
 
@@ -1905,7 +1904,7 @@ public sealed class RandomExtensionsTest : Test
 
       new Random().DirectorySequence(count).Should().BeOfType<IEnumerable<DirectoryInfo>>().And.HaveCount(count).And.AllSatisfy(directory => Test(directory, Path.GetTempPath()));
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+      var currentDirectory = System.IO.Directory.GetCurrentDirectory().ToDirectory();
       new Random().DirectorySequence(count, currentDirectory).Should().BeOfType<IEnumerable<DirectoryInfo>>().And.HaveCount(count).And.AllSatisfy(directory => Test(directory, currentDirectory.FullName));
     }
 
@@ -1939,7 +1938,7 @@ public sealed class RandomExtensionsTest : Test
 
       Test(new Random().File(), Path.GetTempPath());
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+      var currentDirectory = System.IO.Directory.GetCurrentDirectory().ToDirectory();
       Test(new Random().File(currentDirectory), currentDirectory.FullName);
     }
 
@@ -1979,7 +1978,7 @@ public sealed class RandomExtensionsTest : Test
 
       new Random().FileSequence(count).Should().BeOfType<IEnumerable<FileInfo>>().And.HaveCount(count).And.AllSatisfy(file => Test(file, Path.GetTempPath()));
 
-      var currentDirectory = Directory.GetCurrentDirectory().ToDirectory();
+      var currentDirectory = System.IO.Directory.GetCurrentDirectory().ToDirectory();
       new Random().FileSequence(count, currentDirectory).Should().BeOfType<IEnumerable<FileInfo>>().And.HaveCount(count).And.AllSatisfy(file => Test(file, currentDirectory.FullName));
     }
 

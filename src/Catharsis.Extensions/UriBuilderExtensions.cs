@@ -43,7 +43,7 @@ public static class UriBuilderExtensions
     if (builder is null) throw new ArgumentNullException(nameof(builder));
     if (parameters is null) throw new ArgumentNullException(nameof(parameters));
 
-    return builder.WithQuery(parameters.ToValueTuple().AsArray());
+    return builder.WithQuery();
   }
 
   /// <summary>

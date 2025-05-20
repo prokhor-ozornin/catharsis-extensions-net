@@ -20,12 +20,12 @@ public sealed class BinaryReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryReader) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().ToBinaryReader().IsStart()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToBinaryReader().IsStart()).ThrowExactly<NotSupportedException>();
 
-      Test(Stream.Null.ToBinaryReader());
-      Test(this.EmptyStream().ToBinaryReader());
-      Test(this.RandomStream().ToBinaryReader());
-      Test(this.RandomReadOnlyStream().ToBinaryReader());
+      Test(System.IO.Stream.Null.ToBinaryReader());
+      Test(EmptyStream.ToBinaryReader());
+      Test(Stream.ToBinaryReader());
+      Test(ReadOnlyStream.ToBinaryReader());
     }
 
     return;
@@ -52,10 +52,10 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((BinaryReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(Stream.Null.ToBinaryReader());
-      Test(this.EmptyStream().ToBinaryReader());
-      Test(this.RandomStream().ToBinaryReader());
-      Test(this.RandomReadOnlyStream().ToBinaryReader());
+      Test(System.IO.Stream.Null.ToBinaryReader());
+      Test(EmptyStream.ToBinaryReader());
+      Test(Stream.ToBinaryReader());
+      Test(ReadOnlyStream.ToBinaryReader());
     }
 
     return;
@@ -81,12 +81,12 @@ public sealed class BinaryReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().ToBinaryReader().Rewind()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToBinaryReader().Rewind()).ThrowExactly<NotSupportedException>();
 
-      Test(Stream.Null.ToBinaryReader());
-      Test(this.EmptyStream().ToBinaryReader());
-      Test(this.RandomStream().ToBinaryReader());
-      Test(this.RandomReadOnlyStream().ToBinaryReader());
+      Test(System.IO.Stream.Null.ToBinaryReader());
+      Test(EmptyStream.ToBinaryReader());
+      Test(Stream.ToBinaryReader());
+      Test(ReadOnlyStream.ToBinaryReader());
     }
 
     return;
@@ -111,12 +111,12 @@ public sealed class BinaryReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => BinaryReaderExtensions.Skip(null, 0)).ThrowExactly<ArgumentNullException>();
-      AssertionExtensions.Should(() => Stream.Null.ToBinaryReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToBinaryReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      Test(Stream.Null.ToBinaryReader());
-      Test(this.EmptyStream().ToBinaryReader());
-      Test(this.RandomStream().ToBinaryReader());
-      Test(this.RandomReadOnlyStream().ToBinaryReader());
+      Test(System.IO.Stream.Null.ToBinaryReader());
+      Test(EmptyStream.ToBinaryReader());
+      Test(Stream.ToBinaryReader());
+      Test(ReadOnlyStream.ToBinaryReader());
     }
 
     return;
@@ -147,14 +147,14 @@ public sealed class BinaryReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToBinaryReader().IsUnset()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryReader().IsUnset()).ThrowExactly<ArgumentException>();
 
       Test(true, null);
-      Test(true, Stream.Null.ToBinaryReader());
-      Test(true, this.EmptyStream().ToBinaryReader());
-      Test(false, this.RandomStream().ToBinaryReader());
-      Test(false, this.RandomReadOnlyStream().ToBinaryReader());
-      Test(false, this.RandomReadOnlyForwardStream().ToBinaryReader());
+      Test(true, System.IO.Stream.Null.ToBinaryReader());
+      Test(true, EmptyStream.ToBinaryReader());
+      Test(false, Stream.ToBinaryReader());
+      Test(false, ReadOnlyStream.ToBinaryReader());
+      Test(false, ReadOnlyForwardStream.ToBinaryReader());
     }
 
     return;
@@ -177,13 +177,13 @@ public sealed class BinaryReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => this.WriteOnlyForwardStream().ToBinaryReader().IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryReader().IsEmpty()).ThrowExactly<ArgumentException>();
 
-      Test(true, Stream.Null.ToBinaryReader());
-      Test(true, this.EmptyStream().ToBinaryReader());
-      Test(false, this.RandomStream().ToBinaryReader());
-      Test(false, this.RandomReadOnlyStream().ToBinaryReader());
-      Test(false, this.RandomReadOnlyForwardStream().ToBinaryReader());
+      Test(true, System.IO.Stream.Null.ToBinaryReader());
+      Test(true, EmptyStream.ToBinaryReader());
+      Test(false, Stream.ToBinaryReader());
+      Test(false, ReadOnlyStream.ToBinaryReader());
+      Test(false, ReadOnlyForwardStream.ToBinaryReader());
     }
 
     return;
@@ -207,9 +207,9 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => BinaryReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(Stream.Null.ToBinaryReader());
-      Test(this.EmptyStream().ToBinaryReader());
-      Test(this.RandomStream().ToBinaryReader());
+      Test(System.IO.Stream.Null.ToBinaryReader());
+      Test(EmptyStream.ToBinaryReader());
+      Test(Stream.ToBinaryReader());
     }
 
     return;
@@ -238,12 +238,12 @@ public sealed class BinaryReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryReader) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().ToBinaryReader().Empty()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToBinaryReader().Empty()).ThrowExactly<NotSupportedException>();
 
-      Test(Stream.Null.ToBinaryReader());
-      Test(this.EmptyStream().ToBinaryReader());
-      Test(this.RandomStream().ToBinaryReader());
-      Test(this.RandomReadOnlyStream().ToBinaryReader());
+      Test(System.IO.Stream.Null.ToBinaryReader());
+      Test(EmptyStream.ToBinaryReader());
+      Test(Stream.ToBinaryReader());
+      Test(ReadOnlyStream.ToBinaryReader());
     }
 
     return;
@@ -268,12 +268,12 @@ public sealed class BinaryReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((BinaryReader) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Stream.Null.ToBinaryReader().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
-      AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().ToBinaryReader().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToBinaryReader().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToBinaryReader().TryFinallyClear(_ => { })).ThrowExactly<NotSupportedException>();
 
-      Test(Stream.Null.ToBinaryReader());
-      Test(this.EmptyStream().ToBinaryReader());
-      Test(this.RandomStream().ToBinaryReader());
+      Test(System.IO.Stream.Null.ToBinaryReader());
+      Test(EmptyStream.ToBinaryReader());
+      Test(Stream.ToBinaryReader());
     }
 
     return;
@@ -302,10 +302,10 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => BinaryReaderExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test([], Stream.Null.ToBinaryReader());
-      Test([], this.EmptyStream().ToBinaryReader());
+      Test([], System.IO.Stream.Null.ToBinaryReader());
+      Test([], EmptyStream.ToBinaryReader());
 
-      var bytes = this.RandomBytes();
+      var bytes = Bytes;
       using (var stream = new MemoryStream(bytes))
       {
         Test(bytes, stream.ToBinaryReader());
@@ -324,10 +324,10 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => BinaryReaderExtensions.ToEnumerable(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test([], Stream.Null.ToBinaryReader());
-      Test([], this.EmptyStream().ToBinaryReader());
+      Test([], System.IO.Stream.Null.ToBinaryReader());
+      Test([], EmptyStream.ToBinaryReader());
 
-      var bytes = this.RandomBytes();
+      var bytes = Bytes;
       using (var stream = new MemoryStream(bytes))
       {
         Test(bytes, stream.ToBinaryReader());
@@ -362,10 +362,10 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => BinaryReaderExtensions.ToAsyncEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test([], Stream.Null.ToBinaryReader());
-      Test([], this.EmptyStream().ToBinaryReader());
+      Test([], System.IO.Stream.Null.ToBinaryReader());
+      Test([], EmptyStream.ToBinaryReader());
 
-      var bytes = this.RandomBytes();
+      var bytes = Bytes;
       using (var stream = new MemoryStream(bytes))
       {
         Test(bytes, stream.ToBinaryReader());
@@ -386,10 +386,10 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => BinaryReaderExtensions.ToAsyncEnumerable(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test([], Stream.Null.ToBinaryReader());
-      Test([], this.EmptyStream().ToBinaryReader());
+      Test([], System.IO.Stream.Null.ToBinaryReader());
+      Test([], EmptyStream.ToBinaryReader());
 
-      var bytes = this.RandomBytes();
+      var bytes = Bytes;
       using (var stream = new MemoryStream(bytes))
       {
         Test(bytes, stream.ToBinaryReader());
@@ -420,9 +420,9 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => BinaryReaderExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(this.EmptyStream().ToBinaryReader());
-      Test(this.RandomStream().ToBinaryReader());
-      Test(this.RandomReadOnlyStream().ToBinaryReader());
+      Test(EmptyStream.ToBinaryReader());
+      Test(Stream.ToBinaryReader());
+      Test(ReadOnlyStream.ToBinaryReader());
     }
 
     return;
@@ -451,9 +451,9 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => BinaryReaderExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(this.EmptyStream().ToBinaryReader());
-      Test(this.RandomStream().ToBinaryReader());
-      Test(this.RandomReadOnlyStream().ToBinaryReader());
+      Test(EmptyStream.ToBinaryReader());
+      Test(Stream.ToBinaryReader());
+      Test(ReadOnlyStream.ToBinaryReader());
     }
 
     return;
@@ -484,8 +484,8 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => BinaryReaderExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(string.Empty, Stream.Null.ToBinaryReader());
-      Test(string.Empty, this.EmptyStream().ToBinaryReader());
+      Test(string.Empty, System.IO.Stream.Null.ToBinaryReader());
+      Test(string.Empty, EmptyStream.ToBinaryReader());
 
       var text = Fixture.Create<string>();
       Encoding.GetEncodings().Select(encoding => encoding.GetEncoding()).ForEach(encoding =>
@@ -517,9 +517,9 @@ public sealed class BinaryReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       Test(false, null);
-      Test(false, Stream.Null.ToBinaryReader());
-      Test(false, this.EmptyStream().ToBinaryReader());
-      Test(true, this.RandomStream().ToBinaryReader());
+      Test(false, System.IO.Stream.Null.ToBinaryReader());
+      Test(false, EmptyStream.ToBinaryReader());
+      Test(true, Stream.ToBinaryReader());
     }
 
     return;

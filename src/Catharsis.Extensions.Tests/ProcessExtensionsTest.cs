@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -18,7 +17,7 @@ public sealed class ProcessExtensionsTest : Test
   /// </summary>
   public ProcessExtensionsTest()
   {
-    ShellProcess = this.ShellCommand().ToProcess(new ProcessStartInfo { RedirectStandardError = true, RedirectStandardInput = true, RedirectStandardOutput = true });
+    ShellProcess = Shell.ToProcess(new ProcessStartInfo { RedirectStandardError = true, RedirectStandardInput = true, RedirectStandardOutput = true });
     ShellProcess.Start();
   }
 
@@ -129,7 +128,7 @@ public sealed class ProcessExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ProcessExtensions.TryFinallyKill(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("process");
       
-      var process = this.ShellCommand().ToProcess();
+      var process = Shell.ToProcess();
       
       AssertionExtensions.Should(() => process.TryFinallyKill(_ => { })).ThrowExactly<InvalidOperationException>();
 

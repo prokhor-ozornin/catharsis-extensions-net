@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Reflection;
+﻿using System.Reflection;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -62,7 +61,7 @@ public sealed class TypeExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, Type type) => type.IsArray<T>().Should().Be(result);
+    static void Test<T>(bool result, Type type) => type.IsArray<T>().Should().Be(result);
   }
 
   /// <summary>
@@ -93,16 +92,16 @@ public sealed class TypeExtensionsTest : Test
     {
       AssertionExtensions.Should(() => TypeExtensions.IsAssignableTo<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
-      Validate<object>(true, typeof(object));
-      Validate<object>(true, typeof(string));
-      Validate<string>(false, typeof(object));
+      Test<object>(true, typeof(object));
+      Test<object>(true, typeof(string));
+      Test<string>(false, typeof(object));
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Validate<T>(bool result, Type type) => type.IsAssignableTo<T>().Should().Be(result);
+    static void Test<T>(bool result, Type type) => type.IsAssignableTo<T>().Should().Be(result);
   }
 
   /// <summary>
@@ -127,7 +126,7 @@ public sealed class TypeExtensionsTest : Test
     {
       AssertionExtensions.Should(() => TypeExtensions.IsDerivedFrom<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
-      static void Validate<T>(bool result, Type type) => type.IsDerivedFrom<T>().Should().Be(result);
+      static void Test<T>(bool result, Type type) => type.IsDerivedFrom<T>().Should().Be(result);
     }
 
     throw new NotImplementedException();
@@ -155,7 +154,7 @@ public sealed class TypeExtensionsTest : Test
     {
       AssertionExtensions.Should(() => TypeExtensions.Implements<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
-      static void Validate<T>(bool result, Type type) => type.Implements<T>().Should().Be(result);
+      static void Test<T>(bool result, Type type) => type.Implements<T>().Should().Be(result);
     }
 
     throw new NotImplementedException();

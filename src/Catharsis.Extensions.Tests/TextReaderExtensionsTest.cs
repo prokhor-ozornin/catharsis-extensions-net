@@ -20,12 +20,12 @@ public sealed class TextReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
 
-      Test(Stream.Null.ToStreamReader());
-      Test(this.EmptyStream().ToStreamReader());
-      Test(this.RandomStream().ToStreamReader());
-      Test(this.RandomReadOnlyStream().ToStreamReader());
+      Test(System.IO.Stream.Null.ToStreamReader());
+      Test(EmptyStream.ToStreamReader());
+      Test(Stream.ToStreamReader());
+      Test(ReadOnlyStream.ToStreamReader());
     }
 
     return;
@@ -51,7 +51,7 @@ public sealed class TextReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToStreamReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
     }
 
     throw new NotImplementedException();
@@ -125,7 +125,7 @@ public sealed class TextReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((TextReader) null).AsSynchronized()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(this.EmptyTextReader());
+      Test(EmptyTextReader);
       Test(Fixture.Create<string>().ToStringReader());
     }
 
@@ -228,7 +228,7 @@ public sealed class TextReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToStreamReader().ToEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       static void Test(TextReader reader, int count)
       {
@@ -268,7 +268,7 @@ public sealed class TextReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable(1)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToAsyncEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToStreamReader().ToAsyncEnumerable(0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       static void Test(TextReader reader, int count)
       {
@@ -366,7 +366,7 @@ public sealed class TextReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
 
-      Test(string.Empty, this.EmptyTextReader());
+      Test(string.Empty, EmptyTextReader);
       Fixture.Create<string>().With(text => Test(text, text.ToStringReader()));
     }
 
@@ -525,7 +525,7 @@ public sealed class TextReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TextReader) null).ToXDocumentAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
-      AssertionExtensions.Should(() => Stream.Null.ToStreamReader().ToXDocumentAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToStreamReader().ToXDocumentAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
       /*const string Xml = "<?xml version=\"1.0\"?><article>text</article>";
 

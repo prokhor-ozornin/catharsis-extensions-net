@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
@@ -19,12 +18,12 @@ public sealed class StreamReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((StreamReader) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => this.RandomReadOnlyForwardStream().ToStreamReader().IsStart()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToStreamReader().IsStart()).ThrowExactly<NotSupportedException>();
 
-      Test(Stream.Null.ToStreamReader());
-      Test(this.EmptyStream().ToStreamReader());
-      Test(this.RandomStream().ToStreamReader());
-      Test(this.RandomReadOnlyStream().ToStreamReader());
+      Test(System.IO.Stream.Null.ToStreamReader());
+      Test(EmptyStream.ToStreamReader());
+      Test(Stream.ToStreamReader());
+      Test(ReadOnlyStream.ToStreamReader());
     }
 
     return;
@@ -51,8 +50,8 @@ public sealed class StreamReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((StreamReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(Stream.Null.ToStreamReader());
-      Test(this.RandomStream().ToStreamReader());
+      Test(System.IO.Stream.Null.ToStreamReader());
+      Test(Stream.ToStreamReader());
     }
 
     return;
@@ -77,11 +76,11 @@ public sealed class StreamReaderExtensionsTest : Test
     using (new AssertionScope())
     {
       Test(true, null);
-      Test(true, Stream.Null.ToStreamReader());
-      Test(true, this.EmptyStream().ToStreamReader());
-      Test(false, this.RandomStream().ToStreamReader());
-      Test(false, this.RandomReadOnlyStream().ToStreamReader());
-      Test(false, this.RandomReadOnlyForwardStream().ToStreamReader());
+      Test(true, System.IO.Stream.Null.ToStreamReader());
+      Test(true, EmptyStream.ToStreamReader());
+      Test(false, Stream.ToStreamReader());
+      Test(false, ReadOnlyStream.ToStreamReader());
+      Test(false, ReadOnlyForwardStream.ToStreamReader());
     }
 
     return;
@@ -105,11 +104,11 @@ public sealed class StreamReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((StreamReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(true, Stream.Null.ToStreamReader());
-      Test(true, this.EmptyStream().ToStreamReader());
-      Test(false, this.RandomStream().ToStreamReader());
-      Test(false, this.RandomReadOnlyStream().ToStreamReader());
-      Test(false, this.RandomReadOnlyForwardStream().ToStreamReader());
+      Test(true, System.IO.Stream.Null.ToStreamReader());
+      Test(true, EmptyStream.ToStreamReader());
+      Test(false, Stream.ToStreamReader());
+      Test(false, ReadOnlyStream.ToStreamReader());
+      Test(false, ReadOnlyForwardStream.ToStreamReader());
     }
 
     return;
@@ -133,8 +132,8 @@ public sealed class StreamReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((StreamReader) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(Stream.Null.ToStreamReader());
-      Test(this.RandomStream().ToStreamReader());
+      Test(System.IO.Stream.Null.ToStreamReader());
+      Test(Stream.ToStreamReader());
     }
 
     return;
@@ -160,9 +159,9 @@ public sealed class StreamReaderExtensionsTest : Test
     {
       AssertionExtensions.Should(() => StreamReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
-      Test(Stream.Null.ToStreamReader());
-      Test(this.EmptyStream().ToStreamReader());
-      Test(this.RandomStream().ToStreamReader());
+      Test(System.IO.Stream.Null.ToStreamReader());
+      Test(EmptyStream.ToStreamReader());
+      Test(Stream.ToStreamReader());
     }
 
     return;

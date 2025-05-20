@@ -33,7 +33,7 @@ public sealed class IEnumerableExtensionsTest : Test
       AssertionExtensions.Should(() => IEnumerableExtensions.ForEach<object>(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
       AssertionExtensions.Should(() => Enumerable.Empty<object>().ForEach((Action<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      static void Validate<T>(IEnumerable<T> enumerable)
+      static void Test<T>(IEnumerable<T> enumerable)
       {
       }
     }
@@ -43,7 +43,7 @@ public sealed class IEnumerableExtensionsTest : Test
       AssertionExtensions.Should(() => IEnumerableExtensions.ForEach<object>(null, (_, _) => { })).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
       AssertionExtensions.Should(() => Enumerable.Empty<object>().ForEach((Action<int, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
-      static void Validate<T>(IEnumerable<T> enumerable)
+      static void Test<T>(IEnumerable<T> enumerable)
       {
       }
     }
@@ -71,7 +71,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(string result, IEnumerable<T> enumerable, string separator = null) => enumerable.Join(separator).Should().Be(result);
+    static void Test<T>(string result, IEnumerable<T> enumerable, string separator = null) => enumerable.Join(separator).Should().Be(result);
   }
 
   /// <summary>
@@ -98,7 +98,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> enumerable, int count) => enumerable.Repeat(count).Should().BeOfType<IEnumerable<T>>().And.Equal(result);
+    static void Test<T>(IEnumerable<T> result, IEnumerable<T> enumerable, int count) => enumerable.Repeat(count).Should().BeOfType<IEnumerable<T>>().And.Equal(result);
   }
 
   /// <summary>
@@ -146,7 +146,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> enumerable)
+    static void Test<T>(IEnumerable<T> enumerable)
     {
     }
   }
@@ -174,7 +174,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> enumerable)
+    static void Test<T>(IEnumerable<T> enumerable)
     {
     }
   }
@@ -195,7 +195,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => enumerable.StartsWith(other, comparer).Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => enumerable.StartsWith(other, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -214,7 +214,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => enumerable.EndsWith(other, comparer).Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => enumerable.EndsWith(other, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -238,7 +238,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => enumerable.Contains(other, comparer).Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> other, IEqualityComparer<T> comparer = null) => enumerable.Contains(other, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -256,7 +256,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => enumerable.ContainsUnique(comparer).Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => enumerable.ContainsUnique(comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -274,7 +274,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable) => enumerable.ContainsNull().Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.ContainsNull().Should().Be(result);
   }
 
   /// <summary>
@@ -292,7 +292,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable) => enumerable.ContainsDefault().Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.ContainsDefault().Should().Be(result);
   }
 
   /// <summary>
@@ -311,7 +311,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> superset, IEqualityComparer<T> comparer = null) => enumerable.IsSubset(superset, comparer).Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> superset, IEqualityComparer<T> comparer = null) => enumerable.IsSubset(superset, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -330,7 +330,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> subset, IEqualityComparer<T> comparer = null) => enumerable.IsSuperset(subset, comparer).Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> subset, IEqualityComparer<T> comparer = null) => enumerable.IsSuperset(subset, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -349,7 +349,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> reversed, IEqualityComparer<T> comparer = null) => enumerable.IsReversed(reversed, comparer).Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable, IEnumerable<T> reversed, IEqualityComparer<T> comparer = null) => enumerable.IsReversed(reversed, comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -367,7 +367,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable, IComparer<T> comparer = null) => enumerable.IsOrdered(comparer).Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable, IComparer<T> comparer = null) => enumerable.IsOrdered(comparer).Should().Be(result);
   }
 
   /// <summary>
@@ -404,7 +404,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable) => enumerable.IsUnset().Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.IsUnset().Should().Be(result);
   }
 
   /// <summary>
@@ -427,7 +427,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable) => enumerable.IsEmpty().Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.IsEmpty().Should().Be(result);
   }
 
   /// <summary>
@@ -460,7 +460,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> min, IEnumerable<T> max) => min.Min(max).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(min);
+    static void Test<T>(IEnumerable<T> min, IEnumerable<T> max) => min.Min(max).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(min);
   }
 
   /// <summary>
@@ -493,7 +493,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> min, IEnumerable<T> max) => min.Max(max).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(max);
+    static void Test<T>(IEnumerable<T> min, IEnumerable<T> max) => min.Max(max).Should().BeOfType<IEnumerable<T>>().And.BeSameAs(max);
   }
 
   /// <summary>
@@ -511,7 +511,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> min, IEnumerable<T> max) => min.MinMax(max).Should().Be((min, max));
+    static void Test<T>(IEnumerable<T> min, IEnumerable<T> max) => min.MinMax(max).Should().Be((min, max));
   }
 
 
@@ -615,7 +615,7 @@ public sealed class IEnumerableExtensionsTest : Test
     {
       AssertionExtensions.Should(() => IEnumerableExtensions.ToHex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
-      var bytes = this.RandomBytes();
+      var bytes = Bytes;
 
       Enumerable.Empty<byte>().ToHex().Should().BeEmpty();
       bytes.ToHex().Should().HaveLength(bytes.Length * 2);
@@ -639,7 +639,7 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Encrypt(this.SymmetricAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Encrypt(SymmetricAlgorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().Encrypt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
     }
 
@@ -664,9 +664,9 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).EncryptAsync(this.SymmetricAlgorithm())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).EncryptAsync(SymmetricAlgorithm)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().EncryptAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().EncryptAsync(this.SymmetricAlgorithm())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().EncryptAsync(SymmetricAlgorithm)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -690,7 +690,7 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Decrypt(this.SymmetricAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Decrypt(SymmetricAlgorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().Decrypt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("algorithm");
     }
 
@@ -715,9 +715,9 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).DecryptAsync(this.SymmetricAlgorithm())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => Stream.Null.DecryptAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
-      AssertionExtensions.Should(() => Stream.Null.DecryptAsync(this.SymmetricAlgorithm())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).DecryptAsync(SymmetricAlgorithm)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => System.IO.Stream.Null.DecryptAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("algorithm").Await();
+      AssertionExtensions.Should(() => System.IO.Stream.Null.DecryptAsync(SymmetricAlgorithm)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -745,14 +745,14 @@ public sealed class IEnumerableExtensionsTest : Test
 
       using var algorithm = MD5.Create();
 
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Hash(this.HashAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).Hash(HashAlgorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
       algorithm.Should().BeOfType<MD5>();
 
-      Enumerable.Empty<byte>().Hash(this.HashAlgorithm()).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash([]));
+      Enumerable.Empty<byte>().Hash(HashAlgorithm).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash([]));
 
-      var bytes = this.RandomBytes();
-      bytes.Hash(this.HashAlgorithm()).Should().BeOfType<byte[]>().And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(bytes));
+      var bytes = Bytes;
+      bytes.Hash(HashAlgorithm).Should().BeOfType<byte[]>().And.HaveCount(algorithm.HashSize / 8).And.Equal(algorithm.ComputeHash(bytes));
     }
 
     return;
@@ -777,7 +777,7 @@ public sealed class IEnumerableExtensionsTest : Test
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashMd5()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
       Test(Enumerable.Empty<byte>().ToArray());
-      Test(this.RandomBytes());
+      Test(Bytes);
     }
 
     return;
@@ -800,7 +800,7 @@ public sealed class IEnumerableExtensionsTest : Test
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha1()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
       Test(Enumerable.Empty<byte>().ToArray());
-      Test(this.RandomBytes());
+      Test(Bytes);
     }
 
     return;
@@ -823,7 +823,7 @@ public sealed class IEnumerableExtensionsTest : Test
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha256()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
       Test(Enumerable.Empty<byte>().ToArray());
-      Test(this.RandomBytes());
+      Test(Bytes);
     }
 
     return;
@@ -846,7 +846,7 @@ public sealed class IEnumerableExtensionsTest : Test
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha384()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
       Test(Enumerable.Empty<byte>().ToArray());
-      Test(this.RandomBytes());
+      Test(Bytes);
     }
 
     return;
@@ -869,7 +869,7 @@ public sealed class IEnumerableExtensionsTest : Test
       AssertionExtensions.Should(() => ((IEnumerable<byte>) null).HashSha512()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
 
       Test(Enumerable.Empty<byte>().ToArray());
-      Test(this.RandomBytes());
+      Test(Bytes);
     }
 
     return;
@@ -889,7 +889,7 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(System.IO.Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => IEnumerableExtensions.WriteTo([], (Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -915,9 +915,9 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(System.IO.Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
       AssertionExtensions.Should(() => IEnumerableExtensions.WriteToAsync([], (Stream) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Stream.Null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(System.IO.Stream.Null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -943,7 +943,7 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(System.IO.Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -964,9 +964,9 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(System.IO.Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
       AssertionExtensions.Should(() => string.Empty.WriteToAsync((TextWriter) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(System.IO.Stream.Null.ToStreamWriter())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -986,11 +986,11 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(System.IO.Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Test(this.EmptyStream().ToBinaryWriter(), this.RandomBytes());
-      Test(this.RandomStream().ToBinaryWriter(), this.RandomBytes());
+      Test(EmptyStream.ToBinaryWriter(), Bytes);
+      Test(Stream.ToBinaryWriter(), Bytes);
     }
 
     return;
@@ -1022,7 +1022,7 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1043,7 +1043,7 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(System.IO.Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync((XmlWriter) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     }
 
@@ -1064,7 +1064,7 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(this.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(FakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1085,9 +1085,9 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(this.RandomFakeFile())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(FakeFile)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync((FileInfo) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(this.RandomFakeFile())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(FakeFile)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -1193,9 +1193,9 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(this.Http(), "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Fixture.Create<HttpClient>(), "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(this.Http(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Fixture.Create<HttpClient>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
     }
 
     throw new NotImplementedException();
@@ -1215,10 +1215,10 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(this.Http(), "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Fixture.Create<HttpClient>(), "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
       AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(this.Http(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(this.Http(), "localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Fixture.Create<HttpClient>(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Fixture.Create<HttpClient>(), "localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -1238,8 +1238,8 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(this.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(this.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Fixture.Create<TcpClient>())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Fixture.Create<TcpClient>())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
     }
 
     throw new NotImplementedException();
@@ -1259,9 +1259,9 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(this.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(this.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(this.Tcp())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Fixture.Create<TcpClient>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Fixture.Create<TcpClient>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Fixture.Create<TcpClient>())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -1281,8 +1281,8 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(this.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(this.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteTo(Fixture.Create<UdpClient>())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteTo(Fixture.Create<UdpClient>())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
     }
 
     throw new NotImplementedException();
@@ -1302,9 +1302,9 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(this.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(this.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
-      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(this.Udp())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => ((IEnumerable<byte>) null).WriteToAsync(Fixture.Create<UdpClient>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Fixture.Create<UdpClient>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
+      AssertionExtensions.Should(() => Enumerable.Empty<byte>().WriteToAsync(Fixture.Create<UdpClient>())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -1324,7 +1324,7 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IEnumerableExtensions.WriteTo(null, this.EmptySecureString())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => IEnumerableExtensions.WriteTo(null, EmptySecureString)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => IEnumerableExtensions.WriteTo(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1358,7 +1358,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> enumerable)
+    static void Test<T>(IEnumerable<T> enumerable)
     {
       var result = enumerable.ToAsyncEnumerable();
       result.Should().BeOfType<IAsyncEnumerable<T>>();
@@ -1448,7 +1448,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => enumerable.ToReadOnlySet(comparer).Should().BeOfType<HashSet<T>>().And.Equal(result);
+    static void Test<T>(IEnumerable<T> result, IEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => enumerable.ToReadOnlySet(comparer).Should().BeOfType<HashSet<T>>().And.Equal(result);
   }
 
   /// <summary>
@@ -1466,7 +1466,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => enumerable.ToFrozenSet(comparer).Should().BeOfType<FrozenSet<T>>().And.Equal(result);
+    static void Test<T>(IEnumerable<T> result, IEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => enumerable.ToFrozenSet(comparer).Should().BeOfType<FrozenSet<T>>().And.Equal(result);
   }
 
   /// <summary>
@@ -1527,7 +1527,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<TElement, TPriority>(IEnumerable<(TElement Element, TPriority Priority)> enumerable, IComparer<TPriority> comparer = null)
+    static void Test<TElement, TPriority>(IEnumerable<(TElement Element, TPriority Priority)> enumerable, IComparer<TPriority> comparer = null)
     {
       var array = enumerable.ToArray();
       var queue = array.ToPriorityQueue(comparer);
@@ -1551,7 +1551,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Validate<T>(IEnumerable<T> result, IEnumerable<T> enumerable) => enumerable.ToImmutableQueue().Should().BeOfType<ImmutableQueue<T>>().And.Equal(result);
+    static void Test<T>(IEnumerable<T> result, IEnumerable<T> enumerable) => enumerable.ToImmutableQueue().Should().BeOfType<ImmutableQueue<T>>().And.Equal(result);
   }
   
   /// <summary>
@@ -1902,13 +1902,13 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      Validate<object>(false, null);
+      Test<object>(false, null);
       Test(false, Enumerable.Empty<object>());
       Test(true, new object[] { new() });
     }
 
     return;
 
-    static void Validate<T>(bool result, IEnumerable<T> enumerable) => enumerable.ToBoolean().Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.ToBoolean().Should().Be(result);
   }
 }

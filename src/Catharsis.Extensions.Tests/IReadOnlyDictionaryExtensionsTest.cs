@@ -1,4 +1,3 @@
-using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;

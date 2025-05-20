@@ -1007,18 +1007,18 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      Validate<DayOfWeek>(false, null);
-      Validate<DayOfWeek>(false, string.Empty);
-      Validate<DayOfWeek>(false, "invalid");
+      Test<DayOfWeek>(false, null);
+      Test<DayOfWeek>(false, string.Empty);
+      Test<DayOfWeek>(false, "invalid");
 
-      Enum.GetNames<DayOfWeek>().ForEach(day => Validate<DayOfWeek>(true, day));
-      Enum.GetNames<DayOfWeek>().ForEach(day => Validate<DayOfWeek>(true, day.ToLower()));
-      Enum.GetNames<DayOfWeek>().ForEach(day => Validate<DayOfWeek>(true, day.ToUpper()));
+      Enum.GetNames<DayOfWeek>().ForEach(day => Test<DayOfWeek>(true, day));
+      Enum.GetNames<DayOfWeek>().ForEach(day => Test<DayOfWeek>(true, day.ToLower()));
+      Enum.GetNames<DayOfWeek>().ForEach(day => Test<DayOfWeek>(true, day.ToUpper()));
     }
 
     return;
 
-    static void Validate<T>(bool result, string text) where T : struct => text.IsEnum<T>().Should().Be(result);
+    static void Test<T>(bool result, string text) where T : struct => text.IsEnum<T>().Should().Be(result);
   }
 
   /// <summary>
@@ -1075,7 +1075,7 @@ public sealed class StringExtensionsTest : Test
     {
       Test(false, null);
       Test(false, string.Empty);
-      Test(false, this.RandomName());
+      Test(false, Fixture.Create<string>());
       Test(false, nameof(Object));
       Test(true, typeof(object).FullName);
       Test(true, typeof(object).AssemblyQualifiedName);
@@ -1202,9 +1202,9 @@ public sealed class StringExtensionsTest : Test
     {
       Test(false, null);
       Test(false, string.Empty);
-      Test(false, this.RandomName());
+      Test(false, Fixture.Create<string>());
       Test(false, Environment.SystemDirectory);
-      this.RandomEmptyFile().TryFinallyDelete(file => Test(true, file.FullName));
+      EmptyFile.TryFinallyDelete(file => Test(true, file.FullName));
     }
 
     return;
@@ -1222,9 +1222,9 @@ public sealed class StringExtensionsTest : Test
     {
       Test(false, null);
       Test(false, string.Empty);
-      Test(false, this.RandomName());
+      Test(false, Fixture.Create<string>());
       Test(true, Environment.SystemDirectory);
-      this.RandomDirectory().TryFinallyDelete(directory => Test(true, directory.FullName));
+      Directory.TryFinallyDelete(directory => Test(true, directory.FullName));
     }
 
     return;
@@ -1273,7 +1273,7 @@ public sealed class StringExtensionsTest : Test
 
       string[] arguments = ["dir"];
 
-      var process = this.ShellCommand().Execute(arguments);
+      var process = Shell.Execute(arguments);
 
       process.Finish(TimeSpan.FromSeconds(5));
 
@@ -1285,7 +1285,7 @@ public sealed class StringExtensionsTest : Test
       process.StartTime.Should().BeBefore(DateTime.Now);
       process.ExitTime.Should().BeBefore(DateTime.Now);
 
-      process.StartInfo.FileName.Should().Be(this.ShellCommand());
+      process.StartInfo.FileName.Should().Be(Shell);
       process.StartInfo.ArgumentList.Should().Equal(arguments);
       process.StartInfo.Arguments.Should().BeEmpty();
       process.StartInfo.CreateNoWindow.Should().BeTrue();
@@ -1340,7 +1340,7 @@ public sealed class StringExtensionsTest : Test
 
       string.Empty.FromBase64().Should().BeOfType<byte[]>().And.BeSameAs(string.Empty.FromBase64()).And.BeEmpty();
 
-      var bytes = this.RandomBytes();
+      var bytes = Bytes;
       bytes.ToBase64().Should().BeOfType<string>().And.Be(System.Convert.ToBase64String(bytes));
     }
 
@@ -1361,7 +1361,7 @@ public sealed class StringExtensionsTest : Test
 
       string.Empty.FromHex().Should().BeOfType<byte[]>().And.BeSameAs(string.Empty.FromHex()).And.BeEmpty();
 
-      var bytes = this.RandomBytes();
+      var bytes = Bytes;
       bytes.ToHex().Should().BeOfType<string>().And.Be(System.Convert.ToHexString(bytes));
     }
 
@@ -1458,7 +1458,7 @@ public sealed class StringExtensionsTest : Test
 
       using var algorithm = MD5.Create();
 
-      AssertionExtensions.Should(() => ((string) null).Hash(this.HashAlgorithm())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Hash(HashAlgorithm)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       algorithm.Should().BeOfType<MD5>();
 
@@ -1466,7 +1466,7 @@ public sealed class StringExtensionsTest : Test
 
       texts.ForEach(text =>
       {
-        text.Hash(this.HashAlgorithm()).Should().BeOfType<string>().And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
+        text.Hash(HashAlgorithm).Should().BeOfType<string>().And.HaveLength(algorithm.HashSize / 4).And.Be(System.Convert.ToHexString(algorithm.ComputeHash(Encoding.UTF8.GetBytes(text))));
       });
     }
 
@@ -1671,7 +1671,7 @@ public sealed class StringExtensionsTest : Test
       AssertionExtensions.Should(() => StringExtensions.With(null, Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.With((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
-      static void Validate<T>(string text, IEnumerable<char> characters)
+      static void Test<T>(string text, IEnumerable<char> characters)
       {
       }
     }
@@ -1681,7 +1681,7 @@ public sealed class StringExtensionsTest : Test
       AssertionExtensions.Should(() => StringExtensions.With(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
-      static void Validate<T>(string text, params char[] characters)
+      static void Test<T>(string text, params char[] characters)
       {
       }
     }
@@ -1779,7 +1779,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).WriteTo(System.IO.Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.WriteTo((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1805,9 +1805,9 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(System.IO.Stream.Null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
       AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(System.IO.Stream.Null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -1834,7 +1834,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).WriteTo(System.IO.Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.WriteTo((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1859,9 +1859,9 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(System.IO.Stream.Null.ToStreamWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
       AssertionExtensions.Should(() => string.Empty.WriteToAsync((TextWriter) null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Stream.Null.ToStreamWriter())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(System.IO.Stream.Null.ToStreamWriter())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -1885,11 +1885,11 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).WriteTo(System.IO.Stream.Null.ToBinaryWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.WriteTo((BinaryWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
 
-      Test(string.Empty, Stream.Null.ToBinaryWriter());
-      Test(Fixture.Create<string>(), this.EmptyStream().ToBinaryWriter());
+      Test(string.Empty, System.IO.Stream.Null.ToBinaryWriter());
+      Test(Fixture.Create<string>(), EmptyStream.ToBinaryWriter());
     }
 
     return;
@@ -1916,7 +1916,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.WriteTo(null, Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => StringExtensions.WriteTo(null, System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1941,7 +1941,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.WriteToAsync(null, Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => StringExtensions.WriteToAsync(null, System.IO.Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
       AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     }
 
@@ -1966,7 +1966,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(this.RandomFakeFile())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).WriteTo(FakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.WriteTo((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1987,9 +1987,9 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(this.RandomFakeFile())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(FakeFile)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
       AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(this.RandomFakeFile(), null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(FakeFile, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -2103,9 +2103,9 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(this.Http(), "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Fixture.Create<HttpClient>(), "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.WriteTo(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("http");
-      AssertionExtensions.Should(() => string.Empty.WriteTo(this.Http(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+      AssertionExtensions.Should(() => string.Empty.WriteTo(Fixture.Create<HttpClient>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
     }
 
     throw new NotImplementedException();
@@ -2129,10 +2129,10 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(this.Http(), "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Fixture.Create<HttpClient>(), "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
       AssertionExtensions.Should(() => string.Empty.WriteToAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("http").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(this.Http(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(this.Http(), "localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Fixture.Create<HttpClient>(), null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Fixture.Create<HttpClient>(), "localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -2156,8 +2156,8 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(this.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo(this.Tcp())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Fixture.Create<TcpClient>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo(Fixture.Create<TcpClient>())).ThrowExactly<ArgumentNullException>().WithParameterName("tcp");
     }
 
     throw new NotImplementedException();
@@ -2181,9 +2181,9 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(this.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(this.Tcp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(this.Tcp(), null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Fixture.Create<TcpClient>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Fixture.Create<TcpClient>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("tcp").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Fixture.Create<TcpClient>(), null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -2207,8 +2207,8 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteTo(this.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-      AssertionExtensions.Should(() => string.Empty.WriteTo(this.Udp())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
+      AssertionExtensions.Should(() => ((string) null).WriteTo(Fixture.Create<UdpClient>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.WriteTo(Fixture.Create<UdpClient>())).ThrowExactly<ArgumentNullException>().WithParameterName("udp");
     }
 
     throw new NotImplementedException();
@@ -2232,9 +2232,9 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((string) null).WriteToAsync(this.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(this.Udp())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
-      AssertionExtensions.Should(() => string.Empty.WriteToAsync(this.Udp(), null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(Fixture.Create<UdpClient>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Fixture.Create<UdpClient>())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("udp").Await();
+      AssertionExtensions.Should(() => string.Empty.WriteToAsync(Fixture.Create<UdpClient>(), null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
     throw new NotImplementedException();
@@ -3500,7 +3500,7 @@ public sealed class StringExtensionsTest : Test
 
       string.Empty.ToType().Should().BeNull();
 
-      this.RandomName().ToType().Should().BeNull();
+      Fixture.Create<string>().ToType().Should().BeNull();
 
       nameof(Object).ToType().Should().BeNull();
       typeof(object).FullName.ToType().Should().BeOfType<Type>().And.Be(typeof(object));
@@ -3526,7 +3526,7 @@ public sealed class StringExtensionsTest : Test
       string.Empty.ToType(out result).Should().BeFalse();
       result.Should().BeNull();
 
-      this.RandomName().ToType(out result).Should().BeFalse();
+      Fixture.Create<string>().ToType(out result).Should().BeFalse();
       result.Should().BeNull();
 
       nameof(Object).ToType(out result).Should().BeFalse();
@@ -3810,12 +3810,12 @@ public sealed class StringExtensionsTest : Test
         file.FullName.Should().Be(name);
       });
 
-      name = this.RandomName();
+      name = Fixture.Create<string>();
       name.ToFile().TryFinallyDelete(file =>
       {
         file.Exists.Should().BeTrue();
         file.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
-        file.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
+        file.FullName.Should().Be(Path.Combine(System.IO.Directory.GetCurrentDirectory(), name));
       });
 
       static void Test(string text)
@@ -3835,13 +3835,13 @@ public sealed class StringExtensionsTest : Test
         info.FullName.Should().Be(name);
       });
 
-      name = this.RandomName();
+      name = Fixture.Create<string>();
       name.ToFile(out file).Should().BeFalse();
       file.TryFinallyDelete(info =>
       {
         info.Exists.Should().BeTrue();
         info.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
-        info.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
+        info.FullName.Should().Be(Path.Combine(System.IO.Directory.GetCurrentDirectory(), name));
       });
 
       static void Test(string text)
@@ -3873,11 +3873,11 @@ public sealed class StringExtensionsTest : Test
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
       directory.FullName.Should().Be(name);
 
-      name = this.RandomName();
+      name = Fixture.Create<string>();
       directory = name.ToDirectory();
       directory.Exists.Should().BeFalse();
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
-      directory.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
+      directory.FullName.Should().Be(Path.Combine(System.IO.Directory.GetCurrentDirectory(), name));
 
       static void Test(string text)
       {
@@ -3893,11 +3893,11 @@ public sealed class StringExtensionsTest : Test
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
       directory.FullName.Should().Be(name);
 
-      name = this.RandomName();
+      name = Fixture.Create<string>();
       name.ToDirectory(out directory).Should().BeFalse();
       directory.Exists.Should().BeFalse();
       directory.CreationTimeUtc.Should().BeBefore(DateTime.UtcNow).And.BeAfter(DateTime.MinValue);
-      directory.FullName.Should().Be(Path.Combine(Directory.GetCurrentDirectory(), name));
+      directory.FullName.Should().Be(Path.Combine(System.IO.Directory.GetCurrentDirectory(), name));
 
       static void Test(string text)
       {
@@ -4232,7 +4232,7 @@ public sealed class StringExtensionsTest : Test
       AssertionExtensions.Should(() => StringExtensions.ToProcess(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Test(string.Empty);
-      Test(this.ShellCommand());
+      Test(Shell);
     }
 
     return;
