@@ -346,6 +346,15 @@ public sealed class ObjectExtensionsTest : Test
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.SetFieldValue{T}(T, string, object)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void SetFieldValue_Method()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="ObjectExtensions.GetPropertyValue{T}(object, string)"/> method.</para>
   /// </summary>
   [Fact]
@@ -420,6 +429,15 @@ public sealed class ObjectExtensionsTest : Test
     static void Test()
     {
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.Nullify{T}(T, string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Nullify_Method()
+  {
+    throw new NotImplementedException();
   }
 
   /// <summary>

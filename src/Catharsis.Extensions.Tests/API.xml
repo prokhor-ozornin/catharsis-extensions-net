@@ -2492,6 +2492,11 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.GetFieldValue``1(System.Object,System.String)"/> method.</para>
             </summary>
         </member>
+        <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.SetFieldValue_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.SetFieldValue``1(``0,System.String,System.Object)"/> method.</para>
+            </summary>
+        </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.GetPropertyValue_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.GetPropertyValue``1(System.Object,System.String)"/> method.</para>
@@ -2500,6 +2505,11 @@
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.SetPropertyValue_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.SetPropertyValue``1(``0,System.String,System.Object)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.Nullify_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.Nullify``1(``0,System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.CallMethod_Methods">

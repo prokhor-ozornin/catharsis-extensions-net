@@ -4894,6 +4894,18 @@
             <exception cref="T:System.ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.InvalidOperationException"></exception>
         </member>
+        <member name="M:Catharsis.Extensions.ObjectExtensions.SetFieldValue``1(``0,System.String,System.Object)">
+            <summary>
+              <para>Sets the value of given field on specified target object.</para>
+            </summary>
+            <typeparam name="T">Type of target object.</typeparam>
+            <param name="instance">Target object whose field is to be changed.</param>
+            <param name="name">Name of field to change.</param>
+            <param name="value">New value of object's field.</param>
+            <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.ObjectExtensions.GetFieldValue``1(System.Object,System.String)"/>
+        </member>
         <member name="M:Catharsis.Extensions.ObjectExtensions.GetPropertyValue``1(System.Object,System.String)">
             <summary>
               <para>Returns the value of given property for specified target object.</para>
@@ -4917,6 +4929,15 @@
             <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.ObjectExtensions.GetPropertyValue``1(System.Object,System.String)"/>
+        </member>
+        <member name="M:Catharsis.Extensions.ObjectExtensions.Nullify``1(``0,System.String)">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="instance"></param>
+            <param name="member"></param>
+            <returns></returns>
         </member>
         <member name="M:Catharsis.Extensions.ObjectExtensions.CallMethod``1(System.Object,System.String,System.Collections.Generic.IEnumerable{System.Object})">
             <summary>

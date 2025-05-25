@@ -183,6 +183,33 @@ public static class ObjectExtensions
   }
 
   /// <summary>
+  ///   <para>Sets the value of given field on specified target object.</para>
+  /// </summary>
+  /// <typeparam name="T">Type of target object.</typeparam>
+  /// <param name="instance">Target object whose field is to be changed.</param>
+  /// <param name="name">Name of field to change.</param>
+  /// <param name="value">New value of object's field.</param>
+  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="GetFieldValue{T}(object, string)"/>
+  public static T SetFieldValue<T>(this T instance, string name, object value)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (name is null) throw new ArgumentNullException(nameof(name));
+
+    var field = instance.GetType().AnyField(name);
+
+    if (field is null)
+    {
+      throw new InvalidOperationException($"Instance of type {instance.GetType()} has no field named \"{name}\"");
+    }
+
+    field.SetValue(instance, value);
+
+    return instance;
+  }
+
+  /// <summary>
   ///   <para>Returns the value of given property for specified target object.</para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
@@ -232,6 +259,33 @@ public static class ObjectExtensions
     if (property.CanWrite)
     {
       property.SetValue(instance, value, null);
+    }
+
+    return instance;
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="instance"></param>
+  /// <param name="member"></param>
+  /// <returns></returns>
+  public static T Nullify<T>(this T instance, string member)
+  {
+    if (instance is null) throw new ArgumentNullException(nameof(instance));
+    if (member is null) throw new ArgumentNullException(nameof(member));
+
+    var type = instance.GetType();
+
+    if (type.HasProperty(member))
+    {
+      instance.SetPropertyValue(member, null);
+    }
+
+    if (type.HasField(member))
+    {
+      instance.SetFieldValue(member, null);
     }
 
     return instance;
