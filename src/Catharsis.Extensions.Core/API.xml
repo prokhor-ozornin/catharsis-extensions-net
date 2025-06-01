@@ -3068,6 +3068,42 @@
             <param name="comparable"></param>
             <returns></returns>
         </member>
+        <member name="M:Catharsis.Extensions.IComparableExtensions.IsLesser``1(``0,``0)">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Catharsis.Extensions.IComparableExtensions.IsLesserOrEqual``1(``0,``0)">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Catharsis.Extensions.IComparableExtensions.IsGreater``1(``0,``0)">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Catharsis.Extensions.IComparableExtensions.IsGreaterOrEqual``1(``0,``0)">
+            <summary>
+              <para></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
         <member name="M:Catharsis.Extensions.IComparableExtensions.Min``1(``0,``0)">
             <summary>
               <para></para>

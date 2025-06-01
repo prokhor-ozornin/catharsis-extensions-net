@@ -39,6 +39,42 @@ public static class IComparableExtensions
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
+  public static bool IsLesser<T>(this T left, T right) where T : IComparable<T> => left.CompareTo(right) < 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static bool IsLesserOrEqual<T>(this T left, T right) where T : IComparable<T> => left.CompareTo(right) <= 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static bool IsGreater<T>(this T left, T right) where T : IComparable<T> => left.CompareTo(right) > 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
+  public static bool IsGreaterOrEqual<T>(this T left, T right) where T : IComparable<T> => left.CompareTo(right) >= 0;
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  /// <param name="left"></param>
+  /// <param name="right"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="left"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Max{T}(T, T)"/>
   /// <seealso cref="MinMax{T}(T, T)"/>

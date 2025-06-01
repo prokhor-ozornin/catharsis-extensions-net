@@ -58,6 +58,70 @@ public sealed class IComparableExtensionsTest : Test
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.IsLesser{T}(T, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsLesser_Method()
+  {
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
+
+    return;
+
+    static void Test<T>(bool result, T left, T right) where T : struct, IComparable<T> => left.IsLesser(right).Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.IsLesserOrEqual{T}(T, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsLesserOrEqual_Method()
+  {
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
+
+    return;
+
+    static void Test<T>(bool result, T left, T right) where T : struct, IComparable<T> => left.IsLesserOrEqual(right).Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.IsGreater{T}(T, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsGreater_Method()
+  {
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
+
+    return;
+
+    static void Test<T>(bool result, T left, T right) where T : struct, IComparable<T> => left.IsGreater(right).Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.IsGreaterOrEqual{T}(T, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsGreaterOrEqual_Method()
+  {
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
+
+    return;
+
+    static void Test<T>(bool result, T left, T right) where T : struct, IComparable<T> => left.IsGreaterOrEqual(right).Should().Be(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="IComparableExtensions.Min{T}(T, T)"/> method.</para>
   /// </summary>
   [Fact]

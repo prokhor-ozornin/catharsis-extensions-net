@@ -1595,6 +1595,26 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IComparableExtensions.IsNegative``1(``0)"/> method.</para>
             </summary>
         </member>
+        <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.IsLesser_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IComparableExtensions.IsLesser``1(``0,``0)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.IsLesserOrEqual_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IComparableExtensions.IsLesserOrEqual``1(``0,``0)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.IsGreater_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IComparableExtensions.IsGreater``1(``0,``0)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.IsGreaterOrEqual_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IComparableExtensions.IsGreaterOrEqual``1(``0,``0)"/> method.</para>
+            </summary>
+        </member>
         <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.Min_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IComparableExtensions.Min``1(``0,``0)"/> method.</para>
