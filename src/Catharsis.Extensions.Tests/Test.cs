@@ -9,8 +9,8 @@ public class Test : IDisposable
 {
   protected IFixture Fixture { get; } = new Fixture();
   protected Random Random { get; } = new();
-  protected byte[] Bytes { get; } = new Random().ByteSequence(short.MaxValue).AsArray();
-  protected object[] Objects { get; } = new Random().ObjectSequence(short.MaxValue).AsArray();
+  protected byte[] Bytes { get; } = new Random().Byte(short.MaxValue).AsArray();
+  protected object[] Objects { get; } = new Random().Object(short.MaxValue).AsArray();
   protected string Shell => "cmd.exe";
   protected IAsyncEnumerable<object> EmptyAsyncEnumerable { get; } = Enumerable.Empty<object>().ToAsyncEnumerable();
   protected SecureString EmptySecureString { get; } = new();

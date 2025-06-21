@@ -1353,7 +1353,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
       Test(Enumerable.Empty<object>());
       Test(Array.Empty<object>());
-      Test(new Random().ObjectSequence(1000).ToArray());
+      Test(new Random().Object(1000).ToArray());
     }
 
     return;
