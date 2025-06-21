@@ -1213,7 +1213,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <seealso cref="DateTimeOffset(Random, int, DateTimeOffset?, DateTimeOffset?)"/>
-  public static DateTimeOffset DateTimeOffset(this Random random, DateTimeOffset? from = null, DateTimeOffset? to = null) => random is not null ? new DateTimeOffset(random.Long((from ?? System.DateTimeOffset.MinValue).Ticks, (to ?? System.DateTimeOffset.MaxValue).Ticks), TimeSpan.Zero) : throw new ArgumentNullException(nameof(random));
+  public static DateTimeOffset DateTimeOffset(this Random random, DateTimeOffset? from = null, DateTimeOffset? to = null) => random is not null ? new DateTimeOffset(random.Long((from ?? System.DateTimeOffset.MinValue).Ticks, (to ?? System.DateTimeOffset.MaxValue).Ticks), System.TimeSpan.Zero) : throw new ArgumentNullException(nameof(random));
 
   /// <summary>
   ///   <para></para>
@@ -1273,7 +1273,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <seealso cref="TimeOnly(Random, int, TimeOnly?, TimeOnly?)"/>
-  public static TimeOnly TimeOnly(this Random random, TimeOnly? from = null, TimeOnly? to = null) => random is not null ? System.TimeOnly.FromTimeSpan(TimeSpan.FromTicks(random.Long((from ?? System.TimeOnly.MinValue).Ticks, (to ?? System.TimeOnly.MaxValue).Ticks))) : throw new ArgumentNullException(nameof(random));
+  public static TimeOnly TimeOnly(this Random random, TimeOnly? from = null, TimeOnly? to = null) => random is not null ? System.TimeOnly.FromTimeSpan(System.TimeSpan.FromTicks(random.Long((from ?? System.TimeOnly.MinValue).Ticks, (to ?? System.TimeOnly.MaxValue).Ticks))) : throw new ArgumentNullException(nameof(random));
 
   /// <summary>
   ///   <para></para>
@@ -1292,6 +1292,34 @@ public static class RandomExtensions
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
     return count.Objects(() => random.TimeOnly(from, to));
+  }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="from"></param>
+  /// <param name="to"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  public static TimeSpan TimeSpan(this Random random, TimeSpan? from = null, TimeSpan? to = null) => random is not null ? System.TimeSpan.FromTicks(random.Long(from?.Ticks, to?.Ticks)) : throw new ArgumentNullException(nameof(random));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="random"></param>
+  /// <param name="count"></param>
+  /// <param name="from"></param>
+  /// <param name="to"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentOutOfRangeException"></exception>
+  public static IEnumerable<TimeSpan> TimeSpan(this Random random, int count, TimeSpan? from = null, TimeSpan? to = null)
+  {
+    if (random is null) throw new ArgumentNullException(nameof(random));
+    if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+    return count.Objects(() => random.TimeSpan(from, to));
   }
 #endif
 

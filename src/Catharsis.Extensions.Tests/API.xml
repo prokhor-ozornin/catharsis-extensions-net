@@ -2893,15 +2893,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Sbyte(System.Random,System.Nullable{System.SByte},System.Nullable{System.SByte})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Sbyte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.SbyteSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SbyteSequence(System.Random,System.Int32,System.Nullable{System.SByte},System.Nullable{System.SByte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SbyteSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Sbyte(System.Random,System.Int32,System.Nullable{System.SByte},System.Nullable{System.SByte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Sbyte(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2911,15 +2904,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Byte(System.Random,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Byte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.ByteSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ByteSequence(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ByteSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Byte(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Byte(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2929,15 +2915,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Short(System.Random,System.Nullable{System.Int16},System.Nullable{System.Int16})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Short(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.ShortSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ShortSequence(System.Random,System.Int32,System.Nullable{System.Int16},System.Nullable{System.Int16})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ShortSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Short(System.Random,System.Int32,System.Nullable{System.Int16},System.Nullable{System.Int16})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Short(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2947,15 +2926,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Ushort(System.Random,System.Nullable{System.UInt16},System.Nullable{System.UInt16})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Ushort(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.UshortSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.UshortSequence(System.Random,System.Int32,System.Nullable{System.UInt16},System.Nullable{System.UInt16})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.UshortSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Ushort(System.Random,System.Int32,System.Nullable{System.UInt16},System.Nullable{System.UInt16})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Ushort(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2965,15 +2937,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Int(System.Random,System.Nullable{System.Int32},System.Nullable{System.Int32})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Int(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.IntSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IntSequence(System.Random,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IntSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Int(System.Random,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Int(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2983,15 +2948,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Uint(System.Random,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Uint(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.UintSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.UintSequence(System.Random,System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.UintSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Uint(System.Random,System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Uint(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -3001,36 +2959,27 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Long(System.Random,System.Nullable{System.Int64},System.Nullable{System.Int64})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Long(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Long(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Long(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.LongSequence_Methods">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Float_Methods">
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.LongSequence(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.LongSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Float(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Float(System.Random,System.Int32)"/></description></item>
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Float_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Double_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.Float(System.Random)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.FloatSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.FloatSequence(System.Random,System.Int32)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Double_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.Double(System.Random)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DoubleSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DoubleSequence(System.Random,System.Int32)"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Double(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Double(System.Random,System.Int32)"/></description></item>
+              </list>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Char_Methods">
@@ -3039,15 +2988,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Char(System.Random,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Char(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.CharSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.CharSequence(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.CharSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Char(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Char(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -3057,46 +2999,36 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.String(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.String(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.String(System.Random,System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.String(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.StringSequence_Methods">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Digits_Methods">
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.StringSequence(System.Random,System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.StringSequence(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Digits(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Digits(System.Random,System.Int32,System.Int32)"/></description></item>
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Digits_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Letters_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.Digits(System.Random,System.Int32)"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Letters(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Letters(System.Random,System.Int32,System.Int32)"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DigitsSequence_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.AlphaDigits_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DigitsSequence(System.Random,System.Int32,System.Int32)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Letters_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.Letters(System.Random,System.Int32)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.LettersSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.LettersSequence(System.Random,System.Int32,System.Int32)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.AlphaDigits_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.AlphaDigits(System.Random,System.Int32)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.AlphaDigitsSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.AlphaDigitsSequence(System.Random,System.Int32,System.Int32)"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.AlphaDigits(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.AlphaDigits(System.Random,System.Int32,System.Int32)"/></description></item>
+              </list>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.SecureString_Methods">
@@ -3105,71 +3037,72 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureString(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureString(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureString(System.Random,System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureString(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.SecureStringSequence_Methods">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DateTime_Methods">
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureStringSequence(System.Random,System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureStringSequence(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateTime(System.Random,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateTime(System.Random,System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/></description></item>
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DateTimeSequence_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DateTimeOffset_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DateTimeSequence(System.Random,System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateTimeOffset(System.Random,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateTimeOffset(System.Random,System.Int32,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DateTimeOffset_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DateOnly_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DateTimeOffset(System.Random,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateOnly(System.Random,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateOnly(System.Random,System.Int32,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DateTimeOffsetSequence_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.TimeOnly_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DateTimeOffsetSequence(System.Random,System.Int32,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TimeOnly(System.Random,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TimeOnly(System.Random,System.Int32,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DateOnly_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.TimeSpan_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DateOnly(System.Random,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TimeSpan(System.Random,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TimeSpan(System.Random,System.Int32,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DateOnlySequence_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Range_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DateOnlySequence(System.Random,System.Int32,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Range(System.Random,System.Nullable{System.Int32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Range(System.Random,System.Int32,System.Nullable{System.Int32})"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.TimeOnly_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Guid_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.TimeOnly(System.Random,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.TimeOnlySequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.TimeOnlySequence(System.Random,System.Int32,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Range_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.Range(System.Random,System.Nullable{System.Int32})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.RangeSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.RangeSequence(System.Random,System.Int32,System.Nullable{System.Int32})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Guid_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.Guid(System.Random)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.GuidSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.GuidSequence(System.Random,System.Int32)"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Guid(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Guid(System.Random,System.Int32)"/></description></item>
+              </list>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Object_Methods">
@@ -3178,76 +3111,63 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Object(System.Random,System.Collections.Generic.IEnumerable{System.Type})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Object(System.Random,System.Type[])"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Object(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Type})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Object(System.Random,System.Int32,System.Type[])"/></description></item>
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.ObjectSequence_Methods">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.FileName_Methods">
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ObjectSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Type})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ObjectSequence(System.Random,System.Int32,System.Type[])"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FileName(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FileName(System.Random,System.Int32)"/></description></item>
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.FileName_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DirectoryName_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.FileName(System.Random)"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DirectoryName(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DirectoryName(System.Random,System.Int32)"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.FileNameSequence_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.FilePath_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.FileNameSequence(System.Random,System.Int32)"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FilePath(System.Random,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FilePath(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DirectoryName_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DirectoryPath_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DirectoryName(System.Random)"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FilePath(System.Random,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FilePath(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DirectoryNameSequence_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Directory_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DirectoryNameSequence(System.Random,System.Int32)"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Directory(System.Random,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Directory(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
+              </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.FilePath_Method">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.File_Methods">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.FilePath(System.Random,System.IO.DirectoryInfo)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.FilePathSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.FilePathSequence(System.Random,System.Int32,System.IO.DirectoryInfo)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DirectoryPath_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DirectoryPath(System.Random,System.IO.DirectoryInfo)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DirectoryPathSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DirectoryPathSequence(System.Random,System.Int32,System.IO.DirectoryInfo)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Directory_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.Directory(System.Random,System.IO.DirectoryInfo)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DirectorySequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DirectorySequence(System.Random,System.Int32,System.IO.DirectoryInfo)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.File_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.File(System.Random,System.IO.DirectoryInfo)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.FileSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.FileSequence(System.Random,System.Int32,System.IO.DirectoryInfo)"/> method.</para>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.File(System.Random,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.File(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
+              </list>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.BinaryFile_Methods">
@@ -3256,6 +3176,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFile(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo)"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFile(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFile(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFile(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3264,25 +3186,9 @@
               <para>Performs testing of following methods :</para>
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.BinaryFileSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileSequence(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileSequence(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.BinaryFileSequenceAsync_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileSequenceAsync(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileSequenceAsync(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.BinaryFileAsync(Random, int, IEnumerable, DirectoryInfo, CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.BinaryFileAsync(Random, int, int, IEnumerable, DirectoryInfo, CancellationToken)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3292,6 +3198,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/></description></item>
                 <item><description><see cref="!:RandomExtensions.TextFile(Random, int, Encoding, DirectoryInfo, IEnumerable&lt;Range&gt;)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3304,32 +3212,13 @@
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.TextFileSequence_Methods">
+        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.IpV6Address_Methods">
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFileSequence(System.Random,System.Int32,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFileSequence(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpV6Address(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpV6Address(System.Random,System.Int32)"/></description></item>
               </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.TextFileSequenceAsync_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFileSequenceAsync(System.Random,System.Int32,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="!:RandomExtensions.TextFileSequenceAsync(Random, int, int, Encoding, DirectoryInfo, CancellationToken, IEnumerable&lt;Range&gt;)"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.IpV6Address_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.IpV6Address(System.Random)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.IpV6AddressSequence_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.IpV6AddressSequence(System.Random,System.Int32)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.PhysicalAddress_Methods">
@@ -3338,15 +3227,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddress(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddress(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.PhysicalAddressSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddressSequence(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddressSequence(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddress(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddress(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -3383,15 +3265,8 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.IpAddressSequence_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddressSequence(System.Random,System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddressSequence(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
