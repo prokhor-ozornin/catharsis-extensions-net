@@ -9,6 +9,24 @@ public static class ICollectionExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
+  /// <param name="collection"></param>
+  /// <param name="elements"></param>
+  /// <typeparam name="T"></typeparam>
+  /// <returns></returns>
+  public static ICollection<T> AddIfAbsent<T>(this ICollection<T> collection, IEnumerable<T> elements) => collection.With(elements, x => !collection.Contains(x));
+  
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="collection"></param>
+  /// <param name="elements"></param>
+  /// <typeparam name="T"></typeparam>
+  /// <returns></returns>
+  public static ICollection<T> AddIfAbsent<T>(this ICollection<T> collection, params T[] elements) => AddIfAbsent(collection, elements as IEnumerable<T>);
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="collection"></param>
   /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
@@ -44,17 +62,21 @@ public static class ICollectionExtensions
   /// <typeparam name="T">Type of collection's elements.</typeparam>
   /// <param name="collection">Collection to which elements are added.</param>
   /// <param name="elements">Elements enumerator that provide elements for addition to the collection <paramref name="collection"/>.</param>
+  /// <param name="predicate"></param>
   /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   /// <seealso cref="With{T}(ICollection{T}, T[])"/>
-  public static ICollection<T> With<T>(this ICollection<T> collection, IEnumerable<T> elements)
+  public static ICollection<T> With<T>(this ICollection<T> collection, IEnumerable<T> elements, Predicate<T> predicate = null)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
     if (elements is null) throw new ArgumentNullException(nameof(elements));
 
     foreach (var element in elements)
     {
-      collection.Add(element);
+      if (predicate is null || predicate(element))
+      {
+        collection.Add(element);
+      }
     }
 
     return collection;
@@ -68,7 +90,7 @@ public static class ICollectionExtensions
   /// <param name="elements"></param>
   /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="With{T}(ICollection{T}, IEnumerable{T})"/>
+  /// <seealso cref="With{T}(ICollection{T}, IEnumerable{T}, Predicate{T})"/>
   public static ICollection<T> With<T>(this ICollection<T> collection, params T[] elements) => collection.With(elements as IEnumerable<T>);
 
   /// <summary>

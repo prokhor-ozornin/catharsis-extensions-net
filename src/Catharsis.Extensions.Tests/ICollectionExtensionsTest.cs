@@ -10,6 +10,25 @@ namespace Catharsis.Extensions.Tests;
 public sealed class ICollectionExtensionsTest : Test
 {
   /// <summary>
+  ///   <para>Performs testing of following methods :</para>
+  ///   <list type="bullet">
+  ///     <item><description><see cref="ICollectionExtensions.AddIfAbsent{T}(ICollection{T}, IEnumerable{T})"/></description></item>
+  ///     <item><description><see cref="ICollectionExtensions.AddIfAbsent{T}(ICollection{T}, T[])"/></description></item>
+  ///   </list>
+  /// </summary>
+  [Fact]
+  public void AddIfAbsent_Methods()
+  {
+    using (new AssertionScope())
+    {
+    }
+
+    using (new AssertionScope())
+    {
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="ICollectionExtensions.Empty{T}(ICollection{T})"/> method.</para>
   /// </summary>
   [Fact]
@@ -52,7 +71,7 @@ public sealed class ICollectionExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="ICollectionExtensions.With{T}(ICollection{T}, IEnumerable{T})"/></description></item>
+  ///     <item><description><see cref="ICollectionExtensions.With{T}(ICollection{T}, IEnumerable{T}, Predicate{T})"/></description></item>
   ///     <item><description><see cref="ICollectionExtensions.With{T}(ICollection{T}, T[])"/></description></item>
   ///   </list>
   /// </summary>

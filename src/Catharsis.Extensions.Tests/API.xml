@@ -1547,6 +1547,15 @@
               <para>Tests set for class <see cref="T:Catharsis.Extensions.ICollectionExtensions"/>.</para>
             </summary>
         </member>
+        <member name="M:Catharsis.Extensions.Tests.ICollectionExtensionsTest.AddIfAbsent_Methods">
+            <summary>
+              <para>Performs testing of following methods :</para>
+              <list type="bullet">
+                <item><description><see cref="M:Catharsis.Extensions.ICollectionExtensions.AddIfAbsent``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.ICollectionExtensions.AddIfAbsent``1(System.Collections.Generic.ICollection{``0},``0[])"/></description></item>
+              </list>
+            </summary>
+        </member>
         <member name="M:Catharsis.Extensions.Tests.ICollectionExtensionsTest.Empty_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.ICollectionExtensions.Empty``1(System.Collections.Generic.ICollection{``0})"/> method.</para>
@@ -1561,7 +1570,7 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.ICollectionExtensions.With``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.ICollectionExtensions.With``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.ICollectionExtensions.With``1(System.Collections.Generic.ICollection{``0},``0[])"/></description></item>
               </list>
             </summary>

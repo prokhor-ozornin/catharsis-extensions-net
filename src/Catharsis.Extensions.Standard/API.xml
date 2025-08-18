@@ -2643,6 +2643,24 @@
             </summary>
             <seealso cref="T:System.Collections.Generic.ICollection`1"/>
         </member>
+        <member name="M:Catharsis.Extensions.ICollectionExtensions.AddIfAbsent``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="collection"></param>
+            <param name="elements"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Catharsis.Extensions.ICollectionExtensions.AddIfAbsent``1(System.Collections.Generic.ICollection{``0},``0[])">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="collection"></param>
+            <param name="elements"></param>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
         <member name="M:Catharsis.Extensions.ICollectionExtensions.Empty``1(System.Collections.Generic.ICollection{``0})">
             <summary>
               <para></para>
@@ -2662,13 +2680,14 @@
             <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="collection"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="M:Catharsis.Extensions.ICollectionExtensions.With``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})">
+        <member name="M:Catharsis.Extensions.ICollectionExtensions.With``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})">
             <summary>
               <para>Sequentially adds all elements, returned by the enumerator, to the specified collection.</para>
             </summary>
             <typeparam name="T">Type of collection's elements.</typeparam>
             <param name="collection">Collection to which elements are added.</param>
             <param name="elements">Elements enumerator that provide elements for addition to the collection <paramref name="collection"/>.</param>
+            <param name="predicate"></param>
             <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.ICollectionExtensions.With``1(System.Collections.Generic.ICollection{``0},``0[])"/>
@@ -2682,7 +2701,7 @@
             <param name="elements"></param>
             <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.ICollectionExtensions.With``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})"/>
+            <seealso cref="M:Catharsis.Extensions.ICollectionExtensions.With``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0},System.Predicate{``0})"/>
         </member>
         <member name="M:Catharsis.Extensions.ICollectionExtensions.Without``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})">
             <summary>
