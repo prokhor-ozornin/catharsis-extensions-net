@@ -1301,7 +1301,7 @@ public static class RandomExtensions
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   public static TimeSpan TimeSpan(this Random random, TimeSpan? from = null, TimeSpan? to = null) => random is not null ? System.TimeSpan.FromTicks(random.Long(from?.Ticks, to?.Ticks)) : throw new ArgumentNullException(nameof(random));
 
   /// <summary>
@@ -1312,7 +1312,7 @@ public static class RandomExtensions
   /// <param name="from"></param>
   /// <param name="to"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   public static IEnumerable<TimeSpan> TimeSpan(this Random random, int count, TimeSpan? from = null, TimeSpan? to = null)
   {

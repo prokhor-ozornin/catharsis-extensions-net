@@ -1171,7 +1171,7 @@ public static class IEnumerableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="enumerable"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   public static IEnumerable<Tuple<T, int>> ToTuple<T>(this IEnumerable<T> enumerable) => enumerable?.Select((item, index) => new Tuple<T, int>(item, index)) ?? throw new ArgumentNullException(nameof(enumerable));
 
   /// <summary>

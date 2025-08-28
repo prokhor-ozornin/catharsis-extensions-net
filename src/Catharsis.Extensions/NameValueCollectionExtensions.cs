@@ -159,7 +159,7 @@ public static class NameValueCollectionExtensions
   /// </summary>
   /// <param name="collection"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static IEnumerable<Tuple<string, string>> ToTuple(this NameValueCollection collection)
   {
     if (collection is null) throw new ArgumentNullException(nameof(collection));
