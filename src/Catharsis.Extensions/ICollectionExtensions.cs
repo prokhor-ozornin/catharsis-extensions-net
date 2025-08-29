@@ -13,6 +13,7 @@ public static class ICollectionExtensions
   /// <param name="elements"></param>
   /// <typeparam name="T"></typeparam>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
   public static ICollection<T> AddIfAbsent<T>(this ICollection<T> collection, IEnumerable<T> elements) => collection.With(elements, x => !collection.Contains(x));
   
   /// <summary>
@@ -22,6 +23,7 @@ public static class ICollectionExtensions
   /// <param name="elements"></param>
   /// <typeparam name="T"></typeparam>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
   public static ICollection<T> AddIfAbsent<T>(this ICollection<T> collection, params T[] elements) => AddIfAbsent(collection, elements as IEnumerable<T>);
 
   /// <summary>

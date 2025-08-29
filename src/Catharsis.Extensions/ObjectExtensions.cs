@@ -271,10 +271,13 @@ public static class ObjectExtensions
   /// <param name="instance"></param>
   /// <param name="member"></param>
   /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="member"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentException">If <paramref name="member"/> is invalid string.</exception>
   public static T Nullify<T>(this T instance, string member)
   {
     if (instance is null) throw new ArgumentNullException(nameof(instance));
     if (member is null) throw new ArgumentNullException(nameof(member));
+    if (member.IsEmpty()) throw new ArgumentException(nameof(member));
 
     var type = instance.GetType();
 

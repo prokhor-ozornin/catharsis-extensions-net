@@ -2965,6 +2965,7 @@
             <typeparam name="T"></typeparam>
             <param name="cloneable"></param>
             <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="cloneable"/> is <see langword="null"/>.</exception>
         </member>
         <member name="T:Catharsis.Extensions.ICollectionExtensions">
             <summary>
@@ -2980,6 +2981,7 @@
             <param name="elements"></param>
             <typeparam name="T"></typeparam>
             <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.ICollectionExtensions.AddIfAbsent``1(System.Collections.Generic.ICollection{``0},``0[])">
             <summary>
@@ -2989,6 +2991,7 @@
             <param name="elements"></param>
             <typeparam name="T"></typeparam>
             <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.ICollectionExtensions.Empty``1(System.Collections.Generic.ICollection{``0})">
             <summary>
@@ -3188,7 +3191,7 @@
             <param name="key"></param>
             <param name="value"></param>
             <returns></returns>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.IDictionaryExtensions.Get``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)"/>
         </member>
         <member name="M:Catharsis.Extensions.IDictionaryExtensions.GetOrSet``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
@@ -3323,7 +3326,7 @@
             <param name="dictionary"></param>
             <param name="comparer"></param>
             <returns></returns>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.IDictionaryExtensions.ToFrozenDictionary``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IEqualityComparer{``0})">
             <summary>
@@ -4111,7 +4114,7 @@
             <typeparam name="T"></typeparam>
             <param name="enumerable"></param>
             <returns></returns>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToTuple``2(System.Collections.Generic.IEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})">
             <summary>
@@ -4531,7 +4534,7 @@
             <param name="dictionary"></param>
             <param name="comparer"></param>
             <returns></returns>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
         </member>
         <member name="T:Catharsis.Extensions.KeyValuePairExtensions">
             <summary>
@@ -4822,7 +4825,7 @@
             </summary>
             <param name="collection"></param>
             <returns></returns>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
         </member>
         <member name="T:Catharsis.Extensions.ObjectExtensions">
             <summary>
@@ -4993,6 +4996,8 @@
             <param name="instance"></param>
             <param name="member"></param>
             <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If either <paramref name="instance"/> or <paramref name="member"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="member"/> is invalid string.</exception>
         </member>
         <member name="M:Catharsis.Extensions.ObjectExtensions.CallMethod``1(System.Object,System.String,System.Collections.Generic.IEnumerable{System.Object})">
             <summary>
@@ -6461,7 +6466,7 @@
             <param name="from"></param>
             <param name="to"></param>
             <returns></returns>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.TimeSpan(System.Random,System.Int32,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})">
             <summary>
@@ -6472,7 +6477,7 @@
             <param name="from"></param>
             <param name="to"></param>
             <returns></returns>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.Range(System.Random,System.Nullable{System.Int32})">

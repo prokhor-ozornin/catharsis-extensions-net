@@ -11,5 +11,6 @@ public static class ICloneableExtensions
   /// <typeparam name="T"></typeparam>
   /// <param name="cloneable"></param>
   /// <returns></returns>
-  public static T Clone<T>(this ICloneable cloneable) => cloneable.Clone().To<T>();
+  /// <exception cref="ArgumentNullException">If <paramref name="cloneable"/> is <see langword="null"/>.</exception>
+  public static T Clone<T>(this ICloneable cloneable) => cloneable is not null ? cloneable.Clone().To<T>() : throw new ArgumentNullException(nameof(cloneable));
 }
