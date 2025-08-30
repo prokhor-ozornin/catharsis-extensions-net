@@ -330,6 +330,7 @@
             </summary>
             <param name="count"></param>
             <param name="action"></param>
+            <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
             <seealso cref="M:Catharsis.Extensions.BasicTypesExtensions.Times(System.Int32,System.Action{System.Int32})"/>
@@ -340,6 +341,7 @@
             </summary>
             <param name="count">Number of times to call a delegate.</param>
             <param name="action">Delegate that represents a method to be called.</param>
+            <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
             <seealso cref="M:Catharsis.Extensions.BasicTypesExtensions.Times(System.Int32,System.Action)"/>
@@ -562,6 +564,7 @@
               <para>Determines whether the specified <see cref="T:System.IO.BinaryReader"/> instance is either <see langword="null"/> or "empty".</para>
             </summary>
             <param name="reader"></param>
+            <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.BinaryReaderExtensions.IsEmpty(System.IO.BinaryReader)"/>
         </member>
@@ -2306,6 +2309,7 @@
             <param name="enumerable"></param>
             <param name="action"></param>
             <param name="cancellation"></param>
+            <returns></returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ForEachAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Action{``0},System.Threading.CancellationToken)"/>
         </member>
@@ -7750,6 +7754,7 @@
               <para></para>
             </summary>
             <param name="stream"></param>
+            <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.StreamExtensions.IsEmpty(System.IO.Stream)"/>
         </member>

@@ -70,6 +70,7 @@ public static class BinaryReaderExtensions
   ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance is either <see langword="null"/> or "empty".</para>
   /// </summary>
   /// <param name="reader"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsEmpty(BinaryReader)"/>
   public static bool IsUnset(this BinaryReader reader) => reader is null || reader.IsEmpty();

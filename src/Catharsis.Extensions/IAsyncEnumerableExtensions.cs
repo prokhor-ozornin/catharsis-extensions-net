@@ -72,6 +72,7 @@ public static class IAsyncEnumerableExtensions
   /// <param name="enumerable"></param>
   /// <param name="action"></param>
   /// <param name="cancellation"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ForEachAsync{T}(IAsyncEnumerable{T}, Action{T}, CancellationToken)"/>
   public static async Task<IAsyncEnumerable<T>> ForEachAsync<T>(this IAsyncEnumerable<T> enumerable, Action<int, T> action, CancellationToken cancellation = default)

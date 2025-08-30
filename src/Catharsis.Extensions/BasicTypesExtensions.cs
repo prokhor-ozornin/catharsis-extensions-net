@@ -193,6 +193,7 @@ public static class BasicTypesExtensions
   /// </summary>
   /// <param name="count"></param>
   /// <param name="action"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Times(int, Action{int})"/>
@@ -209,6 +210,7 @@ public static class BasicTypesExtensions
   /// </summary>
   /// <param name="count">Number of times to call a delegate.</param>
   /// <param name="action">Delegate that represents a method to be called.</param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Times(int, Action)"/>

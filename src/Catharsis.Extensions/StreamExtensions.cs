@@ -588,6 +588,7 @@ public static class StreamExtensions
   ///   <para></para>
   /// </summary>
   /// <param name="stream"></param>
+  /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IsEmpty(Stream)"/>
   public static bool IsUnset(this Stream stream) => stream is null || stream.IsEmpty();
