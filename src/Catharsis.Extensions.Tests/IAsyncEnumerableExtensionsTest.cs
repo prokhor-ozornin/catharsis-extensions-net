@@ -8,6 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IAsyncEnumerableExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="IAsyncEnumerableExtensions"/>
 public sealed class IAsyncEnumerableExtensionsTest : Test
 {
   /// <summary>

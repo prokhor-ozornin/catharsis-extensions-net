@@ -8,6 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="HttpClientExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="HttpClientExtensions"/>
 public sealed class HttpClientExtensionsTest : Test
 {
   /// <summary>

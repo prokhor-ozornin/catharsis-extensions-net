@@ -7,6 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="DelegateExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="DelegateExtensions"/>
 public sealed class DelegateExtensionsTest : Test
 {
   private delegate int Increment(int value);

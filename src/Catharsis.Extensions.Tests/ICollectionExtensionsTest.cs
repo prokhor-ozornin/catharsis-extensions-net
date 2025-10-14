@@ -7,6 +7,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="ICollectionExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="ICollectionExtensions"/>
 public sealed class ICollectionExtensionsTest : Test
 {
   /// <summary>

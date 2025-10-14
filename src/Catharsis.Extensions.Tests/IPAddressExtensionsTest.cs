@@ -9,6 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IPAddressExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="IPAddressExtensions"/>
 public sealed class IPAddressExtensionsTest : Test
 {
   /// <summary>

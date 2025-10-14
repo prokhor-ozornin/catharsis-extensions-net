@@ -10,6 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="FileInfoExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="FileInfoExtensions"/>
 public sealed class FileInfoExtensionsTest : Test
 {
   /// <summary>

@@ -9,6 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="MatchExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="MatchExtensions"/>
 public sealed class MatchExtensionsTest : Test
 {
   /// <summary>

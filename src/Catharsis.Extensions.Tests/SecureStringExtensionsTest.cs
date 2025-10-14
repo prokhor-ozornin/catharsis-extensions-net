@@ -10,6 +10,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="SecureStringExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="SecureStringExtensions"/>
 public sealed class SecureStringExtensionsTest : Test
 {
   /// <summary>

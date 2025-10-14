@@ -9,6 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="XmlWriterExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="XmlWriterExtensions"/>
 public sealed class XmlWriterExtensionsTest : Test
 {
   /// <summary>

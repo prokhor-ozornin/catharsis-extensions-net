@@ -8,6 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="NameValueCollectionExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="NameValueCollectionExtensions"/>
 public sealed class NameValueCollectionExtensionsTest : Test
 {
   /// <summary>

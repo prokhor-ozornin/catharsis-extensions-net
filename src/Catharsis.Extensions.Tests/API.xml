@@ -8,6 +8,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.ActionExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.ActionExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ActionExtensionsTest.Execute_Methods">
             <summary>
@@ -31,6 +32,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.ArrayExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.ArrayExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.Range_Method">
             <summary>
@@ -66,6 +68,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.AssemblyExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.AssemblyExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.AssemblyExtensionsTest.Resource_Method">
             <summary>
@@ -76,6 +79,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.BasicTypesExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.BasicTypesExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Sbyte_Abs_Method">
             <summary>
@@ -259,6 +263,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.BinaryReaderExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.BinaryReaderExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryReaderExtensionsTest.IsStart_Method">
             <summary>
@@ -347,6 +352,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.BinaryWriterExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.BinaryWriterExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryWriterExtensionsTest.IsStart_Method">
             <summary>
@@ -402,6 +408,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.CookieExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.CookieExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.CookieExtensionsTest.IsUnset_Method">
             <summary>
@@ -422,6 +429,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.DateOnlyExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.DateOnlyExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateOnlyExtensionsTest.IsWeekday_Method">
             <summary>
@@ -472,6 +480,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.DateTimeExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.DateTimeExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.IsPast_Method">
             <summary>
@@ -597,6 +606,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.DateTimeOffsetExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.DateTimeOffsetExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.IsPast_Method">
             <summary>
@@ -722,6 +732,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.DelegateExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.DelegateExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DelegateExtensionsTest.#ctor">
             <summary>
@@ -742,6 +753,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.DirectoryInfoExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.DirectoryInfoExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DirectoryInfoExtensionsTest.Size_Method">
             <summary>
@@ -825,6 +837,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.DriveInfoExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.DriveInfoExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DriveInfoExtensionsTest.Size_Method">
             <summary>
@@ -855,6 +868,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.FieldInfoExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.FieldInfoExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.FieldInfoExtensionsTest.IsOfType_Method">
             <summary>
@@ -880,6 +894,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.FileInfoExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.FileInfoExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.FileInfoExtensionsTest.IsUnset_Method">
             <summary>
@@ -1055,6 +1070,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.FileSystemInfoExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.FileSystemInfoExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.FileSystemInfoExtensionsTest.ToUri_Method">
             <summary>
@@ -1065,6 +1081,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.FuncExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.FuncExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.FuncExtensionsTest.ToTask_Methods">
             <summary>
@@ -1079,6 +1096,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.HttpClientExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.HttpClientExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.HttpClientExtensionsTest.WithTimeout_Method">
             <summary>
@@ -1209,6 +1227,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.HttpContentExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.HttpContentExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.HttpContentExtensionsTest.ToStream_Method">
             <summary>
@@ -1244,6 +1263,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IAsyncEnumerableExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.IAsyncEnumerableExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ForEach_Methods">
             <summary>
@@ -1536,6 +1556,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.ICloneableExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.ICloneableExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ICloneableExtensionsTest.Cloneable_Method">
             <summary>
@@ -1546,6 +1567,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.ICollectionExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.ICollectionExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ICollectionExtensionsTest.AddIfAbsent_Methods">
             <summary>
@@ -1588,6 +1610,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IComparableExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.IComparableExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.IsDefault_Method">
             <summary>
@@ -1643,6 +1666,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IDictionaryExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.IDictionaryExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IDictionaryExtensionsTest.Get_Method">
             <summary>
@@ -1711,6 +1735,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IEnumerableExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.IEnumerableExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ForEach_Methods">
             <summary>
@@ -2136,6 +2161,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IListExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.IListExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IListExtensionsTest.Randomize_Method">
             <summary>
@@ -2185,6 +2211,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IPAddressExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.IPAddressExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.Ip4_Method">
             <summary>
@@ -2240,6 +2267,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IPHostEntryExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.IPHostEntryExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPHostEntryExtensionsTest.IsAvailable_Method">
             <summary>
@@ -2275,6 +2303,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.IReadOnlyDictionaryExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.IReadOnlyDictionaryExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IReadOnlyDictionaryExtensionsTest.ToValueTuple_Method">
             <summary>
@@ -2290,6 +2319,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.KeyValuePairExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.KeyValuePairExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.KeyValuePairExtensionsTest.ToValueTuple_Method">
             <summary>
@@ -2305,6 +2335,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.MatchExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.MatchExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MatchExtensionsTest.ToEnumerable_Method">
             <summary>
@@ -2320,6 +2351,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.MemberInfoExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.MemberInfoExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MemberInfoExtensionsTest.IsConstructor_Method">
             <summary>
@@ -2368,6 +2400,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.MethodInfoExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.MethodInfoExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MethodInfoExtensionsTest.IsOverridable_Method">
             <summary>
@@ -2402,6 +2435,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.NameValueCollectionExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.NameValueCollectionExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.NameValueCollectionExtensionsTest.Empty_Method">
             <summary>
@@ -2455,6 +2489,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.ObjectExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.ObjectExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.As_Method">
             <summary>
@@ -2790,6 +2825,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.PhysicalAddressExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.PhysicalAddressExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.PhysicalAddressExtensionsTest.Clone_Method">
             <summary>
@@ -2805,6 +2841,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.ProcessExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.ProcessExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ProcessExtensionsTest.#ctor">
             <summary>
@@ -2895,6 +2932,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.RandomExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.RandomExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.Sbyte_Methods">
             <summary>
@@ -3288,6 +3326,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.RangeExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.RangeExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.RangeExtensionsTest.ToEnumerable_Method">
             <summary>
@@ -3298,6 +3337,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.RegexExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.RegexExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.RegexExtensionsTest.Clone_Method">
             <summary>
@@ -3313,6 +3353,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.SecureStringExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.SecureStringExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.SecureStringExtensionsTest.AsReadOnly_Method">
             <summary>
@@ -3391,6 +3432,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.SmtpClientExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.SmtpClientExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.SmtpClientExtensionsTest.WithTimeout_Method">
             <summary>
@@ -3401,6 +3443,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.SocketExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.SocketExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.SocketExtensionsTest.WithTimeout_Method">
             <summary>
@@ -3416,6 +3459,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.StreamExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.StreamExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.IsStart_Method">
             <summary>
@@ -3799,6 +3843,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.StreamReaderExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.StreamReaderExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamReaderExtensionsTest.IsStart_Method">
             <summary>
@@ -3834,6 +3879,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.StreamWriterExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.StreamWriterExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamWriterExtensionsTest.Rewind_Method">
             <summary>
@@ -3864,6 +3910,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.StringBuilderExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.StringBuilderExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringBuilderExtensionsTest.IsUnset_Method">
             <summary>
@@ -3942,6 +3989,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.StringExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.StringExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.Compare_Method">
             <summary>
@@ -4661,6 +4709,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.SymmetricAlgorithmExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.SymmetricAlgorithmExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.SymmetricAlgorithmExtensionsTest.Encrypt_Bytes_Method">
             <summary>
@@ -4706,6 +4755,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.TaskExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.TaskExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TaskExtensionsTest.Await_Methods">
             <summary>
@@ -4748,6 +4798,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.TcpClientExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.TcpClientExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TcpClientExtensionsTest.IsUnset_Method">
             <summary>
@@ -4831,6 +4882,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.TextReaderExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.TextReaderExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TextReaderExtensionsTest.IsEnd_Method">
             <summary>
@@ -4939,6 +4991,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.TextWriterExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.TextWriterExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TextWriterExtensionsTest.AsSynchronized_Method">
             <summary>
@@ -4979,6 +5032,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.TimeOnlyExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.TimeOnlyExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeOnlyExtensionsTest.Range_Methods">
             <summary>
@@ -5019,6 +5073,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.TimeSpanExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.TimeSpanExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeSpanExtensionsTest.InThePast_Method">
             <summary>
@@ -5049,6 +5104,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.TypeExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.TypeExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TypeExtensionsTest.IsSealed_Method">
             <summary>
@@ -5173,6 +5229,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.UdpClientExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.UdpClientExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.UdpClientExtensionsTest.IsUnset_Method">
             <summary>
@@ -5248,6 +5305,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.UriBuilderExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.UriBuilderExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.UriBuilderExtensionsTest.Empty_Method">
             <summary>
@@ -5267,6 +5325,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.UriExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.UriExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.UriExtensionsTest.IsAvailable_Method">
             <summary>
@@ -5450,6 +5509,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.ValueTaskExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.ValueTaskExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ValueTaskExtensionsTest.Await_Methods">
             <summary>
@@ -5475,6 +5535,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.XDocumentExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.XDocumentExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.XDocumentExtensionsTest.IsUnset_Method">
             <summary>
@@ -5574,6 +5635,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.XmlDocumentExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.XmlDocumentExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.XmlDocumentExtensionsTest.IsUnset_Method">
             <summary>
@@ -5662,6 +5724,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.XmlReaderExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.XmlReaderExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.XmlReaderExtensionsTest.Skip_Method">
             <summary>
@@ -5722,6 +5785,7 @@
             <summary>
               <para>Tests set for class <see cref="T:Catharsis.Extensions.XmlWriterExtensions"/>.</para>
             </summary>
+            <seealso cref="T:Catharsis.Extensions.XmlWriterExtensions"/>
         </member>
         <member name="M:Catharsis.Extensions.Tests.XmlWriterExtensionsTest.WriteBytes_Method">
             <summary>

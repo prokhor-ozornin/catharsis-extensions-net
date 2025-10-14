@@ -8,6 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="UriExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="UriExtensions"/>
 public sealed class UriExtensionsTest : Test
 {
   /// <summary>

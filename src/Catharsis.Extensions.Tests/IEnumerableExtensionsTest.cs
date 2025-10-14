@@ -16,6 +16,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="IEnumerableExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="IEnumerableExtensions"/>
 public sealed class IEnumerableExtensionsTest : Test
 {
   /// <summary>

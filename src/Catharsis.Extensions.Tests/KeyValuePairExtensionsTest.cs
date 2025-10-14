@@ -5,6 +5,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="KeyValuePairExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="KeyValuePairExtensions"/>
 public sealed class KeyValuePairExtensionsTest : Test
 {
   /// <summary>

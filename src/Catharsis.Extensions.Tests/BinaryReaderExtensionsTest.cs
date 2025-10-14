@@ -9,6 +9,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="BinaryReaderExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="BinaryReaderExtensions"/>
 public sealed class BinaryReaderExtensionsTest : Test
 {
   /// <summary>

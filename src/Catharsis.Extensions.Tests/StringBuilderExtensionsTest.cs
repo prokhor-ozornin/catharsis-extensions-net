@@ -11,6 +11,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StringBuilderExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="StringBuilderExtensions"/>
 public sealed class StringBuilderExtensionsTest : Test
 {
   /// <summary>

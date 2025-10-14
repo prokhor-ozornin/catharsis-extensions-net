@@ -11,6 +11,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="UdpClientExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="UdpClientExtensions"/>
 public sealed class UdpClientExtensionsTest : Test
 {
   /// <summary>

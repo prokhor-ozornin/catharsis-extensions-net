@@ -8,6 +8,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="BinaryWriterExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="BinaryWriterExtensions"/>
 public sealed class BinaryWriterExtensionsTest : Test
 {
   /// <summary>

@@ -11,6 +11,7 @@ namespace Catharsis.Extensions.Tests;
 /// <summary>
 ///   <para>Tests set for class <see cref="StreamExtensions"/>.</para>
 /// </summary>
+/// <seealso cref="StreamExtensions"/>
 public sealed class StreamExtensionsTest : Test
 {
   /// <summary>
