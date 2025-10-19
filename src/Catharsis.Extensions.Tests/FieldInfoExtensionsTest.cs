@@ -20,9 +20,9 @@ public sealed class FieldInfoExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => FieldInfoExtensions.IsOfType<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+      
+      throw new NotImplementedException();
     }
-
-    throw new NotImplementedException();
 
     return;
 

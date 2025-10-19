@@ -100,7 +100,7 @@ public static class ICollectionExtensions
   /// </summary>
   /// <typeparam name="T">Type of collection's elements.</typeparam>
   /// <param name="collection">Collection from which elements are removed.</param>
-  /// <param name="elements">Elements enumerator that provider elements for removal from the collection <see cref="collection"/>.</param>
+  /// <param name="elements">Elements enumerator that provider elements for removal from the collection <paramref name="collection"/>.</param>
   /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
   /// <seealso cref="ICollection{T}.Remove(T)"/>
   /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>

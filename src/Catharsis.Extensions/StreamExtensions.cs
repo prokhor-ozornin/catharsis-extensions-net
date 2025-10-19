@@ -931,7 +931,7 @@ public static class StreamExtensions
   /// </summary>
   /// <param name="stream">Source stream to read from.</param>
   /// <param name="encoding">Encoding to be used for bytes-to-text conversion. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
-  /// <returns>Text data from a <see cref="stream"/> stream.</returns>
+  /// <returns>Text data from a <paramref name="stream"/> stream.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToText(Stream, Encoding, bool)"/>
   public static async Task<string> ToTextAsync(this Stream stream, Encoding encoding = null)
@@ -965,7 +965,7 @@ public static class StreamExtensions
   /// <param name="stream">Source stream to read from.</param>
   /// <param name="encoding">Text encoding to use by <see cref="ToBinaryReader"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
-  /// <returns>Binary reader instance that wraps <see cref="stream"/> stream.</returns>
+  /// <returns>Binary reader instance that wraps <paramref name="stream"/> stream.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   public static BinaryReader ToBinaryReader(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new BinaryReader(stream, encoding ?? Encoding.Default, !close) : throw new ArgumentNullException(nameof(stream));
 
@@ -975,7 +975,7 @@ public static class StreamExtensions
   /// <param name="stream">Target stream to write to.</param>
   /// <param name="encoding">Text encoding to use by <see cref="ToBinaryWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
-  /// <returns>Binary writer instance that wraps <see cref="stream"/> stream.</returns>
+  /// <returns>Binary writer instance that wraps <paramref name="stream"/> stream.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   public static BinaryWriter ToBinaryWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new BinaryWriter(stream, encoding ?? Encoding.Default, !close) : throw new ArgumentNullException(nameof(stream));
 
@@ -985,7 +985,7 @@ public static class StreamExtensions
   /// <param name="stream">Source stream to read from.</param>
   /// <param name="encoding">Text encoding to use by <see cref="ToStreamReader"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
-  /// <returns>Text reader instance that wraps <see cref="stream"/> stream.</returns> 
+  /// <returns>Text reader instance that wraps <paramref name="stream"/> stream.</returns> 
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   public static StreamReader ToStreamReader(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new StreamReader(stream, encoding ?? Encoding.Default, true, -1, !close) : throw new ArgumentNullException(nameof(stream));
 
@@ -995,7 +995,7 @@ public static class StreamExtensions
   /// <param name="stream">Target stream to write to.</param>
   /// <param name="encoding">Text encoding to use by <see cref="ToStreamWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
-  /// <returns>Text writer instance that wraps <see cref="stream"/> stream.</returns>
+  /// <returns>Text writer instance that wraps <paramref name="stream"/> stream.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   public static StreamWriter ToStreamWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? new StreamWriter(stream, encoding ?? Encoding.Default, -1, !close) : throw new ArgumentNullException(nameof(stream));
 
@@ -1031,7 +1031,7 @@ public static class StreamExtensions
   /// <param name="stream">Target stream to write to.</param>
   /// <param name="encoding">Text encoding to use by <see cref="XmlWriter"/>. If not specified, default <see cref="Encoding.UTF8"/> will be used.</param>
   /// <param name="close"></param>
-  /// <returns>XML writer instance that wraps <see cref="stream"/> stream.</returns>
+  /// <returns>XML writer instance that wraps <paramref name="stream"/> stream.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
   public static XmlWriter ToXmlWriter(this Stream stream, Encoding encoding = null, bool close = true) => stream is not null ? XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = close, Indent = true, Encoding = encoding ?? Encoding.Default }) : throw new ArgumentNullException(nameof(stream));
 

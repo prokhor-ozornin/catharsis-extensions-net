@@ -21,9 +21,8 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
+      throw new NotImplementedException();
     }
-
-    throw new NotImplementedException();
 
     return;
 

@@ -1691,7 +1691,7 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="!:IDictionaryExtensions.With&lt;TKey, TValue&gt;(IDictionary&lt;TKey, TValue&gt;, TKey, TValue&gt;)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.IDictionaryExtensions.With``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.IDictionaryExtensions.With``2(System.Collections.Generic.IDictionary{``0,``1},System.Collections.Generic.IEnumerable{System.ValueTuple{``0,``1}})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.IDictionaryExtensions.With``2(System.Collections.Generic.IDictionary{``0,``1},System.ValueTuple{``0,``1}[])"/></description></item>
               </list>
@@ -2063,7 +2063,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToPriorityQueue_Method">
             <summary>
-              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToPriorityQueue&lt;TElement, TPriority&gt;(IEnumerable&lt;ValueTuple&lt;TElement, TPriority&gt;, IComparer&lt;TPriority&gt;)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToPriorityQueue``2(System.Collections.Generic.IEnumerable{System.ValueTuple{``0,``1}},System.Collections.Generic.IComparer{``1})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToImmutableQueue_Method">
@@ -2121,12 +2121,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToDictionary_Method">
             <summary>
-              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToDictionary&lt;TKey, TValue&gt;(IEnumerable&lt;ValueTuple&lt;TKey, TValue&gt;, IEqualityComparer&lt;TKey&gt;)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToDictionary``2(System.Collections.Generic.IEnumerable{System.ValueTuple{``0,``1}},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToReadOnlyDictionary_Method">
             <summary>
-              <para>Performs testing of <see cref="!:IEnumerableExtensions.ToReadOnlyDictionary&lt;TKey, TValue&gt;(IEnumerable&lt;TKey, TValue, IEqualityComparer&lt;TKey&gt;)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToReadOnlyDictionary``2(System.Collections.Generic.IEnumerable{System.ValueTuple{``0,``1}},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToText_Method">
@@ -2236,21 +2236,6 @@
         <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.Clone_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.Clone(System.Net.IPAddress)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.Min_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.Min(System.Net.IPAddress,System.Net.IPAddress)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.Max_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.Max(System.Net.IPAddress,System.Net.IPAddress)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.MinMax_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.MinMax(System.Net.IPAddress,System.Net.IPAddress)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.ToIpHost_Method">
@@ -2797,7 +2782,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.ToEnumerable_Method">
             <summary>
-              <para>Performs testing of <see cref="!:ObjectExtensions.ToEnumerable&lt;T&gt;()"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.ToEnumerable``1(``0,``0[])"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.ToFormattedString_Method">
@@ -3233,9 +3218,9 @@
               <para>Performs testing of following methods :</para>
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="!:RandomExtensions.BinaryFileAsync(Random, int, IEnumerable, DirectoryInfo, CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="!:RandomExtensions.BinaryFileAsync(Random, int, int, IEnumerable, DirectoryInfo, CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3244,7 +3229,7 @@
               <para>Performs testing of following methods :</para>
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="!:RandomExtensions.TextFile(Random, int, Encoding, DirectoryInfo, IEnumerable&lt;Range&gt;)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
               </list>
@@ -3310,9 +3295,9 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Nullable{System.Int64},System.Nullable{System.Int64})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
@@ -4551,7 +4536,7 @@
               <para>Performs testing of following methods :</para>
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.StringExtensions.ToEnum``1(System.String)"/></description></item>
-                <item><description><see cref="!:StringExtensions.ToEnum&lt;T&gt;(string, out T)"/></description></item>
+                <item><description><see cref="!:StringExtensions.ToEnum&lt;T&gt;(string, T?)"/></description></item>
               </list>
             </summary>
         </member>
@@ -4876,6 +4861,146 @@
         <member name="M:Catharsis.Extensions.Tests.TcpClientExtensionsTest.WriteTextAsync_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.TcpClientExtensions.WriteTextAsync(System.Net.Sockets.TcpClient,System.String,System.Text.Encoding,System.Threading.CancellationToken)"/> method.</para>
+            </summary>
+        </member>
+        <member name="T:Catharsis.Extensions.Tests.Test">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.Fixture">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.Random">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.Bytes">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.Objects">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.Shell">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.EmptyAsyncEnumerable">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.EmptySecureString">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.RandomSecureString">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.SymmetricAlgorithm">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.HashAlgorithm">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.EmptyTextReader">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.EmptyStream">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.Stream">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.ReadOnlyStream">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.ReadOnlyForwardStream">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.WriteOnlyStream">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.WriteOnlyForwardStream">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.FakeFile">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.EmptyFile">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.NonEmptyFile">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.Directory">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.Tests.Test.FakeDirectory">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.Test.#ctor">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.Test.Dispose">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.Test.TestCompareTo``2(System.String,``1,``1,System.Func{``0})">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.Test.TestEquality``2(System.String,``1,``1,System.Func{``0})">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.Test.TestHashCode``2(System.String,``1,``1,System.Func{``0})">
+            <summary>
+              <para></para>
             </summary>
         </member>
         <member name="T:Catharsis.Extensions.Tests.TextReaderExtensionsTest">

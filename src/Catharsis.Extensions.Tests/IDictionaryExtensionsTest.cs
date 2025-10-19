@@ -66,7 +66,7 @@ public sealed class IDictionaryExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="IDictionaryExtensions.With{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue})"/></description></item>
+  ///     <item><description><see cref="IDictionaryExtensions.With{TKey, TValue}(IDictionary{TKey, TValue}, TKey, TValue)"/></description></item>
   ///     <item><description><see cref="IDictionaryExtensions.With{TKey, TValue}(IDictionary{TKey, TValue}, IEnumerable{ValueTuple{TKey, TValue}})"/></description></item>
   ///     <item><description><see cref="IDictionaryExtensions.With{TKey, TValue}(IDictionary{TKey, TValue}, ValueTuple{TKey, TValue}[])"/></description></item>
   ///   </list>

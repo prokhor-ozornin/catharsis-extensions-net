@@ -28,12 +28,11 @@ public sealed class AssemblyExtensionsTest : Test
       // TODO Encoding support
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(byte[] result, Assembly assembly, string name)
     {
+      throw new NotImplementedException();
     }
   }
 }

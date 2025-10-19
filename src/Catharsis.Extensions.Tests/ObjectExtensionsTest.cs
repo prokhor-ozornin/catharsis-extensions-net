@@ -1490,7 +1490,7 @@ public sealed class ObjectExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="ObjectExtensions.ToEnumerable{T}()"/> method.</para>
+  ///   <para>Performs testing of <see cref="ObjectExtensions.ToEnumerable{T}(T, T[])"/> method.</para>
   /// </summary>
   [Fact]
   public void ToEnumerable_Method()

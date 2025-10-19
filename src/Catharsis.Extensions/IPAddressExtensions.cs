@@ -73,58 +73,6 @@ public static class IPAddressExtensions
   /// <returns>Cloning result.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
   public static IPAddress Clone(this IPAddress address) => address is not null ? new IPAddress(address.GetAddressBytes()) : throw new ArgumentNullException(nameof(address));
-  
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Max(IPAddress, IPAddress)"/>
-  /// <seealso cref="MinMax(IPAddress, IPAddress)"/>
-  public static IPAddress Min(this IPAddress left, IPAddress right)
-  {
-    if (left is null) throw new ArgumentNullException(nameof(left));
-    if (right is null) throw new ArgumentNullException(nameof(right));
-
-    return left.Address <= right.Address ? left : right;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Min(IPAddress, IPAddress)"/>
-  /// <seealso cref="MinMax(IPAddress, IPAddress)"/>
-  public static IPAddress Max(this IPAddress left, IPAddress right)
-  {
-    if (left is null) throw new ArgumentNullException(nameof(left));
-    if (right is null) throw new ArgumentNullException(nameof(right));
-
-    return left.Address >= right.Address ? left : right;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="left"></param>
-  /// <param name="right"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Min(IPAddress, IPAddress)"/>
-  /// <seealso cref="Max(IPAddress, IPAddress)"/>
-  public static (IPAddress Min, IPAddress Max) MinMax(this IPAddress left, IPAddress right)
-  {
-    if (left is null) throw new ArgumentNullException(nameof(left));
-    if (right is null) throw new ArgumentNullException(nameof(right));
-
-    return left.Address <= right.Address ? (left, right) : (right, left);
-  }
-
 
   /// <summary>
   ///   <para></para>

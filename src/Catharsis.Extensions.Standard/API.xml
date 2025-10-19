@@ -2716,7 +2716,7 @@
             </summary>
             <typeparam name="T">Type of collection's elements.</typeparam>
             <param name="collection">Collection from which elements are removed.</param>
-            <param name="elements">Elements enumerator that provider elements for removal from the collection <see cref="!:collection"/>.</param>
+            <param name="elements">Elements enumerator that provider elements for removal from the collection <paramref name="collection"/>.</param>
             <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
             <seealso cref="M:System.Collections.Generic.ICollection`1.Remove(`0)"/>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
@@ -4013,39 +4013,6 @@
             <param name="address">IP address to be cloned.</param>
             <returns>Cloning result.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
-        </member>
-        <member name="M:Catharsis.Extensions.IPAddressExtensions.Min(System.Net.IPAddress,System.Net.IPAddress)">
-            <summary>
-              <para></para>
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.IPAddressExtensions.Max(System.Net.IPAddress,System.Net.IPAddress)"/>
-            <seealso cref="M:Catharsis.Extensions.IPAddressExtensions.MinMax(System.Net.IPAddress,System.Net.IPAddress)"/>
-        </member>
-        <member name="M:Catharsis.Extensions.IPAddressExtensions.Max(System.Net.IPAddress,System.Net.IPAddress)">
-            <summary>
-              <para></para>
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.IPAddressExtensions.Min(System.Net.IPAddress,System.Net.IPAddress)"/>
-            <seealso cref="M:Catharsis.Extensions.IPAddressExtensions.MinMax(System.Net.IPAddress,System.Net.IPAddress)"/>
-        </member>
-        <member name="M:Catharsis.Extensions.IPAddressExtensions.MinMax(System.Net.IPAddress,System.Net.IPAddress)">
-            <summary>
-              <para></para>
-            </summary>
-            <param name="left"></param>
-            <param name="right"></param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.IPAddressExtensions.Min(System.Net.IPAddress,System.Net.IPAddress)"/>
-            <seealso cref="M:Catharsis.Extensions.IPAddressExtensions.Max(System.Net.IPAddress,System.Net.IPAddress)"/>
         </member>
         <member name="M:Catharsis.Extensions.IPAddressExtensions.ToIpHost(System.Net.IPAddress)">
             <summary>
@@ -7232,7 +7199,7 @@
             </summary>
             <param name="stream">Source stream to read from.</param>
             <param name="encoding">Encoding to be used for bytes-to-text conversion. If not specified, default <see cref="P:System.Text.Encoding.UTF8"/> will be used.</param>
-            <returns>Text data from a <see cref="!:stream"/> stream.</returns>
+            <returns>Text data from a <paramref name="stream"/> stream.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.StreamExtensions.ToText(System.IO.Stream,System.Text.Encoding,System.Boolean)"/>
         </member>
@@ -7253,7 +7220,7 @@
             <param name="stream">Source stream to read from.</param>
             <param name="encoding">Text encoding to use by <see cref="M:Catharsis.Extensions.StreamExtensions.ToBinaryReader(System.IO.Stream,System.Text.Encoding,System.Boolean)"/>. If not specified, default <see cref="P:System.Text.Encoding.UTF8"/> will be used.</param>
             <param name="close"></param>
-            <returns>Binary reader instance that wraps <see cref="!:stream"/> stream.</returns>
+            <returns>Binary reader instance that wraps <paramref name="stream"/> stream.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToBinaryWriter(System.IO.Stream,System.Text.Encoding,System.Boolean)">
@@ -7263,7 +7230,7 @@
             <param name="stream">Target stream to write to.</param>
             <param name="encoding">Text encoding to use by <see cref="M:Catharsis.Extensions.StreamExtensions.ToBinaryWriter(System.IO.Stream,System.Text.Encoding,System.Boolean)"/>. If not specified, default <see cref="P:System.Text.Encoding.UTF8"/> will be used.</param>
             <param name="close"></param>
-            <returns>Binary writer instance that wraps <see cref="!:stream"/> stream.</returns>
+            <returns>Binary writer instance that wraps <paramref name="stream"/> stream.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToStreamReader(System.IO.Stream,System.Text.Encoding,System.Boolean)">
@@ -7273,7 +7240,7 @@
             <param name="stream">Source stream to read from.</param>
             <param name="encoding">Text encoding to use by <see cref="M:Catharsis.Extensions.StreamExtensions.ToStreamReader(System.IO.Stream,System.Text.Encoding,System.Boolean)"/>. If not specified, default <see cref="P:System.Text.Encoding.UTF8"/> will be used.</param>
             <param name="close"></param>
-            <returns>Text reader instance that wraps <see cref="!:stream"/> stream.</returns> 
+            <returns>Text reader instance that wraps <paramref name="stream"/> stream.</returns> 
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToStreamWriter(System.IO.Stream,System.Text.Encoding,System.Boolean)">
@@ -7283,7 +7250,7 @@
             <param name="stream">Target stream to write to.</param>
             <param name="encoding">Text encoding to use by <see cref="M:Catharsis.Extensions.StreamExtensions.ToStreamWriter(System.IO.Stream,System.Text.Encoding,System.Boolean)"/>. If not specified, default <see cref="P:System.Text.Encoding.UTF8"/> will be used.</param>
             <param name="close"></param>
-            <returns>Text writer instance that wraps <see cref="!:stream"/> stream.</returns>
+            <returns>Text writer instance that wraps <paramref name="stream"/> stream.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToXmlReader(System.IO.Stream,System.Boolean)">
@@ -7319,7 +7286,7 @@
             <param name="stream">Target stream to write to.</param>
             <param name="encoding">Text encoding to use by <see cref="T:System.Xml.XmlWriter"/>. If not specified, default <see cref="P:System.Text.Encoding.UTF8"/> will be used.</param>
             <param name="close"></param>
-            <returns>XML writer instance that wraps <see cref="!:stream"/> stream.</returns>
+            <returns>XML writer instance that wraps <paramref name="stream"/> stream.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToXmlDictionaryWriter(System.IO.Stream,System.Text.Encoding,System.Boolean)">
@@ -9324,7 +9291,7 @@
             <param name="client"></param>
             <param name="bytes"></param>
             <returns>Back self-reference to the given <paramref name="client"/>.</returns>
-            <exception cref="T:System.ArgumentNullException">If either <paramref name="tcp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentNullException">If either <paramref name="client"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.TcpClientExtensions.WriteBytesAsync(System.Net.Sockets.TcpClient,System.Collections.Generic.IEnumerable{System.Byte},System.Threading.CancellationToken)"/>
         </member>
         <member name="M:Catharsis.Extensions.TcpClientExtensions.WriteBytesAsync(System.Net.Sockets.TcpClient,System.Collections.Generic.IEnumerable{System.Byte},System.Threading.CancellationToken)">
@@ -10275,7 +10242,7 @@
             <param name="headers"></param>
             <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:WriteBytesAsync(Uri, IEnumerable&lt;byte&gt;, TimeSpan?, CancellationToken, ValueTuple&lt;string, object&gt;[] headers)"/>
+            <seealso cref="M:Catharsis.Extensions.UriExtensions.WriteBytesAsync(System.Uri,System.Collections.Generic.IEnumerable{System.Byte},System.Nullable{System.TimeSpan},System.Threading.CancellationToken,System.ValueTuple{System.String,System.Object}[])"/>
         </member>
         <member name="M:Catharsis.Extensions.UriExtensions.WriteBytesAsync(System.Uri,System.Collections.Generic.IEnumerable{System.Byte},System.Nullable{System.TimeSpan},System.Threading.CancellationToken,System.ValueTuple{System.String,System.Object}[])">
             <summary>

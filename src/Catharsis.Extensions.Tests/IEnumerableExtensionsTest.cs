@@ -1514,7 +1514,7 @@ public sealed class IEnumerableExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToPriorityQueue{TElement, TPriority}(IEnumerable{ValueTuple{TElement, TPriority}, IComparer{TPriority})"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToPriorityQueue{TElement, TPriority}(IEnumerable{ValueTuple{TElement, TPriority}}, IComparer{TPriority})"/> method.</para>
   /// </summary>
   [Fact]
   public void ToPriorityQueue_Method()
@@ -1772,7 +1772,7 @@ public sealed class IEnumerableExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToDictionary{TKey, TValue}(IEnumerable{ValueTuple{TKey, TValue}, IEqualityComparer{TKey})"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToDictionary{TKey, TValue}(IEnumerable{ValueTuple{TKey, TValue}}, IEqualityComparer{TKey})"/> method.</para>
   /// </summary>
   [Fact]
   public void ToDictionary_Method()
@@ -1792,7 +1792,7 @@ public sealed class IEnumerableExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToReadOnlyDictionary{TKey, TValue}(IEnumerable{TKey, TValue, IEqualityComparer{TKey})"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToReadOnlyDictionary{TKey, TValue}(IEnumerable{ValueTuple{TKey, TValue}}, IEqualityComparer{TKey})"/> method.</para>
   /// </summary>
   [Fact]
   public void ToReadOnlyDictionary_Method()

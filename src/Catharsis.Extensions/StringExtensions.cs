@@ -1314,6 +1314,7 @@ public static class StringExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToSbyte(string, out sbyte?, IFormatProvider)"/>
+  [CLSCompliant(false)]
   public static sbyte ToSbyte(this string text, IFormatProvider format = null) => text is not null ? sbyte.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1324,6 +1325,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <seealso cref="ToSbyte(string, IFormatProvider)"/>
+  [CLSCompliant(false)]
   public static bool ToSbyte(this string text, out sbyte? result, IFormatProvider format = null) => (result = sbyte.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -1378,6 +1380,7 @@ public static class StringExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToUshort(string, out ushort?, IFormatProvider)"/>
+  [CLSCompliant(false)]
   public static ushort ToUshort(this string text, IFormatProvider format = null) => text is not null ? ushort.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1388,6 +1391,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <seealso cref="ToUshort(string, IFormatProvider)"/>
+  [CLSCompliant(false)]
   public static bool ToUshort(this string text, out ushort? result, IFormatProvider format = null) => (result = ushort.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -1420,6 +1424,7 @@ public static class StringExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToUint(string, out uint?, IFormatProvider)"/>
+  [CLSCompliant(false)]
   public static uint ToUint(this string text, IFormatProvider format = null) => text is not null ? uint.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1430,6 +1435,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <seealso cref="ToUint(string, IFormatProvider)"/>
+  [CLSCompliant(false)]
   public static bool ToUint(this string text, out uint? result, IFormatProvider format = null) => (result = uint.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>
@@ -1462,6 +1468,7 @@ public static class StringExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToUlong(string, out ulong?, IFormatProvider)"/>
+  [CLSCompliant(false)]
   public static ulong ToUlong(this string text, IFormatProvider format = null) => text is not null ? ulong.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
 
   /// <summary>
@@ -1472,6 +1479,7 @@ public static class StringExtensions
   /// <param name="format"></param>
   /// <returns></returns>
   /// <seealso cref="ToUlong(string, IFormatProvider)"/>
+  [CLSCompliant(false)]
   public static bool ToUlong(this string text, out ulong? result, IFormatProvider format = null) => (result = ulong.TryParse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture, out var value) ? value : null) is not null;
 
   /// <summary>

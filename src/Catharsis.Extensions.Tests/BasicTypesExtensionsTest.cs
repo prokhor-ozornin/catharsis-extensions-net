@@ -25,12 +25,11 @@ public sealed class BasicTypesExtensionsTest : Test
         */
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(sbyte original, short result)
     {
+      throw new NotImplementedException();
     }
   }
 
@@ -49,12 +48,11 @@ public sealed class BasicTypesExtensionsTest : Test
         */
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(short original, short result)
     {
+      throw new NotImplementedException();
     }
   }
 
@@ -73,12 +71,11 @@ public sealed class BasicTypesExtensionsTest : Test
         */
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(int original, int result)
     {
+      throw new NotImplementedException();
     }
   }
 
@@ -97,12 +94,11 @@ public sealed class BasicTypesExtensionsTest : Test
         */
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(long original, long result)
     {
+      throw new NotImplementedException();
     }
   }
 
@@ -121,12 +117,11 @@ public sealed class BasicTypesExtensionsTest : Test
         */
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(float original, float result)
     {
+      throw new NotImplementedException();
     }
   }
 
@@ -145,12 +140,11 @@ public sealed class BasicTypesExtensionsTest : Test
         */
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(double original, double result)
     {
+      throw new NotImplementedException();
     }
   }
 
@@ -169,12 +163,11 @@ public sealed class BasicTypesExtensionsTest : Test
         */
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(decimal original, decimal result)
     {
+      throw new NotImplementedException();
     }
   }
 
@@ -195,12 +188,11 @@ public sealed class BasicTypesExtensionsTest : Test
         1.6.Ceil().Should().Be(2);*/
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(float original, float result)
     {
+      throw new NotImplementedException();
     }
   }
 

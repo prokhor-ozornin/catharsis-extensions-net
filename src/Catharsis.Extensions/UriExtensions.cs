@@ -247,7 +247,7 @@ public static class UriExtensions
   /// <param name="headers"></param>
   /// <returns>Back self-reference to the given <paramref name="destination"/>.</returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="destination"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytesAsync(Uri, IEnumerable{byte}, TimeSpan?, CancellationToken, ValueTuple{string, object}[] headers)"/>
+  /// <seealso cref="WriteBytesAsync(Uri, IEnumerable{byte}, TimeSpan?, CancellationToken, ValueTuple{string, object}[])"/>
   public static Uri WriteBytes(this Uri destination, IEnumerable<byte> bytes, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
   {
     if (destination is null) throw new ArgumentNullException(nameof(destination));

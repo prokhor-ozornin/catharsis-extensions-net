@@ -399,8 +399,9 @@ public sealed class ProcessExtensionsTest : Test
   /// <summary>
   ///   <para></para>
   /// </summary>
-  public void Dispose()
+  public override void Dispose()
   {
+    base.Dispose();
     ShellProcess.Kill();
   }
 }

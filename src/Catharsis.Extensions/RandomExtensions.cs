@@ -21,6 +21,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Sbyte(Random, IEnumerable{Range})"/>
+  [CLSCompliant(false)]
   public static sbyte Sbyte(this Random random, sbyte? from = null, sbyte? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -38,6 +39,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Sbyte(Random, sbyte?, sbyte?)"/>
+  [CLSCompliant(false)]
   public static sbyte Sbyte(this Random random, IEnumerable<Range> ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -67,6 +69,7 @@ public static class RandomExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Sbyte(Random, int, IEnumerable{Range})"/>
+  [CLSCompliant(false)]
   public static IEnumerable<sbyte> Sbyte(this Random random, int count, sbyte? from = null, sbyte? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -85,6 +88,7 @@ public static class RandomExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Sbyte(Random, int, sbyte?, sbyte?)"/>
+  [CLSCompliant(false)]
   public static IEnumerable<sbyte> Sbyte(this Random random, int count, IEnumerable<Range> ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -315,6 +319,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Ushort(Random, IEnumerable{Range})"/>
+  [CLSCompliant(false)]
   public static ushort Ushort(this Random random, ushort? from = null, ushort? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -332,6 +337,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Ushort(Random, ushort?, ushort?)"/>
+  [CLSCompliant(false)]
   public static ushort Ushort(this Random random, IEnumerable<Range> ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -361,6 +367,7 @@ public static class RandomExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Ushort(Random, int, IEnumerable{Range})"/>
+  [CLSCompliant(false)]
   public static IEnumerable<ushort> Ushort(this Random random, int count, ushort? from = null, ushort? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -379,6 +386,7 @@ public static class RandomExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Ushort(Random, int, ushort?, ushort?)"/>
+  [CLSCompliant(false)]
   public static IEnumerable<ushort> Ushort(this Random random, int count, IEnumerable<Range> ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -512,6 +520,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Uint(Random, IEnumerable{Range})"/>
+  [CLSCompliant(false)]
   public static uint Uint(this Random random, uint? from = null, uint? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -529,6 +538,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Uint(Random, uint?, uint?)"/>
+  [CLSCompliant(false)]
   public static uint Uint(this Random random, IEnumerable<Range> ranges) => (uint?) random?.Long(ranges) ?? throw new ArgumentNullException(nameof(random));
 
   /// <summary>
@@ -542,6 +552,7 @@ public static class RandomExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Uint(Random, int, IEnumerable{Range})"/>
+  [CLSCompliant(false)]
   public static IEnumerable<uint> Uint(this Random random, int count, uint? from = null, uint? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -560,6 +571,7 @@ public static class RandomExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="Uint(Random, int, uint?, uint?)"/>
+  [CLSCompliant(false)]
   public static IEnumerable<uint> Uint(this Random random, int count, IEnumerable<Range> ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -2283,7 +2295,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <seealso cref="IpAddress(Random, IEnumerable{Range})"/>
-  public static IPAddress IpAddress(this Random random, uint? from = null, uint? to = null) => random is not null ? new IPAddress(random.Uint(from, to)) : throw new ArgumentNullException(nameof(random));
+  public static IPAddress IpAddress(this Random random, long? from = null, long? to = null) => random is not null ? new IPAddress(random.Long(from, to)) : throw new ArgumentNullException(nameof(random));
 
   /// <summary>
   ///   <para></para>
@@ -2292,7 +2304,7 @@ public static class RandomExtensions
   /// <param name="ranges"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IpAddress(Random, uint?, uint?)"/>
+  /// <seealso cref="IpAddress(Random, long?, long?)"/>
   public static IPAddress IpAddress(this Random random, IEnumerable<Range> ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
@@ -2322,7 +2334,7 @@ public static class RandomExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
   /// <seealso cref="IpAddress(Random, int, IEnumerable{Range})"/>
-  public static IEnumerable<IPAddress> IpAddress(this Random random, int count, uint? from = null, uint? to = null)
+  public static IEnumerable<IPAddress> IpAddress(this Random random, int count, long? from = null, long? to = null)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -2339,7 +2351,7 @@ public static class RandomExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
-  /// <seealso cref="IpAddress(Random, int, uint?, uint?)"/>
+  /// <seealso cref="IpAddress(Random, int, long?, long?)"/>
   public static IEnumerable<IPAddress> IpAddress(this Random random, int count, IEnumerable<Range> ranges)
   {
     if (random is null) throw new ArgumentNullException(nameof(random));

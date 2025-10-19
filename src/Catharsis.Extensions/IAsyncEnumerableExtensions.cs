@@ -907,7 +907,7 @@ public static class IAsyncEnumerableExtensions
   /// <param name="valueComparer"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="key"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToImmutableSortedDictionaryAsync{TKey, TValue}(IAsyncEnumerable{TValue, Func{TValue, TKey}, IComparer{TKey}, IEqualityComparer{TValue}, CancellationToken)"/>
+  /// <seealso cref="ToImmutableSortedDictionaryAsync{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IComparer{TKey}, IEqualityComparer{TValue}, CancellationToken)"/>
   public static ImmutableSortedDictionary<TKey, TValue> ToImmutableSortedDictionary<TKey, TValue>(this IAsyncEnumerable<TValue> enumerable, Func<TValue, TKey> key, IComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null) where TKey : notnull
   {
     if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));

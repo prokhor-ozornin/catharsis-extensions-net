@@ -157,7 +157,7 @@ public static class TcpClientExtensions
   /// <param name="client"></param>
   /// <param name="bytes"></param>
   /// <returns>Back self-reference to the given <paramref name="client"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="tcp"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteBytesAsync(TcpClient, IEnumerable{byte}, CancellationToken)"/>
   public static TcpClient WriteBytes(this TcpClient client, IEnumerable<byte> bytes)
   {

@@ -12,6 +12,7 @@ public static class BasicTypesExtensions
   /// <param name="number"></param>
   /// <returns></returns>
   /// <seealso cref="Math.Abs(sbyte)"/>
+  [CLSCompliant(false)]
   public static short Abs(this sbyte number) => Math.Abs(number);
 
   /// <summary>
@@ -342,6 +343,7 @@ public static class BasicTypesExtensions
   /// </summary>
   /// <param name="value"></param>
   /// <returns></returns>
+  [CLSCompliant(false)]
   public static bool ToBoolean(this sbyte value) => value > 0;
 
   /// <summary>
@@ -363,6 +365,7 @@ public static class BasicTypesExtensions
   /// </summary>
   /// <param name="value"></param>
   /// <returns></returns>
+  [CLSCompliant(false)]
   public static bool ToBoolean(this ushort value) => value > 0;
 
   /// <summary>
@@ -377,6 +380,7 @@ public static class BasicTypesExtensions
   /// </summary>
   /// <param name="value"></param>
   /// <returns></returns>
+  [CLSCompliant(false)]
   public static bool ToBoolean(this uint value) => value > 0;
 
   /// <summary>
@@ -391,6 +395,7 @@ public static class BasicTypesExtensions
   /// </summary>
   /// <param name="value"></param>
   /// <returns></returns>
+  [CLSCompliant(false)]
   public static bool ToBoolean(this ulong value) => value > 0;
 
   /// <summary>

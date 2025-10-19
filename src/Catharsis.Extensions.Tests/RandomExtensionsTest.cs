@@ -2029,9 +2029,9 @@ public sealed class RandomExtensionsTest : Test
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="RandomExtensions.BinaryFileAsync(Random, int, byte?, byte?, DirectoryInfo, CancellationToken)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.BinaryFileAsync(Random, int, IEnumerable, DirectoryInfo, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.BinaryFileAsync(Random, int, IEnumerable{Range}, DirectoryInfo, CancellationToken)"/></description></item>
   ///     <item><description><see cref="RandomExtensions.BinaryFileAsync(Random, int, int, byte?, byte?, DirectoryInfo, CancellationToken)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.BinaryFileAsync(Random, int, int, IEnumerable, DirectoryInfo, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.BinaryFileAsync(Random, int, int, IEnumerable{Range}, DirectoryInfo, CancellationToken)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -2175,7 +2175,7 @@ public sealed class RandomExtensionsTest : Test
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="RandomExtensions.TextFile(Random, int, Encoding, char?, char?, DirectoryInfo)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.TextFile(Random, int, Encoding, DirectoryInfo, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.TextFile(Random, int, IEnumerable{Range}, Encoding, DirectoryInfo)"/></description></item>
   ///     <item><description><see cref="RandomExtensions.TextFile(Random, int, int, Encoding, char?, char?, DirectoryInfo)"/></description></item>
   ///     <item><description><see cref="RandomExtensions.TextFile(Random, int, int, IEnumerable{Range}, Encoding, DirectoryInfo)"/></description></item>
   ///   </list>
@@ -2576,9 +2576,9 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.IpAddress(Random, uint?, uint?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.IpAddress(Random, long?, long?)"/></description></item>
   ///     <item><description><see cref="RandomExtensions.IpAddress(Random, IEnumerable{Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.IpAddress(Random, int, uint?, uint?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.IpAddress(Random, int, long?, long?)"/></description></item>
   ///     <item><description><see cref="RandomExtensions.IpAddress(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>

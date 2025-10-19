@@ -19,9 +19,9 @@ public sealed class DirectoryInfoExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((DirectoryInfo) null).Size()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+      
+      throw new NotImplementedException();
     }
-
-    throw new NotImplementedException();
 
     return;
 

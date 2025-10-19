@@ -22,15 +22,13 @@ public sealed class HttpContentExtensionsTest : Test
       AssertionExtensions.Should(() => HttpContentExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("content");
     }
 
-    throw new NotImplementedException();
-
     return;
 
     static void Test(HttpContent content)
     {
       using (content)
       {
-
+        throw new NotImplementedException();
       }
     }
   }
