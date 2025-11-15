@@ -1342,7 +1342,7 @@ public sealed class IEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToAsyncEnumerable{T}(IEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]
@@ -1365,7 +1365,7 @@ public sealed class IEnumerableExtensionsTest : Test
       result.Should().BeOfType<IAsyncEnumerable<T>>();
       result.ToArray().Should().BeOfType<T[]>().And.Equal(enumerable.ToArray());
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IEnumerableExtensions.ToLinkedList{T}(IEnumerable{T})"/> method.</para>

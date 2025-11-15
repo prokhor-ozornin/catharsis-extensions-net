@@ -3888,15 +3888,6 @@
             <returns>Back self-reference to the given <paramref name="enumerable"/>.</returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToAsyncEnumerable``1(System.Collections.Generic.IEnumerable{``0})">
-            <summary>
-              <para></para>
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="enumerable"></param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-        </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToLinkedList``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
               <para></para>

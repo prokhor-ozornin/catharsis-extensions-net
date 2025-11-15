@@ -1318,19 +1318,9 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToList``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToListAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToListAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToLinkedList_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToLinkedList``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToLinkedListAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToLinkedListAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToReadOnlyList_Method">
@@ -1338,19 +1328,9 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToReadOnlyList``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToReadOnlyListAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToReadOnlyListAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToHashSet_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToHashSet``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToHashSetAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToHashSetAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0},System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToSortedSet_Method">
@@ -1358,29 +1338,14 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToSortedSet``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IComparer{``0})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToSortedSetAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToSortedSetAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IComparer{``0},System.Threading.CancellationToken)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToDictionary_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToDictionary``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToDictionaryAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToDictionaryAsync``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IEqualityComparer{``0},System.Threading.CancellationToken)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToReadOnlyDictionary_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToReadOnlyDictionary``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToReadOnlyDictionaryAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToReadOnlyDictionaryAsync``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IEqualityComparer{``0},System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToValueTuple_Methods">
@@ -1389,15 +1354,6 @@
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToValueTuple``1(System.Collections.Generic.IAsyncEnumerable{``0})"/></description></item>
                 <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToValueTuple``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})"/></description></item>
-              </list>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToValueTupleAsync_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToValueTupleAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToValueTupleAsync``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0},System.Threading.CancellationToken)"/></description></item>
               </list>
             </summary>
         </member>
@@ -1410,33 +1366,14 @@
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToTupleAsync_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTupleAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTupleAsync``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0},System.Threading.CancellationToken)"/></description></item>
-              </list>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToStack_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToStack``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToStackAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToStackAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToQueue_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToQueue``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToQueueAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToQueueAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToMemoryStream_Methods">
@@ -1448,23 +1385,9 @@
               </list>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToMemoryStreamAsync_Methods">
-            <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToMemoryStreamAsync(System.Collections.Generic.IAsyncEnumerable{System.Byte},System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToMemoryStreamAsync(System.Collections.Generic.IAsyncEnumerable{System.Byte[]},System.Threading.CancellationToken)"/></description></item>
-              </list>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToReadOnlySet_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToReadOnlySet``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToReadOnlySetAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToReadOnlySetAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0},System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToPriorityQueue_Method">
@@ -1472,19 +1395,9 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToPriorityQueue``2(System.Collections.Generic.IAsyncEnumerable{System.ValueTuple{``0,``1}},System.Collections.Generic.IComparer{``1})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToPriorityQueueAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToPriorityQueueAsync``2(System.Collections.Generic.IAsyncEnumerable{System.ValueTuple{``0,``1}},System.Collections.Generic.IComparer{``1},System.Threading.CancellationToken)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableArray_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableArray``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableArrayAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableArrayAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableList_Method">
@@ -1492,19 +1405,9 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableList``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableListAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableListAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableHashSet_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableHashSet``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableHashSetAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableHashSetAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0},System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableSortedSet_Method">
@@ -1512,29 +1415,14 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableSortedSet``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IComparer{``0})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableSortedSetAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableSortedSetAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Collections.Generic.IComparer{``0},System.Threading.CancellationToken)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableDictionary_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableDictionary``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableDictionaryAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableDictionaryAsync``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IEqualityComparer{``0},System.Threading.CancellationToken)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableSortedDictionary_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableSortedDictionary``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0},System.Collections.Generic.IEqualityComparer{``1})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableSortedDictionaryAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableSortedDictionaryAsync``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0},System.Collections.Generic.IEqualityComparer{``1},System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableQueue_Method">
@@ -2014,11 +1902,6 @@
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.WriteTo_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.WriteTo(System.Collections.Generic.IEnumerable{System.Char},System.Security.SecureString)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToAsyncEnumerable_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToAsyncEnumerable``1(System.Collections.Generic.IEnumerable{``0})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ToLinkedList_Method">

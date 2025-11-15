@@ -1,4 +1,4 @@
-#if NET8_0_OR_GREATER
+#if NET10_0_OR_GREATER
 using System.Collections.Frozen;
 #endif
 
@@ -242,7 +242,7 @@ public static class IDictionaryExtensions
     return comparer is not null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => pair.ToTuple()) : dictionary.Select(pair => pair.ToTuple());
   }
 
-#if NET8_0_OR_GREATER
+#if NET10_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>

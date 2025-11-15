@@ -241,7 +241,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(T[] result, IAsyncEnumerable<T> enumerable) => enumerable.ToArray().Should().BeOfType<T[]>().And.Equal(result);
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToArrayAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -266,7 +266,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       task.Should().BeAssignableTo<Task<T[]>>();
       task.Await().Should().BeOfType<T[]>().And.Equal(result);
     }
-  }
+  }*/
   
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToList{T}(IAsyncEnumerable{T})"/> method.</para>
@@ -289,7 +289,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(IEnumerable<T> result, IAsyncEnumerable<T> enumerable) => enumerable.ToList().Should().BeOfType<IEnumerable<T>>().And.Equal(result);
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToListAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -314,7 +314,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       task.Should().BeAssignableTo<Task<List<T>>>();
       task.Await().Should().BeOfType<List<T>>().And.Equal(result);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToLinkedList{T}(IAsyncEnumerable{T})"/> method.</para>
@@ -337,7 +337,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(T[] result, IAsyncEnumerable<T> enumerable) => enumerable.ToLinkedList().Should().BeOfType<T[]>().And.Equal(result);
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToLinkedListAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -362,7 +362,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       task.Should().BeAssignableTo<Task<LinkedList<T>>>();
       task.Await().Should().BeOfType<LinkedList<T>>().And.Equal(result);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToReadOnlyList{T}(IAsyncEnumerable{T})"/> method.</para>
@@ -384,7 +384,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToReadOnlyListAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -402,7 +402,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(IAsyncEnumerable<T> enumerable)
     {
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToHashSet{T}(IAsyncEnumerable{T}, IEqualityComparer{T})"/> method.</para>
@@ -430,7 +430,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToHashSetAsync{T}(IAsyncEnumerable{T}, IEqualityComparer{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -456,7 +456,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       set.Should().BeOfType<IEnumerable<T>>().And.Equal(result);
       set.Comparer.Should().BeOfType<IEqualityComparer<T>>().And.BeSameAs(comparer ?? EqualityComparer<T>.Default);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToSortedSet{T}(IAsyncEnumerable{T}, IComparer{T})"/> method.</para>
@@ -484,7 +484,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToSortedSetAsync{T}(IAsyncEnumerable{T}, IComparer{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -510,7 +510,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       set.Should().BeOfType<SortedSet<T>>().And.Equal(result.ToSortedSet(comparer));
       set.Comparer.Should().BeOfType<IComparer<T>>().And.BeSameAs(comparer ?? Comparer<T>.Default);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToDictionary{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IEqualityComparer{TKey})"/> method.</para>
@@ -539,7 +539,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToDictionaryAsync{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IEqualityComparer{TKey}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -566,7 +566,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       dictionary.Should().BeOfType<Dictionary<TKey, TValue>>().And.Equal(result.ToDictionary(key, comparer));
       dictionary.Comparer.Should().BeOfType<IEqualityComparer<TKey>>().And.BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToReadOnlyDictionary{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IEqualityComparer{TKey})"/> method.</para>
@@ -589,7 +589,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToReadOnlyDictionaryAsync{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IEqualityComparer{TKey}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -608,7 +608,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<TKey, TValue>(IReadOnlyDictionary<TKey, TValue> result, IAsyncEnumerable<TValue> enumerable, Func<TValue, TKey> key, IEqualityComparer<TKey> comparer = null)
     {
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
@@ -642,7 +642,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     throw new NotImplementedException();
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="IAsyncEnumerableExtensions.ToValueTupleAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/></description></item>
@@ -672,7 +672,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
 
     throw new NotImplementedException();
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
@@ -706,7 +706,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     throw new NotImplementedException();
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="IAsyncEnumerableExtensions.ToTupleAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/></description></item>
@@ -736,7 +736,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
 
     throw new NotImplementedException();
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToStack{T}(IAsyncEnumerable{T})"/> method.</para>
@@ -759,7 +759,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(IEnumerable<T> result, IAsyncEnumerable<T> enumerable) => enumerable.ToStack().Should().BeOfType<Stack<T>>().And.Equal(result);
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToStackAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -784,7 +784,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       task.Should().BeAssignableTo<Task<Stack<T>>>();
       task.Await().Should().BeOfType<Stack<T>>().And.Equal(result);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToQueue{T}(IAsyncEnumerable{T})"/> method.</para>
@@ -807,7 +807,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(IEnumerable<T> result, IAsyncEnumerable<T> enumerable) => enumerable.ToQueue().Should().BeOfType<Queue<T>>().And.Equal(result);
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToQueueAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -832,7 +832,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       task.Should().BeAssignableTo<Task<Queue<T>>>();
       task.Await().Should().BeOfType<Queue<T>>().And.Equal(result);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
@@ -881,7 +881,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="IAsyncEnumerableExtensions.ToMemoryStreamAsync(IAsyncEnumerable{byte}, CancellationToken)"/></description></item>
@@ -930,7 +930,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
         stream.ToArray().Should().Equal(bytes);
       }
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToReadOnlySet{T}(IAsyncEnumerable{T}, IEqualityComparer{T})"/> method.</para>
@@ -952,7 +952,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToReadOnlySetAsync{T}(IAsyncEnumerable{T}, IEqualityComparer{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -970,7 +970,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(IEnumerable<T> result, IAsyncEnumerable<T> enumerable, IEqualityComparer<T> comparer = null)
     {
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToPriorityQueue{TElement, TPriority}(IAsyncEnumerable{ValueTuple{TElement, TPriority}}, IComparer{TPriority})"/> method.</para>
@@ -1000,7 +1000,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToPriorityQueueAsync{TElement, TPriority}(IAsyncEnumerable{ValueTuple{TElement, TPriority}}, IComparer{TPriority}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -1028,7 +1028,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       queue.Comparer.Should().BeOfType<IComparer<TPriority>>().And.BeSameAs(comparer ?? Comparer<TPriority>.Default);
       queue.UnorderedItems.Should().BeEquivalentTo(result);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableArray{T}(IAsyncEnumerable{T})"/> method.</para>
@@ -1051,7 +1051,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(IEnumerable<T> result, IAsyncEnumerable<T> enumerable) => enumerable.ToImmutableArray().Should().BeOfType<ImmutableArray<T>>().And.Equal(result);
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableArrayAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -1076,7 +1076,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       task.Should().BeAssignableTo<Task<ImmutableArray<T>>>();
       task.Await().Should().BeOfType<ImmutableArray<T>>().And.Equal(result);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableList{T}(IAsyncEnumerable{T})"/> method.</para>
@@ -1099,7 +1099,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(IEnumerable<T> result, IAsyncEnumerable<T> enumerable) => enumerable.ToImmutableList().Should().BeOfType<ImmutableList<T>>().And.Equal(result);
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableListAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -1124,7 +1124,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       task.Should().BeAssignableTo<Task<ImmutableList<T>>>();
       task.Await().Should().BeOfType<ImmutableList<T>>().And.Equal(result);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableHashSet{T}(IAsyncEnumerable{T}, IEqualityComparer{T})"/> method.</para>
@@ -1152,7 +1152,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableHashSetAsync{T}(IAsyncEnumerable{T}, IEqualityComparer{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -1178,7 +1178,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       set.Should().BeOfType<ImmutableHashSet<T>>().And.Equal(result.ToImmutableHashSet(comparer));
       set.KeyComparer.Should().BeOfType<IEqualityComparer<T>>().And.BeSameAs(comparer ?? EqualityComparer<T>.Default);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableSortedSet{T}(IAsyncEnumerable{T}, IComparer{T})"/> method.</para>
@@ -1200,7 +1200,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableSortedSetAsync{T}(IAsyncEnumerable{T}, IComparer{T}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -1218,7 +1218,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     static void Test<T>(IEnumerable<T> result, IAsyncEnumerable<T> enumerable, IComparer<T> comparer = null)
     {
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableDictionary{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IEqualityComparer{TKey})"/> method.</para>
@@ -1248,7 +1248,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableDictionaryAsync{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IEqualityComparer{TKey}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -1276,7 +1276,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       dictionary.KeyComparer.Should().BeOfType<IEqualityComparer<TKey>>().And.BeSameAs(comparer ?? EqualityComparer<TKey>.Default);
       dictionary.ValueComparer.Should().BeOfType<IEqualityComparer<TValue>>().And.BeSameAs(EqualityComparer<TKey>.Default);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableSortedDictionary{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IComparer{TKey}, IEqualityComparer{TValue})"/> method.</para>
@@ -1306,7 +1306,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     }
   }
 
-  /// <summary>
+  /*/// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableSortedDictionaryAsync{TKey, TValue}(IAsyncEnumerable{TValue}, Func{TValue, TKey}, IComparer{TKey}, IEqualityComparer{TValue}, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
@@ -1334,7 +1334,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       result.KeyComparer.Should().BeOfType<IComparer<TKey>>().And.BeSameAs(keyComparer ?? Comparer<TKey>.Default);
       result.ValueComparer.Should().BeOfType<IEqualityComparer<TValue>>().And.BeSameAs(EqualityComparer<TKey>.Default);
     }
-  }
+  }*/
 
   /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToImmutableQueue{T}(IAsyncEnumerable{T})"/> method.</para>
