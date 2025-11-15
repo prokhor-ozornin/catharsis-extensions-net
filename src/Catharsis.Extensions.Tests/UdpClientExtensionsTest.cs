@@ -302,7 +302,7 @@ public sealed class UdpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((UdpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((UdpClient) null).ToBytesAsync().ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
     }
 
     throw new NotImplementedException();

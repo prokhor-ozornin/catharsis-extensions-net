@@ -2256,15 +2256,15 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToArray``1(System.Collections.Generic.IAsyncEnumerable{``0})">
+        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToArray``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)">
             <summary>
               <para></para>
             </summary>
             <typeparam name="T"></typeparam>
             <param name="enumerable"></param>
+            <param name="cancellation"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToArrayAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/>
         </member>
         <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToArrayAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)">
             <summary>
@@ -2277,7 +2277,7 @@
             <seealso cref="!:ToImmutableArrayAsync&lt;T&gt;"/>
             <seealso cref="M:System.Linq.Enumerable.ToArray``1(System.Collections.Generic.IEnumerable{``0})"/>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToArray``1(System.Collections.Generic.IAsyncEnumerable{``0})"/>
+            <seealso cref="!:ToArray&lt;T&gt;(IAsyncEnumerable&lt;T&gt;)"/>
         </member>
         <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToList``1(System.Collections.Generic.IAsyncEnumerable{``0})">
             <summary>

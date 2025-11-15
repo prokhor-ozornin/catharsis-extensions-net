@@ -593,8 +593,8 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ToBytesAsync(null, "localhost".ToUri()).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
-      AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToBytesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+      AssertionExtensions.Should(() => HttpClientExtensions.ToBytesAsync(null, "localhost".ToUri()).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToBytesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
     }

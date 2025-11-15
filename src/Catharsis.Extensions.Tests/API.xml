@@ -1310,12 +1310,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToArray_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToArray``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToArrayAsync_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToArrayAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/> method.</para>
+              <para>Performs testing of <see cref="!:IAsyncEnumerableExtensions.ToArray&lt;T&gt;(IAsyncEnumerable&lt;T&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToList_Method">

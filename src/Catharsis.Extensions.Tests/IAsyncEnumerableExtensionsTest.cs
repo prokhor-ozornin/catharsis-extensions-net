@@ -242,33 +242,6 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToArrayAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToArrayAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToArrayAsync<object>(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("enumerable").Await();
-      AssertionExtensions.Should(() => EmptyAsyncEnumerable.ToArrayAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
-
-      Test([], EmptyAsyncEnumerable);
-
-      var objects = new Random().Guid(1000).ToArray();
-      Test(objects, objects.ToAsyncEnumerable());
-    }
-
-    return;
-
-    static void Test<T>(IEnumerable<T> result, IAsyncEnumerable<T> enumerable)
-    {
-      var task = enumerable.ToArrayAsync();
-      task.Should().BeAssignableTo<Task<T[]>>();
-      task.Await().Should().BeOfType<T[]>().And.Equal(result);
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="IAsyncEnumerableExtensions.ToList{T}(IAsyncEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]

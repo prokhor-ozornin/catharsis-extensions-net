@@ -100,7 +100,7 @@ public sealed class TextReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TextReaderExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+      AssertionExtensions.Should(() => TextReaderExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
     }
 
     throw new NotImplementedException();
@@ -255,7 +255,7 @@ public sealed class TextReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("reader").Await();
+      AssertionExtensions.Should(() => ((TextReader) null).ToAsyncEnumerable().ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       static void Test(TextReader reader)
       {

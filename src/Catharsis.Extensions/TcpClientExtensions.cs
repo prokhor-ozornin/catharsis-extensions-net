@@ -149,7 +149,7 @@ public static class TcpClientExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToText(TcpClient, Encoding)"/>
-  public static async Task<string> ToTextAsync(this TcpClient client, Encoding encoding = null) => (await client.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
+  public static async ValueTask<string> ToTextAsync(this TcpClient client, Encoding encoding = null) => (await client.ToBytesAsync().ToArrayAsync().ConfigureAwait(false)).ToText(encoding);
 
   /// <summary>
   ///   <para></para>

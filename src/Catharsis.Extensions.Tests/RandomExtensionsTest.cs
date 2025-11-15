@@ -2146,9 +2146,9 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0, 0).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
-      AssertionExtensions.Should(() => new Random().BinaryFileAsync(-1, 0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
-      AssertionExtensions.Should(() => new Random().BinaryFileAsync(0, -1).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
+      AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0, 0).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => new Random().BinaryFileAsync(-1, 0).ToArrayAsync()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
+      AssertionExtensions.Should(() => new Random().BinaryFileAsync(0, -1).ToArrayAsync()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       throw new NotImplementedException();
 
@@ -2159,9 +2159,9 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0, 0).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
-      AssertionExtensions.Should(() => new Random().BinaryFileAsync(-1, 0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
-      AssertionExtensions.Should(() => new Random().BinaryFileAsync(0, -1).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
+      AssertionExtensions.Should(() => RandomExtensions.BinaryFileAsync(null, 0, 0).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => new Random().BinaryFileAsync(-1, 0).ToArrayAsync()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
+      AssertionExtensions.Should(() => new Random().BinaryFileAsync(0, -1).ToArrayAsync()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       throw new NotImplementedException();
 

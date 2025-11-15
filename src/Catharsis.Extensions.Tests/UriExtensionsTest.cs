@@ -115,7 +115,7 @@ public sealed class UriExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+      AssertionExtensions.Should(() => UriExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
     }
 
     throw new NotImplementedException();
@@ -402,7 +402,7 @@ public sealed class UriExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
+      AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       static void Test(Uri uri)
       {
@@ -411,8 +411,8 @@ public sealed class UriExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null, 1).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
-      AssertionExtensions.Should(() => "localhost".ToUri().ToAsyncEnumerable(0).ToArrayAsync()).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
+      AssertionExtensions.Should(() => UriExtensions.ToAsyncEnumerable(null, 1).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+      AssertionExtensions.Should(() => "localhost".ToUri().ToAsyncEnumerable(0).ToArrayAsync()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       static void Test(Uri uri)
       {
@@ -499,7 +499,7 @@ public sealed class UriExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriExtensions.ToBytesAsync(null).ToArrayAsync()).ThrowAsync<ArgumentNullException>().WithParameterName("uri").Await();
+      AssertionExtensions.Should(() => UriExtensions.ToBytesAsync(null).ToArrayAsync()).Throw<ArgumentNullException>().WithParameterName("uri");
     }
 
     throw new NotImplementedException();

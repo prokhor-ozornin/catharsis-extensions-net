@@ -160,11 +160,12 @@ public static class IAsyncEnumerableExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="enumerable"></param>
+  /// <param name="cancellation"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToArrayAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/>
-  public static T[] ToArray<T>(this IAsyncEnumerable<T> enumerable) => enumerable?.ToArrayAsync().Result ?? throw new ArgumentNullException(nameof(enumerable));
+  public static T[] ToArray<T>(this IAsyncEnumerable<T> enumerable, CancellationToken cancellation = default) => enumerable?.ToArrayAsync(cancellation).Result ?? throw new ArgumentNullException(nameof(enumerable));
 
+#if !NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -177,6 +178,7 @@ public static class IAsyncEnumerableExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   /// <seealso cref="ToArray{T}(IAsyncEnumerable{T})"/>
   public static async Task<T[]> ToArrayAsync<T>(this IAsyncEnumerable<T> enumerable, CancellationToken cancellation = default) => enumerable is not null ? (await enumerable.ToListAsync(cancellation).ConfigureAwait(false)).AsArray() : throw new ArgumentNullException(nameof(enumerable));
+#endif  
 
   /// <summary>
   ///   <para></para>
@@ -188,6 +190,7 @@ public static class IAsyncEnumerableExtensions
   /// <seealso cref="ToListAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/>
   public static List<T> ToList<T>(this IAsyncEnumerable<T> enumerable) => enumerable?.ToListAsync().Result ?? throw new ArgumentNullException(nameof(enumerable));
 
+#if !NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -213,6 +216,7 @@ public static class IAsyncEnumerableExtensions
 
     return result;
   }
+#endif
 
   /// <summary>
   ///   <para></para>
@@ -284,6 +288,7 @@ public static class IAsyncEnumerableExtensions
   /// <seealso cref="ToHashSetAsync{T}(IAsyncEnumerable{T}, IEqualityComparer{T}, CancellationToken)"/>
   public static HashSet<T> ToHashSet<T>(this IAsyncEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => enumerable?.ToHashSetAsync(comparer).Result ?? throw new ArgumentNullException(nameof(enumerable));
 
+#if !NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -312,6 +317,7 @@ public static class IAsyncEnumerableExtensions
 
     return result;
   }
+#endif
 
   /// <summary>
   ///   <para></para>
@@ -370,6 +376,7 @@ public static class IAsyncEnumerableExtensions
     return enumerable.ToDictionaryAsync(key, comparer).Result;
   }
 
+#if !NET8_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -398,6 +405,7 @@ public static class IAsyncEnumerableExtensions
 
     return result;
   }
+#endif
 
   /// <summary>
   ///   <para></para>

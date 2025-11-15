@@ -93,7 +93,7 @@ public sealed class HttpContentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
+      AssertionExtensions.Should(() => ((HttpContent) null).ToBytesAsync().ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
 
       new[] { [], Bytes }.ForEach(bytes =>
       {

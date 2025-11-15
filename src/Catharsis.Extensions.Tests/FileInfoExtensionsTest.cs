@@ -138,7 +138,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
+      AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
       Test(EmptyFile);
       Encoding.GetEncodings().ForEach(encoding => Test(EmptyFile, encoding.GetEncoding()));
