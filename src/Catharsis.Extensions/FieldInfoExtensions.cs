@@ -8,36 +8,36 @@ namespace Catharsis.Extensions;
 /// <seealso cref="FieldInfo"/>
 public static class FieldInfoExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
   /// <param name="field"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
-  public static bool IsOfType<T>(this FieldInfo field) => field is not null ? field.FieldType == typeof(T) : throw new ArgumentNullException(nameof(field));
+  extension(FieldInfo field)
+  {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
+    public bool IsOfType<T>() => field is not null ? field.FieldType == typeof(T) : throw new ArgumentNullException(nameof(field));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="field"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
-  public static bool IsProtected(this FieldInfo field) => field?.IsFamily ?? throw new ArgumentNullException(nameof(field));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
+    public bool IsProtected => @field?.IsFamily ?? throw new ArgumentNullException(nameof(@field));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="field"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
-  public static bool IsInternal(this FieldInfo field) => field?.IsAssembly ?? throw new ArgumentNullException(nameof(field));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
+    public bool IsInternal => @field?.IsAssembly ?? throw new ArgumentNullException(nameof(@field));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="field"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
-  public static bool IsProtectedInternal(this FieldInfo field) => field?.IsFamilyOrAssembly ?? throw new ArgumentNullException(nameof(field));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
+    public bool IsProtectedInternal => @field?.IsFamilyOrAssembly ?? throw new ArgumentNullException(nameof(@field));
+  }
 }

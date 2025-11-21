@@ -9,248 +9,235 @@ namespace Catharsis.Extensions;
 /// <seealso cref="XmlDocument"/>
 public static class XmlDocumentExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="document"></param>
-  /// <returns></returns>
-  /// <seealso cref="IsEmpty(XmlDocument)"/>
-  public static bool IsUnset(this XmlDocument document) => document is null || document.IsEmpty();
-
-  /// <summary>
-  ///   <para>Determines whether the specified <see cref="XmlDocument"/> instance can be considered "empty", meaning it has no child nodes.</para>
-  /// </summary>
-  /// <param name="document">XML document instance for evaluation.</param>
-  /// <returns>If the specified <paramref name="document"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static bool IsEmpty(this XmlDocument document) => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document">XML document to be cleared.</param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static XmlDocument Empty(this XmlDocument document)
+  extension(XmlDocument document)
   {
-    if (document is null) throw new ArgumentNullException(nameof(document));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="IsEmpty(XmlDocument)"/>
+    public bool IsUnset => document is null || document.IsEmpty;
 
-    document.RemoveAll();
+    /// <summary>
+    ///   <para>Determines whether the specified <see cref="XmlDocument"/> instance can be considered "empty", meaning it has no child nodes.</para>
+    /// </summary>
+    /// <value>If the specified <paramref name="document"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    public bool IsEmpty => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
 
-    return document;
-  }
-  
-  /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="XmlDocument"/> that has the same text content as the original.</para>
-  /// </summary>
-  /// <param name="document">XML document instance to be cloned.</param>
-  /// <returns>Cloning result.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static XmlDocument Clone(this XmlDocument document) => document is not null ? new XmlDocument().With(xml => xml.LoadXml(document.InnerXml)) : throw new ArgumentNullException(nameof(document));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="action"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
-  public static XmlDocument TryFinallyClear(this XmlDocument document, Action<XmlDocument> action)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-    if (action is null) throw new ArgumentNullException(nameof(action));
-
-    return document.TryFinally(action, x => x.Empty());
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="nodes"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="With(XmlDocument, XmlNode[])"/>
-  public static XmlDocument With(this XmlDocument document, IEnumerable<XmlNode> nodes)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-    if (nodes is null) throw new ArgumentNullException(nameof(nodes));
-
-    foreach (var node in nodes)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    public XmlDocument Empty()
     {
-      document.AppendChild(node);
+      if (document is null) throw new ArgumentNullException(nameof(document));
+
+      document.RemoveAll();
+
+      return document;
     }
 
-    return document;
-  }
+    /// <summary>
+    ///   <para>Creates a copy of the specified <see cref="XmlDocument"/> that has the same text content as the original.</para>
+    /// </summary>
+    /// <returns>Cloning result.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    public XmlDocument Clone() => document is not null ? new XmlDocument().With(xml => xml.LoadXml(document.InnerXml)) : throw new ArgumentNullException(nameof(document));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="nodes"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="With(XmlDocument, IEnumerable{XmlNode})"/>
-  public static XmlDocument With(this XmlDocument document, params XmlNode[] nodes) => document.With(nodes as IEnumerable<XmlNode>);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="nodes"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Without(XmlDocument, XmlNode[])"/>
-  public static XmlDocument Without(this XmlDocument document, IEnumerable<XmlNode> nodes)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-    if (nodes is null) throw new ArgumentNullException(nameof(nodes));
-
-    foreach (var node in nodes)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="action"></param>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+    public XmlDocument TryFinallyClear(Action<XmlDocument> action)
     {
-      document.RemoveChild(node);
+      if (document is null) throw new ArgumentNullException(nameof(document));
+      if (action is null) throw new ArgumentNullException(nameof(action));
+
+      return document.TryFinally(action, x => x.Empty());
     }
 
-    return document;
-  }
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="With(XmlDocument, XmlNode[])"/>
+    public XmlDocument With(IEnumerable<XmlNode> nodes)
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
+      if (nodes is null) throw new ArgumentNullException(nameof(nodes));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="nodes"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Without(XmlDocument, IEnumerable{XmlNode})"/>
-  public static XmlDocument Without(this XmlDocument document, params XmlNode[] nodes) => document.Without(nodes as IEnumerable<XmlNode>);
+      foreach (var node in nodes)
+      {
+        document.AppendChild(node);
+      }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="destination"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
-  public static XmlDocument Serialize(this XmlDocument document, XmlWriter destination)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+      return document;
+    }
 
-    document.Save(destination);
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="With(XmlDocument, IEnumerable{XmlNode})"/>
+    public XmlDocument With(params XmlNode[] nodes) => document.With(nodes as IEnumerable<XmlNode>);
 
-    return document;
-  }
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="nodes"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Without(XmlDocument, XmlNode[])"/>
+    public XmlDocument Without(IEnumerable<XmlNode> nodes)
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
+      if (nodes is null) throw new ArgumentNullException(nameof(nodes));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="destination"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
-  public static XmlDocument Serialize(this XmlDocument document, TextWriter destination)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+      foreach (var node in nodes)
+      {
+        document.RemoveChild(node);
+      }
 
-    using var writer = destination.ToXmlWriter(false);
+      return document;
+    }
 
-    return document.Serialize(writer);
-  }
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="nodes"></param>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Without(XmlDocument, IEnumerable{XmlNode})"/>
+    public XmlDocument Without(params XmlNode[] nodes) => document.Without(nodes as IEnumerable<XmlNode>);
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
-  public static XmlDocument Serialize(this XmlDocument document, Stream destination, Encoding encoding = null)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="destination"></param>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+    public XmlDocument Serialize(XmlWriter destination)
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
+      if (destination is null) throw new ArgumentNullException(nameof(destination));
 
-    using var writer = destination.ToXmlWriter(encoding, false);
+      document.Save(destination);
 
-    return document.Serialize(writer);
-  }
+      return document;
+    }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <param name="destination"></param>
-  /// <param name="encoding"></param>
-  /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
-  public static XmlDocument Serialize(this XmlDocument document, FileInfo destination, Encoding encoding = null)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
-    if (destination is null) throw new ArgumentNullException(nameof(destination));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="destination"></param>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+    public XmlDocument Serialize(TextWriter destination)
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
+      if (destination is null) throw new ArgumentNullException(nameof(destination));
 
-    using var writer = destination.ToXmlWriter(encoding);
+      using var writer = destination.ToXmlWriter(false);
 
-    return document.Serialize(writer);
-  }
+      return document.Serialize(writer);
+    }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static string Serialize(this XmlDocument document)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="destination"></param>
+    /// <param name="encoding"></param>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+    public XmlDocument Serialize(Stream destination, Encoding encoding = null)
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
+      if (destination is null) throw new ArgumentNullException(nameof(destination));
 
-    using var destination = new StringWriter();
+      using var writer = destination.ToXmlWriter(encoding, false);
 
-    document.Serialize(destination);
+      return document.Serialize(writer);
+    }
 
-    return destination.ToString();
-  }
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="destination"></param>
+    /// <param name="encoding"></param>
+    /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+    public XmlDocument Serialize(FileInfo destination, Encoding encoding = null)
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
+      if (destination is null) throw new ArgumentNullException(nameof(destination));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static IEnumerable<XmlNode> ToEnumerable(this XmlDocument document) => document?.ChildNodes.Cast<XmlNode>() ?? throw new ArgumentNullException(nameof(document));
+      using var writer = destination.ToXmlWriter(encoding);
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static byte[] ToBytes(this XmlDocument document)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
+      return document.Serialize(writer);
+    }
 
-    using var stream = new MemoryStream();
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    public string Serialize()
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
 
-    document.Save(stream);
+      using var destination = new StringWriter();
 
-    return stream.ToArray();
-  }
+      document.Serialize(destination);
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="document"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-  public static string ToText(this XmlDocument document)
-  {
-    if (document is null) throw new ArgumentNullException(nameof(document));
+      return destination.ToString();
+    }
 
-    using var writer = new StringWriter();
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    public IEnumerable<XmlNode> ToEnumerable() => document?.ChildNodes.Cast<XmlNode>() ?? throw new ArgumentNullException(nameof(document));
 
-    document.Save(writer);
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    public byte[] ToBytes()
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
 
-    return writer.ToString();
+      using var stream = new MemoryStream();
+
+      document.Save(stream);
+
+      return stream.ToArray();
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    public string ToText()
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
+
+      using var writer = new StringWriter();
+
+      document.Save(writer);
+
+      return writer.ToString();
+    }
   }
 }

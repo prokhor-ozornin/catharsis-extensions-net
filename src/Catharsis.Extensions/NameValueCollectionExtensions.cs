@@ -8,169 +8,163 @@ namespace Catharsis.Extensions;
 /// <seealso cref="NameValueCollection"/>
 public static class NameValueCollectionExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="collection">Collection to be cleared.</param>
-  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-  public static NameValueCollection Empty(this NameValueCollection collection)
+  extension(NameValueCollection collection)
   {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-
-    collection.Clear();
-
-    return collection;
-  }
-
-  /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="NameValueCollection"/> that contains the same elements as the original.</para>
-  /// </summary>
-  /// <param name="collection">Collection to be cloned.</param>
-  /// <returns>Cloning result.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-  public static NameValueCollection Clone(this NameValueCollection collection) => collection is not null ? new NameValueCollection(collection) : throw new ArgumentNullException(nameof(collection));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="collection"></param>
-  /// <param name="action"></param>
-  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
-  public static NameValueCollection TryFinallyClear(this NameValueCollection collection, Action<NameValueCollection> action)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-    if (action is null) throw new ArgumentNullException(nameof(action));
-
-    return collection.TryFinally(action, x => x.Clear());
-  }
-  
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="collection"></param>
-  /// <param name="elements"></param>
-  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="With(NameValueCollection, ValueTuple{string, object}[])"/>
-  public static NameValueCollection With(this NameValueCollection collection, IEnumerable<(string Name, object Value)> elements)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-    if (elements is null) throw new ArgumentNullException(nameof(elements));
-
-    foreach (var element in elements)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+    public NameValueCollection Empty()
     {
-      collection.Add(element.Name, element.Value?.ToInvariantString());
+      if (collection is null) throw new ArgumentNullException(nameof(collection));
+
+      collection.Clear();
+
+      return collection;
     }
 
-    return collection;
-  }
+    /// <summary>
+    ///   <para>Creates a copy of the specified <see cref="NameValueCollection"/> that contains the same elements as the original.</para>
+    /// </summary>
+    /// <returns>Cloning result.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+    public NameValueCollection Clone() => collection is not null ? new NameValueCollection(collection) : throw new ArgumentNullException(nameof(collection));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="collection"></param>
-  /// <param name="elements"></param>
-  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="With(NameValueCollection, IEnumerable{ValueTuple{string, object}})"/>
-  public static NameValueCollection With(this NameValueCollection collection, params (string Name, object Value)[] elements) => collection.With(elements as IEnumerable<(string Name, object Value)>);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="collection"></param>
-  /// <param name="elements"></param>
-  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Without(NameValueCollection, string[])"/>
-  public static NameValueCollection Without(this NameValueCollection collection, IEnumerable<string> elements)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-    if (elements is null) throw new ArgumentNullException(nameof(elements));
-
-    foreach (var element in elements)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="action"></param>
+    /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+    public NameValueCollection TryFinallyClear(Action<NameValueCollection> action)
     {
-      collection.Remove(element);
+      if (collection is null) throw new ArgumentNullException(nameof(collection));
+      if (action is null) throw new ArgumentNullException(nameof(action));
+
+      return collection.TryFinally(action, x => x.Clear());
     }
 
-    return collection;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="collection"></param>
-  /// <param name="elements"></param>
-  /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Without(NameValueCollection, IEnumerable{string})"/>
-  public static NameValueCollection Without(this NameValueCollection collection, params string[] elements) => collection.Without(elements as IEnumerable<string>);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="collection"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-  public static Dictionary<string, string> ToDictionary(this NameValueCollection collection)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-
-    var result = new Dictionary<string, string>();
-
-    for (var i = 0; i < collection.Count; i++)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="elements"></param>
+    /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="With(NameValueCollection, ValueTuple{string, object}[])"/>
+    public NameValueCollection With(IEnumerable<(string Name, object Value)> elements)
     {
-      var key = collection.GetKey(i);
+      if (collection is null) throw new ArgumentNullException(nameof(collection));
+      if (elements is null) throw new ArgumentNullException(nameof(elements));
 
-      if (key is not null)
+      foreach (var element in elements)
       {
-        result.Add(key, collection.Get(i));
+        collection.Add(element.Name, element.Value?.ToInvariantString());
+      }
+
+      return collection;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="elements"></param>
+    /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="With(NameValueCollection, IEnumerable{ValueTuple{string, object}})"/>
+    public NameValueCollection With(params (string Name, object Value)[] elements) => collection.With(elements as IEnumerable<(string Name, object Value)>);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="elements"></param>
+    /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="collection"/> or <paramref name="elements"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Without(NameValueCollection, string[])"/>
+    public NameValueCollection Without(IEnumerable<string> elements)
+    {
+      if (collection is null) throw new ArgumentNullException(nameof(collection));
+      if (elements is null) throw new ArgumentNullException(nameof(elements));
+
+      foreach (var element in elements)
+      {
+        collection.Remove(element);
+      }
+
+      return collection;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="elements"></param>
+    /// <returns>Back self-reference to the given <paramref name="collection"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Without(NameValueCollection, IEnumerable{string})"/>
+    public NameValueCollection Without(params string[] elements) => collection.Without(elements as IEnumerable<string>);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+    public Dictionary<string, string> ToDictionary()
+    {
+      if (collection is null) throw new ArgumentNullException(nameof(collection));
+
+      var result = new Dictionary<string, string>();
+
+      for (var i = 0; i < collection.Count; i++)
+      {
+        var key = collection.GetKey(i);
+
+        if (key is not null)
+        {
+          result.Add(key, collection.Get(i));
+        }
+      }
+
+      return result;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+    public IEnumerable<(string Name, string Value)> ToValueTuple()
+    {
+      if (collection is null) throw new ArgumentNullException(nameof(collection));
+
+      for (var i = 0; i < collection.Count; i++)
+      {
+        var key = collection.GetKey(i);
+
+        if (key is not null)
+        {
+          yield return (key, collection.Get(i));
+        }
       }
     }
 
-    return result;
-  }
-
-  /// <summary>
-  /// 
-  /// </summary>
-  /// <param name="collection"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-  public static IEnumerable<(string Name, string Value)> ToValueTuple(this NameValueCollection collection)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-
-    for (var i = 0; i < collection.Count; i++)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
+    public IEnumerable<Tuple<string, string>> ToTuple()
     {
-      var key = collection.GetKey(i);
+      if (collection is null) throw new ArgumentNullException(nameof(collection));
 
-      if (key is not null)
+      for (var i = 0; i < collection.Count; i++)
       {
-        yield return (key, collection.Get(i));
-      }
-    }
-  }
+        var key = collection.GetKey(i);
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="collection"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="collection"/> is <see langword="null"/>.</exception>
-  public static IEnumerable<Tuple<string, string>> ToTuple(this NameValueCollection collection)
-  {
-    if (collection is null) throw new ArgumentNullException(nameof(collection));
-
-    for (var i = 0; i < collection.Count; i++)
-    {
-      var key = collection.GetKey(i);
-
-      if (key is not null)
-      {
-        yield return new Tuple<string, string>(key, collection.Get(i));
+        if (key is not null)
+        {
+          yield return new Tuple<string, string>(key, collection.Get(i));
+        }
       }
     }
   }

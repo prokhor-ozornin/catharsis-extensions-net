@@ -23,7 +23,7 @@ public sealed class IComparableExtensionsTest : Test
 
     return;
 
-    static void Test<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsDefault().Should().Be(result);
+    static void Test<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsDefault.Should().Be(result);
   }
 
   /// <summary>
@@ -39,7 +39,7 @@ public sealed class IComparableExtensionsTest : Test
 
     return;
 
-    static void Test<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsPositive().Should().Be(result);
+    static void Test<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsPositive.Should().Be(result);
   }
 
   /// <summary>
@@ -55,7 +55,7 @@ public sealed class IComparableExtensionsTest : Test
 
     return;
 
-    static void Test<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsNegative().Should().Be(result);
+    static void Test<T>(bool result, T instance) where T : struct, IComparable<T> => instance.IsNegative.Should().Be(result);
   }
 
   /// <summary>

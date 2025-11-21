@@ -30,7 +30,7 @@ public sealed class XDocumentExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, XDocument document) => document.IsUnset().Should().Be(document is null || document.IsEmpty()).And.Be(result);
+    static void Test(bool result, XDocument document) => document.IsUnset.Should().Be(document is null || document.IsEmpty).And.Be(result);
   }
 
   /// <summary>
@@ -41,7 +41,7 @@ public sealed class XDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XDocument) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
       Test(true, new XDocument());
       Test(false, new XDocument(new XComment("comment")));
@@ -51,7 +51,7 @@ public sealed class XDocumentExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, XDocument document) => document.IsEmpty().Should().Be(result);
+    static void Test(bool result, XDocument document) => document.IsEmpty.Should().Be(result);
   }
 
   /// <summary>
@@ -62,7 +62,7 @@ public sealed class XDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XDocument) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
       Test(new XDocument());
       Test(new XDocument(new XElement("root")));

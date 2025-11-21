@@ -97,7 +97,7 @@ public sealed class DirectoryInfoExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, DirectoryInfo directory) => directory.IsUnset().Should().Be(result);
+    static void Test(bool result, DirectoryInfo directory) => directory.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -108,29 +108,29 @@ public sealed class DirectoryInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((DirectoryInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
 
       var directory = FakeDirectory;
       directory.Exists.Should().BeFalse();
-      directory.IsEmpty().Should().BeTrue();
+      directory.IsEmpty.Should().BeTrue();
 
       directory = Environment.SystemDirectory.ToDirectory();
       directory.Exists.Should().BeTrue();
-      directory.IsEmpty().Should().BeFalse();
+      directory.IsEmpty.Should().BeFalse();
 
       Directory.TryFinallyDelete(info =>
       {
         info.Exists.Should().BeTrue();
-        info.IsEmpty().Should().BeTrue();
+        info.IsEmpty.Should().BeTrue();
         new Random().File(new Random().Directory(info));
         new Random().File(info);
-        info.IsEmpty().Should().BeFalse();
+        info.IsEmpty.Should().BeFalse();
       });
     }
 
     return;
 
-    static void Test(bool result, DirectoryInfo directory) => directory.IsEmpty().Should().Be(result);
+    static void Test(bool result, DirectoryInfo directory) => directory.IsEmpty.Should().Be(result);
   }
 
   /// <summary>
@@ -239,7 +239,7 @@ public sealed class DirectoryInfoExtensionsTest : Test
         new Random().File(new Random().Directory(info));
       });
       directory.Exists.Should().BeTrue();
-      directory.IsEmpty().Should().BeTrue();
+      directory.IsEmpty.Should().BeTrue();
     }
 
     return;

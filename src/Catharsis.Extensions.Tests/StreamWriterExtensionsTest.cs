@@ -51,7 +51,7 @@ public sealed class StreamWriterExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, StreamWriter writer) => writer.IsUnset().Should().Be(writer is null || writer.IsEmpty()).And.Be(result);
+    static void Test(bool result, StreamWriter writer) => writer.IsUnset.Should().Be(writer is null || writer.IsEmpty).And.Be(result);
   }
 
   /// <summary>
@@ -62,8 +62,8 @@ public sealed class StreamWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToStreamWriter().IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToStreamWriter().IsEmpty).ThrowExactly<ArgumentException>();
 
       Test(EmptyStream.ToStreamWriter());
       Test(Stream.ToStreamWriter());
@@ -76,9 +76,9 @@ public sealed class StreamWriterExtensionsTest : Test
     {
       using (writer)
       {
-        writer.Empty().IsEmpty().Should().BeTrue();
+        writer.Empty().IsEmpty.Should().BeTrue();
         writer.BaseStream.WriteByte(byte.MinValue);
-        writer.IsEmpty().Should().BeFalse();
+        writer.IsEmpty.Should().BeFalse();
       }
     }
   }

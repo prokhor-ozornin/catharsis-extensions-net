@@ -8,66 +8,67 @@ namespace Catharsis.Extensions;
 /// <seealso cref="UriBuilder"/>
 public static class UriBuilderExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="builder">URI builder to be cleared.</param>
-  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
-  public static UriBuilder Empty(this UriBuilder builder)
+  extension(UriBuilder builder)
   {
-    if (builder is null) throw new ArgumentNullException(nameof(builder));
-
-    builder.Fragment = string.Empty;
-    builder.Host = string.Empty;
-    builder.Password = string.Empty;
-    builder.Path = string.Empty;
-    builder.Port = -1;
-    builder.Query = string.Empty;
-    builder.Scheme = string.Empty;
-    builder.UserName = string.Empty;
-
-    return builder;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <param name="parameters"></param>
-  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WithQuery(UriBuilder, ValueTuple{string, object}[])"/>
-  public static UriBuilder WithQuery(this UriBuilder builder, IReadOnlyDictionary<string, object> parameters)
-  {
-    if (builder is null) throw new ArgumentNullException(nameof(builder));
-    if (parameters is null) throw new ArgumentNullException(nameof(parameters));
-
-    return builder.WithQuery();
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="builder"></param>
-  /// <param name="parameters"></param>
-  /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WithQuery(UriBuilder, IReadOnlyDictionary{string, object})"/>
-  public static UriBuilder WithQuery(this UriBuilder builder, params (string Name, object Value)[] parameters)
-  {
-    if (builder is null) throw new ArgumentNullException(nameof(builder));
-    if (parameters is null) throw new ArgumentNullException(nameof(parameters));
-
-    var query = HttpUtility.ParseQueryString(builder.Query);
-
-    foreach (var parameter in parameters)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
+    public UriBuilder Empty()
     {
-      query.Add(parameter.Name, parameter.Value?.ToInvariantString());
+      if (builder is null) throw new ArgumentNullException(nameof(builder));
+
+      builder.Fragment = string.Empty;
+      builder.Host = string.Empty;
+      builder.Password = string.Empty;
+      builder.Path = string.Empty;
+      builder.Port = -1;
+      builder.Query = string.Empty;
+      builder.Scheme = string.Empty;
+      builder.UserName = string.Empty;
+
+      return builder;
     }
 
-    builder.Query = query.ToString() ?? string.Empty;
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="parameters"></param>
+    /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="WithQuery(UriBuilder, ValueTuple{string, object}[])"/>
+    public UriBuilder WithQuery(IReadOnlyDictionary<string, object> parameters)
+    {
+      if (builder is null) throw new ArgumentNullException(nameof(builder));
+      if (parameters is null) throw new ArgumentNullException(nameof(parameters));
 
-    return builder;
+      return builder.WithQuery(parameters);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="parameters"></param>
+    /// <returns>Back self-reference to the given <paramref name="builder"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="parameters"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="WithQuery(UriBuilder, IReadOnlyDictionary{string, object})"/>
+    public UriBuilder WithQuery(params (string Name, object Value)[] parameters)
+    {
+      if (builder is null) throw new ArgumentNullException(nameof(builder));
+      if (parameters is null) throw new ArgumentNullException(nameof(parameters));
+
+      var query = HttpUtility.ParseQueryString(builder.Query);
+
+      foreach (var parameter in parameters)
+      {
+        query.Add(parameter.Name, parameter.Value?.ToInvariantString());
+      }
+
+      builder.Query = query.ToString() ?? string.Empty;
+
+      return builder;
+    }
   }
 }

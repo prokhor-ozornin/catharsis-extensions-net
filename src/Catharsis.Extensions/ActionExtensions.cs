@@ -7,25 +7,43 @@
 /// <seealso cref="Predicate{T}"/>
 public static class ActionExtensions
 {
-  /// <summary>
-  ///   <para>Executes a specified action continuously while a certain condition remains true.</para>
-  /// </summary>
   /// <param name="action">Action to execute.</param>
-  /// <param name="condition">Condition of execution.</param>
-  /// <returns>Back self-reference to the given <paramref name="action"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="action"/> or <paramref name="condition"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Execute{T}(Action{T}, Predicate{T}, T)"/>
-  public static Action Execute(this Action action, Func<bool> condition)
+  extension(Action action)
   {
-    if (action is null) throw new ArgumentNullException(nameof(action));
-    if (condition is null) throw new ArgumentNullException(nameof(condition));
-
-    while (condition())
+    /// <summary>
+    ///   <para>Executes a specified action continuously while a certain condition remains true.</para>
+    /// </summary>
+    /// <param name="condition">Condition of execution.</param>
+    /// <returns>Back self-reference to the given <paramref name="action"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="action"/> or <paramref name="condition"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Execute{T}(Action{T}, Predicate{T}, T)"/>
+    public Action Execute(Func<bool> condition)
     {
-      action();
+      if (action is null) throw new ArgumentNullException(nameof(action));
+      if (condition is null) throw new ArgumentNullException(nameof(condition));
+
+      while (condition())
+      {
+        action();
+      }
+
+      return action;
     }
 
-    return action;
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToTask(Action{object}, object, TaskCreationOptions, CancellationToken)"/>
+    public Task ToTask(TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => action is not null ? new Task(action, cancellation, options) : throw new ArgumentNullException(nameof(action));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public Task Task => action.ToTask();
   }
 
   /// <summary>
@@ -50,17 +68,6 @@ public static class ActionExtensions
 
     return action;
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="action"></param>
-  /// <param name="options"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToTask(Action{object}, object, TaskCreationOptions, CancellationToken)"/>
-  public static Task ToTask(this Action action, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => action is not null ? new Task(action, cancellation, options) : throw new ArgumentNullException(nameof(action));
 
   /// <summary>
   ///   <para></para>

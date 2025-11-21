@@ -14,14 +14,6 @@ public static class TextReaderExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static bool IsEnd(this TextReader reader) => reader is not null ? reader.Peek() < 0 : throw new ArgumentNullException(nameof(reader));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <typeparam name="TReader"></typeparam>
   /// <param name="reader"></param>
   /// <param name="count"></param>
@@ -38,261 +30,253 @@ public static class TextReaderExtensions
     return reader;
   }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="reader"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="LinesAsync(TextReader)"/>
-  public static IEnumerable<string> Lines(this TextReader reader)
+  extension(TextReader reader)
   {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    public bool IsEnd => reader is not null ? reader.Peek() < 0 : throw new ArgumentNullException(nameof(reader));
 
-    for (string line; (line = reader.ReadLine()) is not null;)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="LinesAsync(TextReader)"/>
+    public IEnumerable<string> Lines()
     {
-      yield return line;
-    }
-  }
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
 
-  /// <summary>
-  ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a list of strings, using default system-dependent string separator.</para>
-  /// </summary>
-  /// <param name="reader"><see cref="TextReader"/> which is used to read text from its underlying source.</param>
-  /// <returns>List of strings which have been read from a <paramref name="reader"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Lines(TextReader)"/>
-  public static async IAsyncEnumerable<string> LinesAsync(this TextReader reader)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    for (string line; (line = await reader.ReadLineAsync()) is not null;)
-    {
-      yield return line;
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static TextReader AsSynchronized(this TextReader reader) => reader is not null ? TextReader.Synchronized(reader) : throw new ArgumentNullException(nameof(reader));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="reader"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static T DeserializeAsDataContract<T>(this TextReader reader, params Type[] types)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    using var xmlReader = reader.ToXmlReader(false);
-
-    return xmlReader.DeserializeAsDataContract<T>(types);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="reader"></param>
-  /// <param name="types"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static T DeserializeAsXml<T>(this TextReader reader, params Type[] types)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    using var xmlReader = reader.ToXmlReader(false);
-
-    return xmlReader.DeserializeAsXml<T>(types);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="close"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToEnumerable(TextReader, int, bool)"/>
-  public static IEnumerable<char> ToEnumerable(this TextReader reader, bool close = false) => reader.ToEnumerable(4096, close).SelectMany(chars => chars);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="count"></param>
-  /// <param name="close"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  /// <seealso cref="ToEnumerable(TextReader, bool)"/>
-  public static IEnumerable<char[]> ToEnumerable(this TextReader reader, int count, bool close = false)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-    if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    return new TextReaderEnumerable(reader, count, close);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="close"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToAsyncEnumerable(TextReader, int, bool)"/>
-  public static async IAsyncEnumerable<char> ToAsyncEnumerable(this TextReader reader, bool close = false)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    await foreach (var elements in reader.ToAsyncEnumerable(4096, close).ConfigureAwait(false))
-    {
-      foreach (var element in elements)
+      for (string line; (line = reader.ReadLine()) is not null;)
       {
-        yield return element;
+        yield return line;
       }
     }
+
+    /// <summary>
+    ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a list of strings, using default system-dependent string separator.</para>
+    /// </summary>
+    /// <returns>List of strings which have been read from a <paramref name="reader"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Lines(TextReader)"/>
+    public async IAsyncEnumerable<string> LinesAsync()
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+      for (string line; (line = await reader.ReadLineAsync()) is not null;)
+      {
+        yield return line;
+      }
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    public TextReader AsSynchronized() => reader is not null ? TextReader.Synchronized(reader) : throw new ArgumentNullException(nameof(reader));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="types"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    public T DeserializeAsDataContract<T>(params Type[] types)
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+      using var xmlReader = reader.ToXmlReader(false);
+
+      return xmlReader.DeserializeAsDataContract<T>(types);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="types"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    public T DeserializeAsXml<T>(params Type[] types)
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+      using var xmlReader = reader.ToXmlReader(false);
+
+      return xmlReader.DeserializeAsXml<T>(types);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="close"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToEnumerable(TextReader, int, bool)"/>
+    public IEnumerable<char> ToEnumerable(bool close = false) => reader.ToEnumerable(4096, close).SelectMany(chars => chars);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="count"></param>
+    /// <param name="close"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <seealso cref="ToEnumerable(TextReader, bool)"/>
+    public IEnumerable<char[]> ToEnumerable(int count, bool close = false)
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+      if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+      return new TextReaderEnumerable(reader, count, close);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="close"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToAsyncEnumerable(TextReader, int, bool)"/>
+    public async IAsyncEnumerable<char> ToAsyncEnumerable(bool close = false)
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+      await foreach (var elements in reader.ToAsyncEnumerable(4096, close).ConfigureAwait(false))
+      {
+        foreach (var element in elements)
+        {
+          yield return element;
+        }
+      }
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="count"></param>
+    /// <param name="close"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    /// <seealso cref="ToAsyncEnumerable(TextReader, bool)"/>
+    public IAsyncEnumerable<char[]> ToAsyncEnumerable(int count, bool close = false)
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+      if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+      return new TextReaderAsyncEnumerable(reader, count, close);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="encoding"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToBytesAsync(TextReader, Encoding)"/>
+    public byte[] ToBytes(Encoding encoding = null) => reader.ToText().ToBytes(encoding);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="encoding"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToBytes(TextReader, Encoding)"/>
+    public async Task<byte[]> ToBytesAsync(Encoding encoding = null) => (await reader.ToTextAsync().ConfigureAwait(false)).ToBytes(encoding);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToTextAsync(TextReader)"/>
+    public string ToText() => reader?.ReadToEnd() ?? throw new ArgumentNullException(nameof(reader));
+
+    /// <summary>
+    ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>
+    /// </summary>
+    /// <returns>Text content which have been read from a <paramref name="reader"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToText(TextReader)"/>
+    public async Task<string> ToTextAsync() => reader is not null ? await reader.ReadToEndAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(reader));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="close"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    public XmlReader ToXmlReader(bool close = true) => reader is not null ? XmlReader.Create(reader, new XmlReaderSettings { CloseInput = close, IgnoreComments = true, IgnoreWhitespace = true }) : throw new ArgumentNullException(nameof(reader));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="close"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    public XmlDictionaryReader ToXmlDictionaryReader(bool close = true) => reader.ToXmlReader(close).ToXmlDictionaryReader();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    public XmlDocument ToXmlDocument()
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+      using var xmlReader = reader.ToXmlReader(false);
+
+      return xmlReader.ToXmlDocument();
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToXDocumentAsync(TextReader, CancellationToken)"/>
+    public XDocument ToXDocument()
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+      using var xmlReader = reader.ToXmlReader(false);
+
+      return xmlReader.ToXDocument();
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToXDocument(TextReader)"/>
+    public async Task<XDocument> ToXDocumentAsync(CancellationToken cancellation = default)
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+      cancellation.ThrowIfCancellationRequested();
+
+      using var xmlReader = reader.ToXmlReader(false);
+
+      return await xmlReader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    public bool ToBoolean() => reader is not null && reader.Peek() >= 0;
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="count"></param>
-  /// <param name="close"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  /// <seealso cref="ToAsyncEnumerable(TextReader, bool)"/>
-  public static IAsyncEnumerable<char[]> ToAsyncEnumerable(this TextReader reader, int count, bool close = false)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-    if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    return new TextReaderAsyncEnumerable(reader, count, close);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToBytesAsync(TextReader, Encoding)"/>
-  public static byte[] ToBytes(this TextReader reader, Encoding encoding = null) => reader.ToText().ToBytes(encoding);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="encoding"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToBytes(TextReader, Encoding)"/>
-  public static async Task<byte[]> ToBytesAsync(this TextReader reader, Encoding encoding = null) => (await reader.ToTextAsync().ConfigureAwait(false)).ToBytes(encoding);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToTextAsync(TextReader)"/>
-  public static string ToText(this TextReader reader) => reader?.ReadToEnd() ?? throw new ArgumentNullException(nameof(reader));
-
-  /// <summary>
-  ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>
-  /// </summary>
-  /// <param name="reader"><see cref="TextReader"/> which is used to read text from its underlying source.</param>
-  /// <returns>Text content which have been read from a <paramref name="reader"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToText(TextReader)"/>
-  public static async Task<string> ToTextAsync(this TextReader reader) => reader is not null ? await reader.ReadToEndAsync().ConfigureAwait(false) : throw new ArgumentNullException(nameof(reader));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="close"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static XmlReader ToXmlReader(this TextReader reader, bool close = true) => reader is not null ? XmlReader.Create(reader, new XmlReaderSettings { CloseInput = close, IgnoreComments = true, IgnoreWhitespace = true }) : throw new ArgumentNullException(nameof(reader));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="close"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static XmlDictionaryReader ToXmlDictionaryReader(this TextReader reader, bool close = true) => reader.ToXmlReader(close).ToXmlDictionaryReader();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  public static XmlDocument ToXmlDocument(this TextReader reader)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    using var xmlReader = reader.ToXmlReader(false);
-
-    return xmlReader.ToXmlDocument();
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToXDocumentAsync(TextReader, CancellationToken)"/>
-  public static XDocument ToXDocument(this TextReader reader)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    using var xmlReader = reader.ToXmlReader(false);
-
-    return xmlReader.ToXDocument();
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToXDocument(TextReader)"/>
-  public static async Task<XDocument> ToXDocumentAsync(this TextReader reader, CancellationToken cancellation = default)
-  {
-    if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    using var xmlReader = reader.ToXmlReader(false);
-
-    return await xmlReader.ToXDocumentAsync(cancellation).ConfigureAwait(false);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="reader"></param>
-  /// <returns></returns>
-  public static bool ToBoolean(this TextReader reader) => reader is not null && reader.Peek() >= 0;
 
   private sealed class TextReaderEnumerable : IEnumerable<char[]>
   {

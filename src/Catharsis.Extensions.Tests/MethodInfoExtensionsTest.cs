@@ -21,14 +21,14 @@ public sealed class MethodInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MethodInfoExtensions.IsOverridable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => null.IsOverridable).ThrowExactly<ArgumentNullException>().WithParameterName("method");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, MethodInfo method) => method.IsOverridable().Should().Be(result);
+    static void Test(bool result, MethodInfo method) => method.IsOverridable.Should().Be(result);
   }
 
   /// <summary>
@@ -39,14 +39,14 @@ public sealed class MethodInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MethodInfoExtensions.IsProtected(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => null.IsProtected).ThrowExactly<ArgumentNullException>().WithParameterName("method");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, MethodInfo method) => method.IsProtected().Should().Be(result);
+    static void Test(bool result, MethodInfo method) => method.IsProtected.Should().Be(result);
   }
 
   /// <summary>
@@ -57,14 +57,14 @@ public sealed class MethodInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MethodInfoExtensions.IsInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => null.IsInternal).ThrowExactly<ArgumentNullException>().WithParameterName("method");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, MethodInfo method) => method.IsInternal().Should().Be(result);
+    static void Test(bool result, MethodInfo method) => method.IsInternal.Should().Be(result);
   }
 
   /// <summary>
@@ -75,14 +75,14 @@ public sealed class MethodInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MethodInfoExtensions.IsProtectedInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => null.IsProtectedInternal).ThrowExactly<ArgumentNullException>().WithParameterName("method");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, MethodInfo method) => method.IsProtectedInternal().Should().Be(result);
+    static void Test(bool result, MethodInfo method) => method.IsProtectedInternal.Should().Be(result);
   }
 
   /// <summary>

@@ -28,7 +28,7 @@ public sealed class UdpClientExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, UdpClient client) => client.IsUnset().Should().Be(result);
+    static void Test(bool result, UdpClient client) => client.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -39,14 +39,14 @@ public sealed class UdpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((UdpClient) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((UdpClient) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("client");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, UdpClient client) => client.IsEmpty().Should().Be(result);
+    static void Test(bool result, UdpClient client) => client.IsEmpty.Should().Be(result);
   }
 
   /// <summary>

@@ -20,14 +20,14 @@ public sealed class IPAddressExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IPAddressExtensions.IsV4(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+      AssertionExtensions.Should(() => null.IsV4).ThrowExactly<ArgumentNullException>().WithParameterName("address");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, IPAddress address) => address.IsV4().Should().Be(result);
+    static void Test(bool result, IPAddress address) => address.IsV4.Should().Be(result);
   }
 
   /// <summary>
@@ -38,14 +38,14 @@ public sealed class IPAddressExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IPAddressExtensions.IsV6(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+      AssertionExtensions.Should(() => null.IsV6).ThrowExactly<ArgumentNullException>().WithParameterName("address");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, IPAddress address) => address.IsV6().Should().Be(result);
+    static void Test(bool result, IPAddress address) => address.IsV6.Should().Be(result);
   }
 
   /// <summary>

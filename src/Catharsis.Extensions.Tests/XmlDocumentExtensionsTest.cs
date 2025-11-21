@@ -34,7 +34,7 @@ public sealed class XmlDocumentExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, XmlDocument document) => document.IsUnset().Should().Be(document is null || document.IsEmpty()).And.Be(result);
+    static void Test(bool result, XmlDocument document) => document.IsUnset.Should().Be(document is null || document.IsEmpty).And.Be(result);
   }
 
   /// <summary>
@@ -45,7 +45,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
       Test(true, new XmlDocument());
       Test(true, new XmlDocument().With(document => document.With(document.CreateComment(null))));
@@ -60,7 +60,7 @@ public sealed class XmlDocumentExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, XmlDocument document) => document.IsEmpty().Should().Be(result);
+    static void Test(bool result, XmlDocument document) => document.IsEmpty.Should().Be(result);
   }
 
   /// <summary>
@@ -71,7 +71,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
 
       Test(new XmlDocument());
       Test(new XmlDocument().With(document => document.With(document.CreateElement("root"))));

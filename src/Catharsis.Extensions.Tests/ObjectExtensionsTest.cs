@@ -134,23 +134,23 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      ((object) null).IsNull().Should().BeTrue();
-      ((int?) null).IsNull().Should().BeTrue();
+      ((object) null).IsNull.Should().BeTrue();
+      ((int?) null).IsNull.Should().BeTrue();
 
-      new object().IsNull().Should().BeFalse();
-      string.Empty.IsNull().Should().BeFalse();
-      Array.Empty<object>().IsNull().Should().BeFalse();
-      Enumerable.Empty<object>().IsNull().Should().BeFalse();
-      Guid.Empty.IsNull().Should().BeFalse();
+      new object().IsNull.Should().BeFalse();
+      string.Empty.IsNull.Should().BeFalse();
+      Array.Empty<object>().IsNull.Should().BeFalse();
+      Enumerable.Empty<object>().IsNull.Should().BeFalse();
+      Guid.Empty.IsNull.Should().BeFalse();
 
-      new WeakReference(null).IsNull().Should().BeTrue();
-      new WeakReference(new object()).IsNull().Should().BeFalse();
-      new WeakReference(string.Empty).IsNull().Should().BeFalse();
+      new WeakReference(null).IsNull.Should().BeTrue();
+      new WeakReference(new object()).IsNull.Should().BeFalse();
+      new WeakReference(string.Empty).IsNull.Should().BeFalse();
     }
 
     return;
 
-    static void Test(bool result, object instance) => instance.IsNull().Should().Be(result);
+    static void Test(bool result, object instance) => instance.IsNull.Should().Be(result);
   }
 
   /// <summary>
@@ -184,7 +184,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Test<T>(bool result, T? nullable) where T : struct => nullable.IsUnset().Should().Be(result);
+    static void Test<T>(bool result, T? nullable) where T : struct => nullable.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -201,7 +201,7 @@ public sealed class ObjectExtensionsTest : Test
 
     return;
 
-    static void Test<T>(bool result, Lazy<T> lazy) => lazy.IsUnset().Should().Be(result);
+    static void Test<T>(bool result, Lazy<T> lazy) => lazy.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -212,48 +212,48 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      ((sbyte?)sbyte.MinValue).IsEmpty().Should().BeFalse();
-      ((sbyte?)sbyte.MaxValue).IsEmpty().Should().BeFalse();
-      ((sbyte?)null).IsEmpty().Should().BeTrue();
+      ((sbyte?)sbyte.MinValue).IsEmpty.Should().BeFalse();
+      ((sbyte?)sbyte.MaxValue).IsEmpty.Should().BeFalse();
+      ((sbyte?)null).IsEmpty.Should().BeTrue();
 
-      ((byte?)byte.MinValue).IsEmpty().Should().BeFalse();
-      ((byte?)byte.MaxValue).IsEmpty().Should().BeFalse();
-      ((byte?)null).IsEmpty().Should().BeTrue();
+      ((byte?)byte.MinValue).IsEmpty.Should().BeFalse();
+      ((byte?)byte.MaxValue).IsEmpty.Should().BeFalse();
+      ((byte?)null).IsEmpty.Should().BeTrue();
 
-      ((short?)short.MinValue).IsEmpty().Should().BeFalse();
-      ((short?)short.MaxValue).IsEmpty().Should().BeFalse();
-      ((short?)null).IsEmpty().Should().BeTrue();
+      ((short?)short.MinValue).IsEmpty.Should().BeFalse();
+      ((short?)short.MaxValue).IsEmpty.Should().BeFalse();
+      ((short?)null).IsEmpty.Should().BeTrue();
 
-      ((ushort?)ushort.MinValue).IsEmpty().Should().BeFalse();
-      ((ushort?)ushort.MaxValue).IsEmpty().Should().BeFalse();
-      ((ushort?)null).IsEmpty().Should().BeTrue();
+      ((ushort?)ushort.MinValue).IsEmpty.Should().BeFalse();
+      ((ushort?)ushort.MaxValue).IsEmpty.Should().BeFalse();
+      ((ushort?)null).IsEmpty.Should().BeTrue();
 
-      ((int?)int.MinValue).IsEmpty().Should().BeFalse();
-      ((int?)int.MaxValue).IsEmpty().Should().BeFalse();
-      ((int?)null).IsEmpty().Should().BeTrue();
+      ((int?)int.MinValue).IsEmpty.Should().BeFalse();
+      ((int?)int.MaxValue).IsEmpty.Should().BeFalse();
+      ((int?)null).IsEmpty.Should().BeTrue();
 
-      ((uint?)uint.MinValue).IsEmpty().Should().BeFalse();
-      ((uint?)uint.MaxValue).IsEmpty().Should().BeFalse();
-      ((uint?)null).IsEmpty().Should().BeTrue();
+      ((uint?)uint.MinValue).IsEmpty.Should().BeFalse();
+      ((uint?)uint.MaxValue).IsEmpty.Should().BeFalse();
+      ((uint?)null).IsEmpty.Should().BeTrue();
 
-      ((long?)long.MinValue).IsEmpty().Should().BeFalse();
-      ((long?)long.MaxValue).IsEmpty().Should().BeFalse();
-      ((long?)null).IsEmpty().Should().BeTrue();
+      ((long?)long.MinValue).IsEmpty.Should().BeFalse();
+      ((long?)long.MaxValue).IsEmpty.Should().BeFalse();
+      ((long?)null).IsEmpty.Should().BeTrue();
 
-      ((ulong?)ulong.MinValue).IsEmpty().Should().BeFalse();
-      ((ulong?)ulong.MaxValue).IsEmpty().Should().BeFalse();
-      ((ulong?)null).IsEmpty().Should().BeTrue();
+      ((ulong?)ulong.MinValue).IsEmpty.Should().BeFalse();
+      ((ulong?)ulong.MaxValue).IsEmpty.Should().BeFalse();
+      ((ulong?)null).IsEmpty.Should().BeTrue();
 
-      ((char?)null).IsEmpty().Should().BeTrue();
-      ((char?)char.MinValue).IsEmpty().Should().BeFalse();
+      ((char?)null).IsEmpty.Should().BeTrue();
+      ((char?)char.MinValue).IsEmpty.Should().BeFalse();
 
-      ((Guid?)Guid.Empty).IsEmpty().Should().BeFalse();
-      ((Guid?)null).IsEmpty().Should().BeTrue();
+      ((Guid?)Guid.Empty).IsEmpty.Should().BeFalse();
+      ((Guid?)null).IsEmpty.Should().BeTrue();
     }
 
     return;
 
-    static void Test<T>(bool result, T? nullable) where T : struct => nullable.IsEmpty().Should().Be(result);
+    static void Test<T>(bool result, T? nullable) where T : struct => nullable.IsEmpty.Should().Be(result);
   }
 
   /// <summary>
@@ -264,36 +264,36 @@ public sealed class ObjectExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      new Lazy<object>().IsEmpty().Should().BeTrue();
+      new Lazy<object>().IsEmpty.Should().BeTrue();
 
-      new Lazy<object>(new object()).IsEmpty().Should().BeFalse();
+      new Lazy<object>(new object()).IsEmpty.Should().BeFalse();
       var lazy = new Lazy<object>(() => new object());
-      lazy.IsEmpty().Should().BeTrue();
+      lazy.IsEmpty.Should().BeTrue();
       _ = lazy.Value;
-      lazy.IsEmpty().Should().BeFalse();
+      lazy.IsEmpty.Should().BeFalse();
 
-      new Lazy<object>((object)null).IsEmpty().Should().BeTrue();
+      new Lazy<object>((object)null).IsEmpty.Should().BeTrue();
       lazy = new Lazy<object>(() => null);
-      lazy.IsEmpty().Should().BeTrue();
+      lazy.IsEmpty.Should().BeTrue();
       _ = lazy.Value;
-      lazy.IsEmpty().Should().BeTrue();
+      lazy.IsEmpty.Should().BeTrue();
 
-      new Lazy<object>(string.Empty).IsEmpty().Should().BeTrue();
+      new Lazy<object>(string.Empty).IsEmpty.Should().BeTrue();
       lazy = new Lazy<object>(() => string.Empty);
-      lazy.IsEmpty().Should().BeTrue();
+      lazy.IsEmpty.Should().BeTrue();
       _ = lazy.Value;
-      lazy.IsEmpty().Should().BeTrue();
+      lazy.IsEmpty.Should().BeTrue();
 
-      new Lazy<object>(" \t\r\n ").IsEmpty().Should().BeTrue();
+      new Lazy<object>(" \t\r\n ").IsEmpty.Should().BeTrue();
       lazy = new Lazy<object>(() => " \t\r\n ");
-      lazy.IsEmpty().Should().BeTrue();
+      lazy.IsEmpty.Should().BeTrue();
       _ = lazy.Value;
-      lazy.IsEmpty().Should().BeTrue();
+      lazy.IsEmpty.Should().BeTrue();
     }
 
     return;
 
-    static void Test<T>(bool result, Lazy<T> lazy) => lazy.IsEmpty().Should().Be(result);
+    static void Test<T>(bool result, Lazy<T> lazy) => lazy.IsEmpty.Should().Be(result);
   }
 
   /// <summary>

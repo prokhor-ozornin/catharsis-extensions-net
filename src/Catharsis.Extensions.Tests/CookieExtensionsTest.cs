@@ -29,7 +29,7 @@ public sealed class CookieExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, Cookie cookie) => cookie.IsUnset().Should().Be(result);
+    static void Test(bool result, Cookie cookie) => cookie.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -40,7 +40,7 @@ public sealed class CookieExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((Cookie) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
+      AssertionExtensions.Should(() => ((Cookie) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
 
       Test(true, new Cookie());
       Test(true, new Cookie("name", null));
@@ -51,7 +51,7 @@ public sealed class CookieExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, Cookie cookie) => cookie.IsEmpty().Should().Be(result);
+    static void Test(bool result, Cookie cookie) => cookie.IsEmpty.Should().Be(result);
   }
 
   /// <summary>

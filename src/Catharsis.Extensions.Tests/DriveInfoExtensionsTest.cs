@@ -60,7 +60,7 @@ public sealed class DriveInfoExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, DriveInfo drive) => drive.IsUnset().Should().Be(result);
+    static void Test(bool result, DriveInfo drive) => drive.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -71,14 +71,14 @@ public sealed class DriveInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((DriveInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+      AssertionExtensions.Should(() => ((DriveInfo) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
 
-      DriveInfo.GetDrives().Should().BeOfType<DriveInfo[]>().And.Contain(drive => !drive.IsEmpty());
+      DriveInfo.GetDrives().Should().BeOfType<DriveInfo[]>().And.Contain(drive => !drive.IsEmpty);
     }
 
     return;
 
-    static void Test(bool result, DriveInfo drive) => drive.IsEmpty().Should().Be(result);
+    static void Test(bool result, DriveInfo drive) => drive.IsEmpty.Should().Be(result);
   }
 
   /// <summary>

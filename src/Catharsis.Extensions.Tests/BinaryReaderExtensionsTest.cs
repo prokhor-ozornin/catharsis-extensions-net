@@ -20,8 +20,8 @@ public sealed class BinaryReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryReader) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToBinaryReader().IsStart()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ((BinaryReader) null).IsStart).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToBinaryReader().IsStart).ThrowExactly<NotSupportedException>();
 
       Test(System.IO.Stream.Null.ToBinaryReader());
       Test(EmptyStream.ToBinaryReader());
@@ -36,9 +36,9 @@ public sealed class BinaryReaderExtensionsTest : Test
       using (reader)
       {
         reader.BaseStream.MoveToStart();
-        reader.IsStart().Should().BeTrue();
+        reader.IsStart.Should().BeTrue();
         reader.BaseStream.MoveToEnd();
-        reader.IsStart().Should().Be(reader.BaseStream.IsEmpty());
+        reader.IsStart.Should().Be(reader.BaseStream.IsEmpty());
       }
     }
   }
@@ -51,7 +51,7 @@ public sealed class BinaryReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ((BinaryReader) null).IsEnd).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       Test(System.IO.Stream.Null.ToBinaryReader());
       Test(EmptyStream.ToBinaryReader());
@@ -66,9 +66,9 @@ public sealed class BinaryReaderExtensionsTest : Test
       using (reader)
       {
         reader.BaseStream.MoveToStart();
-        reader.IsEnd().Should().Be(reader.BaseStream.IsEnd()).And.Be(reader.BaseStream.IsEmpty());
+        reader.IsEnd.Should().Be(reader.BaseStream.IsEnd()).And.Be(reader.BaseStream.IsEmpty());
         reader.BaseStream.MoveToEnd();
-        reader.IsEnd().Should().Be(reader.BaseStream.IsEnd()).And.BeTrue();
+        reader.IsEnd.Should().Be(reader.BaseStream.IsEnd()).And.BeTrue();
       }
     }
   }
@@ -129,13 +129,13 @@ public sealed class BinaryReaderExtensionsTest : Test
         reader.Rewind();
 
         reader.Skip(0).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.IsStart().Should().BeTrue();
+        reader.IsStart.Should().BeTrue();
 
         reader.Skip((int) reader.BaseStream.Length).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.IsEnd().Should().BeTrue();
+        reader.IsEnd.Should().BeTrue();
 
         reader.Skip(int.MaxValue).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.IsEnd().Should().BeTrue();
+        reader.IsEnd.Should().BeTrue();
       }
     }
   }
@@ -148,7 +148,7 @@ public sealed class BinaryReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryReader().IsUnset()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryReader().IsUnset).ThrowExactly<ArgumentException>();
 
       Test(true, null);
       Test(true, System.IO.Stream.Null.ToBinaryReader());
@@ -164,7 +164,7 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       using (reader)
       {
-        reader.IsUnset().Should().Be(result);
+        reader.IsUnset.Should().Be(result);
       }
     }
   }
@@ -177,8 +177,8 @@ public sealed class BinaryReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryReader().IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => ((BinaryReader) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryReader().IsEmpty).ThrowExactly<ArgumentException>();
 
       Test(true, System.IO.Stream.Null.ToBinaryReader());
       Test(true, EmptyStream.ToBinaryReader());
@@ -193,7 +193,7 @@ public sealed class BinaryReaderExtensionsTest : Test
     {
       using (reader)
       {
-        reader.IsEmpty().Should().Be(result);
+        reader.IsEmpty.Should().Be(result);
       }
     }
   }
@@ -284,7 +284,7 @@ public sealed class BinaryReaderExtensionsTest : Test
       using (reader)
       {
         reader.TryFinallyClear(reader => reader.BaseStream.WriteByte(byte.MaxValue)).Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.IsEmpty().Should().BeTrue();
+        reader.IsEmpty.Should().BeTrue();
       }
     }
   }

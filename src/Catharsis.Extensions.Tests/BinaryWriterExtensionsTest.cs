@@ -19,8 +19,8 @@ public sealed class BinaryWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsStart()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ((BinaryWriter) null).IsStart).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsStart).ThrowExactly<NotSupportedException>();
 
       Test(System.IO.Stream.Null.ToBinaryWriter());
       Test(EmptyStream.ToBinaryWriter());
@@ -35,9 +35,9 @@ public sealed class BinaryWriterExtensionsTest : Test
       using (writer)
       {
         writer.BaseStream.MoveToStart();
-        writer.IsStart().Should().BeTrue();
+        writer.IsStart.Should().BeTrue();
         writer.BaseStream.MoveToEnd();
-        writer.IsStart().Should().Be(writer.BaseStream.IsEmpty());
+        writer.IsStart.Should().Be(writer.BaseStream.IsEmpty());
       }
     }
   }
@@ -50,8 +50,8 @@ public sealed class BinaryWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEnd()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEnd).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEnd).ThrowExactly<ArgumentException>();
 
       Test(System.IO.Stream.Null.ToBinaryWriter());
       Test(EmptyStream.ToBinaryWriter());
@@ -66,9 +66,9 @@ public sealed class BinaryWriterExtensionsTest : Test
       using (writer)
       {
         writer.BaseStream.MoveToStart();
-        writer.IsEnd().Should().Be(writer.BaseStream.IsEmpty());
+        writer.IsEnd.Should().Be(writer.BaseStream.IsEmpty());
         writer.BaseStream.MoveToEnd();
-        writer.IsEnd().Should().BeTrue();
+        writer.IsEnd.Should().BeTrue();
       }
     }
   }
@@ -110,7 +110,7 @@ public sealed class BinaryWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsUnset()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsUnset).ThrowExactly<ArgumentException>();
 
       Test(true, null);
       Test(true, System.IO.Stream.Null.ToBinaryWriter());
@@ -125,7 +125,7 @@ public sealed class BinaryWriterExtensionsTest : Test
     {
       using (writer)
       {
-        writer.IsUnset().Should().Be(result);
+        writer.IsUnset.Should().Be(result);
       }
     }
   }
@@ -138,8 +138,8 @@ public sealed class BinaryWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEmpty).ThrowExactly<ArgumentException>();
 
       Test(true, System.IO.Stream.Null.ToBinaryWriter());
       Test(true, EmptyStream.ToBinaryWriter());
@@ -153,7 +153,7 @@ public sealed class BinaryWriterExtensionsTest : Test
     {
       using (writer)
       {
-        writer.IsEmpty().Should().Be(result);
+        writer.IsEmpty.Should().Be(result);
       }
     }
   }

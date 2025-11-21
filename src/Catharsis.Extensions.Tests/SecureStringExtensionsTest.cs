@@ -58,7 +58,7 @@ public sealed class SecureStringExtensionsTest : Test
     {
       using (text)
       {
-        text.IsUnset().Should().Be(text is null || text.IsEmpty()).And.Be(result);
+        text.IsUnset.Should().Be(text is null || text.IsEmpty).And.Be(result);
       }
     }
   }
@@ -71,7 +71,7 @@ public sealed class SecureStringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => SecureStringExtensions.IsEmpty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+      AssertionExtensions.Should(() => null.IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
 
       Test(true, EmptySecureString);
       Test(false, RandomSecureString);
@@ -83,7 +83,7 @@ public sealed class SecureStringExtensionsTest : Test
     {
       using (text)
       {
-        text.IsEmpty().Should().Be(text.Length == 0).And.Be(result);
+        text.IsEmpty.Should().Be(text.Length == 0).And.Be(result);
       }
     }
   }
@@ -109,7 +109,7 @@ public sealed class SecureStringExtensionsTest : Test
       using (text)
       {
         text.Empty().Should().BeOfType<SecureString>().And.BeSameAs(text);
-        text.IsEmpty().Should().BeTrue();
+        text.IsEmpty.Should().BeTrue();
       }
     }
   }
@@ -136,7 +136,7 @@ public sealed class SecureStringExtensionsTest : Test
       using (text)
       {
         text.TryFinallyClear(secure => secure.With(char.MinValue, char.MaxValue)).Should().BeOfType<SecureString>().And.BeSameAs(text);
-        text.IsEmpty().Should().BeTrue();
+        text.IsEmpty.Should().BeTrue();
       }
     }
   }

@@ -166,13 +166,13 @@ public sealed class StringExtensionsTest : Test
       date.AddMilliseconds(-1).ToString("o", format).CompareAsDate(date.ToString("o", format), format).Should().BeNegative();
 
       date.ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddMilliseconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddSeconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddMinutes(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddHours(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.AtStartOfDay().AddDays(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
-      date.AtStartOfDay().AddMonths(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
-      date.AtStartOfDay().AddYears(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
+      date.StartOfDay().AddMilliseconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.StartOfDay().AddSeconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.StartOfDay().AddMinutes(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.StartOfDay().AddHours(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.StartOfDay().AddDays(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
+      date.StartOfDay().AddMonths(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
+      date.StartOfDay().AddYears(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
 
       date.ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
       date.AddMilliseconds(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
@@ -3756,7 +3756,7 @@ public sealed class StringExtensionsTest : Test
         AssertionExtensions.Should(() => string.Empty.ToTimeOnly(format)).ThrowExactly<FormatException>();
         AssertionExtensions.Should(() => "invalid".ToTimeOnly(format)).ThrowExactly<FormatException>();
 
-        $" {time.ToString("T", format)} ".ToTimeOnly(format).Should().Be(time.AtStartOfSecond());
+        $" {time.ToString("T", format)} ".ToTimeOnly(format).Should().Be(time.StartOfSecond);
       }
     }
 
@@ -3782,7 +3782,7 @@ public sealed class StringExtensionsTest : Test
         result.Should().BeNull();
 
         $" {time.ToString("T", format)} ".ToTimeOnly(out result, format).Should().BeTrue();
-        result.Should().Be(time.AtStartOfSecond());
+        result.Should().Be(time.StartOfSecond);
       }
     }
   }

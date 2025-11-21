@@ -18,8 +18,8 @@ public sealed class StreamReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((StreamReader) null).IsStart()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToStreamReader().IsStart()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ((StreamReader) null).IsStart).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToStreamReader().IsStart).ThrowExactly<NotSupportedException>();
 
       Test(System.IO.Stream.Null.ToStreamReader());
       Test(EmptyStream.ToStreamReader());
@@ -34,9 +34,9 @@ public sealed class StreamReaderExtensionsTest : Test
       using (reader)
       {
         reader.BaseStream.MoveToStart();
-        reader.IsStart().Should().BeTrue();
+        reader.IsStart.Should().BeTrue();
         reader.BaseStream.MoveToEnd();
-        reader.IsStart().Should().Be(reader.BaseStream.Length == 0);
+        reader.IsStart.Should().Be(reader.BaseStream.Length == 0);
       }
     }
   }
@@ -90,7 +90,7 @@ public sealed class StreamReaderExtensionsTest : Test
     {
       using (reader)
       {
-        reader.IsUnset().Should().Be(reader is null || reader.IsEmpty()).And.Be(result);
+        reader.IsUnset.Should().Be(reader is null || reader.IsEmpty).And.Be(result);
       }
     }
   }
@@ -103,7 +103,7 @@ public sealed class StreamReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((StreamReader) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ((StreamReader) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       Test(true, System.IO.Stream.Null.ToStreamReader());
       Test(true, EmptyStream.ToStreamReader());
@@ -118,7 +118,7 @@ public sealed class StreamReaderExtensionsTest : Test
     {
       using (reader)
       {
-        reader.IsEmpty().Should().Be(result);
+        reader.IsEmpty.Should().Be(result);
       }
     }
   }

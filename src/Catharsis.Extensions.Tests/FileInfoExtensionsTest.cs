@@ -26,7 +26,7 @@ public sealed class FileInfoExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, FileInfo file) => file.IsUnset().Should().Be(result);
+    static void Test(bool result, FileInfo file) => file.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -37,11 +37,11 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((FileInfo) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
       var file = FakeFile;
       file.Exists.Should().BeFalse();
-      file.IsEmpty().Should().BeTrue();
+      file.IsEmpty.Should().BeTrue();
 
       var bytes = new Random().Byte(1).ToArray();
 
@@ -49,16 +49,16 @@ public sealed class FileInfoExtensionsTest : Test
       {
         info.Exists.Should().BeTrue();
         info.Length.Should().Be(0);
-        info.IsEmpty().Should().BeTrue();
+        info.IsEmpty.Should().BeTrue();
         bytes.WriteToAsync(info).Await();
         info.Length.Should().Be(bytes.Length);
-        info.IsEmpty().Should().BeFalse();
+        info.IsEmpty.Should().BeFalse();
       });
     }
 
     return;
 
-    static void Test(bool result, FileInfo file) => file.IsEmpty().Should().Be(result);
+    static void Test(bool result, FileInfo file) => file.IsEmpty.Should().Be(result);
   }
 
   /// <summary>

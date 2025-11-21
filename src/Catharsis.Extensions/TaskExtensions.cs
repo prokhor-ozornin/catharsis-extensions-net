@@ -6,200 +6,195 @@ namespace Catharsis.Extensions;
 /// <seealso cref="Task"/>
 public static class TaskExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="task"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Await{T}(Task{T}, TimeSpan?, CancellationToken)"/>
-  /// <seealso cref="Await{T}(Task{T}, out T, TimeSpan?, CancellationToken)"/>
-  public static Task Await(this Task task, TimeSpan? timeout = null, CancellationToken cancellation = default)
+  extension(Task task)
   {
-    if (task is null) throw new ArgumentNullException(nameof(task));
-
-    if (task.IsCompleted)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="timeout"></param>
+    /// <param name="cancellation"></param>
+    /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Await{T}(Task{T}, TimeSpan?, CancellationToken)"/>
+    /// <seealso cref="Await{T}(Task{T}, out T, TimeSpan?, CancellationToken)"/>
+    public Task Await(TimeSpan? timeout = null, CancellationToken cancellation = default)
     {
+      if (task is null) throw new ArgumentNullException(nameof(task));
+
+      if (task.IsCompleted)
+      {
+        return task;
+      }
+
+      cancellation.ThrowIfCancellationRequested();
+
+      if (timeout is not null)
+      {
+        task.Wait((int) timeout.Value.TotalMilliseconds, cancellation);
+      }
+      else
+      {
+        task.Wait(cancellation);
+      }
+
       return task;
     }
 
-    cancellation.ThrowIfCancellationRequested();
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="failure"></param>
+    /// <param name="cancellation"></param>
+    /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+    public Task Execute(Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
 
-    if (timeout is not null)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="failure"></param>
+    /// <param name="cancellation"></param>
+    /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+    public async Task ExecuteAsync(Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null)
     {
-      task.Wait((int) timeout.Value.TotalMilliseconds, cancellation);
-    }
-    else
-    {
-      task.Wait(cancellation);
+      if (task is null) throw new ArgumentNullException(nameof(task));
+
+      await task.ConfigureAwait(false);
+
+      if (task.IsCompletedSuccessfully && success is not null)
+      {
+        success(task);
+      }
+      else if (task.IsFaulted && failure is not null)
+      {
+        failure(task);
+      }
+      else if (task.IsCanceled && cancellation is not null)
+      {
+        cancellation(task);
+      }
     }
 
-    return task;
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+    public ValueTask ToValueTask() => task is not null ? new ValueTask(task) : throw new ArgumentNullException(nameof(task));
   }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
   /// <param name="task"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Await(Task, TimeSpan?, CancellationToken)"/>
-  /// <seealso cref="Await{T}(Task{T}, out T, TimeSpan?, CancellationToken)"/>
-  public static T Await<T>(this Task<T> task, TimeSpan? timeout = null, CancellationToken cancellation = default)
+  /// <typeparam name="T"></typeparam>
+  extension<T>(Task<T> task)
   {
-    if (task is null) throw new ArgumentNullException(nameof(task));
-
-    if (task.IsCompleted)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="timeout"></param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Await(Task, TimeSpan?, CancellationToken)"/>
+    /// <seealso cref="Await{T}(Task{T}, out T, TimeSpan?, CancellationToken)"/>
+    public T Await(TimeSpan? timeout = null, CancellationToken cancellation = default)
     {
+      if (task is null) throw new ArgumentNullException(nameof(task));
+
+      if (task.IsCompleted)
+      {
+        return task.Result;
+      }
+
+      cancellation.ThrowIfCancellationRequested();
+    
+      if (timeout is not null)
+      {
+        task.Wait((int) timeout.Value.TotalMilliseconds, cancellation);
+      }
+      else
+      {
+        task.Wait(cancellation);
+      }
+
       return task.Result;
     }
 
-    cancellation.ThrowIfCancellationRequested();
-    
-    if (timeout is not null)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="result"></param>
+    /// <param name="timeout"></param>
+    /// <param name="cancellation"></param>
+    /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Await(Task, TimeSpan?, CancellationToken)"/>
+    /// <seealso cref="Await{T}(Task{T}, TimeSpan?, CancellationToken)"/>
+    public Task<T> Await(out T result, TimeSpan? timeout = null, CancellationToken cancellation = default)
     {
-      task.Wait((int) timeout.Value.TotalMilliseconds, cancellation);
-    }
-    else
-    {
-      task.Wait(cancellation);
-    }
+      if (task is null) throw new ArgumentNullException(nameof(task));
 
-    return task.Result;
-  }
+      if (task.IsCompleted)
+      {
+        result = task.Result;
+        return task;
+      }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="task"></param>
-  /// <param name="result"></param>
-  /// <param name="timeout"></param>
-  /// <param name="cancellation"></param>
-  /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Await(Task, TimeSpan?, CancellationToken)"/>
-  /// <seealso cref="Await{T}(Task{T}, TimeSpan?, CancellationToken)"/>
-  public static Task<T> Await<T>(this Task<T> task, out T result, TimeSpan? timeout = null, CancellationToken cancellation = default)
-  {
-    if (task is null) throw new ArgumentNullException(nameof(task));
+      cancellation.ThrowIfCancellationRequested();
 
-    if (task.IsCompleted)
-    {
-      result = task.Result;
+      result = task.Await(timeout, cancellation);
+
       return task;
     }
 
-    cancellation.ThrowIfCancellationRequested();
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="failure"></param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+    public T Execute(Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null) => task is not null ? task.ExecuteAsync(success, failure, cancellation).Await() : throw new ArgumentNullException(nameof(task));
 
-    result = task.Await(timeout, cancellation);
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="failure"></param>
+    /// <param name="cancellation"></param>
+    /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+    public async Task<T> ExecuteAsync(Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null)
+    {
+      if (task is null) throw new ArgumentNullException(nameof(task));
 
-    return task;
+      await task.ConfigureAwait(false);
+
+      if (task.IsCompletedSuccessfully && success is not null)
+      {
+        success(task);
+      }
+      else if (task.IsFaulted && failure is not null)
+      {
+        failure(task);
+      }
+      else if (task.IsCanceled && cancellation is not null)
+      {
+        cancellation(task);
+      }
+
+      return task.Result;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
+    public ValueTask<T> ToValueTask() => task is not null ? new ValueTask<T>(task) : throw new ArgumentNullException(nameof(task));
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="task"></param>
-  /// <param name="success"></param>
-  /// <param name="failure"></param>
-  /// <param name="cancellation"></param>
-  /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
-  public static Task Execute(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null) => task.ExecuteAsync(success, failure, cancellation).Await();
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="task"></param>
-  /// <param name="success"></param>
-  /// <param name="failure"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
-  public static T Execute<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null) => task is not null ? task.ExecuteAsync(success, failure, cancellation).Await() : throw new ArgumentNullException(nameof(task));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="task"></param>
-  /// <param name="success"></param>
-  /// <param name="failure"></param>
-  /// <param name="cancellation"></param>
-  /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
-  public static async Task ExecuteAsync(this Task task, Action<Task> success = null, Action<Task> failure = null, Action<Task> cancellation = null)
-  {
-    if (task is null) throw new ArgumentNullException(nameof(task));
-
-    await task.ConfigureAwait(false);
-
-    if (task.IsCompletedSuccessfully && success is not null)
-    {
-      success(task);
-    }
-    else if (task.IsFaulted && failure is not null)
-    {
-      failure(task);
-    }
-    else if (task.IsCanceled && cancellation is not null)
-    {
-      cancellation(task);
-    }
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="task"></param>
-  /// <param name="success"></param>
-  /// <param name="failure"></param>
-  /// <param name="cancellation"></param>
-  /// <returns>Back self-reference to the given <paramref name="task"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
-  public static async Task<T> ExecuteAsync<T>(this Task<T> task, Action<Task<T>> success = null, Action<Task<T>> failure = null, Action<Task<T>> cancellation = null)
-  {
-    if (task is null) throw new ArgumentNullException(nameof(task));
-
-    await task.ConfigureAwait(false);
-
-    if (task.IsCompletedSuccessfully && success is not null)
-    {
-      success(task);
-    }
-    else if (task.IsFaulted && failure is not null)
-    {
-      failure(task);
-    }
-    else if (task.IsCanceled && cancellation is not null)
-    {
-      cancellation(task);
-    }
-
-    return task.Result;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="task"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
-  public static ValueTask ToValueTask(this Task task) => task is not null ? new ValueTask(task) : throw new ArgumentNullException(nameof(task));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="task"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="task"/> is <see langword="null"/>.</exception>
-  public static ValueTask<T> ToValueTask<T>(this Task<T> task) => task is not null ? new ValueTask<T>(task) : throw new ArgumentNullException(nameof(task));
 }

@@ -6,128 +6,121 @@
 /// <seealso cref="BinaryWriter"/>
 public static class BinaryWriterExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="writer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsEnd(BinaryWriter)"/>
-  public static bool IsStart(this BinaryWriter writer) => writer?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(writer));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsStart(BinaryWriter)"/>
-  public static bool IsEnd(this BinaryWriter writer) => writer?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(writer));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  public static BinaryWriter Rewind(this BinaryWriter writer)
+  extension(BinaryWriter writer)
   {
-    if (writer is null)
-      throw new ArgumentNullException(nameof(writer));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsEnd(BinaryWriter)"/>
+    public bool IsStart => writer?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(writer));
 
-    writer.BaseStream.MoveToStart();
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsStart(BinaryWriter)"/>
+    public bool IsEnd => writer?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(writer));
 
-    return writer;
-  }
-  
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <returns></returns>
-  /// <seealso cref="IsEmpty(BinaryWriter)"/>
-  public static bool IsUnset(this BinaryWriter writer) => writer is null || writer.IsEmpty();
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+    public BinaryWriter Rewind()
+    {
+      if (writer is null) throw new ArgumentNullException(nameof(writer));
 
-  /// <summary>
-  ///   <para>Determines whether the specified <see cref="BinaryWriter"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
-  /// </summary>
-  /// <param name="writer">Binary writer instance for evaluation.</param>
-  /// <returns>If the specified <paramref name="writer"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsUnset(BinaryWriter)"/>
-  public static bool IsEmpty(this BinaryWriter writer) => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
+      writer.BaseStream.MoveToStart();
 
-  /// <summary>
-  ///   <para>Creates a copy of the specified <see cref="BinaryWriter"/>, which will write data to the same underlying <see cref="Stream"/>.</para>
-  /// </summary>
-  /// <param name="writer">Binary writer instance to be cloned.</param>
-  /// <returns>Cloning result.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  public static BinaryWriter Clone(this BinaryWriter writer) => writer is not null ? new BinaryWriter(writer.BaseStream) : throw new ArgumentNullException(nameof(writer));
+      return writer;
+    }
 
-  /// <summary>
-  ///   <para>"Empties" a specified <seealso cref="BinaryWriter"/> by setting the length of its underlying <seealso cref="Stream"/> to zero.</para>
-  /// </summary>
-  /// <param name="writer">Binary writer to be cleared.</param>
-  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  public static BinaryWriter Empty(this BinaryWriter writer)
-  {
-    if (writer is null) throw new ArgumentNullException(nameof(writer));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="IsEmpty(BinaryWriter)"/>
+    public bool IsUnset => writer is null || writer.IsEmpty;
 
-    writer.BaseStream.Empty();
+    /// <summary>
+    ///   <para>Determines whether the specified <see cref="BinaryWriter"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
+    /// </summary>
+    /// <value>If the specified <paramref name="writer"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
+    /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsUnset(BinaryWriter)"/>
+    public bool IsEmpty => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
-    return writer;
-  }
+    /// <summary>
+    ///   <para>Creates a copy of the specified <see cref="BinaryWriter"/>, which will write data to the same underlying <see cref="Stream"/>.</para>
+    /// </summary>
+    /// <returns>Cloning result.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+    public BinaryWriter Clone() => writer is not null ? new BinaryWriter(writer.BaseStream) : throw new ArgumentNullException(nameof(writer));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <param name="action"></param>
-  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
-  public static BinaryWriter TryFinallyClear(this BinaryWriter writer, Action<BinaryWriter> action)
-  {
-    if (writer is null) throw new ArgumentNullException(nameof(writer));
-    if (action is null) throw new ArgumentNullException(nameof(action));
+    /// <summary>
+    ///   <para>"Empties" a specified <seealso cref="BinaryWriter"/> by setting the length of its underlying <seealso cref="Stream"/> to zero.</para>
+    /// </summary>
+    /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+    public BinaryWriter Empty()
+    {
+      if (writer is null) throw new ArgumentNullException(nameof(writer));
 
-    return writer.TryFinally(action, x => x.Empty());
-  }
+      writer.BaseStream.Empty();
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <param name="bytes"></param>
-  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteText(BinaryWriter, string)"/>
-  public static BinaryWriter WriteBytes(this BinaryWriter writer, IEnumerable<byte> bytes)
-  {
-    if (writer is null) throw new ArgumentNullException(nameof(writer));
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+      return writer;
+    }
 
-    writer.Write(bytes.AsArray());
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="action"></param>
+    /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+    public BinaryWriter TryFinallyClear(Action<BinaryWriter> action)
+    {
+      if (writer is null) throw new ArgumentNullException(nameof(writer));
+      if (action is null) throw new ArgumentNullException(nameof(action));
+
+      return writer.TryFinally(action, x => x.Empty());
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="bytes"></param>
+    /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="WriteText(BinaryWriter, string)"/>
+    public BinaryWriter WriteBytes(IEnumerable<byte> bytes)
+    {
+      if (writer is null) throw new ArgumentNullException(nameof(writer));
+      if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+
+      writer.Write(bytes.AsArray());
    
-    return writer;
-  }
+      return writer;
+    }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <param name="text"></param>
-  /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="WriteBytes(BinaryWriter, IEnumerable{byte})"/>
-  public static BinaryWriter WriteText(this BinaryWriter writer, string text)
-  {
-    if (writer is null) throw new ArgumentNullException(nameof(writer));
-    if (text is null) throw new ArgumentNullException(nameof(text));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="WriteBytes(BinaryWriter, IEnumerable{byte})"/>
+    public BinaryWriter WriteText(string text)
+    {
+      if (writer is null) throw new ArgumentNullException(nameof(writer));
+      if (text is null) throw new ArgumentNullException(nameof(text));
 
-    writer.Write(text);
+      writer.Write(text);
 
-    return writer;
+      return writer;
+    }
   }
 }

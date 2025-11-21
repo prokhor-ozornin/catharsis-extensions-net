@@ -97,7 +97,7 @@ public sealed class IPHostEntryExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, IPHostEntry host) => host.IsUnset().Should().Be(host is null || host.IsEmpty()).And.Be(result);
+    static void Test(bool result, IPHostEntry host) => host.IsUnset.Should().Be(host is null || host.IsEmpty).And.Be(result);
   }
 
   /// <summary>
@@ -108,7 +108,7 @@ public sealed class IPHostEntryExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IPHostEntry) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
+      AssertionExtensions.Should(() => ((IPHostEntry) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("host");
 
       Test(true, new IPHostEntry());
       Test(true, new IPHostEntry { HostName = string.Empty, AddressList = [] });
@@ -118,7 +118,7 @@ public sealed class IPHostEntryExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, IPHostEntry host) => host.IsEmpty().Should().Be(host.HostName.IsUnset() && host.AddressList.IsUnset()).And.Be(result);
+    static void Test(bool result, IPHostEntry host) => host.IsEmpty.Should().Be(host.HostName.IsUnset() && host.AddressList.IsUnset()).And.Be(result);
   }
 
   /// <summary>

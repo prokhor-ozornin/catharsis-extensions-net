@@ -20,8 +20,8 @@ public sealed class TextReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TextReader) null).IsEnd()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToStreamReader().IsEnd()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => ((TextReader) null).IsEnd).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.ToStreamReader().IsEnd).ThrowExactly<NotSupportedException>();
 
       Test(System.IO.Stream.Null.ToStreamReader());
       Test(EmptyStream.ToStreamReader());
@@ -36,9 +36,9 @@ public sealed class TextReaderExtensionsTest : Test
       using (reader)
       {
         reader.BaseStream.MoveToStart();
-        reader.IsEnd().Should().Be(reader.BaseStream.Length == 0);
+        reader.IsEnd.Should().Be(reader.BaseStream.Length == 0);
         reader.ToBytesAsync().Await();
-        reader.IsEnd().Should().BeTrue();
+        reader.IsEnd.Should().BeTrue();
       }
     }
   }

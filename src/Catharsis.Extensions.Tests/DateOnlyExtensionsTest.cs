@@ -32,7 +32,7 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, DateOnly date) => date.IsWeekday().Should().Be(result);
+    static void Test(bool result, DateOnly date) => date.IsWeekday.Should().Be(result);
   }
 
   /// <summary>
@@ -57,7 +57,7 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, DateOnly date) => date.IsWeekend().Should().Be(result);
+    static void Test(bool result, DateOnly date) => date.IsWeekend.Should().Be(result);
   }
 
   /// <summary>
@@ -80,22 +80,22 @@ public sealed class DateOnlyExtensionsTest : Test
       date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
       date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.BeEmpty();
 
-      date.Range(date.AddDays(1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 1.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 1.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.Range(date.AddDays(1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 2.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 2.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.Range(date.AddDays(2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
-      date.Range(date.AddDays(-2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
+      date.Range(date.AddDays(2), 1.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
+      date.Range(date.AddDays(-2), 1.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
 
-      date.Range(date.AddDays(3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
-      date.Range(date.AddDays(-3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
+      date.Range(date.AddDays(3), 2.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
+      date.Range(date.AddDays(-3), 2.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
     }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtStartOfYear(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.StartOfYear"/> method.</para>
   /// </summary>
   [Fact]
   public void AtStartOfYear_Method()
@@ -110,11 +110,11 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(DateOnly date) => date.AtStartOfYear().Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1);
+    static void Test(DateOnly date) => date.StartOfYear().Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtEndOfYear(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.EndOfYear"/> method.</para>
   /// </summary>
   [Fact]
   public void AtEndOfYear_Method()
@@ -129,11 +129,11 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(DateOnly date) => date.AtEndOfYear().Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
+    static void Test(DateOnly date) => date.EndOfYear().Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtStartOfMonth(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.StartOfMonth"/> method.</para>
   /// </summary>
   [Fact]
   public void AtStartOfMonth_Method()
@@ -148,11 +148,11 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(DateOnly date) => date.AtStartOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
+    static void Test(DateOnly date) => date.StartOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.AtEndOfMonth(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.EndOfMonth"/> method.</para>
   /// </summary>
   [Fact]
   public void AtEndOfMonth_Method()
@@ -167,7 +167,7 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(DateOnly date) => date.AtEndOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
+    static void Test(DateOnly date) => date.EndOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
   }
 
   /// <summary>

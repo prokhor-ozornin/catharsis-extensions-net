@@ -29,7 +29,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, DateTime date) => date.IsPast().Should().Be(result);
+    static void Test(bool result, DateTime date) => date.IsPast.Should().Be(result);
   }
 
   /// <summary>
@@ -50,7 +50,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, DateTime date) => date.IsFuture().Should().Be(result);
+    static void Test(bool result, DateTime date) => date.IsFuture.Should().Be(result);
   }
 
   /// <summary>
@@ -75,7 +75,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, DateTime date) => date.IsWeekday().Should().Be(result);
+    static void Test(bool result, DateTime date) => date.IsWeekday.Should().Be(result);
   }
 
   /// <summary>
@@ -100,7 +100,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, DateTime date) => date.IsWeekend().Should().Be(result);
+    static void Test(bool result, DateTime date) => date.IsWeekend.Should().Be(result);
   }
 
   /// <summary>
@@ -123,17 +123,17 @@ public sealed class DateTimeExtensionsTest : Test
       date.Range(date, TimeSpan.FromTicks(1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
       date.Range(date, TimeSpan.FromTicks(-1)).Should().BeAssignableTo<IEnumerable<DateTime>>().And.BeEmpty();
 
-      date.Range(date.AddDays(1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 1.Days).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 1.Days).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.Range(date.AddDays(1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
-      date.Range(date.AddDays(-1), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
+      date.Range(date.AddDays(1), 2.Days).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date);
+      date.Range(date.AddDays(-1), 2.Days).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(1).And.Equal(date.AddDays(-1));
 
-      date.Range(date.AddDays(2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
-      date.Range(date.AddDays(-2), 1.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
+      date.Range(date.AddDays(2), 1.Days).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(1));
+      date.Range(date.AddDays(-2), 1.Days).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-2), date.AddDays(-1));
 
-      date.Range(date.AddDays(3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
-      date.Range(date.AddDays(-3), 2.Days()).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
+      date.Range(date.AddDays(3), 2.Days).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
+      date.Range(date.AddDays(-3), 2.Days).Should().BeAssignableTo<IEnumerable<DateTime>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
     }
   }
 
@@ -188,7 +188,7 @@ public sealed class DateTimeExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfYear(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.StartOfYear"/> method.</para>
   /// </summary>
   [Fact]
   public void AtStartOfYear_Method()
@@ -203,11 +203,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtStartOfYear().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfYear().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfYear(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.EndOfYear"/> method.</para>
   /// </summary>
   [Fact]
   public void AtEndOfYear_Method()
@@ -222,11 +222,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtEndOfYear().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfYear().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfMonth(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.StartOfMonth"/> method.</para>
   /// </summary>
   [Fact]
   public void AtStartOfMonth_Method()
@@ -241,11 +241,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtStartOfMonth().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfMonth().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfMonth(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.EndOfMonth"/> method.</para>
   /// </summary>
   [Fact]
   public void AtEndOfMonth_Method()
@@ -260,11 +260,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtEndOfMonth().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfMonth().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfDay(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.StartOfDay"/> method.</para>
   /// </summary>
   [Fact]
   public void AtStartOfDay_Method()
@@ -279,11 +279,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtStartOfDay().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfDay().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfDay(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.EndOfDay"/> method.</para>
   /// </summary>
   [Fact]
   public void AtEndOfDay_Method()
@@ -298,11 +298,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtEndOfDay().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfDay().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfHour(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.StartOfHour"/> method.</para>
   /// </summary>
   [Fact]
   public void AtStartOfHour_Method()
@@ -317,11 +317,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtStartOfHour().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(0).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfHour().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfHour(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.EndOfHour"/> method.</para>
   /// </summary>
   [Fact]
   public void AtEndOfHour_Method()
@@ -336,11 +336,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtEndOfHour().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(59).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfHour().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfMinute(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.StartOfMinute"/> method.</para>
   /// </summary>
   [Fact]
   public void AtStartOfMinute_Method()
@@ -355,11 +355,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtStartOfMinute().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfMinute().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(0);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfMinute(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.EndOfMinute"/> method.</para>
   /// </summary>
   [Fact]
   public void AtEndOfMinute_Method()
@@ -374,11 +374,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtEndOfMinute().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfMinute().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(59);
   }
   
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtStartOfSecond(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.StartOfSecond"/> method.</para>
   /// </summary>
   [Fact]
   public void AtStartOfSecond_Method()
@@ -393,11 +393,11 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtStartOfSecond().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
+    static void Test(DateTime date) => date.StartOfSecond().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
   }
   
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeExtensions.AtEndOfSecond(DateTime)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeExtensions.EndOfSecond"/> method.</para>
   /// </summary>
   [Fact]
   public void AtEndOfSecond_Method()
@@ -412,7 +412,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.AtEndOfSecond().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
+    static void Test(DateTime date) => date.EndOfSecond().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
   }
 
   /// <summary>

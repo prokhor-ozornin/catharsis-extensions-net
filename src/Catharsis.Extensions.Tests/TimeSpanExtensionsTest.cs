@@ -30,7 +30,7 @@ public sealed class TimeSpanExtensionsTest : Test
 
     return;
 
-    static void Test(TimeSpan timespan) => timespan.InThePast().Should().BeCloseTo(DateTimeOffset.UtcNow - timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
+    static void Test(TimeSpan timespan) => timespan.InThePast.Should().BeCloseTo(DateTimeOffset.UtcNow - timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
   }
 
   /// <summary>
@@ -53,7 +53,7 @@ public sealed class TimeSpanExtensionsTest : Test
 
     return;
 
-    static void Test(TimeSpan timespan) => timespan.InTheFuture().Should().BeCloseTo(DateTimeOffset.UtcNow + timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
+    static void Test(TimeSpan timespan) => timespan.InTheFuture.Should().BeCloseTo(DateTimeOffset.UtcNow + timespan, TimeSpan.FromMilliseconds(1)).And.HaveOffset(TimeSpan.Zero).And.BeWithin(TimeSpan.Zero);
   }
 
   /// <summary>
@@ -74,7 +74,7 @@ public sealed class TimeSpanExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, TimeSpan span) => span.IsEmpty().Should().Be(result);
+    static void Test(bool result, TimeSpan span) => span.IsEmpty.Should().Be(result);
   }
 
   /// <summary>

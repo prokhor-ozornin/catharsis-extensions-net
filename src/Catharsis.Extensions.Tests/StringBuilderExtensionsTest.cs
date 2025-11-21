@@ -30,7 +30,7 @@ public sealed class StringBuilderExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, StringBuilder builder) => builder.IsUnset().Should().Be(builder is null || builder.IsEmpty()).And.Be(result);
+    static void Test(bool result, StringBuilder builder) => builder.IsUnset.Should().Be(builder is null || builder.IsEmpty).And.Be(result);
   }
 
   /// <summary>
@@ -41,7 +41,7 @@ public sealed class StringBuilderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((StringBuilder) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => ((StringBuilder) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
       Test(true, new StringBuilder());
       Test(true, new StringBuilder().Append(string.Empty));
@@ -50,7 +50,7 @@ public sealed class StringBuilderExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, StringBuilder builder) => builder.IsEmpty().Should().Be(builder.Length == 0).And.Be(result);
+    static void Test(bool result, StringBuilder builder) => builder.IsEmpty.Should().Be(builder.Length == 0).And.Be(result);
   }
 
   /// <summary>
@@ -72,7 +72,7 @@ public sealed class StringBuilderExtensionsTest : Test
     static void Test(StringBuilder builder)
     {
       builder.Empty().Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
-      builder.IsEmpty().Should().BeTrue();
+      builder.IsEmpty.Should().BeTrue();
     }
   }
 
@@ -124,7 +124,7 @@ public sealed class StringBuilderExtensionsTest : Test
     static void Test(StringBuilder builder)
     {
       builder.TryFinallyClear(builder => builder.With(char.MinValue, char.MaxValue)).Should().BeOfType<StringBuilder>().And.BeSameAs(builder);
-      builder.IsEmpty().Should().BeTrue();
+      builder.IsEmpty.Should().BeTrue();
     }
   }
 

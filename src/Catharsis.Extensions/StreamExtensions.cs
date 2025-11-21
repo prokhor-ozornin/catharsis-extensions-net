@@ -41,7 +41,7 @@ public static class StreamExtensions
 
     using var reader = stream.ToStreamReader(null, false);
 
-    return reader.IsEnd();
+    return reader.IsEnd;
   }
 
   /// <summary>

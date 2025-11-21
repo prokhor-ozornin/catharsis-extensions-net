@@ -37,14 +37,14 @@ public sealed class FieldInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FieldInfoExtensions.IsProtected(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+      AssertionExtensions.Should(() => null.IsProtected).ThrowExactly<ArgumentNullException>().WithParameterName("field");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, FieldInfo field) => field.IsProtected().Should().Be(result);
+    static void Test(bool result, FieldInfo field) => field.IsProtected.Should().Be(result);
   }
 
   /// <summary>
@@ -55,14 +55,14 @@ public sealed class FieldInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FieldInfoExtensions.IsInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+      AssertionExtensions.Should(() => null.IsInternal).ThrowExactly<ArgumentNullException>().WithParameterName("field");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, FieldInfo field) => field.IsInternal().Should().Be(result);
+    static void Test(bool result, FieldInfo field) => field.IsInternal.Should().Be(result);
   }
 
   /// <summary>
@@ -73,13 +73,13 @@ public sealed class FieldInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FieldInfoExtensions.IsProtectedInternal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+      AssertionExtensions.Should(() => null.IsProtectedInternal).ThrowExactly<ArgumentNullException>().WithParameterName("field");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, FieldInfo field) => field.IsProtectedInternal().Should().Be(result);
+    static void Test(bool result, FieldInfo field) => field.IsProtectedInternal.Should().Be(result);
   }
 }

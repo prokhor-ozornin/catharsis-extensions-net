@@ -31,7 +31,7 @@ public sealed class TcpClientExtensionsTest : Test
     {
       using (client)
       {
-        client.IsUnset().Should().Be(result);
+        client.IsUnset.Should().Be(result);
       }
     }
   }
@@ -44,7 +44,7 @@ public sealed class TcpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((TcpClient) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((TcpClient) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("client");
     }
 
     throw new NotImplementedException();
@@ -55,7 +55,7 @@ public sealed class TcpClientExtensionsTest : Test
     {
       using (client)
       {
-        client.IsEmpty().Should().Be(result);
+        client.IsEmpty.Should().Be(result);
       }
     }
   }

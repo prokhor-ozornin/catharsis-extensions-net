@@ -19,14 +19,14 @@ public sealed class TypeExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.IsSealed(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => null.IsSealed).ThrowExactly<ArgumentNullException>().WithParameterName("type");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, Type type) => type.IsSealed().Should().Be(result);
+    static void Test(bool result, Type type) => type.IsSealed.Should().Be(result);
   }
 
   /// <summary>
@@ -37,14 +37,14 @@ public sealed class TypeExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.IsStatic(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => null.IsStatic).ThrowExactly<ArgumentNullException>().WithParameterName("type");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, Type type) => type.IsStatic().Should().Be(result);
+    static void Test(bool result, Type type) => type.IsStatic.Should().Be(result);
   }
 
   /// <summary>
@@ -169,14 +169,14 @@ public sealed class TypeExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.Implementations(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => null.Implementations).ThrowExactly<ArgumentNullException>().WithParameterName("type");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(Type type, params Type[] implementations) => type.Implementations().Should().BeOfType<IEnumerable<Type>>().And.Equal(implementations);
+    static void Test(Type type, params Type[] implementations) => type.Implementations.Should().BeOfType<IEnumerable<Type>>().And.Equal(implementations);
   }
 
   /// <summary>
@@ -334,7 +334,7 @@ public sealed class TypeExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TypeExtensions.HasDefaultConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => null.HasDefaultConstructor).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
       /*typeof(TestObject).Constructor().Should().NotBeNull();
       typeof(string).Constructor().Should().BeNull();*/
@@ -344,7 +344,7 @@ public sealed class TypeExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, Type type) => type.HasDefaultConstructor().Should().Be(result);
+    static void Test(bool result, Type type) => type.HasDefaultConstructor.Should().Be(result);
   }
 
   /// <summary>

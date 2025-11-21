@@ -611,7 +611,7 @@ public sealed class BasicTypesExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => (-1).Nulls()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => (-1).Nulls).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
     }
 
     throw new NotImplementedException();
@@ -692,8 +692,8 @@ public sealed class BasicTypesExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => int.MinValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
-      AssertionExtensions.Should(() => int.MaxValue.Days()).ThrowExactly<ArgumentOutOfRangeException>();
+      AssertionExtensions.Should(() => int.MinValue.Days).ThrowExactly<ArgumentOutOfRangeException>();
+      AssertionExtensions.Should(() => int.MaxValue.Days).ThrowExactly<ArgumentOutOfRangeException>();
 
       new[] { -1, 0, 1 }.ForEach(Test);
     }
@@ -702,7 +702,7 @@ public sealed class BasicTypesExtensionsTest : Test
 
     static void Test(int count)
     {
-      var days = count.Days();
+      var days = count.Days;
 
       days.Days.Should().Be(count);
       days.Hours.Should().Be(0);
@@ -726,8 +726,8 @@ public sealed class BasicTypesExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => int.MinValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
-      AssertionExtensions.Should(() => int.MaxValue.Hours()).ThrowExactly<ArgumentOutOfRangeException>();
+      AssertionExtensions.Should(() => int.MinValue.Hours).ThrowExactly<ArgumentOutOfRangeException>();
+      AssertionExtensions.Should(() => int.MaxValue.Hours).ThrowExactly<ArgumentOutOfRangeException>();
 
       new[] { -1, 0, 1 }.ForEach(Test);
     }
@@ -736,7 +736,7 @@ public sealed class BasicTypesExtensionsTest : Test
 
     static void Test(int count)
     {
-      var hours = count.Hours();
+      var hours = count.Hours;
 
       hours.Days.Should().Be(0);
       hours.Hours.Should().Be(count);
@@ -767,7 +767,7 @@ public sealed class BasicTypesExtensionsTest : Test
 
     static void Test(int count)
     {
-      var hours = count.Minutes();
+      var hours = count.Minutes;
 
       hours.Days.Should().Be(0);
       hours.Hours.Should().Be(0);
@@ -798,7 +798,7 @@ public sealed class BasicTypesExtensionsTest : Test
 
     static void Test(int count)
     {
-      var seconds = count.Seconds();
+      var seconds = count.Seconds;
 
       seconds.Days.Should().Be(0);
       seconds.Hours.Should().Be(0);
@@ -829,7 +829,7 @@ public sealed class BasicTypesExtensionsTest : Test
 
     static void Test(int count)
     {
-      var milliseconds = count.Milliseconds();
+      var milliseconds = count.Milliseconds;
 
       milliseconds.Days.Should().Be(0);
       milliseconds.Hours.Should().Be(0);
@@ -860,7 +860,7 @@ public sealed class BasicTypesExtensionsTest : Test
 
     static void Test(long count)
     {
-      var ticks = count.Ticks();
+      var ticks = count.Ticks;
 
       ticks.Days.Should().Be(0);
       ticks.Hours.Should().Be(0);

@@ -18,360 +18,334 @@ namespace Catharsis.Extensions;
 /// <seealso cref="IEnumerable{T}"/>
 public static class IEnumerableExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
   /// <param name="enumerable"></param>
-  /// <param name="action"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ForEach{T}(IEnumerable{T}, Action{int, T})"/>
-  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action) => action is not null ? enumerable.ForEach((_, element) => action(element)) : throw new ArgumentNullException(nameof(action));
-
-  /// <summary>
-  ///   <para>Iterates through a sequence, calling a delegate for each element in it.</para>
-  /// </summary>
-  /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-  /// <param name="enumerable">Source sequence for iteration.</param>
-  /// <param name="action">Delegate to be called for each element in a sequence.</param>
-  /// <returns>Back self-reference to the given <paramref name="enumerable"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ForEach{T}(IEnumerable{T}, Action{T})"/>
-  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<int, T> action)
+  /// <typeparam name="T"></typeparam>
+  extension<T>(IEnumerable<T> enumerable)
   {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-    if (action is null) throw new ArgumentNullException(nameof(action));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="action"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ForEach{T}(IEnumerable{T}, Action{int, T})"/>
+    public IEnumerable<T> ForEach(Action<T> action) => action is not null ? enumerable.ForEach((_, element) => action(element)) : throw new ArgumentNullException(nameof(action));
 
-    var index = 0;
-
-    foreach (var element in enumerable)
+    /// <summary>
+    ///   <para>Iterates through a sequence, calling a delegate for each element in it.</para>
+    /// </summary>
+    /// <param name="action">Delegate to be called for each element in a sequence.</param>
+    /// <returns>Back self-reference to the given <paramref name="enumerable"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ForEach{T}(IEnumerable{T}, Action{T})"/>
+    public IEnumerable<T> ForEach(Action<int, T> action)
     {
-      action(index, element);
-      index++;
-    }
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+      if (action is null) throw new ArgumentNullException(nameof(action));
 
-    return enumerable;
-  }
+      var index = 0;
 
-  /// <summary>
-  ///   <para>Concatenates all elements in a sequence into a string, using specified separator.</para>
-  /// </summary>
-  /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-  /// <param name="enumerable">Source sequence of elements.</param>
-  /// <param name="separator">String to use as a separator between concatenated elements from <paramref name="enumerable"/>.</param>
-  /// <returns>String which is formed from string representation of each element in a <paramref name="enumerable"/> with a <paramref name="separator"/> between them.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static string Join<T>(this IEnumerable<T> enumerable, string separator = null)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    separator ??= string.Empty;
-
-    var result = new StringBuilder();
-
-    foreach (var element in enumerable)
-    {
-      var value = element?.ToInvariantString() ?? string.Empty;
-
-      if (value.Length == 0)
+      foreach (var element in enumerable)
       {
-        continue;
+        action(index, element);
+        index++;
       }
 
-      result.Append(value);
+      return enumerable;
+    }
 
-      if (separator.Length > 0)
+    /// <summary>
+    ///   <para>Concatenates all elements in a sequence into a string, using specified separator.</para>
+    /// </summary>
+    /// <param name="separator">String to use as a separator between concatenated elements from <paramref name="enumerable"/>.</param>
+    /// <returns>String which is formed from string representation of each element in a <paramref name="enumerable"/> with a <paramref name="separator"/> between them.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public string Join(string separator = null)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      separator ??= string.Empty;
+
+      var result = new StringBuilder();
+
+      foreach (var element in enumerable)
       {
-        result.Append(separator);
+        var value = element?.ToInvariantString() ?? string.Empty;
+
+        if (value.Length == 0)
+        {
+          continue;
+        }
+
+        result.Append(value);
+
+        if (separator.Length > 0)
+        {
+          result.Append(separator);
+        }
+      }
+
+      return result.Length > 0 ? result.ToString(0, result.Length - separator.Length) : string.Empty;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public IEnumerable<T> Repeat(int count)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      switch (count)
+      {
+        case < 0:
+          throw new ArgumentOutOfRangeException(nameof(count));
+
+        case 0:
+          return [];
+      }
+
+      var result = enumerable;
+
+      (count - 1).Times(() => result = result.Concat(enumerable));
+
+      return result;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="offset"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public IEnumerable<T> Range(int? offset = null, int? count = null)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+      if (offset is < 0) throw new ArgumentOutOfRangeException(nameof(offset));
+      if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+      if (offset is not null)
+      {
+        enumerable = enumerable.Skip(offset.Value);
+      }
+
+      if (count is not null)
+      {
+        enumerable = enumerable.Take(count.Value);
+      }
+
+      return enumerable;
+    }
+
+    /// <summary>
+    ///   <para>Picks up random element from a specified sequence and returns it.</para>
+    /// </summary>
+    /// <param name="random"></param>
+    /// <returns>Random member of <paramref name="enumerable"/> sequence. If <paramref name="enumerable"/> contains no elements, returns <c>null</c>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public T Random(Random random = null)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      var randomizer = random ?? new Random();
+      var count = enumerable.Count();
+
+      return count > 0 ? enumerable.ElementAt(randomizer.Next(count)) : default;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="random"></param>
+    /// <returns>Back self-reference to the given <paramref name="enumerable"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public IEnumerable<T> Randomize(Random random = null)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      var randomizer = random ?? new Random();
+
+      return enumerable.OrderBy(_ => randomizer.Next());
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <param name="comparer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="EndsWith{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+    public bool StartsWith(IEnumerable<T> other, IEqualityComparer<T> comparer = null)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+      if (other is null) throw new ArgumentNullException(nameof(other));
+
+      return enumerable.Take(other.Count()).SequenceEqual(other, comparer);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <param name="comparer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="StartsWith{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+    public bool EndsWith(IEnumerable<T> other, IEqualityComparer<T> comparer = null)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+      if (other is null) throw new ArgumentNullException(nameof(other));
+
+      return enumerable.TakeLast(other.Count()).SequenceEqual(other, comparer);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="other"></param>
+    /// <param name="comparer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
+    public bool Contains(IEnumerable<T> other, IEqualityComparer<T> comparer = null)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+      if (other is null) throw new ArgumentNullException(nameof(other));
+
+      return !enumerable.Except(other, comparer).Any();
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="comparer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public bool ContainsUnique(IEqualityComparer<T> comparer = null) => !enumerable?.GroupBy(x => x, comparer).Where(group => group.Count() > 1).Select(group => group.Key).Any() ?? throw new ArgumentNullException(nameof(enumerable));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public bool ContainsNull
+    {
+      get
+      {
+        if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+        return enumerable.Any(element => element is null);
       }
     }
 
-    return result.Length > 0 ? result.ToString(0, result.Length - separator.Length) : string.Empty;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="count"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static IEnumerable<T> Repeat<T>(this IEnumerable<T> enumerable, int count)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    switch (count)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public bool ContainsDefault
     {
-      case < 0:
-        throw new ArgumentOutOfRangeException(nameof(count));
+      get
+      {
+        if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
 
-      case 0:
-        return [];
+        return enumerable.Any(element => element.Equals(default(T)));
+      }
     }
 
-    var result = enumerable;
-
-    (count - 1).Times(() => result = result.Concat(enumerable));
-
-    return result;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="offset"></param>
-  /// <param name="count"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static IEnumerable<T> Range<T>(this IEnumerable<T> enumerable, int? offset = null, int? count = null)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-    if (offset is < 0) throw new ArgumentOutOfRangeException(nameof(offset));
-    if (count is < 0) throw new ArgumentOutOfRangeException(nameof(count));
-
-    if (offset is not null)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="superset"></param>
+    /// <param name="comparer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="superset"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsSuperset{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+    public bool IsSubset(IEnumerable<T> superset, IEqualityComparer<T> comparer = null)
     {
-      enumerable = enumerable.Skip(offset.Value);
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+      if (superset is null) throw new ArgumentNullException(nameof(superset));
+
+      return !enumerable.Except(superset, comparer).Any();
     }
 
-    if (count is not null)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="subset"></param>
+    /// <param name="comparer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="subset"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsSubset{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+    public bool IsSuperset(IEnumerable<T> subset, IEqualityComparer<T> comparer = null) => subset.IsSubset(enumerable, comparer);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="reversed"></param>
+    /// <param name="comparer"></param>
+    /// <returns>Back self-reference to the given <paramref name="enumerable"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="reversed"/> is <see langword="null"/>.</exception>
+    public bool IsReversed(IEnumerable<T> reversed, IEqualityComparer<T> comparer = null)
     {
-      enumerable = enumerable.Take(count.Value);
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+      if (reversed is null) throw new ArgumentNullException(nameof(reversed));
+
+      return enumerable.SequenceEqual(reversed.Reverse(), comparer);
     }
 
-    return enumerable;
-  }
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public T[] AsArray() => enumerable is not null ? enumerable as T[] ?? enumerable.ToArray() : throw new ArgumentNullException(nameof(enumerable));
 
-  /// <summary>
-  ///   <para>Picks up random element from a specified sequence and returns it.</para>
-  /// </summary>
-  /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-  /// <param name="enumerable">Source sequence of elements.</param>
-  /// <param name="random"></param>
-  /// <returns>Random member of <paramref name="enumerable"/> sequence. If <paramref name="enumerable"/> contains no elements, returns <c>null</c>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static T Random<T>(this IEnumerable<T> enumerable, Random random = null)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public IEnumerable<T> AsNotNullable() => enumerable?.Where(element => element is not null) ?? throw new ArgumentNullException(nameof(enumerable));
 
-    var randomizer = random ?? new Random();
-    var count = enumerable.Count();
-
-    return count > 0 ? enumerable.ElementAt(randomizer.Next(count)) : default;
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="random"></param>
-  /// <returns>Back self-reference to the given <paramref name="enumerable"/>.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static IEnumerable<T> Randomize<T>(this IEnumerable<T> enumerable, Random random = null)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    var randomizer = random ?? new Random();
-
-    return enumerable.OrderBy(_ => randomizer.Next());
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="other"></param>
-  /// <param name="comparer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="EndsWith{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
-  public static bool StartsWith<T>(this IEnumerable<T> enumerable, IEnumerable<T> other, IEqualityComparer<T> comparer = null)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-    if (other is null) throw new ArgumentNullException(nameof(other));
-
-    return enumerable.Take(other.Count()).SequenceEqual(other, comparer);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="other"></param>
-  /// <param name="comparer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="StartsWith{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
-  public static bool EndsWith<T>(this IEnumerable<T> enumerable, IEnumerable<T> other, IEqualityComparer<T> comparer = null)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-    if (other is null) throw new ArgumentNullException(nameof(other));
-
-    return enumerable.TakeLast(other.Count()).SequenceEqual(other, comparer);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="other"></param>
-  /// <param name="comparer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
-  public static bool Contains<T>(this IEnumerable<T> enumerable, IEnumerable<T> other, IEqualityComparer<T> comparer = null)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-    if (other is null) throw new ArgumentNullException(nameof(other));
-
-    return !enumerable.Except(other, comparer).Any();
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="comparer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static bool ContainsUnique<T>(this IEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => !enumerable?.GroupBy(x => x, comparer).Where(group => group.Count() > 1).Select(group => group.Key).Any() ?? throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static bool ContainsNull<T>(this IEnumerable<T> enumerable)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    return enumerable.Any(element => element is null);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static bool ContainsDefault<T>(this IEnumerable<T> enumerable)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    return enumerable.Any(element => element.Equals(default(T)));
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="superset"></param>
-  /// <param name="comparer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="superset"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsSuperset{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
-  public static bool IsSubset<T>(this IEnumerable<T> enumerable, IEnumerable<T> superset, IEqualityComparer<T> comparer = null)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-    if (superset is null) throw new ArgumentNullException(nameof(superset));
-
-    return !enumerable.Except(superset, comparer).Any();
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="subset"></param>
-  /// <param name="comparer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="subset"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="IsSubset{T}(IEnumerable{T}, IEnumerable{T}, IEqualityComparer{T})"/>
-  public static bool IsSuperset<T>(this IEnumerable<T> enumerable, IEnumerable<T> subset, IEqualityComparer<T> comparer = null) => subset.IsSubset(enumerable, comparer);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="reversed"></param>
-  /// <param name="comparer"></param>
-  /// <returns>Back self-reference to the given <paramref name="enumerable"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="reversed"/> is <see langword="null"/>.</exception>
-  public static bool IsReversed<T>(this IEnumerable<T> enumerable, IEnumerable<T> reversed, IEqualityComparer<T> comparer = null)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-    if (reversed is null) throw new ArgumentNullException(nameof(reversed));
-
-    return enumerable.SequenceEqual(reversed.Reverse(), comparer);
-  }
-
-#if NET10_0_OR_GREATER
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="comparer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static bool IsOrdered<T>(this IEnumerable<T> enumerable, IComparer<T> comparer = null) => enumerable?.Order(comparer).SequenceEqual(enumerable) ?? throw new ArgumentNullException(nameof(enumerable));
-#endif
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static T[] AsArray<T>(this IEnumerable<T> enumerable) => enumerable is not null ? enumerable as T[] ?? enumerable.ToArray() : throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static IEnumerable<T> AsNotNullable<T>(this IEnumerable<T> enumerable) => enumerable?.Where(element => element is not null) ?? throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static IEnumerable<T> WithCancellation<T>(this IEnumerable<T> enumerable, CancellationToken cancellation)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    foreach (var element in enumerable)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public IEnumerable<T> WithCancellation(CancellationToken cancellation)
     {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
       cancellation.ThrowIfCancellationRequested();
 
-      yield return element;
+      foreach (var element in enumerable)
+      {
+        cancellation.ThrowIfCancellationRequested();
+
+        yield return element;
+      }
     }
+    
+    #if NET10_0_OR_GREATER
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="enumerable"></param>
+    /// <param name="comparer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public static bool IsOrdered<T>(this IEnumerable<T> enumerable, IComparer<T> comparer = null) => enumerable?.Order(comparer).SequenceEqual(enumerable) ?? throw new ArgumentNullException(nameof(enumerable));
+  #endif
   }
+
 
   /// <summary>
   ///   <para>Returns BASE64-encoded representation of a sequence sequence.</para>
@@ -387,7 +361,7 @@ public static class IEnumerableExtensions
   /// <param name="enumerable"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static string ToHex(this IEnumerable<byte> enumerable)
+  /*public static string ToHex(this IEnumerable<byte> enumerable)
   {
     if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
 
@@ -397,7 +371,7 @@ public static class IEnumerableExtensions
     return BitConverter.ToString(enumerable.AsArray()).Replace("-", "");
   #endif
   }
-
+*/
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -978,7 +952,7 @@ public static class IEnumerableExtensions
     return enumerable;
   }
 
-#if !NET10_0_OR_GREATER
+/*#if !NET10_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -995,7 +969,7 @@ public static class IEnumerableExtensions
       yield return await Task.FromResult(element).ConfigureAwait(false);
     }
   }
-#endif
+#endif*/
 
   /// <summary>
   ///   <para></para>
@@ -1025,7 +999,7 @@ public static class IEnumerableExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   public static SortedSet<T> ToSortedSet<T>(this IEnumerable<T> enumerable, IComparer<T> comparer = null) => enumerable is not null ? new SortedSet<T>(enumerable, comparer) : throw new ArgumentNullException(nameof(enumerable));
 
-#if NET10_0_OR_GREATER
+/*#if NET10_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -1045,7 +1019,7 @@ public static class IEnumerableExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   public static FrozenSet<T> ToFrozenSet<T>(this IEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => enumerable is not null ? FrozenSet.ToFrozenSet(enumerable, comparer) : throw new ArgumentNullException(nameof(enumerable));
-#endif
+#endif*/
 
   /// <summary>
   ///   <para></para>
@@ -1065,7 +1039,7 @@ public static class IEnumerableExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   public static Queue<T> ToQueue<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new Queue<T>(enumerable) : throw new ArgumentNullException(nameof(enumerable));
 
-#if NET10_0_OR_GREATER
+/*#if NET10_0_OR_GREATER
   /// <summary>
   ///   <para></para>
   /// </summary>
@@ -1085,7 +1059,7 @@ public static class IEnumerableExtensions
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   public static ImmutableQueue<T> ToImmutableQueue<T>(this IEnumerable<T> enumerable) => enumerable is not null ? ImmutableQueue.CreateRange(enumerable) : throw new ArgumentNullException(nameof(enumerable));
-#endif
+#endif*/
 
   /// <summary>
   ///   <para></para>

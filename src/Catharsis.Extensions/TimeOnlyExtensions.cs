@@ -7,75 +7,72 @@ namespace Catharsis.Extensions;
 /// <seealso cref="TimeOnly"/>
 public static class TimeOnlyExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="from"></param>
-  /// <param name="to"></param>
-  /// <param name="offset"></param>
-  /// <returns></returns>
-  public static IEnumerable<TimeOnly> Range(this TimeOnly from, TimeOnly to, TimeSpan offset)
+  /// <param name="time"></param>
+  extension(TimeOnly time)
   {
-    if (from == to || offset == TimeSpan.Zero)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="to"></param>
+    /// <param name="offset"></param>
+    /// <returns></returns>
+    public IEnumerable<TimeOnly> Range(TimeOnly to, TimeSpan offset)
     {
-      yield break;
+      if (time == to || offset == TimeSpan.Zero)
+      {
+        yield break;
+      }
+
+      var dateFrom = offset > TimeSpan.Zero ? time.Min(to) : time.Max(to);
+      var dateTo = offset > TimeSpan.Zero ? time.Max(to) : time.Min(to);
+
+      for (var date = dateFrom; date < dateTo; date = date.Add(offset))
+      {
+        yield return date;
+      }
     }
 
-    var dateFrom = offset > TimeSpan.Zero ? from.Min(to) : from.Max(to);
-    var dateTo = offset > TimeSpan.Zero ? from.Max(to) : from.Min(to);
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="TimeOnlyExtensions.EndOfHour"/>
+    public TimeOnly StartOfHour => new(time.Hour, 0, 0, 0);
 
-    for (var date = dateFrom; date < dateTo; date = date.Add(offset))
-    {
-      yield return date;
-    }
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="TimeOnlyExtensions.StartOfHour"/>
+    public TimeOnly EndOfHour => new(time.Hour, 59, 59, 999);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="TimeOnlyExtensions.EndOfMinute"/>
+    public TimeOnly StartOfMinute => new(time.Hour, time.Minute, 0, 0);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="TimeOnlyExtensions.StartOfMinute"/>
+    public TimeOnly EndOfMinute => new(time.Hour, time.Minute, 59, 999);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="TimeOnlyExtensions.EndOfSecond"/>
+    public TimeOnly StartOfSecond => new(time.Hour, time.Minute, time.Second, 0);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="TimeOnlyExtensions.StartOfSecond"/>
+    public TimeOnly EndOfSecond => new(time.Hour, time.Minute, time.Second, 999);
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtEndOfHour(TimeOnly)"/>
-  public static TimeOnly AtStartOfHour(this TimeOnly time) => new(time.Hour, 0, 0, 0);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtStartOfHour(TimeOnly)"/>
-  public static TimeOnly AtEndOfHour(this TimeOnly time) => new(time.Hour, 59, 59, 999);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtEndOfMinute(TimeOnly)"/>
-  public static TimeOnly AtStartOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 0, 0);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtStartOfMinute(TimeOnly)"/>
-  public static TimeOnly AtEndOfMinute(this TimeOnly time) => new(time.Hour, time.Minute, 59, 999);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtEndOfSecond(TimeOnly)"/>
-  public static TimeOnly AtStartOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 0);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="time"></param>
-  /// <returns></returns>
-  /// <seealso cref="AtStartOfSecond(TimeOnly)"/>
-  public static TimeOnly AtEndOfSecond(this TimeOnly time) => new(time.Hour, time.Minute, time.Second, 999);
 }
 #endif
