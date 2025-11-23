@@ -17,7 +17,7 @@ public static class XDocumentExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsEmpty(XDocument)"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => document is null || document.IsEmpty;
 
     /// <summary>
@@ -183,6 +183,11 @@ public static class XDocumentExtensions
 
       return stream.ToArray();
     }
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => document.ToBytes();
 
     /// <summary>
     ///   <para></para>
@@ -218,6 +223,11 @@ public static class XDocumentExtensions
 
       return writer.ToString();
     }
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string Text => document.ToText();
 
     /// <summary>
     ///   <para></para>

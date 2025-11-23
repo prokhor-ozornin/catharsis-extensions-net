@@ -23,7 +23,7 @@ public static class IPHostEntryExtensions
     {
       if (host is null) throw new ArgumentNullException(nameof(host));
 
-      var address = host.HostName.IsUnset() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
+      var address = host.HostName.IsUnset ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
 
       if (address is null)
       {
@@ -36,6 +36,11 @@ public static class IPHostEntryExtensions
 
       return reply?.Status == IPStatus.Success;
     }
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public bool IsAvailable => host.IsAvailable();
 
     /// <summary>
     ///   <para></para>
@@ -48,7 +53,7 @@ public static class IPHostEntryExtensions
     {
       if (host is null) throw new ArgumentNullException(nameof(host));
 
-      var address = host.HostName.IsUnset() ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
+      var address = host.HostName.IsUnset ? host.AddressList?.FirstOrDefault()?.ToString() : host.HostName;
 
       if (address is null)
       {
@@ -66,7 +71,7 @@ public static class IPHostEntryExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsEmpty(IPHostEntry)"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => host is null || host.IsEmpty;
 
     /// <summary>
@@ -74,8 +79,8 @@ public static class IPHostEntryExtensions
     /// </summary>
     /// <value>If the specified <paramref name="host"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="host"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(IPHostEntry)"/>
-    public bool IsEmpty => host is not null ? host.HostName.IsUnset() && host.AddressList.IsUnset() : throw new ArgumentNullException(nameof(host));
+    /// <seealso cref="IsUnset"/>
+    public bool IsEmpty => host is not null ? host.HostName.IsUnset && host.AddressList.IsUnset() : throw new ArgumentNullException(nameof(host));
 
     /// <summary>
     ///   <para>Creates a copy of the specified <see cref="IPHostEntry"/> with the same properties as the original.</para>

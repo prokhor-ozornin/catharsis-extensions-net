@@ -41,6 +41,16 @@ public static class ArrayExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public byte[] Bytes => array.ToBytes();
+    
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => array.ToText();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="array"/> is <see langword="null"/>.</exception>
     public byte[] FromBase64() => array is not null ? Convert.FromBase64CharArray(array, 0, array.Length) : throw new ArgumentNullException(nameof(array));
@@ -60,21 +70,16 @@ public static class ArrayExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="array"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToText(byte[], Encoding)"/>
     public string ToText() => array is not null ? array.Length > 0 ? new string(array) : string.Empty : throw new ArgumentNullException(nameof(array));
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => array.ToBytes();
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => array.ToText();
   }
 
   /// <param name="array"></param>
   extension(byte[] array)
   {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => array.ToText();
+
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -92,15 +97,5 @@ public static class ArrayExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="array"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToText(char[])"/>
     public string ToText(Encoding encoding = null) => array is not null ? array.Length > 0 ? (encoding ?? Encoding.Default).GetString(array) : string.Empty : throw new ArgumentNullException(nameof(array));
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public ByteArrayContent ByteArrayContent => array.ToByteArrayContent();
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => array.ToText();
   }
 }

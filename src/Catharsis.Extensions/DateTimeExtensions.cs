@@ -19,29 +19,114 @@ public static class DateTimeExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsFuture(DateTime)"/>
+    /// <seealso cref="IsFuture"/>
     public bool IsPast => date.ToUniversalTime() < DateTime.UtcNow;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsPast(DateTime)"/>
+    /// <seealso cref="IsPast"/>
     public bool IsFuture => date.ToUniversalTime() > DateTime.UtcNow;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsWeekend(DateTime)"/>
+    /// <seealso cref="IsWeekend"/>
     public bool IsWeekday => !date.IsWeekend;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsWeekday(DateTime)"/>
+    /// <seealso cref="IsWeekday"/>
     public bool IsWeekend => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
+
+    /// <summary>
+    ///   <para>For a given date/time instance returns a new date/time, representing the start of year.</para>
+    /// </summary>
+    /// <value>New date/time object instance that represents the start of year of the specified <paramref name="date"/>.</value>
+    /// <seealso cref="EndOfYear"/>
+    public DateTime StartOfYear => new(date.Year, 1, 1, 0, 0, 0, date.Kind);
+
+    /// <summary>
+    ///   <para>For a given date/time instance returns a new date/time, representing the end of current year.</para>
+    /// </summary>
+    /// <value>New date/time object instance that represents the end of year of the specified <paramref name="date"/>.</value>
+    /// <seealso cref="StartOfYear"/>
+    public DateTime EndOfYear => new(date.Year, 12, 31, 23, 59, 59, 999, date.Kind);
+
+    /// <summary>
+    ///   <para>For a given date/time instance returns a new date/time, representing the start of month.</para>
+    /// </summary>
+    /// <value>New date/time object instance that represents the start of month of the specified <paramref name="date"/>.</value>
+    /// <seealso cref="EndOfMonth"/>
+    public DateTime StartOfMonth => new(date.Year, date.Month, 1, 0, 0, 0, date.Kind);
+
+    /// <summary>
+    ///   <para>For a given date/time instance returns a new date/time, representing the end of current month.</para>
+    /// </summary>
+    /// <value>New date/time object instance that represents the end of month of the specified <paramref name="date"/>.</value>
+    /// <seealso cref="StartOfMonth"/>
+    public DateTime EndOfMonth => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Kind);
+
+    /// <summary>
+    ///   <para>For a given date/time instance returns a new date/time, representing the start of day.</para>
+    /// </summary>
+    /// <value>New date/time object instance that represent the start of day of the specified <paramref name="date"/>.</value>
+    /// <remarks>Date component (year, month, day) remains the same, while time component (hour/minute/second) is changed to represent the beginning of the day (hour : 0, minute : 0, second : 0).</remarks>
+    /// <seealso cref="EndOfDay"/>
+    public DateTime StartOfDay => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Kind);
+
+    /// <summary>
+    ///   <para>For a given date/time instance returns a new date/time, representing the end of current day.</para>
+    /// </summary>
+    /// <value>New date/time object instance that represents the end of day of the specified <paramref name="date"/>.</value>
+    /// <seealso cref="StartOfDay"/>
+    public DateTime EndOfDay => new(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Kind);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfHour"/>
+    public DateTime StartOfHour => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Kind);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfHour"/>
+    public DateTime EndOfHour => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Kind);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfMinute"/>
+    public DateTime StartOfMinute => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Kind);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfMinute"/>
+    public DateTime EndOfMinute => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Kind);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfSecond"/>
+    public DateTime StartOfSecond => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Kind);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfSecond"/>
+    public DateTime EndOfSecond => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Kind);
 
     /// <summary>
     ///   <para></para>
@@ -80,91 +165,6 @@ public static class DateTimeExtensions
     /// <returns><c>true</c> if both <paramref name="date"/> and <paramref name="right"/> have equal time component.</returns>
     /// <seealso cref="EqualsByDate(DateTime, DateTime)"/>
     public bool EqualsByTime(DateTime right) => date.Hour == right.Hour && date.Minute == right.Minute && date.Second == right.Second && date.Millisecond == right.Millisecond;
-
-    /// <summary>
-    ///   <para>For a given date/time instance returns a new date/time, representing the start of year.</para>
-    /// </summary>
-    /// <value>New date/time object instance that represents the start of year of the specified <paramref name="date"/>.</value>
-    /// <seealso cref="DateTimeExtensions.EndOfYear"/>
-    public DateTime StartOfYear => new(date.Year, 1, 1, 0, 0, 0, date.Kind);
-
-    /// <summary>
-    ///   <para>For a given date/time instance returns a new date/time, representing the end of current year.</para>
-    /// </summary>
-    /// <value>New date/time object instance that represents the end of year of the specified <paramref name="date"/>.</value>
-    /// <seealso cref="DateTimeExtensions.StartOfYear"/>
-    public DateTime EndOfYear => new(date.Year, 12, 31, 23, 59, 59, 999, date.Kind);
-
-    /// <summary>
-    ///   <para>For a given date/time instance returns a new date/time, representing the start of month.</para>
-    /// </summary>
-    /// <value>New date/time object instance that represents the start of month of the specified <paramref name="date"/>.</value>
-    /// <seealso cref="DateTimeExtensions.EndOfMonth"/>
-    public DateTime StartOfMonth => new(date.Year, date.Month, 1, 0, 0, 0, date.Kind);
-
-    /// <summary>
-    ///   <para>For a given date/time instance returns a new date/time, representing the end of current month.</para>
-    /// </summary>
-    /// <value>New date/time object instance that represents the end of month of the specified <paramref name="date"/>.</value>
-    /// <seealso cref="DateTimeExtensions.StartOfMonth"/>
-    public DateTime EndOfMonth => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Kind);
-
-    /// <summary>
-    ///   <para>For a given date/time instance returns a new date/time, representing the start of day.</para>
-    /// </summary>
-    /// <value>New date/time object instance that represent the start of day of the specified <paramref name="date"/>.</value>
-    /// <remarks>Date component (year, month, day) remains the same, while time component (hour/minute/second) is changed to represent the beginning of the day (hour : 0, minute : 0, second : 0).</remarks>
-    /// <seealso cref="DateTimeExtensions.EndOfDay"/>
-    public DateTime StartOfDay => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Kind);
-
-    /// <summary>
-    ///   <para>For a given date/time instance returns a new date/time, representing the end of current day.</para>
-    /// </summary>
-    /// <value>New date/time object instance that represents the end of day of the specified <paramref name="date"/>.</value>
-    /// <seealso cref="DateTimeExtensions.StartOfDay"/>
-    public DateTime EndOfDay => new(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Kind);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeExtensions.EndOfHour"/>
-    public DateTime StartOfHour => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Kind);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeExtensions.StartOfHour"/>
-    public DateTime EndOfHour => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Kind);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeExtensions.EndOfMinute"/>
-    public DateTime StartOfMinute => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Kind);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeExtensions.StartOfMinute"/>
-    public DateTime EndOfMinute => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Kind);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeExtensions.EndOfSecond"/>
-    public DateTime StartOfSecond => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Kind);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeExtensions.StartOfSecond"/>
-    public DateTime EndOfSecond => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Kind);
 
     /// <summary>
     ///   <para></para>

@@ -662,7 +662,7 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text) => text.IsUnset().Should().Be(result);
+    static void Test(bool result, string text) => text.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -673,14 +673,14 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.IsUpperCased(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => null.IsUpperCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, string text) => text.IsUpperCased().Should().Be(result);
+    static void Test(bool result, string text) => text.IsUpperCased.Should().Be(result);
   }
 
   /// <summary>
@@ -691,14 +691,14 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.IsLowerCased(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => null.IsLowerCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, string text) => text.IsLowerCased().Should().Be(result);
+    static void Test(bool result, string text) => text.IsLowerCased.Should().Be(result);
   }
 
   /// <summary>
@@ -722,7 +722,7 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text) => text.IsBoolean().Should().Be(result);
+    static void Test(bool result, string text) => text.IsBoolean.Should().Be(result);
   }
 
   /// <summary>
@@ -1261,7 +1261,7 @@ public sealed class StringExtensionsTest : Test
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="StringExtensions.Execute(string, IEnumerable{string})"/></description></item>
-  ///     <item><description><see cref="StringExtensions.Execute(string, string[])"/></description></item>
+  ///     <item><description><see cref="StringExtensions.ToProcess(string,string[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -1274,7 +1274,7 @@ public sealed class StringExtensionsTest : Test
 
       string[] arguments = ["dir"];
 
-      var process = Shell.Execute(arguments);
+      var process = Shell.ToProcess(arguments);
 
       process.Finish(TimeSpan.FromSeconds(5));
 
@@ -1317,8 +1317,8 @@ public sealed class StringExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Execute(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("command");
-      AssertionExtensions.Should(() => string.Empty.Execute([])).ThrowExactly<InvalidOperationException>();
+      AssertionExtensions.Should(() => StringExtensions.ToProcess(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("command");
+      AssertionExtensions.Should(() => string.Empty.ToProcess([])).ThrowExactly<InvalidOperationException>();
 
       static void Test(string text)
       {

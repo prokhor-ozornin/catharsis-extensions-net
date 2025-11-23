@@ -14,13 +14,13 @@ public static class TextReaderExtensions
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <typeparam name="TReader"></typeparam>
+  /// <typeparam name="T"></typeparam>
   /// <param name="reader"></param>
   /// <param name="count"></param>
   /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentOutOfRangeException"></exception>
-  public static TReader Skip<TReader>(this TReader reader, int count) where TReader : TextReader
+  public static T Skip<T>(this T reader, int count) where T : TextReader
   {
     if (reader is null) throw new ArgumentNullException(nameof(reader));
     if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -55,6 +55,11 @@ public static class TextReaderExtensions
         yield return line;
       }
     }
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string[] Lines => reader.Lines().ToArray();
 
     /// <summary>
     ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a list of strings, using default system-dependent string separator.</para>
@@ -182,6 +187,11 @@ public static class TextReaderExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToBytesAsync(TextReader, Encoding)"/>
     public byte[] ToBytes(Encoding encoding = null) => reader.ToText().ToBytes(encoding);
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => reader.ToBytes();
 
     /// <summary>
     ///   <para></para>
@@ -199,6 +209,11 @@ public static class TextReaderExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToTextAsync(TextReader)"/>
     public string ToText() => reader?.ReadToEnd() ?? throw new ArgumentNullException(nameof(reader));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string Text => reader.ToText();
 
     /// <summary>
     ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>

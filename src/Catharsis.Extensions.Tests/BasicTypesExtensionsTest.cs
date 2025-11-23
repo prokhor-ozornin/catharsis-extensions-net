@@ -877,61 +877,110 @@ public sealed class BasicTypesExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(char)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(sbyte)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(byte)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(short)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(ushort)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(int)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(uint)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(long)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(ulong)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(float)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(double)"/></description></item>
-  ///     <item><description><see cref="BasicTypesExtensions.ToBoolean(decimal)"/></description></item>
-  ///   </list>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(char)"/> method.</para>
   /// </summary>
   [Fact]
-  public void ToBoolean_Methods()
+  public void Char_ToBoolean_Method()
   {
     char.MinValue.ToBoolean().Should().BeFalse();
     char.MaxValue.ToBoolean().Should().BeTrue();
     ((char) 0).ToBoolean().Should().BeFalse();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(sbyte)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Sbyte_ToBoolean_Method()
+  {
     sbyte.MinValue.ToBoolean().Should().BeFalse();
     sbyte.MaxValue.ToBoolean().Should().BeTrue();
     ((sbyte) 0).ToBoolean().Should().BeFalse();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(byte)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Byte_ToBoolean_Method()
+  {
     byte.MinValue.ToBoolean().Should().BeFalse();
     byte.MaxValue.ToBoolean().Should().BeTrue();
     ((byte) 0).ToBoolean().Should().BeFalse();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(short)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Short_ToBoolean_Method()
+  {
     short.MinValue.ToBoolean().Should().BeFalse();
     short.MaxValue.ToBoolean().Should().BeTrue();
     ((short) 0).ToBoolean().Should().BeFalse();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(ushort)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Ushort_ToBoolean_Method()
+  {
     ushort.MinValue.ToBoolean().Should().BeFalse();
     ushort.MaxValue.ToBoolean().Should().BeTrue();
     ((ushort) 0).ToBoolean().Should().BeFalse();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(int)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Int_ToBoolean_Method()
+  {
     int.MinValue.ToBoolean().Should().BeFalse();
     int.MaxValue.ToBoolean().Should().BeTrue();
     0.ToBoolean().Should().BeFalse();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(uint)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uint_ToBoolean_Method()
+  {
     uint.MinValue.ToBoolean().Should().BeFalse();
     uint.MaxValue.ToBoolean().Should().BeTrue();
     ((uint) 0).ToBoolean().Should().BeFalse();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(long)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Long_ToBoolean_Method()
+  {
     long.MinValue.ToBoolean().Should().BeFalse();
     long.MaxValue.ToBoolean().Should().BeTrue();
     ((long) 0).ToBoolean().Should().BeFalse();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(ulong)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Ulong_ToBoolean_Method()
+  {
     ulong.MinValue.ToBoolean().Should().BeFalse();
     ulong.MaxValue.ToBoolean().Should().BeTrue();
     ((ulong) 0).ToBoolean().Should().BeFalse();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(float)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Float_ToBoolean_Method()
+  {
     float.MinValue.ToBoolean().Should().BeFalse();
     float.MaxValue.ToBoolean().Should().BeTrue();
     ((float) 0.0).ToBoolean().Should().BeFalse();
@@ -939,7 +988,14 @@ public sealed class BasicTypesExtensionsTest : Test
     float.Epsilon.ToBoolean().Should().BeTrue();
     float.NegativeInfinity.ToBoolean().Should().BeFalse();
     float.PositiveInfinity.ToBoolean().Should().BeTrue();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(double)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Double_ToBoolean_Method()
+  {
     double.MinValue.ToBoolean().Should().BeFalse();
     double.MaxValue.ToBoolean().Should().BeTrue();
     0.0.ToBoolean().Should().BeFalse();
@@ -947,7 +1003,14 @@ public sealed class BasicTypesExtensionsTest : Test
     double.Epsilon.ToBoolean().Should().BeTrue();
     double.NegativeInfinity.ToBoolean().Should().BeFalse();
     double.PositiveInfinity.ToBoolean().Should().BeTrue();
+  }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.ToBoolean(decimal)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Decimal_ToBoolean_Method()
+  {
     decimal.MinValue.ToBoolean().Should().BeFalse();
     decimal.MaxValue.ToBoolean().Should().BeTrue();
     decimal.Zero.ToBoolean().Should().BeFalse();

@@ -208,7 +208,7 @@ public static class IDictionaryExtensions
       return comparer is not null ? dictionary.OrderBy(pair => pair.Key, comparer).Select(pair => pair.ToTuple()) : dictionary.Select(pair => pair.ToTuple());
     }
 
-  #if NET10_0_OR_GREATER
+    #if NET10_0_OR_GREATER
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -216,6 +216,6 @@ public static class IDictionaryExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="dictionary"/> is <see langword="null"/>.</exception>
     public FrozenDictionary<TKey, TValue> ToFrozenDictionary(IEqualityComparer<TKey> comparer = null) => dictionary is not null ? FrozenDictionary.ToFrozenDictionary(dictionary, comparer) : throw new ArgumentNullException(nameof(dictionary));
-  #endif
+    #endif
   }
 }

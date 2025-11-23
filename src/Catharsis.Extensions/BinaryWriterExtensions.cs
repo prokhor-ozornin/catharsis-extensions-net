@@ -14,16 +14,31 @@ public static class BinaryWriterExtensions
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsEnd(BinaryWriter)"/>
-    public bool IsStart => writer?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(writer));
+    /// <seealso cref="IsEnd"/>
+    public bool IsStart => writer?.BaseStream.IsStart ?? throw new ArgumentNullException(nameof(writer));
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsStart(BinaryWriter)"/>
-    public bool IsEnd => writer?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(writer));
+    /// <seealso cref="IsStart"/>
+    public bool IsEnd => writer?.BaseStream.IsEnd ?? throw new ArgumentNullException(nameof(writer));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="IsEmpty"/>
+    public bool IsUnset => writer is null || writer.IsEmpty;
+
+    /// <summary>
+    ///   <para>Determines whether the specified <see cref="BinaryWriter"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
+    /// </summary>
+    /// <value>If the specified <paramref name="writer"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
+    /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsUnset"/>
+    public bool IsEmpty => writer?.BaseStream.IsEmpty ?? throw new ArgumentNullException(nameof(writer));
 
     /// <summary>
     ///   <para></para>
@@ -38,21 +53,6 @@ public static class BinaryWriterExtensions
 
       return writer;
     }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="IsEmpty(BinaryWriter)"/>
-    public bool IsUnset => writer is null || writer.IsEmpty;
-
-    /// <summary>
-    ///   <para>Determines whether the specified <see cref="BinaryWriter"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
-    /// </summary>
-    /// <value>If the specified <paramref name="writer"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
-    /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(BinaryWriter)"/>
-    public bool IsEmpty => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
 
     /// <summary>
     ///   <para>Creates a copy of the specified <see cref="BinaryWriter"/>, which will write data to the same underlying <see cref="Stream"/>.</para>

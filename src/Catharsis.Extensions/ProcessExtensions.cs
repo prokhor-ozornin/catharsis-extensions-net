@@ -72,7 +72,7 @@ public static class ProcessExtensions
       return process;
     }
 
-  #if NET10_0_OR_GREATER
+    #if NET10_0_OR_GREATER
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -92,7 +92,7 @@ public static class ProcessExtensions
 
       return process;
     }
-  #endif
+    #endif
 
     /// <summary>
     ///   <para></para>
@@ -185,6 +185,11 @@ public static class ProcessExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToErrorTextAsync(Process)"/>
     public string ToErrorText() => process?.StandardError.ToText() ?? throw new ArgumentNullException(nameof(process));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string ErrorText => process.ToErrorText();
 
     /// <summary>
     ///   <para></para>
@@ -201,6 +206,11 @@ public static class ProcessExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToBytesAsync(Process)"/>
     public IEnumerable<byte> ToBytes() => process?.StandardOutput.BaseStream.ToBytes() ?? throw new ArgumentNullException(nameof(process));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => process.ToBytes().ToArray();
 
     /// <summary>
     ///   <para></para>
@@ -217,6 +227,11 @@ public static class ProcessExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToTextAsync(Process)"/>
     public string ToText() => process?.StandardOutput.ToText() ?? throw new ArgumentNullException(nameof(process));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string Text => process.ToText();
 
     /// <summary>
     ///   <para></para>

@@ -347,13 +347,143 @@ public static class IEnumerableExtensions
   }
 
 
-  /// <summary>
-  ///   <para>Returns BASE64-encoded representation of a sequence sequence.</para>
-  /// </summary>
   /// <param name="enumerable">Bytes to convert to BASE64 encoding.</param>
-  /// <returns>BASE64 string representation of <paramref name="enumerable"/> array.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static string ToBase64(this IEnumerable<byte> enumerable) => enumerable is not null ? Convert.ToBase64String(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
+  extension(IEnumerable<byte> enumerable)
+  {
+    /// <summary>
+    ///   <para>Returns BASE64-encoded representation of a sequence sequence.</para>
+    /// </summary>
+    /// <returns>BASE64 string representation of <paramref name="enumerable"/> array.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public string ToBase64() => enumerable is not null ? Convert.ToBase64String(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="algorithm"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="EncryptAsync(IEnumerable{byte}, SymmetricAlgorithm, CancellationToken)"/>
+    public byte[] Encrypt(SymmetricAlgorithm algorithm) => algorithm.Encrypt(enumerable);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="algorithm"></param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Encrypt(IEnumerable{byte}, SymmetricAlgorithm)"/>
+    public async Task<byte[]> EncryptAsync(SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.EncryptAsync(enumerable, cancellation).ConfigureAwait(false);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="algorithm"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="DecryptAsync(IEnumerable{byte}, SymmetricAlgorithm, CancellationToken)"/>
+    public byte[] Decrypt(SymmetricAlgorithm algorithm) => algorithm.Decrypt(enumerable);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="algorithm"></param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="Decrypt(IEnumerable{byte}, SymmetricAlgorithm)"/>
+    public async Task<byte[]> DecryptAsync(SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.DecryptAsync(enumerable, cancellation).ConfigureAwait(false);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="algorithm"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
+    public byte[] Hash(HashAlgorithm algorithm)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+      if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
+
+      return algorithm.ComputeHash(enumerable.AsArray());
+    }
+
+    /// <summary>
+    ///   <para>Computes hash digest for the given sequence of sequence, using <c>MD5</c> algorithm.</para>
+    /// </summary>
+    /// <returns>Hash digest value.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public byte[] HashMd5()
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      using var algorithm = MD5.Create();
+
+      return enumerable.Hash(algorithm);
+    }
+
+    /// <summary>
+    ///   <para>Computes hash digest for the given array of sequence, using <c>SHA1</c> algorithm.</para>
+    /// </summary>
+    /// <returns>Hash digest value.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public byte[] HashSha1()
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      using var algorithm = SHA1.Create();
+
+      return enumerable.Hash(algorithm);
+    }
+
+    /// <summary>
+    ///   <para>Computes hash digest for the given array of sequence, using <c>SHA256</c> algorithm.</para>
+    /// </summary>
+    /// <returns>Hash digest value.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public byte[] HashSha256()
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      using var algorithm = SHA256.Create();
+
+      return enumerable.Hash(algorithm);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public byte[] HashSha384()
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      using var algorithm = SHA384.Create();
+
+      return enumerable.Hash(algorithm);
+    }
+
+    /// <summary>
+    ///   <para>Computes hash digest for the given array of sequence, using <c>SHA512</c> algorithm.</para>
+    /// </summary>
+    /// <returns>Hash digest value.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException"></exception>
+    public byte[] HashSha512()
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      using var algorithm = SHA512.Create();
+
+      return enumerable.Hash(algorithm);
+    }
+  }
 
   /// <summary>
   ///   <para></para>
@@ -372,142 +502,6 @@ public static class IEnumerableExtensions
   #endif
   }
 */
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="enumerable"></param>
-  /// <param name="algorithm"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="EncryptAsync(IEnumerable{byte}, SymmetricAlgorithm, CancellationToken)"/>
-  public static byte[] Encrypt(this IEnumerable<byte> enumerable, SymmetricAlgorithm algorithm) => algorithm.Encrypt(enumerable);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="enumerable"></param>
-  /// <param name="algorithm"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Encrypt(IEnumerable{byte}, SymmetricAlgorithm)"/>
-  public static async Task<byte[]> EncryptAsync(this IEnumerable<byte> enumerable, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.EncryptAsync(enumerable, cancellation).ConfigureAwait(false);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="enumerable"></param>
-  /// <param name="algorithm"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="DecryptAsync(IEnumerable{byte}, SymmetricAlgorithm, CancellationToken)"/>
-  public static byte[] Decrypt(this IEnumerable<byte> enumerable, SymmetricAlgorithm algorithm) => algorithm.Decrypt(enumerable);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="enumerable"></param>
-  /// <param name="algorithm"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="Decrypt(IEnumerable{byte}, SymmetricAlgorithm)"/>
-  public static async Task<byte[]> DecryptAsync(this IEnumerable<byte> enumerable, SymmetricAlgorithm algorithm, CancellationToken cancellation = default) => await algorithm.DecryptAsync(enumerable, cancellation).ConfigureAwait(false);
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="enumerable"></param>
-  /// <param name="algorithm"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="algorithm"/> is <see langword="null"/>.</exception>
-  public static byte[] Hash(this IEnumerable<byte> enumerable, HashAlgorithm algorithm)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-    if (algorithm is null) throw new ArgumentNullException(nameof(algorithm));
-
-    return algorithm.ComputeHash(enumerable.AsArray());
-  }
-
-  /// <summary>
-  ///   <para>Computes hash digest for the given sequence of sequence, using <c>MD5</c> algorithm.</para>
-  /// </summary>
-  /// <param name="enumerable">Source sequence sequence.</param>
-  /// <returns>Hash digest value.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static byte[] HashMd5(this IEnumerable<byte> enumerable)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    using var algorithm = MD5.Create();
-
-    return enumerable.Hash(algorithm);
-  }
-
-  /// <summary>
-  ///   <para>Computes hash digest for the given array of sequence, using <c>SHA1</c> algorithm.</para>
-  /// </summary>
-  /// <param name="enumerable">Source sequence sequence.</param>
-  /// <returns>Hash digest value.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static byte[] HashSha1(this IEnumerable<byte> enumerable)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    using var algorithm = SHA1.Create();
-
-    return enumerable.Hash(algorithm);
-  }
-
-  /// <summary>
-  ///   <para>Computes hash digest for the given array of sequence, using <c>SHA256</c> algorithm.</para>
-  /// </summary>
-  /// <param name="enumerable">Source sequence sequence.</param>
-  /// <returns>Hash digest value.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static byte[] HashSha256(this IEnumerable<byte> enumerable)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    using var algorithm = SHA256.Create();
-
-    return enumerable.Hash(algorithm);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static byte[] HashSha384(this IEnumerable<byte> enumerable)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    using var algorithm = SHA384.Create();
-
-    return enumerable.Hash(algorithm);
-  }
-
-  /// <summary>
-  ///   <para>Computes hash digest for the given array of sequence, using <c>SHA512</c> algorithm.</para>
-  /// </summary>
-  /// <param name="enumerable">Source sequence sequence.</param>
-  /// <returns>Hash digest value.</returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <exception cref="InvalidOperationException"></exception>
-  public static byte[] HashSha512(this IEnumerable<byte> enumerable)
-  {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    using var algorithm = SHA512.Create();
-
-    return enumerable.Hash(algorithm);
-  }
 
   /// <summary>
   ///   <para></para>
@@ -533,93 +527,93 @@ public static class IEnumerableExtensions
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="left"></param>
+  /// <param name="enumerable"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Max{T}(IEnumerable{T}, IEnumerable{T})"/>
   /// <seealso cref="MinMax{T}(IEnumerable{T}, IEnumerable{T})"/>
-  public static IEnumerable<T> Min<T>(this IEnumerable<T> left, IEnumerable<T> right)
+  public static IEnumerable<T> Min<T>(this IEnumerable<T> enumerable, IEnumerable<T> right)
   {
-    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
     if (right is null) throw new ArgumentNullException(nameof(right));
 
-    return left.Count() <= right.Count() ? left : right;
+    return enumerable.Count() <= right.Count() ? enumerable : right;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="left"></param>
+  /// <param name="enumerable"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Min{T}(IEnumerable{T}, IEnumerable{T})"/>
   /// <seealso cref="MinMax{T}(IEnumerable{T}, IEnumerable{T})"/>
-  public static IEnumerable<T> Max<T>(this IEnumerable<T> left, IEnumerable<T> right)
+  public static IEnumerable<T> Max<T>(this IEnumerable<T> enumerable, IEnumerable<T> right)
   {
-    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
     if (right is null) throw new ArgumentNullException(nameof(right));
 
-    return left.Count() >= right.Count() ? left : right;
+    return enumerable.Count() >= right.Count() ? enumerable : right;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
   /// <typeparam name="T"></typeparam>
-  /// <param name="left"></param>
+  /// <param name="enumerable"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   /// <seealso cref="Min{T}(IEnumerable{T}, IEnumerable{T})"/>
   /// <seealso cref="Max{T}(IEnumerable{T}, IEnumerable{T})"/>
-  public static (IEnumerable<T> Min, IEnumerable<T> Max) MinMax<T>(this IEnumerable<T> left, IEnumerable<T> right)
+  public static (IEnumerable<T> Min, IEnumerable<T> Max) MinMax<T>(this IEnumerable<T> enumerable, IEnumerable<T> right)
   {
-    if (left is null) throw new ArgumentNullException(nameof(left));
+    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
     if (right is null) throw new ArgumentNullException(nameof(right));
 
-    return left.Count() <= right.Count() ? (left, right) : (right, left);
+    return enumerable.Count() <= right.Count() ? (enumerable, right) : (right, enumerable);
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
+  /// <param name="enumerable"></param>
   /// <param name="destination"></param>
-  /// <returns>Back self-reference to the given <paramref name="bytes"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="bytes"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <returns>Back self-reference to the given <paramref name="enumerable"/>.</returns>
+  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteToAsync(IEnumerable{byte}, Stream, CancellationToken)"/>
-  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> bytes, Stream destination)
+  public static IEnumerable<byte> WriteTo(this IEnumerable<byte> enumerable, Stream destination)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
-    destination.WriteBytes(bytes);
+    destination.WriteBytes(enumerable);
 
-    return bytes;
+    return enumerable;
   }
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <param name="bytes"></param>
+  /// <param name="enumerable"></param>
   /// <param name="destination"></param>
   /// <param name="cancellation"></param>
   /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="bytes"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
   /// <seealso cref="WriteTo(IEnumerable{byte}, Stream)"/>
-  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> bytes, Stream destination, CancellationToken cancellation = default)
+  public static async Task<IEnumerable<byte>> WriteToAsync(this IEnumerable<byte> enumerable, Stream destination, CancellationToken cancellation = default)
   {
-    if (bytes is null) throw new ArgumentNullException(nameof(bytes));
+    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
     if (destination is null) throw new ArgumentNullException(nameof(destination));
 
     cancellation.ThrowIfCancellationRequested();
 
-    await destination.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false);
+    await destination.WriteBytesAsync(enumerable, cancellation).ConfigureAwait(false);
 
-    return bytes;
+    return enumerable;
   }
 
   /// <summary>
@@ -971,33 +965,81 @@ public static class IEnumerableExtensions
   }
 #endif*/
 
+/// <param name="enumerable"></param>
+/// <typeparam name="T"></typeparam>
+extension<T>(IEnumerable<T> enumerable)
+{
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static LinkedList<T> ToLinkedList<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new LinkedList<T>(enumerable) : throw new ArgumentNullException(nameof(enumerable));
+  public LinkedList<T> ToLinkedList() => enumerable is not null ? new LinkedList<T>(enumerable) : throw new ArgumentNullException(nameof(enumerable));
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
   /// <returns></returns>
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static IReadOnlyList<T> ToReadOnlyList<T>(this IEnumerable<T> enumerable) => enumerable?.ToList() ?? throw new ArgumentNullException(nameof(enumerable));
+  public IReadOnlyList<T> ToReadOnlyList() => enumerable?.ToList() ?? throw new ArgumentNullException(nameof(enumerable));
 
   /// <summary>
   ///   <para>Converts sequence of elements into a set collection type.</para>
   /// </summary>
-  /// <typeparam name="T">Type of elements in a sequence.</typeparam>
-  /// <param name="enumerable">Source sequence of elements.</param>
   /// <param name="comparer"></param>
   /// <returns>Set collection which contains elements from <paramref name="enumerable"/> sequence without duplicates. Order of elements in a set is not guaranteed to be the same as returned by <paramref name="enumerable"/>'s enumerator.</returns>
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static SortedSet<T> ToSortedSet<T>(this IEnumerable<T> enumerable, IComparer<T> comparer = null) => enumerable is not null ? new SortedSet<T>(enumerable, comparer) : throw new ArgumentNullException(nameof(enumerable));
+  public SortedSet<T> ToSortedSet(IComparer<T> comparer = null) => enumerable is not null ? new SortedSet<T>(enumerable, comparer) : throw new ArgumentNullException(nameof(enumerable));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+  public Stack<T> ToStack() => enumerable is not null ? new Stack<T>(enumerable) : throw new ArgumentNullException(nameof(enumerable));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+  public Queue<T> ToQueue() => enumerable is not null ? new Queue<T>(enumerable) : throw new ArgumentNullException(nameof(enumerable));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+  public ArraySegment<T> ToArraySegment() => enumerable is not null ? new ArraySegment<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+  public Memory<T> ToMemory() => enumerable is not null ? new Memory<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+  public ReadOnlyMemory<T> ToReadOnlyMemory() => enumerable is not null ? new ReadOnlyMemory<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+  public Span<T> ToSpan() => enumerable is not null ? new Span<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+  public ReadOnlySpan<T> ToReadOnlySpan() => enumerable is not null ? new ReadOnlySpan<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
+}
 
 /*#if NET10_0_OR_GREATER
   /// <summary>
@@ -1021,24 +1063,6 @@ public static class IEnumerableExtensions
   public static FrozenSet<T> ToFrozenSet<T>(this IEnumerable<T> enumerable, IEqualityComparer<T> comparer = null) => enumerable is not null ? FrozenSet.ToFrozenSet(enumerable, comparer) : throw new ArgumentNullException(nameof(enumerable));
 #endif*/
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static Stack<T> ToStack<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new Stack<T>(enumerable) : throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static Queue<T> ToQueue<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new Queue<T>(enumerable) : throw new ArgumentNullException(nameof(enumerable));
-
 /*#if NET10_0_OR_GREATER
   /// <summary>
   ///   <para></para>
@@ -1060,51 +1084,6 @@ public static class IEnumerableExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   public static ImmutableQueue<T> ToImmutableQueue<T>(this IEnumerable<T> enumerable) => enumerable is not null ? ImmutableQueue.CreateRange(enumerable) : throw new ArgumentNullException(nameof(enumerable));
 #endif*/
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static ArraySegment<T> ToArraySegment<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new ArraySegment<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static Memory<T> ToMemory<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new Memory<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static ReadOnlyMemory<T> ToReadOnlyMemory<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new ReadOnlyMemory<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static Span<T> ToSpan<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new Span<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static ReadOnlySpan<T> ToReadOnlySpan<T>(this IEnumerable<T> enumerable) => enumerable is not null ? new ReadOnlySpan<T>(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
 
   /// <summary>
   ///   <para></para>
@@ -1168,36 +1147,36 @@ public static class IEnumerableExtensions
     return comparer is not null ? enumerable.OrderBy(key, comparer).Select(tuple => new Tuple<TKey, TValue>(key(tuple), tuple)) : enumerable.Select(tuple => new Tuple<TKey, TValue>(key(tuple), tuple));
   }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
+  /// <param name="enumerable"></param>
   /// <typeparam name="TKey"></typeparam>
   /// <typeparam name="TValue"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="comparer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> enumerable, IEqualityComparer<TKey> comparer = null) where TKey : notnull
+  extension<TKey, TValue>(IEnumerable<(TKey Key, TValue Value)> enumerable) where TKey : notnull
   {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="comparer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public Dictionary<TKey, TValue> ToDictionary(IEqualityComparer<TKey> comparer = null)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
 
-    var result = new Dictionary<TKey, TValue>(comparer);
+      var result = new Dictionary<TKey, TValue>(comparer);
 
-    enumerable.ForEach(tuple => result.Add(tuple.Key, tuple.Value));
+      enumerable.ForEach(tuple => result.Add(tuple.Key, tuple.Value));
 
-    return result;
+      return result;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="comparer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary(IEqualityComparer<TKey> comparer = null) => enumerable.ToDictionary(comparer);
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TKey"></typeparam>
-  /// <typeparam name="TValue"></typeparam>
-  /// <param name="enumerable"></param>
-  /// <param name="comparer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> enumerable, IEqualityComparer<TKey> comparer = null) where TKey : notnull => enumerable.ToDictionary(comparer);
 
   /// <summary>
   ///   <para></para>
@@ -1207,72 +1186,76 @@ public static class IEnumerableExtensions
   /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
   public static string ToText(this IEnumerable<char> enumerable) => enumerable is not null ? new string(enumerable.AsArray()) : throw new ArgumentNullException(nameof(enumerable));
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToMemoryStream(IEnumerable{byte[]})"/>
-  public static MemoryStream ToMemoryStream(this IEnumerable<byte> enumerable) => enumerable?.Chunk(4096).ToMemoryStream() ?? throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="enumerable"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToMemoryStreamAsync(IEnumerable{byte[]}, CancellationToken)"/>
-  public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte> enumerable, CancellationToken cancellation = default) => enumerable is not null ? await enumerable.Chunk(4096).ToMemoryStreamAsync(cancellation).ConfigureAwait(false) : throw new ArgumentNullException(nameof(enumerable));
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="enumerable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToMemoryStream(IEnumerable{byte})"/>
-  public static MemoryStream ToMemoryStream(this IEnumerable<byte[]> enumerable)
+  extension(IEnumerable<byte> enumerable)
   {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToMemoryStream(IEnumerable{byte[]})"/>
+    public MemoryStream ToMemoryStream() => enumerable?.Chunk(4096).ToMemoryStream() ?? throw new ArgumentNullException(nameof(enumerable));
 
-    var stream = new MemoryStream();
-
-    foreach (var bytes in enumerable)
-    {
-      stream.Write(bytes, 0, bytes.Length);
-    }
-
-    stream.MoveToStart();
-
-    return stream;
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToMemoryStreamAsync(IEnumerable{byte[]}, CancellationToken)"/>
+    public async Task<MemoryStream> ToMemoryStreamAsync(CancellationToken cancellation = default) => enumerable is not null ? await enumerable.Chunk(4096).ToMemoryStreamAsync(cancellation).ConfigureAwait(false) : throw new ArgumentNullException(nameof(enumerable));
   }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="enumerable"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToMemoryStreamAsync(IEnumerable{byte}, CancellationToken)"/>
-  public static async Task<MemoryStream> ToMemoryStreamAsync(this IEnumerable<byte[]> enumerable, CancellationToken cancellation = default)
+  extension(IEnumerable<byte[]> enumerable)
   {
-    if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-    cancellation.ThrowIfCancellationRequested();
-
-    var stream = new MemoryStream();
-
-    foreach (var bytes in enumerable)
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToMemoryStream(IEnumerable{byte})"/>
+    public MemoryStream ToMemoryStream()
     {
-      await stream.WriteAsync(bytes, 0, bytes.Length, cancellation).ConfigureAwait(false);
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+      var stream = new MemoryStream();
+
+      foreach (var bytes in enumerable)
+      {
+        stream.Write(bytes, 0, bytes.Length);
+      }
+
+      stream.MoveToStart();
+
+      return stream;
     }
 
-    stream.MoveToStart();
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToMemoryStreamAsync(IEnumerable{byte}, CancellationToken)"/>
+    public async Task<MemoryStream> ToMemoryStreamAsync(CancellationToken cancellation = default)
+    {
+      if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
 
-    return stream;
+      cancellation.ThrowIfCancellationRequested();
+
+      var stream = new MemoryStream();
+
+      foreach (var bytes in enumerable)
+      {
+        await stream.WriteAsync(bytes, 0, bytes.Length, cancellation).ConfigureAwait(false);
+      }
+
+      stream.MoveToStart();
+
+      return stream;
+    }
   }
 
   /// <summary>

@@ -28,7 +28,7 @@ public static class StreamWriterExtensions
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsEmpty(StreamWriter)"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => writer is null || writer.IsEmpty;
 
     /// <summary>
@@ -36,8 +36,8 @@ public static class StreamWriterExtensions
     /// </summary>
     /// <value>If the specified <paramref name="writer"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(StreamWriter)"/>
-    public bool IsEmpty => writer?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(writer));
+    /// <seealso cref="IsUnset"/>
+    public bool IsEmpty => writer?.BaseStream.IsEmpty ?? throw new ArgumentNullException(nameof(writer));
 
     /// <summary>
     ///   <para></para>

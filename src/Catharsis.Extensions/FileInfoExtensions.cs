@@ -17,7 +17,7 @@ public static class FileInfoExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsEmpty(FileInfo)"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => file is null || file.IsEmpty;
 
     /// <summary>
@@ -25,7 +25,7 @@ public static class FileInfoExtensions
     /// </summary>
     /// <value>If the specified <paramref name="file"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(FileInfo)"/>
+    /// <seealso cref="IsUnset"/>
     public bool IsEmpty => file is not null ? !file.Exists || file.Length == 0 : throw new ArgumentNullException(nameof(file));
 
     /// <summary>
@@ -39,7 +39,7 @@ public static class FileInfoExtensions
       if (file is null) throw new ArgumentNullException(nameof(file));
       if (directory is null) throw new ArgumentNullException(nameof(directory));
 
-      return directory.Files(null, true).Contains(file);
+      return directory.ListFiles(null, true).Contains(file);
     }
 
     /// <summary>
@@ -368,6 +368,9 @@ public static class FileInfoExtensions
       return reader.ToText();
     }
     
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
     public string Text => file.ToText();
 
     /// <summary>
@@ -392,6 +395,11 @@ public static class FileInfoExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
     public FileStream ToStream() => file?.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
+    
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public FileStream Stream => file.ToStream();
 
     /// <summary>
     ///   <para></para>

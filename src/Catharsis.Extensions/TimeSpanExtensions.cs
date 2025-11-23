@@ -13,14 +13,14 @@ public static class TimeSpanExtensions
     ///   <para>Returns a new date/time instance, representing a point in time lesser than the current by specified <see cref="TimeSpan"/>.</para>
     /// </summary>
     /// <value>Current date/time, decremented by the <paramref name="timespan"/>, expressed as a local time.</value>
-    /// <seealso cref="InTheFuture(TimeSpan)"/>
+    /// <seealso cref="InTheFuture"/>
     public DateTimeOffset InThePast => DateTimeOffset.UtcNow - timespan;
 
     /// <summary>
     ///   <para>Returns a new date/time instance, representing a point in time greater than the current by specified <see cref="TimeSpan"/>.</para>
     /// </summary>
     /// <value>Current date/time, incremented by the <paramref name="timespan"/>, expressed as a local time.</value>
-    /// <seealso cref="InThePast(TimeSpan)"/>
+    /// <seealso cref="InThePast"/>
     public DateTimeOffset InTheFuture => DateTimeOffset.UtcNow + timespan;
 
     /// <summary>

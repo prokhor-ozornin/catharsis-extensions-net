@@ -14,42 +14,52 @@ public static class MemberInfoExtensions
     /// <summary>
     ///   <para>Determines whether a target type's member represents constructor of a class (a <see cref="ConstructorInfo"/> instance).</para>
     /// </summary>
-    /// <returns><c>True</c> if specified <paramref name="member"/> represents class constructor, <c>false</c> otherwise.</returns>
+    /// <value>
+    ///   <c>True</c> if specified <paramref name="member"/> represents class constructor, <c>false</c> otherwise.
+    /// </value>
     /// <seealso cref="MemberTypes.Constructor"/>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is <see langword="null"/>.</exception>
-    public bool IsConstructor() => member is not null ? member.MemberType == MemberTypes.Constructor : throw new ArgumentNullException(nameof(member));
+    public bool IsConstructor => member is not null ? member.MemberType == MemberTypes.Constructor : throw new ArgumentNullException(nameof(member));
 
     /// <summary>
     ///   <para>Determines whether a target type's member represents a method (a <see cref="MethodInfo"/> instance).</para>
     /// </summary>
-    /// <returns><c>True</c> if specified <paramref name="member"/> represents a method, <c>false</c> otherwise.</returns>
+    /// <value>
+    ///   <c>True</c> if specified <paramref name="member"/> represents a method, <c>false</c> otherwise.
+    /// </value>
     /// <seealso cref="MemberTypes.Method"/>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is <see langword="null"/>.</exception>
-    public bool IsMethod() => member is not null ? member.MemberType == MemberTypes.Method : throw new ArgumentNullException(nameof(member));
+    public bool IsMethod => member is not null ? member.MemberType == MemberTypes.Method : throw new ArgumentNullException(nameof(member));
 
     /// <summary>
     ///   <para>Determines whether a target type's member represents a property (a <see cref="PropertyInfo"/> instance).</para>
     /// </summary>
-    /// <returns><c>True</c> if specified <paramref name="member"/> represents a property, <c>false</c> otherwise.</returns>
+    /// <value>
+    ///   <c>True</c> if specified <paramref name="member"/> represents a property, <c>false</c> otherwise.
+    /// </value>
     /// <seealso cref="MemberTypes.Property"/>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is <see langword="null"/>.</exception>
-    public bool IsProperty() => member is not null ? member.MemberType == MemberTypes.Property : throw new ArgumentNullException(nameof(member));
+    public bool IsProperty => member is not null ? member.MemberType == MemberTypes.Property : throw new ArgumentNullException(nameof(member));
 
     /// <summary>
     ///   <para>Determines whether a target type's member represents a field (a <see cref="FieldInfo"/> instance).</para>
     /// </summary>
-    /// <returns><c>True</c> if specified <paramref name="member"/> represents a field, <c>false</c> otherwise.</returns>
+    /// <value>
+    ///   <c>True</c> if specified <paramref name="member"/> represents a field, <c>false</c> otherwise.
+    /// </value>
     /// <seealso cref="MemberTypes.Field"/>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is <see langword="null"/>.</exception>
-    public bool IsField() => member is not null ? member.MemberType == MemberTypes.Field : throw new ArgumentNullException(nameof(member));
+    public bool IsField => member is not null ? member.MemberType == MemberTypes.Field : throw new ArgumentNullException(nameof(member));
 
     /// <summary>
     ///   <para>Determines whether a target type's member represents an event (a <see cref="EventInfo"/> instance).</para>
     /// </summary>
-    /// <returns><c>True</c> if specified <paramref name="member"/> represents an event, <c>false</c> otherwise.</returns>
+    /// <value>
+    ///   <c>True</c> if specified <paramref name="member"/> represents an event, <c>false</c> otherwise.
+    /// </value>
     /// <seealso cref="MemberTypes.Event"/>
     /// <exception cref="ArgumentNullException">If <paramref name="member"/> is <see langword="null"/>.</exception>
-    public bool IsEvent() => member is not null ? member.MemberType == MemberTypes.Event : throw new ArgumentNullException(nameof(member));
+    public bool IsEvent => member is not null ? member.MemberType == MemberTypes.Event : throw new ArgumentNullException(nameof(member));
 
     /// <summary>
     ///   <para>Returns a custom <see cref="Attribute"/>, identified by specified type, that is applied to current type's member.</para>

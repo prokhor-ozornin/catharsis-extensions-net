@@ -206,7 +206,7 @@ public static class TypeExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
     /// <seealso cref="HasConstructor(Type, Type[])"/>
-    /// <seealso cref="HasDefaultConstructor(Type)"/>
+    /// <seealso cref="HasDefaultConstructor"/>
     public bool HasConstructor(IEnumerable<Type> arguments = null)
     {
       if (type is null) throw new ArgumentNullException(nameof(type));
@@ -221,7 +221,7 @@ public static class TypeExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
     /// <seealso cref="HasConstructor(Type, IEnumerable{Type})"/>
-    /// <seealso cref="HasDefaultConstructor(Type)"/>
+    /// <seealso cref="HasDefaultConstructor"/>
     public bool HasConstructor(params Type[] arguments) => type.HasConstructor(arguments as IEnumerable<Type>);
 
     /// <summary>

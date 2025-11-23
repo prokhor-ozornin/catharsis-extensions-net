@@ -11,21 +11,21 @@ namespace Catharsis.Extensions.Tests;
 public sealed class DirectoryInfoExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.Size(DirectoryInfo, string, bool)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.TotalSize"/> method.</para>
   /// </summary>
   [Fact]
   public void Size_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((DirectoryInfo) null).Size()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+      AssertionExtensions.Should(() => ((DirectoryInfo) null).TotalSize()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
       
       throw new NotImplementedException();
     }
 
     return;
 
-    static void Test(long result, DirectoryInfo directory, string pattern = null, bool recursive = true) => directory.Size(pattern, recursive).Should().Be(result);
+    static void Test(long result, DirectoryInfo directory, string pattern = null, bool recursive = true) => directory.TotalSize(pattern, recursive).Should().Be(result);
   }
 
   /// <summary>
@@ -48,39 +48,39 @@ public sealed class DirectoryInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.Files(DirectoryInfo, string, bool)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.ListFiles"/> method.</para>
   /// </summary>
   [Fact]
   public void Files_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => DirectoryInfoExtensions.Files(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+      AssertionExtensions.Should(() => DirectoryInfoExtensions.ListFiles(null)).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(FileInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.Files(pattern, recursive).Should().Equal(result);
+    static void Test(FileInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.ListFiles(pattern, recursive).Should().Equal(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.Directories(DirectoryInfo, string, bool)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DirectoryInfoExtensions.ListDirectories"/> method.</para>
   /// </summary>
   [Fact]
   public void Directories_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((DirectoryInfo) null).Directories()).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
+      AssertionExtensions.Should(() => DirectoryInfoExtensions.ListDirectories(((DirectoryInfo) null))).ThrowExactly<ArgumentNullException>().WithParameterName("directory");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(DirectoryInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.Directories(pattern, recursive).Should().Equal(result);
+    static void Test(DirectoryInfo[] result, DirectoryInfo directory, string pattern = null, bool recursive = false) => directory.ListDirectories(pattern, recursive).Should().Equal(result);
   }
 
   /// <summary>

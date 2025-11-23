@@ -11,14 +11,19 @@ namespace Catharsis.Extensions.Tests;
 public sealed class ActionExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="ActionExtensions.Execute(Action, Func{bool})"/></description></item>
-  ///     <item><description><see cref="ActionExtensions.Execute{T}(Action{T}, Predicate{T}, T)"/></description></item>
-  ///   </list>
+  ///   <para>Performs testing of <see cref="ActionExtensions.get_Task(Action)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Execute_Methods()
+  public void Action_Task_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ActionExtensions.Execute(Action, Func{bool})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Action_Execute_Method()
   {
     using (new AssertionScope())
     {
@@ -37,12 +42,20 @@ public sealed class ActionExtensionsTest : Test
       counter = 0;
       action.Execute(() => counter < count).Should().BeOfType<Action>().And.BeSameAs(action);
       counter.Should().Be(count);
-
-      static void Test()
-      {
-      }
     }
+    
+    return;
 
+    static void Test()
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ActionExtensions.Execute{T}(Action{T}, Predicate{T}, T)"/> method.</para>
+  /// </summary>
+  public void GenericAction_Execute_Method()
+  {
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Action<object>) null).Execute(_ => true, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("action");
@@ -67,44 +80,49 @@ public sealed class ActionExtensionsTest : Test
       collection = [];
       action.Execute(x => x?.Count < count, null).Should().BeOfType<Action<ICollection<int>>>().And.BeSameAs(action);
       collection.Should().BeOfType<List<int>>().And.BeEmpty();
-
-      static void Test()
-      {
-      }
     }
-
-    throw new NotImplementedException();
+    
+    return;
+    
+    static void Test()
+    {
+    }
   }
 
   /// <summary>
-  ///   <para>Performs testing of following methods :</para>
-  ///   <list type="bullet">
-  ///     <item><description><see cref="ActionExtensions.ToTask(Action, TaskCreationOptions, CancellationToken)"/></description></item>
-  ///     <item><description><see cref="ActionExtensions.ToTask(Action{object}, object, TaskCreationOptions, CancellationToken)"/></description></item>
-  ///   </list>
+  ///   <para>Performs testing of <see cref="ActionExtensions.ToTask(Action, TaskCreationOptions, CancellationToken)"/> method.</para>
   /// </summary>
   [Fact]
-  public void ToTask_Methods()
+  public void Action_ToTask_Method()
   {
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ActionExtensions.ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
-
-      static void Test()
-      {
-      }
     }
 
+    return;
+    
+    static void Test()
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ActionExtensions.ToTask(Action{object}, object, TaskCreationOptions, CancellationToken)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void GenericAction_ToTask_Method()
+  {
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((Action<object>) null).ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
 
-
-      static void Test()
-      {
-      }
     }
 
-    throw new NotImplementedException();
+    return;
+    
+    static void Test()
+    {
+    }
   }
 }

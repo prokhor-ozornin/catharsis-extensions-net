@@ -36,10 +36,28 @@ public sealed class ArrayExtensionsTest : Test
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="ArrayExtensions.get_Bytes(char[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void CharArray_Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ArrayExtensions.get_Text(char[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void CharArray_Text_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="ArrayExtensions.FromBase64(char[])"/> method.</para>
   /// </summary>
   [Fact]
-  public void FromBase64_Method()
+  public void CharArray_FromBase64_Method()
   {
     using (new AssertionScope())
     {
@@ -65,7 +83,7 @@ public sealed class ArrayExtensionsTest : Test
   ///   <para>Performs testing of <see cref="ArrayExtensions.ToBytes(char[], Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void ToBytes_Method()
+  public void CharArray_ToBytes_Method()
   {
     using (new AssertionScope())
     {
@@ -86,32 +104,6 @@ public sealed class ArrayExtensionsTest : Test
 
       var bytes = chars.ToBytes(encoding);
       bytes.Should().BeOfType<byte[]>().And.HaveCount((encoding ?? Encoding.Default).GetByteCount(chars)).And.Equal((encoding ?? Encoding.Default).GetBytes(chars));
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ArrayExtensions.ToByteArrayContent(byte[], int?, int?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToByteArrayContent_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
-
-      Test([]);
-      Test(Bytes);
-    }
-
-    return;
-
-    static void Test(byte[] bytes)
-    {
-      using var content = bytes.ToByteArrayContent();
-
-      content.Should().BeOfType<ByteArrayContent>();
-      content.Headers.Should().BeEmpty();
-      content.ReadAsByteArrayAsync().Await().Should().Equal(bytes);
     }
   }
 
@@ -140,6 +132,42 @@ public sealed class ArrayExtensionsTest : Test
     {
     }
   }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ArrayExtensions.get_Text(byte[])"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ByteArray_Text_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ArrayExtensions.ToByteArrayContent(byte[], int?, int?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ByteArray_ToByteArrayContent_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+
+      Test([]);
+      Test(Bytes);
+    }
+
+    return;
+
+    static void Test(byte[] bytes)
+    {
+      using var content = bytes.ToByteArrayContent();
+
+      content.Should().BeOfType<ByteArrayContent>();
+      content.Headers.Should().BeEmpty();
+      content.ReadAsByteArrayAsync().Await().Should().Equal(bytes);
+    }
+  }
+
 
   /// <summary>
   ///   <para>Performs testing of <see cref="ArrayExtensions.ToText(byte[], Encoding)"/> method.</para>

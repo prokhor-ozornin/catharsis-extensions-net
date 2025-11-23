@@ -20,7 +20,7 @@ public sealed class MemberInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.IsConstructor(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => null.IsConstructor).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Constructor().As<MemberInfo>().IsConstructor().Should().BeTrue();
     }
@@ -29,7 +29,7 @@ public sealed class MemberInfoExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, MemberInfo member) => member.IsConstructor().Should().Be(result);
+    static void Test(bool result, MemberInfo member) => member.IsConstructor.Should().Be(result);
   }
 
   /// <summary>
@@ -40,7 +40,7 @@ public sealed class MemberInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.IsMethod(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => null.IsMethod).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Method("PublicMethod").As<MemberInfo>().IsMethod().Should().BeTrue();
     }
@@ -49,7 +49,7 @@ public sealed class MemberInfoExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, MemberInfo member) => member.IsMethod().Should().Be(result);
+    static void Test(bool result, MemberInfo member) => member.IsMethod.Should().Be(result);
   }
 
   /// <summary>
@@ -60,7 +60,7 @@ public sealed class MemberInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.IsProperty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => null.IsProperty).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Property("PublicProperty").As<MemberInfo>().IsProperty().Should().BeTrue();
     }
@@ -69,7 +69,7 @@ public sealed class MemberInfoExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, MemberInfo member) => member.IsProperty().Should().Be(result);
+    static void Test(bool result, MemberInfo member) => member.IsProperty.Should().Be(result);
   }
 
   /// <summary>
@@ -80,7 +80,7 @@ public sealed class MemberInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.IsField(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => null.IsField).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Field("PublicField").As<MemberInfo>().IsField().Should().BeTrue();
     }
@@ -89,7 +89,7 @@ public sealed class MemberInfoExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, MemberInfo member) => member.IsField().Should().Be(result);
+    static void Test(bool result, MemberInfo member) => member.IsField.Should().Be(result);
   }
 
   /// <summary>
@@ -100,7 +100,7 @@ public sealed class MemberInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.IsEvent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => null.IsEvent).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Event("PublicEvent").As<MemberInfo>().IsEvent().Should().BeTrue();
     }
@@ -109,7 +109,7 @@ public sealed class MemberInfoExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, MemberInfo member) => member.IsEvent().Should().Be(result);
+    static void Test(bool result, MemberInfo member) => member.IsEvent.Should().Be(result);
   }
 
   /// <summary>

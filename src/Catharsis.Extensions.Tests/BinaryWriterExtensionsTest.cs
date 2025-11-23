@@ -37,7 +37,7 @@ public sealed class BinaryWriterExtensionsTest : Test
         writer.BaseStream.MoveToStart();
         writer.IsStart.Should().BeTrue();
         writer.BaseStream.MoveToEnd();
-        writer.IsStart.Should().Be(writer.BaseStream.IsEmpty());
+        writer.IsStart.Should().Be(writer.BaseStream.IsEmpty);
       }
     }
   }
@@ -66,7 +66,7 @@ public sealed class BinaryWriterExtensionsTest : Test
       using (writer)
       {
         writer.BaseStream.MoveToStart();
-        writer.IsEnd.Should().Be(writer.BaseStream.IsEmpty());
+        writer.IsEnd.Should().Be(writer.BaseStream.IsEmpty);
         writer.BaseStream.MoveToEnd();
         writer.IsEnd.Should().BeTrue();
       }

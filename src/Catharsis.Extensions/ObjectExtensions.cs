@@ -13,90 +13,6 @@ namespace Catharsis.Extensions;
 /// <seealso cref="object"/>
 public static class ObjectExtensions
 {
-  /// <summary>
-  ///   <para>Returns the value of a member on a target object, using expression tree to specify type's member.</para>
-  /// </summary>
-  /// <typeparam name="T">Type of target object.</typeparam>
-  /// <typeparam name="TResult">Type of <paramref name="instance"/>'s member.</typeparam>
-  /// <param name="instance">Target object, whose member's value is to be returned.</param>
-  /// <param name="expression">Lambda expression that represents a member of <typeparamref name="T"/> type, whose value for <paramref name="instance"/> instance is to be returned. Generally it should represents either a public property/field or no-arguments method.</param>
-  /// <returns>Value of member of <typeparamref name="T"/> type on a <paramref name="instance"/> instance.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="expression"/> is <see langword="null"/>.</exception>
-  public static TResult GetMember<T, TResult>(this T instance, Expression<Func<T, TResult>> expression)
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (expression is null) throw new ArgumentNullException(nameof(expression));
-
-    return expression.Compile()(instance);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparamref name="T"/>
-  /// <param name="action"></param>
-  /// <param name="finalizer"></param>
-  /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="TryFinallyDispose{TSubject, TResult}(TSubject, Func{TSubject, TResult}, Action{TSubject})"/>
-  public static T TryFinallyDispose<T>(this T instance, Action<T> action, Action<T> finalizer = null) where T : IDisposable
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (action is null) throw new ArgumentNullException(nameof(action));
-
-    return instance.TryFinallyDispose(_ =>
-    {
-      action(instance);
-
-      return instance;
-    }, finalizer);
-  }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="TSubject"></typeparam>
-  /// <typeparam name="TResult"></typeparam>
-  /// <param name="instance"></param>
-  /// <param name="function"></param>
-  /// <param name="finalizer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="function"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="TryFinallyDispose{T}(T, Action{T}, Action{T})"/>
-  public static TResult TryFinallyDispose<TSubject, TResult>(this TSubject instance, Func<TSubject, TResult> function, Action<TSubject> finalizer = null) where TSubject : IDisposable
-  {
-    if (instance is null) throw new ArgumentNullException(nameof(instance));
-    if (function is null) throw new ArgumentNullException(nameof(function));
-
-    try
-    {
-      return function(instance);
-    }
-    finally
-    {
-      finalizer?.Invoke(instance);
-      instance.Dispose();
-    }
-  }
-  
-  /// <param name="instance"></param>
-  /// <typeparam name="T"></typeparam>
-  extension<T>(Lazy<T> instance)
-  {
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    public bool IsUnset => instance is null || instance.IsEmpty;
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
-    public bool IsEmpty => instance is not null ? !instance.IsValueCreated || instance.Value is null || instance.Value.ToString().IsUnset() : throw new ArgumentNullException(nameof(instance));
-  }
-
   /// <param name="instance"></param>
   extension(object instance)
   {
@@ -340,25 +256,71 @@ public static class ObjectExtensions
 
   /// <param name="instance"></param>
   /// <typeparam name="T"></typeparam>
-  extension<T>(T? instance) where T : struct
+  extension<T>(T instance) where T : IDisposable
   {
     /// <summary>
-    ///   <para></para>
+    ///   <para>Returns the value of a member on a target object, using expression tree to specify type's member.</para>
     /// </summary>
-    /// <value></value>
-    public bool IsUnset => instance is null || instance.IsEmpty;
+    /// <typeparam name="T">Type of target object.</typeparam>
+    /// <typeparam name="TResult">Type of <paramref name="instance"/>'s member.</typeparam>
+    /// <param name="expression">Lambda expression that represents a member of <typeparamref name="T"/> type, whose value for <paramref name="instance"/> instance is to be returned. Generally it should represents either a public property/field or no-arguments method.</param>
+    /// <returns>Value of member of <typeparamref name="T"/> type on a <paramref name="instance"/> instance.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="expression"/> is <see langword="null"/>.</exception>
+    public TResult GetMember<TResult>(Expression<Func<T, TResult>> expression)
+    {
+      if (instance is null) throw new ArgumentNullException(nameof(instance));
+      if (expression is null) throw new ArgumentNullException(nameof(expression));
+
+      return expression.Compile()(instance);
+    }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <value></value>
-    public bool IsEmpty => !instance.HasValue || instance.Value.ToString().IsUnset();
-  }
+    /// <typeparamref name="T"/>
+    /// <param name="action"></param>
+    /// <param name="finalizer"></param>
+    /// <returns>Back self-reference to the given <paramref name="instance"/>.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="TryFinallyDispose{TSubject, TResult}(TSubject, Func{TSubject, TResult}, Action{TSubject})"/>
+    public T TryFinallyDispose(Action<T> action, Action<T> finalizer = null)
+    {
+      if (instance is null) throw new ArgumentNullException(nameof(instance));
+      if (action is null) throw new ArgumentNullException(nameof(action));
 
-  /// <param name="instance"></param>
-  /// <typeparam name="T"></typeparam>
-  extension<T>(T instance)
-  {
+      return instance.TryFinallyDispose(_ =>
+      {
+        action(instance);
+
+        return instance;
+      }, finalizer);
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
+    /// <param name="function"></param>
+    /// <param name="finalizer"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="function"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="TryFinallyDispose{T}(T, Action{T}, Action{T})"/>
+    public TResult TryFinallyDispose<TResult>(Func<T, TResult> function, Action<T> finalizer = null)
+    {
+      if (instance is null) throw new ArgumentNullException(nameof(instance));
+      if (function is null) throw new ArgumentNullException(nameof(function));
+
+      try
+      {
+        return function(instance);
+      }
+      finally
+      {
+        finalizer?.Invoke(instance);
+        instance.Dispose();
+      }
+    }
+    
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1314,5 +1276,40 @@ public static class ObjectExtensions
         finalizer?.Invoke(instance);
       }
     }
+  }
+
+  /// <param name="instance"></param>
+  /// <typeparam name="T"></typeparam>
+  extension<T>(T? instance) where T : struct
+  {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    public bool IsUnset => instance is null || instance.IsEmpty;
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    public bool IsEmpty => !instance.HasValue || instance.Value.ToString().IsUnset;
+  }
+
+  /// <param name="instance"></param>
+  /// <typeparam name="T"></typeparam>
+  extension<T>(Lazy<T> instance)
+  {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    public bool IsUnset => instance is null || instance.IsEmpty;
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
+    public bool IsEmpty => instance is not null ? !instance.IsValueCreated || instance.Value is null || instance.Value.ToString().IsUnset : throw new ArgumentNullException(nameof(instance));
   }
 }

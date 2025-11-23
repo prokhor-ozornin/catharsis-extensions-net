@@ -22,9 +22,9 @@ public sealed class StreamExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.IsStart(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
-      AssertionExtensions.Should(() => ReadOnlyForwardStream.IsStart()).ThrowExactly<NotSupportedException>();
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsStart()).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => null.IsStart).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => ReadOnlyForwardStream.IsStart).ThrowExactly<NotSupportedException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsStart).ThrowExactly<NotSupportedException>();
 
       Test(System.IO.Stream.Null);
       Test(EmptyStream);
@@ -39,8 +39,8 @@ public sealed class StreamExtensionsTest : Test
     {
       using (stream)
       {
-        stream.MoveToStart().IsStart().Should().BeTrue();
-        stream.MoveToEnd().IsStart().Should().Be(stream.IsEmpty());
+        stream.MoveToStart().IsStart.Should().BeTrue();
+        stream.MoveToEnd().IsStart.Should().Be(stream.IsEmpty);
       }
     }
   }
@@ -53,8 +53,8 @@ public sealed class StreamExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.IsEnd(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEnd()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => null.IsEnd).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEnd).ThrowExactly<ArgumentException>();
 
       Test(System.IO.Stream.Null);
       Test(EmptyStream);
@@ -69,8 +69,8 @@ public sealed class StreamExtensionsTest : Test
     {
       using (stream)
       {
-        stream.MoveToStart().IsEnd().Should().Be(stream.IsEmpty());
-        stream.MoveToEnd().IsEnd().Should().BeTrue();
+        stream.MoveToStart().IsEnd.Should().Be(stream.IsEmpty);
+        stream.MoveToEnd().IsEnd.Should().BeTrue();
       }
     }
   }
@@ -83,7 +83,7 @@ public sealed class StreamExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.IsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => null.IsReadOnly).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Test(false, System.IO.Stream.Null);
       Test(false, EmptyStream);
@@ -100,7 +100,7 @@ public sealed class StreamExtensionsTest : Test
     {
       using (stream)
       {
-        stream.IsReadOnly().Should().Be(stream.CanRead && !stream.CanWrite).And.Be(result);
+        stream.IsReadOnly.Should().Be(stream.CanRead && !stream.CanWrite).And.Be(result);
       }
     }
   }
@@ -113,7 +113,7 @@ public sealed class StreamExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.IsWriteOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => null.IsWriteOnly).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Test(false, System.IO.Stream.Null);
       Test(false, EmptyStream);
@@ -130,7 +130,7 @@ public sealed class StreamExtensionsTest : Test
     {
       using (stream)
       {
-        stream.IsWriteOnly().Should().Be(stream.CanWrite && !stream.CanRead).And.Be(result);
+        stream.IsWriteOnly.Should().Be(stream.CanWrite && !stream.CanRead).And.Be(result);
       }
     }
   }
@@ -143,7 +143,7 @@ public sealed class StreamExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.IsOperable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => null.IsOperable).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Test(true, System.IO.Stream.Null);
       Test(true, EmptyStream);
@@ -160,7 +160,7 @@ public sealed class StreamExtensionsTest : Test
     {
       using (stream)
       {
-        stream.IsOperable().Should().Be(stream.CanRead || stream.CanWrite).And.Be(result);
+        stream.IsOperable.Should().Be(stream.CanRead || stream.CanWrite).And.Be(result);
       }
     }
   }
@@ -1340,7 +1340,7 @@ public sealed class StreamExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEmpty).ThrowExactly<ArgumentException>();
 
       Test(true, null);
       Test(true, System.IO.Stream.Null);
@@ -1357,7 +1357,7 @@ public sealed class StreamExtensionsTest : Test
     {
       using (stream)
       {
-        stream.IsUnset().Should().Be(stream is null || stream.IsEmpty()).And.Be(result);
+        stream.IsUnset.Should().Be(stream is null || stream.IsEmpty).And.Be(result);
       }
     }
   }
@@ -1370,8 +1370,8 @@ public sealed class StreamExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.IsEmpty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEmpty()).ThrowExactly<ArgumentException>();
+      AssertionExtensions.Should(() => null.IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEmpty).ThrowExactly<ArgumentException>();
 
       Test(true, System.IO.Stream.Null);
       Test(true, EmptyStream);
@@ -1387,7 +1387,7 @@ public sealed class StreamExtensionsTest : Test
     {
       using (stream)
       {
-        stream.IsEmpty().Should().Be(result);
+        stream.IsEmpty.Should().Be(result);
       }
     }
   }
@@ -1827,7 +1827,7 @@ public sealed class StreamExtensionsTest : Test
         }
         else
         {
-          stream.IsEnd().Should().BeTrue();
+          stream.IsEnd.Should().BeTrue();
         }
       }
     }
@@ -1865,7 +1865,7 @@ public sealed class StreamExtensionsTest : Test
         }
         else
         {
-          stream.IsEnd().Should().BeTrue();
+          stream.IsEnd.Should().BeTrue();
         }
       }
     }
@@ -1901,11 +1901,11 @@ public sealed class StreamExtensionsTest : Test
 
         if (close)
         {
-          stream.IsOperable().Should().BeFalse();
+          stream.IsOperable.Should().BeFalse();
         }
         else
         {
-          stream.IsEnd().Should().BeTrue();
+          stream.IsEnd.Should().BeTrue();
         }
       }
     }
@@ -1945,7 +1945,7 @@ public sealed class StreamExtensionsTest : Test
         var task = stream.ToTextAsync(encoding);
         task.Should().BeAssignableTo<Task<string>>();
         task.Await().Should().BeOfType<string>().And.Be(result);
-        stream.IsEnd().Should().BeTrue();
+        stream.IsEnd.Should().BeTrue();
       }
     }
   }

@@ -16,12 +16,12 @@ public static class DirectoryInfoExtensions
     /// <param name="recursive"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
-    public long Size(string pattern = null, bool recursive = true) => directory.Files(pattern, recursive).Sum(file => file.Length);
+    public long TotalSize(string pattern = null, bool recursive = true) => directory.ListFiles(pattern, recursive).Sum(file => file.Length);
     
     /// <summary>
     ///   <para>[NEW]</para>
     /// </summary>
-    public long Size => directory.Size();
+    public long Size => directory.TotalSize();
 
     /// <summary>
     ///   <para></para>
@@ -34,7 +34,7 @@ public static class DirectoryInfoExtensions
       if (directory is null) throw new ArgumentNullException(nameof(directory));
       if (parent is null) throw new ArgumentNullException(nameof(parent));
 
-      return parent.Directories(null, true).Contains(directory);
+      return parent.ListDirectories(null, true).Contains(directory);
     }
 
     /// <summary>
@@ -44,12 +44,12 @@ public static class DirectoryInfoExtensions
     /// <param name="recursive"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
-    public IEnumerable<FileInfo> Files(string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateFiles(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : [] : throw new ArgumentNullException(nameof(directory));
+    public IEnumerable<FileInfo> ListFiles(string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateFiles(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : [] : throw new ArgumentNullException(nameof(directory));
     
     /// <summary>
     ///   <para>[NEW]</para>
     /// </summary>
-    public IEnumerable<FileInfo> Files => directory.Files();
+    public IEnumerable<FileInfo> Files => ListFiles(directory);
 
     /// <summary>
     ///   <para></para>
@@ -58,12 +58,12 @@ public static class DirectoryInfoExtensions
     /// <param name="recursive"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
-    public IEnumerable<DirectoryInfo> Directories(string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateDirectories(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : [] : throw new ArgumentNullException(nameof(directory));
+    public IEnumerable<DirectoryInfo> ListDirectories(string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateDirectories(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : [] : throw new ArgumentNullException(nameof(directory));
     
     /// <summary>
     ///   <para>[NEW]</para>
     /// </summary>
-    public IEnumerable<DirectoryInfo> Directories => directory.Directories();
+    public IEnumerable<DirectoryInfo> Directories => ListDirectories(directory);
 
     /// <summary>
     ///   <para></para>
@@ -96,8 +96,8 @@ public static class DirectoryInfoExtensions
     {
       if (directory is null) throw new ArgumentNullException(nameof(directory));
 
-      directory.Directories().ForEach(info => info.Delete(true));
-      directory.Files().ForEach(file => file.Delete());
+      ListDirectories(directory).ForEach(info => info.Delete(true));
+      ListFiles(directory).ForEach(file => file.Delete());
 
       return directory;
     }

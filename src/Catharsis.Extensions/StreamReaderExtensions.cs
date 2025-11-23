@@ -14,7 +14,7 @@ public static class StreamReaderExtensions
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    public bool IsStart => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
+    public bool IsStart => reader?.BaseStream.IsStart ?? throw new ArgumentNullException(nameof(reader));
 
     /// <summary>
     ///   <para></para>
@@ -34,7 +34,7 @@ public static class StreamReaderExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsEmpty(StreamReader)"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => reader is null || reader.IsEmpty;
 
     /// <summary>
@@ -42,8 +42,8 @@ public static class StreamReaderExtensions
     /// </summary>
     /// <value>If the specified <paramref name="reader"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(StreamReader)"/>
-    public bool IsEmpty => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
+    /// <seealso cref="IsUnset"/>
+    public bool IsEmpty => reader?.BaseStream.IsEmpty ?? throw new ArgumentNullException(nameof(reader));
 
     /// <summary>
     ///   <para></para>

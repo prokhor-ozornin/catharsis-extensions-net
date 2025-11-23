@@ -6,39 +6,39 @@
 /// <seealso cref="IComparable{T}"/>
 public static class IComparableExtensions
 {
-  /// <param name="left"></param>
+  /// <param name="comparable"></param>
   /// <typeparam name="T"></typeparam>
-  extension<T>(T left) where T : IComparable
+  extension<T>(T comparable) where T : IComparable
   {
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="left"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="comparable"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Max{T}(T, T)"/>
     /// <seealso cref="MinMax{T}(T, T)"/>
-    public T Min(T right) => left is not null ? left.CompareTo(right) <= 0 ? left : right : throw new ArgumentNullException(nameof(left));
+    public T Min(T other) => comparable is not null ? comparable.CompareTo(other) <= 0 ? comparable : other : throw new ArgumentNullException(nameof(comparable));
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="left"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="comparable"/> is <see langword="null"/>.</exception>
     /// <seealso cref=" Min{T}(T, T)"/>
     /// <seealso cref="MinMax{T}(T, T)"/>
-    public T Max(T right) => left is not null ? left.CompareTo(right) > 0 ? left : right : throw new ArgumentNullException(nameof(left));
+    public T Max(T other) => comparable is not null ? comparable.CompareTo(other) > 0 ? comparable : other : throw new ArgumentNullException(nameof(comparable));
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="left"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="comparable"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Min{T}(T, T)"/>
     /// <seealso cref="Max{T}(T, T)"/>
-    public (T Min, T Max) MinMax(T right) => left is not null ? left.CompareTo(right) <= 0 ? (left, right) : (right, left) : throw new ArgumentNullException(nameof(left));
+    public (T Min, T Max) MinMax(T other) => comparable is not null ? comparable.CompareTo(other) <= 0 ? (left: comparable, right: other) : (right: other, left: comparable) : throw new ArgumentNullException(nameof(comparable));
   }
 
   /// <param name="comparable"></param>
@@ -49,14 +49,14 @@ public static class IComparableExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsNegative{T}(T)"/>
+    /// <seealso cref="IsNegative"/>
     public bool IsPositive => comparable.CompareTo(default) > 0;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsPositive{T}(T)"/>
+    /// <seealso cref="IsPositive"/>
     public bool IsNegative => comparable.CompareTo(default) < 0;
 
     /// <summary>
@@ -68,29 +68,29 @@ public static class IComparableExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    public bool IsLesser(T right) => comparable.CompareTo(right) < 0;
+    public bool IsLesser(T other) => comparable.CompareTo(other) < 0;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    public bool IsLesserOrEqual(T right) => comparable.CompareTo(right) <= 0;
+    public bool IsLesserOrEqual(T other) => comparable.CompareTo(other) <= 0;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    public bool IsGreater(T right) => comparable.CompareTo(right) > 0;
+    public bool IsGreater(T other) => comparable.CompareTo(other) > 0;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    public bool IsGreaterOrEqual(T right) => comparable.CompareTo(right) >= 0;
+    public bool IsGreaterOrEqual(T other) => comparable.CompareTo(other) >= 0;
   }
 }

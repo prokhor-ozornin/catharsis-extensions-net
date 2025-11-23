@@ -14,15 +14,43 @@ public static class DateOnlyExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsWeekend(DateOnly)"/>
+    /// <seealso cref="IsWeekend"/>
     public bool IsWeekday => !date.IsWeekend;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsWeekday(DateOnly)"/>
+    /// <seealso cref="IsWeekday"/>
     public bool IsWeekend => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfYear"/>
+    public DateOnly StartOfYear => new(date.Year, 1, 1);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfYear"/>
+    public DateOnly EndOfYear => new(date.Year, 12, DateTime.DaysInMonth(date.Year, date.Month));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfMonth"/>
+    public DateOnly StartOfMonth => new(date.Year, date.Month, 1);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfMonth"/>
+    public DateOnly EndOfMonth => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
 
     /// <summary>
     ///   <para></para>
@@ -45,34 +73,6 @@ public static class DateOnlyExtensions
         yield return dateOnly;
       }
     }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateOnlyExtensions.EndOfYear"/>
-    public DateOnly StartOfYear => new(date.Year, 1, 1);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateOnlyExtensions.StartOfYear"/>
-    public DateOnly EndOfYear => new(date.Year, 12, DateTime.DaysInMonth(date.Year, date.Month));
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateOnlyExtensions.EndOfMonth"/>
-    public DateOnly StartOfMonth => new(date.Year, date.Month, 1);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateOnlyExtensions.StartOfMonth"/>
-    public DateOnly EndOfMonth => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
 
     /// <summary>
     ///   <para></para>

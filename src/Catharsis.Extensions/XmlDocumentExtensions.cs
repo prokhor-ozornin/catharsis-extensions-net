@@ -16,7 +16,7 @@ public static class XmlDocumentExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsEmpty(XmlDocument)"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => document is null || document.IsEmpty;
 
     /// <summary>
@@ -225,6 +225,11 @@ public static class XmlDocumentExtensions
     }
 
     /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => document.ToBytes();
+    
+    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
@@ -239,5 +244,10 @@ public static class XmlDocumentExtensions
 
       return writer.ToString();
     }
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string Text => document.ToText();
   }
 }

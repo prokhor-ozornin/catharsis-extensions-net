@@ -18,7 +18,7 @@ public static class IPAddressExtensions
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsV6(IPAddress)"/>
+    /// <seealso cref="IsV6"/>
     public bool IsV4 => address is not null ? address.AddressFamily == AddressFamily.InterNetwork : throw new ArgumentNullException(nameof(address));
 
     /// <summary>
@@ -26,7 +26,7 @@ public static class IPAddressExtensions
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsV4(IPAddress)"/>
+    /// <seealso cref="IsV4"/>
     public bool IsV6 => address is not null ? address.AddressFamily == AddressFamily.InterNetworkV6 : throw new ArgumentNullException(nameof(address));
 
     /// <summary>
@@ -46,6 +46,11 @@ public static class IPAddressExtensions
 
       return reply?.Status == IPStatus.Success;
     }
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public bool IsAvailable => address.IsAvailable();
 
     /// <summary>
     ///   <para></para>
@@ -85,5 +90,10 @@ public static class IPAddressExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
     public byte[] ToBytes() => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => address.ToBytes();
   }
 }

@@ -24,5 +24,10 @@ public static class PhysicalAddressExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
     public byte[] ToBytes() => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => address.ToBytes();
   }
 }

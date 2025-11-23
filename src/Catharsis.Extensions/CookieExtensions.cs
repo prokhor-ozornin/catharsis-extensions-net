@@ -15,7 +15,7 @@ public static class CookieExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsEmpty(Cookie)"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => cookie is null || cookie.IsEmpty;
 
     /// <summary>
@@ -23,8 +23,8 @@ public static class CookieExtensions
     /// </summary>
     /// <value>If the specified <paramref name="cookie"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="cookie"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(Cookie)"/>
-    public bool IsEmpty => cookie is not null ? cookie.Name.IsUnset() || cookie.Value.IsUnset() : throw new ArgumentNullException(nameof(cookie));
+    /// <seealso cref="IsUnset"/>
+    public bool IsEmpty => cookie is not null ? cookie.Name.IsUnset || cookie.Value.IsUnset : throw new ArgumentNullException(nameof(cookie));
 
     /// <summary>
     ///   <para>Creates a copy of the specified <see cref="Cookie"/> with the same properties as the original.</para>

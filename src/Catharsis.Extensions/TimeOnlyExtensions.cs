@@ -36,42 +36,42 @@ public static class TimeOnlyExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="TimeOnlyExtensions.EndOfHour"/>
+    /// <seealso cref="EndOfHour"/>
     public TimeOnly StartOfHour => new(time.Hour, 0, 0, 0);
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="TimeOnlyExtensions.StartOfHour"/>
+    /// <seealso cref="StartOfHour"/>
     public TimeOnly EndOfHour => new(time.Hour, 59, 59, 999);
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="TimeOnlyExtensions.EndOfMinute"/>
+    /// <seealso cref="EndOfMinute"/>
     public TimeOnly StartOfMinute => new(time.Hour, time.Minute, 0, 0);
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="TimeOnlyExtensions.StartOfMinute"/>
+    /// <seealso cref="StartOfMinute"/>
     public TimeOnly EndOfMinute => new(time.Hour, time.Minute, 59, 999);
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="TimeOnlyExtensions.EndOfSecond"/>
+    /// <seealso cref="EndOfSecond"/>
     public TimeOnly StartOfSecond => new(time.Hour, time.Minute, time.Second, 0);
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="TimeOnlyExtensions.StartOfSecond"/>
+    /// <seealso cref="StartOfSecond"/>
     public TimeOnly EndOfSecond => new(time.Hour, time.Minute, time.Second, 999);
   }
 }

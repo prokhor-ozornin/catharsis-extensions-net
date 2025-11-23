@@ -118,7 +118,7 @@ public sealed class IPHostEntryExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, IPHostEntry host) => host.IsEmpty.Should().Be(host.HostName.IsUnset() && host.AddressList.IsUnset()).And.Be(result);
+    static void Test(bool result, IPHostEntry host) => host.IsEmpty.Should().Be(host.HostName.IsUnset && host.AddressList.IsUnset()).And.Be(result);
   }
 
   /// <summary>

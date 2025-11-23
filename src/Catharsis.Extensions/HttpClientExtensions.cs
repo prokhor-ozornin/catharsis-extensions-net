@@ -424,11 +424,11 @@ public static class HttpClientExtensions
 
       cancellation.ThrowIfCancellationRequested();
 
-    #if NET10_0_OR_GREATER
+      #if NET10_0_OR_GREATER
       return await client.GetStreamAsync(uri, cancellation).ConfigureAwait(false);
-    #else
+      #else
       return await client.GetStreamAsync(uri).ConfigureAwait(false);
-    #endif
+      #endif
     }
 
     /// <summary>
@@ -483,11 +483,11 @@ public static class HttpClientExtensions
 
       cancellation.ThrowIfCancellationRequested();
 
-    #if NET10_0_OR_GREATER
+      #if NET10_0_OR_GREATER
       return await client.GetStringAsync(uri, cancellation).ConfigureAwait(false);
-    #else
+      #else
       return await client.GetStringAsync(uri).ConfigureAwait(false);
-    #endif
+      #endif
     }
   }
 }

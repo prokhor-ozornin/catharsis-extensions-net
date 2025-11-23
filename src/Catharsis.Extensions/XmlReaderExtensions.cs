@@ -72,6 +72,11 @@ public static class XmlReaderExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToBytesAsync(XmlReader, Encoding)"/>
     public byte[] ToBytes(Encoding encoding = null) => reader.ToText().ToBytes(encoding);
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => reader.ToBytes();
 
     /// <summary>
     ///   <para></para>
@@ -89,6 +94,11 @@ public static class XmlReaderExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToTextAsync(XmlReader)"/>
     public string ToText() => reader?.ReadOuterXml() ?? throw new ArgumentNullException(nameof(reader));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string Text => reader.ToText();
 
     /// <summary>
     ///   <para></para>

@@ -38,7 +38,7 @@ public sealed class BinaryReaderExtensionsTest : Test
         reader.BaseStream.MoveToStart();
         reader.IsStart.Should().BeTrue();
         reader.BaseStream.MoveToEnd();
-        reader.IsStart.Should().Be(reader.BaseStream.IsEmpty());
+        reader.IsStart.Should().Be(reader.BaseStream.IsEmpty);
       }
     }
   }
@@ -66,9 +66,9 @@ public sealed class BinaryReaderExtensionsTest : Test
       using (reader)
       {
         reader.BaseStream.MoveToStart();
-        reader.IsEnd.Should().Be(reader.BaseStream.IsEnd()).And.Be(reader.BaseStream.IsEmpty());
+        reader.IsEnd.Should().Be(reader.BaseStream.IsEnd).And.Be(reader.BaseStream.IsEmpty);
         reader.BaseStream.MoveToEnd();
-        reader.IsEnd.Should().Be(reader.BaseStream.IsEnd()).And.BeTrue();
+        reader.IsEnd.Should().Be(reader.BaseStream.IsEnd).And.BeTrue();
       }
     }
   }
@@ -98,7 +98,7 @@ public sealed class BinaryReaderExtensionsTest : Test
       {
         reader.BaseStream.MoveToEnd();
         reader.Rewind().Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.BaseStream.IsStart().Should().BeTrue();
+        reader.BaseStream.IsStart.Should().BeTrue();
       }
     }
   }
@@ -254,7 +254,7 @@ public sealed class BinaryReaderExtensionsTest : Test
       using (reader)
       {
         reader.Empty().Should().BeOfType<BinaryReader>().And.BeSameAs(reader);
-        reader.BaseStream.IsEmpty().Should().BeTrue();
+        reader.BaseStream.IsEmpty.Should().BeTrue();
         reader.PeekChar().Should().Be(-1);
       }
     }

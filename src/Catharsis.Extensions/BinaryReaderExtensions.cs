@@ -14,17 +14,43 @@ public static class BinaryReaderExtensions
     /// </summary>
     /// <value>If the specified <paramref name="reader"/> is at the starting position, return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsEnd(BinaryReader)"/>
-    public bool IsStart => reader?.BaseStream.IsStart() ?? throw new ArgumentNullException(nameof(reader));
+    /// <seealso cref="IsEnd"/>
+    public bool IsStart => reader?.BaseStream.IsStart ?? throw new ArgumentNullException(nameof(reader));
 
     /// <summary>
     ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the final position, meaning it's currently at the end of its underlying <seealso cref="Stream"/>.</para>
     /// </summary>
     /// <value>If the specified <paramref name="reader"/> is at the final position, return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsStart(BinaryReader)"/>
-    public bool IsEnd => reader?.BaseStream.IsEnd() ?? throw new ArgumentNullException(nameof(reader));
+    /// <seealso cref="IsStart"/>
+    public bool IsEnd => reader?.BaseStream.IsEnd ?? throw new ArgumentNullException(nameof(reader));
 
+    /// <summary>
+    ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance is either <see langword="null"/> or "empty".</para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsEmpty"/>
+    public bool IsUnset => reader is null || reader.IsEmpty;
+
+    /// <summary>
+    ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
+    /// </summary>
+    /// <value>If the specified <paramref name="reader"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsUnset"/>
+    public bool IsEmpty => reader?.BaseStream.IsEmpty ?? throw new ArgumentNullException(nameof(reader));
+
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => reader.ToBytes().ToArray();
+
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string Text => reader.ToText();
+    
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -32,8 +58,7 @@ public static class BinaryReaderExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
     public BinaryReader Rewind()
     {
-      if (reader is null)
-        throw new ArgumentNullException(nameof(reader));
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
 
       reader.BaseStream.MoveToStart();
 
@@ -62,22 +87,6 @@ public static class BinaryReaderExtensions
 
       return reader;
     }
-
-    /// <summary>
-    ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance is either <see langword="null"/> or "empty".</para>
-    /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsEmpty(BinaryReader)"/>
-    public bool IsUnset => reader is null || reader.IsEmpty;
-
-    /// <summary>
-    ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance can be considered "empty", meaning it has an "empty" underlying <see cref="Stream"/>.</para>
-    /// </summary>
-    /// <value>If the specified <paramref name="reader"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
-    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(BinaryReader)"/>
-    public bool IsEmpty => reader?.BaseStream.IsEmpty() ?? throw new ArgumentNullException(nameof(reader));
 
     /// <summary>
     ///   <para>Creates a copy of the specified <see cref="BinaryReader"/>, which will read data from the same underlying <see cref="Stream"/>.</para>
@@ -170,11 +179,6 @@ public static class BinaryReaderExtensions
     public IAsyncEnumerable<byte> ToBytesAsync() => reader?.BaseStream.ToBytesAsync() ?? throw new ArgumentNullException(nameof(reader));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => reader.ToBytes().ToArray();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
@@ -193,11 +197,6 @@ public static class BinaryReaderExtensions
       }
     }
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => reader.ToText();
-
     /// <summary>
     ///   <para></para>
     /// </summary>

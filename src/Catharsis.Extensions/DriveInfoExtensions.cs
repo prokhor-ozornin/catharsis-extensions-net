@@ -16,7 +16,7 @@ public static class DriveInfoExtensions
     /// <param name="recursive"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="drive"/> is <see langword="null"/>.</exception>
-    public long Size(string pattern = null, bool recursive = true) => drive?.RootDirectory.Size(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
+    public long Size(string pattern = null, bool recursive = true) => drive?.RootDirectory.TotalSize(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
     
     /// <summary>
     ///   <para>[NEW]</para>
@@ -30,7 +30,7 @@ public static class DriveInfoExtensions
     /// <param name="recursive"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="drive"/> is <see langword="null"/>.</exception>
-    public IEnumerable<DirectoryInfo> Directories(string pattern = null, bool recursive = false) => drive?.RootDirectory.Directories(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
+    public IEnumerable<DirectoryInfo> Directories(string pattern = null, bool recursive = false) => drive?.RootDirectory.ListDirectories(pattern, recursive) ?? throw new ArgumentNullException(nameof(drive));
     
     /// <summary>
     ///   <para>[NEW]</para>

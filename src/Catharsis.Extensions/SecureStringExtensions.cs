@@ -31,7 +31,7 @@ public static class SecureStringExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsEmpty(SecureString)"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => text is null || text.IsEmpty;
 
     /// <summary>
@@ -39,7 +39,7 @@ public static class SecureStringExtensions
     /// </summary>
     /// <value>If the specified <paramref name="text"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(SecureString)"/>
+    /// <seealso cref="IsUnset"/>
     public bool IsEmpty => text is not null ? text.Length == 0 : throw new ArgumentNullException(nameof(text));
 
     /// <summary>
@@ -131,49 +131,49 @@ public static class SecureStringExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Max(SecureString, SecureString)"/>
     /// <seealso cref="MinMax(SecureString, SecureString)"/>
-    public SecureString Min(SecureString right)
+    public SecureString Min(SecureString other)
     {
       if (text is null) throw new ArgumentNullException(nameof(text));
-      if (right is null) throw new ArgumentNullException(nameof(right));
+      if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return text.Length <= right.Length ? text : right;
+      return text.Length <= other.Length ? text : other;
     }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Min(SecureString, SecureString)"/>
     /// <seealso cref="MinMax(SecureString, SecureString)"/>
-    public SecureString Max(SecureString right)
+    public SecureString Max(SecureString other)
     {
       if (text is null) throw new ArgumentNullException(nameof(text));
-      if (right is null) throw new ArgumentNullException(nameof(right));
+      if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return text.Length > right.Length ? text : right;
+      return text.Length > other.Length ? text : other;
     }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Min(SecureString, SecureString)"/>
     /// <seealso cref="Max(SecureString, SecureString)"/>
-    public (SecureString Min, SecureString Max) MinMax(SecureString right)
+    public (SecureString Min, SecureString Max) MinMax(SecureString other)
     {
       if (text is null) throw new ArgumentNullException(nameof(text));
-      if (right is null) throw new ArgumentNullException(nameof(right));
+      if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return text.Length <= right.Length ? (text, right) : (right, text);
+      return text.Length <= other.Length ? (text, right: other) : (right: other, text);
     }
 
     /// <summary>
@@ -183,6 +183,11 @@ public static class SecureStringExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
     public byte[] ToBytes(Encoding encoding = null) => text.ToText().ToBytes(encoding);
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => text.ToBytes();
 
     /// <summary>
     ///   <para></para>
@@ -214,6 +219,11 @@ public static class SecureStringExtensions
         }
       }
     }
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string Text => text.ToText();
 
     /// <summary>
     ///   <para></para>

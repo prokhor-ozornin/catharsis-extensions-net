@@ -11,6 +11,11 @@ public static class ActionExtensions
   extension(Action action)
   {
     /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public Task Task => action.ToTask();
+
+    /// <summary>
     ///   <para>Executes a specified action continuously while a certain condition remains true.</para>
     /// </summary>
     /// <param name="condition">Condition of execution.</param>
@@ -39,12 +44,19 @@ public static class ActionExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToTask(Action{object}, object, TaskCreationOptions, CancellationToken)"/>
     public Task ToTask(TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => action is not null ? new Task(action, cancellation, options) : throw new ArgumentNullException(nameof(action));
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public Task Task => action.ToTask();
   }
+
+  /// <summary>
+  ///   <para></para>
+  /// </summary>
+  /// <param name="action"></param>
+  /// <param name="state"></param>
+  /// <param name="options"></param>
+  /// <param name="cancellation"></param>
+  /// <returns></returns>
+  /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
+  /// <seealso cref="ToTask(Action, TaskCreationOptions, CancellationToken)"/>
+  public static Task ToTask(this Action<object> action, object state, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => action is not null ? new Task(action, state, cancellation, options) : throw new ArgumentNullException(nameof(action));
 
   /// <summary>
   ///   <para></para>
@@ -68,16 +80,4 @@ public static class ActionExtensions
 
     return action;
   }
-
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="action"></param>
-  /// <param name="state"></param>
-  /// <param name="options"></param>
-  /// <param name="cancellation"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="action"/> is <see langword="null"/>.</exception>
-  /// <seealso cref="ToTask(Action, TaskCreationOptions, CancellationToken)"/>
-  public static Task ToTask(this Action<object> action, object state, TaskCreationOptions options = TaskCreationOptions.None, CancellationToken cancellation = default) => action is not null ? new Task(action, state, cancellation, options) : throw new ArgumentNullException(nameof(action));
 }

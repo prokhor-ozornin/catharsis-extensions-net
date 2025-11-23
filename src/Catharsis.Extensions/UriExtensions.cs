@@ -26,6 +26,11 @@ public static class UriExtensions
     /// <exception cref="InvalidOperationException"></exception>
     /// <seealso cref="IsAvailableAsync(Uri, TimeSpan?, CancellationToken)"/>
     public bool IsAvailable(TimeSpan? timeout = null) => uri is not null ? uri.IsAvailableAsync(timeout).Result : throw new ArgumentNullException(nameof(uri));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public bool IsAvailable => uri.IsAvailable();
 
     /// <summary>
     ///   <para></para>
@@ -73,7 +78,7 @@ public static class UriExtensions
 
       var query = uri.Query;
 
-      return query.IsUnset() ? new Dictionary<string, string>() : HttpUtility.ParseQueryString(uri.Query).ToDictionary();
+      return query.IsUnset ? new Dictionary<string, string>() : HttpUtility.ParseQueryString(uri.Query).ToDictionary();
     }
 
     /// <summary>
@@ -101,6 +106,11 @@ public static class UriExtensions
 
       return reader.Lines().AsArray();
     }
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string[] Lines => uri.Lines();
 
     /// <summary>
     ///   <para></para>
@@ -433,6 +443,11 @@ public static class UriExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToBytesAsync(Uri, TimeSpan?, ValueTuple{string, object}[])"/>
     public IEnumerable<byte> ToBytes(TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri?.ToStream(timeout, headers).ToBytes(true) ?? throw new ArgumentNullException(nameof(uri));
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => uri.ToBytes().ToArray();
 
     /// <summary>
     ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
@@ -471,6 +486,11 @@ public static class UriExtensions
     
       return stream.ToText(encoding);
     }
+    
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public string Text => uri.ToText();
 
     /// <summary>
     ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>

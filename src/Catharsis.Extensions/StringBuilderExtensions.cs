@@ -18,7 +18,7 @@ public static class StringBuilderExtensions
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsEmpty(StringBuilder)"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => builder is null || builder.IsEmpty;
 
     /// <summary>
@@ -26,7 +26,7 @@ public static class StringBuilderExtensions
     /// </summary>
     /// <value>If the specified <paramref name="builder"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(StringBuilder)"/>
+    /// <seealso cref="IsUnset"/>
     public bool IsEmpty => builder is not null ? builder.Length == 0 : throw new ArgumentNullException(nameof(builder));
 
     /// <summary>
@@ -118,49 +118,49 @@ public static class StringBuilderExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Max(StringBuilder, StringBuilder)"/>
     /// <seealso cref="MinMax(StringBuilder, StringBuilder)"/>
-    public StringBuilder Min(StringBuilder right)
+    public StringBuilder Min(StringBuilder other)
     {
       if (builder is null) throw new ArgumentNullException(nameof(builder));
-      if (right is null) throw new ArgumentNullException(nameof(right));
+      if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return builder.Length <= right.Length ? builder : right;
+      return builder.Length <= other.Length ? builder : other;
     }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Min(StringBuilder, StringBuilder)"/>
     /// <seealso cref="MinMax(StringBuilder, StringBuilder)"/>
-    public StringBuilder Max(StringBuilder right)
+    public StringBuilder Max(StringBuilder other)
     {
       if (builder is null) throw new ArgumentNullException(nameof(builder));
-      if (right is null) throw new ArgumentNullException(nameof(right));
+      if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return builder.Length > right.Length ? builder : right;
+      return builder.Length > other.Length ? builder : other;
     }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="builder"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Min(StringBuilder, StringBuilder)"/>
     /// <seealso cref="Max(StringBuilder, StringBuilder)"/>
-    public (StringBuilder Min, StringBuilder Max) MinMax(StringBuilder right)
+    public (StringBuilder Min, StringBuilder Max) MinMax(StringBuilder other)
     {
       if (builder is null) throw new ArgumentNullException(nameof(builder));
-      if (right is null) throw new ArgumentNullException(nameof(right));
+      if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return builder.Length <= right.Length ? (builder, right) : (right, builder);
+      return builder.Length <= other.Length ? (builder, right: other) : (right: other, builder);
     }
 
     /// <summary>

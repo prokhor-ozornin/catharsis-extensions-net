@@ -78,6 +78,36 @@ public static class BasicTypesExtensions
   extension(short number)
   {
     /// <summary>
+    ///   <para>Creates a time span object, representing a given number of days.</para>
+    /// </summary>
+    /// <value>Time span instance.</value>
+    public TimeSpan Days => new(number, 0, 0, 0);
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of hours.</para>
+    /// </summary>
+    /// <value>Time span instance.</value>
+    public TimeSpan Hours => new(number, 0, 0);
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of minutes.</para>
+    /// </summary>
+    /// <value>Time span instance.</value>
+    public TimeSpan Minutes => new(0, number, 0);
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of seconds.</para>
+    /// </summary>
+    /// <value>Time span instance.</value>
+    public TimeSpan Seconds => new(0, 0, number);
+
+    /// <summary>
+    ///   <para>Creates a time span object, representing a given number of milliseconds.</para>
+    /// </summary>
+    /// <value>Time span instance.</value>
+    public TimeSpan Milliseconds => new(0, 0, 0, 0, number);
+
+    /// <summary>
     ///   <para>Returns the absolute value of 16-bit signed integer.</para>
     /// </summary>
     /// <returns>Absolute value of <paramref name="number"/>.</returns>
@@ -94,6 +124,13 @@ public static class BasicTypesExtensions
   /// <param name="number">Source number.</param>
   extension(int number)
   {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public IEnumerable<object> Nulls => number.Objects<object>(() => null);
+
     /// <summary>
     ///   <para>Returns the absolute value of 32-bit signed integer.</para>
     /// </summary>
@@ -142,13 +179,6 @@ public static class BasicTypesExtensions
         action(value);
       }
     }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public IEnumerable<object> Nulls => number.Objects<object>(() => null);
 
     /// <summary>
     ///   <para></para>
@@ -203,36 +233,6 @@ public static class BasicTypesExtensions
     }
 
     /// <summary>
-    ///   <para>Creates a time span object, representing a given number of days.</para>
-    /// </summary>
-    /// <value>Time span instance.</value>
-    public TimeSpan Days => new(number, 0, 0, 0);
-
-    /// <summary>
-    ///   <para>Creates a time span object, representing a given number of hours.</para>
-    /// </summary>
-    /// <value>Time span instance.</value>
-    public TimeSpan Hours => new(number, 0, 0);
-
-    /// <summary>
-    ///   <para>Creates a time span object, representing a given number of minutes.</para>
-    /// </summary>
-    /// <value>Time span instance.</value>
-    public TimeSpan Minutes => new(0, number, 0);
-
-    /// <summary>
-    ///   <para>Creates a time span object, representing a given number of seconds.</para>
-    /// </summary>
-    /// <value>Time span instance.</value>
-    public TimeSpan Seconds => new(0, 0, number);
-
-    /// <summary>
-    ///   <para>Creates a time span object, representing a given number of milliseconds.</para>
-    /// </summary>
-    /// <value>Time span instance.</value>
-    public TimeSpan Milliseconds => new(0, 0, 0, 0, number);
-    
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
@@ -243,17 +243,17 @@ public static class BasicTypesExtensions
   extension(long number)
   {
     /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    public TimeSpan Ticks => new(number);
+
+    /// <summary>
     ///   <para>Returns the absolute value of 64-bit signed integer.</para>
     /// </summary>
     /// <returns>Absolute value of <paramref name="number"/>.</returns>
     /// <seealso cref="Math.Abs(long)"/>
     public long Abs() => Math.Abs(number);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    public TimeSpan Ticks => new(number);
 
     /// <summary>
     ///   <para></para>

@@ -9,17 +9,16 @@ namespace Catharsis.Extensions;
 /// <seealso cref="TextWriter"/>
 public static class TextWriterExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <param name="writer"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
-  public static TextWriter AsSynchronized(this TextWriter writer) => writer is not null ? TextWriter.Synchronized(writer) : throw new ArgumentNullException(nameof(writer));
-
   /// <param name="writer"></param>
   extension(TextWriter writer)
   {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
+    public TextWriter AsSynchronized() => writer is not null ? TextWriter.Synchronized(writer) : throw new ArgumentNullException(nameof(writer));
+
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -38,8 +37,8 @@ public static class TextWriterExtensions
   }
 
   /// <param name="writer"></param>
-  /// <typeparam name="TWriter"></typeparam>
-  extension<TWriter>(TWriter writer) where TWriter : TextWriter
+  /// <typeparam name="T"></typeparam>
+  extension<T>(T writer) where T : TextWriter
   {
     /// <summary>
     ///   <para></para>
@@ -49,7 +48,7 @@ public static class TextWriterExtensions
     /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
     /// <seealso cref="WriteBytesAsync{TWriter}(TWriter, IEnumerable{byte}, Encoding, CancellationToken)"/>
-    public TWriter WriteBytes(IEnumerable<byte> bytes, Encoding encoding = null)
+    public T WriteBytes(IEnumerable<byte> bytes, Encoding encoding = null)
     {
       if (writer is null) throw new ArgumentNullException(nameof(writer));
       if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -66,7 +65,7 @@ public static class TextWriterExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="bytes"/> is <see langword="null"/>.</exception>
     /// <seealso cref="WriteBytes{TWriter}(TWriter, IEnumerable{byte}, Encoding)"/>
-    public async Task<TWriter> WriteBytesAsync(IEnumerable<byte> bytes, Encoding encoding = null, CancellationToken cancellation = default)
+    public async Task<T> WriteBytesAsync(IEnumerable<byte> bytes, Encoding encoding = null, CancellationToken cancellation = default)
     {
       if (writer is null) throw new ArgumentNullException(nameof(writer));
       if (bytes is null) throw new ArgumentNullException(nameof(bytes));
@@ -81,7 +80,7 @@ public static class TextWriterExtensions
     /// <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
     /// <seealso cref="WriteTextAsync{TWriter}(TWriter, string, CancellationToken)"/>
-    public TWriter WriteText(string text)
+    public T WriteText(string text)
     {
       if (writer is null) throw new ArgumentNullException(nameof(writer));
       if (text is null) throw new ArgumentNullException(nameof(text));
@@ -99,7 +98,7 @@ public static class TextWriterExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="writer"/> or <paramref name="text"/> is <see langword="null"/>.</exception>
     /// <seealso cref="WriteText{TWriter}(TWriter, string)"/>
-    public async Task<TWriter> WriteTextAsync(string text, CancellationToken cancellation = default)
+    public async Task<T> WriteTextAsync(string text, CancellationToken cancellation = default)
     {
       if (writer is null) throw new ArgumentNullException(nameof(writer));
       if (text is null) throw new ArgumentNullException(nameof(text));

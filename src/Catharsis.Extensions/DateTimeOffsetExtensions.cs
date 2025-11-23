@@ -15,29 +15,113 @@ public static class DateTimeOffsetExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsFuture(DateTimeOffset)"/>
+    /// <seealso cref="IsFuture"/>
     public bool IsPast => date < DateTimeOffset.UtcNow;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsPast(DateTimeOffset)"/>
+    /// <seealso cref="IsPast"/>
     public bool IsFuture => date > DateTimeOffset.UtcNow;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsWeekend(DateTimeOffset)"/>
+    /// <seealso cref="IsWeekend"/>
     public bool IsWeekday => !date.IsWeekend;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsWeekday(DateTimeOffset)"/>
+    /// <seealso cref="IsWeekday"/>
     public bool IsWeekend => date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfYear"/>
+    public DateTimeOffset StartOfYear => new(date.Year, 1, 1, 0, 0, 0, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfYear"/>
+    public DateTimeOffset EndOfYear => new(date.Year, 12, 31, 23, 59, 59, 999, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfMonth"/>
+    public DateTimeOffset StartOfMonth => new(date.Year, date.Month, 1, 0, 0, 0, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfMonth"/>
+    public DateTimeOffset EndOfMonth => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfDay"/>
+    public DateTimeOffset StartOfDay => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfDay"/>
+    public DateTimeOffset EndOfDay => new(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfHour"/>
+    public DateTimeOffset StartOfHour => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfHour"/>
+    public DateTimeOffset EndOfHour => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfMinute"/>
+    public DateTimeOffset StartOfMinute => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfMinute"/>
+    public DateTimeOffset EndOfMinute => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="EndOfSecond"/>
+    public DateTimeOffset StartOfSecond => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Offset);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <seealso cref="StartOfSecond"/>
+    public DateTimeOffset EndOfSecond => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Offset);
 
     /// <summary>
     ///   <para></para>
@@ -76,90 +160,6 @@ public static class DateTimeOffsetExtensions
     /// <returns></returns>
     /// <seealso cref="EqualsByDate(DateTimeOffset, DateTimeOffset)"/>
     public bool EqualsByTime(DateTimeOffset right) => date.Hour == right.Hour && date.Minute == right.Minute && date.Second == right.Second && date.Millisecond == right.Millisecond;
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.EndOfYear"/>
-    public DateTimeOffset StartOfYear => new(date.Year, 1, 1, 0, 0, 0, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.StartOfYear"/>
-    public DateTimeOffset EndOfYear => new(date.Year, 12, 31, 23, 59, 59, 999, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.EndOfMonth"/>
-    public DateTimeOffset StartOfMonth => new(date.Year, date.Month, 1, 0, 0, 0, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.StartOfMonth"/>
-    public DateTimeOffset EndOfMonth => new(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.EndOfDay"/>
-    public DateTimeOffset StartOfDay => new(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.StartOfDay"/>
-    public DateTimeOffset EndOfDay => new(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.EndOfHour"/>
-    public DateTimeOffset StartOfHour => new(date.Year, date.Month, date.Day, date.Hour, 0, 0, 0, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.StartOfHour"/>
-    public DateTimeOffset EndOfHour => new(date.Year, date.Month, date.Day, date.Hour, 59, 59, 999, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.EndOfMinute"/>
-    public DateTimeOffset StartOfMinute => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 0, 0, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.StartOfMinute"/>
-    public DateTimeOffset EndOfMinute => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, 59, 999, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.EndOfSecond"/>
-    public DateTimeOffset StartOfSecond => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 0, date.Offset);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="DateTimeOffsetExtensions.StartOfSecond"/>
-    public DateTimeOffset EndOfSecond => new(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, 999, date.Offset);
 
     /// <summary>
     ///   <para></para>
