@@ -10,22 +10,6 @@ public static class BinaryReaderExtensions
   extension(BinaryReader reader)
   {
     /// <summary>
-    ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the starting position, meaning the position within it's underlying <seealso cref="Stream"/> is zero.</para>
-    /// </summary>
-    /// <value>If the specified <paramref name="reader"/> is at the starting position, return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
-    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsEnd"/>
-    public bool IsStart => reader?.BaseStream.IsStart ?? throw new ArgumentNullException(nameof(reader));
-
-    /// <summary>
-    ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the final position, meaning it's currently at the end of its underlying <seealso cref="Stream"/>.</para>
-    /// </summary>
-    /// <value>If the specified <paramref name="reader"/> is at the final position, return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
-    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsStart"/>
-    public bool IsEnd => reader?.BaseStream.IsEnd ?? throw new ArgumentNullException(nameof(reader));
-
-    /// <summary>
     ///   <para>Determines whether the specified <see cref="BinaryReader"/> instance is either <see langword="null"/> or "empty".</para>
     /// </summary>
     /// <value></value>
@@ -42,15 +26,31 @@ public static class BinaryReaderExtensions
     public bool IsEmpty => reader?.BaseStream.IsEmpty ?? throw new ArgumentNullException(nameof(reader));
 
     /// <summary>
-    ///   <para>[NEW]</para>
+    ///   <para></para>
     /// </summary>
     public byte[] Bytes => reader.ToBytes().ToArray();
 
     /// <summary>
-    ///   <para>[NEW]</para>
+    ///   <para></para>
     /// </summary>
     public string Text => reader.ToText();
     
+    /// <summary>
+    ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the starting position, meaning the position within it's underlying <seealso cref="Stream"/> is zero.</para>
+    /// </summary>
+    /// <value>If the specified <paramref name="reader"/> is at the starting position, return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsEnd"/>
+    public bool IsStart => reader?.BaseStream.IsStart ?? throw new ArgumentNullException(nameof(reader));
+
+    /// <summary>
+    ///   <para>Determines whether the specified <seealso cref="BinaryReader"/> is currently at the final position, meaning it's currently at the end of its underlying <seealso cref="Stream"/>.</para>
+    /// </summary>
+    /// <value>If the specified <paramref name="reader"/> is at the final position, return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsStart"/>
+    public bool IsEnd => reader?.BaseStream.IsEnd ?? throw new ArgumentNullException(nameof(reader));
+
     /// <summary>
     ///   <para></para>
     /// </summary>

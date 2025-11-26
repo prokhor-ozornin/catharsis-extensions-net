@@ -32,11 +32,21 @@ public static class IPAddressExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public bool IsAvailable => address.Availability();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public byte[] Bytes => address.ToBytes();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="timeout"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsAvailableAsync(IPAddress, TimeSpan?)"/>
-    public bool IsAvailable(TimeSpan? timeout = null)
+    /// <seealso cref="IPAddressExtensions.AvailabilityAsync"/>
+    public bool Availability(TimeSpan? timeout = null)
     {
       if (address is null) throw new ArgumentNullException(nameof(address));
 
@@ -48,18 +58,13 @@ public static class IPAddressExtensions
     }
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsAvailable => address.IsAvailable();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="timeout"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsAvailable(IPAddress, TimeSpan?)"/>
-    public async Task<bool> IsAvailableAsync(TimeSpan? timeout = null)
+    /// <seealso cref="IPAddressExtensions.Availability"/>
+    public async Task<bool> AvailabilityAsync(TimeSpan? timeout = null)
     {
       if (address is null) throw new ArgumentNullException(nameof(address));
 
@@ -90,10 +95,5 @@ public static class IPAddressExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
     public byte[] ToBytes() => address?.GetAddressBytes() ?? throw new ArgumentNullException(nameof(address));
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => address.ToBytes();
   }
 }

@@ -122,8 +122,8 @@ public sealed class DirectoryInfoExtensionsTest : Test
       {
         info.Exists.Should().BeTrue();
         info.IsEmpty.Should().BeTrue();
-        new Random().File(new Random().Directory(info));
-        new Random().File(info);
+        new Random().ToFile(new Random().ToDirectory(info));
+        new Random().ToFile(info);
         info.IsEmpty.Should().BeFalse();
       });
     }
@@ -226,8 +226,8 @@ public sealed class DirectoryInfoExtensionsTest : Test
       directory.Exists.Should().BeFalse();
       directory.TryFinallyDelete(info =>
       {
-        new Random().File(info);
-        new Random().File(new Random().Directory(info));
+        new Random().ToFile(info);
+        new Random().ToFile(new Random().ToDirectory(info));
       });
       directory.Exists.Should().BeFalse();
 
@@ -235,8 +235,8 @@ public sealed class DirectoryInfoExtensionsTest : Test
       directory.Exists.Should().BeTrue();
       directory.TryFinallyDelete(info =>
       {
-        new Random().File(info);
-        new Random().File(new Random().Directory(info));
+        new Random().ToFile(info);
+        new Random().ToFile(new Random().ToDirectory(info));
       });
       directory.Exists.Should().BeTrue();
       directory.IsEmpty.Should().BeTrue();

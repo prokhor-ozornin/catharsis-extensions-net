@@ -148,18 +148,18 @@ public static class DateTimeOffsetExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
     /// <seealso cref="EqualsByTime(DateTimeOffset, DateTimeOffset)"/>
-    public bool EqualsByDate(DateTimeOffset right) => date.Year == right.Year && date.Month == right.Month && date.Day == right.Day;
+    public bool EqualsByDate(DateTimeOffset other) => date.Year == other.Year && date.Month == other.Month && date.Day == other.Day;
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
     /// <seealso cref="EqualsByDate(DateTimeOffset, DateTimeOffset)"/>
-    public bool EqualsByTime(DateTimeOffset right) => date.Hour == right.Hour && date.Minute == right.Minute && date.Second == right.Second && date.Millisecond == right.Millisecond;
+    public bool EqualsByTime(DateTimeOffset other) => date.Hour == other.Hour && date.Minute == other.Minute && date.Second == other.Second && date.Millisecond == other.Millisecond;
 
     /// <summary>
     ///   <para></para>

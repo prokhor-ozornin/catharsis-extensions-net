@@ -340,30 +340,30 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.Lines(string, string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToLines"/> method.</para>
   /// </summary>
   [Fact]
   public void Lines_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => StringExtensions.ToLines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
-      string.Empty.Lines().Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines()).And.BeEmpty();
-      string.Empty.Lines("\t").Should().BeOfType<string>().And.BeSameAs(string.Empty.Lines("\t")).And.BeEmpty();
+      string.Empty.ToLines().Should().BeOfType<string>().And.BeSameAs(string.Empty.ToLines()).And.BeEmpty();
+      string.Empty.ToLines("\t").Should().BeOfType<string>().And.BeSameAs(string.Empty.ToLines("\t")).And.BeEmpty();
 
       var text = Fixture.Create<string>();
-      text.Lines().Should().BeOfType<string[]>().And.HaveCount(1).And.HaveElementAt(0, text);
+      text.ToLines().Should().BeOfType<string[]>().And.HaveCount(1).And.HaveElementAt(0, text);
 
       var strings = 10.Objects(() => Fixture.Create<string>()).AsArray();
       text = strings.Join(Environment.NewLine);
-      var lines = text.Lines();
+      var lines = text.ToLines();
       lines.Should().BeOfType<string[]>().And.HaveCount(strings.Length).And.Equal(strings);
     }
 
     return;
 
-    static void Test(IEnumerable<string> result, string text, string separator = null) => text.Lines(separator).Should().BeOfType<string[]>().And.Equal(result);
+    static void Test(IEnumerable<string> result, string text, string separator = null) => text.ToLines(separator).Should().BeOfType<string[]>().And.Equal(result);
   }
 
   /// <summary>
@@ -726,7 +726,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsSbyte(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsSbyteInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsSbyte_Method()
@@ -746,11 +746,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsByteInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsByte(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsByteInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsByte_Method()
@@ -770,11 +770,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsByte(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsByteInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsShort(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsShortInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsShort_Method()
@@ -794,11 +794,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsShort(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsShortInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsUshort(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsUshortInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsUshort_Method()
@@ -818,11 +818,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsUshort(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsUshortInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsInt(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsIntInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsInt_Method()
@@ -842,11 +842,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsInt(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsIntInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsUint(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsUintInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsUint_Method()
@@ -866,11 +866,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsUint(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsUintInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsLong(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsLongInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsLong_Method()
@@ -890,11 +890,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsLong(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsLongInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsUlong(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsUlongInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsUlong_Method()
@@ -914,11 +914,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsUlong(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsUlongInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsFloat(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsFloatInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsFloat_Method()
@@ -942,11 +942,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsFloat(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsFloatInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDouble(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDoubleInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDouble_Method()
@@ -970,11 +970,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDouble(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDoubleInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDecimal(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDecimalInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDecimal_Method()
@@ -997,7 +997,7 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDecimal(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDecimalInFormat(format).Should().Be(result);
   }
 
   /// <summary>
@@ -1042,7 +1042,7 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text) => text.IsGuid().Should().Be(result);
+    static void Test(bool result, string text) => text.IsGuid.Should().Be(result);
   }
 
   /// <summary>
@@ -1063,7 +1063,7 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text) => text.IsUri().Should().Be(result);
+    static void Test(bool result, string text) => text.IsUri.Should().Be(result);
   }
 
   /// <summary>
@@ -1090,11 +1090,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text) => text.IsType().Should().Be(result);
+    static void Test(bool result, string text) => text.IsType.Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDateTime(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDateTimeInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDateTime_Method()
@@ -1115,11 +1115,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDateTime(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDateTimeInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDateTimeOffset(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDateTimeOffsetInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDateTimeOffset_Method()
@@ -1140,11 +1140,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDateTimeOffset(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDateTimeOffsetInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDateOnly(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDateOnlyInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDateOnly_Method()
@@ -1165,11 +1165,11 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDateOnly(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsDateOnlyInFormat(format).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsTimeOnly(string, IFormatProvider)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsTimeOnlyInFormat"/> method.</para>
   /// </summary>
   [Fact]
   public void IsTimeOnly_Method()
@@ -1190,7 +1190,7 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text, IFormatProvider format = null) => text.IsTimeOnly(format).Should().Be(result);
+    static void Test(bool result, string text, IFormatProvider format = null) => text.IsTimeOnlyInFormat(format).Should().Be(result);
   }
 
   /// <summary>
@@ -1210,7 +1210,7 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text) => text.IsFile().Should().Be(result);
+    static void Test(bool result, string text) => text.IsFile.Should().Be(result);
   }
 
   /// <summary>
@@ -1230,7 +1230,7 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text) => text.IsDirectory().Should().Be(result);
+    static void Test(bool result, string text) => text.IsDirectory.Should().Be(result);
   }
 
   /// <summary>
@@ -1254,7 +1254,7 @@ public sealed class StringExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, string text) => text.IsIpAddress().Should().Be(result);
+    static void Test(bool result, string text) => text.IsIpAddress.Should().Be(result);
   }
 
   /// <summary>

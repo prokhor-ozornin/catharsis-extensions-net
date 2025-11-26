@@ -12,6 +12,16 @@ public static class HttpContentExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public Stream Stream => content.ToStream();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public byte[] Bytes => content.ToBytes().ToArray();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="content"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToStreamAsync(HttpContent, CancellationToken)"/>
@@ -26,11 +36,6 @@ public static class HttpContentExtensions
       #endif
     }
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public Stream Stream => content.ToStream();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -59,11 +64,6 @@ public static class HttpContentExtensions
     /// <seealso cref="ToBytesAsync(HttpContent)"/>
     public IEnumerable<byte> ToBytes() => content?.ToStream().ToBytes() ?? throw new ArgumentNullException(nameof(content));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => content.ToBytes().ToArray();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -104,9 +104,9 @@ public static class HttpContentExtensions
       cancellation.ThrowIfCancellationRequested();
 
       #if NET10_0_OR_GREATER
-        return await content.ReadAsStringAsync(cancellation).ConfigureAwait(false);
+      return await content.ReadAsStringAsync(cancellation).ConfigureAwait(false);
       #else
-        return await content.ReadAsStringAsync().ConfigureAwait(false);
+      return await content.ReadAsStringAsync().ConfigureAwait(false);
       #endif
     }
   }

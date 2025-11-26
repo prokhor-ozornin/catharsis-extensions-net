@@ -20,18 +20,23 @@ public static class UriExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public bool IsAvailable => uri.Availability();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string[] Lines => uri.ToLines().ToArray();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="timeout"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
     /// <exception cref="InvalidOperationException"></exception>
     /// <seealso cref="IsAvailableAsync(Uri, TimeSpan?, CancellationToken)"/>
-    public bool IsAvailable(TimeSpan? timeout = null) => uri is not null ? uri.IsAvailableAsync(timeout).Result : throw new ArgumentNullException(nameof(uri));
+    public bool Availability(TimeSpan? timeout = null) => uri is not null ? uri.IsAvailableAsync(timeout).Result : throw new ArgumentNullException(nameof(uri));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsAvailable => uri.IsAvailable();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -39,7 +44,7 @@ public static class UriExtensions
     /// <param name="cancellation"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsAvailable(Uri, TimeSpan?)"/>
+    /// <seealso cref="UriExtensions.Availability"/>
     public async Task<bool> IsAvailableAsync(TimeSpan? timeout = null, CancellationToken cancellation = default)
     {
       if (uri is null) throw new ArgumentNullException(nameof(uri));
@@ -96,22 +101,17 @@ public static class UriExtensions
     /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="LinesAsync(Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/>
-    public string[] Lines(Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+    /// <seealso cref="UriExtensions.ToLinesAsync"/>
+    public IEnumerable<string> ToLines(Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
     {
       if (uri is null) throw new ArgumentNullException(nameof(uri));
 
       using var stream = uri.ToStream(timeout, headers);
       using var reader = stream.ToStreamReader(encoding);
 
-      return reader.Lines().AsArray();
+      return reader.ToLines();
     }
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string[] Lines => uri.Lines();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -120,8 +120,8 @@ public static class UriExtensions
     /// <param name="headers"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Lines(Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/>
-    public async IAsyncEnumerable<string> LinesAsync(Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
+    /// <seealso cref="UriExtensions.ToLines"/>
+    public async IAsyncEnumerable<string> ToLinesAsync(Encoding encoding = null, TimeSpan? timeout = null, params (string Name, object Value)[] headers)
     {
       if (uri is null) throw new ArgumentNullException(nameof(uri));
 

@@ -153,18 +153,18 @@ public static class DateTimeExtensions
     /// <summary>
     ///   <para>Determines whether two <see cref="DateTime"/> object instances represent the same date (have same year/month/day values).</para>
     /// </summary>
-    /// <param name="right">Second date to compare with the current.</param>
-    /// <returns><c>true</c> if both <paramref name="date"/> and <paramref name="right"/> have equals date component.</returns>
+    /// <param name="other">Second date to compare with the current.</param>
+    /// <returns><c>true</c> if both <paramref name="date"/> and <paramref name="other"/> have equals date component.</returns>
     /// <seealso cref="EqualsByTime(DateTime, DateTime)"/>
-    public bool EqualsByDate(DateTime right) => date.Year == right.Year && date.Month == right.Month && date.Day == right.Day;
+    public bool EqualsByDate(DateTime other) => date.Year == other.Year && date.Month == other.Month && date.Day == other.Day;
 
     /// <summary>
     ///   <para>Determines whether two <see cref="DateTime"/> object instances represent the same time (have same hour/minute/second values).</para>
     /// </summary>
-    /// <param name="right">Second date to compare with the current.</param>
-    /// <returns><c>true</c> if both <paramref name="date"/> and <paramref name="right"/> have equal time component.</returns>
+    /// <param name="other">Second date to compare with the current.</param>
+    /// <returns><c>true</c> if both <paramref name="date"/> and <paramref name="other"/> have equal time component.</returns>
     /// <seealso cref="EqualsByDate(DateTime, DateTime)"/>
-    public bool EqualsByTime(DateTime right) => date.Hour == right.Hour && date.Minute == right.Minute && date.Second == right.Second && date.Millisecond == right.Millisecond;
+    public bool EqualsByTime(DateTime other) => date.Hour == other.Hour && date.Minute == other.Minute && date.Second == other.Second && date.Millisecond == other.Millisecond;
 
     /// <summary>
     ///   <para></para>

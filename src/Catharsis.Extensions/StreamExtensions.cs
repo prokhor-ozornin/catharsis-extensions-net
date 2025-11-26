@@ -72,23 +72,7 @@ public static class StreamExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="encoding"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="LinesAsync(Stream, Encoding)"/>
-    public string[] Lines(Encoding encoding = null)
-    {
-      if (stream is null) throw new ArgumentNullException(nameof(stream));
-
-      using var reader = stream.ToStreamReader(encoding, false);
-
-      return reader.Lines().AsArray();
-    }
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string[] Lines => stream.Lines();
+    public string[] Lines => stream.ToLines().ToArray();
 
     /// <summary>
     ///   <para></para>
@@ -96,8 +80,24 @@ public static class StreamExtensions
     /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Lines(Stream, Encoding)"/>
-    public async IAsyncEnumerable<string> LinesAsync(Encoding encoding = null)
+    /// <seealso cref="StreamExtensions.ToLinesAsync"/>
+    public IEnumerable<string> ToLines(Encoding encoding = null)
+    {
+      if (stream is null) throw new ArgumentNullException(nameof(stream));
+
+      using var reader = stream.ToStreamReader(encoding, false);
+
+      return reader.ToLines();
+    }
+    
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="encoding"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="StreamExtensions.ToLines"/>
+    public async IAsyncEnumerable<string> ToLinesAsync(Encoding encoding = null)
     {
       if (stream is null) throw new ArgumentNullException(nameof(stream));
 
@@ -529,7 +529,7 @@ public static class StreamExtensions
       var leftCount = stream.CanSeek ? stream.Length : stream.ToEnumerable().Count();
       var rightCount = other.CanSeek ? other.Length : other.ToEnumerable().Count();
 
-      return leftCount <= rightCount ? (left: stream, right: other) : (right: other, left: stream);
+      return leftCount <= rightCount ? (stream, other) : (other, stream);
     }
 
     /// <summary>

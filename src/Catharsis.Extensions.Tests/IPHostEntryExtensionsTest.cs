@@ -12,22 +12,22 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IPHostEntryExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsAvailable(IPHostEntry, TimeSpan?)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.Availability"/> method.</para>
   /// </summary>
   [Fact]
   public void IsAvailable_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IPHostEntry) null).IsAvailable()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
+      AssertionExtensions.Should(() => ((IPHostEntry) null).Availability()).ThrowExactly<ArgumentNullException>().WithParameterName("host");
 
-      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailable()).ThrowExactly<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailable(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().IsAvailable(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().Availability()).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().Availability(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.ToIpHost().Availability(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
-      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailable()).ThrowExactly<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailable(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().IsAvailable(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().Availability()).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().Availability(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.ToIpHost().Availability(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
       Test(false, new IPHostEntry());
       Test(false, new IPHostEntry { HostName = string.Empty, AddressList = [] });
@@ -39,7 +39,7 @@ public sealed class IPHostEntryExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, IPHostEntry host, TimeSpan? timeout = null) => host.IsAvailable(timeout).Should().Be(result);
+    static void Test(bool result, IPHostEntry host, TimeSpan? timeout = null) => host.Availability(timeout).Should().Be(result);
   }
 
   /// <summary>
@@ -118,7 +118,7 @@ public sealed class IPHostEntryExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, IPHostEntry host) => host.IsEmpty.Should().Be(host.HostName.IsUnset && host.AddressList.IsUnset()).And.Be(result);
+    static void Test(bool result, IPHostEntry host) => host.IsEmpty.Should().Be(host.HostName.IsUnset && host.AddressList.IsUnset).And.Be(result);
   }
 
   /// <summary>

@@ -27,7 +27,17 @@ public static class UdpClientExtensions
     /// <value>If the specified <paramref name="client"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="client"/> is <see langword="null"/>.</exception>
     /// <seealso cref="IsUnset"/>
-    public bool IsEmpty => client?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(client));
+    public bool IsEmpty => client?.ToEnumerable().IsEmpty ?? throw new ArgumentNullException(nameof(client));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public byte[] Bytes => client.ToBytes().ToArray();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => client.ToText();
 
     /// <summary>
     ///   <para></para>
@@ -153,11 +163,6 @@ public static class UdpClientExtensions
     public IEnumerable<byte> ToBytes() => client?.ReceiveAsync().Result.Buffer ?? throw new ArgumentNullException(nameof(client));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => client.ToBytes().ToArray();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
@@ -184,11 +189,6 @@ public static class UdpClientExtensions
     /// <seealso cref="ToTextAsync(UdpClient, Encoding)"/>
     public string ToText(Encoding encoding = null) => client.ToBytes().AsArray().ToText(encoding);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => client.ToText();
-
     /// <summary>
     ///   <para></para>
     /// </summary>

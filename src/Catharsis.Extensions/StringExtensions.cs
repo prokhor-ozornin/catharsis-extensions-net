@@ -20,6 +20,150 @@ public static class StringExtensions
   extension(string text)
   {
     /// <summary>
+    ///   <para></para>
+    /// </summary>
+    [CLSCompliant(false)]
+    public bool IsSbyte => text.IsSbyteInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsByte => text.IsByteInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsShort => text.IsShortInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    [CLSCompliant(false)]
+    public bool IsUshort => text.IsUshortInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsInt => text.IsIntInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    [CLSCompliant(false)]
+    public bool IsUint => text.IsUintInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsLong => text.IsLongInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    [CLSCompliant(false)]
+    public bool IsUlong => text.IsUlongInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsFloat => text.IsFloatInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsDouble => text.IsDoubleInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsDecimal => text.IsDecimalInFormat();
+
+    /// <summary>
+    ///   <para>Determines whether a source string represents a valid <see cref="Guid"/> value.</para>
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if <paramref name="text"/> represents a valid value of <see cref="Guid"/> type, <c>false</c> otherwise.
+    /// </value>
+    public bool IsGuid => text.ToGuid(out _);
+
+    /// <summary>
+    ///   <para>Determines whether a source string represents a valid <see cref="Uri"/> value.</para>
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if <paramref name="text"/> represents a valid value of <see cref="Uri"/> type, <c>false</c> otherwise.
+    /// </value>
+    public bool IsUri => text.ToUri(out _);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    public bool IsType => text.ToType(out _);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsDateTime => text.IsDateTimeInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsDateTimeOffset => text.IsDateTimeOffsetInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsDateOnly => text.IsDateOnlyInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public bool IsTimeOnly => text.IsTimeOnlyInFormat();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    public bool IsFile => text.ToFile(out _);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    public bool IsDirectory => text.ToDirectory(out _);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    public bool IsIpAddress => text.ToIpAddress(out _);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string[] Lines => text.ToLines();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Reversed => text.Reverse();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string UpperCased => text.CapitalizeAll();
+    
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string LowerCased => text.ToLower();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public byte[] Bytes => text.ToBytes();
+
+    /// <summary>
     ///   <para>Compares two specified strings and returns an integer that indicates their relative position in the sort order.</para>
     /// </summary>
     /// <param name="other">The second string to compare with the current.</param>
@@ -103,11 +247,6 @@ public static class StringExtensions
     public string Reverse() => text is not null ? text.Length > 0 ? text.Reverse<char>().ToArray().ToText() : string.Empty : throw new ArgumentNullException(nameof(text));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Reversed => text.Reverse();
-
-    /// <summary>
     ///   <para>Multiplies/repeats value of source string given number of times, returning resulting string.</para>
     /// </summary>
     /// <param name="count">Number of repeats.</param>
@@ -138,13 +277,8 @@ public static class StringExtensions
     /// <param name="separator"></param>
     /// <returns>Target array of strings, which are part of <paramref name="text"/> string.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-    public string[] Lines(string separator = null) => text is not null ? text.Length > 0 ? text.Split(separator ?? Environment.NewLine) : [] : throw new ArgumentNullException(nameof(text));
+    public string[] ToLines(string separator = null) => text is not null ? text.Length > 0 ? text.Split(separator ?? Environment.NewLine) : [] : throw new ArgumentNullException(nameof(text));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string[] Lines => text.Lines();
-
     /// <summary>
     ///   <para>Alters case of all characters inside a string, using provided culture.</para>
     ///   <para>Upper-case characters are converted to lower-case and vice versa.</para>
@@ -209,16 +343,6 @@ public static class StringExtensions
     public string CapitalizeAll(CultureInfo culture = null) => text is not null ? text.Length > 0 ? (culture ?? CultureInfo.CurrentCulture).TextInfo.ToTitleCase(text) : string.Empty : throw new ArgumentNullException(nameof(text));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string UpperCased => text.CapitalizeAll();
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string LowerCased => text.ToLower();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="value"></param>
@@ -246,7 +370,7 @@ public static class StringExtensions
 
       var result = new StringBuilder();
 
-      var lines = text.Lines().AsArray();
+      var lines = text.ToLines().AsArray();
 
       lines.ForEach((index, line) =>
       {
@@ -281,7 +405,7 @@ public static class StringExtensions
 
       var result = new StringBuilder(text);
 
-      foreach (var line in text.Lines())
+      foreach (var line in text.ToLines())
       {
         result.AppendLine(line.SkipWhile(character => character == value).ToArray().ToText());
       }
@@ -411,140 +535,81 @@ public static class StringExtensions
     /// <param name="format"></param>
     /// <returns></returns>
     [CLSCompliant(false)]
-    public bool IsSbyte(IFormatProvider format = null) => text.ToSbyte(out _, format);
+    public bool IsSbyteInFormat(IFormatProvider format = null) => text.ToSbyte(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    [CLSCompliant(false)]
-    public bool IsSbyte => text.IsSbyte();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
-    public bool IsByte(IFormatProvider format = null) => text.ToByte(out _, format);
+    public bool IsByteInFormat(IFormatProvider format = null) => text.ToByte(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsByte => text.IsByte();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
-    public bool IsShort(IFormatProvider format = null) => text.ToShort(out _, format);
+    public bool IsShortInFormat(IFormatProvider format = null) => text.ToShort(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsShort => text.IsShort();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
     [CLSCompliant(false)]
-    public bool IsUshort(IFormatProvider format = null) => text.ToUshort(out _, format);
+    public bool IsUshortInFormat(IFormatProvider format = null) => text.ToUshort(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    [CLSCompliant(false)]
-    public bool IsUshort => text.IsUshort();
-
     /// <summary>
     ///   <para>Determines whether a source string represents a valid integer value.</para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns><c>true</c> if <paramref name="text"/> represents a valid value of integer type, <c>false</c> otherwise.</returns>
-    public bool IsInt(IFormatProvider format = null) => text.ToInt(out _, format);
+    public bool IsIntInFormat(IFormatProvider format = null) => text.ToInt(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsInt => text.IsInt();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
     [CLSCompliant(false)]
-    public bool IsUint(IFormatProvider format = null) => text.ToUint(out _, format);
+    public bool IsUintInFormat(IFormatProvider format = null) => text.ToUint(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    [CLSCompliant(false)]
-    public bool IsUint => text.IsUint();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
-    public bool IsLong(IFormatProvider format = null) => text.ToLong(out _, format);
+    public bool IsLongInFormat(IFormatProvider format = null) => text.ToLong(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsLong => text.IsLong();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
     [CLSCompliant(false)]
-    public bool IsUlong(IFormatProvider format = null) => text.ToUlong(out _, format);
+    public bool IsUlongInFormat(IFormatProvider format = null) => text.ToUlong(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    [CLSCompliant(false)]
-    public bool IsUlong => text.IsUlong();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
-    public bool IsFloat(IFormatProvider format = null) => text.ToFloat(out _, format);
+    public bool IsFloatInFormat(IFormatProvider format = null) => text.ToFloat(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsFloat => text.IsFloat();
-
     /// <summary>
     ///   <para>Determines whether a source string represents a valid <see cref="double"/> value.</para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns><c>true</c> if <paramref name="text"/> represents a valid value of <see cref="double"/> type, <c>false</c> otherwise.</returns>
-    public bool IsDouble(IFormatProvider format = null) => text.ToDouble(out _, format);
+    public bool IsDoubleInFormat(IFormatProvider format = null) => text.ToDouble(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsDouble => text.IsDouble();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
-    public bool IsDecimal(IFormatProvider format = null) => text.ToDecimal(out _, format);
+    public bool IsDecimalInFormat(IFormatProvider format = null) => text.ToDecimal(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsDecimal => text.IsDecimal();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -553,118 +618,32 @@ public static class StringExtensions
     public bool IsEnum<T>() where T : struct => text.ToEnum<T>(out _);
 
     /// <summary>
-    ///   <para>Determines whether a source string represents a valid <see cref="Guid"/> value.</para>
-    /// </summary>
-    /// <returns><c>true</c> if <paramref name="text"/> represents a valid value of <see cref="Guid"/> type, <c>false</c> otherwise.</returns>
-    public bool IsGuid() => text.ToGuid(out _);
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsGuid => text.IsGuid();
-
-    /// <summary>
-    ///   <para>Determines whether a source string represents a valid <see cref="Uri"/> value.</para>
-    /// </summary>
-    /// <returns><c>true</c> if <paramref name="text"/> represents a valid value of <see cref="Uri"/> type, <c>false</c> otherwise.</returns>
-    public bool IsUri() => text.ToUri(out _);
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsUri => text.IsUri();
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <returns></returns>
-    public bool IsType() => text.ToType(out _);
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsType => text.IsType();
-
-    /// <summary>
     ///   <para>Determines whether a source string represents a valid <see cref="DateTime"/> value.</para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns><c>true</c> if <paramref name="text"/> represents a valid value of <see cref="DateTime"/> type, <c>false</c> otherwise.</returns>
-    public bool IsDateTime(IFormatProvider format = null) => text.ToDateTime(out _, format);
+    public bool IsDateTimeInFormat(IFormatProvider format = null) => text.ToDateTime(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsDateTime => text.IsDateTime();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
-    public bool IsDateTimeOffset(IFormatProvider format = null) => text.ToDateTimeOffset(out _, format);
+    public bool IsDateTimeOffsetInFormat(IFormatProvider format = null) => text.ToDateTimeOffset(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsDateTimeOffset => text.IsDateTimeOffset();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
-    public bool IsDateOnly(IFormatProvider format = null) => text.ToDateOnly(out _, format);
+    public bool IsDateOnlyInFormat(IFormatProvider format = null) => text.ToDateOnly(out _, format);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsDateOnly => text.IsDateOnly();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="format"></param>
     /// <returns></returns>
-    public bool IsTimeOnly(IFormatProvider format = null) => text.ToTimeOnly(out _, format);
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsTimeOnly => text.IsTimeOnly();
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <returns></returns>
-    public bool IsFile() => text.ToFile(out _);
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsFile => text.IsFile();
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <returns></returns>
-    public bool IsDirectory() => text.ToDirectory(out _);
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsDirectory => text.IsDirectory();
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <returns></returns>
-    public bool IsIpAddress() => text.ToIpAddress(out _);
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public bool IsIpAddress => text.IsIpAddress();
+    public bool IsTimeOnlyInFormat(IFormatProvider format = null) => text.ToTimeOnly(out _, format);
 
     /// <summary>
     ///   <para></para>
@@ -838,49 +817,49 @@ public static class StringExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Max(string, string)"/>
     /// <seealso cref="MinMax(string, string)"/>
-    public string Min(string right)
+    public string Min(string other)
     {
       if (text is null) throw new ArgumentNullException(nameof(text));
-      if (right is null) throw new ArgumentNullException(nameof(right));
+      if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return text.Length <= right.Length ? text : right;
+      return text.Length <= other.Length ? text : other;
     }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Min(string, string)"/>
     /// <seealso cref="MinMax(string, string)"/>
-    public string Max(string right)
+    public string Max(string other)
     {
       if (text is null) throw new ArgumentNullException(nameof(text));
-      if (right is null) throw new ArgumentNullException(nameof(right));
+      if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return text.Length >= right.Length ? text : right;
+      return text.Length >= other.Length ? text : other;
     }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentNullException">If either <paramref name="text"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Min(string, string)"/>
     /// <seealso cref="Max(string, string)"/>
-    public (string Min, string Max) MinMax(string right)
+    public (string Min, string Max) MinMax(string other)
     {
       if (text is null) throw new ArgumentNullException(nameof(text));
-      if (right is null) throw new ArgumentNullException(nameof(right));
+      if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return text.Length <= right.Length ? (text, right) : (right, text);
+      return text.Length <= other.Length ? (text, other) : (other, text);
     }
 
     /// <summary>
@@ -1336,11 +1315,6 @@ public static class StringExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
     public byte[] ToBytes(Encoding encoding = null) => text is not null ? text.Length > 0 ? (encoding ?? Encoding.Default).GetBytes(text) : [] : throw new ArgumentNullException(nameof(text));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => text.ToBytes();
-
     /// <summary>
     ///   <para>Converts specified string into <see cref="bool"/> value.</para>
     /// </summary>

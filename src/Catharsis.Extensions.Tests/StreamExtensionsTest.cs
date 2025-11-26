@@ -166,14 +166,14 @@ public sealed class StreamExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.Lines(Stream, Encoding)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToLines"/> method.</para>
   /// </summary>
   [Fact]
   public void Lines_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => StreamExtensions.ToLines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
     }
 
     throw new NotImplementedException();
@@ -184,20 +184,20 @@ public sealed class StreamExtensionsTest : Test
     {
       using (stream)
       {
-        stream.Lines(encoding).Should().BeOfType<string[]>().And.Equal(result);
+        stream.ToLines(encoding).Should().BeOfType<string[]>().And.Equal(result);
       }
     }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.LinesAsync(Stream, Encoding)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.ToLinesAsync"/> method.</para>
   /// </summary>
   [Fact]
   public void LinesAsync_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => StreamExtensions.ToLinesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
     }
 
     throw new NotImplementedException();
@@ -208,7 +208,7 @@ public sealed class StreamExtensionsTest : Test
     {
       using (stream)
       {
-        stream.LinesAsync(encoding).ToArray().Should().BeOfType<string[]>().And.Equal(result);
+        stream.ToLinesAsync(encoding).ToArray().Should().BeOfType<string[]>().And.Equal(result);
       }
     }
   }

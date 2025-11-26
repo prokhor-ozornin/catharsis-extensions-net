@@ -28,7 +28,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test(EmptyAsyncEnumerable, []);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects.ToAsyncEnumerable(), objects);
 
       static void Test<T>(IAsyncEnumerable<T> enumerable, IEnumerable<T> elements)
@@ -59,7 +59,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test(EmptyAsyncEnumerable, []);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects.ToAsyncEnumerable(), objects);
     }
   }
@@ -82,7 +82,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test(EmptyAsyncEnumerable, []);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects.ToAsyncEnumerable(), objects);
 
       static void Test<T>(IAsyncEnumerable<T> enumerable, IEnumerable<T> elements)
@@ -104,7 +104,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test(EmptyAsyncEnumerable, []);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects.ToAsyncEnumerable(), objects);
 
       static void Test<T>(IAsyncEnumerable<T> enumerable, T[] elements)
@@ -145,12 +145,12 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
       Test<object>(true, null);
       Test(true, EmptyAsyncEnumerable);
       Test(true, Array.Empty<object>().ToAsyncEnumerable());
-      Test(false, new Random().Guid(1).ToAsyncEnumerable());
+      Test(false, new Random().ToGuid(1).ToAsyncEnumerable());
     }
 
     return;
 
-    static void Test<T>(bool result, IAsyncEnumerable<T> enumerable) => enumerable.IsUnset().Should().Be(result);
+    static void Test<T>(bool result, IAsyncEnumerable<T> enumerable) => enumerable.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -161,16 +161,16 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).IsEmpty()).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+      AssertionExtensions.Should(() => ((IAsyncEnumerable<object>) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
       Test(true, EmptyAsyncEnumerable);
       Test(true, Array.Empty<object>().ToAsyncEnumerable());
-      Test(false, new Random().Guid(1).ToAsyncEnumerable());
+      Test(false, new Random().ToGuid(1).ToAsyncEnumerable());
     }
 
     return;
 
-    static void Test<T>(bool result, IAsyncEnumerable<T> enumerable) => enumerable.IsEmpty().Should().Be(result);
+    static void Test<T>(bool result, IAsyncEnumerable<T> enumerable) => enumerable.IsEmpty.Should().Be(result);
   }
 
   /// <summary>
@@ -186,7 +186,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test(true, EmptyAsyncEnumerable);
       Test(true, Array.Empty<object>().ToAsyncEnumerable());
-      Test(false, new Random().Guid(1).ToAsyncEnumerable());
+      Test(false, new Random().ToGuid(1).ToAsyncEnumerable());
     }
 
     return;
@@ -211,7 +211,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -232,7 +232,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -280,7 +280,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -328,7 +328,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -416,7 +416,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -470,7 +470,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -525,7 +525,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable, value => value);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable(), value => value);
     }
 
@@ -750,7 +750,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray().Reverse();
+      var objects = new Random().ToGuid(1000).ToArray().Reverse();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -798,7 +798,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -984,7 +984,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], Enumerable.Empty<(object, object)>().ToAsyncEnumerable());
 
-      var objects = new Random().Guid(100).ToArray();
+      var objects = new Random().ToGuid(100).ToArray();
       var elements = objects.Select((index, value) => (value, index));
       Test(elements, elements.ToAsyncEnumerable());
     }
@@ -1042,7 +1042,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -1090,7 +1090,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -1138,7 +1138,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -1233,7 +1233,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable, value => value);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable(), value => value);
     }
 
@@ -1291,7 +1291,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable, value => value);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable(), value => value);
     }
 
@@ -1348,7 +1348,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 
@@ -1370,7 +1370,7 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
 
       Test([], EmptyAsyncEnumerable);
 
-      var objects = new Random().Guid(1000).ToArray();
+      var objects = new Random().ToGuid(1000).ToArray();
       Test(objects, objects.ToAsyncEnumerable());
     }
 

@@ -31,6 +31,26 @@ public static class FileInfoExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public byte[] Bytes => file.ToBytes().ToArray();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => file.ToText();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string[] Lines => file.ToLines().ToArray();
+    
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public FileStream Stream => file.ToStream();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="directory"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="file"/> or <paramref name="directory"/> is <see langword="null"/>.</exception>
@@ -73,27 +93,22 @@ public static class FileInfoExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
     /// <seealso cref="LinesAsync(FileInfo, Encoding)"/>
-    public string[] Lines(Encoding encoding = null)
+    public IEnumerable<string> ToLines(Encoding encoding = null)
     {
       if (file is null) throw new ArgumentNullException(nameof(file));
 
       using var reader = file.ToStreamReader(encoding);
 
-      return reader.Lines().AsArray();
+      return reader.ToLines();
     }
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string[] Lines => file.Lines();
-
     /// <summary>
     ///   <para>Reads text content of a file and returns it as a list of strings, using default system-dependent string separator.</para>
     /// </summary>
     /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
     /// <returns>List of strings which have been read from a <paramref name="file"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Lines(FileInfo, Encoding)"/>
+    /// <seealso cref="FileInfoExtensions.ToLines"/>
     public async IAsyncEnumerable<string> LinesAsync(Encoding encoding = null)
     {
       if (file is null) throw new ArgumentNullException(nameof(file));
@@ -340,11 +355,6 @@ public static class FileInfoExtensions
     public IEnumerable<byte> ToBytes() => file?.ToReadOnlyStream().ToBytes(true) ?? throw new ArgumentNullException(nameof(file));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => file.ToBytes().ToArray();
-
-    /// <summary>
     ///  <para>Reads entire contents of file and returns it as a byte array.</para>
     /// </summary>
     /// <returns>Byte content of specified <paramref name="file"/>.</returns>
@@ -369,11 +379,6 @@ public static class FileInfoExtensions
     }
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => file.ToText();
-
-    /// <summary>
     ///   <para>Reads text content of a file and returns it as a string.</para>
     /// </summary>
     /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
@@ -396,11 +401,6 @@ public static class FileInfoExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
     public FileStream ToStream() => file?.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None) ?? throw new ArgumentNullException(nameof(file));
     
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    public FileStream Stream => file.ToStream();
-
     /// <summary>
     ///   <para></para>
     /// </summary>

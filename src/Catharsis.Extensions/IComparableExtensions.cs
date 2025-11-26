@@ -38,13 +38,19 @@ public static class IComparableExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="comparable"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Min{T}(T, T)"/>
     /// <seealso cref="Max{T}(T, T)"/>
-    public (T Min, T Max) MinMax(T other) => comparable is not null ? comparable.CompareTo(other) <= 0 ? (left: comparable, right: other) : (right: other, left: comparable) : throw new ArgumentNullException(nameof(comparable));
+    public (T Min, T Max) MinMax(T other) => comparable is not null ? comparable.CompareTo(other) <= 0 ? (comparable, other) : (other, comparable) : throw new ArgumentNullException(nameof(comparable));
   }
 
   /// <param name="comparable"></param>
   /// <typeparam name="T"></typeparam>
   extension<T>(T comparable) where T : IComparable<T>
   {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    public bool IsDefault => comparable.CompareTo(default) == 0;
+
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -58,12 +64,6 @@ public static class IComparableExtensions
     /// <value></value>
     /// <seealso cref="IsPositive"/>
     public bool IsNegative => comparable.CompareTo(default) < 0;
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    public bool IsDefault => comparable.CompareTo(default) == 0;
 
     /// <summary>
     ///   <para></para>

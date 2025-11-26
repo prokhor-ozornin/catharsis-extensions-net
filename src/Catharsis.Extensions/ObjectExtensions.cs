@@ -58,9 +58,9 @@ public static class ObjectExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <returns></returns>
-    public bool IsSameAs(object right) => ReferenceEquals(instance, right);
+    public bool IsSameAs(object other) => ReferenceEquals(instance, other);
 
     /// <summary>
     ///   <para>Returns the value of object's field with a specified name.</para>
@@ -259,22 +259,6 @@ public static class ObjectExtensions
   extension<T>(T instance) where T : IDisposable
   {
     /// <summary>
-    ///   <para>Returns the value of a member on a target object, using expression tree to specify type's member.</para>
-    /// </summary>
-    /// <typeparam name="T">Type of target object.</typeparam>
-    /// <typeparam name="TResult">Type of <paramref name="instance"/>'s member.</typeparam>
-    /// <param name="expression">Lambda expression that represents a member of <typeparamref name="T"/> type, whose value for <paramref name="instance"/> instance is to be returned. Generally it should represents either a public property/field or no-arguments method.</param>
-    /// <returns>Value of member of <typeparamref name="T"/> type on a <paramref name="instance"/> instance.</returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="expression"/> is <see langword="null"/>.</exception>
-    public TResult GetMember<TResult>(Expression<Func<T, TResult>> expression)
-    {
-      if (instance is null) throw new ArgumentNullException(nameof(instance));
-      if (expression is null) throw new ArgumentNullException(nameof(expression));
-
-      return expression.Compile()(instance);
-    }
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <typeparamref name="T"/>
@@ -320,7 +304,28 @@ public static class ObjectExtensions
         instance.Dispose();
       }
     }
-    
+  }
+
+  /// <param name="instance"></param>
+  /// <typeparam name="T"></typeparam>
+  extension<T>(T instance)
+  {
+    /// <summary>
+    ///   <para>Returns the value of a member on a target object, using expression tree to specify type's member.</para>
+    /// </summary>
+    /// <typeparam name="T">Type of target object.</typeparam>
+    /// <typeparam name="TResult">Type of <paramref name="instance"/>'s member.</typeparam>
+    /// <param name="expression">Lambda expression that represents a member of <typeparamref name="T"/> type, whose value for <paramref name="instance"/> instance is to be returned. Generally it should represents either a public property/field or no-arguments method.</param>
+    /// <returns>Value of member of <typeparamref name="T"/> type on a <paramref name="instance"/> instance.</returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="instance"/> or <paramref name="expression"/> is <see langword="null"/>.</exception>
+    public TResult GetMember<TResult>(Expression<Func<T, TResult>> expression)
+    {
+      if (instance is null) throw new ArgumentNullException(nameof(instance));
+      if (expression is null) throw new ArgumentNullException(nameof(expression));
+
+      return expression.Compile()(instance);
+    }
+
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -427,7 +432,7 @@ public static class ObjectExtensions
     {
       if (instance is null) throw new ArgumentNullException(nameof(instance));
       if (member is null) throw new ArgumentNullException(nameof(member));
-      if (member.IsEmpty()) throw new ArgumentException(nameof(member));
+      if (member.IsEmpty) throw new ArgumentException(nameof(member));
 
       var type = instance.GetType();
 
@@ -494,34 +499,34 @@ public static class ObjectExtensions
     ///   <para>Determines whether specified objects are considered equal by comparing values of the given set of properties/fields on each of them.</para>
     ///   <para>The following algorithm is used in equality determination:
     ///     <list type="bullet">
-    ///       <item><description>If both <paramref name="left"/> and <paramref name="right"/> are <c>null</c> references, method returns <c>true</c>.</description></item>
+    ///       <item><description>If both <paramref name="instance"/> and <paramref name="other"/> are <c>null</c> references, method returns <c>true</c>.</description></item>
     ///       <item><description>If one of compared objects is <c>null</c> and another is not, method returns <c>false</c>.</description></item>
     ///       <item><description>If both objects references are equal (they represent the same object instance), method returns <c>true</c>.</description></item>
     ///       <item><description>If <typeparamref name="T"/> type does not contain any properties/fields in <paramref name="properties"/> set, <see cref="object.Equals(object, object)"/> method is used for equality comparison.</description></item>
-    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties/fields in <paramref name="properties"/> set, their values are used for equality comparison according to <see cref="object.Equals(object)"/> method of both <paramref name="left"/> and <paramref name="right"/> instances.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties/fields in <paramref name="properties"/> set, their values are used for equality comparison according to <see cref="object.Equals(object)"/> method of both <paramref name="instance"/> and <paramref name="other"/> instances.</description></item>
     ///     </list>
     ///   </para>
     /// </summary>
-    /// <param name="right">Second object to compare with the current one.</param>
+    /// <param name="other">Second object to compare with the current one.</param>
     /// <param name="properties">Set of properties/fields whose values are used in equality comparison.</param>
-    /// <returns><c>true</c> if <paramref name="instance"/> and <paramref name="right"/> are considered equal, <c>false</c> otherwise.</returns>
+    /// <returns><c>true</c> if <paramref name="instance"/> and <paramref name="other"/> are considered equal, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Equality{T}(T, T, string[])"/>
-    public bool Equality(T right, IEnumerable<string> properties)
+    public bool Equality(T other, IEnumerable<string> properties)
     {
       if (properties is null) throw new ArgumentNullException(nameof(properties));
 
-      if (instance is null && right is null)
+      if (instance is null && other is null)
       {
         return true;
       }
 
-      if (instance is null || right is null)
+      if (instance is null || other is null)
       {
         return false;
       }
 
-      if (instance.IsSameAs(right))
+      if (instance.IsSameAs(other))
       {
         return true;
       }
@@ -530,7 +535,7 @@ public static class ObjectExtensions
 
       if (propertiesArray.Length == 0)
       {
-        return instance.Equals(right);
+        return instance.Equals(other);
       }
 
       var type = instance.GetType();
@@ -539,7 +544,7 @@ public static class ObjectExtensions
 
       if (typeProperties.Length == 0 && typeFields.Length == 0)
       {
-        return Equals(instance, right);
+        return Equals(instance, other);
       }
 
       return typeProperties.All(property =>
@@ -549,7 +554,7 @@ public static class ObjectExtensions
 
         try
         {
-          secondProperty = property.GetValue(right, null);
+          secondProperty = property.GetValue(other, null);
         }
         catch
         {
@@ -563,7 +568,7 @@ public static class ObjectExtensions
 
         try
         {
-          second = field.GetValue(right);
+          second = field.GetValue(other);
         }
         catch
         {
@@ -576,44 +581,44 @@ public static class ObjectExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <param name="properties"></param>
     /// <returns></returns>
     /// <seealso cref="Equality{T}(T, T, IEnumerable{string})"/>
-    public bool Equality(T right, params string[] properties) => Equality(instance, right, properties as IEnumerable<string>);
+    public bool Equality(T other, params string[] properties) => Equality(instance, other, properties as IEnumerable<string>);
 
     /// <summary>
     ///   <para>Determines whether specified objects are considered equal by comparing values of the given set of properties, represented as expression trees, on each of them.</para>
     ///   <para>The following algorithm is used in equality determination:
     ///     <list type="bullet">
-    ///       <item><description>If both <paramref name="left"/> and <paramref name="right"/> are <c>null</c> references, method returns <c>true</c>.</description></item>
+    ///       <item><description>If both <paramref name="instance"/> and <paramref name="other"/> are <c>null</c> references, method returns <c>true</c>.</description></item>
     ///       <item><description>If one of compared objects is <c>null</c> and another is not, method returns <c>false</c>.</description></item>
     ///       <item><description>If both objects references are equal (they represent the same object instance), method returns <c>true</c>.</description></item>
     ///       <item><description>If <typeparamref name="T"/> type does not contain any properties in <paramref name="properties"/> set, <see cref="object.Equals(object, object)"/> method is used for equality comparison.</description></item>
-    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties in <paramref name="properties"/> set, their values are used for equality comparison according to <see cref="object.Equals(object)"/> method of both <paramref name="left"/> and <paramref name="right"/> instances.</description></item>
+    ///       <item><description>If <typeparamref name="T"/> type contains any of the properties in <paramref name="properties"/> set, their values are used for equality comparison according to <see cref="object.Equals(object)"/> method of both <paramref name="instance"/> and <paramref name="other"/> instances.</description></item>
     ///     </list>
     ///   </para>
     /// </summary>
-    /// <param name="right">Second object to compare with the current one.</param>
+    /// <param name="other">Second object to compare with the current one.</param>
     /// <param name="properties">Set of properties in a form of expression trees, whose values are used in equality comparison.</param>
-    /// <returns><c>true</c> if <paramref name="left"/> and <paramref name="right"/> are considered equal, <c>false</c> otherwise.</returns>
+    /// <returns><c>true</c> if <paramref name="instance"/> and <paramref name="other"/> are considered equal, <c>false</c> otherwise.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="properties"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Equality{T}(T, T, Expression{Func{T, object}}[])"/>
-    public bool Equality(T right, IEnumerable<Expression<Func<T, object>>> properties)
+    public bool Equality(T other, IEnumerable<Expression<Func<T, object>>> properties)
     {
       if (properties is null) throw new ArgumentNullException(nameof(properties));
 
-      if (instance is null && right is null)
+      if (instance is null && other is null)
       {
         return true;
       }
 
-      if (instance is null || right is null)
+      if (instance is null || other is null)
       {
         return false;
       }
 
-      if (instance.IsSameAs(right))
+      if (instance.IsSameAs(other))
       {
         return true;
       }
@@ -622,20 +627,20 @@ public static class ObjectExtensions
 
       if (propertiesArray.Length == 0)
       {
-        return instance.Equals(right);
+        return instance.Equals(other);
       }
 
-      return properties.Select(expression => expression.Compile()).All(func => Equals(func(instance), func(right)));
+      return properties.Select(expression => expression.Compile()).All(func => Equals(func(instance), func(other)));
     }
 
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="right"></param>
+    /// <param name="other"></param>
     /// <param name="properties"></param>
     /// <returns></returns>
     /// <seealso cref="Equality{T}(T, T, IEnumerable{Expression{Func{T, object}}})"/>
-    public bool Equality(T right, params Expression<Func<T, object>>[] properties) => instance.Equality(right, properties as IEnumerable<Expression<Func<T, object>>>);
+    public bool Equality(T other, params Expression<Func<T, object>>[] properties) => instance.Equality(other, properties as IEnumerable<Expression<Func<T, object>>>);
 
     /// <summary>
     ///   <para>Returns a hash value of a given object, using specified set of properties in its calculation.</para>

@@ -43,7 +43,7 @@ public sealed class FileInfoExtensionsTest : Test
       file.Exists.Should().BeFalse();
       file.IsEmpty.Should().BeTrue();
 
-      var bytes = new Random().Byte(1).ToArray();
+      var bytes = new Random().ToByte(1).ToArray();
 
       EmptyFile.TryFinallyDelete(info =>
       {
@@ -101,14 +101,14 @@ public sealed class FileInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="FileInfoExtensions.Lines(FileInfo, Encoding)"/> method.</para>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.ToLines"/> method.</para>
   /// </summary>
   [Fact]
   public void Lines_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => FileInfoExtensions.ToLines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
       Test(EmptyFile);
       Encoding.GetEncodings().ForEach(encoding => Test(EmptyFile, encoding.GetEncoding()));
@@ -120,12 +120,12 @@ public sealed class FileInfoExtensionsTest : Test
     {
       file.TryFinallyDelete(file =>
       {
-        var lines = file.Lines(encoding);
-        lines.Should().BeOfType<string[]>().And.BeSameAs(file.Lines(encoding)).And.BeEmpty();
+        var lines = file.ToLines(encoding);
+        lines.Should().BeOfType<string[]>().And.BeSameAs(file.ToLines(encoding)).And.BeEmpty();
 
-        lines = new Random().Letters(80, 1000).ToArray();
+        lines = new Random().ToLetters(80, 1000).ToArray();
         lines.Join(Environment.NewLine).WriteToAsync(file, encoding).Await();
-        file.Lines(encoding).Should().BeOfType<string[]>().And.Equal(lines);
+        file.ToLines(encoding).Should().BeOfType<string[]>().And.Equal(lines);
       });
     }
   }
@@ -150,7 +150,7 @@ public sealed class FileInfoExtensionsTest : Test
     {
       file.TryFinallyDelete(file =>
       {
-        var lines = new Random().Letters(80, 1000).ToArray();
+        var lines = new Random().ToLetters(80, 1000).ToArray();
         lines.Join(Environment.NewLine).WriteToAsync(file, encoding).Await();
         file.LinesAsync(encoding).ToArray().Should().BeOfType<IAsyncEnumerable<string>>().And.Equal(lines);
 

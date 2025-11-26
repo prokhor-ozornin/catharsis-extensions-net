@@ -46,7 +46,7 @@ public static class TextReaderExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
     /// <seealso cref="LinesAsync(TextReader)"/>
-    public IEnumerable<string> Lines()
+    public IEnumerable<string> ToLines()
     {
       if (reader is null) throw new ArgumentNullException(nameof(reader));
 
@@ -59,14 +59,14 @@ public static class TextReaderExtensions
     /// <summary>
     ///   <para>[NEW]</para>
     /// </summary>
-    public string[] Lines => reader.Lines().ToArray();
+    public string[] Lines => reader.ToLines().ToArray();
 
     /// <summary>
     ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a list of strings, using default system-dependent string separator.</para>
     /// </summary>
     /// <returns>List of strings which have been read from a <paramref name="reader"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Lines(TextReader)"/>
+    /// <seealso cref="TextReaderExtensions.ToLines"/>
     public async IAsyncEnumerable<string> LinesAsync()
     {
       if (reader is null) throw new ArgumentNullException(nameof(reader));

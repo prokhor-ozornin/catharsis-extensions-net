@@ -49,22 +49,22 @@ public sealed class IPAddressExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPAddressExtensions.IsAvailable(IPAddress, TimeSpan?)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.Availability"/> method.</para>
   /// </summary>
   [Fact]
   public void IsAvailable_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IPAddress) null).IsAvailable()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+      AssertionExtensions.Should(() => ((IPAddress) null).Availability()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
-      AssertionExtensions.Should(() => IPAddress.Any.IsAvailable()).ThrowExactly<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.Any.IsAvailable(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.Any.IsAvailable(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.Any.Availability()).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.Availability(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.Availability(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
-      AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailable()).ThrowExactly<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailable(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailable(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.Availability()).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.Availability(TimeSpan.Zero)).ThrowExactly<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.Availability(TimeSpan.FromMilliseconds(-1))).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
       Test(true, IPAddress.Loopback);
       Test(true, IPAddress.IPv6Loopback);
@@ -72,26 +72,26 @@ public sealed class IPAddressExtensionsTest : Test
 
     return;
 
-    static void Test(bool result, IPAddress address, TimeSpan? timeout = null) => address.IsAvailable(timeout).Should().Be(result);
+    static void Test(bool result, IPAddress address, TimeSpan? timeout = null) => address.Availability(timeout).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPAddressExtensions.IsAvailableAsync(IPAddress, TimeSpan?)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.AvailabilityAsync"/> method.</para>
   /// </summary>
   [Fact]
   public void IsAvailableAsync_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((IPAddress) null).IsAvailableAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("address").Await();
+      AssertionExtensions.Should(() => ((IPAddress) null).AvailabilityAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("address").Await();
 
-      AssertionExtensions.Should(() => IPAddress.Any.IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.Any.IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.Any.IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.Any.AvailabilityAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.AvailabilityAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.Any.AvailabilityAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
-      AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
-      AssertionExtensions.Should(() => IPAddress.IPv6Any.IsAvailableAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.AvailabilityAsync()).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.AvailabilityAsync(TimeSpan.Zero)).ThrowExactlyAsync<ArgumentException>().WithParameterName("address");
+      AssertionExtensions.Should(() => IPAddress.IPv6Any.AvailabilityAsync(TimeSpan.FromMilliseconds(-1))).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("timeout");
 
       Test(true, IPAddress.Loopback);
       Test(true, IPAddress.IPv6Loopback);
@@ -101,7 +101,7 @@ public sealed class IPAddressExtensionsTest : Test
 
     static void Test(bool result, IPAddress address, TimeSpan? timeout = null)
     {
-      var task = address.IsAvailableAsync(timeout);
+      var task = address.AvailabilityAsync(timeout);
       task.Dispose();
       task.Should().BeAssignableTo<Task<bool>>();
       task.Await().Should().Be(result);

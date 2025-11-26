@@ -24,7 +24,7 @@ public static class XmlDocumentExtensions
     /// </summary>
     /// <value>If the specified <paramref name="document"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
     /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-    public bool IsEmpty => document?.ToEnumerable().IsEmpty() ?? throw new ArgumentNullException(nameof(document));
+    public bool IsEmpty => document?.ToEnumerable().IsEmpty ?? throw new ArgumentNullException(nameof(document));
 
     /// <summary>
     ///   <para></para>

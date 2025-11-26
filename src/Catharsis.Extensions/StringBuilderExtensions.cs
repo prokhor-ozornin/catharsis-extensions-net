@@ -160,7 +160,7 @@ public static class StringBuilderExtensions
       if (builder is null) throw new ArgumentNullException(nameof(builder));
       if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return builder.Length <= other.Length ? (builder, right: other) : (right: other, builder);
+      return builder.Length <= other.Length ? (builder, other) : (other, builder);
     }
 
     /// <summary>

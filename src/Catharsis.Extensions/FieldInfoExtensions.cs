@@ -14,14 +14,6 @@ public static class FieldInfoExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
-    public bool IsOfType<T>() => field is not null ? field.FieldType == typeof(T) : throw new ArgumentNullException(nameof(field));
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
     public bool IsProtected => @field?.IsFamily ?? throw new ArgumentNullException(nameof(@field));
@@ -39,5 +31,13 @@ public static class FieldInfoExtensions
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
     public bool IsProtectedInternal => @field?.IsFamilyOrAssembly ?? throw new ArgumentNullException(nameof(@field));
+    
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="field"/> is <see langword="null"/>.</exception>
+    public bool IsOfType<T>() => field is not null ? field.FieldType == typeof(T) : throw new ArgumentNullException(nameof(field));
   }
 }

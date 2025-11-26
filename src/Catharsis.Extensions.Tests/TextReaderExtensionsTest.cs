@@ -69,14 +69,14 @@ public sealed class TextReaderExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextReaderExtensions.Lines(TextReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.ToLines"/> method.</para>
   /// </summary>
   [Fact]
   public void Lines_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TextReaderExtensions.Lines(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => TextReaderExtensions.ToLines(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
     }
 
     throw new NotImplementedException();
@@ -87,7 +87,7 @@ public sealed class TextReaderExtensionsTest : Test
     {
       using (reader)
       {
-        reader.Lines().Should().BeOfType<IEnumerable<string>>().And.Equal(result);
+        reader.ToLines().Should().BeOfType<IEnumerable<string>>().And.Equal(result);
       }
     }
   }

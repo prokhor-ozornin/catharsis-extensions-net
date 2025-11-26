@@ -11,39 +11,39 @@ namespace Catharsis.Extensions.Tests;
 public sealed class DriveInfoExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="DriveInfoExtensions.Size(DriveInfo, string, bool)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DriveInfoExtensions.TotalSize"/> method.</para>
   /// </summary>
   [Fact]
   public void Size_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((DriveInfo) null).Size()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+      AssertionExtensions.Should(() => ((DriveInfo) null).TotalSize()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(long result, DriveInfo drive, string pattern = null, bool recursive = true) => drive.Size(pattern, recursive).Should().Be(result);
+    static void Test(long result, DriveInfo drive, string pattern = null, bool recursive = true) => drive.TotalSize(pattern, recursive).Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DriveInfoExtensions.Directories(DriveInfo, string, bool)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DriveInfoExtensions.ListDirectories"/> method.</para>
   /// </summary>
   [Fact]
   public void Directories_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((DriveInfo) null).Directories()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+      AssertionExtensions.Should(() => ((DriveInfo) null).ListDirectories()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(IEnumerable<DirectoryInfo> result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.Directories(pattern, recursive).Should().BeOfType<IEnumerable<DirectoryInfo>>().And.Equal(result);
+    static void Test(IEnumerable<DirectoryInfo> result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.ListDirectories(pattern, recursive).Should().BeOfType<IEnumerable<DirectoryInfo>>().And.Equal(result);
   }
 
   /// <summary>

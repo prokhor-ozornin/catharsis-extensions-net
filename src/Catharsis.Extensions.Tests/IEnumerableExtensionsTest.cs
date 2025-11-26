@@ -405,7 +405,7 @@ public sealed class IEnumerableExtensionsTest : Test
 
     return;
 
-    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.IsUnset().Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.IsUnset.Should().Be(result);
   }
 
   /// <summary>
@@ -416,19 +416,19 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IEnumerableExtensions.IsEmpty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+      AssertionExtensions.Should(() => null.IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
-      Enumerable.Empty<object>().IsEmpty().Should().BeTrue();
-      Array.Empty<object>().IsEmpty().Should().BeTrue();
+      Enumerable.Empty<object>().IsEmpty.Should().BeTrue();
+      Array.Empty<object>().IsEmpty.Should().BeTrue();
 
-      new object[] { null }.IsEmpty().Should().BeFalse();
+      new object[] { null }.IsEmpty.Should().BeFalse();
 
       throw new NotImplementedException();
     }
 
     return;
 
-    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.IsEmpty().Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.IsEmpty.Should().Be(result);
   }
 
   /// <summary>

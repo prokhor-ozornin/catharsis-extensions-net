@@ -12,21 +12,21 @@ namespace Catharsis.Extensions.Tests;
 public sealed class UriExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.IsAvailable(Uri, TimeSpan?)"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.Availability"/> method.</para>
   /// </summary>
   [Fact]
   public void IsAvailable_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriExtensions.IsAvailable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+      AssertionExtensions.Should(() => UriExtensions.Availability(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(bool result, Uri uri) => uri.IsAvailable().Should().Be(result);
+    static void Test(bool result, Uri uri) => uri.Availability().Should().Be(result);
   }
 
   /// <summary>
@@ -90,39 +90,39 @@ public sealed class UriExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.Lines(Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToLines"/> method.</para>
   /// </summary>
   [Fact]
   public void Lines_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriExtensions.Lines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+      AssertionExtensions.Should(() => UriExtensions.ToLines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(string[] result, Uri uri, Encoding encoding = null) => uri.Lines(encoding).Should().BeOfType<string[]>().And.Equal(result);
+    static void Test(string[] result, Uri uri, Encoding encoding = null) => uri.ToLines(encoding).Should().BeOfType<string[]>().And.Equal(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UriExtensions.LinesAsync(Uri, Encoding, TimeSpan?, ValueTuple{string, object}[])"/> method.</para>
+  ///   <para>Performs testing of <see cref="UriExtensions.ToLinesAsync"/> method.</para>
   /// </summary>
   [Fact]
   public void LinesAsync_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => UriExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
+      AssertionExtensions.Should(() => UriExtensions.ToLinesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test(string[] result, Uri uri, Encoding encoding = null) => uri.LinesAsync(encoding).ToArray().Should().BeOfType<string[]>().And.Equal(result);
+    static void Test(string[] result, Uri uri, Encoding encoding = null) => uri.ToLinesAsync(encoding).ToArray().Should().BeOfType<string[]>().And.Equal(result);
   }
 
   /// <summary>

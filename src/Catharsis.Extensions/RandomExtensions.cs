@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Net.NetworkInformation;
+﻿using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Text;
@@ -18,13 +17,90 @@ public static class RandomExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    [CLSCompliant(false)]
+    public sbyte Sbyte => random.ToSbyte();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public byte Byte => random.ToByte();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public short Short => random.ToShort();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    [CLSCompliant(false)]
+    public ushort Ushort => random.ToUshort();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public int Int => random.ToInt();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public double Double => random.ToDouble();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public char Char => random.ToChar();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public Range Range => random.ToRange();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public Guid Guid => random.ToGuid();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string FileName => random.ToFileName();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string DirectoryName => random.ToDirectoryName();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string FilePath => random.ToFilePath();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string DirectoryPath => random.ToDirectoryPath();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public FileInfo File => random.ToFile();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public Stream Stream => random.ToStream();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Sbyte(Random, IEnumerable{System.Range})"/>
+    /// <seealso cref="ToSbyte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
     [CLSCompliant(false)]
-    public sbyte Sbyte(sbyte? from = null, sbyte? to = null)
+    public sbyte ToSbyte(sbyte? from = null, sbyte? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
@@ -34,31 +110,25 @@ public static class RandomExtensions
     }
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    [CLSCompliant(false)]
-    public sbyte Sbyte => random.Sbyte();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="ranges"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Sbyte(Random, sbyte?, sbyte?)"/>
+    /// <seealso cref="ToSbyte(Random, sbyte?, sbyte?)"/>
     [CLSCompliant(false)]
-    public sbyte Sbyte(IEnumerable<Range> ranges)
+    public sbyte ToSbyte(IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
       switch (ranges.Count())
       {
         case 0:
-          return random.Sbyte();
+          return random.ToSbyte();
 
         case 1:
           var range = ranges.First();
-          return random.Sbyte((sbyte?) range.Start.Value, (sbyte?) range.End.Value);
+          return random.ToSbyte((sbyte?) range.Start.Value, (sbyte?) range.End.Value);
 
         default:
           return (sbyte) ranges.ToRange().Random();
@@ -74,14 +144,14 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Sbyte(Random, int, IEnumerable{System.Range})"/>
+    /// <seealso cref="ToSbyte(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
     [CLSCompliant(false)]
-    public IEnumerable<sbyte> Sbyte(int count, sbyte? from = null, sbyte? to = null)
+    public IEnumerable<sbyte> ToSbyte(int count, sbyte? from = null, sbyte? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Sbyte(from, to));
+      return count.Objects(() => random.ToSbyte(from, to));
     }
 
     /// <summary>
@@ -92,9 +162,9 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Sbyte(Random, int, sbyte?, sbyte?)"/>
+    /// <seealso cref="RandomExtensions.ToSbyte(System.Random,int,sbyte?,sbyte?)"/>
     [CLSCompliant(false)]
-    public IEnumerable<sbyte> Sbyte(int count, IEnumerable<Range> ranges)
+    public IEnumerable<sbyte> ToSbyte(int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -107,11 +177,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.Sbyte(count);
+          return random.ToSbyte(count);
 
         case 1:
           var range = ranges.First();
-          return random.Sbyte(count, (sbyte?) range.Start.Value, (sbyte?) range.End.Value);
+          return random.ToSbyte(count, (sbyte?) range.Start.Value, (sbyte?) range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -126,8 +196,8 @@ public static class RandomExtensions
     /// <param name="to"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Byte(Random, IEnumerable{System.Range})"/>
-    public byte Byte(byte? from = null, byte? to = null)
+    /// <seealso cref="RandomExtensions.ToByte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public byte ToByte(byte? from = null, byte? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
@@ -137,29 +207,24 @@ public static class RandomExtensions
     }
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte Byte => random.Byte();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="ranges"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Byte(Random, byte?, byte?)"/>
-    public byte Byte(IEnumerable<Range> ranges)
+    public byte ToByte(IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
       switch (ranges.Count())
       {
         case 0:
-          return random.Byte();
+          return random.ToByte();
 
         case 1:
           var range = ranges.First();
-          return random.Byte((byte?) range.Start.Value, (byte?) range.End.Value);
+          return random.ToByte((byte?) range.Start.Value, (byte?) range.End.Value);
 
         default:
           return (byte) ranges.ToRange().Random();
@@ -175,13 +240,13 @@ public static class RandomExtensions
     /// <returns>Array of randomly generated bytes. Length of array is equal to <paramref name="count"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Byte(Random, int, IEnumerable{System.Range})"/>
-    public IEnumerable<byte> Byte(int count, byte? from = null, byte? to = null)
+    /// <seealso cref="RandomExtensions.ToByte(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public IEnumerable<byte> ToByte(int count, byte? from = null, byte? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Byte(from, to));
+      return count.Objects(() => random.ToByte(from, to));
     }
 
     /// <summary>
@@ -192,8 +257,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Byte(Random, int, byte?, byte?)"/>
-    public IEnumerable<byte> Byte(int count, IEnumerable<Range> ranges)
+    /// <seealso cref="RandomExtensions.ToByte(System.Random,int,byte?,byte?)"/>
+    public IEnumerable<byte> ToByte(int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -206,11 +271,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.Byte(count);
+          return random.ToByte(count);
 
         case 1:
           var range = ranges.First();
-          return random.Byte(count, (byte?) range.Start.Value, (byte?) range.End.Value);
+          return random.ToByte(count, (byte?) range.Start.Value, (byte?) range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -225,8 +290,8 @@ public static class RandomExtensions
     /// <param name="to"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Short(Random, IEnumerable{System.Range})"/>
-    public short Short(short? from = null, short? to = null)
+    /// <seealso cref="RandomExtensions.ToShort(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public short ToShort(short? from = null, short? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
@@ -236,29 +301,24 @@ public static class RandomExtensions
     }
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public short Short => random.Short();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="ranges"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Short(Random, short?, short?)"/>
-    public short Short(IEnumerable<Range> ranges)
+    public short ToShort(IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
       switch (ranges.Count())
       {
         case 0:
-          return random.Short();
+          return random.ToShort();
 
         case 1:
           var range = ranges.First();
-          return random.Short((short?) range.Start.Value, (short?) range.End.Value);
+          return random.ToShort((short?) range.Start.Value, (short?) range.End.Value);
 
         default:
           return (short) ranges.ToRange().Random();
@@ -274,13 +334,13 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Short(Random, int, IEnumerable{System.Range})"/>
-    public IEnumerable<short> Short(int count, short? from = null, short? to = null)
+    /// <seealso cref="RandomExtensions.ToShort(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public IEnumerable<short> ToShort(int count, short? from = null, short? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Short(from, to));
+      return count.Objects(() => random.ToShort(from, to));
     }
 
     /// <summary>
@@ -291,8 +351,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Short(Random, int, short?, short?)"/>
-    public IEnumerable<short> Short(int count, IEnumerable<Range> ranges)
+    /// <seealso cref="RandomExtensions.ToShort(System.Random,int,short?,short?)"/>
+    public IEnumerable<short> ToShort(int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -305,11 +365,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.Short(count);
+          return random.ToShort(count);
 
         case 1:
           var range = ranges.First();
-          return random.Short(count, (short?) range.Start.Value, (short?) range.End.Value);
+          return random.ToShort(count, (short?) range.Start.Value, (short?) range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -324,9 +384,9 @@ public static class RandomExtensions
     /// <param name="to"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Ushort(Random, IEnumerable{System.Range})"/>
+    /// <seealso cref="RandomExtensions.ToUshort(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
     [CLSCompliant(false)]
-    public ushort Ushort(ushort? from = null, ushort? to = null)
+    public ushort ToUshort(ushort? from = null, ushort? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
@@ -336,12 +396,6 @@ public static class RandomExtensions
     }
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    [CLSCompliant(false)]
-    public ushort Ushort => random.Ushort();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="ranges"></param>
@@ -349,18 +403,18 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Ushort(Random, ushort?, ushort?)"/>
     [CLSCompliant(false)]
-    public ushort Ushort(IEnumerable<Range> ranges)
+    public ushort ToUshort(IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
       switch (ranges.Count())
       {
         case 0:
-          return random.Ushort();
+          return random.ToUshort();
 
         case 1:
           var range = ranges.First();
-          return random.Ushort((ushort?) range.Start.Value, (ushort?) range.End.Value);
+          return random.ToUshort((ushort?) range.Start.Value, (ushort?) range.End.Value);
 
         default:
           return (ushort) ranges.ToRange().Random();
@@ -376,14 +430,14 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Ushort(Random, int, IEnumerable{System.Range})"/>
+    /// <seealso cref="RandomExtensions.ToUshort(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
     [CLSCompliant(false)]
-    public IEnumerable<ushort> Ushort(int count, ushort? from = null, ushort? to = null)
+    public IEnumerable<ushort> ToUshort(int count, ushort? from = null, ushort? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Ushort(from, to));
+      return count.Objects(() => random.ToUshort(from, to));
     }
 
     /// <summary>
@@ -394,9 +448,9 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Ushort(Random, int, ushort?, ushort?)"/>
+    /// <seealso cref="RandomExtensions.ToUshort(System.Random,int,ushort?,ushort?)"/>
     [CLSCompliant(false)]
-    public IEnumerable<ushort> Ushort(int count, IEnumerable<Range> ranges)
+    public IEnumerable<ushort> ToUshort(int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -409,11 +463,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.Ushort(count);
+          return random.ToUshort(count);
 
         case 1:
           var range = ranges.First();
-          return random.Ushort(count, (ushort?) range.Start.Value, (ushort?) range.End.Value);
+          return random.ToUshort(count, (ushort?) range.Start.Value, (ushort?) range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -428,8 +482,8 @@ public static class RandomExtensions
     /// <param name="to"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Int(Random, IEnumerable{System.Range})"/>
-    public int Int(int? from = null, int? to = null)
+    /// <seealso cref="RandomExtensions.ToInt(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public int ToInt(int? from = null, int? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
@@ -439,29 +493,24 @@ public static class RandomExtensions
     }
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public int Int => random.Int();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="ranges"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Int(Random, int?, int?)"/>
-    public int Int(IEnumerable<Range> ranges)
+    public int ToInt(IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
       switch (ranges.Count())
       {
         case 0:
-          return random.Int();
+          return random.ToInt();
 
         case 1:
           var range = ranges.First();
-          return Int(random, (int?) range.Start.Value, range.End.Value);
+          return ToInt(random, (int?) range.Start.Value, range.End.Value);
 
         default:
           return ranges.ToRange().Random();
@@ -477,13 +526,13 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Int(Random, int, IEnumerable{System.Range})"/>
-    public IEnumerable<int> Int(int count, int? from = null, int? to = null)
+    /// <seealso cref="RandomExtensions.ToInt(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public IEnumerable<int> ToInt(int count, int? from = null, int? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Int(from, to));
+      return count.Objects(() => random.ToInt(from, to));
     }
 
     /// <summary>
@@ -494,8 +543,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Int(Random, int, int?, int?)"/>
-    public IEnumerable<int> Int(int count, IEnumerable<Range> ranges)
+    /// <seealso cref="RandomExtensions.ToInt(System.Random,int,int?,int?)"/>
+    public IEnumerable<int> ToInt(int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -508,11 +557,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.Int(count);
+          return random.ToInt(count);
 
         case 1:
           var range = ranges.First();
-          return random.Int(count, range.Start.Value, range.End.Value);
+          return random.ToInt(count, range.Start.Value, range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -525,14 +574,9 @@ public static class RandomExtensions
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Double(Random, int)"/>
-    public double Double() => random?.NextDouble() ?? throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToDouble(System.Random,int)"/>
+    public double ToDouble() => random?.NextDouble() ?? throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public double Double => random.Double();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -541,12 +585,12 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="Double(Random)"/>
-    public IEnumerable<double> Double(int count)
+    public IEnumerable<double> ToDouble(int count)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects<double>(random.Double);
+      return count.Objects<double>(random.ToDouble);
     }
 
     /// <summary>
@@ -556,8 +600,8 @@ public static class RandomExtensions
     /// <param name="to"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Char(Random, IEnumerable{System.Range})"/>
-    public char Char(char? from = null, char? to = null)
+    /// <seealso cref="RandomExtensions.ToChar(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public char ToChar(char? from = null, char? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
@@ -567,29 +611,24 @@ public static class RandomExtensions
     }
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public char Char => random.Char();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="ranges"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Char(Random, char?, char?)"/>
-    public char Char(IEnumerable<Range> ranges)
+    public char ToChar(IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
 
       switch (ranges.Count())
       {
         case 0:
-          return random.Char();
+          return random.ToChar();
 
         case 1:
           var range = ranges.First();
-          return random.Char((char?) range.Start.Value, (char?) range.End.Value);
+          return random.ToChar((char?) range.Start.Value, (char?) range.End.Value);
 
         default:
           return (char) ranges.ToRange().Random();
@@ -605,13 +644,13 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Char(Random, int, IEnumerable{System.Range})"/>
-    public IEnumerable<char> Char(int count, char? from = null, char? to = null)
+    /// <seealso cref="RandomExtensions.ToChar(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public IEnumerable<char> ToChar(int count, char? from = null, char? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Char(from, to));
+      return count.Objects(() => random.ToChar(from, to));
     }
 
     /// <summary>
@@ -622,8 +661,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Char(Random, int, char?, char?)"/>
-    public IEnumerable<char> Char(int count, IEnumerable<Range> ranges)
+    /// <seealso cref="RandomExtensions.ToChar(System.Random,int,char?,char?)"/>
+    public IEnumerable<char> ToChar(int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -636,11 +675,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.Char(count);
+          return random.ToChar(count);
 
         case 1:
           var range = ranges.First();
-          return random.Char(count, (char?) range.Start.Value, (char?) range.End.Value);
+          return random.ToChar(count, (char?) range.Start.Value, (char?) range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -657,8 +696,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="String(Random, int, IEnumerable{System.Range})"/>
-    public string String(int count, char? from = null, char? to = null)
+    /// <seealso cref="RandomExtensions.ToText(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public string ToText(int count, char? from = null, char? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -668,7 +707,7 @@ public static class RandomExtensions
         return string.Empty;
       }
 
-      return random.Char(count, from, to).AsArray().ToText();
+      return random.ToChar(count, from, to).AsArray().ToText();
     }
 
     /// <summary>
@@ -679,8 +718,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="String(Random, int, char?, char?)"/>
-    public string String(int count, IEnumerable<Range> ranges)
+    /// <seealso cref="RandomExtensions.ToString(System.Random,int,char?,char?)"/>
+    public string ToText(int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -693,11 +732,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.String(count);
+          return random.ToText(count);
 
         case 1:
           var range = ranges.First();
-          return random.String(count, (char?) range.Start.Value, (char?) range.End.Value);
+          return random.ToText(count, (char?) range.Start.Value, (char?) range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -716,14 +755,14 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="String(Random, int, int, IEnumerable{System.Range})"/>
-    public IEnumerable<string> String(int size, int count, char? from = null, char? to = null)
+    /// <seealso cref="RandomExtensions.ToText(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public IEnumerable<string> ToText(int size, int count, char? from = null, char? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.String(size, from, to));
+      return count.Objects(() => random.ToText(size, from, to));
     }
 
     /// <summary>
@@ -735,8 +774,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="String(Random, int, int, char?, char?)"/>
-    public IEnumerable<string> String(int size, int count, IEnumerable<Range> ranges)
+    /// <seealso cref="RandomExtensions.ToText(System.Random,int,int,char?,char?)"/>
+    public IEnumerable<string> ToText(int size, int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -750,11 +789,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.String(size, count);
+          return random.ToText(size, count);
 
         case 1:
           var range = ranges.First();
-          return random.String(size, count, (char?) range.Start.Value, (char?) range.End.Value);
+          return random.ToText(size, count, (char?) range.Start.Value, (char?) range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -768,8 +807,8 @@ public static class RandomExtensions
     /// <param name="count"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Digits(Random, int, int)"/>
-    public string Digits(int count) => String(random, count, ['0'..'9']);
+    /// <seealso cref="RandomExtensions.ToDigits(System.Random,int,int)"/>
+    public string ToDigits(int count) => random.ToText(count, ['0'..'9']);
 
     /// <summary>
     ///   <para></para>
@@ -780,13 +819,13 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="Digits(Random, int)"/>
-    public IEnumerable<string> Digits(int size, int count)
+    public IEnumerable<string> ToDigits(int size, int count)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Digits(size));
+      return count.Objects(() => random.ToDigits(size));
     }
 
     /// <summary>
@@ -796,8 +835,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Letters(Random, int, int)"/>
-    public string Letters(int count) => random.String(count, ['a'..'z', 'A'..'Z']);
+    /// <seealso cref="RandomExtensions.ToLetters(System.Random,int,int)"/>
+    public string ToLetters(int count) => random.ToText(count, ['a'..'z', 'A'..'Z']);
 
     /// <summary>
     ///   <para></para>
@@ -808,13 +847,13 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="Letters(Random, int)"/>
-    public IEnumerable<string> Letters(int size, int count)
+    public IEnumerable<string> ToLetters(int size, int count)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Letters(size));
+      return count.Objects(() => random.ToLetters(size));
     }
 
     /// <summary>
@@ -824,8 +863,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="AlphaDigits(Random, int, int)"/>
-    public string AlphaDigits(int count) => random.String(count, ['a'..'z', 'A'..'Z', '0'..'9']);
+    /// <seealso cref="RandomExtensions.ToAlphaDigits(System.Random,int,int)"/>
+    public string ToAlphaDigits(int count) => random.ToText(count, ['a'..'z', 'A'..'Z', '0'..'9']);
 
     /// <summary>
     ///   <para></para>
@@ -836,13 +875,13 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="AlphaDigits(Random, int)"/>
-    public IEnumerable<string> AlphaDigits(int size, int count)
+    public IEnumerable<string> ToAlphaDigits(int size, int count)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.AlphaDigits(size));
+      return count.Objects(() => random.ToAlphaDigits(size));
     }
 
     /// <summary>
@@ -854,8 +893,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="SecureString(Random, int, IEnumerable{System.Range})"/>
-    public SecureString SecureString(int count, char? from = null, char? to = null)
+    /// <seealso cref="RandomExtensions.ToSecureString(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public SecureString ToSecureString(int count, char? from = null, char? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -867,7 +906,7 @@ public static class RandomExtensions
 
       var result = new SecureString();
 
-      count.Times(() => result.AppendChar(random.Char(from, to)));
+      count.Times(() => result.AppendChar(random.ToChar(from, to)));
 
       return result;
     }
@@ -881,7 +920,7 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="SecureString(Random, int, char?, char?)"/>
-    public SecureString SecureString(int count, IEnumerable<Range> ranges)
+    public SecureString ToSecureString(int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -894,11 +933,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.SecureString(count);
+          return random.ToSecureString(count);
 
         case 1:
           var range = ranges.First();
-          return random.SecureString(count, (char?) range.Start.Value, (char?) range.End.Value);
+          return random.ToSecureString(count, (char?) range.Start.Value, (char?) range.End.Value);
 
         default:
           var result = new SecureString();
@@ -920,14 +959,14 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="SecureString(Random, int, int, IEnumerable{System.Range})"/>
-    public IEnumerable<SecureString> SecureString(int size, int count, char? from = null, char? to = null)
+    /// <seealso cref="RandomExtensions.ToSecureString(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public IEnumerable<SecureString> ToSecureString(int size, int count, char? from = null, char? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.SecureString(size, from, to));
+      return count.Objects(() => random.ToSecureString(size, from, to));
     }
 
     /// <summary>
@@ -939,8 +978,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="SecureString(Random, int, int, char?, char?)"/>
-    public IEnumerable<SecureString> SecureString(int size, int count, IEnumerable<Range> ranges)
+    /// <seealso cref="RandomExtensions.ToSecureString(System.Random,int,int,char?,char?)"/>
+    public IEnumerable<SecureString> ToSecureString(int size, int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -954,11 +993,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.SecureString(size, count);
+          return random.ToSecureString(size, count);
 
         case 1:
           var range = ranges.First();
-          return random.SecureString(size, count, (char?) range.Start.Value, (char?) range.End.Value);
+          return random.ToSecureString(size, count, (char?) range.Start.Value, (char?) range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -978,14 +1017,9 @@ public static class RandomExtensions
     /// <param name="to"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Range(Random, int, int?)"/>
-    public Range Range(int? to = null) => random is not null ? System.Range.EndAt(Index.FromStart(Int(random, (int?) 0, to))) : throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToRange(System.Random,int,int?)"/>
+    public Range ToRange(int? to = null) => random is not null ? System.Range.EndAt(Index.FromStart(ToInt(random, (int?) 0, to))) : throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public Range Range => random.Range();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -994,21 +1028,16 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Range(Random, int?)"/>
-    public IEnumerable<Range> Range(int count, int? to = null) => random is not null ? count.Objects(() => random.Range(to)) : throw new ArgumentNullException(nameof(random));
+    public IEnumerable<Range> ToRange(int count, int? to = null) => random is not null ? count.Objects(() => random.ToRange(to)) : throw new ArgumentNullException(nameof(random));
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Guid(Random, int)"/>
-    public Guid Guid() => random is not null ? System.Guid.NewGuid() : throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToGuid(System.Random,int)"/>
+    public Guid ToGuid() => random is not null ? System.Guid.NewGuid() : throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public Guid Guid => random.Guid();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1017,12 +1046,12 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="Guid(Random)"/>
-    public IEnumerable<Guid> Guid(int count)
+    public IEnumerable<Guid> ToGuid(int count)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects<Guid>(random.Guid);
+      return count.Objects<Guid>(random.ToGuid);
     }
 
     /// <summary>
@@ -1031,13 +1060,13 @@ public static class RandomExtensions
     /// <param name="types"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Object(Random, Type[])"/>
-    public object Object(IEnumerable<Type> types)
+    /// <seealso cref="RandomExtensions.ToObject(System.Random,System.Type[])"/>
+    public object ToObject(IEnumerable<Type> types)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (types is null) throw new ArgumentNullException(nameof(types));
 
-      return types.IsEmpty() ? new object() : types.Random().Instance<object>();
+      return types.IsEmpty ? new object() : types.Random().Instance<object>();
     }
 
     /// <summary>
@@ -1047,7 +1076,7 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <seealso cref="Object(Random, IEnumerable{Type})"/>
-    public object Object(params Type[] types) => random.Object(types as IEnumerable<Type>);
+    public object ToObject(params Type[] types) => random.ToObject(types as IEnumerable<Type>);
 
     /// <summary>
     ///   <para></para>
@@ -1057,14 +1086,14 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Object(Random, int, Type[])"/>
-    public IEnumerable<object> Object(int count, IEnumerable<Type> types)
+    /// <seealso cref="RandomExtensions.ToObject(System.Random,int,System.Type[])"/>
+    public IEnumerable<object> ToObject(int count, IEnumerable<Type> types)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (types is null) throw new ArgumentNullException(nameof(types));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Object(types));
+      return count.Objects(() => random.ToObject(types));
     }
 
     /// <summary>
@@ -1075,22 +1104,17 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Object(Random, int, IEnumerable{Type})"/>
-    public IEnumerable<object> Object(int count, params Type[] types) => random.Object(count, types as IEnumerable<Type>);
+    /// <seealso cref="RandomExtensions.ToObject(System.Random,int,System.Collections.Generic.IEnumerable{System.Type})"/>
+    public IEnumerable<object> ToObject(int count, params Type[] types) => random.ToObject(count, types as IEnumerable<Type>);
 
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="FileName(Random, int)"/>
-    public string FileName() => random is not null ? Path.GetRandomFileName() : throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToFileName(System.Random,int)"/>
+    public string ToFileName() => random is not null ? Path.GetRandomFileName() : throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string FileName => random.FileName();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1099,12 +1123,12 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="FileName(Random)"/>
-    public IEnumerable<string> FileName(int count)
+    public IEnumerable<string> ToFileName(int count)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects<string>(random.FileName);
+      return count.Objects<string>(random.ToFileName);
     }
 
     /// <summary>
@@ -1112,14 +1136,9 @@ public static class RandomExtensions
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="DirectoryName(Random, int)"/>
-    public string DirectoryName() => random is not null ? System.Guid.NewGuid().ToString("N") : throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToDirectoryName(System.Random,int)"/>
+    public string ToDirectoryName() => random is not null ? System.Guid.NewGuid().ToString("N") : throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string DirectoryName => random.DirectoryName();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1128,12 +1147,12 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="DirectoryName(Random)"/>
-    public IEnumerable<string> DirectoryName(int count)
+    public IEnumerable<string> ToDirectoryName(int count)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects<string>(random.DirectoryName);
+      return count.Objects<string>(random.ToDirectoryName);
     }
 
     /// <summary>
@@ -1142,14 +1161,9 @@ public static class RandomExtensions
     /// <param name="directory"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="FilePath(Random, int, DirectoryInfo)"/>
-    public string FilePath(DirectoryInfo directory = null) => random is not null ? Path.Combine(directory?.FullName ?? Path.GetTempPath(), random.FileName()) : throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToFilePath(System.Random,int,System.IO.DirectoryInfo)"/>
+    public string ToFilePath(DirectoryInfo directory = null) => random is not null ? Path.Combine(directory?.FullName ?? Path.GetTempPath(), random.ToFileName()) : throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string FilePath => random.FilePath();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1159,12 +1173,12 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="FilePath(Random, DirectoryInfo)"/>
-    public IEnumerable<string> FilePath(int count, DirectoryInfo directory = null)
+    public IEnumerable<string> ToFilePath(int count, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.FilePath(directory));
+      return count.Objects(() => random.ToFilePath(directory));
     }
 
     /// <summary>
@@ -1173,14 +1187,9 @@ public static class RandomExtensions
     /// <param name="parent"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="DirectoryPath(Random, int, DirectoryInfo)"/>
-    public string DirectoryPath(DirectoryInfo parent = null) => random is not null ? Path.Combine(parent?.FullName ?? Path.GetTempPath(), random.DirectoryName()) : throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToDirectoryPath(System.Random,int,System.IO.DirectoryInfo)"/>
+    public string ToDirectoryPath(DirectoryInfo parent = null) => random is not null ? Path.Combine(parent?.FullName ?? Path.GetTempPath(), random.ToDirectoryName()) : throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string DirectoryPath => random.DirectoryPath();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1190,12 +1199,12 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="DirectoryPath(Random, DirectoryInfo)"/>
-    public IEnumerable<string> DirectoryPath(int count, DirectoryInfo parent = null)
+    public IEnumerable<string> ToDirectoryPath(int count, DirectoryInfo parent = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.DirectoryPath(parent));
+      return count.Objects(() => random.ToDirectoryPath(parent));
     }
 
     /// <summary>
@@ -1204,14 +1213,9 @@ public static class RandomExtensions
     /// <param name="parent"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Directory(Random, int, DirectoryInfo)"/>
-    public DirectoryInfo Directory(DirectoryInfo parent = null) => random is not null ? System.IO.Directory.CreateDirectory(Path.Combine(parent?.FullName ?? Path.GetTempPath(), System.Guid.NewGuid().ToString("N"))) : throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToDirectory(System.Random,int,System.IO.DirectoryInfo)"/>
+    public DirectoryInfo ToDirectory(DirectoryInfo parent = null) => random is not null ? System.IO.Directory.CreateDirectory(Path.Combine(parent?.FullName ?? Path.GetTempPath(), System.Guid.NewGuid().ToString("N"))) : throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public DirectoryInfo Directory => random.Directory();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1221,12 +1225,12 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="Directory(Random, DirectoryInfo)"/>
-    public IEnumerable<DirectoryInfo> Directory(int count, DirectoryInfo parent = null)
+    public IEnumerable<DirectoryInfo> ToDirectory(int count, DirectoryInfo parent = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.Directory(parent));
+      return count.Objects(() => random.ToDirectory(parent));
     }
 
     /// <summary>
@@ -1235,14 +1239,9 @@ public static class RandomExtensions
     /// <param name="directory"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="File(Random, int, DirectoryInfo)"/>
-    public FileInfo File(DirectoryInfo directory = null) => random is not null ? Path.Combine(directory?.FullName ?? Path.GetTempPath(), random.FileName()).ToFile().CreateWithPath() : throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToFile(System.Random,int,System.IO.DirectoryInfo)"/>
+    public FileInfo ToFile(DirectoryInfo directory = null) => random is not null ? Path.Combine(directory?.FullName ?? Path.GetTempPath(), random.ToFileName()).ToFile().CreateWithPath() : throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public FileInfo File => random.File();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1252,12 +1251,12 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="File(Random, DirectoryInfo)"/>
-    public IEnumerable<FileInfo> File(int count, DirectoryInfo directory = null)
+    public IEnumerable<FileInfo> ToFile(int count, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.File(directory));
+      return count.Objects(() => random.ToFile(directory));
     }
 
     /// <summary>
@@ -1270,20 +1269,20 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="BinaryFileAsync(Random, int, byte?, byte?, DirectoryInfo, CancellationToken)"/>
-    public FileInfo BinaryFile(int size, byte? from = null, byte? to = null, DirectoryInfo directory = null)
+    /// <seealso cref="RandomExtensions.ToBinaryFileAsync(System.Random,int,byte?,byte?,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/>
+    public FileInfo ToBinaryFile(int size, byte? from = null, byte? to = null, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
 
       if (size == 0)
       {
-        return random.File(directory);
+        return random.ToFile(directory);
       }
 
-      var bytes = random.Byte(size, from, to);
+      var bytes = random.ToByte(size, from, to);
 
-      var file = random.File(directory);
+      var file = random.ToFile(directory);
 
       try
       {
@@ -1309,7 +1308,7 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="BinaryFile(Random, int, byte?, byte?, DirectoryInfo)"/>
-    public async Task<FileInfo> BinaryFileAsync(int size, byte? from = null, byte? to = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
+    public async Task<FileInfo> ToBinaryFileAsync(int size, byte? from = null, byte? to = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1318,12 +1317,12 @@ public static class RandomExtensions
 
       if (size == 0)
       {
-        return random.File(directory);
+        return random.ToFile(directory);
       }
 
-      var bytes = random.Byte(size, from, to);
+      var bytes = random.ToByte(size, from, to);
     
-      var file = random.File(directory);
+      var file = random.ToFile(directory);
 
       try
       {
@@ -1346,31 +1345,31 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="BinaryFileAsync(Random, int,  IEnumerable{System.Range}, DirectoryInfo, CancellationToken)"/>
-    public FileInfo BinaryFile(int size, IEnumerable<Range> ranges, DirectoryInfo directory = null)
+    /// <seealso cref="RandomExtensions.ToBinaryFileAsync(System.Random,int,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/>
+    public FileInfo ToBinaryFile(int size, IEnumerable<Range> ranges, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
 
       if (size == 0)
       {
-        return random.BinaryFile(size, null, null, directory);
+        return random.ToBinaryFile(size, null, null, directory);
       }
 
       switch (ranges.Count())
       {
         case 0:
-          return random.BinaryFile(size, null, null, directory);
+          return random.ToBinaryFile(size, null, null, directory);
 
         case 1:
           var range = ranges.First();
-          return random.BinaryFile(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory);
+          return random.ToBinaryFile(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory);
 
         default:
           var totalRange = ranges.ToRange();
           var bytes = size.Objects(() => (byte) totalRange.Random());
 
-          var file = random.File(directory);
+          var file = random.ToFile(directory);
 
           try
           {
@@ -1395,8 +1394,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="BinaryFile(Random, int, IEnumerable{System.Range}, DirectoryInfo)"/>
-    public async Task<FileInfo> BinaryFileAsync(int size, IEnumerable<Range> ranges, DirectoryInfo directory = null, CancellationToken cancellation = default)
+    /// <seealso cref="RandomExtensions.ToBinaryFile(System.Random,int,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/>
+    public async Task<FileInfo> ToBinaryFileAsync(int size, IEnumerable<Range> ranges, DirectoryInfo directory = null, CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1405,23 +1404,23 @@ public static class RandomExtensions
 
       if (size == 0)
       {
-        return await random.BinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
+        return await random.ToBinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
       }
 
       switch (ranges.Count())
       {
         case 0:
-          return await random.BinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
+          return await random.ToBinaryFileAsync(size, null, null, directory, cancellation).ConfigureAwait(false);
 
         case 1:
           var range = ranges.First();
-          return await random.BinaryFileAsync(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false);
+          return await random.ToBinaryFileAsync(size, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false);
 
         default:
           var totalRange = ranges.ToRange();
           var bytes = size.Objects(() => (byte) totalRange.Random());
 
-          var file = random.File(directory);
+          var file = random.ToFile(directory);
 
           try
           {
@@ -1447,8 +1446,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="BinaryFileAsync(Random, int, int, byte?, byte?, DirectoryInfo, CancellationToken)"/>
-    public IEnumerable<FileInfo> BinaryFile(int size, int count, byte? from = null, byte? to = null, DirectoryInfo directory = null)
+    /// <seealso cref="RandomExtensions.ToBinaryFileAsync(System.Random,int,int,byte?,byte?,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/>
+    public IEnumerable<FileInfo> ToBinaryFile(int size, int count, byte? from = null, byte? to = null, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1456,7 +1455,7 @@ public static class RandomExtensions
 
       for (var i = 1; i <= count; i++)
       {
-        yield return random.BinaryFile(size, from, to, directory);
+        yield return random.ToBinaryFile(size, from, to, directory);
       }
     }
 
@@ -1472,8 +1471,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="BinaryFile(Random, int, int, byte?, byte?, DirectoryInfo)"/>
-    public async IAsyncEnumerable<FileInfo> BinaryFileAsync(int size, int count, byte? from = null, byte? to = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
+    /// <seealso cref="RandomExtensions.ToBinaryFile(System.Random,int,int,byte?,byte?,System.IO.DirectoryInfo)"/>
+    public async IAsyncEnumerable<FileInfo> ToBinaryFileAsync(int size, int count, byte? from = null, byte? to = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1483,7 +1482,7 @@ public static class RandomExtensions
 
       for (var i = 1; i <= count; i++)
       {
-        yield return await random.BinaryFileAsync(size, from, to, directory, cancellation).ConfigureAwait(false);
+        yield return await random.ToBinaryFileAsync(size, from, to, directory, cancellation).ConfigureAwait(false);
       }
     }
 
@@ -1497,8 +1496,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="BinaryFileAsync(Random, int, int, IEnumerable{System.Range}, DirectoryInfo, CancellationToken)"/>
-    public IEnumerable<FileInfo> BinaryFile(int size, int count, IEnumerable<Range> ranges, DirectoryInfo directory = null)
+    /// <seealso cref="RandomExtensions.ToBinaryFileAsync"/>
+    public IEnumerable<FileInfo> ToBinaryFile(int size, int count, IEnumerable<Range> ranges, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1512,7 +1511,7 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          foreach (var file in random.BinaryFile(size, count, null, null, directory))
+          foreach (var file in random.ToBinaryFile(size, count, null, null, directory))
           {
             yield return file;
           }
@@ -1522,7 +1521,7 @@ public static class RandomExtensions
         case 1:
           var range = ranges.First();
 
-          foreach (var file in random.BinaryFile(size, count, (byte?) range.Start.Value, (byte?) range.End.Value, directory))
+          foreach (var file in random.ToBinaryFile(size, count, (byte?) range.Start.Value, (byte?) range.End.Value, directory))
           {
             yield return file;
           }
@@ -1536,7 +1535,7 @@ public static class RandomExtensions
           {
             var bytes = size.Objects(() => (byte) totalRange.Random());
 
-            var file = random.File(directory);
+            var file = random.ToFile(directory);
 
             try
             {
@@ -1565,8 +1564,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="BinaryFile(Random, int, int, IEnumerable{System.Range}, DirectoryInfo)"/>
-    public async IAsyncEnumerable<FileInfo> BinaryFileAsync(int size, int count, IEnumerable<Range> ranges, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
+    /// <seealso cref="RandomExtensions.ToBinaryFile(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/>
+    public async IAsyncEnumerable<FileInfo> ToBinaryFileAsync(int size, int count, IEnumerable<Range> ranges, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1582,7 +1581,7 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          await foreach (var file in random.BinaryFileAsync(size, count, null, null, directory, cancellation).ConfigureAwait(false))
+          await foreach (var file in random.ToBinaryFileAsync(size, count, null, null, directory, cancellation).ConfigureAwait(false))
           {
             yield return file;
           }
@@ -1592,7 +1591,7 @@ public static class RandomExtensions
         case 1:
           var range = ranges.First();
 
-          await foreach (var file in random.BinaryFileAsync(size, count, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false))
+          await foreach (var file in random.ToBinaryFileAsync(size, count, (byte?) range.Start.Value, (byte?) range.End.Value, directory, cancellation).ConfigureAwait(false))
           {
             yield return file;
           }
@@ -1606,7 +1605,7 @@ public static class RandomExtensions
           {
             var bytes = size.Objects(() => (byte) totalRange.Random());
 
-            var file = random.File(directory);
+            var file = random.ToFile(directory);
 
             try
             {
@@ -1635,20 +1634,20 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="TextFileAsync(Random, int, Encoding, char?, char?, DirectoryInfo, CancellationToken)"/>
-    public FileInfo TextFile(int size, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null)
+    /// <seealso cref="RandomExtensions.ToTextFileAsync(System.Random,int,System.Text.Encoding,char?,char?,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/>
+    public FileInfo ToTextFile(int size, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
 
       if (size == 0)
       {
-        return random.File(directory);
+        return random.ToFile(directory);
       }
 
-      var text = random.String(size, from, to);
+      var text = random.ToText(size, from, to);
 
-      return random.File(directory).WriteText(text, encoding);
+      return random.ToFile(directory).WriteText(text, encoding);
     }
 
     /// <summary>
@@ -1664,7 +1663,7 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="TextFile(Random, int, Encoding, char?, char?, DirectoryInfo)"/>
-    public async Task<FileInfo> TextFileAsync(int size, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
+    public async Task<FileInfo> ToTextFileAsync(int size, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1673,12 +1672,12 @@ public static class RandomExtensions
 
       if (size == 0)
       {
-        return random.File(directory);
+        return random.ToFile(directory);
       }
 
-      var text = random.String(size, from, to);
+      var text = random.ToText(size, from, to);
 
-      return await random.File(directory).WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
+      return await random.ToFile(directory).WriteTextAsync(text, encoding, cancellation).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -1691,30 +1690,30 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="TextFileAsync(Random, int, IEnumerable{System.Range}, Encoding, DirectoryInfo, CancellationToken)"/>
-    public FileInfo TextFile(int size, IEnumerable<Range> ranges, Encoding encoding = null, DirectoryInfo directory = null)
+    /// <seealso cref="RandomExtensions.ToTextFileAsync"/>
+    public FileInfo ToTextFile(int size, IEnumerable<Range> ranges, Encoding encoding = null, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
 
       if (size == 0)
       {
-        return random.TextFile(size, encoding, null, null, directory);
+        return random.ToTextFile(size, encoding, null, null, directory);
       }
 
       switch (ranges.Count())
       {
         case 0:
-          return random.TextFile(size, encoding, null, null, directory);
+          return random.ToTextFile(size, encoding, null, null, directory);
 
         case 1:
           var range = ranges.First();
-          return random.TextFile(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory);
+          return random.ToTextFile(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory);
 
         default:
           var totalRange = ranges.ToRange();
           var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-          return random.File(directory).WriteText(chars.ToText(), encoding);
+          return random.ToFile(directory).WriteText(chars.ToText(), encoding);
       }
     }
 
@@ -1729,8 +1728,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="TextFile(Random, int, IEnumerable{System.Range}, Encoding, DirectoryInfo)"/>
-    public async Task<FileInfo> TextFileAsync(int size, IEnumerable<Range> ranges, Encoding encoding = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
+    /// <seealso cref="RandomExtensions.ToTextFile(System.Random,int,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/>
+    public async Task<FileInfo> ToTextFileAsync(int size, IEnumerable<Range> ranges, Encoding encoding = null, DirectoryInfo directory = null, CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1739,22 +1738,22 @@ public static class RandomExtensions
 
       if (size == 0)
       {
-        return await random.TextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
+        return await random.ToTextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
       }
 
       switch (ranges.Count())
       {
         case 0:
-          return await random.TextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
+          return await random.ToTextFileAsync(size, encoding, null, null, directory, cancellation).ConfigureAwait(false);
 
         case 1:
           var range = ranges.First();
-          return await random.TextFileAsync(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false);
+          return await random.ToTextFileAsync(size, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false);
 
         default:
           var totalRange = ranges.ToRange();
           var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-          return await random.File(directory).WriteTextAsync(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
+          return await random.ToFile(directory).WriteTextAsync(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
       }
     }
 
@@ -1770,8 +1769,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="TextFile(Random, int, int, Encoding, char?, char?, DirectoryInfo, CancellationToken)"/>
-    public IEnumerable<FileInfo> TextFile(int size, int count, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null)
+    /// <seealso cref="RandomExtensions.ToTextFile(System.Random,int,int,System.Text.Encoding,char?,char?,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/>
+    public IEnumerable<FileInfo> ToTextFile(int size, int count, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1779,7 +1778,7 @@ public static class RandomExtensions
 
       for (var i = 1; i <= count; i++)
       {
-        yield return random.TextFile(size, encoding, from, to, directory);
+        yield return random.ToTextFile(size, encoding, from, to, directory);
       }
     }
 
@@ -1796,8 +1795,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="TextFile(Random, int, int, Encoding, char?, char?, DirectoryInfo)"/>
-    public async IAsyncEnumerable<FileInfo> TextFile(int size, int count, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
+    /// <seealso cref="RandomExtensions.ToTextFile(System.Random,int,int,System.Text.Encoding,char?,char?,System.IO.DirectoryInfo)"/>
+    public async IAsyncEnumerable<FileInfo> ToTextFile(int size, int count, Encoding encoding = null, char? from = null, char? to = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1807,7 +1806,7 @@ public static class RandomExtensions
 
       for (var i = 1; i <= count; i++)
       {
-        yield return await random.TextFileAsync(size, encoding, from, to, directory, cancellation).ConfigureAwait(false);
+        yield return await random.ToTextFileAsync(size, encoding, from, to, directory, cancellation).ConfigureAwait(false);
       }
     }
 
@@ -1822,8 +1821,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="TextFileAsync(Random, int, int, IEnumerable{System.Range}, Encoding, DirectoryInfo, CancellationToken)"/>
-    public IEnumerable<FileInfo> TextFile(int size, int count, IEnumerable<Range> ranges, Encoding encoding = null, DirectoryInfo directory = null)
+    /// <seealso cref="RandomExtensions.ToTextFileAsync(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/>
+    public IEnumerable<FileInfo> ToTextFile(int size, int count, IEnumerable<Range> ranges, Encoding encoding = null, DirectoryInfo directory = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1837,7 +1836,7 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          foreach (var file in random.TextFile(size, count, encoding, null, null, directory))
+          foreach (var file in random.ToTextFile(size, count, encoding, null, null, directory))
           {
             yield return file;
           }
@@ -1847,7 +1846,7 @@ public static class RandomExtensions
         case 1:
           var range = ranges.First();
 
-          foreach (var file in random.TextFile(size, count, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory))
+          foreach (var file in random.ToTextFile(size, count, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory))
           {
             yield return file;
           }
@@ -1860,7 +1859,7 @@ public static class RandomExtensions
           for (var i = 1; i <= count; i++)
           {
             var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-            yield return random.File(directory).WriteText(chars.ToText(), encoding);
+            yield return random.ToFile(directory).WriteText(chars.ToText(), encoding);
           }
 
           break;
@@ -1879,8 +1878,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="TextFile(Random, int, int, IEnumerable{System.Range}, Encoding, DirectoryInfo)"/>
-    public async IAsyncEnumerable<FileInfo> TextFileAsync(int size, int count, IEnumerable<Range> ranges, Encoding encoding = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
+    /// <seealso cref="RandomExtensions.ToTextFile(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/>
+    public async IAsyncEnumerable<FileInfo> ToTextFileAsync(int size, int count, IEnumerable<Range> ranges, Encoding encoding = null, DirectoryInfo directory = null, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1896,7 +1895,7 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          await foreach (var file in random.TextFile(size, count, encoding, null, null, directory, cancellation).ConfigureAwait(false))
+          await foreach (var file in random.ToTextFile(size, count, encoding, null, null, directory, cancellation).ConfigureAwait(false))
           {
             yield return file;
           }
@@ -1906,7 +1905,7 @@ public static class RandomExtensions
         case 1:
           var range = ranges.First();
 
-          await foreach (var file in random.TextFile(size, count, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false))
+          await foreach (var file in random.ToTextFile(size, count, encoding, (char?) range.Start.Value, (char?) range.End.Value, directory, cancellation).ConfigureAwait(false))
           {
             yield return file;
           }
@@ -1919,7 +1918,7 @@ public static class RandomExtensions
           for (var i = 1; i <= count; i++)
           {
             var chars = size.Objects(() => (char) totalRange.Random()).AsArray();
-            yield return await random.File(directory).WriteTextAsync(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
+            yield return await random.ToFile(directory).WriteTextAsync(chars.ToText(), encoding, cancellation).ConfigureAwait(false);
           }
 
           break;
@@ -1935,13 +1934,13 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="PhysicalAddress(Random, int, IEnumerable{System.Range})"/>
-    public PhysicalAddress PhysicalAddress(int size, byte? from = null, byte? to = null)
+    /// <seealso cref="RandomExtensions.ToPhysicalAddress(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public PhysicalAddress ToPhysicalAddress(int size, byte? from = null, byte? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
 
-      return new PhysicalAddress(random.Byte(size, from, to).AsArray());
+      return new PhysicalAddress(random.ToByte(size, from, to).AsArray());
     }
 
     /// <summary>
@@ -1953,7 +1952,7 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="PhysicalAddress(Random, int, byte?, byte?)"/>
-    public PhysicalAddress PhysicalAddress(int size, IEnumerable<Range> ranges)
+    public PhysicalAddress ToPhysicalAddress(int size, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -1961,14 +1960,14 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.PhysicalAddress(size);
+          return random.ToPhysicalAddress(size);
 
         case 1:
           var range = ranges.First();
-          return random.PhysicalAddress(size, (byte?) range.Start.Value, (byte?) range.End.Value);
+          return random.ToPhysicalAddress(size, (byte?) range.Start.Value, (byte?) range.End.Value);
 
         default:
-          return new PhysicalAddress(random.Byte(size, ranges).AsArray());
+          return new PhysicalAddress(random.ToByte(size, ranges).AsArray());
       }
     }
 
@@ -1982,14 +1981,14 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="PhysicalAddress(Random, int, int, IEnumerable{System.Range})"/>
-    public IEnumerable<PhysicalAddress> PhysicalAddress(int size, int count, byte? from = null, byte? to = null)
+    /// <seealso cref="RandomExtensions.ToPhysicalAddress(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public IEnumerable<PhysicalAddress> ToPhysicalAddress(int size, int count, byte? from = null, byte? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects(() => random.PhysicalAddress(size, from, to));
+      return count.Objects(() => random.ToPhysicalAddress(size, from, to));
     }
 
     /// <summary>
@@ -2001,8 +2000,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="PhysicalAddress(Random, int, int, byte?, byte?)"/>
-    public IEnumerable<PhysicalAddress> PhysicalAddress(int size, int count, IEnumerable<Range> ranges)
+    /// <seealso cref="RandomExtensions.ToPhysicalAddress(System.Random,int,int,byte?,byte?)"/>
+    public IEnumerable<PhysicalAddress> ToPhysicalAddress(int size, int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (size < 0) throw new ArgumentOutOfRangeException(nameof(size));
@@ -2016,11 +2015,11 @@ public static class RandomExtensions
       switch (ranges.Count())
       {
         case 0:
-          return random.PhysicalAddress(size, count);
+          return random.ToPhysicalAddress(size, count);
 
         case 1:
           var range = ranges.First();
-          return random.PhysicalAddress(size, count, (byte?) range.Start.Value, (byte?) range.End.Value);
+          return random.ToPhysicalAddress(size, count, (byte?) range.Start.Value, (byte?) range.End.Value);
 
         default:
           var totalRange = ranges.ToRange();
@@ -2037,8 +2036,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="MemoryStreamAsync(Random, int, byte?, byte?, CancellationToken)"/>
-    public MemoryStream MemoryStream(int count, byte? from = null, byte? to = null)
+    /// <seealso cref="RandomExtensions.ToMemoryStreamAsync(System.Random,int,byte?,byte?,System.Threading.CancellationToken)"/>
+    public MemoryStream ToMemoryStream(int count, byte? from = null, byte? to = null)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -2047,7 +2046,7 @@ public static class RandomExtensions
 
       if (count > 0)
       {
-        stream.WriteBytes(random.Byte(count, from, to)).MoveToStart();
+        stream.WriteBytes(random.ToByte(count, from, to)).MoveToStart();
       }
 
       return stream;
@@ -2064,7 +2063,7 @@ public static class RandomExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     /// <seealso cref="MemoryStream(Random, int, byte?, byte?)"/>
-    public async Task<MemoryStream> MemoryStreamAsync(int count, byte? from = null, byte? to = null, CancellationToken cancellation = default)
+    public async Task<MemoryStream> ToMemoryStreamAsync(int count, byte? from = null, byte? to = null, CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -2075,7 +2074,7 @@ public static class RandomExtensions
 
       if (count > 0)
       {
-        (await stream.WriteBytesAsync(random.Byte(count, from, to), cancellation).ConfigureAwait(false)).MoveToStart();
+        (await stream.WriteBytesAsync(random.ToByte(count, from, to), cancellation).ConfigureAwait(false)).MoveToStart();
       }
 
       return stream;
@@ -2089,8 +2088,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="MemoryStreamAsync(Random, int, IEnumerable{System.Range}, CancellationToken)"/>
-    public MemoryStream MemoryStream(int count, IEnumerable<Range> ranges)
+    /// <seealso cref="RandomExtensions.ToMemoryStreamAsync"/>
+    public MemoryStream ToMemoryStream(int count, IEnumerable<Range> ranges)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -2100,7 +2099,7 @@ public static class RandomExtensions
       if (count > 0)
       {
         var range = ranges.ToRange();
-        var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.Byte(count)).AsArray();
+        var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.ToByte(count)).AsArray();
 
         stream.WriteBytes(bytes).MoveToStart();
       }
@@ -2117,8 +2116,8 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="MemoryStream(Random, int, IEnumerable{System.Range})"/>
-    public async Task<MemoryStream> MemoryStreamAsync(int count, IEnumerable<Range> ranges, CancellationToken cancellation = default)
+    /// <seealso cref="RandomExtensions.ToMemoryStream(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public async Task<MemoryStream> ToMemoryStreamAsync(int count, IEnumerable<Range> ranges, CancellationToken cancellation = default)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
@@ -2130,7 +2129,7 @@ public static class RandomExtensions
       if (count > 0)
       {
         var range = ranges.ToRange();
-        var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.Byte(count)).AsArray();
+        var bytes = (range.Any() ? count.Objects(() => (byte) range.Random()) : random.ToByte(count)).AsArray();
 
         (await stream.WriteBytesAsync(bytes, cancellation).ConfigureAwait(false)).MoveToStart();
       }
@@ -2145,22 +2144,16 @@ public static class RandomExtensions
     /// <param name="to"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Stream(Random, IEnumerable{System.Range})"/>
-    public Stream Stream(byte? from = null, byte? to = null) => random is not null ? new RandomStream(from, to) : throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="RandomExtensions.ToStream(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
+    public Stream ToStream(byte? from = null, byte? to = null) => random is not null ? new RandomStream(from, to) : throw new ArgumentNullException(nameof(random));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public Stream Stream => random.Stream();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="ranges"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Stream(Random, byte?, byte?)"/>
-    public Stream Stream(IEnumerable<Range> ranges) => random is not null ? new RandomRangeStream(ranges) : throw new ArgumentNullException(nameof(random));
+    public Stream ToStream(IEnumerable<Range> ranges) => random is not null ? new RandomRangeStream(ranges) : throw new ArgumentNullException(nameof(random));
   }
 
   private sealed class RandomStream : Stream
@@ -2193,7 +2186,7 @@ public static class RandomExtensions
 
     public override int Read(byte[] buffer, int offset, int count)
     {
-      buffer.Fill(() => Randomizer.Byte(Min, Max), offset, count);
+      buffer.Fill(() => Randomizer.ToByte(Min, Max), offset, count);
       return count;
     }
 
@@ -2236,7 +2229,7 @@ public static class RandomExtensions
 
     public override int Read(byte[] buffer, int offset, int count)
     {
-      buffer.Fill(() => Range.Any() ? (byte) Range.Random() : Randomizer.Byte(), offset, count);
+      buffer.Fill(() => Range.Any() ? (byte) Range.Random() : Randomizer.ToByte(), offset, count);
       return count;
     }
 

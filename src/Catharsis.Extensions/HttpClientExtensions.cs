@@ -400,43 +400,6 @@ public static class HttpClientExtensions
     /// <param name="uri"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="ToStreamAsync(HttpClient, Uri, CancellationToken)"/>
-    public Stream ToStream(Uri uri)
-    {
-      if (client is null) throw new ArgumentNullException(nameof(client));
-      if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-      return client.ToStreamAsync(uri).Result;
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="uri"></param>
-    /// <param name="cancellation"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="ToStream(HttpClient, Uri)"/>
-    public async Task<Stream> ToStreamAsync(Uri uri, CancellationToken cancellation = default)
-    {
-      if (client is null) throw new ArgumentNullException(nameof(client));
-      if (uri is null) throw new ArgumentNullException(nameof(uri));
-
-      cancellation.ThrowIfCancellationRequested();
-
-      #if NET10_0_OR_GREATER
-      return await client.GetStreamAsync(uri, cancellation).ConfigureAwait(false);
-      #else
-      return await client.GetStreamAsync(uri).ConfigureAwait(false);
-      #endif
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <param name="uri"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToBytes(HttpClient, Uri)"/>
     public async IAsyncEnumerable<byte> ToBytesAsync(Uri uri)
     {
@@ -487,6 +450,43 @@ public static class HttpClientExtensions
       return await client.GetStringAsync(uri, cancellation).ConfigureAwait(false);
       #else
       return await client.GetStringAsync(uri).ConfigureAwait(false);
+      #endif
+    }
+    
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="uri"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToStreamAsync(HttpClient, Uri, CancellationToken)"/>
+    public Stream ToStream(Uri uri)
+    {
+      if (client is null) throw new ArgumentNullException(nameof(client));
+      if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+      return client.ToStreamAsync(uri).Result;
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <param name="uri"></param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If either <paramref name="client"/> or <paramref name="uri"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="ToStream(HttpClient, Uri)"/>
+    public async Task<Stream> ToStreamAsync(Uri uri, CancellationToken cancellation = default)
+    {
+      if (client is null) throw new ArgumentNullException(nameof(client));
+      if (uri is null) throw new ArgumentNullException(nameof(uri));
+
+      cancellation.ThrowIfCancellationRequested();
+
+      #if NET10_0_OR_GREATER
+      return await client.GetStreamAsync(uri, cancellation).ConfigureAwait(false);
+      #else
+      return await client.GetStreamAsync(uri).ConfigureAwait(false);
       #endif
     }
   }

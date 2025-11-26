@@ -173,7 +173,7 @@ public static class SecureStringExtensions
       if (text is null) throw new ArgumentNullException(nameof(text));
       if (other is null) throw new ArgumentNullException(nameof(other));
 
-      return text.Length <= other.Length ? (text, right: other) : (right: other, text);
+      return text.Length <= other.Length ? (text, other) : (other, text);
     }
 
     /// <summary>

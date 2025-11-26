@@ -78,6 +78,23 @@ public static class BasicTypesExtensions
   extension(short number)
   {
     /// <summary>
+    ///   <para>Returns the absolute value of 16-bit signed integer.</para>
+    /// </summary>
+    /// <returns>Absolute value of <paramref name="number"/>.</returns>
+    /// <seealso cref="Math.Abs(short)"/>
+    public short Abs() => Math.Abs(number);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    public bool ToBoolean() => number > 0;
+  }
+
+  /// <param name="number">Source number.</param>
+  extension(int number)
+  {
+    /// <summary>
     ///   <para>Creates a time span object, representing a given number of days.</para>
     /// </summary>
     /// <value>Time span instance.</value>
@@ -107,23 +124,6 @@ public static class BasicTypesExtensions
     /// <value>Time span instance.</value>
     public TimeSpan Milliseconds => new(0, 0, 0, 0, number);
 
-    /// <summary>
-    ///   <para>Returns the absolute value of 16-bit signed integer.</para>
-    /// </summary>
-    /// <returns>Absolute value of <paramref name="number"/>.</returns>
-    /// <seealso cref="Math.Abs(short)"/>
-    public short Abs() => Math.Abs(number);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <returns></returns>
-    public bool ToBoolean() => number > 0;
-  }
-
-  /// <param name="number">Source number.</param>
-  extension(int number)
-  {
     /// <summary>
     ///   <para></para>
     /// </summary>

@@ -12,17 +12,42 @@ public static class DirectoryInfoExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <value></value>
+    /// <seealso cref="IsEmpty"/>
+    public bool IsUnset => directory is null || directory.IsEmpty;
+
+    /// <summary>
+    ///   <para>Determines whether the specified <see cref="DirectoryInfo"/> instance can be considered "empty", meaning it either doesn't exist or doesn't contain any other files or directories.</para>
+    /// </summary>
+    /// <value>If the specified <paramref name="directory"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
+    /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsUnset"/>
+    public bool IsEmpty => directory is not null ? !directory.Exists || directory.ToEnumerable().IsEmpty : throw new ArgumentNullException(nameof(directory));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public long Size => directory.TotalSize();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public IEnumerable<FileInfo> Files => ListFiles(directory);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public IEnumerable<DirectoryInfo> Directories => ListDirectories(directory);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="pattern"></param>
     /// <param name="recursive"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
     public long TotalSize(string pattern = null, bool recursive = true) => directory.ListFiles(pattern, recursive).Sum(file => file.Length);
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public long Size => directory.TotalSize();
-
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -47,11 +72,6 @@ public static class DirectoryInfoExtensions
     public IEnumerable<FileInfo> ListFiles(string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateFiles(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : [] : throw new ArgumentNullException(nameof(directory));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public IEnumerable<FileInfo> Files => ListFiles(directory);
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="pattern"></param>
@@ -60,26 +80,6 @@ public static class DirectoryInfoExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
     public IEnumerable<DirectoryInfo> ListDirectories(string pattern = null, bool recursive = false) => directory is not null ? directory.Exists ? directory.EnumerateDirectories(pattern ?? "*", new EnumerationOptions { RecurseSubdirectories = recursive }) : [] : throw new ArgumentNullException(nameof(directory));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public IEnumerable<DirectoryInfo> Directories => ListDirectories(directory);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="IsEmpty(DirectoryInfo)"/>
-    public bool IsUnset => directory is null || directory.IsEmpty;
-
-    /// <summary>
-    ///   <para>Determines whether the specified <see cref="DirectoryInfo"/> instance can be considered "empty", meaning it either doesn't exist or doesn't contain any other files or directories.</para>
-    /// </summary>
-    /// <value>If the specified <paramref name="directory"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
-    /// <exception cref="ArgumentNullException">If <paramref name="directory"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset(DirectoryInfo)"/>
-    public bool IsEmpty => directory is not null ? !directory.Exists || directory.ToEnumerable().IsEmpty() : throw new ArgumentNullException(nameof(directory));
-
     /// <summary>
     ///   <para>Creates a copy of the specified <see cref="DirectoryInfo"/> that will point to the same directory as the original.</para>
     /// </summary>

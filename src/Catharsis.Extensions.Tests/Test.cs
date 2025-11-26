@@ -23,12 +23,12 @@ public class Test : IDisposable
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected byte[] Bytes { get; } = new Random().Byte(short.MaxValue).AsArray();
+  protected byte[] Bytes { get; } = new Random().ToByte(short.MaxValue).AsArray();
   
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected object[] Objects { get; } = new Random().Object(short.MaxValue).AsArray();
+  protected object[] Objects { get; } = new Random().ToObject(short.MaxValue).AsArray();
   
   /// <summary>
   ///   <para></para>
@@ -48,7 +48,7 @@ public class Test : IDisposable
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected SecureString RandomSecureString { get; } = new Random().SecureString(short.MaxValue, ['a'..'z', 'A'..'Z']);
+  protected SecureString RandomSecureString { get; } = new Random().ToSecureString(short.MaxValue, ['a'..'z', 'A'..'Z']);
   
   /// <summary>
   ///   <para></para>
@@ -73,17 +73,17 @@ public class Test : IDisposable
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected MemoryStream Stream { get; } = new Random().MemoryStreamAsync(short.MaxValue).Await();
+  protected MemoryStream Stream { get; } = new Random().ToMemoryStreamAsync(short.MaxValue).Await();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected Stream ReadOnlyStream { get; } = new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnly();
+  protected Stream ReadOnlyStream { get; } = new Random().ToMemoryStreamAsync(short.MaxValue).Await().AsReadOnly();
 
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected Stream ReadOnlyForwardStream { get; } = new Random().MemoryStreamAsync(short.MaxValue).Await().AsReadOnlyForward();
+  protected Stream ReadOnlyForwardStream { get; } = new Random().ToMemoryStreamAsync(short.MaxValue).Await().AsReadOnlyForward();
 
   /// <summary>
   ///   <para></para>
@@ -98,22 +98,22 @@ public class Test : IDisposable
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected FileInfo FakeFile { get; } = new Random().FilePath().ToFile();
+  protected FileInfo FakeFile { get; } = new Random().ToFilePath().ToFile();
   
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected FileInfo EmptyFile { get; } = new Random().File();
+  protected FileInfo EmptyFile { get; } = new Random().ToFile();
   
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected FileInfo NonEmptyFile { get; } = new Random().TextFileAsync(short.MaxValue).Await();
+  protected FileInfo NonEmptyFile { get; } = new Random().ToTextFileAsync(short.MaxValue).Await();
   
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected DirectoryInfo Directory { get; } = new Random().Directory();
+  protected DirectoryInfo Directory { get; } = new Random().ToDirectory();
   
   /// <summary>
   ///   <para></para>
