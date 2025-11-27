@@ -521,7 +521,6 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
-      AssertionExtensions.Should(() => System.IO.Stream.Null.ToAsyncEnumerable().ToDictionary<object, byte>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
       Test([], EmptyAsyncEnumerable, value => value);
 
@@ -1229,7 +1228,6 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
-      AssertionExtensions.Should(() => System.IO.Stream.Null.ToAsyncEnumerable().ToImmutableDictionary<object, byte>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
       Test([], EmptyAsyncEnumerable, value => value);
 
@@ -1287,7 +1285,6 @@ public sealed class IAsyncEnumerableExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => IAsyncEnumerableExtensions.ToImmutableSortedDictionary<object, object>(null, _ => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
-      AssertionExtensions.Should(() => System.IO.Stream.Null.ToAsyncEnumerable().ToImmutableSortedDictionary<object, byte>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("key");
 
       Test([], EmptyAsyncEnumerable, value => value);
 

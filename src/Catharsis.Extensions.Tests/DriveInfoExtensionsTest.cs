@@ -64,7 +64,7 @@ public sealed class DriveInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DriveInfoExtensions.IsEmpty(DriveInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DriveInfoExtensions.get_IsEmpty(DriveInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsEmpty_Method()
@@ -73,7 +73,7 @@ public sealed class DriveInfoExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((DriveInfo) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
 
-      DriveInfo.GetDrives().Should().BeOfType<DriveInfo[]>().And.Contain(drive => !drive.IsEmpty);
+      DriveInfo.GetDrives().Should().BeOfType<DriveInfo[]>().And.Contain(drive => DriveInfoExtensions.get_IsEmpty(drive));
     }
 
     return;

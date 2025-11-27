@@ -312,16 +312,11 @@ public static class TextReaderExtensions
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    private sealed class Enumerator : IEnumerator<char[]>
+    private sealed class Enumerator(TextReaderEnumerable parent) : IEnumerator<char[]>
     {
-      private TextReaderEnumerable Parent { get; }
-      private char[] Buffer { get; }
+      private TextReaderEnumerable Parent { get; } = parent ?? throw new ArgumentOutOfRangeException(nameof(parent));
 
-      public Enumerator(TextReaderEnumerable parent)
-      {
-        Parent = parent ?? throw new ArgumentOutOfRangeException(nameof(parent));
-        Buffer = new char[parent.Count];
-      }
+      private char[] Buffer { get; } = new char[parent.Count];
 
       public char[] Current { get; private set; } = [];
 
@@ -368,16 +363,11 @@ public static class TextReaderExtensions
 
     public IAsyncEnumerator<char[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this);
 
-    private sealed class Enumerator : IAsyncEnumerator<char[]>
+    private sealed class Enumerator(TextReaderAsyncEnumerable parent) : IAsyncEnumerator<char[]>
     {
-      private TextReaderAsyncEnumerable Parent { get; }
-      private char[] Buffer { get; }
+      private TextReaderAsyncEnumerable Parent { get; } = parent ?? throw new ArgumentNullException(nameof(parent));
 
-      public Enumerator(TextReaderAsyncEnumerable parent)
-      {
-        Parent = parent ?? throw new ArgumentNullException(nameof(parent));
-        Buffer = new char[parent.Count];
-      }
+      private char[] Buffer { get; } = new char[parent.Count];
 
       public async ValueTask DisposeAsync()
       {

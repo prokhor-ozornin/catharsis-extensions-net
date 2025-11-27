@@ -10,22 +10,29 @@
             </summary>
             <seealso cref="T:Catharsis.Extensions.ActionExtensions"/>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.ActionExtensionsTest.Execute_Methods">
+        <member name="M:Catharsis.Extensions.Tests.ActionExtensionsTest.Action_Task_Property">
             <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.ActionExtensions.Execute(System.Action,System.Func{System.Boolean})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.ActionExtensions.Execute``1(System.Action{``0},System.Predicate{``0},``0)"/></description></item>
-              </list>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ActionExtensions.get_Task(System.Action)"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.ActionExtensionsTest.ToTask_Methods">
+        <member name="M:Catharsis.Extensions.Tests.ActionExtensionsTest.Action_Execute_Method">
             <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.ActionExtensions.ToTask(System.Action,System.Threading.Tasks.TaskCreationOptions,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.ActionExtensions.ToTask(System.Action{System.Object},System.Object,System.Threading.Tasks.TaskCreationOptions,System.Threading.CancellationToken)"/></description></item>
-              </list>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ActionExtensions.Execute(System.Action,System.Func{System.Boolean})"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.ActionExtensionsTest.GenericAction_Execute_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ActionExtensions.Execute``1(System.Action{``0},System.Predicate{``0},``0)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.ActionExtensionsTest.Action_ToTask_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ActionExtensions.ToTask(System.Action,System.Threading.Tasks.TaskCreationOptions,System.Threading.CancellationToken)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.ActionExtensionsTest.GenericAction_ToTask_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ActionExtensions.ToTask(System.Action{System.Object},System.Object,System.Threading.Tasks.TaskCreationOptions,System.Threading.CancellationToken)"/> method.</para>
             </summary>
         </member>
         <member name="T:Catharsis.Extensions.Tests.ArrayExtensionsTest">
@@ -39,24 +46,39 @@
               <para>Performs testing of <see cref="M:Catharsis.Extensions.ArrayExtensions.Range``1(``0[],System.Nullable{System.Int32},System.Nullable{System.Int32})"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.FromBase64_Method">
+        <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.CharArray_Bytes_Property">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ArrayExtensions.get_Bytes(System.Char[])"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.CharArray_Text_Property">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ArrayExtensions.get_Text(System.Char[])"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.CharArray_FromBase64_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.ArrayExtensions.FromBase64(System.Char[])"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.ToBytes_Method">
+        <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.CharArray_ToBytes_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.ArrayExtensions.ToBytes(System.Char[],System.Text.Encoding)"/> method.</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.ToByteArrayContent_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.ArrayExtensions.ToByteArrayContent(System.Byte[],System.Nullable{System.Int32},System.Nullable{System.Int32})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.CharArray_ToText_Method">
             <summary>
               <para>Performs testing of <see cref="M:Catharsis.Extensions.ArrayExtensions.ToText(System.Char[])"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.ByteArray_Text_Property">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ArrayExtensions.get_Text(System.Byte[])"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.ByteArray_ToByteArrayContent_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.ArrayExtensions.ToByteArrayContent(System.Byte[],System.Nullable{System.Int32},System.Nullable{System.Int32})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ArrayExtensionsTest.ByteArray_ToText_Method">
@@ -197,7 +219,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Nulls_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.Nulls(System.Int32)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.get_Nulls(System.Int32)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Objects_Methods">
@@ -212,51 +234,92 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Days_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.Days(System.Int32)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.get_Days(System.Int32)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Hours_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.Hours(System.Int32)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.get_Hours(System.Int32)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Minutes_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.Minutes(System.Int32)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.get_Minutes(System.Int32)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Seconds_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.Seconds(System.Int32)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.get_Seconds(System.Int32)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Milliseconds_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.Milliseconds(System.Int32)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.get_Milliseconds(System.Int32)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Ticks_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.Ticks(System.Int64)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.get_Ticks(System.Int64)"/> method.</para>
             </summary>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.ToBoolean_Methods">
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Char_ToBoolean_Method">
             <summary>
-              <para>Performs testing of following methods :</para>
-              <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Char)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.SByte)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Byte)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Int16)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.UInt16)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Int32)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.UInt32)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Int64)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.UInt64)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Single)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Double)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Decimal)"/></description></item>
-              </list>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Char)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Sbyte_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.SByte)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Byte_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Byte)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Short_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Int16)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Ushort_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.UInt16)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Int_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Int32)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Uint_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.UInt32)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Long_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Int64)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Ulong_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.UInt64)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Float_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Single)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Double_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Double)"/> method.</para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.Tests.BasicTypesExtensionsTest.Decimal_ToBoolean_Method">
+            <summary>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Decimal)"/> method.</para>
             </summary>
         </member>
         <member name="T:Catharsis.Extensions.Tests.BinaryReaderExtensionsTest">
@@ -267,12 +330,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryReaderExtensionsTest.IsStart_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BinaryReaderExtensions.IsStart(System.IO.BinaryReader)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.BinaryReaderExtensions.get_IsStart(System.IO.BinaryReader)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryReaderExtensionsTest.IsEnd_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BinaryReaderExtensions.IsEnd(System.IO.BinaryReader)"/> method.</para>
+              <para>Performs testing of <see cref="!:BinaryReaderExtensions.IsEnd(BinaryReader)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryReaderExtensionsTest.Rewind_Method">
@@ -287,12 +350,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryReaderExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BinaryReaderExtensions.IsUnset(System.IO.BinaryReader)"/> method.</para>
+              <para>Performs testing of <see cref="!:BinaryReaderExtensions.IsUnset(BinaryReader)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryReaderExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BinaryReaderExtensions.IsEmpty(System.IO.BinaryReader)"/> method.</para>
+              <para>Performs testing of <see cref="!:BinaryReaderExtensions.IsEmpty(BinaryReader)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryReaderExtensionsTest.Clone_Method">
@@ -356,12 +419,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryWriterExtensionsTest.IsStart_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BinaryWriterExtensions.IsStart(System.IO.BinaryWriter)"/> method.</para>
+              <para>Performs testing of <see cref="!:BinaryWriterExtensions.IsStart(BinaryWriter)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryWriterExtensionsTest.IsEnd_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BinaryWriterExtensions.IsEnd(System.IO.BinaryWriter)"/> method.</para>
+              <para>Performs testing of <see cref="!:BinaryWriterExtensions.IsEnd(BinaryWriter)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryWriterExtensionsTest.Rewind_Method">
@@ -371,12 +434,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryWriterExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BinaryWriterExtensions.IsUnset(System.IO.BinaryWriter)"/> method.</para>
+              <para>Performs testing of <see cref="!:BinaryWriterExtensions.IsUnset(BinaryWriter)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryWriterExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.BinaryWriterExtensions.IsEmpty(System.IO.BinaryWriter)"/> method.</para>
+              <para>Performs testing of <see cref="!:BinaryWriterExtensions.IsEmpty(BinaryWriter)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.BinaryWriterExtensionsTest.Clone_Method">
@@ -412,12 +475,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.CookieExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.CookieExtensions.IsUnset(System.Net.Cookie)"/> method.</para>
+              <para>Performs testing of <see cref="!:CookieExtensions.IsUnset(Cookie)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.CookieExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.CookieExtensions.IsEmpty(System.Net.Cookie)"/> method.</para>
+              <para>Performs testing of <see cref="!:CookieExtensions.IsEmpty(Cookie)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.CookieExtensionsTest.Clone_Method">
@@ -433,12 +496,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateOnlyExtensionsTest.IsWeekday_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateOnlyExtensions.IsWeekday(System.DateOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateOnlyExtensions.IsWeekday(DateOnly)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateOnlyExtensionsTest.IsWeekend_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateOnlyExtensions.IsWeekend(System.DateOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateOnlyExtensions.IsWeekend(DateOnly)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateOnlyExtensionsTest.Range_Method">
@@ -448,22 +511,22 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateOnlyExtensionsTest.AtStartOfYear_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateOnlyExtensions.AtStartOfYear(System.DateOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateOnlyExtensions.StartOfYear"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateOnlyExtensionsTest.AtEndOfYear_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateOnlyExtensions.AtEndOfYear(System.DateOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateOnlyExtensions.EndOfYear"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateOnlyExtensionsTest.AtStartOfMonth_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateOnlyExtensions.AtStartOfMonth(System.DateOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateOnlyExtensions.StartOfMonth"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateOnlyExtensionsTest.AtEndOfMonth_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateOnlyExtensions.AtEndOfMonth(System.DateOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateOnlyExtensions.EndOfMonth"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateOnlyExtensionsTest.ToDateTime_Method">
@@ -484,22 +547,22 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.IsPast_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.IsPast(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.IsPast(DateTime)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.IsFuture_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.IsFuture(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.IsFuture(DateTime)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.IsWeekday_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.IsWeekday(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.IsWeekday(DateTime)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.IsWeekend_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.IsWeekend(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.IsWeekend(DateTime)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.Range_Method">
@@ -519,62 +582,62 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtStartOfYear_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtStartOfYear(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.StartOfYear"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtEndOfYear_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtEndOfYear(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.EndOfYear"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtStartOfMonth_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtStartOfMonth(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.StartOfMonth"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtEndOfMonth_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtEndOfMonth(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.EndOfMonth"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtStartOfDay_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtStartOfDay(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.StartOfDay"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtEndOfDay_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtEndOfDay(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.EndOfDay"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtStartOfHour_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtStartOfHour(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.StartOfHour"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtEndOfHour_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtEndOfHour(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.EndOfHour"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtStartOfMinute_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtStartOfMinute(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.StartOfMinute"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtEndOfMinute_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtEndOfMinute(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.EndOfMinute"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtStartOfSecond_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtStartOfSecond(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.StartOfSecond"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.AtEndOfSecond_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeExtensions.AtEndOfSecond(System.DateTime)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeExtensions.EndOfSecond"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeExtensionsTest.ToDateTimeOffset_Method">
@@ -610,22 +673,22 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.IsPast_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.IsPast(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.IsPast(DateTimeOffset)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.IsFuture_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.IsFuture(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.IsFuture(DateTimeOffset)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.IsWeekday_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.IsWeekday(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.IsWeekday(DateTimeOffset)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.IsWeekend_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.IsWeekend(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.IsWeekend(DateTimeOffset)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.Range_Method">
@@ -645,62 +708,62 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtStartOfYear_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtStartOfYear(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.StartOfYear"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtEndOfYear_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtEndOfYear(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.EndOfYear"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtStartOfMonth_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtStartOfMonth(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.StartOfMonth"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtEndOfMonth_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtEndOfMonth(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.EndOfMonth"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtStartOfDay_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtStartOfDay(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.StartOfDay"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtEndOfDay_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtEndOfDay(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.EndOfDay"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtStartOfHour_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtStartOfHour(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.StartOfHour"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtEndOfHour_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtEndOfHour(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.EndOfHour"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtStartOfMinute_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtStartOfMinute(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.StartOfMinute"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtEndOfMinute_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtEndOfMinute(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.EndOfMinute"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtStartOfSecond_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtStartOfSecond(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.StartOfSecond"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.AtEndOfSecond_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DateTimeOffsetExtensions.AtEndOfSecond(System.DateTimeOffset)"/> method.</para>
+              <para>Performs testing of <see cref="!:DateTimeOffsetExtensions.EndOfSecond"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DateTimeOffsetExtensionsTest.ToDateTime_Method">
@@ -757,7 +820,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.DirectoryInfoExtensionsTest.Size_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DirectoryInfoExtensions.Size(System.IO.DirectoryInfo,System.String,System.Boolean)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.DirectoryInfoExtensions.TotalSize(System.IO.DirectoryInfo,System.String,System.Boolean)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DirectoryInfoExtensionsTest.InDirectory_Method">
@@ -767,22 +830,22 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.DirectoryInfoExtensionsTest.Files_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DirectoryInfoExtensions.Files(System.IO.DirectoryInfo,System.String,System.Boolean)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.DirectoryInfoExtensions.ListFiles(System.IO.DirectoryInfo,System.String,System.Boolean)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DirectoryInfoExtensionsTest.Directories_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DirectoryInfoExtensions.Directories(System.IO.DirectoryInfo,System.String,System.Boolean)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.DirectoryInfoExtensions.ListDirectories(System.IO.DirectoryInfo,System.String,System.Boolean)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DirectoryInfoExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DirectoryInfoExtensions.IsUnset(System.IO.DirectoryInfo)"/> method.</para>
+              <para>Performs testing of <see cref="!:DirectoryInfoExtensions.IsUnset(DirectoryInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DirectoryInfoExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DirectoryInfoExtensions.IsEmpty(System.IO.DirectoryInfo)"/> method.</para>
+              <para>Performs testing of <see cref="!:DirectoryInfoExtensions.IsEmpty(DirectoryInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DirectoryInfoExtensionsTest.Clone_Method">
@@ -841,22 +904,22 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.DriveInfoExtensionsTest.Size_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DriveInfoExtensions.Size(System.IO.DriveInfo,System.String,System.Boolean)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.DriveInfoExtensions.TotalSize(System.IO.DriveInfo,System.String,System.Boolean)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DriveInfoExtensionsTest.Directories_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DriveInfoExtensions.Directories(System.IO.DriveInfo,System.String,System.Boolean)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.DriveInfoExtensions.ListDirectories(System.IO.DriveInfo,System.String,System.Boolean)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DriveInfoExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DriveInfoExtensions.IsUnset(System.IO.DriveInfo)"/> method.</para>
+              <para>Performs testing of <see cref="!:DriveInfoExtensions.IsUnset(DriveInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DriveInfoExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.DriveInfoExtensions.IsEmpty(System.IO.DriveInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.DriveInfoExtensions.get_IsEmpty(System.IO.DriveInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.DriveInfoExtensionsTest.Clone_Method">
@@ -877,17 +940,17 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.FieldInfoExtensionsTest.IsProtected_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.FieldInfoExtensions.IsProtected(System.Reflection.FieldInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.FieldInfoExtensions.get_IsProtected(System.Reflection.FieldInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.FieldInfoExtensionsTest.IsInternal_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.FieldInfoExtensions.IsInternal(System.Reflection.FieldInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.FieldInfoExtensions.get_IsInternal(System.Reflection.FieldInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.FieldInfoExtensionsTest.IsProtectedInternal_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.FieldInfoExtensions.IsProtectedInternal(System.Reflection.FieldInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.FieldInfoExtensions.get_IsProtectedInternal(System.Reflection.FieldInfo)"/> method.</para>
             </summary>
         </member>
         <member name="T:Catharsis.Extensions.Tests.FileInfoExtensionsTest">
@@ -898,12 +961,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.FileInfoExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.FileInfoExtensions.IsUnset(System.IO.FileInfo)"/> method.</para>
+              <para>Performs testing of <see cref="!:FileInfoExtensions.IsUnset(FileInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.FileInfoExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.FileInfoExtensions.IsEmpty(System.IO.FileInfo)"/> method.</para>
+              <para>Performs testing of <see cref="!:FileInfoExtensions.IsEmpty(FileInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.FileInfoExtensionsTest.InDirectory_Method">
@@ -918,7 +981,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.FileInfoExtensionsTest.Lines_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.FileInfoExtensions.Lines(System.IO.FileInfo,System.Text.Encoding)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.FileInfoExtensions.ToLines(System.IO.FileInfo,System.Text.Encoding)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.FileInfoExtensionsTest.LinesAsync_Method">
@@ -1290,12 +1353,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.IsUnset``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:IAsyncEnumerableExtensions.IsUnset&lt;T&gt;(IAsyncEnumerable&lt;T&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.IsEmpty``1(System.Collections.Generic.IAsyncEnumerable{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:IAsyncEnumerableExtensions.IsEmpty&lt;T&gt;(IAsyncEnumerable&lt;T&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.IsEmptyAsync_Method">
@@ -1340,12 +1403,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToDictionary_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToDictionary``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:IAsyncEnumerableExtensions.ToDictionary&lt;TKey, TValue&gt;(IAsyncEnumerable&lt;TValue&gt;, Func&lt;TValue, TKey&gt;, IEqualityComparer&lt;TKey&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToReadOnlyDictionary_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToReadOnlyDictionary``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:IAsyncEnumerableExtensions.ToReadOnlyDictionary&lt;TKey, TValue&gt;(IAsyncEnumerable&lt;TValue&gt;, Func&lt;TValue, TKey&gt;, IEqualityComparer&lt;TKey&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToValueTuple_Methods">
@@ -1353,7 +1416,7 @@
               <para>Performs testing of following methods :</para>
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToValueTuple``1(System.Collections.Generic.IAsyncEnumerable{``0})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToValueTuple``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})"/></description></item>
+                <item><description><see cref="!:IAsyncEnumerableExtensions.ToValueTuple&lt;TKey, TValue&gt;(IAsyncEnumerable&lt;TValue&gt;, Func&lt;TValue, TKey&gt;, IComparer&lt;TKey&gt;)"/></description></item>
               </list>
             </summary>
         </member>
@@ -1362,7 +1425,7 @@
               <para>Performs testing of following methods :</para>
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTuple``1(System.Collections.Generic.IAsyncEnumerable{``0})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToTuple``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})"/></description></item>
+                <item><description><see cref="!:IAsyncEnumerableExtensions.ToTuple&lt;TKey, TValue&gt;(IAsyncEnumerable&lt;TValue&gt;, Func&lt;TValue, TKey&gt;, IComparer&lt;TKey&gt;)"/></description></item>
               </list>
             </summary>
         </member>
@@ -1417,12 +1480,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableDictionary_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableDictionary``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IEqualityComparer{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:IAsyncEnumerableExtensions.ToImmutableDictionary&lt;TKey, TValue&gt;(IAsyncEnumerable&lt;TValue&gt;, Func&lt;TValue, TKey&gt;, IEqualityComparer&lt;TKey&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableSortedDictionary_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableSortedDictionary``2(System.Collections.Generic.IAsyncEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0},System.Collections.Generic.IEqualityComparer{``1})"/> method.</para>
+              <para>Performs testing of <see cref="!:IAsyncEnumerableExtensions.ToImmutableSortedDictionary&lt;TKey, TValue&gt;(IAsyncEnumerable&lt;TValue&gt;, Func&lt;TValue, TKey&gt;, IComparer&lt;TKey&gt;, IEqualityComparer&lt;TValue&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IAsyncEnumerableExtensionsTest.ToImmutableQueue_Method">
@@ -1497,17 +1560,17 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.IsDefault_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IComparableExtensions.IsDefault``1(``0)"/> method.</para>
+              <para>Performs testing of <see cref="!:IComparableExtensions.IsDefault&lt;T&gt;(T)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.IsPositive_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IComparableExtensions.IsPositive``1(``0)"/> method.</para>
+              <para>Performs testing of <see cref="!:IComparableExtensions.IsPositive&lt;T&gt;(T)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.IsNegative_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IComparableExtensions.IsNegative``1(``0)"/> method.</para>
+              <para>Performs testing of <see cref="!:IComparableExtensions.IsNegative&lt;T&gt;(T)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IComparableExtensionsTest.IsLesser_Method">
@@ -1676,12 +1739,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ContainsNull_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.ContainsNull``1(System.Collections.Generic.IEnumerable{``0})"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.get_ContainsNull``1(System.Collections.Generic.IEnumerable{``0})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.ContainsDefault_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.ContainsDefault``1(System.Collections.Generic.IEnumerable{``0})"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.get_ContainsDefault``1(System.Collections.Generic.IEnumerable{``0})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.IsSubset_Method">
@@ -1711,12 +1774,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.IsUnset``1(System.Collections.Generic.IEnumerable{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:IEnumerableExtensions.IsUnset&lt;T&gt;(IEnumerable&lt;T&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IEnumerableExtensions.IsEmpty``1(System.Collections.Generic.IEnumerable{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:IEnumerableExtensions.IsEmpty&lt;T&gt;(IEnumerable&lt;T&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IEnumerableExtensionsTest.Min_Method">
@@ -1984,7 +2047,7 @@
               <para>Performs testing of following methods :</para>
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToValueTuple``1(System.Collections.Generic.IEnumerable{``0})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToValueTuple``2(System.Collections.Generic.IEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})"/></description></item>
+                <item><description><see cref="!:IEnumerableExtensions.ToValueTuple&lt;TKey, TValue&gt;(IEnumerable&lt;TValue&gt;, Func&lt;TValue, TKey&gt;, IComparer&lt;TKey&gt;)"/></description></item>
               </list>
             </summary>
         </member>
@@ -1993,7 +2056,7 @@
               <para>Performs testing of following methods :</para>
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToTuple``1(System.Collections.Generic.IEnumerable{``0})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.IEnumerableExtensions.ToTuple``2(System.Collections.Generic.IEnumerable{``1},System.Func{``1,``0},System.Collections.Generic.IComparer{``0})"/></description></item>
+                <item><description><see cref="!:IEnumerableExtensions.ToTuple&lt;TKey, TValue&gt;(IEnumerable&lt;TValue&gt;, Func&lt;TValue, TKey&gt;, IComparer&lt;TKey&gt;)"/></description></item>
               </list>
             </summary>
         </member>
@@ -2093,22 +2156,22 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.Ip4_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.IsV4(System.Net.IPAddress)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.get_IsV4(System.Net.IPAddress)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.Ip6_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.IsV6(System.Net.IPAddress)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.get_IsV6(System.Net.IPAddress)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.IsAvailable_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.IsAvailable(System.Net.IPAddress,System.Nullable{System.TimeSpan})"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.Availability(System.Net.IPAddress,System.Nullable{System.TimeSpan})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.IsAvailableAsync_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.IsAvailableAsync(System.Net.IPAddress,System.Nullable{System.TimeSpan})"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPAddressExtensions.AvailabilityAsync(System.Net.IPAddress,System.Nullable{System.TimeSpan})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPAddressExtensionsTest.Clone_Method">
@@ -2134,7 +2197,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPHostEntryExtensionsTest.IsAvailable_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPHostEntryExtensions.IsAvailable(System.Net.IPHostEntry,System.Nullable{System.TimeSpan})"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPHostEntryExtensions.Availability(System.Net.IPHostEntry,System.Nullable{System.TimeSpan})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPHostEntryExtensionsTest.IsAvailableAsync_Method">
@@ -2144,12 +2207,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPHostEntryExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPHostEntryExtensions.IsUnset(System.Net.IPHostEntry)"/> method.</para>
+              <para>Performs testing of <see cref="!:IPHostEntryExtensions.IsUnset(IPHostEntry)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPHostEntryExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.IPHostEntryExtensions.IsEmpty(System.Net.IPHostEntry)"/> method.</para>
+              <para>Performs testing of <see cref="!:IPHostEntryExtensions.IsEmpty(IPHostEntry)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.IPHostEntryExtensionsTest.Clone_Method">
@@ -2218,27 +2281,27 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.MemberInfoExtensionsTest.IsConstructor_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.IsConstructor(System.Reflection.MemberInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.get_IsConstructor(System.Reflection.MemberInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MemberInfoExtensionsTest.IsMethod_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.IsMethod(System.Reflection.MemberInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.get_IsMethod(System.Reflection.MemberInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MemberInfoExtensionsTest.IsProperty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.IsProperty(System.Reflection.MemberInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.get_IsProperty(System.Reflection.MemberInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MemberInfoExtensionsTest.IsField_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.IsField(System.Reflection.MemberInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.get_IsField(System.Reflection.MemberInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MemberInfoExtensionsTest.IsEvent_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.IsEvent(System.Reflection.MemberInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.MemberInfoExtensions.get_IsEvent(System.Reflection.MemberInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MemberInfoExtensionsTest.Attribute_Methods">
@@ -2267,22 +2330,22 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.MethodInfoExtensionsTest.IsOverridable_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.MethodInfoExtensions.IsOverridable(System.Reflection.MethodInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.MethodInfoExtensions.get_IsOverridable(System.Reflection.MethodInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MethodInfoExtensionsTest.IsProtected_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.MethodInfoExtensions.IsProtected(System.Reflection.MethodInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.MethodInfoExtensions.get_IsProtected(System.Reflection.MethodInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MethodInfoExtensionsTest.IsInternal_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.MethodInfoExtensions.IsInternal(System.Reflection.MethodInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.MethodInfoExtensions.get_IsInternal(System.Reflection.MethodInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MethodInfoExtensionsTest.IsProtectedInternal_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.MethodInfoExtensions.IsProtectedInternal(System.Reflection.MethodInfo)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.MethodInfoExtensions.get_IsProtectedInternal(System.Reflection.MethodInfo)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.MethodInfoExtensionsTest.ToDelegate_Methods">
@@ -2381,7 +2444,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.IsNull_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.IsNull(System.Object)"/> method.</para>
+              <para>Performs testing of <see cref="!:ObjectExtensions.IsNull(object)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.IsSameAs_Method">
@@ -2391,22 +2454,22 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.Nullable_IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.IsUnset``1(System.Nullable{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:ObjectExtensions.IsUnset&lt;T&gt;(T?)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.Lazy_IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.IsUnset``1(System.Lazy{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:ObjectExtensions.IsUnset&lt;T&gt;(Lazy&lt;T&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.Nullable_IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.IsEmpty``1(System.Nullable{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:ObjectExtensions.IsEmpty&lt;T&gt;(T?)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.Lazy_IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.ObjectExtensions.IsEmpty``1(System.Lazy{``0})"/> method.</para>
+              <para>Performs testing of <see cref="!:ObjectExtensions.IsEmpty&lt;T&gt;(Lazy&lt;T&gt;)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.ObjectExtensionsTest.GetMember_Method">
@@ -2801,10 +2864,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Sbyte(System.Random,System.Nullable{System.SByte},System.Nullable{System.SByte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Sbyte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Sbyte(System.Random,System.Int32,System.Nullable{System.SByte},System.Nullable{System.SByte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Sbyte(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToSbyte(System.Random,System.Nullable{System.SByte},System.Nullable{System.SByte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToSbyte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToSbyte(System.Random,System.Int32,System.Nullable{System.SByte},System.Nullable{System.SByte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToSbyte(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2812,10 +2875,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Byte(System.Random,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Byte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Byte(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Byte(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToByte(System.Random,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToByte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToByte(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToByte(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2823,10 +2886,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Short(System.Random,System.Nullable{System.Int16},System.Nullable{System.Int16})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Short(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Short(System.Random,System.Int32,System.Nullable{System.Int16},System.Nullable{System.Int16})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Short(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToShort(System.Random,System.Nullable{System.Int16},System.Nullable{System.Int16})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToShort(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToShort(System.Random,System.Int32,System.Nullable{System.Int16},System.Nullable{System.Int16})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToShort(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2834,10 +2897,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Ushort(System.Random,System.Nullable{System.UInt16},System.Nullable{System.UInt16})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Ushort(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Ushort(System.Random,System.Int32,System.Nullable{System.UInt16},System.Nullable{System.UInt16})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Ushort(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToUshort(System.Random,System.Nullable{System.UInt16},System.Nullable{System.UInt16})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToUshort(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToUshort(System.Random,System.Int32,System.Nullable{System.UInt16},System.Nullable{System.UInt16})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToUshort(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2845,10 +2908,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Int(System.Random,System.Nullable{System.Int32},System.Nullable{System.Int32})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Int(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Int(System.Random,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Int(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToInt(System.Random,System.Nullable{System.Int32},System.Nullable{System.Int32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToInt(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToInt(System.Random,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToInt(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2856,10 +2919,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Uint(System.Random,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Uint(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Uint(System.Random,System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Uint(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Uint(Random, uint?, uint?)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Uint(Random, IEnumerable&lt;Range&gt;)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Uint(Random, int, uint?, uint?)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Uint(Random, int, IEnumerable&lt;Range&gt;)"/></description></item>
               </list>
             </summary>
         </member>
@@ -2867,10 +2930,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Long(System.Random,System.Nullable{System.Int64},System.Nullable{System.Int64})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Long(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Long(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Long(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Long(Random, long?, long?)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Long(Random, IEnumerable&lt;Range&gt;)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Long(Random, int, long?, long?)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Long(Random, int, IEnumerable&lt;Range&gt;)"/></description></item>
               </list>
             </summary>
         </member>
@@ -2887,8 +2950,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Double(System.Random)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Double(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDouble(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDouble(System.Random,System.Int32)"/></description></item>
               </list>
             </summary>
         </member>
@@ -2896,10 +2959,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Char(System.Random,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Char(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Char(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Char(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToChar(System.Random,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToChar(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToChar(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToChar(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2907,10 +2970,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.String(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.String(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.String(System.Random,System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.String(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToText(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToText(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToText(System.Random,System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToText(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2918,8 +2981,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Digits(System.Random,System.Int32)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Digits(System.Random,System.Int32,System.Int32)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Digits(Random, int)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.Digits(Random, int, int)"/></description></item>
               </list>
             </summary>
         </member>
@@ -2927,8 +2990,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Letters(System.Random,System.Int32)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Letters(System.Random,System.Int32,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToLetters(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToLetters(System.Random,System.Int32,System.Int32)"/></description></item>
               </list>
             </summary>
         </member>
@@ -2936,8 +2999,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.AlphaDigits(System.Random,System.Int32)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.AlphaDigits(System.Random,System.Int32,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToAlphaDigits(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToAlphaDigits(System.Random,System.Int32,System.Int32)"/></description></item>
               </list>
             </summary>
         </member>
@@ -2945,10 +3008,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureString(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureString(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureString(System.Random,System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.SecureString(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToSecureString(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToSecureString(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToSecureString(System.Random,System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToSecureString(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2956,8 +3019,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateTime(System.Random,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateTime(System.Random,System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDateTime(System.Random,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDateTime(System.Random,System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2965,8 +3028,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateTimeOffset(System.Random,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateTimeOffset(System.Random,System.Int32,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDateTimeOffset(System.Random,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDateTimeOffset(System.Random,System.Int32,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/></description></item>
               </list>
             </summary>
         </member>
@@ -2974,8 +3037,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateOnly(System.Random,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DateOnly(System.Random,System.Int32,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/></description></item>
+                <item><description><see cref="!:RandomExtensions.DateOnly(Random, DateOnly?, DateOnly?)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.DateOnly(Random, int, DateOnly?, DateOnly?)"/></description></item>
               </list>
             </summary>
         </member>
@@ -2983,8 +3046,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TimeOnly(System.Random,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TimeOnly(System.Random,System.Int32,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/></description></item>
+                <item><description><see cref="!:RandomExtensions.TimeOnly(Random, TimeOnly?, TimeOnly?)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.TimeOnly(Random, int, TimeOnly?, TimeOnly?)"/></description></item>
               </list>
             </summary>
         </member>
@@ -2992,8 +3055,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TimeSpan(System.Random,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TimeSpan(System.Random,System.Int32,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})"/></description></item>
+                <item><description><see cref="!:RandomExtensions.TimeSpan(Random, TimeSpan?, TimeSpan?)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.TimeSpan(Random, int, TimeSpan?, TimeSpan?)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3001,8 +3064,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Range(System.Random,System.Nullable{System.Int32})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Range(System.Random,System.Int32,System.Nullable{System.Int32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToRange(System.Random,System.Nullable{System.Int32})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToRange(System.Random,System.Int32,System.Nullable{System.Int32})"/></description></item>
               </list>
             </summary>
         </member>
@@ -3010,8 +3073,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Guid(System.Random)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Guid(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToGuid(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToGuid(System.Random,System.Int32)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3019,10 +3082,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Object(System.Random,System.Collections.Generic.IEnumerable{System.Type})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Object(System.Random,System.Type[])"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Object(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Type})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Object(System.Random,System.Int32,System.Type[])"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToObject(System.Random,System.Collections.Generic.IEnumerable{System.Type})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToObject(System.Random,System.Type[])"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToObject(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Type})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToObject(System.Random,System.Int32,System.Type[])"/></description></item>
               </list>
             </summary>
         </member>
@@ -3030,8 +3093,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FileName(System.Random)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FileName(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToFileName(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToFileName(System.Random,System.Int32)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3039,8 +3102,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DirectoryName(System.Random)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.DirectoryName(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDirectoryName(System.Random)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDirectoryName(System.Random,System.Int32)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3048,8 +3111,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FilePath(System.Random,System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FilePath(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToFilePath(System.Random,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToFilePath(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3057,8 +3120,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FilePath(System.Random,System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.FilePath(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToFilePath(System.Random,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToFilePath(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3066,8 +3129,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Directory(System.Random,System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Directory(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDirectory(System.Random,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToDirectory(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3075,8 +3138,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.File(System.Random,System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.File(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToFile(System.Random,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToFile(System.Random,System.Int32,System.IO.DirectoryInfo)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3084,10 +3147,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFile(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFile(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFile(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFile(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFile(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFile(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFile(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFile(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3095,10 +3158,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.BinaryFileAsync(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFileAsync(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFileAsync(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFileAsync(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFileAsync(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3106,10 +3169,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFile(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToTextFile(System.Random,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToTextFile(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToTextFile(System.Random,System.Int32,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToTextFile(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3117,8 +3180,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFileAsync(System.Random,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.TextFileAsync(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToTextFileAsync(System.Random,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToTextFileAsync(System.Random,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3126,8 +3189,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpV6Address(System.Random)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpV6Address(System.Random,System.Int32)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.IpV6Address(Random)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.IpV6Address(Random, int)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3135,10 +3198,10 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddress(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddress(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddress(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.PhysicalAddress(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToPhysicalAddress(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToPhysicalAddress(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToPhysicalAddress(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToPhysicalAddress(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -3146,8 +3209,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.MemoryStream(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.MemoryStream(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToMemoryStream(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToMemoryStream(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -3155,8 +3218,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.MemoryStreamAsync(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.Threading.CancellationToken)"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.MemoryStreamAsync(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToMemoryStreamAsync(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.Threading.CancellationToken)"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToMemoryStreamAsync(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.Threading.CancellationToken)"/></description></item>
               </list>
             </summary>
         </member>
@@ -3164,8 +3227,8 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Stream(System.Random,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.Stream(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToStream(System.Random,System.Nullable{System.Byte},System.Nullable{System.Byte})"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.ToStream(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
               </list>
             </summary>
         </member>
@@ -3173,16 +3236,16 @@
             <summary>
               <para>Performs testing of following methods :</para>
               <list type="bullet">
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Nullable{System.Int64},System.Nullable{System.Int64})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.RandomExtensions.IpAddress(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+                <item><description><see cref="!:RandomExtensions.IpAddress(Random, long?, long?)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.IpAddress(Random, IEnumerable&lt;Range&gt;)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.IpAddress(Random, int, long?, long?)"/></description></item>
+                <item><description><see cref="!:RandomExtensions.IpAddress(Random, int, IEnumerable&lt;Range&gt;)"/></description></item>
               </list>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.RandomExtensionsTest.DateTime_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.RandomExtensions.DateTime(System.Random,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/> method.</para>
+              <para>Performs testing of <see cref="!:RandomExtensions.DateTime(Random, DateTime?, DateTime?)"/> method.</para>
             </summary>
         </member>
         <member name="T:Catharsis.Extensions.Tests.RangeExtensionsTest">
@@ -3225,12 +3288,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.SecureStringExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.SecureStringExtensions.IsUnset(System.Security.SecureString)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.SecureStringExtensions.get_IsUnset(System.Security.SecureString)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.SecureStringExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.SecureStringExtensions.IsEmpty(System.Security.SecureString)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.SecureStringExtensions.get_IsEmpty(System.Security.SecureString)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.SecureStringExtensionsTest.Empty_Method">
@@ -3326,37 +3389,37 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.IsStart_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.IsStart(System.IO.Stream)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.get_IsStart(System.IO.Stream)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.IsEnd_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.IsEnd(System.IO.Stream)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.get_IsEnd(System.IO.Stream)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.IsReadOnly_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.IsReadOnly(System.IO.Stream)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.get_IsReadOnly(System.IO.Stream)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.IsWriteOnly_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.IsWriteOnly(System.IO.Stream)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.get_IsWriteOnly(System.IO.Stream)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.IsOperable_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.IsOperable(System.IO.Stream)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.get_IsOperable(System.IO.Stream)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.Lines_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.Lines(System.IO.Stream,System.Text.Encoding)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.ToLines(System.IO.Stream,System.Text.Encoding)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.LinesAsync_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.LinesAsync(System.IO.Stream,System.Text.Encoding)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.ToLinesAsync(System.IO.Stream,System.Text.Encoding)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.Skip_Method">
@@ -3531,12 +3594,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.IsUnset(System.IO.Stream)"/> method.</para>
+              <para>Performs testing of <see cref="!:StreamExtensions.IsUnset(Stream)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.IsEmpty(System.IO.Stream)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamExtensions.get_IsEmpty(System.IO.Stream)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamExtensionsTest.Empty_Method">
@@ -3710,7 +3773,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamReaderExtensionsTest.IsStart_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamReaderExtensions.IsStart(System.IO.StreamReader)"/> method.</para>
+              <para>Performs testing of <see cref="!:StreamReaderExtensions.IsStart(StreamReader)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamReaderExtensionsTest.Rewind_Method">
@@ -3720,12 +3783,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamReaderExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamReaderExtensions.IsUnset(System.IO.StreamReader)"/> method.</para>
+              <para>Performs testing of <see cref="!:StreamReaderExtensions.IsUnset(StreamReader)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamReaderExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamReaderExtensions.IsEmpty(System.IO.StreamReader)"/> method.</para>
+              <para>Performs testing of <see cref="!:StreamReaderExtensions.IsEmpty(StreamReader)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamReaderExtensionsTest.Empty_Method">
@@ -3751,12 +3814,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamWriterExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamWriterExtensions.IsUnset(System.IO.StreamWriter)"/> method.</para>
+              <para>Performs testing of <see cref="!:StreamWriterExtensions.IsUnset(StreamWriter)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamWriterExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StreamWriterExtensions.IsEmpty(System.IO.StreamWriter)"/> method.</para>
+              <para>Performs testing of <see cref="!:StreamWriterExtensions.IsEmpty(StreamWriter)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StreamWriterExtensionsTest.Empty_Method">
@@ -3777,12 +3840,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringBuilderExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringBuilderExtensions.IsUnset(System.Text.StringBuilder)"/> method.</para>
+              <para>Performs testing of <see cref="!:StringBuilderExtensions.IsUnset(StringBuilder)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringBuilderExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringBuilderExtensions.IsEmpty(System.Text.StringBuilder)"/> method.</para>
+              <para>Performs testing of <see cref="!:StringBuilderExtensions.IsEmpty(StringBuilder)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringBuilderExtensionsTest.Empty_Method">
@@ -3900,7 +3963,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.Lines_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.Lines(System.String,System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.ToLines(System.String,System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.SwapCase_Method">
@@ -3960,77 +4023,77 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsUnset(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="!:StringExtensions.IsUnset(string)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsUpperCased_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsUpperCased(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.get_IsUpperCased(System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsLowerCased_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsLowerCased(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.get_IsLowerCased(System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsBoolean_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsBoolean(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.get_IsBoolean(System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsSbyte_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsSbyte(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsSbyteInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsByte_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsByte(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsByteInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsShort_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsShort(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsShortInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsUshort_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsUshort(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsUshortInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsInt_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsInt(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsIntInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsUint_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsUint(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsUintInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsLong_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsLong(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsLongInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsUlong_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsUlong(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsUlongInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsFloat_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsFloat(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsFloatInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsDouble_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDouble(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDoubleInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsDecimal_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDecimal(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDecimalInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsEnum_Method">
@@ -4040,52 +4103,52 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsGuid_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsGuid(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.get_IsGuid(System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsUri_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsUri(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.get_IsUri(System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsType_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsType(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.get_IsType(System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsDateTime_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDateTime(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDateTimeInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsDateTimeOffset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDateTimeOffset(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDateTimeOffsetInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsDateOnly_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDateOnly(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDateOnlyInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsTimeOnly_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsTimeOnly(System.String,System.IFormatProvider)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsTimeOnlyInFormat(System.String,System.IFormatProvider)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsFile_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsFile(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.get_IsFile(System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsDirectory_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsDirectory(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.get_IsDirectory(System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.IsIpAddress_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.IsIpAddress(System.String)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.StringExtensions.get_IsIpAddress(System.String)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.StringExtensionsTest.Execute_Methods">
@@ -4093,7 +4156,7 @@
               <para>Performs testing of following methods :</para>
               <list type="bullet">
                 <item><description><see cref="M:Catharsis.Extensions.StringExtensions.Execute(System.String,System.Collections.Generic.IEnumerable{System.String})"/></description></item>
-                <item><description><see cref="M:Catharsis.Extensions.StringExtensions.Execute(System.String,System.String[])"/></description></item>
+                <item><description><see cref="M:Catharsis.Extensions.StringExtensions.ToProcess(System.String,System.String[])"/></description></item>
               </list>
             </summary>
         </member>
@@ -4665,12 +4728,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.TcpClientExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TcpClientExtensions.IsUnset(System.Net.Sockets.TcpClient)"/> method.</para>
+              <para>Performs testing of <see cref="!:TcpClientExtensions.IsUnset(TcpClient)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TcpClientExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TcpClientExtensions.IsEmpty(System.Net.Sockets.TcpClient)"/> method.</para>
+              <para>Performs testing of <see cref="!:TcpClientExtensions.IsEmpty(TcpClient)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TcpClientExtensionsTest.WithTimeout_Method">
@@ -4889,7 +4952,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.TextReaderExtensionsTest.IsEnd_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TextReaderExtensions.IsEnd(System.IO.TextReader)"/> method.</para>
+              <para>Performs testing of <see cref="!:TextReaderExtensions.IsEnd(TextReader)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TextReaderExtensionsTest.Skip_Method">
@@ -4899,7 +4962,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.TextReaderExtensionsTest.Lines_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TextReaderExtensions.Lines(System.IO.TextReader)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.TextReaderExtensions.ToLines(System.IO.TextReader)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TextReaderExtensionsTest.LinesAsync_Method">
@@ -5044,32 +5107,32 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeOnlyExtensionsTest.AtStartOfHour_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TimeOnlyExtensions.AtStartOfHour(System.TimeOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:TimeOnlyExtensions.StartOfHour"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeOnlyExtensionsTest.AtEndOfHour_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TimeOnlyExtensions.AtEndOfHour(System.TimeOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:TimeOnlyExtensions.EndOfHour"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeOnlyExtensionsTest.AtStartOfMinute_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TimeOnlyExtensions.AtStartOfMinute(System.TimeOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:TimeOnlyExtensions.StartOfMinute"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeOnlyExtensionsTest.AtEndOfMinute_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TimeOnlyExtensions.AtEndOfMinute(System.TimeOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:TimeOnlyExtensions.EndOfMinute"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeOnlyExtensionsTest.AtStartOfSecond_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TimeOnlyExtensions.AtStartOfSecond(System.TimeOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:TimeOnlyExtensions.StartOfSecond"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeOnlyExtensionsTest.AtEndOfSecond_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TimeOnlyExtensions.AtEndOfSecond(System.TimeOnly)"/> method.</para>
+              <para>Performs testing of <see cref="!:TimeOnlyExtensions.EndOfSecond"/> method.</para>
             </summary>
         </member>
         <member name="T:Catharsis.Extensions.Tests.TimeSpanExtensionsTest">
@@ -5080,17 +5143,17 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeSpanExtensionsTest.InThePast_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TimeSpanExtensions.InThePast(System.TimeSpan)"/> method.</para>
+              <para>Performs testing of <see cref="!:TimeSpanExtensions.InThePast(TimeSpan)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeSpanExtensionsTest.InTheFuture_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TimeSpanExtensions.InTheFuture(System.TimeSpan)"/> method.</para>
+              <para>Performs testing of <see cref="!:TimeSpanExtensions.InTheFuture(TimeSpan)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeSpanExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TimeSpanExtensions.IsEmpty(System.TimeSpan)"/> method.</para>
+              <para>Performs testing of <see cref="!:TimeSpanExtensions.IsEmpty(TimeSpan)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TimeSpanExtensionsTest.With_Method">
@@ -5109,14 +5172,9 @@
             </summary>
             <seealso cref="T:Catharsis.Extensions.TypeExtensions"/>
         </member>
-        <member name="M:Catharsis.Extensions.Tests.TypeExtensionsTest.IsSealed_Method">
-            <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TypeExtensions.IsSealed(System.Type)"/> method.</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.Tests.TypeExtensionsTest.IsStatic_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TypeExtensions.IsStatic(System.Type)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.TypeExtensions.get_IsStatic(System.Type)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TypeExtensionsTest.IsArray_Method">
@@ -5154,7 +5212,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.TypeExtensionsTest.Implementations_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TypeExtensions.Implementations(System.Type)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.TypeExtensions.get_Implementations(System.Type)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TypeExtensionsTest.Implementors_Method">
@@ -5192,7 +5250,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.TypeExtensionsTest.HasDefaultConstructor_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.TypeExtensions.HasDefaultConstructor(System.Type)"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.TypeExtensions.get_HasDefaultConstructor(System.Type)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.TypeExtensionsTest.AnyEvent_Method">
@@ -5236,12 +5294,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.UdpClientExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.UdpClientExtensions.IsUnset(System.Net.Sockets.UdpClient)"/> method.</para>
+              <para>Performs testing of <see cref="!:UdpClientExtensions.IsUnset(UdpClient)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.UdpClientExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.UdpClientExtensions.IsEmpty(System.Net.Sockets.UdpClient)"/> method.</para>
+              <para>Performs testing of <see cref="!:UdpClientExtensions.IsEmpty(UdpClient)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.UdpClientExtensionsTest.WithTimeout_Method">
@@ -5332,7 +5390,7 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.UriExtensionsTest.IsAvailable_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.UriExtensions.IsAvailable(System.Uri,System.Nullable{System.TimeSpan})"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.UriExtensions.Availability(System.Uri,System.Nullable{System.TimeSpan})"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.UriExtensionsTest.IsAvailableAsync_Method">
@@ -5352,12 +5410,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.UriExtensionsTest.Lines_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.UriExtensions.Lines(System.Uri,System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.UriExtensions.ToLines(System.Uri,System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.UriExtensionsTest.LinesAsync_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.UriExtensions.LinesAsync(System.Uri,System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/> method.</para>
+              <para>Performs testing of <see cref="M:Catharsis.Extensions.UriExtensions.ToLinesAsync(System.Uri,System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.UriExtensionsTest.Clone_Method">
@@ -5542,12 +5600,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.XDocumentExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.XDocumentExtensions.IsUnset(System.Xml.Linq.XDocument)"/> method.</para>
+              <para>Performs testing of <see cref="!:XDocumentExtensions.IsUnset(XDocument)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.XDocumentExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.XDocumentExtensions.IsEmpty(System.Xml.Linq.XDocument)"/> method.</para>
+              <para>Performs testing of <see cref="!:XDocumentExtensions.IsEmpty(XDocument)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.XDocumentExtensionsTest.Empty_Method">
@@ -5642,12 +5700,12 @@
         </member>
         <member name="M:Catharsis.Extensions.Tests.XmlDocumentExtensionsTest.IsUnset_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.XmlDocumentExtensions.IsUnset(System.Xml.XmlDocument)"/> method.</para>
+              <para>Performs testing of <see cref="!:XmlDocumentExtensions.IsUnset(XmlDocument)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.XmlDocumentExtensionsTest.IsEmpty_Method">
             <summary>
-              <para>Performs testing of <see cref="M:Catharsis.Extensions.XmlDocumentExtensions.IsEmpty(System.Xml.XmlDocument)"/> method.</para>
+              <para>Performs testing of <see cref="!:XmlDocumentExtensions.IsEmpty(XmlDocument)"/> method.</para>
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.Tests.XmlDocumentExtensionsTest.Empty_Method">

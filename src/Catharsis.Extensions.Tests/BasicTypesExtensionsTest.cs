@@ -604,7 +604,7 @@ public sealed class BasicTypesExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Nulls(int)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.get_Nulls(int)"/> method.</para>
   /// </summary>
   [Fact]
   public void Nulls_Method()
@@ -685,7 +685,7 @@ public sealed class BasicTypesExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Days(int)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.get_Days(int)"/> method.</para>
   /// </summary>
   [Fact]
   public void Days_Method()
@@ -719,7 +719,7 @@ public sealed class BasicTypesExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Hours(int)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.get_Hours(int)"/> method.</para>
   /// </summary>
   [Fact]
   public void Hours_Method()
@@ -753,7 +753,7 @@ public sealed class BasicTypesExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Minutes(int)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.get_Minutes(int)"/> method.</para>
   /// </summary>
   [Fact]
   public void Minutes_Method()
@@ -784,7 +784,7 @@ public sealed class BasicTypesExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Seconds(int)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.get_Seconds(int)"/> method.</para>
   /// </summary>
   [Fact]
   public void Seconds_Method()
@@ -815,7 +815,7 @@ public sealed class BasicTypesExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Milliseconds(int)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.get_Milliseconds(int)"/> method.</para>
   /// </summary>
   [Fact]
   public void Milliseconds_Method()
@@ -846,7 +846,7 @@ public sealed class BasicTypesExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BasicTypesExtensions.Ticks(long)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BasicTypesExtensions.get_Ticks(long)"/> method.</para>
   /// </summary>
   [Fact]
   public void Ticks_Method()

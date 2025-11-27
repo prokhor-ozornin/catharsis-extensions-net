@@ -30,14 +30,14 @@ public sealed class FieldInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="FieldInfoExtensions.IsProtected(FieldInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="FieldInfoExtensions.get_IsProtected(FieldInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsProtected_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsProtected).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+      AssertionExtensions.Should(() => ((FieldInfo) null).IsProtected).ThrowExactly<ArgumentNullException>().WithParameterName("field");
     }
 
     throw new NotImplementedException();
@@ -48,14 +48,14 @@ public sealed class FieldInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="FieldInfoExtensions.IsInternal(FieldInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="FieldInfoExtensions.get_IsInternal(FieldInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsInternal_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsInternal).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+      AssertionExtensions.Should(() => ((FieldInfo) null).IsInternal).ThrowExactly<ArgumentNullException>().WithParameterName("field");
     }
 
     throw new NotImplementedException();
@@ -66,14 +66,14 @@ public sealed class FieldInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="FieldInfoExtensions.IsProtectedInternal(FieldInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="FieldInfoExtensions.get_IsProtectedInternal(FieldInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsProtectedInternal_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsProtectedInternal).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+      AssertionExtensions.Should(() => ((FieldInfo) null).IsProtectedInternal).ThrowExactly<ArgumentNullException>().WithParameterName("field");
     }
 
     throw new NotImplementedException();

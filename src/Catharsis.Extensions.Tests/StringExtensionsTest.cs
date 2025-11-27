@@ -166,13 +166,13 @@ public sealed class StringExtensionsTest : Test
       date.AddMilliseconds(-1).ToString("o", format).CompareAsDate(date.ToString("o", format), format).Should().BeNegative();
 
       date.ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.StartOfDay().AddMilliseconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.StartOfDay().AddSeconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.StartOfDay().AddMinutes(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.StartOfDay().AddHours(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
-      date.StartOfDay().AddDays(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
-      date.StartOfDay().AddMonths(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
-      date.StartOfDay().AddYears(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
+      date.StartOfDay.AddMilliseconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.StartOfDay.AddSeconds(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.StartOfDay.AddMinutes(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.StartOfDay.AddHours(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().Be(0);
+      date.StartOfDay.AddDays(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
+      date.StartOfDay.AddMonths(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
+      date.StartOfDay.AddYears(1).ToString("D", format).CompareAsDate(date.ToString("D", format)).Should().BePositive();
 
       date.ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
       date.AddMilliseconds(1).ToString("T", format).CompareAsDate(date.ToString("T", format), format).Should().Be(0);
@@ -666,14 +666,14 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsUpperCased(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsUpperCased(string)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsUpperCased_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsUpperCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).IsUpperCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -684,14 +684,14 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsLowerCased(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsLowerCased(string)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsLowerCased_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsLowerCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).IsLowerCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -702,7 +702,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsBoolean(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsBoolean(string)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsBoolean_Method()
@@ -726,7 +726,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsSbyteInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsSbyteInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsSbyte_Method()
@@ -750,7 +750,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsByteInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsByteInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsByte_Method()
@@ -774,7 +774,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsShortInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsShortInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsShort_Method()
@@ -798,7 +798,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsUshortInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsUshortInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsUshort_Method()
@@ -822,7 +822,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsIntInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsIntInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsInt_Method()
@@ -846,7 +846,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsUintInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsUintInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsUint_Method()
@@ -870,7 +870,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsLongInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsLongInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsLong_Method()
@@ -894,7 +894,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsUlongInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsUlongInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsUlong_Method()
@@ -918,7 +918,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsFloatInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsFloatInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsFloat_Method()
@@ -946,7 +946,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDoubleInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDoubleInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDouble_Method()
@@ -974,7 +974,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDecimalInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDecimalInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDecimal_Method()
@@ -1023,7 +1023,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsGuid(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsGuid(string)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsGuid_Method()
@@ -1046,7 +1046,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsUri(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsUri(string)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsUri_Method()
@@ -1067,7 +1067,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsType(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsType(string)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsType_Method()
@@ -1094,7 +1094,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDateTimeInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDateTimeInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDateTime_Method()
@@ -1119,7 +1119,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDateTimeOffsetInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDateTimeOffsetInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDateTimeOffset_Method()
@@ -1144,7 +1144,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDateOnlyInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsDateOnlyInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDateOnly_Method()
@@ -1169,7 +1169,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsTimeOnlyInFormat"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.IsTimeOnlyInFormat(string, IFormatProvider)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsTimeOnly_Method()
@@ -1194,7 +1194,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsFile(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsFile(string)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsFile_Method()
@@ -1214,7 +1214,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsDirectory(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsDirectory(string)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsDirectory_Method()
@@ -1234,7 +1234,7 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsIpAddress(string)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsIpAddress(string)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsIpAddress_Method()

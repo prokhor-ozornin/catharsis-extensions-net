@@ -927,7 +927,7 @@ public static class IEnumerableExtensions
     ///   <para></para>
     /// </summary>
     /// <value></value>
-    /// <seealso cref="IsEmpty{T}(IEnumerable{T})"/>
+    /// <seealso cref="IsEmpty"/>
     public bool IsUnset => enumerable is null || enumerable.IsEmpty;
 
     /// <summary>
@@ -935,7 +935,7 @@ public static class IEnumerableExtensions
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset{T}(IEnumerable{T})"/>
+    /// <seealso cref="IsUnset"/>
     public bool IsEmpty => !enumerable?.Any() ?? throw new ArgumentNullException(nameof(enumerable));
 
     #if NET10_0_OR_GREATER
@@ -1149,7 +1149,7 @@ public static class IEnumerableExtensions
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-    public async IAsyncEnumerable<T> ToAsyncEnumerable<T>()
+    public async IAsyncEnumerable<T> ToAsyncEnumerable()
     {
       if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
 
@@ -1195,12 +1195,10 @@ public static class IEnumerableExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <typeparam name="TElement"></typeparam>
-    /// <typeparam name="TPriority"></typeparam>
     /// <param name="comparer"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-    public PriorityQueue<TKey, TValue> ToPriorityQueue<TElement, TPriority>(IComparer<TValue> comparer = null) => enumerable is not null ? new PriorityQueue<TKey, TValue>(enumerable, comparer) : throw new ArgumentNullException(nameof(enumerable));
+    public PriorityQueue<TKey, TValue> ToPriorityQueue(IComparer<TValue> comparer = null) => enumerable is not null ? new PriorityQueue<TKey, TValue>(enumerable, comparer) : throw new ArgumentNullException(nameof(enumerable));
     #endif
   }
 }

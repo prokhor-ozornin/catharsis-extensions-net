@@ -14,14 +14,14 @@ public sealed class MethodInfoExtensionsTest : Test
   private delegate string AsString(object subject);
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="MethodInfoExtensions.IsOverridable(MethodInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MethodInfoExtensions.get_IsOverridable(MethodInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsOverridable_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsOverridable).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => ((MethodInfo) null).IsOverridable).ThrowExactly<ArgumentNullException>().WithParameterName("method");
     }
 
     throw new NotImplementedException();
@@ -32,14 +32,14 @@ public sealed class MethodInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="MethodInfoExtensions.IsProtected(MethodInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MethodInfoExtensions.get_IsProtected(MethodInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsProtected_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsProtected).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => ((MethodInfo) null).IsProtected).ThrowExactly<ArgumentNullException>().WithParameterName("method");
     }
 
     throw new NotImplementedException();
@@ -50,14 +50,14 @@ public sealed class MethodInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="MethodInfoExtensions.IsInternal(MethodInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MethodInfoExtensions.get_IsInternal(MethodInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsInternal_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsInternal).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => ((MethodInfo) null).IsInternal).ThrowExactly<ArgumentNullException>().WithParameterName("method");
     }
 
     throw new NotImplementedException();
@@ -68,14 +68,14 @@ public sealed class MethodInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="MethodInfoExtensions.IsProtectedInternal(MethodInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MethodInfoExtensions.get_IsProtectedInternal(MethodInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsProtectedInternal_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsProtectedInternal).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => ((MethodInfo) null).IsProtectedInternal).ThrowExactly<ArgumentNullException>().WithParameterName("method");
     }
 
     throw new NotImplementedException();

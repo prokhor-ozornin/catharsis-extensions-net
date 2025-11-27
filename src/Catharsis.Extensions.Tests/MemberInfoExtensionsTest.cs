@@ -13,14 +13,14 @@ namespace Catharsis.Extensions.Tests;
 public sealed class MemberInfoExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsConstructor(MemberInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsConstructor(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsConstructor_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsConstructor).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => ((MemberInfo) null).IsConstructor).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Constructor().As<MemberInfo>().IsConstructor().Should().BeTrue();
     }
@@ -33,14 +33,14 @@ public sealed class MemberInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsMethod(MemberInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsMethod(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsMethod_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsMethod).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => ((MemberInfo) null).IsMethod).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Method("PublicMethod").As<MemberInfo>().IsMethod().Should().BeTrue();
     }
@@ -53,14 +53,14 @@ public sealed class MemberInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsProperty(MemberInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsProperty(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsProperty_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsProperty).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => ((MemberInfo) null).IsProperty).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Property("PublicProperty").As<MemberInfo>().IsProperty().Should().BeTrue();
     }
@@ -73,14 +73,14 @@ public sealed class MemberInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsField(MemberInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsField(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsField_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsField).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => ((MemberInfo) null).IsField).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Field("PublicField").As<MemberInfo>().IsField().Should().BeTrue();
     }
@@ -93,14 +93,14 @@ public sealed class MemberInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="MemberInfoExtensions.IsEvent(MemberInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsEvent(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsEvent_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsEvent).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => ((MemberInfo) null).IsEvent).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       //typeof(TestObject).Event("PublicEvent").As<MemberInfo>().IsEvent().Should().BeTrue();
     }

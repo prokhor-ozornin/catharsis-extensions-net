@@ -13,7 +13,7 @@ namespace Catharsis.Extensions.Tests;
 public sealed class BinaryReaderExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.IsStart(BinaryReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BinaryReaderExtensions.get_IsStart(BinaryReader)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsStart_Method()

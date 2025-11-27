@@ -40,7 +40,7 @@ public sealed class SecureStringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SecureStringExtensions.IsUnset(SecureString)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.get_IsUnset(SecureString)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsUnset_Method()
@@ -64,14 +64,14 @@ public sealed class SecureStringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="SecureStringExtensions.IsEmpty(SecureString)"/> method.</para>
+  ///   <para>Performs testing of <see cref="SecureStringExtensions.get_IsEmpty(SecureString)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsEmpty_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
+      AssertionExtensions.Should(() => ((SecureString) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("secure");
 
       Test(true, EmptySecureString);
       Test(false, RandomSecureString);

@@ -110,6 +110,7 @@ public static class StringExtensions
     /// </summary>
     public bool IsDateTimeOffset => text.IsDateTimeOffsetInFormat();
 
+    #if NET10_0_OR_GREATER
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -119,6 +120,7 @@ public static class StringExtensions
     ///   <para></para>
     /// </summary>
     public bool IsTimeOnly => text.IsTimeOnlyInFormat();
+    #endif
 
     /// <summary>
     ///   <para></para>
@@ -631,6 +633,7 @@ public static class StringExtensions
     /// <returns></returns>
     public bool IsDateTimeOffsetInFormat(IFormatProvider format = null) => text.ToDateTimeOffset(out _, format);
     
+    #if NET10_0_OR_GREATER
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -644,6 +647,7 @@ public static class StringExtensions
     /// <param name="format"></param>
     /// <returns></returns>
     public bool IsTimeOnlyInFormat(IFormatProvider format = null) => text.ToTimeOnly(out _, format);
+    #endif
 
     /// <summary>
     ///   <para></para>
@@ -690,12 +694,14 @@ public static class StringExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
     public byte[] FromBase64() => text is not null ? text.Length > 0 ? Convert.FromBase64String(text) : [] : throw new ArgumentNullException(nameof(text));
 
+    #if NET10_0_OR_GREATER
     /// <summary>
     ///   <para>Converts HEX-encoded string into a sequence of bytes.</para>
     /// </summary>
     /// <returns>Decoded data from HEX-encoded <paramref name="text"/> string.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
     public byte[] FromHex() => text is not null ? text.Length > 0 ? Convert.FromHexString(text) : [] : throw new ArgumentNullException(nameof(text));
+    #endif
 
     /// <summary>
     ///   <para>URL-encodes string.</para>
@@ -1562,7 +1568,6 @@ public static class StringExtensions
     /// <typeparam name="T">Type of enumeration.</typeparam>
     /// <returns>Element of enumeration of <typeparamref name="T"/> type, to which string <paramref name="text"/> was converted.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="ToEnum{T}(string, out T?)"/>
     public T ToEnum<T>() where T : struct => text is not null ? Enum.Parse<T>(text, true) : throw new ArgumentNullException(nameof(text));
 
     /// <summary>
@@ -1684,6 +1689,7 @@ public static class StringExtensions
     /// <seealso cref="ToDateTimeOffset(string, IFormatProvider)"/>
     public bool ToDateTimeOffset(out DateTimeOffset? result, IFormatProvider format = null) => (result = DateTimeOffset.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AdjustToUniversal, out var value) ? value : null) is not null;
 
+    #if NET10_0_OR_GREATER
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1719,6 +1725,7 @@ public static class StringExtensions
     /// <returns></returns>
     /// <seealso cref="ToTimeOnly(string, IFormatProvider)"/>
     public bool ToTimeOnly(out TimeOnly? result, IFormatProvider format = null) => (result = TimeOnly.TryParse(text, format ?? CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out var value) ? value : null) is not null;
+    #endif
 
     /// <summary>
     ///   <para></para>

@@ -16,13 +16,6 @@ public static class TypeExtensions
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
-    public bool IsSealed => type is not null ? type.IsSealed && !type.IsAbstract : throw new ArgumentNullException(nameof(type));
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
     public bool IsStatic => type is not null ? type.IsAbstract && type.IsSealed : throw new ArgumentNullException(nameof(type));
 
     /// <summary>

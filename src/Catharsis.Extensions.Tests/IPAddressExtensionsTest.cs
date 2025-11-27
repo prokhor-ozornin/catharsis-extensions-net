@@ -13,14 +13,14 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IPAddressExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPAddressExtensions.IsV4"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.get_IsV4(IPAddress)"/> method.</para>
   /// </summary>
   [Fact]
   public void Ip4_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsV4).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+      AssertionExtensions.Should(() => ((IPAddress) null).IsV4).ThrowExactly<ArgumentNullException>().WithParameterName("address");
     }
 
     throw new NotImplementedException();
@@ -31,14 +31,14 @@ public sealed class IPAddressExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPAddressExtensions.IsV6"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.get_IsV6(IPAddress)"/> method.</para>
   /// </summary>
   [Fact]
   public void Ip6_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsV6).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+      AssertionExtensions.Should(() => ((IPAddress) null).IsV6).ThrowExactly<ArgumentNullException>().WithParameterName("address");
     }
 
     throw new NotImplementedException();

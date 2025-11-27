@@ -261,39 +261,39 @@ public sealed class IEnumerableExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ContainsNull{T}(IEnumerable{T})"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.get_ContainsNull{T}(IEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]
   public void ContainsNull_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IEnumerableExtensions.ContainsNull<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+      AssertionExtensions.Should(() => ((IEnumerable<object>) null).ContainsNull).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.ContainsNull().Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.ContainsNull.Should().Be(result);
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IEnumerableExtensions.ContainsDefault{T}(IEnumerable{T})"/> method.</para>
+  ///   <para>Performs testing of <see cref="IEnumerableExtensions.get_ContainsDefault{T}(IEnumerable{T})"/> method.</para>
   /// </summary>
   [Fact]
   public void ContainsDefault_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IEnumerableExtensions.ContainsDefault<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+      AssertionExtensions.Should(() => ((IEnumerable<object>) null).ContainsDefault).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
     }
 
     throw new NotImplementedException();
 
     return;
 
-    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.ContainsDefault().Should().Be(result);
+    static void Test<T>(bool result, IEnumerable<T> enumerable) => enumerable.ContainsDefault.Should().Be(result);
   }
 
   /// <summary>
@@ -416,7 +416,7 @@ public sealed class IEnumerableExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
+      AssertionExtensions.Should(() => ((IEnumerable<object>) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
       Enumerable.Empty<object>().IsEmpty.Should().BeTrue();
       Array.Empty<object>().IsEmpty.Should().BeTrue();

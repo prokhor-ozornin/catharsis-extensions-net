@@ -15,14 +15,14 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StreamExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.IsStart(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.get_IsStart(Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsStart_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsStart).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => ((Stream) null).IsStart).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => ReadOnlyForwardStream.IsStart).ThrowExactly<NotSupportedException>();
       AssertionExtensions.Should(() => WriteOnlyForwardStream.IsStart).ThrowExactly<NotSupportedException>();
 
@@ -46,14 +46,14 @@ public sealed class StreamExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.IsEnd(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.get_IsEnd(Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsEnd_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsEnd).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => ((Stream) null).IsEnd).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEnd).ThrowExactly<ArgumentException>();
 
       Test(System.IO.Stream.Null);
@@ -76,14 +76,14 @@ public sealed class StreamExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.IsReadOnly(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.get_IsReadOnly(Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsReadOnly_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsReadOnly).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => ((Stream) null).IsReadOnly).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Test(false, System.IO.Stream.Null);
       Test(false, EmptyStream);
@@ -106,14 +106,14 @@ public sealed class StreamExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.IsWriteOnly(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.get_IsWriteOnly(Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsWriteOnly_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsWriteOnly).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => ((Stream) null).IsWriteOnly).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Test(false, System.IO.Stream.Null);
       Test(false, EmptyStream);
@@ -136,14 +136,14 @@ public sealed class StreamExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.IsOperable(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.get_IsOperable(Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsOperable_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsOperable).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => ((Stream) null).IsOperable).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
 
       Test(true, System.IO.Stream.Null);
       Test(true, EmptyStream);
@@ -1363,14 +1363,14 @@ public sealed class StreamExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamExtensions.IsEmpty(Stream)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamExtensions.get_IsEmpty(Stream)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsEmpty_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
+      AssertionExtensions.Should(() => ((Stream) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("stream");
       AssertionExtensions.Should(() => WriteOnlyForwardStream.IsEmpty).ThrowExactly<ArgumentException>();
 
       Test(true, System.IO.Stream.Null);

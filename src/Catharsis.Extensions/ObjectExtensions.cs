@@ -558,6 +558,7 @@ public static class ObjectExtensions
         }
         catch
         {
+          // Ignored
         }
 
         return Equals(firstProperty, secondProperty);
@@ -572,6 +573,7 @@ public static class ObjectExtensions
         }
         catch
         {
+          // Ignored
         }
 
         return Equals(first, second);

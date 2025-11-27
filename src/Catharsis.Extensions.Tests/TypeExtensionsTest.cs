@@ -12,32 +12,14 @@ namespace Catharsis.Extensions.Tests;
 public sealed class TypeExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="TypeExtensions.IsSealed(Type)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsSealed_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => null.IsSealed).ThrowExactly<ArgumentNullException>().WithParameterName("type");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(bool result, Type type) => type.IsSealed.Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="TypeExtensions.IsStatic(Type)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TypeExtensions.get_IsStatic(Type)"/> method.</para>
   /// </summary>
   [Fact]
   public void IsStatic_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.IsStatic).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => ((Type) null).IsStatic).ThrowExactly<ArgumentNullException>().WithParameterName("type");
     }
 
     throw new NotImplementedException();
@@ -162,14 +144,14 @@ public sealed class TypeExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TypeExtensions.Implementations(Type)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TypeExtensions.get_Implementations(Type)"/> method.</para>
   /// </summary>
   [Fact]
   public void Implementations_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.Implementations).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => ((Type) null).Implementations).ThrowExactly<ArgumentNullException>().WithParameterName("type");
     }
 
     throw new NotImplementedException();
@@ -327,14 +309,14 @@ public sealed class TypeExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TypeExtensions.HasDefaultConstructor(Type)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TypeExtensions.get_HasDefaultConstructor(Type)"/> method.</para>
   /// </summary>
   [Fact]
   public void HasDefaultConstructor_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => null.HasDefaultConstructor).ThrowExactly<ArgumentNullException>().WithParameterName("type");
+      AssertionExtensions.Should(() => ((Type) null).HasDefaultConstructor).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
       /*typeof(TestObject).Constructor().Should().NotBeNull();
       typeof(string).Constructor().Should().BeNull();*/

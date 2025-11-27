@@ -1664,7 +1664,7 @@
             <inheritdoc cref="M:Catharsis.Extensions.DelegateExtensions.&lt;G&gt;$4D3227A5AC6A380C659FBD62A27995E8.And(System.Delegate)"/>
         </member>
         <member name="T:Catharsis.Extensions.DelegateExtensions.&lt;G&gt;$4D3227A5AC6A380C659FBD62A27995E8.&lt;M&gt;$F1B688E828E612DD3794FB9AF9B83C70">
-            <param name="delegate">The delegate from which to remove the invocation list of <paramref name="right"/>.</param>
+            <param name="delegate"></param>
         </member>
         <member name="M:Catharsis.Extensions.DelegateExtensions.&lt;G&gt;$4D3227A5AC6A380C659FBD62A27995E8.Not(System.Delegate)">
             <summary>
@@ -2950,6 +2950,9 @@
         <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.get_IsEmpty``1(System.Collections.Generic.IAsyncEnumerable{``0})">
             <inheritdoc cref="P:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.IsEmpty"/>
         </member>
+        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.IsEmptyAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.IsEmptyAsync(System.Threading.CancellationToken)"/>
+        </member>
         <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ForEach``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Action{``0})">
             <inheritdoc cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.ForEach(System.Action{`0})"/>
         </member>
@@ -2964,9 +2967,6 @@
         </member>
         <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.WithEnforcedCancellation``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)">
             <inheritdoc cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.WithEnforcedCancellation(System.Threading.CancellationToken)"/>
-        </member>
-        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.IsEmptyAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)">
-            <inheritdoc cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.IsEmptyAsync(System.Threading.CancellationToken)"/>
         </member>
         <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToEnumerable``1(System.Collections.Generic.IAsyncEnumerable{``0})">
             <inheritdoc cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.ToEnumerable"/>
@@ -3146,7 +3146,7 @@
               <para></para>
             </summary>
             <value></value>
-            <seealso cref="!:IsEmpty&lt;T&gt;(IAsyncEnumerable&lt;T&gt;)"/>
+            <seealso cref="!:IsEmpty"/>
         </member>
         <member name="P:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.IsEmpty">
             <summary>
@@ -3155,7 +3155,16 @@
             <value></value>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.IsEmptyAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/>
-            <seealso cref="!:IsUnset&lt;T&gt;(IAsyncEnumerable&lt;T&gt;)"/>
+            <seealso cref="!:IsUnset"/>
+        </member>
+        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.IsEmptyAsync(System.Threading.CancellationToken)">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="cancellation"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+            <seealso cref="!:IsEmpty"/>
         </member>
         <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.ForEach(System.Action{`0})">
             <summary>
@@ -3203,15 +3212,6 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="enumerable"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.IsEmptyAsync(System.Threading.CancellationToken)">
-            <summary>
-              <para></para>
-            </summary>
-            <param name="cancellation"></param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:IsEmpty&lt;T&gt;(IAsyncEnumerable&lt;T&gt;)"/>
-        </member>
         <member name="M:Catharsis.Extensions.IAsyncEnumerableExtensions.&lt;G&gt;$80073E1EF8BFBE3894A8F13DEEA08DF4`1.ToEnumerable">
             <summary>
               <para></para>
@@ -3249,7 +3249,7 @@
             </summary>
             <param name="cancellation"></param>
             <returns></returns>
-            <seealso cref="!:ToListAsync&lt;T&gt;"/>
+            <seealso cref="!:ToListAsync(CancellationToken)"/>
             <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableListAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/>
             <seealso cref="M:Catharsis.Extensions.IEnumerableExtensions.ToLinkedList``1(System.Collections.Generic.IEnumerable{``0})"/>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
@@ -4321,8 +4321,8 @@
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToReadOnlyDictionary``2(System.Collections.Generic.IEnumerable{System.ValueTuple{``0,``1}},System.Collections.Generic.IEqualityComparer{``0})">
             <inheritdoc cref="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$EB78CFA5A7F7717F313174EFA8D07E9D`2.ToReadOnlyDictionary(System.Collections.Generic.IEqualityComparer{`0})"/>
         </member>
-        <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToPriorityQueue``4(System.Collections.Generic.IEnumerable{System.ValueTuple{``0,``1}},System.Collections.Generic.IComparer{``1})">
-            <inheritdoc cref="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$EB78CFA5A7F7717F313174EFA8D07E9D`2.ToPriorityQueue``2(System.Collections.Generic.IComparer{`1})"/>
+        <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToPriorityQueue``2(System.Collections.Generic.IEnumerable{System.ValueTuple{``0,``1}},System.Collections.Generic.IComparer{``1})">
+            <inheritdoc cref="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$EB78CFA5A7F7717F313174EFA8D07E9D`2.ToPriorityQueue(System.Collections.Generic.IComparer{`1})"/>
         </member>
         <member name="T:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$5EFA5879B81CA4C37F177FCE3609E2C7.&lt;M&gt;$5FF4DCC6621DFA790AD05F61D4C241F1">
             <param name="enumerable"></param>
@@ -4841,7 +4841,7 @@
               <para></para>
             </summary>
             <value></value>
-            <seealso cref="!:IsEmpty&lt;T&gt;(IEnumerable&lt;T&gt;)"/>
+            <seealso cref="!:IsEmpty"/>
         </member>
         <member name="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsEmpty">
             <summary>
@@ -4849,7 +4849,7 @@
             </summary>
             <value></value>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:IsUnset&lt;T&gt;(IEnumerable&lt;T&gt;)"/>
+            <seealso cref="!:IsUnset"/>
         </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsOrdered(System.Collections.Generic.IComparer{`0})">
             <summary>
@@ -5045,12 +5045,10 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$EB78CFA5A7F7717F313174EFA8D07E9D`2.ToPriorityQueue``2(System.Collections.Generic.IComparer{`1})">
+        <member name="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$EB78CFA5A7F7717F313174EFA8D07E9D`2.ToPriorityQueue(System.Collections.Generic.IComparer{`1})">
             <summary>
               <para></para>
             </summary>
-            <typeparam name="TElement"></typeparam>
-            <typeparam name="TPriority"></typeparam>
             <param name="comparer"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
@@ -6956,6 +6954,12 @@
         <member name="M:Catharsis.Extensions.RandomExtensions.get_Int(System.Random)">
             <inheritdoc cref="P:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Int"/>
         </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.get_Uint(System.Random)">
+            <inheritdoc cref="P:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Uint"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.get_Long(System.Random)">
+            <inheritdoc cref="P:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Long"/>
+        </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.get_Double(System.Random)">
             <inheritdoc cref="P:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Double"/>
         </member>
@@ -7046,6 +7050,36 @@
         <member name="M:Catharsis.Extensions.RandomExtensions.ToInt(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
             <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToInt(System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/>
         </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToUint(System.Random,System.Nullable{System.UInt32},System.Nullable{System.UInt32})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToUint(System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToUint(System.Random,System.Collections.Generic.IEnumerable{System.Range})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToUint(System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToUint(System.Random,System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToUint(System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToUint(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToUint(System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Nullable{System.Int64},System.Nullable{System.Int64})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLong(System.Nullable{System.Int64},System.Nullable{System.Int64})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Collections.Generic.IEnumerable{System.Range})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLong(System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLong(System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLong(System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.Float(System.Random)">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Float"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.Float(System.Random,System.Int32)">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Float(System.Int32)"/>
+        </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.ToDouble(System.Random)">
             <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDouble"/>
         </member>
@@ -7105,6 +7139,36 @@
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.ToSecureString(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
             <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToSecureString(System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToDateTime(System.Random,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateTime(System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToDateTime(System.Random,System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateTime(System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToDateTimeOffset(System.Random,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateTimeOffset(System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToDateTimeOffset(System.Random,System.Int32,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateTimeOffset(System.Int32,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToDateOnly(System.Random,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateOnly(System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToDateOnly(System.Random,System.Int32,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateOnly(System.Int32,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToTimeOnly(System.Random,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTimeOnly(System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToTimeOnly(System.Random,System.Int32,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTimeOnly(System.Int32,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToTimeSpan(System.Random,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTimeSpan(System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToTimeSpan(System.Random,System.Int32,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTimeSpan(System.Int32,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.ToRange(System.Random,System.Nullable{System.Int32})">
             <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToRange(System.Nullable{System.Int32})"/>
@@ -7214,6 +7278,24 @@
         <member name="M:Catharsis.Extensions.RandomExtensions.ToTextFileAsync(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo,System.Threading.CancellationToken)">
             <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTextFileAsync(System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/>
         </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToIpAddress(System.Random,System.Nullable{System.Int64},System.Nullable{System.Int64})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpAddress(System.Nullable{System.Int64},System.Nullable{System.Int64})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToIpAddress(System.Random,System.Collections.Generic.IEnumerable{System.Range})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpAddress(System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToIpAddress(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpAddress(System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToIpAddress(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpAddress(System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToIpV6Address(System.Random)">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpV6Address"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToIpV6Address(System.Random,System.Int32)">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpV6Address(System.Int32)"/>
+        </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.ToPhysicalAddress(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})">
             <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToPhysicalAddress(System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/>
         </member>
@@ -7270,6 +7352,16 @@
         <member name="P:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Int">
             <summary>
               <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Uint">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Long">
+            <summary>
+              <para>></para>
             </summary>
         </member>
         <member name="P:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Double">
@@ -7381,7 +7473,7 @@
             <param name="ranges"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:Byte(Random, byte?, byte?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToByte(System.Random,System.Nullable{System.Byte},System.Nullable{System.Byte})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToByte(System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})">
             <summary>
@@ -7423,7 +7515,7 @@
             <param name="ranges"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:Short(Random, short?, short?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToShort(System.Random,System.Nullable{System.Int16},System.Nullable{System.Int16})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToShort(System.Int32,System.Nullable{System.Int16},System.Nullable{System.Int16})">
             <summary>
@@ -7465,7 +7557,7 @@
             <param name="ranges"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:Ushort(Random, ushort?, ushort?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToUshort(System.Random,System.Nullable{System.UInt16},System.Nullable{System.UInt16})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToUshort(System.Int32,System.Nullable{System.UInt16},System.Nullable{System.UInt16})">
             <summary>
@@ -7507,7 +7599,7 @@
             <param name="ranges"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:Int(Random, int?, int?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToInt(System.Random,System.Nullable{System.Int32},System.Nullable{System.Int32})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToInt(System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
@@ -7532,6 +7624,108 @@
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
             <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToInt(System.Random,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})"/>
         </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToUint(System.Nullable{System.UInt32},System.Nullable{System.UInt32})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToUint(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToUint(System.Collections.Generic.IEnumerable{System.Range})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="ranges"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToUint(System.Random,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToUint(System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToUint(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToUint(System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="ranges"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToUint(System.Random,System.Int32,System.Nullable{System.UInt32},System.Nullable{System.UInt32})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLong(System.Nullable{System.Int64},System.Nullable{System.Int64})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLong(System.Collections.Generic.IEnumerable{System.Range})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="ranges"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Nullable{System.Int64},System.Nullable{System.Int64})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLong(System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLong(System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="ranges"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Float">
+            <summary>
+              <para></para>
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.Float(System.Random,System.Int32)"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Float(System.Int32)">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.Float(System.Random)"/>
+        </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDouble">
             <summary>
               <para></para>
@@ -7548,7 +7742,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:Double(Random)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDouble(System.Random)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToChar(System.Nullable{System.Char},System.Nullable{System.Char})">
             <summary>
@@ -7567,7 +7761,7 @@
             <param name="ranges"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:Char(Random, char?, char?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToChar(System.Random,System.Nullable{System.Char},System.Nullable{System.Char})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToChar(System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})">
             <summary>
@@ -7613,7 +7807,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:RandomExtensions.ToString(System.Random,int,char?,char?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToText(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToText(System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})">
             <summary>
@@ -7658,7 +7852,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:Digits(Random, int)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDigits(System.Random,System.Int32)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLetters(System.Int32)">
             <summary>
@@ -7679,7 +7873,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:Letters(Random, int)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToLetters(System.Random,System.Int32)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToAlphaDigits(System.Int32)">
             <summary>
@@ -7700,7 +7894,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:AlphaDigits(Random, int)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToAlphaDigits(System.Random,System.Int32)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToSecureString(System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})">
             <summary>
@@ -7723,7 +7917,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:SecureString(Random, int, char?, char?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToSecureString(System.Random,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToSecureString(System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})">
             <summary>
@@ -7750,6 +7944,114 @@
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
             <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToSecureString(System.Random,System.Int32,System.Int32,System.Nullable{System.Char},System.Nullable{System.Char})"/>
         </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateTime(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDateTime(System.Random,System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateTime(System.Int32,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDateTime(System.Random,System.Nullable{System.DateTime},System.Nullable{System.DateTime})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateTimeOffset(System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDateTimeOffset(System.Random,System.Int32,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateTimeOffset(System.Int32,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDateTimeOffset(System.Random,System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateOnly(System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDateOnly(System.Random,System.Int32,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDateOnly(System.Int32,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDateOnly(System.Random,System.Nullable{System.DateOnly},System.Nullable{System.DateOnly})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTimeOnly(System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToTimeOnly(System.Random,System.Int32,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTimeOnly(System.Int32,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToTimeOnly(System.Random,System.Nullable{System.TimeOnly},System.Nullable{System.TimeOnly})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTimeSpan(System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTimeSpan(System.Int32,System.Nullable{System.TimeSpan},System.Nullable{System.TimeSpan})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToRange(System.Nullable{System.Int32})">
             <summary>
               <para></para>
@@ -7767,7 +8069,7 @@
             <param name="to"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:Range(Random, int?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToRange(System.Random,System.Nullable{System.Int32})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToGuid">
             <summary>
@@ -7785,7 +8087,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:Guid(Random)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToGuid(System.Random)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToObject(System.Collections.Generic.IEnumerable{System.Type})">
             <summary>
@@ -7803,7 +8105,7 @@
             <param name="types"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:Object(Random, IEnumerable&lt;Type&gt;)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToObject(System.Random,System.Collections.Generic.IEnumerable{System.Type})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToObject(System.Int32,System.Collections.Generic.IEnumerable{System.Type})">
             <summary>
@@ -7843,7 +8145,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:FileName(Random)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToFileName(System.Random)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDirectoryName">
             <summary>
@@ -7861,7 +8163,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:DirectoryName(Random)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDirectoryName(System.Random)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToFilePath(System.IO.DirectoryInfo)">
             <summary>
@@ -7881,7 +8183,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:FilePath(Random, DirectoryInfo)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToFilePath(System.Random,System.IO.DirectoryInfo)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDirectoryPath(System.IO.DirectoryInfo)">
             <summary>
@@ -7901,7 +8203,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:DirectoryPath(Random, DirectoryInfo)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDirectoryPath(System.Random,System.IO.DirectoryInfo)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDirectory(System.IO.DirectoryInfo)">
             <summary>
@@ -7921,7 +8223,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:Directory(Random, DirectoryInfo)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToDirectory(System.Random,System.IO.DirectoryInfo)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToFile(System.IO.DirectoryInfo)">
             <summary>
@@ -7941,7 +8243,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:File(Random, DirectoryInfo)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToFile(System.Random,System.IO.DirectoryInfo)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToBinaryFile(System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo)">
             <summary>
@@ -7968,7 +8270,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:BinaryFile(Random, int, byte?, byte?, DirectoryInfo)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFile(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToBinaryFile(System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)">
             <summary>
@@ -8035,7 +8337,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFileAsync(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToBinaryFileAsync(System.Random,System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToBinaryFileAsync(System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)">
             <summary>
@@ -8078,7 +8380,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:TextFile(Random, int, Encoding, char?, char?, DirectoryInfo)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToTextFile(System.Random,System.Int32,System.Text.Encoding,System.Nullable{System.Char},System.Nullable{System.Char},System.IO.DirectoryInfo)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToTextFile(System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)">
             <summary>
@@ -8167,6 +8469,66 @@
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
             <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToTextFile(System.Random,System.Int32,System.Int32,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/>
         </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpAddress(System.Nullable{System.Int64},System.Nullable{System.Int64})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToIpAddress(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpAddress(System.Collections.Generic.IEnumerable{System.Range})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="ranges"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToIpAddress(System.Random,System.Nullable{System.Int64},System.Nullable{System.Int64})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpAddress(System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToIpAddress(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpAddress(System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <param name="ranges"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToIpAddress(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpV6Address">
+            <summary>
+              <para></para>
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToIpV6Address(System.Random,System.Int32)"/>
+        </member>
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToIpV6Address(System.Int32)">
+            <summary>
+              <para></para>
+            </summary>
+            <param name="count"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToIpV6Address(System.Random)"/>
+        </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToPhysicalAddress(System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})">
             <summary>
               <para></para>
@@ -8188,7 +8550,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:PhysicalAddress(Random, int, byte?, byte?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToPhysicalAddress(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToPhysicalAddress(System.Int32,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})">
             <summary>
@@ -8238,7 +8600,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="!:MemoryStream(Random, int, byte?, byte?)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToMemoryStream(System.Random,System.Int32,System.Nullable{System.Byte},System.Nullable{System.Byte})"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToMemoryStream(System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
             <summary>
@@ -11452,7 +11814,6 @@
             <typeparam name="T">Type of enumeration.</typeparam>
             <returns>Element of enumeration of <typeparamref name="T"/> type, to which string <paramref name="text"/> was converted.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.StringExtensions.ToEnum``1(System.String,System.Nullable{``0}@)"/>
         </member>
         <member name="M:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.ToEnum``1(System.Nullable{``0}@)">
             <summary>
@@ -12690,9 +13051,6 @@
             </summary>
             <seealso cref="T:System.Type"/>
         </member>
-        <member name="M:Catharsis.Extensions.TypeExtensions.get_IsSealed(System.Type)">
-            <inheritdoc cref="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.IsSealed"/>
-        </member>
         <member name="M:Catharsis.Extensions.TypeExtensions.get_IsStatic(System.Type)">
             <inheritdoc cref="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.IsStatic"/>
         </member>
@@ -12767,13 +13125,6 @@
         </member>
         <member name="T:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.&lt;M&gt;$617E2A5EAF7361856B5033D63F3EB12E">
             <param name="type"></param>
-        </member>
-        <member name="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.IsSealed">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
         </member>
         <member name="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.IsStatic">
             <summary>

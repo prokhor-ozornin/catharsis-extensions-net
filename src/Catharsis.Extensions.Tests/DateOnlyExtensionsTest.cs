@@ -110,7 +110,7 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(DateOnly date) => date.StartOfYear().Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1);
+    static void Test(DateOnly date) => date.StartOfYear.Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1);
   }
 
   /// <summary>
@@ -129,7 +129,7 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(DateOnly date) => date.EndOfYear().Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
+    static void Test(DateOnly date) => date.EndOfYear.Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
   }
 
   /// <summary>
@@ -148,7 +148,7 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(DateOnly date) => date.StartOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
+    static void Test(DateOnly date) => date.StartOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
   }
 
   /// <summary>
@@ -167,7 +167,7 @@ public sealed class DateOnlyExtensionsTest : Test
 
     return;
 
-    static void Test(DateOnly date) => date.EndOfMonth().Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
+    static void Test(DateOnly date) => date.EndOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
   }
 
   /// <summary>

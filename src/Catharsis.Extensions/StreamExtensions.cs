@@ -1096,12 +1096,8 @@ public static class StreamExtensions
     }
   }
 
-  private sealed class ReadOnlyForwardStream : ReadOnlyStream
+  private sealed class ReadOnlyForwardStream(Stream stream) : ReadOnlyStream(stream)
   {
-    public ReadOnlyForwardStream(Stream stream) : base(stream)
-    {
-    }
-
     public override bool CanSeek => false;
 
     public override long Length => throw new NotSupportedException();
@@ -1170,12 +1166,8 @@ public static class StreamExtensions
     }
   }
 
-  private class WriteOnlyForwardStream : WriteOnlyStream
+  private class WriteOnlyForwardStream(Stream stream) : WriteOnlyStream(stream)
   {
-    public WriteOnlyForwardStream(Stream stream) : base(stream)
-    {
-    }
-
     public override bool CanSeek => false;
 
     public override long Length => throw new NotSupportedException();
@@ -1210,16 +1202,11 @@ public static class StreamExtensions
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    private sealed class Enumerator : IEnumerator<byte[]>
+    private sealed class Enumerator(StreamEnumerable parent) : IEnumerator<byte[]>
     {
-      private StreamEnumerable Parent { get; }
-      private byte[] Buffer { get; }
+      private StreamEnumerable Parent { get; } = parent ?? throw new ArgumentNullException(nameof(parent));
 
-      public Enumerator(StreamEnumerable parent)
-      {
-        Parent = parent ?? throw new ArgumentNullException(nameof(parent));
-        Buffer = new byte[parent.Count];
-      }
+      private byte[] Buffer { get; } = new byte[parent.Count];
 
       public byte[] Current { get; private set; } = [];
 
@@ -1266,18 +1253,14 @@ public static class StreamExtensions
 
     public IAsyncEnumerator<byte[]> GetAsyncEnumerator(CancellationToken cancellation = default) => new Enumerator(this, cancellation);
 
-    private sealed class Enumerator : IAsyncEnumerator<byte[]>
+    private sealed class Enumerator(StreamAsyncEnumerable parent, CancellationToken cancellation)
+      : IAsyncEnumerator<byte[]>
     {
-      private StreamAsyncEnumerable Parent { get; }
-      private CancellationToken Cancellation { get; }
-      private byte[] Buffer { get; }
+      private StreamAsyncEnumerable Parent { get; } = parent ?? throw new ArgumentNullException(nameof(parent));
 
-      public Enumerator(StreamAsyncEnumerable parent, CancellationToken cancellation)
-      {
-        Parent = parent ?? throw new ArgumentNullException(nameof(parent));
-        Cancellation = cancellation;
-        Buffer = new byte[parent.Count];
-      }
+      private CancellationToken Cancellation { get; } = cancellation;
+
+      private byte[] Buffer { get; } = new byte[parent.Count];
 
       public ValueTask DisposeAsync() => Parent.Close ? Parent.Stream.DisposeAsync() : default;
 

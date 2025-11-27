@@ -6,7 +6,7 @@
 /// <seealso cref="Delegate"/>
 public static class DelegateExtensions
 {
-  /// <param name="delegate">The delegate from which to remove the invocation list of <paramref name="right"/>.</param>
+  /// <param name="delegate"></param>
   extension(Delegate @delegate)
   {
     /// <summary>

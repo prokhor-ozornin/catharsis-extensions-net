@@ -118,7 +118,7 @@ public class Test : IDisposable
   /// <summary>
   ///   <para></para>
   /// </summary>
-  protected DirectoryInfo FakeDirectory { get; } = new Random().DirectoryPath().ToDirectory();
+  protected DirectoryInfo FakeDirectory { get; } = new Random().DirectoryPath.ToDirectory();
 
   /// <summary>
   ///   <para></para>

@@ -203,7 +203,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.StartOfYear().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfYear.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
@@ -222,7 +222,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.EndOfYear().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfYear.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
@@ -241,7 +241,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.StartOfMonth().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfMonth.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
@@ -260,7 +260,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.EndOfMonth().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfMonth.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
@@ -279,7 +279,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.StartOfDay().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfDay.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
@@ -298,7 +298,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.EndOfDay().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfDay.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
@@ -317,7 +317,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.StartOfHour().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(0).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfHour.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(0).And.HaveSecond(0);
   }
 
   /// <summary>
@@ -336,7 +336,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.EndOfHour().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(59).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfHour.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(59).And.HaveSecond(59);
   }
 
   /// <summary>
@@ -355,7 +355,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.StartOfMinute().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(0);
+    static void Test(DateTime date) => date.StartOfMinute.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(0);
   }
 
   /// <summary>
@@ -374,7 +374,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.EndOfMinute().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(59);
+    static void Test(DateTime date) => date.EndOfMinute.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(59);
   }
   
   /// <summary>
@@ -393,7 +393,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.StartOfSecond().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
+    static void Test(DateTime date) => date.StartOfSecond.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
   }
   
   /// <summary>
@@ -412,7 +412,7 @@ public sealed class DateTimeExtensionsTest : Test
 
     return;
 
-    static void Test(DateTime date) => date.EndOfSecond().Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
+    static void Test(DateTime date) => date.EndOfSecond.Should().BeIn(date.Kind).And.HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second);
   }
 
   /// <summary>
