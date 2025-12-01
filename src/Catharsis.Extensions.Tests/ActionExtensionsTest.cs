@@ -97,7 +97,7 @@ public sealed class ActionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ActionExtensions.ToTask(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
+      AssertionExtensions.Should(() => ((Action) null).ToTask()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("action").Await();
     }
 
     return;

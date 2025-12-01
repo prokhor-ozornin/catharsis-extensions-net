@@ -42,6 +42,7 @@ public sealed class SocketExtensionsTest : Test
       socket.ReceiveTimeout.Should().Be((int) timespan.TotalMilliseconds);
       socket.SendTimeout.Should().Be((int) timespan.TotalMilliseconds);
     }
+    
 
     throw new NotImplementedException();
 

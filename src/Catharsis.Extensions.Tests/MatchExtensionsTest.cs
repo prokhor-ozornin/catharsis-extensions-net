@@ -20,7 +20,7 @@ public sealed class MatchExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MatchExtensions.ToEnumerable(null)).ThrowExactly<ArgumentNullException>().WithParameterName("match");
+      AssertionExtensions.Should(() => ((Match) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("match");
     }
 
     throw new NotImplementedException();

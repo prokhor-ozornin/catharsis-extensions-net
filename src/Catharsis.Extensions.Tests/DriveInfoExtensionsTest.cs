@@ -11,46 +11,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class DriveInfoExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="DriveInfoExtensions.TotalSize"/> method.</para>
+  ///   <para>Performs testing of <see cref="DriveInfoExtensions.get_IsUnset(DriveInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Size_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((DriveInfo) null).TotalSize()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(long result, DriveInfo drive, string pattern = null, bool recursive = true) => drive.TotalSize(pattern, recursive).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DriveInfoExtensions.ListDirectories"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Directories_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((DriveInfo) null).ListDirectories()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(IEnumerable<DirectoryInfo> result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.ListDirectories(pattern, recursive).Should().BeOfType<IEnumerable<DirectoryInfo>>().And.Equal(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DriveInfoExtensions.IsUnset(DriveInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -67,7 +31,7 @@ public sealed class DriveInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="DriveInfoExtensions.get_IsEmpty(DriveInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {
@@ -82,6 +46,60 @@ public sealed class DriveInfoExtensionsTest : Test
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="DriveInfoExtensions.get_Size(DriveInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Size_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DriveInfoExtensions.get_Directories(DriveInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Directories_Property()
+  {
+    throw new NotImplementedException();
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DriveInfoExtensions.TotalSize(DriveInfo, string, bool)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void TotalSize_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DriveInfo) null).TotalSize()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(long result, DriveInfo drive, string pattern = null, bool recursive = true) => drive.TotalSize(pattern, recursive).Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DriveInfoExtensions.ListDirectories(DriveInfo, string, bool)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ListDirectories_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((DriveInfo) null).ListDirectories()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(IEnumerable<DirectoryInfo> result, DriveInfo drive, string pattern = null, bool recursive = false) => drive.ListDirectories(pattern, recursive).Should().BeOfType<IEnumerable<DirectoryInfo>>().And.Equal(result);
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="DriveInfoExtensions.Clone(DriveInfo)"/> method.</para>
   /// </summary>
   [Fact]
@@ -89,7 +107,7 @@ public sealed class DriveInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => DriveInfoExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
+      AssertionExtensions.Should(() => ((DriveInfo) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("drive");
 
       DriveInfo.GetDrives().ForEach(Test);
     }

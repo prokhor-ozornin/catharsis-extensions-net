@@ -19,7 +19,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.Empty(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
       Test([]);
       Test(new NameValueCollection().With(Objects.Select(element => (element.GetType().FullName, element))));
@@ -43,7 +43,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
 
       Test([]);
       Test(new NameValueCollection().With(("id", Guid.NewGuid())));
@@ -73,7 +73,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
       AssertionExtensions.Should(() => new NameValueCollection().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
       var collection = new NameValueCollection();
-      collection.TryFinallyClear(collection => collection.Add("key", "value")).Should().BeOfType<NameValueCollection>().And.BeSameAs(collection);
+      collection.TryFinallyClear(x => x.Add("key", "value")).Should().BeOfType<NameValueCollection>().And.BeSameAs(collection);
       collection.Count.Should().Be(0);
     }
 
@@ -96,7 +96,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.With(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).With(Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().With((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       static void Test(NameValueCollection collection)
@@ -106,7 +106,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.With(null, Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).With()).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       static void Test(NameValueCollection collection)
@@ -129,7 +129,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.Without(null, Enumerable.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).Without(Enumerable.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().Without((IEnumerable<string>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       static void Test(NameValueCollection collection, IEnumerable<string> elements)
@@ -139,7 +139,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.Without(null, Array.Empty<string>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => new NameValueCollection().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       static void Test(NameValueCollection collection, params string[] elements)
@@ -158,7 +158,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.ToDictionary(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).ToDictionary()).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
     }
 
     throw new NotImplementedException();
@@ -178,7 +178,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.ToValueTuple(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).ToValueTuple()).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
     }
 
     throw new NotImplementedException();
@@ -198,7 +198,7 @@ public sealed class NameValueCollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => NameValueCollectionExtensions.ToTuple(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((NameValueCollection) null).ToTuple()).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
     }
 
     throw new NotImplementedException();

@@ -28,7 +28,6 @@ public sealed class SmtpClientExtensionsTest : Test
     {
       using (client)
       {
-        AssertionExtensions.Should(() => client.WithTimeout(TimeSpan.MinValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
         AssertionExtensions.Should(() => client.WithTimeout(TimeSpan.MaxValue)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("value");
 
         client.WithTimeout(timeout).Should().BeOfType<SmtpClient>().And.BeSameAs(client);

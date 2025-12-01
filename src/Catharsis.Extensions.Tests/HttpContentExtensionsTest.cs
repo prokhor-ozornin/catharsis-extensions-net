@@ -12,6 +12,24 @@ namespace Catharsis.Extensions.Tests;
 public sealed class HttpContentExtensionsTest : Test
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="HttpContentExtensions.get_Stream(HttpContent)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="HttpContentExtensions.get_Bytes(HttpContent)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="HttpContentExtensions.ToStream(HttpContent)"/> method.</para>
   /// </summary>
   [Fact]
@@ -19,7 +37,7 @@ public sealed class HttpContentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpContentExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("content");
+      AssertionExtensions.Should(() => ((HttpContent) null).ToStream()).ThrowExactly<ArgumentNullException>().WithParameterName("content");
     }
 
     return;
@@ -41,7 +59,7 @@ public sealed class HttpContentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpContentExtensions.ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
+      AssertionExtensions.Should(() => ((HttpContent) null).ToStreamAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("content").Await();
       AssertionExtensions.Should(() => new StringContent(string.Empty).ToStreamAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 

@@ -12,28 +12,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class FieldInfoExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="FieldInfoExtensions.IsOfType{T}(FieldInfo)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsOfType_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => FieldInfoExtensions.IsOfType<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("field");
-      
-      throw new NotImplementedException();
-    }
-
-    return;
-
-    static void Test<T>(bool result, FieldInfo field) => field.IsOfType<T>().Should().Be(result);
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="FieldInfoExtensions.get_IsProtected(FieldInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsProtected_Method()
+  public void IsProtected_Property()
   {
     using (new AssertionScope())
     {
@@ -51,7 +33,7 @@ public sealed class FieldInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="FieldInfoExtensions.get_IsInternal(FieldInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsInternal_Method()
+  public void IsInternal_Property()
   {
     using (new AssertionScope())
     {
@@ -69,7 +51,7 @@ public sealed class FieldInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="FieldInfoExtensions.get_IsProtectedInternal(FieldInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsProtectedInternal_Method()
+  public void IsProtectedInternal_Property()
   {
     using (new AssertionScope())
     {
@@ -81,5 +63,23 @@ public sealed class FieldInfoExtensionsTest : Test
     return;
 
     static void Test(bool result, FieldInfo field) => field.IsProtectedInternal.Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FieldInfoExtensions.IsOfType{T}(FieldInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsOfType_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((FieldInfo) null).IsOfType<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("field");
+      
+      throw new NotImplementedException();
+    }
+
+    return;
+
+    static void Test<T>(bool result, FieldInfo field) => field.IsOfType<T>().Should().Be(result);
   }
 }

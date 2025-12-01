@@ -13,6 +13,24 @@ namespace Catharsis.Extensions.Tests;
 public sealed class XmlReaderExtensionsTest : Test
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="XmlReaderExtensions.get_Bytes(XmlReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlReaderExtensions.get_Text(XmlReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Text_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XmlReaderExtensions.Skip(XmlReader, int)"/> method.</para>
   /// </summary>
   [Fact]
@@ -20,7 +38,7 @@ public sealed class XmlReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlReaderExtensions.Skip(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ((XmlReader) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
       AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
     }
 

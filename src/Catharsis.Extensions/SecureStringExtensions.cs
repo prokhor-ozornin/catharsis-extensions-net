@@ -16,20 +16,6 @@ public static class SecureStringExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <returns>Back self-reference to the given <paramref name="text"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-    public SecureString AsReadOnly()
-    {
-      if (text is null) throw new ArgumentNullException(nameof(text));
-
-      text.MakeReadOnly();
-
-      return text;
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
     /// <value></value>
     /// <seealso cref="IsEmpty"/>
     public bool IsUnset => text is null || text.IsEmpty;
@@ -41,6 +27,30 @@ public static class SecureStringExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
     /// <seealso cref="IsUnset"/>
     public bool IsEmpty => text is not null ? text.Length == 0 : throw new ArgumentNullException(nameof(text));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public byte[] Bytes => text.ToBytes();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => text.ToText();
+    
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns>Back self-reference to the given <paramref name="text"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+    public SecureString AsReadOnly()
+    {
+      if (text is null) throw new ArgumentNullException(nameof(text));
+
+      text.MakeReadOnly();
+
+      return text;
+    }
 
     /// <summary>
     ///   <para></para>
@@ -185,11 +195,6 @@ public static class SecureStringExtensions
     public byte[] ToBytes(Encoding encoding = null) => text.ToText().ToBytes(encoding);
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => text.ToBytes();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
@@ -220,11 +225,6 @@ public static class SecureStringExtensions
       }
     }
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => text.ToText();
-
     /// <summary>
     ///   <para></para>
     /// </summary>

@@ -14,10 +14,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class TcpClientExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="TcpClientExtensions.IsUnset(TcpClient)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TcpClientExtensions.get_IsUnset(TcpClient)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -37,16 +37,15 @@ public sealed class TcpClientExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TcpClientExtensions.IsEmpty(TcpClient)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TcpClientExtensions.get_IsEmpty(TcpClient)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((TcpClient) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("client");
     }
-
     throw new NotImplementedException();
 
     return;
@@ -58,6 +57,24 @@ public sealed class TcpClientExtensionsTest : Test
         client.IsEmpty.Should().Be(result);
       }
     }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TcpClientExtensions.get_Bytes(TcpClient)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TcpClientExtensions.get_Text(TcpClient)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Text_Property()
+  {
+    throw new NotImplementedException();
   }
 
   /// <summary>

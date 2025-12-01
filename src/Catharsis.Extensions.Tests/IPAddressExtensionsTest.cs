@@ -16,7 +16,7 @@ public sealed class IPAddressExtensionsTest : Test
   ///   <para>Performs testing of <see cref="IPAddressExtensions.get_IsV4(IPAddress)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Ip4_Method()
+  public void IsV4_Property()
   {
     using (new AssertionScope())
     {
@@ -34,7 +34,7 @@ public sealed class IPAddressExtensionsTest : Test
   ///   <para>Performs testing of <see cref="IPAddressExtensions.get_IsV6(IPAddress)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Ip6_Method()
+  public void IsV6_Property()
   {
     using (new AssertionScope())
     {
@@ -49,10 +49,28 @@ public sealed class IPAddressExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPAddressExtensions.Availability"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.get_IsAvailable(IPAddress)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsAvailable_Method()
+  public void IsAvailable_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.get_Bytes(IPAddress)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.Availability(IPAddress, TimeSpan?)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Availability_Method()
   {
     using (new AssertionScope())
     {
@@ -76,10 +94,10 @@ public sealed class IPAddressExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPAddressExtensions.AvailabilityAsync"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPAddressExtensions.AvailabilityAsync(IPAddress, TimeSpan?)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsAvailableAsync_Method()
+  public void AvailabilityAsync_Method()
   {
     using (new AssertionScope())
     {
@@ -116,7 +134,7 @@ public sealed class IPAddressExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IPAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+      AssertionExtensions.Should(() => ((IPAddress) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
       Test(IPAddress.Any);
       Test(IPAddress.Loopback);
@@ -153,7 +171,7 @@ public sealed class IPAddressExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IPAddressExtensions.ToIpHost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+      AssertionExtensions.Should(() => ((IPAddress) null).ToIpHost()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
       new[] { IPAddress.Any, IPAddress.Broadcast, IPAddress.Loopback, IPAddress.None, IPAddress.IPv6Any, IPAddress.IPv6Loopback, IPAddress.None }.ForEach(Test);
     }

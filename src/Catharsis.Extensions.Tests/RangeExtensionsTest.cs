@@ -36,6 +36,7 @@ public sealed class RangeExtensionsTest : Test
 
     static void Test(Range range)
     {
+      
     }
   }
 }

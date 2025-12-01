@@ -14,10 +14,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class XDocumentExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.IsUnset(XDocument)"/> method.</para>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.get_IsUnset(XDocument)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -34,10 +34,10 @@ public sealed class XDocumentExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.IsEmpty(XDocument)"/> method.</para>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.get_IsEmpty(XDocument)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {
@@ -52,6 +52,24 @@ public sealed class XDocumentExtensionsTest : Test
     return;
 
     static void Test(bool result, XDocument document) => document.IsEmpty.Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.get_Bytes(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.get_Text(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Text_Property()
+  {
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -85,7 +103,7 @@ public sealed class XDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XDocumentExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XDocument) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().Clone()).ThrowExactly<XmlException>();
 
       Test(new XDocument().With(new XElement("root", new XAttribute("id", Guid.NewGuid()))));
@@ -141,7 +159,7 @@ public sealed class XDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XDocumentExtensions.With(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XDocument) null).With(Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
       static void Test()
@@ -151,7 +169,7 @@ public sealed class XDocumentExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XDocumentExtensions.With(null, Array.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XDocument) null).With()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XDocument().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
       static void Test()
@@ -160,6 +178,26 @@ public sealed class XDocumentExtensionsTest : Test
     }
 
     throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.Serialize(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Serialize_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null).Serialize()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(XDocument document)
+    {
+    }
   }
 
   /// <summary>
@@ -242,46 +280,6 @@ public sealed class XDocumentExtensionsTest : Test
     return;
 
     static void Test(XDocument document, FileInfo file, Encoding encoding = null)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.Serialize(XDocument)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Serialize_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XDocument) null).Serialize()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(XDocument document)
-    {
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToEnumerable(XDocument)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToEnumerable_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(XDocument document)
     {
     }
   }
@@ -399,6 +397,26 @@ public sealed class XDocumentExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((XDocument) null).ToXmlWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(XDocument document)
+    {
+    }
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XDocumentExtensions.ToEnumerable(XDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToEnumerable_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     }
 
     throw new NotImplementedException();

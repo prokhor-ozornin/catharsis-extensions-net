@@ -30,12 +30,22 @@ public static class UriExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public byte[] Bytes => uri.ToBytes().ToArray();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => uri.ToText();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="timeout"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
     /// <exception cref="InvalidOperationException"></exception>
-    /// <seealso cref="IsAvailableAsync(Uri, TimeSpan?, CancellationToken)"/>
-    public bool Availability(TimeSpan? timeout = null) => uri is not null ? uri.IsAvailableAsync(timeout).Result : throw new ArgumentNullException(nameof(uri));
+    /// <seealso cref="UriExtensions.AvailabilityAsync"/>
+    public bool Availability(TimeSpan? timeout = null) => uri is not null ? uri.AvailabilityAsync(timeout).Result : throw new ArgumentNullException(nameof(uri));
     
     /// <summary>
     ///   <para></para>
@@ -45,7 +55,7 @@ public static class UriExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
     /// <seealso cref="UriExtensions.Availability"/>
-    public async Task<bool> IsAvailableAsync(TimeSpan? timeout = null, CancellationToken cancellation = default)
+    public async Task<bool> AvailabilityAsync(TimeSpan? timeout = null, CancellationToken cancellation = default)
     {
       if (uri is null) throw new ArgumentNullException(nameof(uri));
 
@@ -128,7 +138,7 @@ public static class UriExtensions
       await using var stream = await uri.ToStreamAsync(timeout, headers).ConfigureAwait(false);
       using var reader = stream.ToStreamReader(encoding);
 
-      await foreach (var line in reader.LinesAsync().ConfigureAwait(false))
+      await foreach (var line in reader.ToLinesAsync().ConfigureAwait(false))
       {
         yield return line;
       }
@@ -445,11 +455,6 @@ public static class UriExtensions
     public IEnumerable<byte> ToBytes(TimeSpan? timeout = null, params (string Name, object Value)[] headers) => uri?.ToStream(timeout, headers).ToBytes(true) ?? throw new ArgumentNullException(nameof(uri));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => uri.ToBytes().ToArray();
-
-    /// <summary>
     ///   <para>Downloads the resource with the specified <see cref="Uri"/> address and returns the result in a binary form.</para>
     /// </summary>
     /// <param name="timeout"></param>
@@ -487,11 +492,6 @@ public static class UriExtensions
       return stream.ToText(encoding);
     }
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => uri.ToText();
-
     /// <summary>
     ///   <para>Downloads the requested resource as a <see cref="string"/>.</para>
     /// </summary>

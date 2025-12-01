@@ -21,7 +21,7 @@ public sealed class ArrayExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ArrayExtensions.Range<object>(null)).ThrowExactly<ArgumentNullException>();
+      AssertionExtensions.Should(() => ((object[]) null).Range()).ThrowExactly<ArgumentNullException>().WithParameterName("array");
       AssertionExtensions.Should(() => Array.Empty<object>().Range(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
       AssertionExtensions.Should(() => Array.Empty<object>().Range(null, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -61,8 +61,7 @@ public sealed class ArrayExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-
-      AssertionExtensions.Should(() => ArrayExtensions.FromBase64(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
+      AssertionExtensions.Should(() => ((char[]) null).FromBase64()).ThrowExactly<ArgumentNullException>().WithParameterName("array");
 
       var bytes = Bytes;
 
@@ -87,8 +86,7 @@ public sealed class ArrayExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ArrayExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>()
-        .WithParameterName("chars");
+      AssertionExtensions.Should(() => ((char[]) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("array");
 
       //Test(this.RandomChars());
       //Encoding.GetEncodings().ForEach(encoding => Test(this.RandomChars(), encoding.GetEncoding()));
@@ -115,7 +113,7 @@ public sealed class ArrayExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ArrayExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("chars");
+      AssertionExtensions.Should(() => ((char[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("array");
 
       Array.Empty<char>().ToText().Should().BeOfType<char[]>().And.BeSameAs(Array.Empty<char>().ToText()).And.BeEmpty();
 
@@ -150,7 +148,7 @@ public sealed class ArrayExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((byte[]) null).ToByteArrayContent()).ThrowExactly<ArgumentNullException>().WithParameterName("array");
 
       Test([]);
       Test(Bytes);
@@ -177,7 +175,7 @@ public sealed class ArrayExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
+      AssertionExtensions.Should(() => ((byte[]) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("array");
 
       //Test(Bytes, null);
       //Encoding.GetEncodings().ForEach(encoding => Test(Bytes, encoding.GetEncoding()));

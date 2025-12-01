@@ -11,10 +11,64 @@ namespace Catharsis.Extensions.Tests;
 public sealed class IComparableExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="IComparableExtensions.IsDefault{T}(T)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.Min{T}(T, T)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsDefault_Method()
+  public void Min_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IComparable) null).Min(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("comparable");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test<T>(T min, T max) where T : IComparable => min.Min(max).Should().BeSameAs(min);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.Max{T}(T, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Max_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IComparable) null).Max(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("comparable");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test<T>(T min, T max) where T : IComparable => min.Max(max).Should().BeSameAs(max);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.MinMax{T}(T, T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void MinMax_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IComparable) null).MinMax(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("comparable");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test<T>(T min, T max) where T : IComparable => min.MinMax(max).Should().Be((min, max));
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.get_IsDefault{T}(T)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDefault_Property()
   {
     using (new AssertionScope())
     {
@@ -27,10 +81,10 @@ public sealed class IComparableExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IComparableExtensions.IsPositive{T}(T)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.get_IsPositive{T}(T)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsPositive_Method()
+  public void IsPositive_Property()
   {
     using (new AssertionScope())
     {
@@ -43,10 +97,10 @@ public sealed class IComparableExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IComparableExtensions.IsNegative{T}(T)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IComparableExtensions.get_IsNegative{T}(T)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsNegative_Method()
+  public void IsNegative_Property()
   {
     using (new AssertionScope())
     {
@@ -120,59 +174,5 @@ public sealed class IComparableExtensionsTest : Test
     return;
 
     static void Test<T>(bool result, T left, T right) where T : struct, IComparable<T> => left.IsGreaterOrEqual(right).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IComparableExtensions.Min{T}(T, T)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Min_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IComparableExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test<T>(T min, T max) where T : IComparable => min.Min(max).Should().BeSameAs(min);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IComparableExtensions.Max{T}(T, T)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Max_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IComparableExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test<T>(T min, T max) where T : IComparable => min.Max(max).Should().BeSameAs(max);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IComparableExtensions.MinMax{T}(T, T)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void MinMax_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IComparableExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test<T>(T min, T max) where T : IComparable => min.MinMax(max).Should().Be((min, max));
   }
 }

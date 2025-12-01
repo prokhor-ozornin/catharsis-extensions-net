@@ -765,8 +765,8 @@ public static class RandomExtensions
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="Float(Random, int)"/>
-    public float Float() => random?.NextSingle() ?? throw new ArgumentNullException(nameof(random));
+    /// <seealso cref="ToFloat(Random, int)"/>
+    public float ToFloat() => random?.NextSingle() ?? throw new ArgumentNullException(nameof(random));
 
     /// <summary>
     ///   <para></para>
@@ -775,13 +775,13 @@ public static class RandomExtensions
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    /// <seealso cref="Float(Random)"/>
-    public IEnumerable<float> Float(int count)
+    /// <seealso cref="ToFloat(Random)"/>
+    public IEnumerable<float> ToFloat(int count)
     {
       if (random is null) throw new ArgumentNullException(nameof(random));
       if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return count.Objects<float>(random.Float);
+      return count.Objects<float>(random.ToFloat);
     }
     #endif
 

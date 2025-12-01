@@ -33,8 +33,8 @@ public sealed class DelegateExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => DelegateExtensions.Not(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => IncrementDelegate.Not(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+      AssertionExtensions.Should(() => ((Delegate) null).Not(IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("delegate");
+      AssertionExtensions.Should(() => IncrementDelegate.Not(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
       AssertionExtensions.Should(() => IncrementDelegate.Not(DecrementDelegate)).ThrowExactly<ArgumentException>();
 
       /*IncrementDelegate.Not(null).Should().BeSameAs(IncrementDelegate);
@@ -58,8 +58,8 @@ public sealed class DelegateExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => DelegateExtensions.And(null, IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => IncrementDelegate.And(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+      AssertionExtensions.Should(() => ((Delegate) null).And(IncrementDelegate)).ThrowExactly<ArgumentNullException>().WithParameterName("delegate");
+      AssertionExtensions.Should(() => IncrementDelegate.And(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
       AssertionExtensions.Should(() => IncrementDelegate.And(DecrementDelegate)).ThrowExactly<ArgumentException>();
 
       /*var andDelegate = IncrementDelegate.And(IncrementDelegate);

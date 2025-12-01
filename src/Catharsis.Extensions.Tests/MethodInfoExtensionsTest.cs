@@ -17,7 +17,7 @@ public sealed class MethodInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="MethodInfoExtensions.get_IsOverridable(MethodInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsOverridable_Method()
+  public void IsOverridable_Property()
   {
     using (new AssertionScope())
     {
@@ -35,7 +35,7 @@ public sealed class MethodInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="MethodInfoExtensions.get_IsProtected(MethodInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsProtected_Method()
+  public void IsProtected_Property()
   {
     using (new AssertionScope())
     {
@@ -53,7 +53,7 @@ public sealed class MethodInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="MethodInfoExtensions.get_IsInternal(MethodInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsInternal_Method()
+  public void IsInternal_Property()
   {
     using (new AssertionScope())
     {
@@ -71,7 +71,7 @@ public sealed class MethodInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="MethodInfoExtensions.get_IsProtectedInternal(MethodInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsProtectedInternal_Method()
+  public void IsProtectedInternal_Property()
   {
     using (new AssertionScope())
     {
@@ -97,7 +97,7 @@ public sealed class MethodInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MethodInfoExtensions.ToDelegate<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => ((MethodInfo) null).ToDelegate<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("method");
 
       static void Test()
       {
@@ -106,7 +106,7 @@ public sealed class MethodInfoExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MethodInfoExtensions.ToDelegate(null, typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("method");
+      AssertionExtensions.Should(() => ((MethodInfo) null).ToDelegate(typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("method");
       AssertionExtensions.Should(() => typeof(object).GetMethod("ToString").ToDelegate(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
       var method = typeof(object).GetMethod("ToString");

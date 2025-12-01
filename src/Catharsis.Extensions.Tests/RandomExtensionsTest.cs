@@ -13,20 +13,173 @@ namespace Catharsis.Extensions.Tests;
 public sealed class RandomExtensionsTest : Test
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Sbyte(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Sbyte_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Byte(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Byte_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Short(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Short_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Ushort(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Ushort_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Int(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Int_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Uint(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Uint_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Long(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Long_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Double(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Double_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Char(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Char_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Range(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Range_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Guid(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Guid_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_FileName(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FileName_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_DirectoryName(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DirectoryName_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_FilePath(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void FilePath_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_DirectoryPath(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void DirectoryPath_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_File(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void File_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="RandomExtensions.get_Stream(Random)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Property()
+  {
+    throw new NotImplementedException();
+  }
+  
+  /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToSbyte"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToSbyte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToSbyte(System.Random,int,sbyte?,sbyte?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToSbyte(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToSbyte(Random, sbyte?, sbyte?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToSbyte(Random, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToSbyte(Random, int, sbyte?, sbyte?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToSbyte(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Sbyte_Methods()
+  public void ToSbyte_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToSbyte(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToSbyte()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       Test(0, 0, 0, 0);
       Test(sbyte.MinValue, sbyte.MinValue, sbyte.MinValue, sbyte.MinValue);
@@ -47,13 +200,13 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToSbyte(null, [Range.All])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToSbyte([Range.All])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      new Random().ToSbyte(new[] { Range.All }).Should().Be(0);
-      new Random().ToSbyte(new[] { ..0 }).Should().Be(0);
-      new Random().ToSbyte(new[] { sbyte.MaxValue..sbyte.MaxValue }).Should().Be(sbyte.MaxValue);
-      new Random().ToSbyte(new[] { ..sbyte.MaxValue }).Should().BeInRange(0, sbyte.MaxValue);
-      new Random().ToSbyte(new[] { sbyte.MaxValue..0 }).Should().BeInRange(0, sbyte.MaxValue);
+      new Random().ToSbyte([Range.All]).Should().Be(0);
+      new Random().ToSbyte(new[] {..0}).Should().Be(0);
+      new Random().ToSbyte([sbyte.MaxValue..sbyte.MaxValue]).Should().Be(sbyte.MaxValue);
+      new Random().ToSbyte(new[] {..sbyte.MaxValue}).Should().BeInRange(0, sbyte.MaxValue);
+      new Random().ToSbyte([sbyte.MaxValue..0]).Should().BeInRange(0, sbyte.MaxValue);
       new Random().ToSbyte().Should().BeInRange(sbyte.MinValue, sbyte.MaxValue);
 
       static void Test(Range[] ranges, sbyte min, sbyte max) => new Random().ToSbyte(ranges).Should().BeInRange(min, max);
@@ -61,7 +214,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToSbyte(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToSbyte(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToSbyte(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -84,24 +237,24 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToSbyte(null, 0, new[] { ..1 })).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToSbyte(0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToSbyte(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
 
       new Random().ToSbyte(0).Should().BeOfType<IEnumerable<sbyte>>().And.BeSameAs(new Random().ToSbyte(0));
 
-      new Random().ToSbyte(0, new[] { Range.All }).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
-      new Random().ToSbyte(0, new[] { ..int.MaxValue }).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
+      new Random().ToSbyte(0, [Range.All]).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
+      new Random().ToSbyte(0, new[] {..int.MaxValue}).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
 
-      new Random().ToSbyte(count, new[] { ..0 }).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToSbyte(count, new[] { sbyte.MaxValue..sbyte.MaxValue }).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(sbyte.MaxValue);
-      new Random().ToSbyte(count, new[] { Range.All }).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToSbyte(count, new[] {..0}).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToSbyte(count, [sbyte.MaxValue..sbyte.MaxValue]).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(sbyte.MaxValue);
+      new Random().ToSbyte(count, [Range.All]).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
 
-      new Random().ToSbyte(count, new[] { ..0, Range.All }).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToSbyte(count, new[] { ..0, ..sbyte.MaxValue }).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, sbyte.MaxValue));
-      new Random().ToSbyte(count, new[] { ..0, sbyte.MaxValue..0 }).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, sbyte.MaxValue));
-      new Random().ToSbyte(count, new[] { ..0, 1..2 }).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
+      new Random().ToSbyte(count, new[] {..0, Range.All}).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToSbyte(count, new[] {..0, ..sbyte.MaxValue}).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, sbyte.MaxValue));
+      new Random().ToSbyte(count, new[] {..0, sbyte.MaxValue..0}).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, sbyte.MaxValue));
+      new Random().ToSbyte(count, new[] {..0, 1..2}).Should().BeOfType<IEnumerable<sbyte>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
 
       throw new NotImplementedException();
 
@@ -114,24 +267,24 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToByte"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToByte(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToByte(System.Random,int,byte?,byte?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToByte(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToByte(Random, byte?, byte?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToByte(Random, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToByte(Random, int, byte?, byte?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToByte(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Byte_Methods()
+  public void ToByte_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToByte(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToByte()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       
-      RandomExtensions.ToByte(new Random(), (byte?) 0, 0).Should().Be(0);
-      new Random().ToByte(from: byte.MinValue, to: byte.MinValue).Should().Be(byte.MinValue);
-      new Random().ToByte(from: byte.MaxValue, to: byte.MaxValue).Should().Be(byte.MaxValue);
-      new Random().ToByte(from: byte.MinValue, to: byte.MaxValue).Should().BeInRange(byte.MinValue, byte.MaxValue);
-      new Random().ToByte(from: byte.MaxValue, to: byte.MinValue).Should().BeInRange(byte.MinValue, byte.MaxValue);
+      new Random().ToByte((byte?) 0, 0).Should().Be(0);
+      //new Random().ToByte(byte.MinValue, byte.MinValue).Should().Be(byte.MinValue);
+      //new Random().ToByte(byte.MaxValue, byte.MaxValue).Should().Be(byte.MaxValue);
+      //new Random().ToByte(byte.MinValue, byte.MaxValue).Should().BeInRange(byte.MinValue, byte.MaxValue);
+      //new Random().ToByte(byte.MaxValue, byte.MinValue).Should().BeInRange(byte.MinValue, byte.MaxValue);
       new Random().ToByte().Should().BeInRange(byte.MinValue, byte.MaxValue);
 
       throw new NotImplementedException();
@@ -143,14 +296,14 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToByte(null, new[] {Range.All})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToByte([Range.All])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      new Random().ToByte(new[] {Range.All}).Should().Be(0);
-      new Random().ToByte(new[] {..0}).Should().Be(0);
+      new Random().ToByte([Range.All]).Should().Be(0);
+      new Random().ToByte(new [] {..0}).Should().Be(0);
       new Random().ToByte(new[] {..byte.MinValue}).Should().Be(byte.MinValue);
-      new Random().ToByte(new[] {byte.MaxValue..byte.MaxValue}).Should().Be(byte.MaxValue);
+      new Random().ToByte([byte.MaxValue..byte.MaxValue]).Should().Be(byte.MaxValue);
       new Random().ToByte(new[] {..byte.MaxValue}).Should().BeInRange(0, byte.MaxValue);
-      new Random().ToByte(new[] {byte.MaxValue..0}).Should().BeInRange(0, byte.MaxValue);
+      new Random().ToByte([byte.MaxValue..0]).Should().BeInRange(0, byte.MaxValue);
       new Random().ToByte().Should().BeInRange(byte.MinValue, byte.MaxValue);
 
       throw new NotImplementedException();
@@ -162,7 +315,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToByte(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToByte(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToByte(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -185,24 +338,24 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToByte(null, 0, new[] { ..1 })).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToByte(0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToByte(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
 
       new Random().ToByte(0).Should().BeOfType<IEnumerable<sbyte>>().And.BeSameAs(new Random().ToByte(0));
 
-      new Random().ToByte(0, new[] { Range.All }).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
-      new Random().ToByte(0, new[] { ..int.MaxValue }).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
+      new Random().ToByte(0, [Range.All]).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
+      new Random().ToByte(0, new[] {..int.MaxValue}).Should().BeOfType<IEnumerable<sbyte>>().And.BeEmpty();
 
-      new Random().ToByte(count, new[] { ..0 }).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToByte(count, new[] { ..byte.MinValue }).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(byte.MinValue);
-      new Random().ToByte(count, new[] { byte.MaxValue..byte.MaxValue }).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(byte.MaxValue);
-      new Random().ToByte(count, new[] { Range.All }).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToByte(count, new[] {..0}).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToByte(count, new[] {..byte.MinValue}).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(byte.MinValue);
+      new Random().ToByte(count, [byte.MaxValue..byte.MaxValue]).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(byte.MaxValue);
+      new Random().ToByte(count, [Range.All]).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
 
-      new Random().ToByte(count, new[] { ..0, Range.All }).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToByte(count, new[] { ..0, ..byte.MaxValue }).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, byte.MaxValue));
-      new Random().ToByte(count, new[] { ..0, 1..2 }).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
+      new Random().ToByte(count, new[] {..0, Range.All}).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToByte(count, new[] {..0, ..byte.MaxValue}).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, byte.MaxValue));
+      new Random().ToByte(count, new[] {..0, 1..2}).Should().BeOfType<IEnumerable<byte>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
 
       throw new NotImplementedException();
 
@@ -215,20 +368,20 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToShort"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToShort(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToShort(System.Random,int,short?,short?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToShort(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToShort(Random, short?, short?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToShort(Random, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToShort(Random, int, short?, short?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToShort(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Short_Methods()
+  public void ToShort_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToShort(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToShort()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      RandomExtensions.ToShort(new Random(), (short?) 0, 0).Should().Be(0);
+      new Random().ToShort((short?) 0, 0).Should().Be(0);
       new Random().ToShort(short.MinValue, short.MinValue).Should().Be(short.MinValue);
       new Random().ToShort(short.MaxValue, short.MaxValue).Should().Be(short.MaxValue);
       new Random().ToShort(short.MinValue, short.MaxValue).Should().BeInRange(short.MinValue, short.MaxValue);
@@ -244,13 +397,13 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToShort(null, new[] {Range.All})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToShort([Range.All])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      new Random().ToShort(new [] {Range.All}).Should().Be(0);
+      new Random().ToShort([Range.All]).Should().Be(0);
       new Random().ToShort(new[] {..0}).Should().Be(0);
-      new Random().ToShort(new[] {short.MaxValue..short.MaxValue}).Should().Be(short.MaxValue);
+      new Random().ToShort([short.MaxValue..short.MaxValue]).Should().Be(short.MaxValue);
       new Random().ToShort(new[] {..short.MaxValue}).Should().BeInRange(0, short.MaxValue);
-      new Random().ToShort(new[] {short.MaxValue..0}).Should().BeInRange(0, short.MaxValue);
+      new Random().ToShort([short.MaxValue..0]).Should().BeInRange(0, short.MaxValue);
       new Random().ToShort().Should().BeInRange(short.MinValue, short.MaxValue);
 
       throw new NotImplementedException();
@@ -262,7 +415,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToShort(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToShort(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToShort(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -285,23 +438,23 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToShort(null, 0, new[] { ..1 })).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToShort(0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToShort(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
 
       new Random().ToShort(0).Should().BeOfType<IEnumerable<short>>().And.BeSameAs(new Random().ToShort(0));
 
-      new Random().ToShort(0, new[] { Range.All }).Should().BeOfType<IEnumerable<short>>().And.BeEmpty();
-      new Random().ToShort(0, new[] { ..int.MaxValue }).Should().BeOfType<IEnumerable<short>>().And.BeEmpty();
+      new Random().ToShort(0, [Range.All]).Should().BeOfType<IEnumerable<short>>().And.BeEmpty();
+      new Random().ToShort(0, new[] {..int.MaxValue}).Should().BeOfType<IEnumerable<short>>().And.BeEmpty();
 
-      new Random().ToShort(count, new[] { ..0 }).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToShort(count, new[] { short.MaxValue..short.MaxValue }).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(short.MaxValue);
-      new Random().ToShort(count, new[] { Range.All }).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToShort(count, new[] {..0}).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToShort(count, [short.MaxValue..short.MaxValue]).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(short.MaxValue);
+      new Random().ToShort(count, [Range.All]).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
 
-      new Random().ToShort(count, new[] { ..0, Range.All }).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToShort(count, new[] { ..0, ..short.MaxValue }).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, short.MaxValue));
-      new Random().ToShort(count, new[] { ..0, 1..2 }).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
+      new Random().ToShort(count, new[] {..0, Range.All}).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToShort(count, new[] {..0, ..short.MaxValue}).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, short.MaxValue));
+      new Random().ToShort(count, new[] {..0, 1..2}).Should().BeOfType<IEnumerable<short>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
 
       throw new NotImplementedException();
 
@@ -314,20 +467,20 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToUshort"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToUshort(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToUshort(System.Random,int,ushort?,ushort?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToUshort(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToUshort(Random, ushort?, ushort?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToUshort(Random, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToUshort(Random, int, ushort?, ushort?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToUshort(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Ushort_Methods()
+  public void ToUshort_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToUshort(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToUshort()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      RandomExtensions.ToUshort(new Random(), (ushort?) 0, 0).Should().Be(0);
+      new Random().ToUshort((ushort?) 0, 0).Should().Be(0);
       new Random().ToUshort(from: ushort.MinValue, to: byte.MinValue).Should().Be(ushort.MinValue);
       new Random().ToUshort(from: ushort.MaxValue, to: ushort.MaxValue).Should().Be(ushort.MaxValue);
       new Random().ToUshort(from: ushort.MinValue, to: ushort.MaxValue).Should().BeInRange(ushort.MinValue, ushort.MaxValue);
@@ -343,14 +496,14 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToUshort(null, new [] {Range.All})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToUshort([Range.All])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      new Random().ToUshort(new[] {Range.All}).Should().Be(0);
+      new Random().ToUshort([Range.All]).Should().Be(0);
       new Random().ToUshort(new[] {..0}).Should().Be(0);
       new Random().ToUshort(new[] {..ushort.MinValue}).Should().Be(ushort.MinValue);
-      new Random().ToUshort(new[] {ushort.MaxValue..ushort.MaxValue}).Should().Be(ushort.MaxValue);
+      new Random().ToUshort([ushort.MaxValue..ushort.MaxValue]).Should().Be(ushort.MaxValue);
       new Random().ToUshort(new[] {..ushort.MaxValue}).Should().BeInRange(0, ushort.MaxValue);
-      new Random().ToUshort(new[] {ushort.MaxValue..0}).Should().BeInRange(0, ushort.MaxValue);
+      new Random().ToUshort([ushort.MaxValue..0]).Should().BeInRange(0, ushort.MaxValue);
       new Random().ToUshort().Should().BeInRange(ushort.MinValue, ushort.MaxValue);
 
       throw new NotImplementedException();
@@ -362,7 +515,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToUshort(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToUshort(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToUshort(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -385,24 +538,24 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToUshort(null, 0, new[] { ..1 })).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToUshort(0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToUshort(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
 
       new Random().ToUshort(0).Should().BeOfType<IEnumerable<ushort>>().And.BeSameAs(new Random().ToUshort(0));
 
-      new Random().ToUshort(0, new[] { Range.All }).Should().BeOfType<IEnumerable<ushort>>().And.BeEmpty();
-      new Random().ToUshort(0, new[] { ..int.MaxValue }).Should().BeOfType<IEnumerable<ushort>>().And.BeEmpty();
+      new Random().ToUshort(0, [Range.All]).Should().BeOfType<IEnumerable<ushort>>().And.BeEmpty();
+      new Random().ToUshort(0, new[] {..int.MaxValue}).Should().BeOfType<IEnumerable<ushort>>().And.BeEmpty();
 
-      new Random().ToUshort(count, new[] { ..0 }).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToUshort(count, new[] { ..ushort.MinValue }).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(ushort.MinValue);
-      new Random().ToUshort(count, new[] { ushort.MaxValue..ushort.MaxValue }).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(ushort.MaxValue);
-      new Random().ToUshort(count, new[] { Range.All }).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToUshort(count, new[] {..0}).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToUshort(count, new[] {..ushort.MinValue}).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(ushort.MinValue);
+      new Random().ToUshort(count, [ushort.MaxValue..ushort.MaxValue]).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(ushort.MaxValue);
+      new Random().ToUshort(count, [Range.All]).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
 
-      new Random().ToUshort(count, new[] { ..0, Range.All }).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToUshort(count, new[] { ..0, ..ushort.MaxValue }).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, ushort.MaxValue));
-      new Random().ToUshort(count, new[] { ..0, 1..2 }).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
+      new Random().ToUshort(count, new[] {..0, Range.All}).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToUshort(count, new[] {..0, ..ushort.MaxValue}).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, ushort.MaxValue));
+      new Random().ToUshort(count, new[] {..0, 1..2}).Should().BeOfType<IEnumerable<ushort>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
 
       throw new NotImplementedException();
 
@@ -415,24 +568,24 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToInt"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToInt(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToInt(System.Random,int,int?,int?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToInt(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToInt(Random, int?, int?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToInt(Random, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToInt(Random, int, int?, int?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToInt(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Int_Methods()
+  public void ToInt_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToInt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToInt()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      RandomExtensions.ToInt(new Random(), (int?) 0, 0).Should().Be(0);
-      RandomExtensions.ToInt(new Random(), (int?) int.MinValue, int.MinValue).Should().Be(int.MinValue);
-      RandomExtensions.ToInt(new Random(), (int?) int.MaxValue, int.MaxValue).Should().Be(int.MaxValue);
-      RandomExtensions.ToInt(new Random(), (int?) int.MinValue, int.MaxValue).Should().BeInRange(int.MinValue, int.MaxValue);
-      RandomExtensions.ToInt(new Random(), (int?) int.MaxValue, int.MinValue).Should().BeInRange(int.MinValue, int.MaxValue);
+      new Random().ToInt((int?) 0, 0).Should().Be(0);
+      new Random().ToInt((int?) int.MinValue, int.MinValue).Should().Be(int.MinValue);
+      new Random().ToInt((int?) int.MaxValue, int.MaxValue).Should().Be(int.MaxValue);
+      new Random().ToInt((int?) int.MinValue, int.MaxValue).Should().BeInRange(int.MinValue, int.MaxValue);
+      new Random().ToInt((int?) int.MaxValue, int.MinValue).Should().BeInRange(int.MinValue, int.MaxValue);
       new Random().ToInt().Should().BeInRange(int.MinValue, int.MaxValue);
 
       throw new NotImplementedException();
@@ -444,13 +597,13 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToInt(null, new[] {Range.All})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToInt([Range.All])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      new Random().ToInt(new[] {Range.All}).Should().Be(0);
+      new Random().ToInt([Range.All]).Should().Be(0);
       new Random().ToInt(new[] {..0}).Should().Be(0);
-      new Random().ToInt(new[] {int.MaxValue..int.MaxValue}).Should().Be(int.MaxValue);
+      new Random().ToInt([int.MaxValue..int.MaxValue]).Should().Be(int.MaxValue);
       new Random().ToInt(new[] {..int.MaxValue}).Should().BeInRange(0, int.MaxValue);
-      new Random().ToInt(new[] {int.MaxValue..0}).Should().BeInRange(0, int.MaxValue);
+      new Random().ToInt([int.MaxValue..0]).Should().BeInRange(0, int.MaxValue);
       new Random().ToInt().Should().BeInRange(int.MinValue, int.MaxValue);
 
       throw new NotImplementedException();
@@ -462,7 +615,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToInt(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToInt(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToInt(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -487,20 +640,20 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.Uint(Random, uint?, uint?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.Uint(Random, IEnumerable{Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.Uint(Random, int, uint?, uint?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.Uint(Random, int, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToUint(Random, uint?, uint?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToUint(Random, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToUint(Random, int, uint?, uint?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToUint(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Uint_Methods()
+  public void ToUint_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToUint(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToUint()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      RandomExtensions.ToUint(new Random(), (uint?) 0, 0).Should().Be(0);
+      new Random().ToUint((uint?) 0, 0).Should().Be(0);
       new Random().ToUint(uint.MinValue, uint.MinValue).Should().Be(uint.MinValue);
       new Random().ToUint(uint.MaxValue, uint.MaxValue).Should().Be(uint.MaxValue);
       new Random().ToUint(uint.MinValue, uint.MaxValue).Should().BeInRange(uint.MinValue, uint.MaxValue);
@@ -516,9 +669,9 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToUint(null, new[] {Range.All})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToUint([Range.All])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      new Random().ToUint(new[] {Range.All}).Should().Be(0);
+      new Random().ToUint([Range.All]).Should().Be(0);
       new Random().ToUint(new[] {..0}).Should().Be(0);
       new Random().ToUint().Should().BeInRange(uint.MinValue, uint.MaxValue);
 
@@ -529,7 +682,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToUint(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToUint(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToUint(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -552,18 +705,18 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToUint(null, 0, new[] { ..1 })).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToUint(0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToUint(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
 
-      new Random().ToUint(0, new[] { Range.All }).Should().BeEmpty();
+      new Random().ToUint(0, [Range.All]).Should().BeEmpty();
 
-      new Random().ToUint(count, new[] { ..0 }).Should().BeOfType<IEnumerable<uint>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToUint(count, new[] { Range.All }).Should().BeOfType<IEnumerable<uint>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToUint(count, new[] {..0}).Should().BeOfType<IEnumerable<uint>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToUint(count, [Range.All]).Should().BeOfType<IEnumerable<uint>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
 
-      new Random().ToUint(count, new[] { ..0, Range.All }).Should().BeOfType<IEnumerable<uint>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToUint(count, new[] { ..0, 1..2 }).Should().BeOfType<IEnumerable<uint>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
+      new Random().ToUint(count, new[] {..0, Range.All}).Should().BeOfType<IEnumerable<uint>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToUint(count, new[] {..0, 1..2}).Should().BeOfType<IEnumerable<uint>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
 
       throw new NotImplementedException();
 
@@ -576,20 +729,20 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.Long(Random, long?, long?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.Long(Random, IEnumerable{Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.Long(Random, int, long?, long?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.Long(Random, int, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToLong(Random, long?, long?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToLong(Random, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToLong(Random, int, long?, long?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToLong(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Long_Methods()
+  public void ToLong_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToLong(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToLong()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      RandomExtensions.ToLong(new Random(), (long?) 0, 0).Should().Be(0);
+      new Random().ToLong((long?) 0, 0).Should().Be(0);
       new Random().ToLong(long.MinValue, long.MinValue).Should().Be(long.MinValue);
       new Random().ToLong(long.MaxValue, long.MaxValue).Should().Be(long.MaxValue);
       new Random().ToLong(long.MinValue, long.MaxValue).Should().BeInRange(long.MinValue, long.MaxValue);
@@ -605,9 +758,9 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToLong(null, new[] {Range.All})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToLong([Range.All])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      new Random().ToLong(new [] {Range.All}).Should().Be(0);
+      new Random().ToLong([Range.All]).Should().Be(0);
       new Random().ToLong(new[] {..0}).Should().Be(0);
       new Random().ToLong().Should().BeInRange(long.MinValue, long.MaxValue);
 
@@ -620,7 +773,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToLong(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToLong(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToLong(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -643,21 +796,21 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToLong(null, 0, new[] { ..1 })).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToLong(0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToLong(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
 
-      new Random().ToLong(0, new[] { Range.All }).Should().BeEmpty();
-      new Random().ToLong(0, new[] { ..int.MaxValue }).Should().BeEmpty();
+      new Random().ToLong(0, [Range.All]).Should().BeEmpty();
+      new Random().ToLong(0, new[] {..int.MaxValue}).Should().BeEmpty();
 
-      new Random().ToLong(count, new[] { ..0 }).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToLong(count, new[] { int.MaxValue..int.MaxValue }).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(int.MaxValue);
-      new Random().ToLong(count, new[] { Range.All }).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToLong(count, new[] {..0}).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToLong(count, [int.MaxValue..int.MaxValue]).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(int.MaxValue);
+      new Random().ToLong(count, [Range.All]).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
 
-      new Random().ToLong(count, new[] { ..0, Range.All }).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
-      new Random().ToLong(count, new[] { ..0, ..short.MaxValue }).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, short.MaxValue));
-      new Random().ToLong(count, new[] { ..0, 1..2 }).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
+      new Random().ToLong(count, new[] {..0, Range.All}).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(0);
+      new Random().ToLong(count, new[] {..0, ..short.MaxValue}).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(0, short.MaxValue));
+      new Random().ToLong(count, new[] {..0, 1..2}).Should().BeOfType<IEnumerable<long>>().And.HaveCount(count).And.AllBeEquivalentTo(1);
 
       throw new NotImplementedException();
 
@@ -670,18 +823,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.Float(Random)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.Float(Random, int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToFloat(Random)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToFloat(Random, int)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Float_Methods()
+  public void ToFloat_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.Float(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToFloat()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      new Random().Float().Should().BeInRange(float.MinValue, float.MaxValue);
+      new Random().ToFloat().Should().BeInRange(float.MinValue, float.MaxValue);
 
       throw new NotImplementedException();
 
@@ -692,12 +845,12 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.Float(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToFloat(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       const int count = 1000;
 
-      new Random().Float(0).Should().BeOfType<IEnumerable<float>>().And.BeEmpty();
-      new Random().Float(count).Should().BeOfType<IEnumerable<float>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(float.MinValue, float.MaxValue));
+      new Random().ToFloat(0).Should().BeOfType<IEnumerable<float>>().And.BeEmpty();
+      new Random().ToFloat(count).Should().BeOfType<IEnumerable<float>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange(float.MinValue, float.MaxValue));
 
       throw new NotImplementedException();
 
@@ -710,16 +863,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToDouble"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToDouble(System.Random,int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDouble(Random)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDouble(Random, int)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Double_Methods()
+  public void ToDouble_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDouble(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDouble()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       new Random().ToDouble().Should().BeInRange(double.MinValue, double.MaxValue);
 
@@ -732,7 +885,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDouble(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDouble(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       const int count = 1000;
 
@@ -750,18 +903,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToChar"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToChar(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToChar(System.Random,int,char?,char?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToChar(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToChar(Random, char?, char?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToChar(Random, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToChar(Random, int, char?, char?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToChar(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Char_Methods()
+  public void ToChar_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToChar(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToChar()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       new Random().ToChar((char) 0, (char) 0).Should().Be((char) 0);
       new Random().ToChar(char.MinValue, char.MinValue).Should().Be(char.MinValue);
@@ -779,14 +932,14 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToChar(null, new [] {Range.All})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToChar([Range.All])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
-      new Random().ToChar(new[] {Range.All}).Should().Be((char) 0);
+      new Random().ToChar([Range.All]).Should().Be((char) 0);
       new Random().ToChar(new[] {..0}).Should().Be((char) 0);
       new Random().ToChar(new[] {..char.MinValue}).Should().Be(char.MinValue);
-      new Random().ToChar(new[] {char.MaxValue..char.MaxValue}).Should().Be(char.MaxValue);
+      new Random().ToChar([char.MaxValue..char.MaxValue]).Should().Be(char.MaxValue);
       new Random().ToChar(new[] {..char.MaxValue}).Should().BeInRange((char) 0, char.MaxValue);
-      new Random().ToChar(new[] {char.MaxValue..0}).Should().BeInRange((char) 0, char.MaxValue);
+      new Random().ToChar([char.MaxValue..0]).Should().BeInRange((char) 0, char.MaxValue);
       new Random().ToChar().Should().BeInRange(char.MinValue, char.MaxValue);
 
       throw new NotImplementedException();
@@ -798,7 +951,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToChar(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToChar(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToChar(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -821,24 +974,24 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToChar(null, 0, new[] { ..1 })).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToChar(0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToChar(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
 
       new Random().ToChar(0).Should().BeOfType<IEnumerable<char>>().And.BeSameAs(new Random().ToChar(0));
 
-      new Random().ToChar(0, new[] { Range.All }).Should().BeOfType<IEnumerable<char>>().And.BeEmpty();
-      new Random().ToChar(0, new[] { ..int.MaxValue }).Should().BeOfType<IEnumerable<char>>().And.BeEmpty();
+      new Random().ToChar(0, [Range.All]).Should().BeOfType<IEnumerable<char>>().And.BeEmpty();
+      new Random().ToChar(0, new[] {..int.MaxValue}).Should().BeOfType<IEnumerable<char>>().And.BeEmpty();
 
-      new Random().ToChar(count, new[] { ..0 }).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
-      new Random().ToChar(count, new[] { ..char.MinValue }).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
-      new Random().ToChar(count, new[] { char.MaxValue..char.MaxValue }).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
-      new Random().ToChar(count, new[] { Range.All }).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+      new Random().ToChar(count, new[] {..0}).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+      new Random().ToChar(count, new[] {..char.MinValue}).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
+      new Random().ToChar(count, [char.MaxValue..char.MaxValue]).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
+      new Random().ToChar(count, [Range.All]).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
 
-      new Random().ToChar(count, new[] { ..0, Range.All }).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
-      new Random().ToChar(count, new[] { ..0, ..char.MaxValue }).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange((char) 0, char.MaxValue));
-      new Random().ToChar(count, new[] { ..0, 'a'..'b' }).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo('a');
+      new Random().ToChar(count, new[] {..0, Range.All}).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+      new Random().ToChar(count, new[] {..0, ..char.MaxValue}).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange((char) 0, char.MaxValue));
+      new Random().ToChar(count, new[] {..0, 'a'..'b'}).Should().BeOfType<IEnumerable<char>>().And.HaveCount(count).And.AllBeEquivalentTo('a');
 
       throw new NotImplementedException();
 
@@ -851,18 +1004,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToText"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToText(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToText(System.Random,int,int,char?,char?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToText(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToText(Random, int, char?, char?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToText(Random, int, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToText(Random, int, int, char?, char?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToText(Random, int, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void String_Methods()
+  public void ToText_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToText(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToText(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToText(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -884,20 +1037,20 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToText(null, 0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToText(0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToText(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
 
       new Random().ToText(0).Should().BeOfType<string>().And.BeSameAs(new Random().ToText(0));
 
-      new Random().ToText(0, new[] {Range.All}).Should().BeOfType<string>().And.BeEmpty();
+      new Random().ToText(0, [Range.All]).Should().BeOfType<string>().And.BeEmpty();
       new Random().ToText(0, new[] {..int.MaxValue}).Should().BeOfType<string>().And.BeEmpty();
 
       new Random().ToText(count, new[] {..0}).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
       new Random().ToText(count, new[] {..char.MinValue}).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
-      new Random().ToText(count, new[] {char.MaxValue..char.MaxValue}).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
-      new Random().ToText(count, new[] {Range.All}).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+      new Random().ToText(count, [char.MaxValue..char.MaxValue]).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
+      new Random().ToText(count, [Range.All]).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
 
       new Random().ToText(count, new[] {..0, Range.All}).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
       new Random().ToText(count, new[] {..0, ..char.MaxValue}).ToCharArray().Should().BeOfType<string>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange((char) 0, char.MaxValue));
@@ -912,7 +1065,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToText(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToText(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToText(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToText(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -944,7 +1097,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToText(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToText(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToText(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToText(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -953,19 +1106,19 @@ public sealed class RandomExtensionsTest : Test
 
       new Random().ToText(0, 0).Should().BeOfType<IEnumerable<string>>().And.BeSameAs(new Random().ToText(0, 0));
 
-      new Random().ToText(size, 0, new[] { Range.All }).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
-      new Random().ToText(size, 0, new[] { ..int.MaxValue }).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
+      new Random().ToText(size, 0, [Range.All]).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
+      new Random().ToText(size, 0, new[] {..int.MaxValue}).Should().BeOfType<IEnumerable<string>>().And.BeEmpty();
 
       new Random().ToText(0, count).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeEmpty());
 
-      new Random().ToText(size, count, new[] { ..0 }).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
-      new Random().ToText(size, count, new[] { ..char.MinValue }).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MinValue));
-      new Random().ToText(size, count, new[] { char.MaxValue..char.MaxValue }).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MaxValue));
-      new Random().ToText(size, count, new[] { Range.All }).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
+      new Random().ToText(size, count, new[] {..0}).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
+      new Random().ToText(size, count, new[] {..char.MinValue}).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MinValue));
+      new Random().ToText(size, count, [char.MaxValue..char.MaxValue]).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MaxValue));
+      new Random().ToText(size, count, [Range.All]).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
 
-      new Random().ToText(size, count, new[] { ..0, Range.All }).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
-      new Random().ToText(size, count, new[] { ..0, ..char.MaxValue }).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllSatisfy(x => x.Should().BeInRange((char) 0, char.MaxValue)));
-      new Random().ToText(size, count, new[] { ..0, 'a'..'b' }).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo('a'));
+      new Random().ToText(size, count, new[] {..0, Range.All}).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
+      new Random().ToText(size, count, new[] {..0, ..char.MaxValue}).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllSatisfy(x => x.Should().BeInRange((char) 0, char.MaxValue)));
+      new Random().ToText(size, count, new[] {..0, 'a'..'b'}).Should().BeOfType<IEnumerable<string>>().And.HaveCount(count).And.AllSatisfy(element => element.ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo('a'));
 
       throw new NotImplementedException();
 
@@ -978,16 +1131,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.Digits(Random, int)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.Digits(Random, int, int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDigits(Random, int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDigits(Random, int, int)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Digits_Methods()
+  public void ToDigits_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDigits(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDigits(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToDigits(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1004,7 +1157,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDigits(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDigits(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToDigits(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToDigits(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -1028,16 +1181,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToLetters"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToLetters(System.Random,int,int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToLetters(Random, int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToLetters(Random, int, int)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Letters_Methods()
+  public void ToLetters_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToLetters(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToLetters(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToLetters(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1054,7 +1207,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToLetters(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToLetters(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToLetters(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToLetters(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -1078,16 +1231,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToAlphaDigits"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToAlphaDigits(System.Random,int,int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToAlphaDigits(Random, int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToAlphaDigits(Random, int, int)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void AlphaDigits_Methods()
+  public void ToAlphaDigits_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToAlphaDigits(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToAlphaDigits(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToAlphaDigits(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1104,7 +1257,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToAlphaDigits(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToAlphaDigits(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToAlphaDigits(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToAlphaDigits(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -1128,18 +1281,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToSecureString"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToSecureString(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToSecureString(System.Random,int,int,char?,char?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToSecureString(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToSecureString(Random, int, char?, char?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToSecureString(Random, int, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToSecureString(Random, int, int, char?, char?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToSecureString(Random, int, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void SecureString_Methods()
+  public void ToSecureString_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToSecureString(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToSecureString(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToSecureString(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1164,16 +1317,16 @@ public sealed class RandomExtensionsTest : Test
     {
       const int count = 1000;
 
-      AssertionExtensions.Should(() => RandomExtensions.ToSecureString(null, 0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToSecureString(0, new[] {..1})).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToSecureString(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
-      new Random().ToSecureString(0, new[] {Range.All}).Length.Should().Be(0);
+      new Random().ToSecureString(0, [Range.All]).Length.Should().Be(0);
       new Random().ToSecureString(0, new[] {..int.MaxValue}).Length.Should().Be(0);
 
       new Random().ToSecureString(count, new[] {..0}).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
       new Random().ToSecureString(count, new[] {..char.MinValue}).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo(char.MinValue);
       new Random().ToSecureString(count, new[] {char.MaxValue..char.MaxValue}).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo(char.MaxValue);
-      new Random().ToSecureString(count, new[] {Range.All}).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
+      new Random().ToSecureString(count, [Range.All]).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
 
       new Random().ToSecureString(count, new[] {..0, Range.All}).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllBeEquivalentTo((char) 0);
       new Random().ToSecureString(count, new[] {..0, ..char.MaxValue}).ToText().ToCharArray().Should().BeOfType<char[]>().And.HaveCount(count).And.AllSatisfy(element => element.Should().BeInRange((char) 0, char.MaxValue));
@@ -1188,7 +1341,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToSecureString(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToSecureString(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToSecureString(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToSecureString(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -1213,26 +1366,26 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToSecureString(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToSecureString(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToSecureString(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToSecureString(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int size = 10;
       const int count = 1000;
 
-      new Random().ToSecureString(size, 0, new[] { Range.All }).Should().BeOfType<IEnumerable<SecureString>>().And.BeEmpty();
-      new Random().ToSecureString(size, 0, new[] { ..int.MaxValue }).Should().BeOfType<IEnumerable<SecureString>>().And.BeEmpty();
+      new Random().ToSecureString(size, 0, [Range.All]).Should().BeOfType<IEnumerable<SecureString>>().And.BeEmpty();
+      new Random().ToSecureString(size, 0, new[] {..int.MaxValue}).Should().BeOfType<IEnumerable<SecureString>>().And.BeEmpty();
 
       new Random().ToSecureString(0, count).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.Length.Should().Be(0));
 
-      new Random().ToSecureString(size, count, new[] { ..0 }).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
-      new Random().ToSecureString(size, count, new[] { ..char.MinValue }).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MinValue));
-      new Random().ToSecureString(size, count, new[] { char.MaxValue..char.MaxValue }).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MaxValue));
-      new Random().ToSecureString(size, count, new[] { Range.All }).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
+      new Random().ToSecureString(size, count, new[] {..0}).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
+      new Random().ToSecureString(size, count, new[] {..char.MinValue}).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MinValue));
+      new Random().ToSecureString(size, count, new[] {char.MaxValue..char.MaxValue}).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo(char.MaxValue));
+      new Random().ToSecureString(size, count, [Range.All]).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
 
-      new Random().ToSecureString(size, count, new[] { ..0, Range.All }).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
-      new Random().ToSecureString(size, count, new[] { ..0, ..char.MaxValue }).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllSatisfy(x => x.Should().BeInRange((char) 0, char.MaxValue)));
-      new Random().ToSecureString(size, count, new[] { ..0, 'a'..'b' }).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo('a'));
+      new Random().ToSecureString(size, count, new[] {..0, Range.All}).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo((char) 0));
+      new Random().ToSecureString(size, count, new[] {..0, ..char.MaxValue}).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllSatisfy(x => x.Should().BeInRange((char) 0, char.MaxValue)));
+      new Random().ToSecureString(size, count, new[] {..0, 'a'..'b'}).Should().BeOfType<IEnumerable<SecureString>>().And.HaveCount(count).And.AllSatisfy(element => element.ToText().ToCharArray().Should().HaveCount(size).And.AllBeEquivalentTo('a'));
 
       throw new NotImplementedException();
 
@@ -1250,11 +1403,11 @@ public sealed class RandomExtensionsTest : Test
   ///   </list>
   /// </summary>
   [Fact]
-  public void DateTime_Methods()
+  public void ToDateTime_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDateTime(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDateTime()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       new Random().ToDateTime(DateTime.MinValue, DateTime.MinValue).Should().Be(DateTime.MinValue).And.BeSameDateAs(new Random().ToDateTime(DateTime.MinValue, DateTime.MinValue));
       new Random().ToDateTime(DateTime.MaxValue, DateTime.MaxValue).Should().Be(DateTime.MaxValue).And.BeSameDateAs(new Random().ToDateTime(DateTime.MaxValue, DateTime.MaxValue));
@@ -1271,7 +1424,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDateTime(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDateTime(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToDateTime(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1299,11 +1452,11 @@ public sealed class RandomExtensionsTest : Test
   ///   </list>
   /// </summary>
   [Fact]
-  public void DateTimeOffset_Methods()
+  public void ToDateTimeOffset_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDateTimeOffset(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDateTimeOffset()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       new Random().ToDateTimeOffset(DateTimeOffset.MinValue, DateTimeOffset.MinValue).Should().Be(DateTimeOffset.MinValue).And.BeSameDateAs(new Random().ToDateTimeOffset(DateTimeOffset.MinValue, DateTimeOffset.MinValue));
       new Random().ToDateTimeOffset(DateTimeOffset.MaxValue, DateTimeOffset.MaxValue).Should().Be(DateTimeOffset.MaxValue).And.BeSameDateAs(new Random().ToDateTimeOffset(DateTimeOffset.MaxValue, DateTimeOffset.MaxValue));
@@ -1320,7 +1473,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDateTimeOffset(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDateTimeOffset(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToDateTimeOffset(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1343,16 +1496,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.DateOnly(Random, DateOnly?, DateOnly?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.DateOnly(Random, int, DateOnly?, DateOnly?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDateOnly(Random, DateOnly?, DateOnly?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDateOnly(Random, int, DateOnly?, DateOnly?)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void DateOnly_Methods()
+  public void ToDateOnly_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDateOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDateOnly()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       new Random().ToDateOnly(DateOnly.MinValue, DateOnly.MinValue).Should().Be(DateOnly.MinValue);
       new Random().ToDateOnly(DateOnly.MaxValue, DateOnly.MaxValue).Should().Be(DateOnly.MaxValue);
@@ -1393,16 +1546,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.TimeOnly(Random, TimeOnly?, TimeOnly?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.TimeOnly(Random, int, TimeOnly?, TimeOnly?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTimeOnly(Random, TimeOnly?, TimeOnly?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTimeOnly(Random, int, TimeOnly?, TimeOnly?)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void TimeOnly_Methods()
+  public void ToTimeOnly_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToTimeOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToTimeOnly()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       new Random().ToTimeOnly(TimeOnly.MinValue, TimeOnly.MinValue).Should().Be(TimeOnly.MinValue);
       new Random().ToTimeOnly(TimeOnly.MaxValue, TimeOnly.MaxValue).Should().Be(TimeOnly.MaxValue);
@@ -1419,7 +1572,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToTimeOnly(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToTimeOnly(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToTimeOnly(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1440,16 +1593,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.TimeSpan(Random, TimeSpan?, TimeSpan?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.TimeSpan(Random, int, TimeSpan?, TimeSpan?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTimeSpan(Random, TimeSpan?, TimeSpan?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTimeSpan(Random, int, TimeSpan?, TimeSpan?)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void TimeSpan_Methods()
+  public void ToTimeSpan_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToTimeSpan(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToTimeSpan()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       throw new NotImplementedException();
 
@@ -1460,7 +1613,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToTimeSpan(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToTimeSpan(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToTimeSpan(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1476,17 +1629,17 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToRange"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToRange(System.Random,int,int?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToRange(Random, int?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToRange(Random, int, int?)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Range_Methods()
+  public void ToRange_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToRange(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
-      AssertionExtensions.Should(() => RandomExtensions.ToRange(new Random(), (int?) int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>();
+      AssertionExtensions.Should(() => ((Random) null).ToRange()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => new Random().ToRange((int?) int.MinValue)).ThrowExactly<ArgumentOutOfRangeException>();
 
       new int?[] { null, 0, int.MaxValue }.ForEach(max =>
       {
@@ -1507,7 +1660,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToRange(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToRange(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToRange(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1531,16 +1684,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToGuid"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToGuid(System.Random,int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToGuid(Random)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToGuid(Random, int)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Guid_Methods()
+  public void ToGuid_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToGuid(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToGuid()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       new Random().ToGuid().Should().NotBe(Guid.Empty);
       new Random().ToGuid().Should().NotBe(Guid.NewGuid());
@@ -1554,7 +1707,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToGuid(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToGuid(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToGuid(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1573,18 +1726,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToObject"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToObject(System.Random,System.Type[])"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToObject(System.Random,int,System.Collections.Generic.IEnumerable{System.Type})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToObject(System.Random,int,System.Type[])"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToObject(Random, IEnumerable{Type})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToObject(Random, Type[])"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToObject(Random, int, IEnumerable{Type})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToObject(Random, int, Type[])"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Object_Methods()
+  public void ToObject_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToObject(null, Enumerable.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToObject(Enumerable.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToObject((IEnumerable<Type>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
 
       throw new NotImplementedException();
@@ -1596,7 +1749,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToObject(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToObject()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToObject(null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
 
       throw new NotImplementedException();
@@ -1608,7 +1761,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToObject(null, 0, Enumerable.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToObject(0, Enumerable.Empty<Type>())).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToObject(0, (IEnumerable<Type>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
       AssertionExtensions.Should(() => new Random().ToObject(-1, Enumerable.Empty<Type>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -1621,9 +1774,9 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToObject(null, 0, [])).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToObject(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToObject(0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("types");
-      AssertionExtensions.Should(() => new Random().ToObject(-1, [])).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+      AssertionExtensions.Should(() => new Random().ToObject(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       throw new NotImplementedException();
 
@@ -1636,16 +1789,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToFileName"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToFileName(System.Random,int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToFileName(Random)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToFileName(Random, int)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void FileName_Methods()
+  public void ToFileName_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToFileName(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToFileName()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       new Random().ToFileName().Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.MatchRegex("^[a-zA-Z0-9]*\\.[a-zA-Z0-9]{3}$");
 
@@ -1658,7 +1811,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToFileName(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToFileName(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToFileName(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1677,16 +1830,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToDirectoryName"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToDirectoryName(System.Random,int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDirectoryName(Random)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDirectoryName(Random, int)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void DirectoryName_Methods()
+  public void ToDirectoryName_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDirectoryName(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDirectoryName()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       new Random().ToDirectoryName().Should().BeOfType<string>().And.NotBeNullOrWhiteSpace().And.HaveLength(32).And.MatchRegex("^[a-zA-Z0-9]*$");
 
@@ -1699,7 +1852,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDirectoryName(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDirectoryName(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToDirectoryName(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1718,16 +1871,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToFilePath"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToFilePath(System.Random,int,System.IO.DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToFilePath(Random, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToFilePath(Random, int, DirectoryInfo)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void FilePath_Methods()
+  public void ToFilePath_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToFilePath(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToFilePath()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       var path = new Random().ToFilePath();
       var file = Path.GetFileName(path);
@@ -1749,7 +1902,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToFilePath(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToFilePath(1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToFilePath(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1774,16 +1927,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToFilePath"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToFilePath(System.Random,int,System.IO.DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDirectoryPath(Random, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDirectoryPath(Random, int, DirectoryInfo)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void DirectoryPath_Methods()
+  public void ToDirectoryPath_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDirectoryPath(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDirectoryPath()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       var path = new Random().ToDirectoryPath();
       var file = Path.GetFileName(path);
@@ -1805,7 +1958,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDirectoryPath(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDirectoryPath(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToDirectoryPath(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 1000;
@@ -1831,16 +1984,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToDirectory"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToDirectory(System.Random,int,System.IO.DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDirectory(Random, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToDirectory(Random, int, DirectoryInfo)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Directory_Methods()
+  public void ToDirectory_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDirectory()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       Test(new Random().ToDirectory(), Path.GetTempPath());
 
@@ -1865,7 +2018,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToDirectory(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToDirectory(1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToDirectory(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 10;
@@ -1897,16 +2050,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToFile"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToFile(System.Random,int,System.IO.DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToFile(Random, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToFile(Random, int, DirectoryInfo)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void File_Methods()
+  public void ToFile_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToFile(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToFile()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       Test(new Random().ToFile(), Path.GetTempPath());
 
@@ -1932,7 +2085,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToFile(null, 1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToFile(1)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToFile(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 10;
@@ -1965,18 +2118,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToBinaryFile"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToBinaryFile(System.Random,int,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToBinaryFile(System.Random,int,int,byte?,byte?,System.IO.DirectoryInfo)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToBinaryFile(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToBinaryFile(Random, int, byte?, byte?, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToBinaryFile(Random, int, IEnumerable{Range}, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToBinaryFile(Random, int, int, byte?, byte?, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToBinaryFile(Random, int, int, IEnumerable{Range}, DirectoryInfo)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void BinaryFile_Methods()
+  public void ToBinaryFile_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToBinaryFile(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToBinaryFile(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToBinaryFile(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
 
       throw new NotImplementedException();
@@ -1988,7 +2141,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToBinaryFile(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToBinaryFile(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToBinaryFile(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
 
       throw new NotImplementedException();
@@ -2000,7 +2153,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToBinaryFile(null, 0, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToBinaryFile(0, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToBinaryFile(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToBinaryFile(0, -1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -2013,7 +2166,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToBinaryFile(null, 0, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToBinaryFile(0, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToBinaryFile(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToBinaryFile(0, -1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -2028,18 +2181,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToBinaryFileAsync(System.Random,int,byte?,byte?,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToBinaryFileAsync(System.Random,int,System.Collections.Generic.IEnumerable{System.Range},System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToBinaryFileAsync(System.Random,int,int,byte?,byte?,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToBinaryFileAsync"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToBinaryFileAsync(Random, int, byte?, byte?, DirectoryInfo, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToBinaryFileAsync(Random, int, IEnumerable{Range}, DirectoryInfo, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToBinaryFileAsync(Random, int, int, byte?, byte?, DirectoryInfo, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToBinaryFileAsync(Random, int, int, IEnumerable{Range}, DirectoryInfo, CancellationToken)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void BinaryFileAsync_Methods()
+  public void ToBinaryFileAsync_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToBinaryFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+      AssertionExtensions.Should(() => ((Random) null).ToBinaryFileAsync(0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
       AssertionExtensions.Should(() => new Random().ToBinaryFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
 
       /*const int size = 4096;
@@ -2095,7 +2248,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToBinaryFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+      AssertionExtensions.Should(() => ((Random) null).ToBinaryFileAsync(0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
       AssertionExtensions.Should(() => new Random().ToBinaryFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
       //AssertionExtensions.Should(() => new Random().BinaryFileAsync(0, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
@@ -2146,7 +2299,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToBinaryFileAsync(null, 0, 0).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToBinaryFileAsync(0, 0).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToBinaryFileAsync(-1, 0).ToArrayAsync()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToBinaryFileAsync(0, -1).ToArrayAsync()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -2159,7 +2312,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToBinaryFileAsync(null, 0, 0).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToBinaryFileAsync(0, 0).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToBinaryFileAsync(-1, 0).ToArrayAsync()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToBinaryFileAsync(0, -1).ToArrayAsync()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -2174,18 +2327,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToTextFile"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToTextFile(System.Random,int,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToTextFile(System.Random,int,int,System.Text.Encoding,char?,char?,System.IO.DirectoryInfo)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToTextFile(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range},System.Text.Encoding,System.IO.DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTextFile(Random, int, Encoding, char?, char?, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTextFile(Random, int, IEnumerable{Range}, Encoding, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTextFile(Random, int, int, Encoding, char?, char?, DirectoryInfo)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTextFile(Random, int, int, IEnumerable{Range}, Encoding, DirectoryInfo)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void TextFile_Methods()
+  public void ToTextFile_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToTextFile(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToTextFile(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToTextFile(-1)).ThrowExactly<ArgumentNullException>().WithParameterName("count");
 
       throw new NotImplementedException();
@@ -2197,7 +2350,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToTextFile(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToTextFile(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToTextFile(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
 
       throw new NotImplementedException();
@@ -2209,7 +2362,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      //AssertionExtensions.Should(() => RandomExtensions.TextFile(null, 0, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      //AssertionExtensions.Should(() => ((Random) null).TextFile(0, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       //AssertionExtensions.Should(() => new Random().TextFile(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       //AssertionExtensions.Should(() => new Random().TextFile(0, -1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -2222,7 +2375,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      //AssertionExtensions.Should(() => RandomExtensions.TextFile(null, 0, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      //AssertionExtensions.Should(() => ((Random) null).TextFile(0, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       //AssertionExtensions.Should(() => new Random().TextFile(-1, 0).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       //AssertionExtensions.Should(() => new Random().TextFile(0, -1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -2237,16 +2390,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToTextFileAsync(System.Random,int,System.Text.Encoding,char?,char?,System.IO.DirectoryInfo,System.Threading.CancellationToken)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToTextFileAsync"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTextFileAsync(Random, int, Encoding, char?, char?, DirectoryInfo, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToTextFileAsync(Random, int, IEnumerable{Range}, Encoding, DirectoryInfo, CancellationToken)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void TextFileAsync_Methods()
+  public void ToTextFileAsync_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToTextFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+      AssertionExtensions.Should(() => ((Random) null).ToTextFileAsync(0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
       AssertionExtensions.Should(() => new Random().ToTextFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
 
       throw new NotImplementedException();
@@ -2258,7 +2411,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToTextFileAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+      AssertionExtensions.Should(() => ((Random) null).ToTextFileAsync(0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
       AssertionExtensions.Should(() => new Random().ToTextFileAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("size").Await();
 
       throw new NotImplementedException();
@@ -2290,16 +2443,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.IpV6Address(Random)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.IpV6Address(Random, int)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToIpV6Address(Random)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToIpV6Address(Random, int)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void IpV6Address_Methods()
+  public void ToIpV6Address_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToIpV6Address(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToIpV6Address()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       throw new NotImplementedException();
 
@@ -2310,7 +2463,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToIpV6Address(null, 0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToIpV6Address(0).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToIpV6Address(-1).ToArray()).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       throw new NotImplementedException();
@@ -2324,18 +2477,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToPhysicalAddress"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToPhysicalAddress(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToPhysicalAddress(System.Random,int,int,byte?,byte?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToPhysicalAddress(System.Random,int,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToPhysicalAddress(Random, int, byte?, byte?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToPhysicalAddress(Random, int, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToPhysicalAddress(Random, int, int,byte?,byte?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToPhysicalAddress(Random, int, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void PhysicalAddress_Methods()
+  public void ToPhysicalAddress_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToPhysicalAddress(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToPhysicalAddress(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToPhysicalAddress(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
 
       const int count = 1000;
@@ -2359,7 +2512,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToPhysicalAddress(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToPhysicalAddress(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToPhysicalAddress(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
 
       const int count = 1000;
@@ -2373,7 +2526,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToPhysicalAddress(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToPhysicalAddress(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToPhysicalAddress(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToPhysicalAddress(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -2386,7 +2539,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToPhysicalAddress(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToPhysicalAddress(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToPhysicalAddress(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("size");
       AssertionExtensions.Should(() => new Random().ToPhysicalAddress(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -2401,16 +2554,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToMemoryStream"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToMemoryStream(System.Random,int,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToMemoryStream(Random, int, byte?, byte?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToMemoryStream(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void MemoryStream_Methods()
+  public void ToMemoryStream_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToMemoryStream(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToMemoryStream(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToMemoryStream(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       throw new NotImplementedException();
@@ -2422,7 +2575,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToMemoryStream(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToMemoryStream(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToMemoryStream(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       throw new NotImplementedException();
@@ -2436,26 +2589,26 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToMemoryStreamAsync(System.Random,int,byte?,byte?,System.Threading.CancellationToken)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToMemoryStreamAsync"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToMemoryStreamAsync(Random, int, byte?, byte?, CancellationToken)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToMemoryStreamAsync(Random, int, IEnumerable{Range}, CancellationToken)"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void MemoryStreamAsync_Methods()
+  public void ToMemoryStreamAsync_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToMemoryStreamAsync(null, 0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+      AssertionExtensions.Should(() => ((Random) null).ToMemoryStreamAsync(0)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
       AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(-1)).ThrowExactlyAsync<ArgumentOutOfRangeException>().WithParameterName("count").Await();
 
       const int count = 1000;
 
       new Random().ToMemoryStreamAsync(0).Await().Length.Should().Be(0);
-      new Random().ToMemoryStreamAsync(0, null, null).Await().Length.Should().Be(0);
+      new Random().ToMemoryStreamAsync(0).Await().Length.Should().Be(0);
 
       using (var stream = new Random().ToMemoryStreamAsync(count).Await())
       {
-        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count, null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Test(stream, count);
 
@@ -2464,7 +2617,7 @@ public sealed class RandomExtensionsTest : Test
 
       using (var stream = new Random().ToMemoryStreamAsync(count, 0, 100).Await())
       {
-        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count, null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Test(stream, count);
 
@@ -2473,7 +2626,7 @@ public sealed class RandomExtensionsTest : Test
 
       using (var stream = new Random().ToMemoryStreamAsync(count, 0, 0).Await())
       {
-        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count, null, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Test(stream, count);
 
@@ -2496,13 +2649,13 @@ public sealed class RandomExtensionsTest : Test
     {
       const int count = 1000;
 
-      AssertionExtensions.Should(() => RandomExtensions.ToMemoryStreamAsync(null, 0, new[] {1..2})).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
+      AssertionExtensions.Should(() => ((Random) null).ToMemoryStreamAsync(0, [1..2])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("random").Await();
 
-      new Random().ToMemoryStreamAsync(0, new[] {Range.All}).Await().Length.Should().Be(0);
+      new Random().ToMemoryStreamAsync(0, [Range.All]).Await().Length.Should().Be(0);
 
-      using (var stream = new Random().ToMemoryStreamAsync(count, new [] {Range.All}).Await())
+      using (var stream = new Random().ToMemoryStreamAsync(count, [Range.All]).Await())
       {
-        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count, new [] {Range.All})).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count, [Range.All])).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Test(stream, count);
 
@@ -2511,7 +2664,7 @@ public sealed class RandomExtensionsTest : Test
 
       using (var stream = new Random().ToMemoryStreamAsync(count, new[] {..100}).Await())
       {
-        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count, new[] {Range.All})).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count, [Range.All])).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Test(stream, count);
 
@@ -2520,7 +2673,7 @@ public sealed class RandomExtensionsTest : Test
 
       using (var stream = new Random().ToMemoryStreamAsync(count, new[] {..0}).Await())
       {
-        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count, new[] {Range.All})).ThrowExactlyAsync<OperationCanceledException>().Await();
+        AssertionExtensions.Should(() => new Random().ToMemoryStreamAsync(count, [Range.All])).ThrowExactlyAsync<OperationCanceledException>().Await();
 
         Test(stream, count);
 
@@ -2543,16 +2696,16 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.ToStream"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.ToStream(System.Random,System.Collections.Generic.IEnumerable{System.Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToStream(Random, byte?, byte?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToStream(Random, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void Stream_Methods()
+  public void ToStream_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToStream()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       throw new NotImplementedException();
 
@@ -2563,7 +2716,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToStream()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       throw new NotImplementedException();
 
@@ -2576,18 +2729,18 @@ public sealed class RandomExtensionsTest : Test
   /// <summary>
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
-  ///     <item><description><see cref="RandomExtensions.IpAddress(Random, long?, long?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.IpAddress(Random, IEnumerable{Range})"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.IpAddress(Random, int, long?, long?)"/></description></item>
-  ///     <item><description><see cref="RandomExtensions.IpAddress(Random, int, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToIpAddress(Random, long?, long?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToIpAddress(Random, IEnumerable{Range})"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToIpAddress(Random, int, long?, long?)"/></description></item>
+  ///     <item><description><see cref="RandomExtensions.ToIpAddress(Random, int, IEnumerable{Range})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
-  public void IpAddress_Methods()
+  public void ToIpAddress_Methods()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToIpAddress(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToIpAddress()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       throw new NotImplementedException();
 
@@ -2598,7 +2751,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToIpAddress(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToIpAddress()).ThrowExactly<ArgumentNullException>().WithParameterName("random");
 
       throw new NotImplementedException();
 
@@ -2609,7 +2762,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToIpAddress(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToIpAddress(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToIpAddress(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       throw new NotImplementedException();
@@ -2621,7 +2774,7 @@ public sealed class RandomExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RandomExtensions.ToIpAddress(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
+      AssertionExtensions.Should(() => ((Random) null).ToIpAddress(0)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
       AssertionExtensions.Should(() => new Random().ToIpAddress(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       throw new NotImplementedException();
@@ -2629,30 +2782,6 @@ public sealed class RandomExtensionsTest : Test
       static void Test()
       {
       }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="RandomExtensions.DateTime(Random, DateTime?, DateTime?)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void DateTime_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => RandomExtensions.ToDateTime(null)).ThrowExactly<ArgumentNullException>().WithParameterName("random");
-
-      new Random().ToDateTime(DateTime.MinValue, DateTime.MinValue).Should().Be(DateTime.MinValue).And.BeSameDateAs(new Random().ToDateTime(DateTime.MinValue, DateTime.MinValue));
-      new Random().ToDateTime(DateTime.MaxValue, DateTime.MaxValue).Should().Be(DateTime.MaxValue).And.BeSameDateAs(new Random().ToDateTime(DateTime.MaxValue, DateTime.MaxValue));
-      new Random().ToDateTime(DateTime.MinValue, DateTime.MaxValue).Should().BeIn(DateTimeKind.Utc).And.BeOnOrAfter(DateTime.MinValue).And.BeOnOrBefore(DateTime.MaxValue);
-      new Random().ToDateTime(DateTime.MaxValue, DateTime.MinValue).Should().BeIn(DateTimeKind.Utc).And.BeOnOrAfter(DateTime.MinValue).And.BeOnOrBefore(DateTime.MaxValue);
-      new Random().ToDateTime().Should().BeIn(DateTimeKind.Utc).And.BeOnOrAfter(DateTime.MinValue).And.BeOnOrBefore(DateTime.MaxValue);
-    }
-
-    throw new NotImplementedException();
-
-    static void Test()
-    {
     }
   }
 }

@@ -30,6 +30,16 @@ public static class XDocumentExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public byte[] Bytes => document.ToBytes();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => document.ToText();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
     public XDocument Empty()
@@ -85,6 +95,22 @@ public static class XDocumentExtensions
     /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
     public XDocument With(params object[] nodes) => document.With(nodes as IEnumerable<object>);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+    public string Serialize()
+    {
+      if (document is null) throw new ArgumentNullException(nameof(document));
+
+      using var destination = new StringWriter();
+
+      document.Serialize(destination);
+
+      return destination.ToString();
+    }
 
     /// <summary>
     ///   <para></para>
@@ -157,22 +183,6 @@ public static class XDocumentExtensions
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-    public string Serialize()
-    {
-      if (document is null) throw new ArgumentNullException(nameof(document));
-
-      using var destination = new StringWriter();
-
-      document.Serialize(destination);
-
-      return destination.ToString();
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
     public byte[] ToBytes()
     {
       if (document is null) throw new ArgumentNullException(nameof(document));
@@ -183,11 +193,6 @@ public static class XDocumentExtensions
 
       return stream.ToArray();
     }
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => document.ToBytes();
 
     /// <summary>
     ///   <para></para>
@@ -224,11 +229,6 @@ public static class XDocumentExtensions
       return writer.ToString();
     }
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => document.ToText();
-
     /// <summary>
     ///   <para></para>
     /// </summary>

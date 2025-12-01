@@ -25,6 +25,7 @@ public sealed class TaskExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((Task) null).Await()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("task").Await();
 
+      
       static void Test()
       {
       }
@@ -125,7 +126,7 @@ public sealed class TaskExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TaskExtensions.ToValueTask(null)).ThrowExactly<ArgumentNullException>().WithParameterName("task");
+      AssertionExtensions.Should(() => ((Task) null).ToValueTask()).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
       static void Test()
       {
@@ -134,7 +135,7 @@ public sealed class TaskExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TaskExtensions.ToValueTask<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("task");
+      AssertionExtensions.Should(() => ((Task<object>) null).ToValueTask()).ThrowExactly<ArgumentNullException>().WithParameterName("task");
 
       static void Test()
       {

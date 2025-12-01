@@ -19,7 +19,7 @@ public sealed class AssemblyExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => AssemblyExtensions.Resource(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("assembly");
+      AssertionExtensions.Should(() => ((Assembly) null).Resource(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("assembly");
       AssertionExtensions.Should(() => Assembly.GetExecutingAssembly().Resource(null)).ThrowExactly<ArgumentNullException>().WithParameterName("name");
 
       //Assembly.GetExecutingAssembly().Resource("invalid").Should().BeNull();

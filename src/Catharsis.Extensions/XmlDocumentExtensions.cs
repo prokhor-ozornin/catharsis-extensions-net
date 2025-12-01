@@ -29,6 +29,16 @@ public static class XmlDocumentExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public byte[] Bytes => document.ToBytes();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => document.ToText();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <returns>Back self-reference to the given <paramref name="document"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
     public XmlDocument Empty()
@@ -225,11 +235,6 @@ public static class XmlDocumentExtensions
     }
 
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => document.ToBytes();
-    
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
@@ -244,10 +249,5 @@ public static class XmlDocumentExtensions
 
       return writer.ToString();
     }
-    
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => document.ToText();
   }
 }

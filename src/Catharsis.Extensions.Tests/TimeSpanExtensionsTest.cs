@@ -11,10 +11,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class TimeSpanExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeSpanExtensions.InThePast(TimeSpan)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeSpanExtensions.get_InThePast(TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
-  public void InThePast_Method()
+  public void InThePast_Property()
   {
     using (new AssertionScope())
     {
@@ -34,10 +34,10 @@ public sealed class TimeSpanExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeSpanExtensions.InTheFuture(TimeSpan)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeSpanExtensions.get_InTheFuture(TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
-  public void InTheFuture_Method()
+  public void InTheFuture_Property()
   {
     using (new AssertionScope())
     {
@@ -57,10 +57,10 @@ public sealed class TimeSpanExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeSpanExtensions.IsEmpty(TimeSpan)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeSpanExtensions.get_IsEmpty(TimeSpan)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {

@@ -12,10 +12,66 @@ namespace Catharsis.Extensions.Tests;
 public sealed class BinaryWriterExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsStart(BinaryWriter)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.get_IsUnset(BinaryWriter)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsStart_Method()
+  public void IsUnset_Property()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsUnset).ThrowExactly<ArgumentException>().WithParameterName("writer");
+
+      Test(true, null);
+      Test(true, System.IO.Stream.Null.ToBinaryWriter());
+      Test(true, EmptyStream.ToBinaryWriter());
+      Test(false, Stream.ToBinaryWriter());
+      Test(true, WriteOnlyStream.ToBinaryWriter());
+    }
+
+    return;
+
+    static void Test(bool result, BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.IsUnset.Should().Be(result);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.get_IsEmpty(BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsEmpty_Property()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEmpty).ThrowExactly<ArgumentException>();
+
+      Test(true, System.IO.Stream.Null.ToBinaryWriter());
+      Test(true, EmptyStream.ToBinaryWriter());
+      Test(false, Stream.ToBinaryWriter());
+      Test(true, WriteOnlyStream.ToBinaryWriter());
+    }
+
+    return;
+
+    static void Test(bool result, BinaryWriter writer)
+    {
+      using (writer)
+      {
+        writer.IsEmpty.Should().Be(result);
+      }
+    }
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.get_IsStart(BinaryWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsStart_Property()
   {
     using (new AssertionScope())
     {
@@ -43,10 +99,10 @@ public sealed class BinaryWriterExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsEnd(BinaryWriter)"/> method.</para>
+  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.get_IsEnd(BinaryWriter)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEnd_Method()
+  public void IsEnd_Property()
   {
     using (new AssertionScope())
     {
@@ -102,61 +158,6 @@ public sealed class BinaryWriterExtensionsTest : Test
     }
   }
 
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsUnset(BinaryWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsUnset_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsUnset).ThrowExactly<ArgumentException>();
-
-      Test(true, null);
-      Test(true, System.IO.Stream.Null.ToBinaryWriter());
-      Test(true, EmptyStream.ToBinaryWriter());
-      Test(false, Stream.ToBinaryWriter());
-      Test(true, WriteOnlyStream.ToBinaryWriter());
-    }
-
-    return;
-
-    static void Test(bool result, BinaryWriter writer)
-    {
-      using (writer)
-      {
-        writer.IsUnset.Should().Be(result);
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="BinaryWriterExtensions.IsEmpty(BinaryWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsEmpty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((BinaryWriter) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToBinaryWriter().IsEmpty).ThrowExactly<ArgumentException>();
-
-      Test(true, System.IO.Stream.Null.ToBinaryWriter());
-      Test(true, EmptyStream.ToBinaryWriter());
-      Test(false, Stream.ToBinaryWriter());
-      Test(true, WriteOnlyStream.ToBinaryWriter());
-    }
-
-    return;
-
-    static void Test(bool result, BinaryWriter writer)
-    {
-      using (writer)
-      {
-        writer.IsEmpty.Should().Be(result);
-      }
-    }
-  }
 
   /// <summary>
   ///   <para>Performs testing of <see cref="BinaryWriterExtensions.Clone(BinaryWriter)"/> method.</para>
@@ -166,7 +167,7 @@ public sealed class BinaryWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => BinaryWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => ((BinaryWriter) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
     }
 
     Test(System.IO.Stream.Null.ToBinaryWriter());
@@ -255,7 +256,7 @@ public sealed class BinaryWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => BinaryWriterExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => ((BinaryWriter) null).WriteBytes([])).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => System.IO.Stream.Null.ToBinaryWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       
       Test([]);
@@ -282,7 +283,7 @@ public sealed class BinaryWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => BinaryWriterExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => ((BinaryWriter) null).WriteText(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => System.IO.Stream.Null.ToBinaryWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Test(string.Empty);

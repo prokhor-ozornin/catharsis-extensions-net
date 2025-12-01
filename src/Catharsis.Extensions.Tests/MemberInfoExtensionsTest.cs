@@ -16,7 +16,7 @@ public sealed class MemberInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsConstructor(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsConstructor_Method()
+  public void IsConstructor_Property()
   {
     using (new AssertionScope())
     {
@@ -36,7 +36,7 @@ public sealed class MemberInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsMethod(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsMethod_Method()
+  public void IsMethod_Property()
   {
     using (new AssertionScope())
     {
@@ -56,7 +56,7 @@ public sealed class MemberInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsProperty(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsProperty_Method()
+  public void IsProperty_Property()
   {
     using (new AssertionScope())
     {
@@ -76,7 +76,7 @@ public sealed class MemberInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsField(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsField_Method()
+  public void IsField_Property()
   {
     using (new AssertionScope())
     {
@@ -96,7 +96,7 @@ public sealed class MemberInfoExtensionsTest : Test
   ///   <para>Performs testing of <see cref="MemberInfoExtensions.get_IsEvent(MemberInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEvent_Method()
+  public void IsEvent_Property()
   {
     using (new AssertionScope())
     {
@@ -124,7 +124,7 @@ public sealed class MemberInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.Attribute<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => ((MemberInfo) null).Attribute<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       static void Test()
       {
@@ -133,7 +133,7 @@ public sealed class MemberInfoExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.Attribute(null, typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => ((MemberInfo) null).Attribute(typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("member");
       AssertionExtensions.Should(() => typeof(object).Attribute(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
       /*typeof(TestObject).Attribute(typeof(NonSerializedAttribute)).Should().BeNull();
@@ -189,7 +189,7 @@ public sealed class MemberInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.Attributes<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => ((MemberInfo) null).Attributes<object>()).ThrowExactly<ArgumentNullException>().WithParameterName("member");
 
       static void Test()
       {
@@ -198,7 +198,7 @@ public sealed class MemberInfoExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => MemberInfoExtensions.Attributes(null, typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("member");
+      AssertionExtensions.Should(() => ((MemberInfo) null).Attributes(typeof(object))).ThrowExactly<ArgumentNullException>().WithParameterName("member");
       AssertionExtensions.Should(() => typeof(object).Attributes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("type");
 
       static void Test()

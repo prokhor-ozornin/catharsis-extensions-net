@@ -20,7 +20,7 @@ public sealed class XmlWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlWriterExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => ((XmlWriter) null).WriteBytes([])).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlWriter().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
@@ -45,7 +45,7 @@ public sealed class XmlWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlWriterExtensions.WriteBytesAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => ((XmlWriter) null).WriteBytesAsync([])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("writer").Await();
       AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlWriter().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
     }
 
@@ -70,7 +70,7 @@ public sealed class XmlWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlWriterExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => ((XmlWriter) null).WriteText(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
       AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlWriter().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
@@ -95,7 +95,7 @@ public sealed class XmlWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlWriterExtensions.WriteTextAsync(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => ((XmlWriter) null).WriteTextAsync(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("writer").Await();
       AssertionExtensions.Should(() => System.IO.Stream.Null.ToXmlWriter().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
     }
 

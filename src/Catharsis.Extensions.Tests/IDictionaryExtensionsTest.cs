@@ -18,7 +18,7 @@ public sealed class IDictionaryExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IDictionaryExtensions.Get<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+      AssertionExtensions.Should(() => ((IDictionary<object, object>) null).Get(new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
     }
 
     throw new NotImplementedException();
@@ -38,7 +38,7 @@ public sealed class IDictionaryExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IDictionaryExtensions.Set<object, object>(null, new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+      AssertionExtensions.Should(() => ((IDictionary<object, object>) null).Set(new object())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
     }
 
     throw new NotImplementedException();
@@ -76,7 +76,7 @@ public sealed class IDictionaryExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IDictionaryExtensions.With<string, object>(null, string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+      AssertionExtensions.Should(() => ((IDictionary<string, object>) null).With(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
 
       static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
       {
@@ -85,7 +85,7 @@ public sealed class IDictionaryExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IDictionaryExtensions.With(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+      AssertionExtensions.Should(() => ((IDictionary<string, object>) null).With(Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().With((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, IEnumerable<(TKey key, TValue value)> elements)
@@ -95,7 +95,7 @@ public sealed class IDictionaryExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IDictionaryExtensions.With(null, Array.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+      AssertionExtensions.Should(() => ((IDictionary<string, object>) null).With()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
       AssertionExtensions.Should(() => new Dictionary<string, object>().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       static void Test<TKey, TValue>(IDictionary<TKey, TValue> dictionary, params (TKey key, TValue value)[] elements)
@@ -147,7 +147,7 @@ public sealed class IDictionaryExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IDictionaryExtensions.ToSortedList<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+      AssertionExtensions.Should(() => ((IDictionary<int, object>) null).ToSortedList()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
     }
 
     throw new NotImplementedException();
@@ -167,7 +167,7 @@ public sealed class IDictionaryExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IDictionaryExtensions.ToSortedDictionary<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+      AssertionExtensions.Should(() => ((IDictionary<int, object>) null).ToSortedDictionary()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
     }
 
     throw new NotImplementedException();
@@ -178,27 +178,7 @@ public sealed class IDictionaryExtensionsTest : Test
     {
     }
   }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="IDictionaryExtensions.ToFrozenDictionary{TKey, TValue}(IDictionary{TKey, TValue}, IEqualityComparer{TKey})"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToFrozenDictionary_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => IDictionaryExtensions.ToFrozenDictionary<int, object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test()
-    {
-    }
-  }
-
+  
   /// <summary>
   ///   <para>Performs testing of <see cref="IDictionaryExtensions.ToValueTuple{TKey, TValue}(IDictionary{TKey, TValue}, IComparer{TKey})"/> method.</para>
   /// </summary>
@@ -228,6 +208,26 @@ public sealed class IDictionaryExtensionsTest : Test
     using (new AssertionScope())
     {
       AssertionExtensions.Should(() => ((IDictionary<object, object>) null).ToTuple()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test()
+    {
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="IDictionaryExtensions.ToFrozenDictionary{TKey, TValue}(IDictionary{TKey, TValue}, IEqualityComparer{TKey})"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToFrozenDictionary_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((IDictionary<int, object>) null).ToFrozenDictionary()).ThrowExactly<ArgumentNullException>().WithParameterName("dictionary");
     }
 
     throw new NotImplementedException();

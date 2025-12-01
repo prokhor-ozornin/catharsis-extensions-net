@@ -11,10 +11,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StreamReaderExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamReaderExtensions.IsStart(StreamReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamReaderExtensions.get_IsStart(StreamReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsStart_Method()
+  public void IsStart_Property()
   {
     using (new AssertionScope())
     {
@@ -42,37 +42,10 @@ public sealed class StreamReaderExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamReaderExtensions.Rewind(StreamReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamReaderExtensions.get_IsUnset(StreamReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Rewind_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StreamReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-
-      Test(System.IO.Stream.Null.ToStreamReader());
-      Test(Stream.ToStreamReader());
-    }
-
-    return;
-
-    static void Test(StreamReader reader)
-    {
-      using (reader)
-      {
-        reader.ToBytesAsync().Await();
-        reader.Rewind().Should().BeOfType<StreamReader>().And.BeSameAs(reader);
-        reader.BaseStream.Should().HavePosition(0);
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamReaderExtensions.IsUnset(StreamReader)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -96,10 +69,10 @@ public sealed class StreamReaderExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StreamReaderExtensions.IsEmpty(StreamReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StreamReaderExtensions.get_IsEmpty(StreamReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {
@@ -119,6 +92,33 @@ public sealed class StreamReaderExtensionsTest : Test
       using (reader)
       {
         reader.IsEmpty.Should().Be(result);
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamReaderExtensions.Rewind(StreamReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Rewind_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((StreamReader) null).Rewind()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+
+      Test(System.IO.Stream.Null.ToStreamReader());
+      Test(Stream.ToStreamReader());
+    }
+
+    return;
+
+    static void Test(StreamReader reader)
+    {
+      using (reader)
+      {
+        reader.ToBytesAsync().Await();
+        reader.Rewind().Should().BeOfType<StreamReader>().And.BeSameAs(reader);
+        reader.BaseStream.Should().HavePosition(0);
       }
     }
   }
@@ -158,7 +158,7 @@ public sealed class StreamReaderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamReaderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ((StreamReader) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
 
       Test(System.IO.Stream.Null.ToStreamReader());
       Test(EmptyStream.ToStreamReader());

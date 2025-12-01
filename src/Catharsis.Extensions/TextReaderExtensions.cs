@@ -43,9 +43,24 @@ public static class TextReaderExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public string[] Lines => reader.ToLines().ToArray();
+
+    /// <summary>
+    ///   <para>[NEW]</para>
+    /// </summary>
+    public byte[] Bytes => reader.ToBytes();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => reader.ToText();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="LinesAsync(TextReader)"/>
+    /// <seealso cref="TextReaderExtensions.ToLinesAsync"/>
     public IEnumerable<string> ToLines()
     {
       if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -57,17 +72,12 @@ public static class TextReaderExtensions
     }
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string[] Lines => reader.ToLines().ToArray();
-
-    /// <summary>
     ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a list of strings, using default system-dependent string separator.</para>
     /// </summary>
     /// <returns>List of strings which have been read from a <paramref name="reader"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
     /// <seealso cref="TextReaderExtensions.ToLines"/>
-    public async IAsyncEnumerable<string> LinesAsync()
+    public async IAsyncEnumerable<string> ToLinesAsync()
     {
       if (reader is null) throw new ArgumentNullException(nameof(reader));
 
@@ -189,11 +199,6 @@ public static class TextReaderExtensions
     public byte[] ToBytes(Encoding encoding = null) => reader.ToText().ToBytes(encoding);
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => reader.ToBytes();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="encoding"></param>
@@ -210,11 +215,6 @@ public static class TextReaderExtensions
     /// <seealso cref="ToTextAsync(TextReader)"/>
     public string ToText() => reader?.ReadToEnd() ?? throw new ArgumentNullException(nameof(reader));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => reader.ToText();
-
     /// <summary>
     ///   <para>Reads text using specified <see cref="TextReader"/> and returns it as a string.</para>
     /// </summary>

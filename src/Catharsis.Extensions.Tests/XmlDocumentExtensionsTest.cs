@@ -13,10 +13,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class XmlDocumentExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlDocumentExtensions.IsUnset(XmlDocument)"/> method.</para>
+  ///   <para>Performs testing of <see cref="XmlDocumentExtensions.get_IsUnset(XmlDocument)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -38,14 +38,14 @@ public sealed class XmlDocumentExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlDocumentExtensions.IsEmpty(XmlDocument)"/> method.</para>
+  ///   <para>Performs testing of <see cref="XmlDocumentExtensions.get_IsEmpty(XmlDocument)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
       Test(true, new XmlDocument());
       Test(true, new XmlDocument().With(document => document.With(document.CreateComment(null))));
@@ -64,6 +64,24 @@ public sealed class XmlDocumentExtensionsTest : Test
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="XmlDocumentExtensions.get_Bytes(XmlDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="XmlDocumentExtensions.get_Text(XmlDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Text_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XmlDocumentExtensions.Empty(XmlDocument)"/> method.</para>
   /// </summary>
   [Fact]
@@ -71,7 +89,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
       Test(new XmlDocument());
       Test(new XmlDocument().With(document => document.With(document.CreateElement("root"))));
@@ -94,7 +112,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlDocumentExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() =>  XmlDocumentExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().Clone()).ThrowExactly<XmlException>();
 
       throw new NotImplementedException();
@@ -124,7 +142,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).TryFinallyClear(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().TryFinallyClear(null)).ThrowExactly<ArgumentNullException>().WithParameterName("action");
 
       new XmlDocument().With(document => Test(document, document.CreateElement("root")));
@@ -151,7 +169,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlDocumentExtensions.With(null, Enumerable.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XmlDocument) null).With(Enumerable.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().With((IEnumerable<XmlNode>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
       static void Test()
@@ -161,7 +179,7 @@ public sealed class XmlDocumentExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlDocumentExtensions.With(null, Array.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XmlDocument) null).With()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("nodes");
 
       static void Test()
@@ -184,7 +202,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlDocumentExtensions.Without(null, Enumerable.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Without(Enumerable.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().Without((IEnumerable<XmlNode>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
       static void Test()
@@ -194,7 +212,7 @@ public sealed class XmlDocumentExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => XmlDocumentExtensions.Without(null, Array.Empty<XmlNode>())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
 
       static void Test()
@@ -206,6 +224,26 @@ public sealed class XmlDocumentExtensionsTest : Test
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="XmlDocumentExtensions.Serialize(XmlDocument)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Serialize_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(XmlDocument document)
+    {
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="XmlDocumentExtensions.Serialize(XmlDocument, XmlWriter)"/> method.</para>
   /// </summary>
   [Fact]
@@ -213,7 +251,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().Serialize((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -234,7 +272,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(System.IO.Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(System.IO.Stream.Null.ToStreamWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().Serialize((TextWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -255,7 +293,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(System.IO.Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(System.IO.Stream.Null)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().Serialize((Stream) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -276,7 +314,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(FakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize(FakeFile)).ThrowExactly<ArgumentNullException>().WithParameterName("document");
       AssertionExtensions.Should(() => new XmlDocument().Serialize((FileInfo) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -290,26 +328,6 @@ public sealed class XmlDocumentExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="XmlDocumentExtensions.Serialize(XmlDocument)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void Serialize_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((XmlDocument) null).Serialize()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(XmlDocument document)
-    {
-    }
-  }
-
-  /// <summary>
   ///   <para>Performs testing of <see cref="XmlDocumentExtensions.ToEnumerable(XmlDocument)"/> method.</para>
   /// </summary>
   [Fact]
@@ -317,7 +335,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).ToEnumerable()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     }
 
     throw new NotImplementedException();
@@ -337,7 +355,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     }
 
     throw new NotImplementedException();
@@ -355,7 +373,7 @@ public sealed class XmlDocumentExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((XmlDocument) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("xml");
+      AssertionExtensions.Should(() => ((XmlDocument) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("document");
     }
 
     throw new NotImplementedException();

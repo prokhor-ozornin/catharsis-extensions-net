@@ -19,7 +19,7 @@ public sealed class RegexExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RegexExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
+      AssertionExtensions.Should(() => ((Regex) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
 
       Test(string.Empty.ToRegex());
       Test("anything".ToRegex());
@@ -47,7 +47,7 @@ public sealed class RegexExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => RegexExtensions.ToEnumerable(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
+      AssertionExtensions.Should(() => ((Regex) null).ToEnumerable(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("regex");
       AssertionExtensions.Should(() => RegexExtensions.ToEnumerable(new Regex(".*"), null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 

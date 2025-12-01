@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Execution;
+using Microsoft.VisualBasic;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
@@ -18,7 +19,7 @@ public sealed class FileSystemInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileSystemInfoExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("entry");
+      AssertionExtensions.Should(() => ((FileSystemInfo) null).ToUri()).ThrowExactly<ArgumentNullException>().WithParameterName("entry");
 
       Test(FakeFile);
       Test(FakeDirectory);

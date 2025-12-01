@@ -615,6 +615,51 @@ public static class IEnumerableExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <value></value>
+    /// <seealso cref="IsEmpty"/>
+    public bool IsUnset => enumerable is null || enumerable.IsEmpty;
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsUnset"/>
+    public bool IsEmpty => !enumerable?.Any() ?? throw new ArgumentNullException(nameof(enumerable));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public bool ContainsDefault
+    {
+      get
+      {
+        if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+        return enumerable.Any(element => element.Equals(default(T)));
+      }
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+    public bool ContainsNull
+    {
+      get
+      {
+        if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
+
+        return enumerable.Any(element => element is null);
+      }
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="action"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="enumerable"/> or <paramref name="action"/> is <see langword="null"/>.</exception>
@@ -821,36 +866,6 @@ public static class IEnumerableExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-    public bool ContainsNull
-    {
-      get
-      {
-        if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-        return enumerable.Any(element => element is null);
-      }
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-    public bool ContainsDefault
-    {
-      get
-      {
-        if (enumerable is null) throw new ArgumentNullException(nameof(enumerable));
-
-        return enumerable.Any(element => element.Equals(default(T)));
-      }
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
     /// <param name="superset"></param>
     /// <param name="comparer"></param>
     /// <returns></returns>
@@ -923,21 +938,6 @@ public static class IEnumerableExtensions
       }
     }
     
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <seealso cref="IsEmpty"/>
-    public bool IsUnset => enumerable is null || enumerable.IsEmpty;
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset"/>
-    public bool IsEmpty => !enumerable?.Any() ?? throw new ArgumentNullException(nameof(enumerable));
-
     #if NET10_0_OR_GREATER
     /// <summary>
     ///   <para></para>

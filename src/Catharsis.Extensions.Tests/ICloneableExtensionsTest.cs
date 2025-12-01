@@ -14,6 +14,7 @@ namespace Catharsis.Extensions.Tests
     [Fact]
     public void Cloneable_Method()
     {
+      
       throw new NotImplementedException();
     }
   }

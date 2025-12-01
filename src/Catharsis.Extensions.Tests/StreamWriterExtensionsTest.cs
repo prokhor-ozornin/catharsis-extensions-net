@@ -11,6 +11,51 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StreamWriterExtensionsTest : Test
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="StreamWriterExtensions.get_IsUnset(StreamWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Property()
+  {
+    using (new AssertionScope())
+    {
+      throw new NotImplementedException();
+    }
+
+    return;
+
+    static void Test(bool result, StreamWriter writer) => writer.IsUnset.Should().Be(writer is null || writer.IsEmpty).And.Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StreamWriterExtensions.get_IsEmpty(StreamWriter)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsEmpty_Property()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToStreamWriter().IsEmpty).ThrowExactly<ArgumentException>();
+
+      Test(EmptyStream.ToStreamWriter());
+      Test(Stream.ToStreamWriter());
+      Test(WriteOnlyStream.ToStreamWriter());
+    }
+
+    return;
+
+    static void Test(StreamWriter writer)
+    {
+      using (writer)
+      {
+        writer.Empty().IsEmpty.Should().BeTrue();
+        writer.BaseStream.WriteByte(byte.MinValue);
+        writer.IsEmpty.Should().BeFalse();
+      }
+    }
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="StreamWriterExtensions.Rewind(StreamWriter)"/> method.</para>
   /// </summary>
   [Fact]
@@ -34,51 +79,6 @@ public sealed class StreamWriterExtensionsTest : Test
         writer.Flush();
         writer.Rewind().Should().BeOfType<StreamWriter>().And.BeSameAs(writer);
         writer.BaseStream.Should().BeOfType<Stream>().And.HavePosition(0);
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamWriterExtensions.IsUnset(StreamWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsUnset_Method()
-  {
-    using (new AssertionScope())
-    {
-      throw new NotImplementedException();
-    }
-
-    return;
-
-    static void Test(bool result, StreamWriter writer) => writer.IsUnset.Should().Be(writer is null || writer.IsEmpty).And.Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StreamWriterExtensions.IsEmpty(StreamWriter)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsEmpty_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((StreamWriter) null).IsEmpty).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
-      AssertionExtensions.Should(() => WriteOnlyForwardStream.ToStreamWriter().IsEmpty).ThrowExactly<ArgumentException>();
-
-      Test(EmptyStream.ToStreamWriter());
-      Test(Stream.ToStreamWriter());
-      Test(WriteOnlyStream.ToStreamWriter());
-    }
-
-    return;
-
-    static void Test(StreamWriter writer)
-    {
-      using (writer)
-      {
-        writer.Empty().IsEmpty.Should().BeTrue();
-        writer.BaseStream.WriteByte(byte.MinValue);
-        writer.IsEmpty.Should().BeFalse();
       }
     }
   }
@@ -117,7 +117,7 @@ public sealed class StreamWriterExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StreamWriterExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
+      AssertionExtensions.Should(() => ((StreamWriter) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("writer");
 
       Test(System.IO.Stream.Null.ToStreamWriter());
       Test(EmptyStream.ToStreamWriter());

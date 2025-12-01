@@ -20,6 +20,15 @@ public static class StringExtensions
   extension(string text)
   {
     /// <summary>
+    ///   <para>Determines where a string is either <c>null</c> reference or is <see cref="string.Empty"/>.</para>
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if <paramref name="text"/> is either a <c>null</c> reference or an empty string.
+    /// </value>
+    /// <seealso cref="string.IsNullOrWhiteSpace(string)"/>
+    public bool IsUnset => string.IsNullOrWhiteSpace(text);
+
+    /// <summary>
     ///   <para></para>
     /// </summary>
     [CLSCompliant(false)]
@@ -141,6 +150,46 @@ public static class StringExtensions
     public bool IsIpAddress => text.ToIpAddress(out _);
 
     /// <summary>
+    ///   <para>Determines whether a source string represents a valid <see cref="bool"/> value.</para>
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if <paramref name="text"/> represents a valid value of <see cref="bool"/> type, <c>false</c> otherwise.
+    /// </value>
+    public bool IsBoolean => text.ToBoolean(out _);
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsLowerCased"/>
+    public bool IsUpperCased
+    {
+      get
+      {
+        if (text is null) throw new ArgumentNullException(nameof(text));
+
+        return text.All(char.IsUpper);
+      }
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsUpperCased"/>
+    public bool IsLowerCased
+    {
+      get
+      {
+        if (text is null) throw new ArgumentNullException(nameof(text));
+
+        return text.All(char.IsLower);
+      }
+    }
+
+    /// <summary>
     ///   <para></para>
     /// </summary>
     public string[] Lines => text.ToLines();
@@ -160,6 +209,11 @@ public static class StringExtensions
     /// </summary>
     public string LowerCased => text.ToLower();
 
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Capitalized => text.Capitalize();
+    
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -333,11 +387,6 @@ public static class StringExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    public string Capitalized => text.Capitalize();
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
     /// <param name="culture"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
@@ -481,55 +530,6 @@ public static class StringExtensions
 
       return options is not null ? Regex.Matches(text, pattern, options.Value) : Regex.Matches(text, pattern);
     }
-
-    /// <summary>
-    ///   <para>Determines where a string is either <c>null</c> reference or is <see cref="string.Empty"/>.</para>
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if <paramref name="text"/> is either a <c>null</c> reference or an empty string.
-    /// </value>
-    /// <seealso cref="string.IsNullOrWhiteSpace(string)"/>
-    public bool IsUnset => string.IsNullOrWhiteSpace(text);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsLowerCased"/>
-    public bool IsUpperCased
-    {
-      get
-      {
-        if (text is null) throw new ArgumentNullException(nameof(text));
-
-        return text.All(char.IsUpper);
-      }
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUpperCased"/>
-    public bool IsLowerCased
-    {
-      get
-      {
-        if (text is null) throw new ArgumentNullException(nameof(text));
-
-        return text.All(char.IsLower);
-      }
-    }
-
-    /// <summary>
-    ///   <para>Determines whether a source string represents a valid <see cref="bool"/> value.</para>
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if <paramref name="text"/> represents a valid value of <see cref="bool"/> type, <c>false</c> otherwise.
-    /// </value>
-    public bool IsBoolean => text.ToBoolean(out _);
 
     /// <summary>
     ///   <para></para>
@@ -1350,8 +1350,6 @@ public static class StringExtensions
     [CLSCompliant(false)]
     public sbyte ToSbyte(IFormatProvider format = null) => text is not null ? sbyte.Parse(text, NumberStyles.Integer, format ?? CultureInfo.InvariantCulture) : throw new ArgumentNullException(nameof(text));
     
-    
-    
     /// <summary>
     ///   <para></para>
     /// </summary>
@@ -1927,15 +1925,4 @@ public static class StringExtensions
       return process;
     }
   }
-
-  #if NET10_0_OR_GREATER
-
-  #endif
-
-  #if NET10_0_OR_GREATER
-  #endif
-
-  #if NET10_0_OR_GREATER
-
-  #endif
 }

@@ -12,10 +12,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class DateTimeOffsetExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.IsPast(DateTimeOffset)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_IsPast(DateTimeOffset)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsPast_Method()
+  public void IsPast_Property()
   {
     using (new AssertionScope())
     {
@@ -33,10 +33,10 @@ public sealed class DateTimeOffsetExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.IsFuture(DateTimeOffset)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_IsFuture(DateTimeOffset)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsFuture_Method()
+  public void IsFuture_Property()
   {
     using (new AssertionScope())
     {
@@ -54,10 +54,10 @@ public sealed class DateTimeOffsetExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.IsWeekday(DateTimeOffset)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_IsWeekday(DateTimeOffset)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsWeekday_Method()
+  public void IsWeekday_Property()
   {
     using (new AssertionScope())
     {
@@ -79,10 +79,10 @@ public sealed class DateTimeOffsetExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.IsWeekend(DateTimeOffset)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_IsWeekend(DateTimeOffset)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsWeekend_Method()
+  public void IsWeekend_Property()
   {
     using (new AssertionScope())
     {
@@ -101,6 +101,234 @@ public sealed class DateTimeOffsetExtensionsTest : Test
     return;
 
     static void Test(bool result, DateTimeOffset date) => date.IsWeekend.Should().Be(result);
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_StartOfYear(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void StartOfYear_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.StartOfYear.Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_EndOfYear(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void EndOfYear_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.EndOfYear.Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_StartOfMonth(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void StartOfMonth_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.StartOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_EndOfMonth(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void EndOfMonth_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.EndOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_StartOfDay(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void StartOfDay_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.StartOfDay.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_EndOfDay(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void EndOfDay_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.EndOfDay.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_StartOfHour(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void StartOfHour_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.StartOfHour.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_EndOfHour(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void EndOfHour_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.EndOfHour.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_StartOfMinute(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void StartOfMinute_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.StartOfMinute.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(0).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_EndOfMinute(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void EndOfMinute_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.EndOfMinute.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(59).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_StartOfSecond(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void StartOfSecond_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.StartOfSecond.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second).And.BeWithin(date.Offset);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.get_EndOfSecond(DateTimeOffset)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void EndOfSecond_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateTimeOffset.MinValue);
+      Test(DateTimeOffset.MaxValue);
+      Test(DateTimeOffset.Now);
+      Test(DateTimeOffset.UtcNow);
+    }
+
+    return;
+
+    static void Test(DateTimeOffset date) => date.EndOfSecond.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second).And.BeWithin(date.Offset);
   }
 
   /// <summary>
@@ -185,234 +413,6 @@ public sealed class DateTimeOffsetExtensionsTest : Test
     return;
 
     static void Test(bool result, DateTimeOffset left, DateTimeOffset right) => left.EqualsByTime(right).Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.StartOfYear"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfYear_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.StartOfYear.Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.EndOfYear"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtEndOfYear_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.EndOfYear.Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(31).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
-  }
-  
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.StartOfMonth"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfMonth_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.StartOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.EndOfMonth"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtEndOfMonth_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.EndOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month)).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.StartOfDay"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfDay_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.StartOfDay.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(0).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.EndOfDay"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtEndOfDay_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.EndOfDay.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(23).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.StartOfHour"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfHour_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.StartOfHour.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(0).And.HaveSecond(0).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.EndOfHour"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtEndOfHour_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.EndOfHour.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(59).And.HaveSecond(59).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.StartOfMinute"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfMinute_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.StartOfMinute.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(0).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.EndOfMinute"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtEndOfMinute_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.EndOfMinute.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(59).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.StartOfSecond"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfSecond_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.StartOfSecond.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second).And.BeWithin(date.Offset);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateTimeOffsetExtensions.EndOfSecond"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtEndOfSecond_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateTimeOffset.MinValue);
-      Test(DateTimeOffset.MaxValue);
-      Test(DateTimeOffset.Now);
-      Test(DateTimeOffset.UtcNow);
-    }
-
-    return;
-
-    static void Test(DateTimeOffset date) => date.EndOfSecond.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(date.Day).And.HaveHour(date.Hour).And.HaveMinute(date.Minute).And.HaveSecond(date.Second).And.BeWithin(date.Offset);
   }
 
   /// <summary>

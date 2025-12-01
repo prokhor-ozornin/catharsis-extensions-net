@@ -12,6 +12,45 @@ public static class TypeExtensions
   extension(Type type)
   {
     /// <summary>
+    ///   <para>Returns enumerator to iterate over the set of specified <paramref name="type"/>'s base types and implemented interfaces.</para>
+    /// </summary>
+    /// <value>Enumerator to iterate through <paramref name="type"/>'s base types and interfaces, which it implements.</value>
+    /// <remarks>The order of the base types and interfaces returned is undetermined.</remarks>
+    /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
+    public IEnumerable<Type> Implementations
+    {
+      get
+      {
+        if (type is null) throw new ArgumentNullException(nameof(type));
+
+        var types = new List<Type>();
+
+        var currentType = type;
+
+        var currentTypeInfo = currentType;
+
+        while (currentTypeInfo.BaseType is not null)
+        {
+          types.Add(currentType);
+          currentType = currentTypeInfo.BaseType;
+        }
+
+        types.AddRange(type.GetInterfaces());
+
+        return types;
+      }
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="HasConstructor(Type, IEnumerable{Type})"/>
+    /// <seealso cref="HasConstructor(Type, Type[])"/>
+    public bool HasDefaultConstructor => type.HasConstructor();
+
+    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <value></value>
@@ -114,36 +153,6 @@ public static class TypeExtensions
     public bool Implements<T>() => type?.Implements(typeof(T)) ?? throw new ArgumentNullException(nameof(type));
 
     /// <summary>
-    ///   <para>Returns enumerator to iterate over the set of specified <paramref name="type"/>'s base types and implemented interfaces.</para>
-    /// </summary>
-    /// <value>Enumerator to iterate through <paramref name="type"/>'s base types and interfaces, which it implements.</value>
-    /// <remarks>The order of the base types and interfaces returned is undetermined.</remarks>
-    /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
-    public IEnumerable<Type> Implementations
-    {
-      get
-      {
-        if (type is null) throw new ArgumentNullException(nameof(type));
-
-        var types = new List<Type>();
-
-        var currentType = type;
-
-        var currentTypeInfo = currentType;
-
-        while (currentTypeInfo.BaseType is not null)
-        {
-          types.Add(currentType);
-          currentType = currentTypeInfo.BaseType;
-        }
-
-        types.AddRange(type.GetInterfaces());
-
-        return types;
-      }
-    }
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <param name="assembly"></param>
@@ -216,15 +225,6 @@ public static class TypeExtensions
     /// <seealso cref="HasConstructor(Type, IEnumerable{Type})"/>
     /// <seealso cref="HasDefaultConstructor"/>
     public bool HasConstructor(params Type[] arguments) => type.HasConstructor(arguments as IEnumerable<Type>);
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="HasConstructor(Type, IEnumerable{Type})"/>
-    /// <seealso cref="HasConstructor(Type, Type[])"/>
-    public bool HasDefaultConstructor => type.HasConstructor();
 
     /// <summary>
     ///   <para>Searches for a named event, declared within a specified <paramref name="type"/>.</para>

@@ -11,6 +11,13 @@ namespace Catharsis.Extensions.Tests;
 /// <seealso cref="IPHostEntryExtensions"/>
 public sealed class IPHostEntryExtensionsTest : Test
 {
+  
+  
+  
+  
+  
+  
+  
   /// <summary>
   ///   <para>Performs testing of <see cref="IPHostEntryExtensions.Availability"/> method.</para>
   /// </summary>
@@ -81,10 +88,10 @@ public sealed class IPHostEntryExtensionsTest : Test
   }
   
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsUnset(IPHostEntry)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.get_IsUnset(IPHostEntry)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -101,10 +108,10 @@ public sealed class IPHostEntryExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.IsEmpty(IPHostEntry)"/> method.</para>
+  ///   <para>Performs testing of <see cref="IPHostEntryExtensions.get_IsEmpty(IPHostEntry)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {

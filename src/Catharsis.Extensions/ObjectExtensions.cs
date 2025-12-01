@@ -19,6 +19,21 @@ public static class ObjectExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <value></value>
+    public bool IsNull
+    {
+      get
+      {
+        return instance switch
+        {
+          WeakReference reference => !reference.IsAlive || reference.Target is null, _ => instance is null
+        };
+      }
+    }
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public T As<T>() where T : class => instance as T;
@@ -39,21 +54,6 @@ public static class ObjectExtensions
     /// <returns><c>true</c> if <paramref name="instance"/> is type-compatible with <typeparamref name="T"/>, <c>false</c> if not.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
     public bool Is<T>() => instance is not null ? instance is T : throw new ArgumentNullException(nameof(instance));
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
-    /// <value></value>
-    public bool IsNull
-    {
-      get
-      {
-        return instance switch
-        {
-          WeakReference reference => !reference.IsAlive || reference.Target is null, _ => instance is null
-        };
-      }
-    }
 
     /// <summary>
     ///   <para></para>

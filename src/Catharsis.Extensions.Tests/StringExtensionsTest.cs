@@ -21,6 +21,328 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StringExtensionsTest : Test
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsUnset(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUnset_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(true, null);
+      Test(true, string.Empty);
+      Test(true, " \t\r\n ");
+      Test(false, " * ");
+    }
+
+    return;
+
+    static void Test(bool result, string text) => text.IsUnset.Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsSbyte(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsSbyte_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsByte(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsByte_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsShort(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsShort_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsUshort(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUshort_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsInt(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsInt_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsUint(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUint_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsLong(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsLong_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsUlong(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUlong_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsFloat(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsFloat_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsDouble(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDouble_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsDecimal(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDecimal_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsGuid(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsGuid_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsUri(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUri_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsType(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsType_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsDateTime(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDateTime_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsDateTimeOffset(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDateTimeOffset_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsDateOnly(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDateOnly_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsTimeOnly(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsTimeOnly_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsFile(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsFile_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsDirectory(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsDirectory_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsIpAddress(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsIpAddress_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsBoolean(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsBoolean_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(false, null);
+      Test(false, string.Empty);
+      Test(true, bool.FalseString);
+      Test(true, bool.TrueString);
+      Test(false, "invalid");
+      Test(true, "TRUE");
+      Test(true, "TruE");
+      Test(true, "true");
+      Test(true, " true ");
+    }
+
+    return;
+
+    static void Test(bool result, string text) => text.IsBoolean.Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsUpperCased(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsUpperCased_Property()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).IsUpperCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(bool result, string text) => text.IsUpperCased.Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_IsLowerCased(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsLowerCased_Property()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((string) null).IsLowerCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(bool result, string text) => text.IsLowerCased.Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_Lines(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Lines_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_Reversed(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Reversed_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_UpperCased(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void UpperCased_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_LowerCased(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void LowerCased_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_Capitalized(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Capitalized_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="StringExtensions.get_Bytes(string)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+  
+  /// <summary>
   ///   <para>Performs testing of <see cref="StringExtensions.Compare(string, string, CultureInfo)"/> method.</para>
   /// </summary>
   [Fact]
@@ -237,7 +559,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Replace(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Replace(Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.Replace((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("replacements");
 
       /*string.Empty.Replace(new object()).Should().BeEmpty();
@@ -262,7 +584,7 @@ public sealed class StringExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Replace(null, []!)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Replace([]!)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.Replace(null)).ThrowExactly<ArgumentNullException>().WithParameterName("replacements");
 
       /*string.Empty.Replace().Should().BeEmpty();
@@ -289,7 +611,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Reverse(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Reverse()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       string.Empty.Reverse().Should().BeOfType<string>().And.BeSameAs(string.Empty.Reverse()).And.BeEmpty();
 
@@ -313,7 +635,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Repeat(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Repeat(0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.Repeat(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       string.Empty.Repeat(0).Should().BeOfType<string>().And.BeSameAs(string.Empty.Repeat(0)).And.BeEmpty();
@@ -340,14 +662,14 @@ public sealed class StringExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.ToLines"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringExtensions.ToLines(string, string)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Lines_Method()
+  public void ToLines_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToLines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToLines()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       string.Empty.ToLines().Should().BeOfType<string>().And.BeSameAs(string.Empty.ToLines()).And.BeEmpty();
       string.Empty.ToLines("\t").Should().BeOfType<string>().And.BeSameAs(string.Empty.ToLines("\t")).And.BeEmpty();
@@ -374,7 +696,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.SwapCase(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).SwapCase()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       var builder = new StringBuilder();
 
@@ -411,7 +733,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Capitalize(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Capitalize()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture =>
       {
@@ -442,7 +764,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.CapitalizeAll(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).CapitalizeAll()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       string.Empty.CapitalizeAll().Should().BeOfType<string>().And.BeEmpty();
 
@@ -468,7 +790,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Indent(null, char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Indent(char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.Indent(char.MinValue, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 2;
@@ -494,7 +816,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Unindent(null, char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Unindent(char.MinValue)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -512,7 +834,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Spacify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Spacify()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.Spacify(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 2;
@@ -540,7 +862,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Unspacify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Unspacify()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -558,7 +880,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Tabify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Tabify()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.Tabify(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
       const int count = 2;
@@ -586,7 +908,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Untabify(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Untabify()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -604,7 +926,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.IsMatch(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).IsMatch(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.IsMatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
 
       Test(true, string.Empty, string.Empty);
@@ -626,7 +948,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Matches(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Matches(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.Matches(null)).ThrowExactly<ArgumentNullException>().WithParameterName("pattern");
 
       /*string.Empty.Matches("anything").Should().BeEmpty();
@@ -644,85 +966,6 @@ public sealed class StringExtensionsTest : Test
     static void Test(string text, string pattern, RegexOptions? options = null)
     {
     }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.IsUnset(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsUnset_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(true, null);
-      Test(true, string.Empty);
-      Test(true, " \t\r\n ");
-      Test(false, " * ");
-    }
-
-    return;
-
-    static void Test(bool result, string text) => text.IsUnset.Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.get_IsUpperCased(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsUpperCased_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).IsUpperCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(bool result, string text) => text.IsUpperCased.Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.get_IsLowerCased(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsLowerCased_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((string) null).IsLowerCased).ThrowExactly<ArgumentNullException>().WithParameterName("text");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(bool result, string text) => text.IsLowerCased.Should().Be(result);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="StringExtensions.get_IsBoolean(string)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void IsBoolean_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(false, null);
-      Test(false, string.Empty);
-      Test(true, bool.FalseString);
-      Test(true, bool.TrueString);
-      Test(false, "invalid");
-      Test(true, "TRUE");
-      Test(true, "TruE");
-      Test(true, "true");
-      Test(true, " true ");
-    }
-
-    return;
-
-    static void Test(bool result, string text) => text.IsBoolean.Should().Be(result);
   }
 
   /// <summary>
@@ -1602,8 +1845,8 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Min(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => string.Empty.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+      AssertionExtensions.Should(() => ((string) null).Min(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
       Test(string.Empty, string.Empty);
       Test(string.Empty, char.MinValue.ToString());
@@ -1624,8 +1867,8 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Max(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
-      AssertionExtensions.Should(() => string.Empty.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
+      AssertionExtensions.Should(() => ((string) null).Max(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
       Test(string.Empty, string.Empty);
       Test(string.Empty, char.MinValue.ToString());
@@ -1646,8 +1889,8 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.MinMax(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("min");
-      AssertionExtensions.Should(() => string.Empty.MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("max");
+      AssertionExtensions.Should(() => ((string) null).MinMax(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => string.Empty.MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
     }
 
     throw new NotImplementedException();
@@ -1669,7 +1912,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.With(null, Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).With(Enumerable.Empty<char>())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.With((IEnumerable<char>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("characters");
 
       static void Test<T>(string text, IEnumerable<char> characters)
@@ -1717,7 +1960,7 @@ public sealed class StringExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.Without(null, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).Without(0)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.Without(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
       AssertionExtensions.Should(() => string.Empty.Without(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
 
@@ -1917,7 +2160,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.WriteTo(null, System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).WriteTo(System.IO.Stream.Null.ToXmlWriter())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => string.Empty.WriteTo((XmlWriter) null)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
     }
 
@@ -1942,7 +2185,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.WriteToAsync(null, System.IO.Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
+      AssertionExtensions.Should(() => ((string) null).WriteToAsync(System.IO.Stream.Null.ToXmlWriter())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
       AssertionExtensions.Should(() => string.Empty.WriteToAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
     }
 
@@ -2259,7 +2502,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Test(Fixture.Create<string>());
       Encoding.GetEncodings().ForEach(encoding => Test(Fixture.Create<string>(), encoding.GetEncoding()));
@@ -2289,7 +2532,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToBoolean(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToBoolean()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(string.Empty.ToBoolean).ThrowExactly<FormatException>();
       AssertionExtensions.Should("invalid".ToBoolean).ThrowExactly<FormatException>();
 
@@ -2378,7 +2621,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToSbyte(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToSbyte()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -2455,7 +2698,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToByte(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToByte()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -2532,7 +2775,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToShort(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToShort()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -2609,7 +2852,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUshort(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToUshort()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -2686,7 +2929,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToInt(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToInt()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -2763,7 +3006,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUint(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToUint()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -2840,7 +3083,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToLong(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToLong()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -2917,7 +3160,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUlong(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToUlong()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -2995,7 +3238,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToFloat(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToFloat()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -3088,7 +3331,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDouble(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToDouble()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -3181,7 +3424,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDecimal(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToDecimal()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       //Test(null);
       //CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(Validate);
@@ -3262,7 +3505,7 @@ public sealed class StringExtensionsTest : Test
   ///   <para>Performs testing of following methods :</para>
   ///   <list type="bullet">
   ///     <item><description><see cref="StringExtensions.ToEnum{T}(string)"/></description></item>
-  ///     <item><description><see cref="StringExtensions.ToEnum{T}(string, T?)"/></description></item>
+  ///     <item><description><see cref="StringExtensions.ToEnum{T}(string, out Nullable{T})"/></description></item>
   ///   </list>
   /// </summary>
   [Fact]
@@ -3270,7 +3513,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToEnum<Guid>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToEnum<Guid>()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => Guid.NewGuid().ToString().ToEnum<Guid>()).ThrowExactly<ArgumentException>();
       AssertionExtensions.Should(string.Empty.ToEnum<DayOfWeek>).ThrowExactly<ArgumentException>();
       AssertionExtensions.Should("invalid".ToEnum<DayOfWeek>).ThrowExactly<ArgumentException>();
@@ -3333,7 +3576,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToGuid(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToGuid()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(string.Empty.ToGuid).ThrowExactly<FormatException>();
       AssertionExtensions.Should("invalid".ToGuid).ThrowExactly<FormatException>();
 
@@ -3389,7 +3632,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToUri(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToUri()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       var uri = string.Empty.ToUri();
       uri.IsAbsoluteUri.Should().BeFalse();
@@ -3497,7 +3740,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToType(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToType()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       string.Empty.ToType().Should().BeNull();
 
@@ -3567,7 +3810,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDateTime(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToDateTime()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       new[] { DateTime.MinValue, DateTime.MaxValue, DateTime.Now, DateTime.UtcNow }.ForEach(date =>
       {
@@ -3625,7 +3868,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDateTimeOffset(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToDateTimeOffset()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       new[] { DateTimeOffset.MinValue, DateTimeOffset.MaxValue, DateTimeOffset.Now, DateTimeOffset.UtcNow }.ForEach(date =>
       {
@@ -3683,7 +3926,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDateOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToDateOnly()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       new[] { DateOnly.MinValue, DateOnly.MaxValue, DateTime.Now.ToDateOnly(), DateTime.UtcNow.ToDateOnly() }.ForEach(date =>
       {
@@ -3741,7 +3984,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToTimeOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToTimeOnly()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       new[] { TimeOnly.MinValue, TimeOnly.MaxValue, DateTime.Now.ToTimeOnly(), DateTime.UtcNow.ToTimeOnly() }.ForEach(time =>
       {
@@ -3799,7 +4042,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToFile(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToFile()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(string.Empty.ToFile).ThrowExactly<ArgumentException>();
 
       var name = Path.GetTempFileName();
@@ -3864,7 +4107,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToDirectory(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToDirectory()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(string.Empty.ToDirectory).ThrowExactly<ArgumentException>();
 
       var name = Environment.SystemDirectory;
@@ -3915,7 +4158,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToPath(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToPath()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -3940,7 +4183,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToIpAddress(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToIpAddress()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(string.Empty.ToIpAddress).ThrowExactly<FormatException>();
       AssertionExtensions.Should("localhost".ToIpAddress).ThrowExactly<FormatException>();
 
@@ -3985,7 +4228,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToIpHost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToIpHost()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
     throw new NotImplementedException();
@@ -4006,7 +4249,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToRegex(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToRegex()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Test(string.Empty);
       Test("[a-z]*");
@@ -4034,7 +4277,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToStringBuilder(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToStringBuilder()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Test(string.Empty);
       Test(Fixture.Create<string>());
@@ -4062,7 +4305,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToStringReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToStringReader()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Test(string.Empty);
       Test(Fixture.Create<string>());
@@ -4086,7 +4329,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToStringContent(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToStringContent()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Encoding.GetEncodings().ForEach(encoding =>
       {
@@ -4230,7 +4473,7 @@ public sealed class StringExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringExtensions.ToProcess(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
+      AssertionExtensions.Should(() => ((string) null).ToProcess()).ThrowExactly<ArgumentNullException>().WithParameterName("text");
 
       Test(string.Empty);
       Test(Shell);

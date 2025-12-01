@@ -23,6 +23,33 @@ public sealed class ProcessExtensionsTest : Test
   }
 
   /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.get_ErrorText(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ErrorText_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.get_Bytes(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.get_Text(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Text_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
   ///   <para>Performs testing of <see cref="ProcessExtensions.Run(Process, TimeSpan?)"/> method.</para>
   /// </summary>
   [Fact]
@@ -30,7 +57,7 @@ public sealed class ProcessExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.Run(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+      AssertionExtensions.Should(() => ((Process) null).Run()).ThrowExactly<ArgumentNullException>().WithParameterName("process");
     }
 
     throw new NotImplementedException();
@@ -54,7 +81,7 @@ public sealed class ProcessExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.Restart(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+      AssertionExtensions.Should(() => ((Process) null).Restart()).ThrowExactly<ArgumentNullException>().WithParameterName("process");
     }
 
     throw new NotImplementedException();
@@ -78,7 +105,7 @@ public sealed class ProcessExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.Finish(null, TimeSpan.Zero)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+      AssertionExtensions.Should(() => ((Process) null).Finish(TimeSpan.Zero)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
     }
 
     throw new NotImplementedException();
@@ -102,7 +129,7 @@ public sealed class ProcessExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.FinishAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
+      AssertionExtensions.Should(() => ((Process) null).FinishAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
       AssertionExtensions.Should(() => Process.GetCurrentProcess().FinishAsync(CancellationToken.None)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
 
@@ -127,7 +154,7 @@ public sealed class ProcessExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.TryFinallyKill(null, _ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+      AssertionExtensions.Should(() => ((Process) null).TryFinallyKill(_ => { })).ThrowExactly<ArgumentNullException>().WithParameterName("process");
       
       var process = Shell.ToProcess();
       
@@ -149,151 +176,7 @@ public sealed class ProcessExtensionsTest : Test
       }
     }
   }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.ToErrorText(Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToErrorText_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ProcessExtensions.ToErrorText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(string result, Process process)
-    {
-      using (process)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.ToErrorTextAsync(Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToErrorTextAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ProcessExtensions.ToErrorTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(string result, Process process)
-    {
-      using (process)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.ToBytes(Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToBytes_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ProcessExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(byte[] result, Process process)
-    {
-      using (process)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.ToBytesAsync(Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToBytesAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ProcessExtensions.ToBytesAsync(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(byte[] result, Process process)
-    {
-      using (process)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.ToText(Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToText_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ProcessExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(string result, Process process)
-    {
-      using (process)
-      {
-
-      }
-    }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="ProcessExtensions.ToTextAsync(Process)"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void ToTextAsync_Method()
-  {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ProcessExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
-    }
-
-    throw new NotImplementedException();
-
-    return;
-
-    static void Test(string result, Process process)
-    {
-      using (process)
-      {
-
-      }
-    }
-  }
-
+  
   /// <summary>
   ///   <para>Performs testing of <see cref="ProcessExtensions.WriteBytes(Process, IEnumerable{byte})"/> method.</para>
   /// </summary>
@@ -302,7 +185,7 @@ public sealed class ProcessExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => ((Process) null).WriteBytes([])).ThrowExactly<ArgumentNullException>().WithParameterName("process");
       AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
@@ -327,7 +210,7 @@ public sealed class ProcessExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.WriteBytesAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => ((Process) null).WriteBytesAsync([])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
       AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
       AssertionExtensions.Should(() => ShellProcess.WriteBytesAsync([])).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
@@ -353,7 +236,7 @@ public sealed class ProcessExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => ((Process) null).WriteText(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("process");
       AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
@@ -378,7 +261,7 @@ public sealed class ProcessExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ProcessExtensions.WriteTextAsync(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().Await();
+      AssertionExtensions.Should(() => ((Process) null).WriteTextAsync(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
       AssertionExtensions.Should(() => Process.GetCurrentProcess().WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().Await();
       AssertionExtensions.Should(() => ShellProcess.WriteTextAsync(string.Empty)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
@@ -388,6 +271,150 @@ public sealed class ProcessExtensionsTest : Test
     return;
 
     static void Test(Process process, string text)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.ToErrorText(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToErrorText_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Process) null).ToErrorText()).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(string result, Process process)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.ToErrorTextAsync(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToErrorTextAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Process) null).ToErrorTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(string result, Process process)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.ToBytes(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBytes_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Process) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(byte[] result, Process process)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.ToBytesAsync(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToBytesAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Process) null).ToBytesAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(byte[] result, Process process)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.ToText(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToText_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Process) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("process");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(string result, Process process)
+    {
+      using (process)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="ProcessExtensions.ToTextAsync(Process)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToTextAsync_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((Process) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("process").Await();
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(string result, Process process)
     {
       using (process)
       {

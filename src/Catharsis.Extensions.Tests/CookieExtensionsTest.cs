@@ -12,10 +12,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class CookieExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="CookieExtensions.IsUnset(Cookie)"/> method.</para>
+  ///   <para>Performs testing of <see cref="CookieExtensions.get_IsUnset(Cookie)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -33,10 +33,10 @@ public sealed class CookieExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="CookieExtensions.IsEmpty(Cookie)"/> method.</para>
+  ///   <para>Performs testing of <see cref="CookieExtensions.get_IsEmpty(Cookie)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {
@@ -62,7 +62,7 @@ public sealed class CookieExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => CookieExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
+      AssertionExtensions.Should(() => ((Cookie) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("cookie");
 
       Test(new Cookie("id", string.Empty, "/", "localhost"));
       

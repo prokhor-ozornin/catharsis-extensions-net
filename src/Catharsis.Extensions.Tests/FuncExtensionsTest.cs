@@ -24,6 +24,7 @@ public sealed class FuncExtensionsTest : Test
     {
       AssertionExtensions.Should(() => ((Func<object>) null).ToTask()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("function").Await();
 
+      
       static void Test()
       {
       }

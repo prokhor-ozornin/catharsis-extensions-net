@@ -15,10 +15,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class UdpClientExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="UdpClientExtensions.IsUnset(UdpClient)"/> method.</para>
+  ///   <para>Performs testing of <see cref="UdpClientExtensions.get_IsUnset(UdpClient)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -32,10 +32,10 @@ public sealed class UdpClientExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="UdpClientExtensions.IsEmpty(UdpClient)"/> method.</para>
+  ///   <para>Performs testing of <see cref="UdpClientExtensions.get_IsEmpty(UdpClient)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {
@@ -47,6 +47,24 @@ public sealed class UdpClientExtensionsTest : Test
     return;
 
     static void Test(bool result, UdpClient client) => client.IsEmpty.Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UdpClientExtensions.get_Bytes(UdpClient)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="UdpClientExtensions.get_Text(UdpClient)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Text_Property()
+  {
+    throw new NotImplementedException();
   }
 
   /// <summary>

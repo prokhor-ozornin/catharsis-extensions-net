@@ -53,6 +53,22 @@ public static class StreamExtensions
     /// </summary>
     /// <value></value>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsEmpty"/>
+    public bool IsUnset => stream is null || stream.IsEmpty;
+
+    /// <summary>
+    ///   <para>Determines whether the specified <see cref="Stream"/> instance can be considered "empty", meaning its length is zero or the end of the stream has been reached.</para>
+    /// </summary>
+    /// <value>If the specified <paramref name="stream"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
+    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+    /// <seealso cref="IsUnset"/>
+    public bool IsEmpty => stream is not null ? stream.CanSeek ? stream.Length == 0 : stream.IsEnd : throw new ArgumentNullException(nameof(stream));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <value></value>
+    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
     public bool IsReadOnly => stream is not null ? stream.CanRead && !stream.CanWrite : throw new ArgumentNullException(nameof(stream));
 
     /// <summary>
@@ -73,6 +89,16 @@ public static class StreamExtensions
     ///   <para></para>
     /// </summary>
     public string[] Lines => stream.ToLines().ToArray();
+    
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public byte[] Bytes => stream.ToBytes().ToArray();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => stream.ToText();
 
     /// <summary>
     ///   <para></para>
@@ -103,7 +129,7 @@ public static class StreamExtensions
 
       using var reader = stream.ToStreamReader(encoding, false);
 
-      await foreach (var line in reader.LinesAsync().ConfigureAwait(false))
+      await foreach (var line in reader.ToLinesAsync().ConfigureAwait(false))
       {
         yield return line;
       }
@@ -462,22 +488,6 @@ public static class StreamExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <value></value>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsEmpty"/>
-    public bool IsUnset => stream is null || stream.IsEmpty;
-
-    /// <summary>
-    ///   <para>Determines whether the specified <see cref="Stream"/> instance can be considered "empty", meaning its length is zero or the end of the stream has been reached.</para>
-    /// </summary>
-    /// <value>If the specified <paramref name="stream"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
-    /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="IsUnset"/>
-    public bool IsEmpty => stream is not null ? stream.CanSeek ? stream.Length == 0 : stream.IsEnd : throw new ArgumentNullException(nameof(stream));
-    
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
     /// <param name="other"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If either <paramref name="stream"/> or <paramref name="other"/> is <see langword="null"/>.</exception>
@@ -637,11 +647,6 @@ public static class StreamExtensions
     public IEnumerable<byte> ToBytes(bool close = false) => stream?.ToEnumerable(close) ?? throw new ArgumentNullException(nameof(stream));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => stream.ToBytes().ToArray();
-
-    /// <summary>
     ///   <para>Read the content of this <see cref="Stream"/> and return it as a <see cref="byte"/> array. The input is closed before this method returns.</para>
     /// </summary>
     /// <param name="close"></param>
@@ -667,11 +672,6 @@ public static class StreamExtensions
       return reader.ToText();
     }
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => stream.ToText();
-
     /// <summary>
     ///   <para>Returns all available text data from a source stream.</para>
     /// </summary>
@@ -742,17 +742,17 @@ public static class StreamExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <param name="close"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
-    public XmlReader ToXmlReader(bool close = true) => stream is not null ? XmlReader.Create(stream, new XmlReaderSettings { CloseInput = close, IgnoreComments = true, IgnoreWhitespace = true }) : throw new ArgumentNullException(nameof(stream));
+    public StreamContent ToStreamContent() => stream is not null ? new StreamContent(stream) : throw new ArgumentNullException(nameof(stream));
 
     /// <summary>
     ///   <para></para>
     /// </summary>
+    /// <param name="close"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
-    public StreamContent ToStreamContent() => stream is not null ? new StreamContent(stream) : throw new ArgumentNullException(nameof(stream));
+    public XmlReader ToXmlReader(bool close = true) => stream is not null ? XmlReader.Create(stream, new XmlReaderSettings { CloseInput = close, IgnoreComments = true, IgnoreWhitespace = true }) : throw new ArgumentNullException(nameof(stream));
 
     /// <summary>
     ///   <para></para>

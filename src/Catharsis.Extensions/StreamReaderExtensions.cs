@@ -19,20 +19,6 @@ public static class StreamReaderExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
-    /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
-    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-    public StreamReader Rewind()
-    {
-      if (reader is null) throw new ArgumentNullException(nameof(reader));
-
-      reader.BaseStream.MoveToStart();
-
-      return reader;
-    }
-
-    /// <summary>
-    ///   <para></para>
-    /// </summary>
     /// <value></value>
     /// <seealso cref="IsEmpty"/>
     public bool IsUnset => reader is null || reader.IsEmpty;
@@ -44,6 +30,20 @@ public static class StreamReaderExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
     /// <seealso cref="IsUnset"/>
     public bool IsEmpty => reader?.BaseStream.IsEmpty ?? throw new ArgumentNullException(nameof(reader));
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
+    public StreamReader Rewind()
+    {
+      if (reader is null) throw new ArgumentNullException(nameof(reader));
+
+      reader.BaseStream.MoveToStart();
+
+      return reader;
+    }
 
     /// <summary>
     ///   <para></para>

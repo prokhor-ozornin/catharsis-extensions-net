@@ -13,10 +13,35 @@ namespace Catharsis.Extensions.Tests;
 public sealed class TextReaderExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextReaderExtensions.IsEnd(TextReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.Skip{TReader}(TReader, int)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEnd_Method()
+  public void Skip_Method()
+  {
+    using (new AssertionScope())
+    {
+      AssertionExtensions.Should(() => ((TextReader) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => System.IO.Stream.Null.ToStreamReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
+    }
+
+    throw new NotImplementedException();
+
+    return;
+
+    static void Test(TextReader reader, int count)
+    {
+      using (reader)
+      {
+
+      }
+    }
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.get_IsEnd(TextReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void IsEnd_Property()
   {
     using (new AssertionScope())
     {
@@ -44,39 +69,41 @@ public sealed class TextReaderExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextReaderExtensions.Skip{TReader}(TReader, int)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.get_Lines(TextReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Skip_Method()
+  public void Lines_Property()
   {
-    using (new AssertionScope())
-    {
-      AssertionExtensions.Should(() => ((TextReader) null).Skip(0)).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
-      AssertionExtensions.Should(() => System.IO.Stream.Null.ToStreamReader().Skip(-1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("count");
-    }
-
     throw new NotImplementedException();
-
-    return;
-
-    static void Test(TextReader reader, int count)
-    {
-      using (reader)
-      {
-
-      }
-    }
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextReaderExtensions.ToLines"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.get_Bytes(TextReader)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Lines_Method()
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.get_Text(TextReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Text_Property()
+  {
+    throw new NotImplementedException();
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.ToLines(TextReader)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void ToLines_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TextReaderExtensions.ToLines(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ((TextReader) null).ToLines().ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
     }
 
     throw new NotImplementedException();
@@ -93,14 +120,14 @@ public sealed class TextReaderExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TextReaderExtensions.LinesAsync(TextReader)"/> method.</para>
+  ///   <para>Performs testing of <see cref="TextReaderExtensions.ToLinesAsync"/> method.</para>
   /// </summary>
   [Fact]
-  public void LinesAsync_Method()
+  public void ToLinesAsync_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => TextReaderExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
+      AssertionExtensions.Should(() => ((TextReader) null).ToLinesAsync().ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("reader");
     }
 
     throw new NotImplementedException();
@@ -111,7 +138,7 @@ public sealed class TextReaderExtensionsTest : Test
     {
       using (reader)
       {
-        reader.LinesAsync().ToArray().Should().BeOfType<IAsyncEnumerable<string>>().And.Equal(result);
+        reader.ToLinesAsync().ToArray().Should().BeOfType<IAsyncEnumerable<string>>().And.Equal(result);
       }
     }
   }

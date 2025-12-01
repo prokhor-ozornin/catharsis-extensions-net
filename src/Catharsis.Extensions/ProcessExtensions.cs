@@ -14,6 +14,21 @@ public static class ProcessExtensions
     /// <summary>
     ///   <para></para>
     /// </summary>
+    public string ErrorText => process.ToErrorText();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public byte[] Bytes => process.ToBytes().ToArray();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    public string Text => process.ToText();
+
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
     /// <param name="timeout"></param>
     /// <returns>Back self-reference to the given <paramref name="process"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
@@ -187,11 +202,6 @@ public static class ProcessExtensions
     public string ToErrorText() => process?.StandardError.ToText() ?? throw new ArgumentNullException(nameof(process));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string ErrorText => process.ToErrorText();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
@@ -208,11 +218,6 @@ public static class ProcessExtensions
     public IEnumerable<byte> ToBytes() => process?.StandardOutput.BaseStream.ToBytes() ?? throw new ArgumentNullException(nameof(process));
     
     /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public byte[] Bytes => process.ToBytes().ToArray();
-
-    /// <summary>
     ///   <para></para>
     /// </summary>
     /// <returns></returns>
@@ -228,11 +233,6 @@ public static class ProcessExtensions
     /// <seealso cref="ToTextAsync(Process)"/>
     public string ToText() => process?.StandardOutput.ToText() ?? throw new ArgumentNullException(nameof(process));
     
-    /// <summary>
-    ///   <para>[NEW]</para>
-    /// </summary>
-    public string Text => process.ToText();
-
     /// <summary>
     ///   <para></para>
     /// </summary>

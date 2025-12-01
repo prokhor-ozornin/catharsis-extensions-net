@@ -37,7 +37,7 @@ public sealed class ICollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ICollectionExtensions.Empty<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
+      AssertionExtensions.Should(() => ((ICollection<object>) null).Empty()).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => Array.Empty<object>().Empty()).ThrowExactly<NotSupportedException>();
 
       Test(Array.Empty<object>().ToList());
@@ -81,14 +81,14 @@ public sealed class ICollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ICollectionExtensions.With<object>(null, Enumerable.Empty<object>)).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => ((ICollection<object>) null).With(Enumerable.Empty<object>)).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => Array.Empty<object>().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
       var collection = new List<object>();
 
       collection.With(Enumerable.Empty<object>()).Should().BeOfType<List<object>>().And.BeSameAs(collection).And.BeEmpty();
 
-      IEnumerable<object> elements = new object[] { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
+      IEnumerable<object> elements = [1, string.Empty, "2", Guid.NewGuid(), null, 10.5];
 
       collection.With(elements).Should().BeOfType<object[]>().And.BeSameAs(collection).And.Equal(elements);
       collection.With(elements).Should().BeOfType<object[]>().And.BeSameAs(collection).And.Equal(elements.Concat(elements));
@@ -100,7 +100,7 @@ public sealed class ICollectionExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ICollectionExtensions.With<object>(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => ((ICollection<object>) null).With()).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => ICollectionExtensions.With(Array.Empty<object>(), null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
 
       static void Test<T>(ICollection<T> collection, params T[] elements)
@@ -123,7 +123,7 @@ public sealed class ICollectionExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((ICollection<object>) null).Without(Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => ((ICollection<object>) null).Without(Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => Array.Empty<object>().Without((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
       var collection = new List<object>();
@@ -144,7 +144,7 @@ public sealed class ICollectionExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => ((ICollection<object>) null).Without([])).ThrowExactly<ArgumentNullException>().WithParameterName("from");
+      AssertionExtensions.Should(() => ((ICollection<object>) null).Without()).ThrowExactly<ArgumentNullException>().WithParameterName("collection");
       AssertionExtensions.Should(() => Array.Empty<object>().Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("enumerable");
 
       static void Test<T>(ICollection<T> collection, params T[] elements)

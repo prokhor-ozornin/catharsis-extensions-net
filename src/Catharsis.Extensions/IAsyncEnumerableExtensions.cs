@@ -240,8 +240,8 @@ public static class IAsyncEnumerableExtensions
     /// </summary>
     /// <param name="cancellation"></param>
     /// <returns></returns>
-    /// <seealso cref="ToListAsync(CancellationToken)"/>
-    /// <seealso cref="ToImmutableListAsync{T}"/>
+    /// <seealso cref="ToListAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/>
+    /// <seealso cref="ToImmutableListAsync{T}(IAsyncEnumerable{T}, CancellationToken)"/>
     /// <seealso cref="IEnumerableExtensions.ToLinkedList{T}(IEnumerable{T})"/>
     /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToLinkedList{T}(IAsyncEnumerable{T})"/>
@@ -578,7 +578,7 @@ public static class IAsyncEnumerableExtensions
     /// <seealso cref="ImmutableArray.ToImmutableArray{TSource}(IEnumerable{TSource})"/>
     /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToImmutableArray{T}(IAsyncEnumerable{T})"/>
-    public async ValueTask<ImmutableArray<T>> ToImmutableArrayAsync(CancellationToken cancellation = default) => enumerable is not null ? (await enumerable.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableArray() : throw new ArgumentNullException(nameof(enumerable));
+    public async ValueTask<ImmutableArray<T>> ToImmutableArrayAsync(CancellationToken cancellation = default) => enumerable is not null ? [..(await enumerable.ToListAsync(cancellation).ConfigureAwait(false))] : throw new ArgumentNullException(nameof(enumerable));
 
     /// <summary>
     ///   <para></para>
@@ -729,12 +729,13 @@ public static class IAsyncEnumerableExtensions
     /// <exception cref="ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
     /// <seealso cref="ToImmutableQueue{T}(IAsyncEnumerable{T})"/>
     public async Task<ImmutableQueue<T>> ToImmutableQueueAsync(CancellationToken cancellation = default) => enumerable is not null ? (await enumerable.ToListAsync(cancellation).ConfigureAwait(false)).ToImmutableQueue() : throw new ArgumentNullException(nameof(enumerable));
-    #else
+    #endif
+    
+    #if !NET10_0_OR_GREATER
     /// <summary>
     ///   <para></para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <param name="enumerable"></param>
     /// <param name="cancellation"></param>
     /// <returns></returns>
     /// <seealso cref="ToImmutableArrayAsync{T}"/>

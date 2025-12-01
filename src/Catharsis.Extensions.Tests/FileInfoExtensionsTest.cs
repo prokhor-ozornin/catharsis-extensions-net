@@ -14,10 +14,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class FileInfoExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="FileInfoExtensions.IsUnset(FileInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.get_IsUnset(FileInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -30,10 +30,10 @@ public sealed class FileInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="FileInfoExtensions.IsEmpty(FileInfo)"/> method.</para>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.get_IsEmpty(FileInfo)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {
@@ -59,6 +59,42 @@ public sealed class FileInfoExtensionsTest : Test
     return;
 
     static void Test(bool result, FileInfo file) => file.IsEmpty.Should().Be(result);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.get_Bytes(FileInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+  
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.get_Text(FileInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Text_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.get_Lines(FileInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Lines_Property()
+  {
+    throw new NotImplementedException();
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.get_Stream(FileInfo)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Stream_Property()
+  {
+    throw new NotImplementedException();
   }
 
   /// <summary>
@@ -88,7 +124,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.CreateWithPath(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).CreateWithPath()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
     }
 
     throw new NotImplementedException();
@@ -101,14 +137,14 @@ public sealed class FileInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="FileInfoExtensions.ToLines"/> method.</para>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.ToLines(FileInfo, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void Lines_Method()
+  public void ToLines_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToLines(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToLines()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
       Test(EmptyFile);
       Encoding.GetEncodings().ForEach(encoding => Test(EmptyFile, encoding.GetEncoding()));
@@ -131,14 +167,14 @@ public sealed class FileInfoExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="FileInfoExtensions.LinesAsync(FileInfo, Encoding)"/> method.</para>
+  ///   <para>Performs testing of <see cref="FileInfoExtensions.ToLinesAsync(FileInfo, Encoding)"/> method.</para>
   /// </summary>
   [Fact]
-  public void LinesAsync_Method()
+  public void ToLinesAsync_Method()
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.LinesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToLinesAsync().ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
       Test(EmptyFile);
       Encoding.GetEncodings().ForEach(encoding => Test(EmptyFile, encoding.GetEncoding()));
@@ -152,9 +188,9 @@ public sealed class FileInfoExtensionsTest : Test
       {
         var lines = new Random().ToLetters(80, 1000).ToArray();
         lines.Join(Environment.NewLine).WriteToAsync(file, encoding).Await();
-        file.LinesAsync(encoding).ToArray().Should().BeOfType<IAsyncEnumerable<string>>().And.Equal(lines);
+        file.ToLinesAsync(encoding).ToArray().Should().BeOfType<IAsyncEnumerable<string>>().And.Equal(lines);
 
-        var linesAsync = file.LinesAsync(encoding);
+        var linesAsync = file.ToLinesAsync(encoding);
         linesAsync.Should().BeOfType<IAsyncEnumerable<string>>();
         linesAsync.ToArray().Should().BeOfType<string[]>().And.BeEmpty();
       });
@@ -169,7 +205,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.AsReadOnly(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).AsReadOnly()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
     }
 
     throw new NotImplementedException();
@@ -189,7 +225,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
       Test(EmptyFile);
       Test(NonEmptyFile);
@@ -354,7 +390,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.WriteBytes(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => ((FileInfo) null).WriteBytes([])).ThrowExactly<ArgumentNullException>().WithParameterName("file");
       AssertionExtensions.Should(() => FakeFile.WriteBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
     }
 
@@ -375,7 +411,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.WriteBytesAsync(null, [])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => ((FileInfo) null).WriteBytesAsync([])).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
       AssertionExtensions.Should(() => FakeFile.WriteBytesAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
       AssertionExtensions.Should(() => FakeFile.WriteBytesAsync([])).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
@@ -397,7 +433,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.WriteText(null, string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("destination");
+      AssertionExtensions.Should(() => ((FileInfo) null).WriteText(string.Empty)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
       AssertionExtensions.Should(() => FakeFile.WriteText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("text");
     }
 
@@ -418,7 +454,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.WriteTextAsync(null, string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("destination").Await();
+      AssertionExtensions.Should(() => ((FileInfo) null).WriteTextAsync(string.Empty)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
       AssertionExtensions.Should(() => FakeFile.WriteTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
       AssertionExtensions.Should(() => FakeFile.WriteTextAsync(string.Empty, null)).ThrowExactlyAsync<OperationCanceledException>().Await();
     }
@@ -440,7 +476,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToBytes()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
     }
 
     throw new NotImplementedException();
@@ -458,7 +494,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToBytesAsync(null).ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToBytesAsync().ToArray()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
 
       var bytes = Bytes;
 
@@ -486,7 +522,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToText()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
     }
 
     throw new NotImplementedException();
@@ -504,7 +540,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
+      AssertionExtensions.Should(() => ((FileInfo) null).ToTextAsync()).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("file").Await();
 
       TestFile(EmptyFile, Fixture.Create<string>(), null);
       Encoding.GetEncodings().ForEach(encoding => TestFile(EmptyFile, Fixture.Create<string>(), encoding.GetEncoding()));
@@ -535,7 +571,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToStream()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
     }
 
     throw new NotImplementedException();
@@ -555,7 +591,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToReadOnlyStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToReadOnlyStream()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
     }
 
     throw new NotImplementedException();
@@ -575,7 +611,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToWriteOnlyStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToWriteOnlyStream()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
     }
 
     throw new NotImplementedException();
@@ -595,7 +631,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToStreamReader(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToStreamReader()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
     }
 
     throw new NotImplementedException();
@@ -615,7 +651,7 @@ public sealed class FileInfoExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => FileInfoExtensions.ToStreamWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("file");
+      AssertionExtensions.Should(() => ((FileInfo) null).ToStreamWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("file");
     }
 
     throw new NotImplementedException();

@@ -92,7 +92,7 @@ public static class FileInfoExtensions
     /// <param name="encoding"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="LinesAsync(FileInfo, Encoding)"/>
+    /// <seealso cref="ToLinesAsync(FileInfo, Encoding)"/>
     public IEnumerable<string> ToLines(Encoding encoding = null)
     {
       if (file is null) throw new ArgumentNullException(nameof(file));
@@ -108,14 +108,14 @@ public static class FileInfoExtensions
     /// <param name="encoding">Text encoding to be used for transformation between text and bytes. If not specified, default <see cref="Encoding.UTF8"/> is used.</param>
     /// <returns>List of strings which have been read from a <paramref name="file"/>.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-    /// <seealso cref="FileInfoExtensions.ToLines"/>
-    public async IAsyncEnumerable<string> LinesAsync(Encoding encoding = null)
+    /// <seealso cref="FileInfoExtensions.ToLines(FileInfo, Encoding)"/>
+    public async IAsyncEnumerable<string> ToLinesAsync(Encoding encoding = null)
     {
       if (file is null) throw new ArgumentNullException(nameof(file));
 
       using var reader = file.ToStreamReader(encoding);
 
-      await foreach (var line in reader.LinesAsync().ConfigureAwait(false))
+      await foreach (var line in reader.ToLinesAsync().ConfigureAwait(false))
       {
         yield return line;
       }

@@ -18,7 +18,7 @@ public sealed class IListExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.Randomize<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => ((IList<object>) null).Randomize()).ThrowExactly<ArgumentNullException>().WithParameterName("list");
 
       var collection = new List<object>();
       collection.Randomize().Should().BeOfType<IList<object>>().And.BeSameAs(collection).And.BeEmpty();
@@ -46,7 +46,7 @@ public sealed class IListExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.Swap<object>(null, 0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => ((IList<object>) null).Swap(0, 0)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().Swap(-1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("firstIndex");
       AssertionExtensions.Should(() => Array.Empty<object>().Swap(1, 0)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("firstIndex");
       AssertionExtensions.Should(() => Array.Empty<object>().Swap(0, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("secondIndex");
@@ -74,7 +74,7 @@ public sealed class IListExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.Fill(null, () => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => ((IList<object>) null).Fill(() => new object())).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().Fill((Func<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("filler");
       AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, -1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
       AssertionExtensions.Should(() => Array.Empty<object>().Fill(_ => null, 1)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
@@ -107,7 +107,7 @@ public sealed class IListExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.AsReadOnly<object>(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => ((IList<object>) null).AsReadOnly()).ThrowExactly<ArgumentNullException>().WithParameterName("list");
 
       /*var list = new List<object> { 1, string.Empty, "2", Guid.NewGuid(), null, 10.5 };
       var readOnly = CollectionsExtensions.AsReadOnly(list);
@@ -153,7 +153,7 @@ public sealed class IListExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.With<object>(null, 0, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("to");
+      AssertionExtensions.Should(() => ((IList<object>) null).With(0, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().With(0, (IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("from");
       AssertionExtensions.Should(() => Array.Empty<object>().With(-1, Enumerable.Empty<object>())).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("offset");
 
@@ -165,7 +165,7 @@ public sealed class IListExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.With<object>(null, 0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => ((List<object>) null).With(0, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
       AssertionExtensions.Should(() => Array.Empty<object>().With(-1, null)).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
 
       static void Test<T>(IList<T> list)
@@ -198,8 +198,8 @@ public sealed class IListExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => IListExtensions.Without<object>(null, null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
-      AssertionExtensions.Should(() => Array.Empty<object>().Without(new[] { -1 })).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
+      AssertionExtensions.Should(() => ((IList<object>) null).Without(null)).ThrowExactly<ArgumentNullException>().WithParameterName("list");
+      AssertionExtensions.Should(() => Array.Empty<object>().Without([-1])).ThrowExactly<ArgumentOutOfRangeException>().WithParameterName("position");
 
       static void Test<T>(IList<T> list)
       {

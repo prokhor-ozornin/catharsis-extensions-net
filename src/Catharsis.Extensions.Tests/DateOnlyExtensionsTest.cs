@@ -11,10 +11,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class DateOnlyExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.IsWeekday(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.get_IsWeekday(DateOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsWeekday_Method()
+  public void IsWeekday_Property()
   {
     using (new AssertionScope())
     {
@@ -36,10 +36,10 @@ public sealed class DateOnlyExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.IsWeekend(DateOnly)"/> method.</para>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.get_IsWeekend(DateOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsWeekend_Method()
+  public void IsWeekend_Property()
   {
     using (new AssertionScope())
     {
@@ -60,6 +60,82 @@ public sealed class DateOnlyExtensionsTest : Test
     static void Test(bool result, DateOnly date) => date.IsWeekend.Should().Be(result);
   }
 
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.get_StartOfYear(DateOnly)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void StartOfYear_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateOnly.MinValue);
+      Test(DateOnly.MaxValue);
+      Test(DateTime.Now.ToDateOnly());
+      Test(DateTime.UtcNow.ToDateOnly());
+    }
+
+    return;
+
+    static void Test(DateOnly date) => date.StartOfYear.Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.get_EndOfYear(DateOnly)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void EndOfYear_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateOnly.MinValue);
+      Test(DateOnly.MaxValue);
+      Test(DateTime.Now.ToDateOnly());
+      Test(DateTime.UtcNow.ToDateOnly());
+    }
+
+    return;
+
+    static void Test(DateOnly date) => date.EndOfYear.Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.get_StartOfMonth(DateOnly)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void StartOfMonth_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateOnly.MinValue);
+      Test(DateOnly.MaxValue);
+      Test(DateTime.Now.ToDateOnly());
+      Test(DateTime.UtcNow.ToDateOnly());
+    }
+
+    return;
+
+    static void Test(DateOnly date) => date.StartOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
+  }
+
+  /// <summary>
+  ///   <para>Performs testing of <see cref="DateOnlyExtensions.get_EndOfMonth(DateOnly)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void EndOfMonth_Property()
+  {
+    using (new AssertionScope())
+    {
+      Test(DateOnly.MinValue);
+      Test(DateOnly.MaxValue);
+      Test(DateTime.Now.ToDateOnly());
+      Test(DateTime.UtcNow.ToDateOnly());
+    }
+
+    return;
+
+    static void Test(DateOnly date) => date.EndOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
+  }
+  
   /// <summary>
   ///   <para>Performs testing of <see cref="DateOnlyExtensions.Range(DateOnly, DateOnly, TimeSpan)"/> method.</para>
   /// </summary>
@@ -92,82 +168,6 @@ public sealed class DateOnlyExtensionsTest : Test
       date.Range(date.AddDays(3), 2.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date, date.AddDays(2));
       date.Range(date.AddDays(-3), 2.Days).Should().BeAssignableTo<IEnumerable<DateOnly>>().And.HaveCount(2).And.Equal(date.AddDays(-3), date.AddDays(-1));
     }
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.StartOfYear"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfYear_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateOnly.MinValue);
-      Test(DateOnly.MaxValue);
-      Test(DateTime.Now.ToDateOnly());
-      Test(DateTime.UtcNow.ToDateOnly());
-    }
-
-    return;
-
-    static void Test(DateOnly date) => date.StartOfYear.Should().HaveYear(date.Year).And.HaveMonth(1).And.HaveDay(1);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.EndOfYear"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtEndOfYear_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateOnly.MinValue);
-      Test(DateOnly.MaxValue);
-      Test(DateTime.Now.ToDateOnly());
-      Test(DateTime.UtcNow.ToDateOnly());
-    }
-
-    return;
-
-    static void Test(DateOnly date) => date.EndOfYear.Should().HaveYear(date.Year).And.HaveMonth(12).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.StartOfMonth"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtStartOfMonth_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateOnly.MinValue);
-      Test(DateOnly.MaxValue);
-      Test(DateTime.Now.ToDateOnly());
-      Test(DateTime.UtcNow.ToDateOnly());
-    }
-
-    return;
-
-    static void Test(DateOnly date) => date.StartOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(1);
-  }
-
-  /// <summary>
-  ///   <para>Performs testing of <see cref="DateOnlyExtensions.EndOfMonth"/> method.</para>
-  /// </summary>
-  [Fact]
-  public void AtEndOfMonth_Method()
-  {
-    using (new AssertionScope())
-    {
-      Test(DateOnly.MinValue);
-      Test(DateOnly.MaxValue);
-      Test(DateTime.Now.ToDateOnly());
-      Test(DateTime.UtcNow.ToDateOnly());
-    }
-
-    return;
-
-    static void Test(DateOnly date) => date.EndOfMonth.Should().HaveYear(date.Year).And.HaveMonth(date.Month).And.HaveDay(DateTime.DaysInMonth(date.Year, date.Month));
   }
 
   /// <summary>

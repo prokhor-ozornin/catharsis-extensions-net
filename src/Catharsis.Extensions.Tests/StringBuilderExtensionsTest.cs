@@ -15,10 +15,10 @@ namespace Catharsis.Extensions.Tests;
 public sealed class StringBuilderExtensionsTest : Test
 {
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsUnset(StringBuilder)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.get_IsUnset(StringBuilder)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsUnset_Method()
+  public void IsUnset_Property()
   {
     using (new AssertionScope())
     {
@@ -34,10 +34,10 @@ public sealed class StringBuilderExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="StringBuilderExtensions.IsEmpty(StringBuilder)"/> method.</para>
+  ///   <para>Performs testing of <see cref="StringBuilderExtensions.get_IsEmpty(StringBuilder)"/> method.</para>
   /// </summary>
   [Fact]
-  public void IsEmpty_Method()
+  public void IsEmpty_Property()
   {
     using (new AssertionScope())
     {
@@ -84,7 +84,7 @@ public sealed class StringBuilderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringBuilderExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => ((StringBuilder) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
       Test(new StringBuilder());
       Test(Fixture.Create<string>().ToStringBuilder());
@@ -140,7 +140,7 @@ public sealed class StringBuilderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringBuilderExtensions.With(null, Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => ((StringBuilder) null).With(Enumerable.Empty<object>())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => string.Empty.ToStringBuilder().With((IEnumerable<object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       Test(new StringBuilder(), []);
@@ -156,7 +156,7 @@ public sealed class StringBuilderExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringBuilderExtensions.With(null, [])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => ((StringBuilder) null).With([])).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
       AssertionExtensions.Should(() => string.Empty.ToStringBuilder().With(null)).ThrowExactly<ArgumentNullException>().WithParameterName("elements");
 
       Test(new StringBuilder(), []);
@@ -222,8 +222,8 @@ public sealed class StringBuilderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringBuilderExtensions.Min(null, new StringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => new StringBuilder().Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+      AssertionExtensions.Should(() => ((StringBuilder) null).Min(new StringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => new StringBuilder().Min(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
       Test(new StringBuilder(), new StringBuilder());
       Test(new StringBuilder(), char.MinValue.ToString().ToStringBuilder());
@@ -243,8 +243,8 @@ public sealed class StringBuilderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringBuilderExtensions.Max(null, new StringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => new StringBuilder().Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+      AssertionExtensions.Should(() => ((StringBuilder) null).Max(new StringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => new StringBuilder().Max(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
       Test(new StringBuilder(), new StringBuilder());
       Test(new StringBuilder(), char.MinValue.ToString().ToStringBuilder());
@@ -264,8 +264,8 @@ public sealed class StringBuilderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringBuilderExtensions.MinMax(null, string.Empty.ToStringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("left");
-      AssertionExtensions.Should(() => string.Empty.ToStringBuilder().MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("right");
+      AssertionExtensions.Should(() => ((StringBuilder) null).MinMax(string.Empty.ToStringBuilder())).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => string.Empty.ToStringBuilder().MinMax(null)).ThrowExactly<ArgumentNullException>().WithParameterName("other");
 
       Test(new StringBuilder(), new StringBuilder());
       Test(new StringBuilder(), char.MinValue.ToString().ToStringBuilder());
@@ -285,7 +285,7 @@ public sealed class StringBuilderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringBuilderExtensions.ToStringWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => ((StringBuilder) null).ToStringWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
       new StringBuilder().With(builder => CultureInfo.GetCultures(CultureTypes.AllCultures).ForEach(culture => Test(builder, culture)));
     }
@@ -312,7 +312,7 @@ public sealed class StringBuilderExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => StringBuilderExtensions.ToXmlWriter(null)).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
+      AssertionExtensions.Should(() => ((StringBuilder) null).ToXmlWriter()).ThrowExactly<ArgumentNullException>().WithParameterName("builder");
 
       Test(new StringBuilder(), string.Empty);
       Test(new StringBuilder(), Fixture.Create<string>());

@@ -62,7 +62,7 @@ public sealed class HttpClientExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.WithHeaders(null, Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).WithHeaders(Enumerable.Empty<(string Name, object Value)>())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WithHeaders((IEnumerable<(string Name, object Value)>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("headers");
 
       using (var client = new HttpClient())
@@ -122,7 +122,7 @@ public sealed class HttpClientExtensionsTest : Test
 
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.WithHeaders(null, new Dictionary<string, object>())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).WithHeaders(new Dictionary<string, object>())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WithHeaders((IReadOnlyDictionary<string, object>) null)).ThrowExactly<ArgumentNullException>().WithParameterName("headers");
 
       using (var client = new HttpClient())
@@ -160,7 +160,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecuteHead(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecuteHead("localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecuteHead(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
@@ -211,7 +211,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecuteGet(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecuteGet("localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecuteGet(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
@@ -236,7 +236,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecuteGetAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecuteGetAsync("localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecuteGetAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecuteGetAsync("localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
@@ -262,7 +262,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecutePost(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecutePost("localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecutePost(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
@@ -287,7 +287,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecutePostAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecutePostAsync("localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecutePostAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecutePostAsync("localhost".ToUri(), null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
@@ -313,7 +313,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecutePut(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecutePut("localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecutePut(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
@@ -338,7 +338,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecutePutAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecutePutAsync("localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecutePutAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecutePutAsync("localhost".ToUri(), null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
@@ -364,7 +364,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecuteDelete(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecuteDelete("localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecuteDelete(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
@@ -385,7 +385,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecuteDeleteAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecuteDeleteAsync("localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecuteDeleteAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecuteDeleteAsync("localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
@@ -411,7 +411,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecutePatch(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecutePatch("localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecutePatch(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
@@ -436,7 +436,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ExecutePatchAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((HttpClient) null).ExecutePatchAsync("localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecutePatchAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ExecutePatchAsync("localhost".ToUri(), null)).ThrowExactlyAsync<OperationCanceledException>().Await();
 
@@ -462,7 +462,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.WriteBytes(null, [], "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).WriteBytes([], "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteBytes(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("bytes");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteBytes([], null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
@@ -488,7 +488,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.WriteBytesAsync(null, [], "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((HttpClient) null).WriteBytesAsync([], "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteBytesAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("bytes").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteBytesAsync([], null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteBytesAsync([], "localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
@@ -515,7 +515,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.WriteText(null, string.Empty, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).WriteText(string.Empty, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteText(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("text");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteText(string.Empty, null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
@@ -541,7 +541,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.WriteTextAsync(null, string.Empty, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((HttpClient) null).WriteTextAsync(string.Empty, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteTextAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("text").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteTextAsync(string.Empty, null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().WriteTextAsync(string.Empty, "localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
@@ -568,7 +568,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ToBytes(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ToBytes("localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToBytes(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
@@ -593,7 +593,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ToBytesAsync(null, "localhost".ToUri()).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ToBytesAsync("localhost".ToUri()).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToBytesAsync(null).ToArrayAsync()).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
@@ -618,7 +618,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ToText(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ToText("localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToText(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
     }
 
@@ -643,7 +643,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ToTextAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((HttpClient) null).ToTextAsync("localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToTextAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToTextAsync("localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
 
@@ -669,7 +669,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ToStream(null, "localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
+      AssertionExtensions.Should(() => ((HttpClient) null).ToStream("localhost".ToUri())).ThrowExactly<ArgumentNullException>().WithParameterName("client");
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToStream(null)).ThrowExactly<ArgumentNullException>().WithParameterName("uri");
 
       throw new NotImplementedException();
@@ -694,7 +694,7 @@ public sealed class HttpClientExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => HttpClientExtensions.ToStreamAsync(null, "localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
+      AssertionExtensions.Should(() => ((HttpClient) null).ToStreamAsync("localhost".ToUri())).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("client").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToStreamAsync(null)).ThrowExactlyAsync<ArgumentNullException>().WithParameterName("uri").Await();
       AssertionExtensions.Should(() => Fixture.Create<HttpClient>().ToStreamAsync("localhost".ToUri())).ThrowExactlyAsync<OperationCanceledException>().Await();
 

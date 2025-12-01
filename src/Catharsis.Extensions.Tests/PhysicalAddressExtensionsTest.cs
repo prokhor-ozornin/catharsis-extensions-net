@@ -12,6 +12,15 @@ namespace Catharsis.Extensions.Tests;
 public sealed class PhysicalAddressExtensionsTest : Test
 {
   /// <summary>
+  ///   <para>Performs testing of <see cref="PhysicalAddressExtensions.get_Bytes(PhysicalAddress)"/> method.</para>
+  /// </summary>
+  [Fact]
+  public void Bytes_Property()
+  {
+    throw new NotImplementedException();
+  }
+  
+  /// <summary>
   ///   <para>Performs testing of <see cref="PhysicalAddressExtensions.Clone(PhysicalAddress)"/> method.</para>
   /// </summary>
   [Fact]
@@ -19,7 +28,7 @@ public sealed class PhysicalAddressExtensionsTest : Test
   {
     using (new AssertionScope())
     {
-      AssertionExtensions.Should(() => PhysicalAddressExtensions.Clone(null)).ThrowExactly<ArgumentNullException>().WithParameterName("address");
+      AssertionExtensions.Should(() => ((PhysicalAddress) null).Clone()).ThrowExactly<ArgumentNullException>().WithParameterName("address");
 
       Test(PhysicalAddress.None);
       Test(new PhysicalAddress(Bytes));

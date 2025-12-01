@@ -2059,8 +2059,8 @@
         <member name="M:Catharsis.Extensions.FileInfoExtensions.ToLines(System.IO.FileInfo,System.Text.Encoding)">
             <inheritdoc cref="M:Catharsis.Extensions.FileInfoExtensions.&lt;G&gt;$9FC757ADB0730D641B7538973D9DCBAA.ToLines(System.Text.Encoding)"/>
         </member>
-        <member name="M:Catharsis.Extensions.FileInfoExtensions.LinesAsync(System.IO.FileInfo,System.Text.Encoding)">
-            <inheritdoc cref="M:Catharsis.Extensions.FileInfoExtensions.&lt;G&gt;$9FC757ADB0730D641B7538973D9DCBAA.LinesAsync(System.Text.Encoding)"/>
+        <member name="M:Catharsis.Extensions.FileInfoExtensions.ToLinesAsync(System.IO.FileInfo,System.Text.Encoding)">
+            <inheritdoc cref="M:Catharsis.Extensions.FileInfoExtensions.&lt;G&gt;$9FC757ADB0730D641B7538973D9DCBAA.ToLinesAsync(System.Text.Encoding)"/>
         </member>
         <member name="M:Catharsis.Extensions.FileInfoExtensions.AsReadOnly(System.IO.FileInfo)">
             <inheritdoc cref="M:Catharsis.Extensions.FileInfoExtensions.&lt;G&gt;$9FC757ADB0730D641B7538973D9DCBAA.AsReadOnly"/>
@@ -2206,9 +2206,9 @@
             <param name="encoding"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="file"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.FileInfoExtensions.LinesAsync(System.IO.FileInfo,System.Text.Encoding)"/>
+            <seealso cref="M:Catharsis.Extensions.FileInfoExtensions.ToLinesAsync(System.IO.FileInfo,System.Text.Encoding)"/>
         </member>
-        <member name="M:Catharsis.Extensions.FileInfoExtensions.&lt;G&gt;$9FC757ADB0730D641B7538973D9DCBAA.LinesAsync(System.Text.Encoding)">
+        <member name="M:Catharsis.Extensions.FileInfoExtensions.&lt;G&gt;$9FC757ADB0730D641B7538973D9DCBAA.ToLinesAsync(System.Text.Encoding)">
             <summary>
               <para>Reads text content of a file and returns it as a list of strings, using default system-dependent string separator.</para>
             </summary>
@@ -3249,7 +3249,7 @@
             </summary>
             <param name="cancellation"></param>
             <returns></returns>
-            <seealso cref="!:ToListAsync(CancellationToken)"/>
+            <seealso cref="!:ToListAsync&lt;T&gt;(IAsyncEnumerable&lt;T&gt;, CancellationToken)"/>
             <seealso cref="M:Catharsis.Extensions.IAsyncEnumerableExtensions.ToImmutableListAsync``1(System.Collections.Generic.IAsyncEnumerable{``0},System.Threading.CancellationToken)"/>
             <seealso cref="M:Catharsis.Extensions.IEnumerableExtensions.ToLinkedList``1(System.Collections.Generic.IEnumerable{``0})"/>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
@@ -4186,6 +4186,18 @@
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.ToMemoryStreamAsync(System.Collections.Generic.IEnumerable{System.Byte[]},System.Threading.CancellationToken)">
             <inheritdoc cref="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$BD8C1825D8F511E8533AB5BF42EF3358.ToMemoryStreamAsync(System.Threading.CancellationToken)"/>
         </member>
+        <member name="M:Catharsis.Extensions.IEnumerableExtensions.get_IsUnset``1(System.Collections.Generic.IEnumerable{``0})">
+            <inheritdoc cref="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsUnset"/>
+        </member>
+        <member name="M:Catharsis.Extensions.IEnumerableExtensions.get_IsEmpty``1(System.Collections.Generic.IEnumerable{``0})">
+            <inheritdoc cref="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsEmpty"/>
+        </member>
+        <member name="M:Catharsis.Extensions.IEnumerableExtensions.get_ContainsDefault``1(System.Collections.Generic.IEnumerable{``0})">
+            <inheritdoc cref="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ContainsDefault"/>
+        </member>
+        <member name="M:Catharsis.Extensions.IEnumerableExtensions.get_ContainsNull``1(System.Collections.Generic.IEnumerable{``0})">
+            <inheritdoc cref="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ContainsNull"/>
+        </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
             <inheritdoc cref="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ForEach(System.Action{`0})"/>
         </member>
@@ -4219,12 +4231,6 @@
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.ContainsUnique``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
             <inheritdoc cref="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ContainsUnique(System.Collections.Generic.IEqualityComparer{`0})"/>
         </member>
-        <member name="M:Catharsis.Extensions.IEnumerableExtensions.get_ContainsNull``1(System.Collections.Generic.IEnumerable{``0})">
-            <inheritdoc cref="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ContainsNull"/>
-        </member>
-        <member name="M:Catharsis.Extensions.IEnumerableExtensions.get_ContainsDefault``1(System.Collections.Generic.IEnumerable{``0})">
-            <inheritdoc cref="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ContainsDefault"/>
-        </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.IsSubset``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
             <inheritdoc cref="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsSubset(System.Collections.Generic.IEnumerable{`0},System.Collections.Generic.IEqualityComparer{`0})"/>
         </member>
@@ -4242,12 +4248,6 @@
         </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.WithCancellation``1(System.Collections.Generic.IEnumerable{``0},System.Threading.CancellationToken)">
             <inheritdoc cref="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.WithCancellation(System.Threading.CancellationToken)"/>
-        </member>
-        <member name="M:Catharsis.Extensions.IEnumerableExtensions.get_IsUnset``1(System.Collections.Generic.IEnumerable{``0})">
-            <inheritdoc cref="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsUnset"/>
-        </member>
-        <member name="M:Catharsis.Extensions.IEnumerableExtensions.get_IsEmpty``1(System.Collections.Generic.IEnumerable{``0})">
-            <inheritdoc cref="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsEmpty"/>
         </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.IsOrdered``1(System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IComparer{``0})">
             <inheritdoc cref="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsOrdered(System.Collections.Generic.IComparer{`0})"/>
@@ -4673,6 +4673,35 @@
             <param name="enumerable"></param>
             <typeparam name="T"></typeparam>
         </member>
+        <member name="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsUnset">
+            <summary>
+              <para></para>
+            </summary>
+            <value></value>
+            <seealso cref="!:IsEmpty"/>
+        </member>
+        <member name="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsEmpty">
+            <summary>
+              <para></para>
+            </summary>
+            <value></value>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+            <seealso cref="!:IsUnset"/>
+        </member>
+        <member name="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ContainsDefault">
+            <summary>
+              <para></para>
+            </summary>
+            <value></value>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+        </member>
+        <member name="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ContainsNull">
+            <summary>
+              <para></para>
+            </summary>
+            <value></value>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
+        </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ForEach(System.Action{`0})">
             <summary>
               <para></para>
@@ -4771,20 +4800,6 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ContainsNull">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-        </member>
-        <member name="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.ContainsDefault">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-        </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsSubset(System.Collections.Generic.IEnumerable{`0},System.Collections.Generic.IEqualityComparer{`0})">
             <summary>
               <para></para>
@@ -4835,21 +4850,6 @@
             <param name="cancellation"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-        </member>
-        <member name="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsUnset">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
-            <seealso cref="!:IsEmpty"/>
-        </member>
-        <member name="P:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsEmpty">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="enumerable"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:IsUnset"/>
         </member>
         <member name="M:Catharsis.Extensions.IEnumerableExtensions.&lt;G&gt;$E09FCB5EB13C1AE2FC524F6744DE5322`1.IsOrdered(System.Collections.Generic.IComparer{`0})">
             <summary>
@@ -5807,6 +5807,9 @@
             </summary>
             <seealso cref="T:System.Object"/>
         </member>
+        <member name="M:Catharsis.Extensions.ObjectExtensions.get_IsNull(System.Object)">
+            <inheritdoc cref="P:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.IsNull"/>
+        </member>
         <member name="M:Catharsis.Extensions.ObjectExtensions.As``1(System.Object)">
             <inheritdoc cref="M:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.As``1"/>
         </member>
@@ -5815,9 +5818,6 @@
         </member>
         <member name="M:Catharsis.Extensions.ObjectExtensions.Is``1(System.Object)">
             <inheritdoc cref="M:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.Is``1"/>
-        </member>
-        <member name="M:Catharsis.Extensions.ObjectExtensions.get_IsNull(System.Object)">
-            <inheritdoc cref="P:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.IsNull"/>
         </member>
         <member name="M:Catharsis.Extensions.ObjectExtensions.IsSameAs(System.Object,System.Object)">
             <inheritdoc cref="M:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.IsSameAs(System.Object)"/>
@@ -6017,6 +6017,12 @@
         <member name="T:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.&lt;M&gt;$4EDAB0A22F864492AAC1EF10E77DAAE8">
             <param name="instance"></param>
         </member>
+        <member name="P:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.IsNull">
+            <summary>
+              <para></para>
+            </summary>
+            <value></value>
+        </member>
         <member name="M:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.As``1">
             <summary>
               <para></para>
@@ -6040,12 +6046,6 @@
             <typeparam name="T">Type of object.</typeparam>
             <returns><c>true</c> if <paramref name="instance"/> is type-compatible with <typeparamref name="T"/>, <c>false</c> if not.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="instance"/> is <see langword="null"/>.</exception>
-        </member>
-        <member name="P:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.IsNull">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
         </member>
         <member name="M:Catharsis.Extensions.ObjectExtensions.&lt;G&gt;$C43E2675C7BBF9284AF22FB8A9BF0280.IsSameAs(System.Object)">
             <summary>
@@ -6696,17 +6696,22 @@
             </summary>
             <seealso cref="T:System.Net.NetworkInformation.PhysicalAddress"/>
         </member>
+        <member name="M:Catharsis.Extensions.PhysicalAddressExtensions.get_Bytes(System.Net.NetworkInformation.PhysicalAddress)">
+            <inheritdoc cref="P:Catharsis.Extensions.PhysicalAddressExtensions.&lt;G&gt;$9E8B936F1248A12E00FFBB41211BA35A.Bytes"/>
+        </member>
         <member name="M:Catharsis.Extensions.PhysicalAddressExtensions.Clone(System.Net.NetworkInformation.PhysicalAddress)">
             <inheritdoc cref="M:Catharsis.Extensions.PhysicalAddressExtensions.&lt;G&gt;$9E8B936F1248A12E00FFBB41211BA35A.Clone"/>
         </member>
         <member name="M:Catharsis.Extensions.PhysicalAddressExtensions.ToBytes(System.Net.NetworkInformation.PhysicalAddress)">
             <inheritdoc cref="M:Catharsis.Extensions.PhysicalAddressExtensions.&lt;G&gt;$9E8B936F1248A12E00FFBB41211BA35A.ToBytes"/>
         </member>
-        <member name="M:Catharsis.Extensions.PhysicalAddressExtensions.get_Bytes(System.Net.NetworkInformation.PhysicalAddress)">
-            <inheritdoc cref="P:Catharsis.Extensions.PhysicalAddressExtensions.&lt;G&gt;$9E8B936F1248A12E00FFBB41211BA35A.Bytes"/>
-        </member>
         <member name="T:Catharsis.Extensions.PhysicalAddressExtensions.&lt;G&gt;$9E8B936F1248A12E00FFBB41211BA35A.&lt;M&gt;$62D71357162C4B45F12791F73B881088">
             <param name="address">Physical address to be cloned.</param>
+        </member>
+        <member name="P:Catharsis.Extensions.PhysicalAddressExtensions.&lt;G&gt;$9E8B936F1248A12E00FFBB41211BA35A.Bytes">
+            <summary>
+              <para></para>
+            </summary>
         </member>
         <member name="M:Catharsis.Extensions.PhysicalAddressExtensions.&lt;G&gt;$9E8B936F1248A12E00FFBB41211BA35A.Clone">
             <summary>
@@ -6722,16 +6727,20 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="address"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="P:Catharsis.Extensions.PhysicalAddressExtensions.&lt;G&gt;$9E8B936F1248A12E00FFBB41211BA35A.Bytes">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="T:Catharsis.Extensions.ProcessExtensions">
             <summary>
               <para>Extension methods for process/threads types.</para>
             </summary>
             <seealso cref="T:System.Diagnostics.Process"/>
+        </member>
+        <member name="M:Catharsis.Extensions.ProcessExtensions.get_ErrorText(System.Diagnostics.Process)">
+            <inheritdoc cref="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ErrorText"/>
+        </member>
+        <member name="M:Catharsis.Extensions.ProcessExtensions.get_Bytes(System.Diagnostics.Process)">
+            <inheritdoc cref="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Bytes"/>
+        </member>
+        <member name="M:Catharsis.Extensions.ProcessExtensions.get_Text(System.Diagnostics.Process)">
+            <inheritdoc cref="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.ProcessExtensions.Run(System.Diagnostics.Process,System.Nullable{System.TimeSpan})">
             <inheritdoc cref="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Run(System.Nullable{System.TimeSpan})"/>
@@ -6763,17 +6772,11 @@
         <member name="M:Catharsis.Extensions.ProcessExtensions.ToErrorText(System.Diagnostics.Process)">
             <inheritdoc cref="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ToErrorText"/>
         </member>
-        <member name="M:Catharsis.Extensions.ProcessExtensions.get_ErrorText(System.Diagnostics.Process)">
-            <inheritdoc cref="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ErrorText"/>
-        </member>
         <member name="M:Catharsis.Extensions.ProcessExtensions.ToErrorTextAsync(System.Diagnostics.Process)">
             <inheritdoc cref="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ToErrorTextAsync"/>
         </member>
         <member name="M:Catharsis.Extensions.ProcessExtensions.ToBytes(System.Diagnostics.Process)">
             <inheritdoc cref="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ToBytes"/>
-        </member>
-        <member name="M:Catharsis.Extensions.ProcessExtensions.get_Bytes(System.Diagnostics.Process)">
-            <inheritdoc cref="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Bytes"/>
         </member>
         <member name="M:Catharsis.Extensions.ProcessExtensions.ToBytesAsync(System.Diagnostics.Process)">
             <inheritdoc cref="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ToBytesAsync"/>
@@ -6781,14 +6784,26 @@
         <member name="M:Catharsis.Extensions.ProcessExtensions.ToText(System.Diagnostics.Process)">
             <inheritdoc cref="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ToText"/>
         </member>
-        <member name="M:Catharsis.Extensions.ProcessExtensions.get_Text(System.Diagnostics.Process)">
-            <inheritdoc cref="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Text"/>
-        </member>
         <member name="M:Catharsis.Extensions.ProcessExtensions.ToTextAsync(System.Diagnostics.Process)">
             <inheritdoc cref="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ToTextAsync"/>
         </member>
         <member name="T:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.&lt;M&gt;$5A8C96957F14E18B7DB04FD9968C611F">
             <param name="process"></param>
+        </member>
+        <member name="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ErrorText">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Bytes">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Text">
+            <summary>
+              <para></para>
+            </summary>
         </member>
         <member name="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Run(System.Nullable{System.TimeSpan})">
             <summary>
@@ -6878,11 +6893,6 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.ProcessExtensions.ToErrorTextAsync(System.Diagnostics.Process)"/>
         </member>
-        <member name="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ErrorText">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ToErrorTextAsync">
             <summary>
               <para></para>
@@ -6899,11 +6909,6 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.ProcessExtensions.ToBytesAsync(System.Diagnostics.Process)"/>
         </member>
-        <member name="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Bytes">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ToBytesAsync">
             <summary>
               <para></para>
@@ -6919,11 +6924,6 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="process"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.ProcessExtensions.ToTextAsync(System.Diagnostics.Process)"/>
-        </member>
-        <member name="P:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.Text">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
         </member>
         <member name="M:Catharsis.Extensions.ProcessExtensions.&lt;G&gt;$CF0CE17D7A3EA2BB5895271206595CBD.ToTextAsync">
             <summary>
@@ -7074,11 +7074,11 @@
         <member name="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Int32,System.Collections.Generic.IEnumerable{System.Range})">
             <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToLong(System.Int32,System.Collections.Generic.IEnumerable{System.Range})"/>
         </member>
-        <member name="M:Catharsis.Extensions.RandomExtensions.Float(System.Random)">
-            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Float"/>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToFloat(System.Random)">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToFloat"/>
         </member>
-        <member name="M:Catharsis.Extensions.RandomExtensions.Float(System.Random,System.Int32)">
-            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Float(System.Int32)"/>
+        <member name="M:Catharsis.Extensions.RandomExtensions.ToFloat(System.Random,System.Int32)">
+            <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToFloat(System.Int32)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.ToDouble(System.Random)">
             <inheritdoc cref="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDouble"/>
@@ -7708,15 +7708,15 @@
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
             <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToLong(System.Random,System.Int32,System.Nullable{System.Int64},System.Nullable{System.Int64})"/>
         </member>
-        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Float">
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToFloat">
             <summary>
               <para></para>
             </summary>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.RandomExtensions.Float(System.Random,System.Int32)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToFloat(System.Random,System.Int32)"/>
         </member>
-        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.Float(System.Int32)">
+        <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToFloat(System.Int32)">
             <summary>
               <para></para>
             </summary>
@@ -7724,7 +7724,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="random"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"></exception>
-            <seealso cref="M:Catharsis.Extensions.RandomExtensions.Float(System.Random)"/>
+            <seealso cref="M:Catharsis.Extensions.RandomExtensions.ToFloat(System.Random)"/>
         </member>
         <member name="M:Catharsis.Extensions.RandomExtensions.&lt;G&gt;$5AB4ABAAFA3359CDE65D50F3C2439F05.ToDouble">
             <summary>
@@ -8693,14 +8693,20 @@
             </summary>
             <seealso cref="T:System.Security.SecureString"/>
         </member>
-        <member name="M:Catharsis.Extensions.SecureStringExtensions.AsReadOnly(System.Security.SecureString)">
-            <inheritdoc cref="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.AsReadOnly"/>
-        </member>
         <member name="M:Catharsis.Extensions.SecureStringExtensions.get_IsUnset(System.Security.SecureString)">
             <inheritdoc cref="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.IsUnset"/>
         </member>
         <member name="M:Catharsis.Extensions.SecureStringExtensions.get_IsEmpty(System.Security.SecureString)">
             <inheritdoc cref="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.IsEmpty"/>
+        </member>
+        <member name="M:Catharsis.Extensions.SecureStringExtensions.get_Bytes(System.Security.SecureString)">
+            <inheritdoc cref="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Bytes"/>
+        </member>
+        <member name="M:Catharsis.Extensions.SecureStringExtensions.get_Text(System.Security.SecureString)">
+            <inheritdoc cref="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Text"/>
+        </member>
+        <member name="M:Catharsis.Extensions.SecureStringExtensions.AsReadOnly(System.Security.SecureString)">
+            <inheritdoc cref="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.AsReadOnly"/>
         </member>
         <member name="M:Catharsis.Extensions.SecureStringExtensions.Empty(System.Security.SecureString)">
             <inheritdoc cref="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Empty"/>
@@ -8732,27 +8738,14 @@
         <member name="M:Catharsis.Extensions.SecureStringExtensions.ToBytes(System.Security.SecureString,System.Text.Encoding)">
             <inheritdoc cref="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.ToBytes(System.Text.Encoding)"/>
         </member>
-        <member name="M:Catharsis.Extensions.SecureStringExtensions.get_Bytes(System.Security.SecureString)">
-            <inheritdoc cref="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Bytes"/>
-        </member>
         <member name="M:Catharsis.Extensions.SecureStringExtensions.ToText(System.Security.SecureString)">
             <inheritdoc cref="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.ToText"/>
-        </member>
-        <member name="M:Catharsis.Extensions.SecureStringExtensions.get_Text(System.Security.SecureString)">
-            <inheritdoc cref="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.SecureStringExtensions.ToBoolean(System.Security.SecureString)">
             <inheritdoc cref="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.ToBoolean"/>
         </member>
         <member name="T:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.&lt;M&gt;$A5903E3218F8BC21F0D75685185D5007">
             <param name="text"></param>
-        </member>
-        <member name="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.AsReadOnly">
-            <summary>
-              <para></para>
-            </summary>
-            <returns>Back self-reference to the given <paramref name="text"/>.</returns>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
         </member>
         <member name="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.IsUnset">
             <summary>
@@ -8768,6 +8761,23 @@
             <value>If the specified <paramref name="text"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
             <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
             <seealso cref="!:IsUnset"/>
+        </member>
+        <member name="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Bytes">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Text">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.AsReadOnly">
+            <summary>
+              <para></para>
+            </summary>
+            <returns>Back self-reference to the given <paramref name="text"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Empty">
             <summary>
@@ -8858,22 +8868,12 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Bytes">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.ToText">
             <summary>
               <para></para>
             </summary>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-        </member>
-        <member name="P:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.Text">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
         </member>
         <member name="M:Catharsis.Extensions.SecureStringExtensions.&lt;G&gt;$9CF75B76EA4A0431EE55646F90A9A0CE.ToBoolean">
             <summary>
@@ -8938,6 +8938,12 @@
         <member name="M:Catharsis.Extensions.StreamExtensions.get_IsEnd(System.IO.Stream)">
             <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsEnd"/>
         </member>
+        <member name="M:Catharsis.Extensions.StreamExtensions.get_IsUnset(System.IO.Stream)">
+            <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsUnset"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StreamExtensions.get_IsEmpty(System.IO.Stream)">
+            <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsEmpty"/>
+        </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.get_IsReadOnly(System.IO.Stream)">
             <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsReadOnly"/>
         </member>
@@ -8949,6 +8955,12 @@
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.get_Lines(System.IO.Stream)">
             <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Lines"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StreamExtensions.get_Bytes(System.IO.Stream)">
+            <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Bytes"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StreamExtensions.get_Text(System.IO.Stream)">
+            <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToLines(System.IO.Stream,System.Text.Encoding)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToLines(System.Text.Encoding)"/>
@@ -9043,12 +9055,6 @@
         <member name="M:Catharsis.Extensions.StreamExtensions.HashSha512Async(System.IO.Stream,System.Threading.CancellationToken)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.HashSha512Async(System.Threading.CancellationToken)"/>
         </member>
-        <member name="M:Catharsis.Extensions.StreamExtensions.get_IsUnset(System.IO.Stream)">
-            <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsUnset"/>
-        </member>
-        <member name="M:Catharsis.Extensions.StreamExtensions.get_IsEmpty(System.IO.Stream)">
-            <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsEmpty"/>
-        </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.Min(System.IO.Stream,System.IO.Stream)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Min(System.IO.Stream)"/>
         </member>
@@ -9079,17 +9085,11 @@
         <member name="M:Catharsis.Extensions.StreamExtensions.ToBytes(System.IO.Stream,System.Boolean)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToBytes(System.Boolean)"/>
         </member>
-        <member name="M:Catharsis.Extensions.StreamExtensions.get_Bytes(System.IO.Stream)">
-            <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Bytes"/>
-        </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToBytesAsync(System.IO.Stream,System.Boolean)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToBytesAsync(System.Boolean)"/>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToText(System.IO.Stream,System.Text.Encoding,System.Boolean)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToText(System.Text.Encoding,System.Boolean)"/>
-        </member>
-        <member name="M:Catharsis.Extensions.StreamExtensions.get_Text(System.IO.Stream)">
-            <inheritdoc cref="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToTextAsync(System.IO.Stream,System.Text.Encoding)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToTextAsync(System.Text.Encoding)"/>
@@ -9109,11 +9109,11 @@
         <member name="M:Catharsis.Extensions.StreamExtensions.ToStreamWriter(System.IO.Stream,System.Text.Encoding,System.Boolean)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToStreamWriter(System.Text.Encoding,System.Boolean)"/>
         </member>
-        <member name="M:Catharsis.Extensions.StreamExtensions.ToXmlReader(System.IO.Stream,System.Boolean)">
-            <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToXmlReader(System.Boolean)"/>
-        </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToStreamContent(System.IO.Stream)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToStreamContent"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StreamExtensions.ToXmlReader(System.IO.Stream,System.Boolean)">
+            <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToXmlReader(System.Boolean)"/>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.ToXmlDictionaryReader(System.IO.Stream,System.Boolean)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToXmlDictionaryReader(System.Boolean)"/>
@@ -9188,6 +9188,22 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
             <seealso cref="!:IsStart"/>
         </member>
+        <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsUnset">
+            <summary>
+              <para></para>
+            </summary>
+            <value></value>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+            <seealso cref="!:IsEmpty"/>
+        </member>
+        <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsEmpty">
+            <summary>
+              <para>Determines whether the specified <see cref="T:System.IO.Stream"/> instance can be considered "empty", meaning its length is zero or the end of the stream has been reached.</para>
+            </summary>
+            <value>If the specified <paramref name="stream"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+            <seealso cref="!:IsUnset"/>
+        </member>
         <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsReadOnly">
             <summary>
               <para></para>
@@ -9210,6 +9226,16 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
         </member>
         <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Lines">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Bytes">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Text">
             <summary>
               <para></para>
             </summary>
@@ -9484,22 +9510,6 @@
             <exception cref="T:System.InvalidOperationException"></exception>
             <seealso cref="M:Catharsis.Extensions.StreamExtensions.HashSha512(System.IO.Stream)"/>
         </member>
-        <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsUnset">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:IsEmpty"/>
-        </member>
-        <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.IsEmpty">
-            <summary>
-              <para>Determines whether the specified <see cref="T:System.IO.Stream"/> instance can be considered "empty", meaning its length is zero or the end of the stream has been reached.</para>
-            </summary>
-            <value>If the specified <paramref name="stream"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:IsUnset"/>
-        </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Min(System.IO.Stream)">
             <summary>
               <para></para>
@@ -9597,11 +9607,6 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.StreamExtensions.ToBytesAsync(System.IO.Stream,System.Boolean)"/>
         </member>
-        <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Bytes">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToBytesAsync(System.Boolean)">
             <summary>
               <para>Read the content of this <see cref="T:System.IO.Stream"/> and return it as a <see cref="T:System.Byte"/> array. The input is closed before this method returns.</para>
@@ -9620,11 +9625,6 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.StreamExtensions.ToTextAsync(System.IO.Stream,System.Text.Encoding)"/>
-        </member>
-        <member name="P:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.Text">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
         </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToTextAsync(System.Text.Encoding)">
             <summary>
@@ -9680,18 +9680,18 @@
             <returns>Text writer instance that wraps <paramref name="stream"/> stream.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
         </member>
+        <member name="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToStreamContent">
+            <summary>
+              <para></para>
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
+        </member>
         <member name="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToXmlReader(System.Boolean)">
             <summary>
               <para></para>
             </summary>
             <param name="close"></param>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
-        </member>
-        <member name="M:Catharsis.Extensions.StreamExtensions.&lt;G&gt;$50F26341F4F164F9281EDEBBEB746904.ToStreamContent">
-            <summary>
-              <para></para>
-            </summary>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="stream"/> is <see langword="null"/>.</exception>
         </member>
@@ -9861,14 +9861,14 @@
         <member name="M:Catharsis.Extensions.StreamReaderExtensions.get_IsStart(System.IO.StreamReader)">
             <inheritdoc cref="P:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.IsStart"/>
         </member>
-        <member name="M:Catharsis.Extensions.StreamReaderExtensions.Rewind(System.IO.StreamReader)">
-            <inheritdoc cref="M:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.Rewind"/>
-        </member>
         <member name="M:Catharsis.Extensions.StreamReaderExtensions.get_IsUnset(System.IO.StreamReader)">
             <inheritdoc cref="P:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.IsUnset"/>
         </member>
         <member name="M:Catharsis.Extensions.StreamReaderExtensions.get_IsEmpty(System.IO.StreamReader)">
             <inheritdoc cref="P:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.IsEmpty"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StreamReaderExtensions.Rewind(System.IO.StreamReader)">
+            <inheritdoc cref="M:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.Rewind"/>
         </member>
         <member name="M:Catharsis.Extensions.StreamReaderExtensions.Empty(System.IO.StreamReader)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.Empty"/>
@@ -9886,13 +9886,6 @@
             <value></value>
             <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="M:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.Rewind">
-            <summary>
-              <para></para>
-            </summary>
-            <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-        </member>
         <member name="P:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.IsUnset">
             <summary>
               <para></para>
@@ -9907,6 +9900,13 @@
             <value>If the specified <paramref name="reader"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
             <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
             <seealso cref="!:IsUnset"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.Rewind">
+            <summary>
+              <para></para>
+            </summary>
+            <returns>Back self-reference to the given <paramref name="reader"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.StreamReaderExtensions.&lt;G&gt;$A2876EF0FD21F9FCFBA3A79E933026D7.Empty">
             <summary>
@@ -9928,14 +9928,14 @@
             </summary>
             <seealso cref="T:System.IO.StreamWriter"/>
         </member>
-        <member name="M:Catharsis.Extensions.StreamWriterExtensions.Rewind(System.IO.StreamWriter)">
-            <inheritdoc cref="M:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.Rewind"/>
-        </member>
         <member name="M:Catharsis.Extensions.StreamWriterExtensions.get_IsUnset(System.IO.StreamWriter)">
             <inheritdoc cref="P:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.IsUnset"/>
         </member>
         <member name="M:Catharsis.Extensions.StreamWriterExtensions.get_IsEmpty(System.IO.StreamWriter)">
             <inheritdoc cref="P:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.IsEmpty"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StreamWriterExtensions.Rewind(System.IO.StreamWriter)">
+            <inheritdoc cref="M:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.Rewind"/>
         </member>
         <member name="M:Catharsis.Extensions.StreamWriterExtensions.Empty(System.IO.StreamWriter)">
             <inheritdoc cref="M:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.Empty"/>
@@ -9945,13 +9945,6 @@
         </member>
         <member name="T:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.&lt;M&gt;$DFB5497563231AD19FC23CF3151D98D2">
             <param name="writer"></param>
-        </member>
-        <member name="M:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.Rewind">
-            <summary>
-              <para></para>
-            </summary>
-            <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
         </member>
         <member name="P:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.IsUnset">
             <summary>
@@ -9968,6 +9961,13 @@
             <value>If the specified <paramref name="writer"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
             <exception cref="T:System.ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
             <seealso cref="!:IsUnset"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.Rewind">
+            <summary>
+              <para></para>
+            </summary>
+            <returns>Back self-reference to the given <paramref name="writer"/>.</returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="writer"/> is <see langword="null"/>.</exception>
         </member>
         <member name="M:Catharsis.Extensions.StreamWriterExtensions.&lt;G&gt;$CC35D0C9D3E143055D956870F6CB7BA2.Empty">
             <summary>
@@ -10168,6 +10168,9 @@
             </summary>
             <seealso cref="T:System.String"/>
         </member>
+        <member name="M:Catharsis.Extensions.StringExtensions.get_IsUnset(System.String)">
+            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsUnset"/>
+        </member>
         <member name="M:Catharsis.Extensions.StringExtensions.get_IsSbyte(System.String)">
             <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsSbyte"/>
         </member>
@@ -10231,6 +10234,15 @@
         <member name="M:Catharsis.Extensions.StringExtensions.get_IsIpAddress(System.String)">
             <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsIpAddress"/>
         </member>
+        <member name="M:Catharsis.Extensions.StringExtensions.get_IsBoolean(System.String)">
+            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsBoolean"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StringExtensions.get_IsUpperCased(System.String)">
+            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsUpperCased"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StringExtensions.get_IsLowerCased(System.String)">
+            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsLowerCased"/>
+        </member>
         <member name="M:Catharsis.Extensions.StringExtensions.get_Lines(System.String)">
             <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.Lines"/>
         </member>
@@ -10242,6 +10254,9 @@
         </member>
         <member name="M:Catharsis.Extensions.StringExtensions.get_LowerCased(System.String)">
             <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.LowerCased"/>
+        </member>
+        <member name="M:Catharsis.Extensions.StringExtensions.get_Capitalized(System.String)">
+            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.Capitalized"/>
         </member>
         <member name="M:Catharsis.Extensions.StringExtensions.get_Bytes(System.String)">
             <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.Bytes"/>
@@ -10282,9 +10297,6 @@
         <member name="M:Catharsis.Extensions.StringExtensions.Capitalize(System.String,System.Globalization.CultureInfo)">
             <inheritdoc cref="M:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.Capitalize(System.Globalization.CultureInfo)"/>
         </member>
-        <member name="M:Catharsis.Extensions.StringExtensions.get_Capitalized(System.String)">
-            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.Capitalized"/>
-        </member>
         <member name="M:Catharsis.Extensions.StringExtensions.CapitalizeAll(System.String,System.Globalization.CultureInfo)">
             <inheritdoc cref="M:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.CapitalizeAll(System.Globalization.CultureInfo)"/>
         </member>
@@ -10311,18 +10323,6 @@
         </member>
         <member name="M:Catharsis.Extensions.StringExtensions.Matches(System.String,System.String,System.Nullable{System.Text.RegularExpressions.RegexOptions})">
             <inheritdoc cref="M:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.Matches(System.String,System.Nullable{System.Text.RegularExpressions.RegexOptions})"/>
-        </member>
-        <member name="M:Catharsis.Extensions.StringExtensions.get_IsUnset(System.String)">
-            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsUnset"/>
-        </member>
-        <member name="M:Catharsis.Extensions.StringExtensions.get_IsUpperCased(System.String)">
-            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsUpperCased"/>
-        </member>
-        <member name="M:Catharsis.Extensions.StringExtensions.get_IsLowerCased(System.String)">
-            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsLowerCased"/>
-        </member>
-        <member name="M:Catharsis.Extensions.StringExtensions.get_IsBoolean(System.String)">
-            <inheritdoc cref="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsBoolean"/>
         </member>
         <member name="M:Catharsis.Extensions.StringExtensions.IsSbyteInFormat(System.String,System.IFormatProvider)">
             <inheritdoc cref="M:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsSbyteInFormat(System.IFormatProvider)"/>
@@ -10681,6 +10681,15 @@
         <member name="T:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.&lt;M&gt;$823E3E3373FDF740140BB7F2C89E481B">
             <param name="text">The current string to compare with the second.</param>
         </member>
+        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsUnset">
+            <summary>
+              <para>Determines where a string is either <c>null</c> reference or is <see cref="F:System.String.Empty"/>.</para>
+            </summary>
+            <value>
+              <c>true</c> if <paramref name="text"/> is either a <c>null</c> reference or an empty string.
+            </value>
+            <seealso cref="M:System.String.IsNullOrWhiteSpace(System.String)"/>
+        </member>
         <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsSbyte">
             <summary>
               <para></para>
@@ -10796,6 +10805,30 @@
             </summary>
             <value></value>
         </member>
+        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsBoolean">
+            <summary>
+              <para>Determines whether a source string represents a valid <see cref="T:System.Boolean"/> value.</para>
+            </summary>
+            <value>
+              <c>true</c> if <paramref name="text"/> represents a valid value of <see cref="T:System.Boolean"/> type, <c>false</c> otherwise.
+            </value>
+        </member>
+        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsUpperCased">
+            <summary>
+              <para></para>
+            </summary>
+            <value></value>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+            <seealso cref="!:IsLowerCased"/>
+        </member>
+        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsLowerCased">
+            <summary>
+              <para></para>
+            </summary>
+            <value></value>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
+            <seealso cref="!:IsUpperCased"/>
+        </member>
         <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.Lines">
             <summary>
               <para></para>
@@ -10812,6 +10845,11 @@
             </summary>
         </member>
         <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.LowerCased">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.Capitalized">
             <summary>
               <para></para>
             </summary>
@@ -10925,11 +10963,6 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.StringExtensions.CapitalizeAll(System.String,System.Globalization.CultureInfo)"/>
         </member>
-        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.Capitalized">
-            <summary>
-              <para></para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.CapitalizeAll(System.Globalization.CultureInfo)">
             <summary>
               <para></para>
@@ -11013,39 +11046,6 @@
             <param name="options">A bitwise combination of the enumeration values that specify options for matching.</param>
             <returns>A collection of the <see cref="T:System.Text.RegularExpressions.Match"/> objects found by the search. If no matches are found, the method returns an empty collection object.</returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="text"/> or <paramref name="pattern"/> is <see langword="null"/>.</exception>
-        </member>
-        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsUnset">
-            <summary>
-              <para>Determines where a string is either <c>null</c> reference or is <see cref="F:System.String.Empty"/>.</para>
-            </summary>
-            <value>
-              <c>true</c> if <paramref name="text"/> is either a <c>null</c> reference or an empty string.
-            </value>
-            <seealso cref="M:System.String.IsNullOrWhiteSpace(System.String)"/>
-        </member>
-        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsUpperCased">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:IsLowerCased"/>
-        </member>
-        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsLowerCased">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="text"/> is <see langword="null"/>.</exception>
-            <seealso cref="!:IsUpperCased"/>
-        </member>
-        <member name="P:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsBoolean">
-            <summary>
-              <para>Determines whether a source string represents a valid <see cref="T:System.Boolean"/> value.</para>
-            </summary>
-            <value>
-              <c>true</c> if <paramref name="text"/> represents a valid value of <see cref="T:System.Boolean"/> type, <c>false</c> otherwise.
-            </value>
         </member>
         <member name="M:Catharsis.Extensions.StringExtensions.&lt;G&gt;$34505F560D9EACF86A87F3ED1F85E448.IsSbyteInFormat(System.IFormatProvider)">
             <summary>
@@ -12558,14 +12558,20 @@
         <member name="M:Catharsis.Extensions.TextReaderExtensions.get_IsEnd(System.IO.TextReader)">
             <inheritdoc cref="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.IsEnd"/>
         </member>
-        <member name="M:Catharsis.Extensions.TextReaderExtensions.ToLines(System.IO.TextReader)">
-            <inheritdoc cref="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToLines"/>
-        </member>
         <member name="M:Catharsis.Extensions.TextReaderExtensions.get_Lines(System.IO.TextReader)">
             <inheritdoc cref="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Lines"/>
         </member>
-        <member name="M:Catharsis.Extensions.TextReaderExtensions.LinesAsync(System.IO.TextReader)">
-            <inheritdoc cref="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.LinesAsync"/>
+        <member name="M:Catharsis.Extensions.TextReaderExtensions.get_Bytes(System.IO.TextReader)">
+            <inheritdoc cref="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Bytes"/>
+        </member>
+        <member name="M:Catharsis.Extensions.TextReaderExtensions.get_Text(System.IO.TextReader)">
+            <inheritdoc cref="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Text"/>
+        </member>
+        <member name="M:Catharsis.Extensions.TextReaderExtensions.ToLines(System.IO.TextReader)">
+            <inheritdoc cref="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToLines"/>
+        </member>
+        <member name="M:Catharsis.Extensions.TextReaderExtensions.ToLinesAsync(System.IO.TextReader)">
+            <inheritdoc cref="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToLinesAsync"/>
         </member>
         <member name="M:Catharsis.Extensions.TextReaderExtensions.AsSynchronized(System.IO.TextReader)">
             <inheritdoc cref="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.AsSynchronized"/>
@@ -12591,17 +12597,11 @@
         <member name="M:Catharsis.Extensions.TextReaderExtensions.ToBytes(System.IO.TextReader,System.Text.Encoding)">
             <inheritdoc cref="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToBytes(System.Text.Encoding)"/>
         </member>
-        <member name="M:Catharsis.Extensions.TextReaderExtensions.get_Bytes(System.IO.TextReader)">
-            <inheritdoc cref="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Bytes"/>
-        </member>
         <member name="M:Catharsis.Extensions.TextReaderExtensions.ToBytesAsync(System.IO.TextReader,System.Text.Encoding)">
             <inheritdoc cref="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToBytesAsync(System.Text.Encoding)"/>
         </member>
         <member name="M:Catharsis.Extensions.TextReaderExtensions.ToText(System.IO.TextReader)">
             <inheritdoc cref="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToText"/>
-        </member>
-        <member name="M:Catharsis.Extensions.TextReaderExtensions.get_Text(System.IO.TextReader)">
-            <inheritdoc cref="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.TextReaderExtensions.ToTextAsync(System.IO.TextReader)">
             <inheritdoc cref="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToTextAsync"/>
@@ -12634,20 +12634,30 @@
             <value></value>
             <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
         </member>
+        <member name="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Lines">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Bytes">
+            <summary>
+              <para>[NEW]</para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Text">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
         <member name="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToLines">
             <summary>
               <para></para>
             </summary>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.TextReaderExtensions.LinesAsync(System.IO.TextReader)"/>
+            <seealso cref="M:Catharsis.Extensions.TextReaderExtensions.ToLinesAsync(System.IO.TextReader)"/>
         </member>
-        <member name="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Lines">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
-        <member name="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.LinesAsync">
+        <member name="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToLinesAsync">
             <summary>
               <para>Reads text using specified <see cref="T:System.IO.TextReader"/> and returns it as a list of strings, using default system-dependent string separator.</para>
             </summary>
@@ -12729,11 +12739,6 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.TextReaderExtensions.ToBytesAsync(System.IO.TextReader,System.Text.Encoding)"/>
         </member>
-        <member name="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Bytes">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToBytesAsync(System.Text.Encoding)">
             <summary>
               <para></para>
@@ -12750,11 +12755,6 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.TextReaderExtensions.ToTextAsync(System.IO.TextReader)"/>
-        </member>
-        <member name="P:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.Text">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
         </member>
         <member name="M:Catharsis.Extensions.TextReaderExtensions.&lt;G&gt;$ED0C8F962EDBAD5B8F826E0ED7DBC34D.ToTextAsync">
             <summary>
@@ -13051,6 +13051,12 @@
             </summary>
             <seealso cref="T:System.Type"/>
         </member>
+        <member name="M:Catharsis.Extensions.TypeExtensions.get_Implementations(System.Type)">
+            <inheritdoc cref="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.Implementations"/>
+        </member>
+        <member name="M:Catharsis.Extensions.TypeExtensions.get_HasDefaultConstructor(System.Type)">
+            <inheritdoc cref="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.HasDefaultConstructor"/>
+        </member>
         <member name="M:Catharsis.Extensions.TypeExtensions.get_IsStatic(System.Type)">
             <inheritdoc cref="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.IsStatic"/>
         </member>
@@ -13075,9 +13081,6 @@
         <member name="M:Catharsis.Extensions.TypeExtensions.Implements``1(System.Type)">
             <inheritdoc cref="M:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.Implements``1"/>
         </member>
-        <member name="M:Catharsis.Extensions.TypeExtensions.get_Implementations(System.Type)">
-            <inheritdoc cref="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.Implementations"/>
-        </member>
         <member name="M:Catharsis.Extensions.TypeExtensions.Implementors(System.Type,System.Reflection.Assembly)">
             <inheritdoc cref="M:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.Implementors(System.Reflection.Assembly)"/>
         </member>
@@ -13098,9 +13101,6 @@
         </member>
         <member name="M:Catharsis.Extensions.TypeExtensions.HasConstructor(System.Type,System.Type[])">
             <inheritdoc cref="M:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.HasConstructor(System.Type[])"/>
-        </member>
-        <member name="M:Catharsis.Extensions.TypeExtensions.get_HasDefaultConstructor(System.Type)">
-            <inheritdoc cref="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.HasDefaultConstructor"/>
         </member>
         <member name="M:Catharsis.Extensions.TypeExtensions.AnyEvent(System.Type,System.String)">
             <inheritdoc cref="M:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.AnyEvent(System.String)"/>
@@ -13125,6 +13125,23 @@
         </member>
         <member name="T:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.&lt;M&gt;$617E2A5EAF7361856B5033D63F3EB12E">
             <param name="type"></param>
+        </member>
+        <member name="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.Implementations">
+            <summary>
+              <para>Returns enumerator to iterate over the set of specified <paramref name="type"/>'s base types and implemented interfaces.</para>
+            </summary>
+            <value>Enumerator to iterate through <paramref name="type"/>'s base types and interfaces, which it implements.</value>
+            <remarks>The order of the base types and interfaces returned is undetermined.</remarks>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
+        </member>
+        <member name="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.HasDefaultConstructor">
+            <summary>
+              <para></para>
+            </summary>
+            <value></value>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
+            <seealso cref="M:Catharsis.Extensions.TypeExtensions.HasConstructor(System.Type,System.Collections.Generic.IEnumerable{System.Type})"/>
+            <seealso cref="M:Catharsis.Extensions.TypeExtensions.HasConstructor(System.Type,System.Type[])"/>
         </member>
         <member name="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.IsStatic">
             <summary>
@@ -13197,14 +13214,6 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.TypeExtensions.Implements(System.Type,System.Type)"/>
         </member>
-        <member name="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.Implementations">
-            <summary>
-              <para>Returns enumerator to iterate over the set of specified <paramref name="type"/>'s base types and implemented interfaces.</para>
-            </summary>
-            <value>Enumerator to iterate through <paramref name="type"/>'s base types and interfaces, which it implements.</value>
-            <remarks>The order of the base types and interfaces returned is undetermined.</remarks>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
-        </member>
         <member name="M:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.Implementors(System.Reflection.Assembly)">
             <summary>
               <para></para>
@@ -13268,15 +13277,6 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.TypeExtensions.HasConstructor(System.Type,System.Collections.Generic.IEnumerable{System.Type})"/>
             <seealso cref="!:HasDefaultConstructor"/>
-        </member>
-        <member name="P:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.HasDefaultConstructor">
-            <summary>
-              <para></para>
-            </summary>
-            <value></value>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="type"/> is <see langword="null"/>.</exception>
-            <seealso cref="M:Catharsis.Extensions.TypeExtensions.HasConstructor(System.Type,System.Collections.Generic.IEnumerable{System.Type})"/>
-            <seealso cref="M:Catharsis.Extensions.TypeExtensions.HasConstructor(System.Type,System.Type[])"/>
         </member>
         <member name="M:Catharsis.Extensions.TypeExtensions.&lt;G&gt;$6B6159A298CA62A8C577E514BE40E3DD.AnyEvent(System.String)">
             <summary>
@@ -13590,11 +13590,17 @@
         <member name="M:Catharsis.Extensions.UriExtensions.get_Lines(System.Uri)">
             <inheritdoc cref="P:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Lines"/>
         </member>
+        <member name="M:Catharsis.Extensions.UriExtensions.get_Bytes(System.Uri)">
+            <inheritdoc cref="P:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Bytes"/>
+        </member>
+        <member name="M:Catharsis.Extensions.UriExtensions.get_Text(System.Uri)">
+            <inheritdoc cref="P:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Text"/>
+        </member>
         <member name="M:Catharsis.Extensions.UriExtensions.Availability(System.Uri,System.Nullable{System.TimeSpan})">
             <inheritdoc cref="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Availability(System.Nullable{System.TimeSpan})"/>
         </member>
-        <member name="M:Catharsis.Extensions.UriExtensions.IsAvailableAsync(System.Uri,System.Nullable{System.TimeSpan},System.Threading.CancellationToken)">
-            <inheritdoc cref="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.IsAvailableAsync(System.Nullable{System.TimeSpan},System.Threading.CancellationToken)"/>
+        <member name="M:Catharsis.Extensions.UriExtensions.AvailabilityAsync(System.Uri,System.Nullable{System.TimeSpan},System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.AvailabilityAsync(System.Nullable{System.TimeSpan},System.Threading.CancellationToken)"/>
         </member>
         <member name="M:Catharsis.Extensions.UriExtensions.GetQuery(System.Uri)">
             <inheritdoc cref="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.GetQuery"/>
@@ -13659,17 +13665,11 @@
         <member name="M:Catharsis.Extensions.UriExtensions.ToBytes(System.Uri,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])">
             <inheritdoc cref="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.ToBytes(System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/>
         </member>
-        <member name="M:Catharsis.Extensions.UriExtensions.get_Bytes(System.Uri)">
-            <inheritdoc cref="P:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Bytes"/>
-        </member>
         <member name="M:Catharsis.Extensions.UriExtensions.ToBytesAsync(System.Uri,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])">
             <inheritdoc cref="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.ToBytesAsync(System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/>
         </member>
         <member name="M:Catharsis.Extensions.UriExtensions.ToText(System.Uri,System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])">
             <inheritdoc cref="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.ToText(System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/>
-        </member>
-        <member name="M:Catharsis.Extensions.UriExtensions.get_Text(System.Uri)">
-            <inheritdoc cref="P:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.UriExtensions.ToTextAsync(System.Uri,System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])">
             <inheritdoc cref="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.ToTextAsync(System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/>
@@ -13717,6 +13717,16 @@
               <para></para>
             </summary>
         </member>
+        <member name="P:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Bytes">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Text">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
         <member name="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Availability(System.Nullable{System.TimeSpan})">
             <summary>
               <para></para>
@@ -13725,9 +13735,9 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
             <exception cref="T:System.InvalidOperationException"></exception>
-            <seealso cref="M:Catharsis.Extensions.UriExtensions.IsAvailableAsync(System.Uri,System.Nullable{System.TimeSpan},System.Threading.CancellationToken)"/>
+            <seealso cref="M:Catharsis.Extensions.UriExtensions.AvailabilityAsync(System.Uri,System.Nullable{System.TimeSpan},System.Threading.CancellationToken)"/>
         </member>
-        <member name="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.IsAvailableAsync(System.Nullable{System.TimeSpan},System.Threading.CancellationToken)">
+        <member name="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.AvailabilityAsync(System.Nullable{System.TimeSpan},System.Threading.CancellationToken)">
             <summary>
               <para></para>
             </summary>
@@ -13954,11 +13964,6 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.UriExtensions.ToBytesAsync(System.Uri,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/>
         </member>
-        <member name="P:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Bytes">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.ToBytesAsync(System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])">
             <summary>
               <para>Downloads the resource with the specified <see cref="T:System.Uri"/> address and returns the result in a binary form.</para>
@@ -13979,11 +13984,6 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="uri"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.UriExtensions.ToTextAsync(System.Uri,System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])"/>
-        </member>
-        <member name="P:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.Text">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
         </member>
         <member name="M:Catharsis.Extensions.UriExtensions.&lt;G&gt;$A2D159684F90C84BD35ED118E17F9ADC.ToTextAsync(System.Text.Encoding,System.Nullable{System.TimeSpan},System.ValueTuple{System.String,System.Object}[])">
             <summary>
@@ -14188,6 +14188,12 @@
         <member name="M:Catharsis.Extensions.XDocumentExtensions.get_IsEmpty(System.Xml.Linq.XDocument)">
             <inheritdoc cref="P:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.IsEmpty"/>
         </member>
+        <member name="M:Catharsis.Extensions.XDocumentExtensions.get_Bytes(System.Xml.Linq.XDocument)">
+            <inheritdoc cref="P:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Bytes"/>
+        </member>
+        <member name="M:Catharsis.Extensions.XDocumentExtensions.get_Text(System.Xml.Linq.XDocument)">
+            <inheritdoc cref="P:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Text"/>
+        </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.Empty(System.Xml.Linq.XDocument)">
             <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Empty"/>
         </member>
@@ -14203,6 +14209,9 @@
         <member name="M:Catharsis.Extensions.XDocumentExtensions.With(System.Xml.Linq.XDocument,System.Object[])">
             <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.With(System.Object[])"/>
         </member>
+        <member name="M:Catharsis.Extensions.XDocumentExtensions.Serialize(System.Xml.Linq.XDocument)">
+            <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Serialize"/>
+        </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.Serialize(System.Xml.Linq.XDocument,System.Xml.XmlWriter)">
             <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Serialize(System.Xml.XmlWriter)"/>
         </member>
@@ -14215,23 +14224,14 @@
         <member name="M:Catharsis.Extensions.XDocumentExtensions.Serialize(System.Xml.Linq.XDocument,System.IO.FileInfo,System.Text.Encoding)">
             <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Serialize(System.IO.FileInfo,System.Text.Encoding)"/>
         </member>
-        <member name="M:Catharsis.Extensions.XDocumentExtensions.Serialize(System.Xml.Linq.XDocument)">
-            <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Serialize"/>
-        </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.ToBytes(System.Xml.Linq.XDocument)">
             <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.ToBytes"/>
-        </member>
-        <member name="M:Catharsis.Extensions.XDocumentExtensions.get_Bytes(System.Xml.Linq.XDocument)">
-            <inheritdoc cref="P:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Bytes"/>
         </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.ToBytesAsync(System.Xml.Linq.XDocument,System.Threading.CancellationToken)">
             <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.ToBytesAsync(System.Threading.CancellationToken)"/>
         </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.ToText(System.Xml.Linq.XDocument)">
             <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.ToText"/>
-        </member>
-        <member name="M:Catharsis.Extensions.XDocumentExtensions.get_Text(System.Xml.Linq.XDocument)">
-            <inheritdoc cref="P:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.ToTextAsync(System.Xml.Linq.XDocument,System.Threading.CancellationToken)">
             <inheritdoc cref="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.ToTextAsync(System.Threading.CancellationToken)"/>
@@ -14261,6 +14261,16 @@
             </summary>
             <value>If the specified <paramref name="document"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
             <exception cref="T:System.ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+        </member>
+        <member name="P:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Bytes">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Text">
+            <summary>
+              <para></para>
+            </summary>
         </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Empty">
             <summary>
@@ -14300,6 +14310,13 @@
             <returns>Back self-reference to the given <paramref name="document"/>.</returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
         </member>
+        <member name="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Serialize">
+            <summary>
+              <para></para>
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+        </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Serialize(System.Xml.XmlWriter)">
             <summary>
               <para></para>
@@ -14334,24 +14351,12 @@
             <returns>Back self-reference to the given <paramref name="document"/>.</returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="document"/> or <paramref name="destination"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Serialize">
-            <summary>
-              <para></para>
-            </summary>
-            <returns></returns>
-            <exception cref="T:System.ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-        </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.ToBytes">
             <summary>
               <para></para>
             </summary>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-        </member>
-        <member name="P:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Bytes">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
         </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.ToBytesAsync(System.Threading.CancellationToken)">
             <summary>
@@ -14367,11 +14372,6 @@
             </summary>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
-        </member>
-        <member name="P:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.Text">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
         </member>
         <member name="M:Catharsis.Extensions.XDocumentExtensions.&lt;G&gt;$BE912B4A4E8EFDED95BD9DCDF1BB864F.ToTextAsync(System.Threading.CancellationToken)">
             <summary>
@@ -14413,6 +14413,12 @@
         </member>
         <member name="M:Catharsis.Extensions.XmlDocumentExtensions.get_IsEmpty(System.Xml.XmlDocument)">
             <inheritdoc cref="P:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.IsEmpty"/>
+        </member>
+        <member name="M:Catharsis.Extensions.XmlDocumentExtensions.get_Bytes(System.Xml.XmlDocument)">
+            <inheritdoc cref="P:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Bytes"/>
+        </member>
+        <member name="M:Catharsis.Extensions.XmlDocumentExtensions.get_Text(System.Xml.XmlDocument)">
+            <inheritdoc cref="P:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.XmlDocumentExtensions.Empty(System.Xml.XmlDocument)">
             <inheritdoc cref="M:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Empty"/>
@@ -14456,14 +14462,8 @@
         <member name="M:Catharsis.Extensions.XmlDocumentExtensions.ToBytes(System.Xml.XmlDocument)">
             <inheritdoc cref="M:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.ToBytes"/>
         </member>
-        <member name="M:Catharsis.Extensions.XmlDocumentExtensions.get_Bytes(System.Xml.XmlDocument)">
-            <inheritdoc cref="P:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Bytes"/>
-        </member>
         <member name="M:Catharsis.Extensions.XmlDocumentExtensions.ToText(System.Xml.XmlDocument)">
             <inheritdoc cref="M:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.ToText"/>
-        </member>
-        <member name="M:Catharsis.Extensions.XmlDocumentExtensions.get_Text(System.Xml.XmlDocument)">
-            <inheritdoc cref="P:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Text"/>
         </member>
         <member name="T:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.&lt;M&gt;$6E4C963E40B4F1BE26652CC31895D5C1">
             <param name="document"></param>
@@ -14481,6 +14481,16 @@
             </summary>
             <value>If the specified <paramref name="document"/> is "empty", return <see langword="true"/>, otherwise return <see langword="false"/>.</value>
             <exception cref="T:System.ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
+        </member>
+        <member name="P:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Bytes">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Text">
+            <summary>
+              <para></para>
+            </summary>
         </member>
         <member name="M:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Empty">
             <summary>
@@ -14595,11 +14605,6 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="P:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Bytes">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.ToText">
             <summary>
               <para></para>
@@ -14607,16 +14612,17 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="document"/> is <see langword="null"/>.</exception>
         </member>
-        <member name="P:Catharsis.Extensions.XmlDocumentExtensions.&lt;G&gt;$1956B83829F99375F12310220EDF9C56.Text">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="T:Catharsis.Extensions.XmlReaderExtensions">
             <summary>
               <para>Extension methods for XML types.</para>
             </summary>
             <seealso cref="T:System.Xml.XmlReader"/>
+        </member>
+        <member name="M:Catharsis.Extensions.XmlReaderExtensions.get_Bytes(System.Xml.XmlReader)">
+            <inheritdoc cref="P:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Bytes"/>
+        </member>
+        <member name="M:Catharsis.Extensions.XmlReaderExtensions.get_Text(System.Xml.XmlReader)">
+            <inheritdoc cref="P:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.XmlReaderExtensions.Skip(System.Xml.XmlReader,System.Int32)">
             <inheritdoc cref="M:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Skip(System.Int32)"/>
@@ -14630,17 +14636,11 @@
         <member name="M:Catharsis.Extensions.XmlReaderExtensions.ToBytes(System.Xml.XmlReader,System.Text.Encoding)">
             <inheritdoc cref="M:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.ToBytes(System.Text.Encoding)"/>
         </member>
-        <member name="M:Catharsis.Extensions.XmlReaderExtensions.get_Bytes(System.Xml.XmlReader)">
-            <inheritdoc cref="P:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Bytes"/>
-        </member>
         <member name="M:Catharsis.Extensions.XmlReaderExtensions.ToBytesAsync(System.Xml.XmlReader,System.Text.Encoding)">
             <inheritdoc cref="M:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.ToBytesAsync(System.Text.Encoding)"/>
         </member>
         <member name="M:Catharsis.Extensions.XmlReaderExtensions.ToText(System.Xml.XmlReader)">
             <inheritdoc cref="M:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.ToText"/>
-        </member>
-        <member name="M:Catharsis.Extensions.XmlReaderExtensions.get_Text(System.Xml.XmlReader)">
-            <inheritdoc cref="P:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Text"/>
         </member>
         <member name="M:Catharsis.Extensions.XmlReaderExtensions.ToTextAsync(System.Xml.XmlReader)">
             <inheritdoc cref="M:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.ToTextAsync"/>
@@ -14659,6 +14659,16 @@
         </member>
         <member name="T:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.&lt;M&gt;$3CD1CF5DAB0613ED5B3EDF8CCE8DB159">
             <param name="reader"></param>
+        </member>
+        <member name="P:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Bytes">
+            <summary>
+              <para></para>
+            </summary>
+        </member>
+        <member name="P:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Text">
+            <summary>
+              <para></para>
+            </summary>
         </member>
         <member name="M:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Skip(System.Int32)">
             <summary>
@@ -14696,11 +14706,6 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.XmlReaderExtensions.ToBytesAsync(System.Xml.XmlReader,System.Text.Encoding)"/>
         </member>
-        <member name="P:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Bytes">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
-        </member>
         <member name="M:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.ToBytesAsync(System.Text.Encoding)">
             <summary>
               <para></para>
@@ -14717,11 +14722,6 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="reader"/> is <see langword="null"/>.</exception>
             <seealso cref="M:Catharsis.Extensions.XmlReaderExtensions.ToTextAsync(System.Xml.XmlReader)"/>
-        </member>
-        <member name="P:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.Text">
-            <summary>
-              <para>[NEW]</para>
-            </summary>
         </member>
         <member name="M:Catharsis.Extensions.XmlReaderExtensions.&lt;G&gt;$BF265BA159F4D677B9CEE24984C04530.ToTextAsync">
             <summary>

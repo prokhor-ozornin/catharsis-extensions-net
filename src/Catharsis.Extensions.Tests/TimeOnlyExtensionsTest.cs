@@ -45,10 +45,10 @@ public sealed class TimeOnlyExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.StartOfHour"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.get_StartOfHour(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void AtStartOfHour_Method()
+  public void StartOfHour_Property()
   {
     using (new AssertionScope())
     {
@@ -64,10 +64,10 @@ public sealed class TimeOnlyExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.EndOfHour"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.get_EndOfHour(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void AtEndOfHour_Method()
+  public void EndOfHour_Property()
   {
     using (new AssertionScope())
     {
@@ -83,10 +83,10 @@ public sealed class TimeOnlyExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.StartOfMinute"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.get_StartOfMinute(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void AtStartOfMinute_Method()
+  public void StartOfMinute_Property()
   {
     using (new AssertionScope())
     {
@@ -102,10 +102,10 @@ public sealed class TimeOnlyExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.EndOfMinute"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.get_EndOfMinute(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void AtEndOfMinute_Method()
+  public void EndOfMinute_Property()
   {
     using (new AssertionScope())
     {
@@ -121,10 +121,10 @@ public sealed class TimeOnlyExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.StartOfSecond"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.get_StartOfSecond(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void AtStartOfSecond_Method()
+  public void StartOfSecond_Property()
   {
     using (new AssertionScope())
     {
@@ -140,10 +140,10 @@ public sealed class TimeOnlyExtensionsTest : Test
   }
 
   /// <summary>
-  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.EndOfSecond"/> method.</para>
+  ///   <para>Performs testing of <see cref="TimeOnlyExtensions.get_EndOfSecond(TimeOnly)"/> method.</para>
   /// </summary>
   [Fact]
-  public void AtEndOfSecond_Method()
+  public void EndOfSecond_Property()
   {
     using (new AssertionScope())
     {
