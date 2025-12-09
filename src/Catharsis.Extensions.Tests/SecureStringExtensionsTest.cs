@@ -1,6 +1,6 @@
-﻿using AutoFixture;
-using System.Security;
+﻿using System.Security;
 using System.Text;
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;

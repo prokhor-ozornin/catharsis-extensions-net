@@ -1,13 +1,13 @@
-using System.Text;
-using System.Security.Cryptography;
-using System.Net.Sockets;
-using System.Xml;
 using System.Diagnostics;
+using System.Net.Sockets;
 using System.Security;
+using System.Security.Cryptography;
+using System.Text;
+using System.Xml;
 
 #if NET10_0_OR_GREATER
-using System.Collections.Immutable;
 using System.Collections.Frozen;
+using System.Collections.Immutable;
 #endif
 
 namespace Catharsis.Extensions;

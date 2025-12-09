@@ -1,6 +1,6 @@
-﻿using AutoFixture;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Text;
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;

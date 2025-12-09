@@ -1,7 +1,7 @@
-﻿using AutoFixture;
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;

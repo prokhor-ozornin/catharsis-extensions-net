@@ -1,5 +1,4 @@
-﻿using AutoFixture;
-using System.Collections.Frozen;
+﻿using System.Collections.Frozen;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Net.Sockets;
@@ -7,6 +6,7 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;

@@ -1,6 +1,6 @@
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
-using System.Runtime.InteropServices;
 
 namespace Catharsis.Extensions;
 

@@ -1,9 +1,9 @@
-using AutoFixture;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Text;
 using System.Xml;
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;

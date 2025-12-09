@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
-using FluentAssertions.Execution;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;

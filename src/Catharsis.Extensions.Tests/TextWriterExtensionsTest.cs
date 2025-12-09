@@ -1,5 +1,5 @@
-﻿using AutoFixture;
-using System.Text;
+﻿using System.Text;
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;

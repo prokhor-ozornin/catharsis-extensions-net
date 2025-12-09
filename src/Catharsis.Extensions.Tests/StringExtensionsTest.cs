@@ -1,16 +1,16 @@
-using AutoFixture;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
-using System.Xml;
 
 namespace Catharsis.Extensions.Tests;
 

@@ -1,7 +1,7 @@
-﻿using AutoFixture;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 using System.Xml;
+using AutoFixture;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;

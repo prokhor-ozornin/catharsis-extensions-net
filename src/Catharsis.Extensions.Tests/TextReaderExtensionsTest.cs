@@ -1,7 +1,7 @@
-﻿using AutoFixture;
-using System.Text;
-using FluentAssertions.Execution;
+﻿using System.Text;
+using AutoFixture;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
 
 namespace Catharsis.Extensions.Tests;
