@@ -5,12 +5,15 @@
 /// </summary>
 public static class ICloneableExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
   /// <param name="cloneable"></param>
-  /// <returns></returns>
-  /// <exception cref="ArgumentNullException">If <paramref name="cloneable"/> is <see langword="null"/>.</exception>
-  public static T Clone<T>(this ICloneable cloneable) => cloneable is not null ? cloneable.Clone().To<T>() : throw new ArgumentNullException(nameof(cloneable));
+  extension(ICloneable cloneable)
+  {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">If <paramref name="cloneable"/> is <see langword="null"/>.</exception>
+    public T Clone<T>() => cloneable is not null ? cloneable.Clone().To<T>() : throw new ArgumentNullException(nameof(cloneable));
+  }
 }

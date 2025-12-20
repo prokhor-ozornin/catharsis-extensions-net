@@ -182,11 +182,16 @@
             <seealso cref="T:System.Reflection.Assembly"/>
         </member>
         <member name="M:Catharsis.Extensions.AssemblyExtensions.Resource(System.Reflection.Assembly,System.String)">
+            <inheritdoc cref="M:Catharsis.Extensions.AssemblyExtensions.&lt;G&gt;$9EA1809196CC07098857FF38CF65557B.Resource(System.String)"/>
+        </member>
+        <member name="T:Catharsis.Extensions.AssemblyExtensions.&lt;G&gt;$9EA1809196CC07098857FF38CF65557B.&lt;M&gt;$C7FA7269C250B4142F4B786CF095D73D">
+            <param name="assembly">Assembly with resource.</param>
+        </member>
+        <member name="M:Catharsis.Extensions.AssemblyExtensions.&lt;G&gt;$9EA1809196CC07098857FF38CF65557B.Resource(System.String)">
             <summary>
               <para>Returns contents of specified embedded text resource of the assembly.</para>
               <para>Returns a <c>null</c> reference if resource with specified name cannot be found.</para>
             </summary>
-            <param name="assembly">Assembly with resource.</param>
             <param name="name">The case-sensitive name of the manifest resource being requested.</param>
             <returns>Text data of assembly manifest's resource.</returns>
             <exception cref="T:System.ArgumentNullException">If either <paramref name="assembly"/> or <paramref name="name"/> is <see langword="null"/>.</exception>
@@ -198,32 +203,16 @@
             <seealso cref="T:System.Math"/>
         </member>
         <member name="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Byte)">
-            <summary>
-              <para></para>
-            </summary>
-            <param name="value"></param>
-            <returns></returns>
+            <inheritdoc cref="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$984646E5C90D4BE007AAE446F159AC52.ToBoolean"/>
         </member>
         <member name="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.UInt16)">
-            <summary>
-              <para></para>
-            </summary>
-            <param name="value"></param>
-            <returns></returns>
+            <inheritdoc cref="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$B7387B77E15A9DBF0D30EA969A07D0DD.ToBoolean"/>
         </member>
         <member name="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.UInt32)">
-            <summary>
-              <para></para>
-            </summary>
-            <param name="value"></param>
-            <returns></returns>
+            <inheritdoc cref="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$59D1B7AA0B822E2E4777E961258AA046.ToBoolean"/>
         </member>
         <member name="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.UInt64)">
-            <summary>
-              <para></para>
-            </summary>
-            <param name="value"></param>
-            <returns></returns>
+            <inheritdoc cref="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$CC86B4FD6473E1534D8E28315C194AD4.ToBoolean"/>
         </member>
         <member name="M:Catharsis.Extensions.BasicTypesExtensions.Repeat(System.Char,System.Int32)">
             <inheritdoc cref="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$617F055EF883302AD66AFAF0ACA83DC6.Repeat(System.Int32)"/>
@@ -347,6 +336,42 @@
         </member>
         <member name="M:Catharsis.Extensions.BasicTypesExtensions.ToBoolean(System.Decimal)">
             <inheritdoc cref="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$05DA939D6DF05BA58CCF6B6457ACB41B.ToBoolean"/>
+        </member>
+        <member name="T:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$984646E5C90D4BE007AAE446F159AC52.&lt;M&gt;$5B9BD66FF9E1AA9C60C6FE873B5C33C4">
+            <param name="value"></param>
+        </member>
+        <member name="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$984646E5C90D4BE007AAE446F159AC52.ToBoolean">
+            <summary>
+              <para></para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$B7387B77E15A9DBF0D30EA969A07D0DD.&lt;M&gt;$B9BA073A668F04D5183D178A5F8E4B94">
+            <param name="value"></param>
+        </member>
+        <member name="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$B7387B77E15A9DBF0D30EA969A07D0DD.ToBoolean">
+            <summary>
+              <para></para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$59D1B7AA0B822E2E4777E961258AA046.&lt;M&gt;$3319E6DC39318D47F4754E3E5D1966B1">
+            <param name="value"></param>
+        </member>
+        <member name="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$59D1B7AA0B822E2E4777E961258AA046.ToBoolean">
+            <summary>
+              <para></para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$CC86B4FD6473E1534D8E28315C194AD4.&lt;M&gt;$33BE01DC9FB5AE0F8C9DAFBCD2BD3757">
+            <param name="value"></param>
+        </member>
+        <member name="M:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$CC86B4FD6473E1534D8E28315C194AD4.ToBoolean">
+            <summary>
+              <para></para>
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Catharsis.Extensions.BasicTypesExtensions.&lt;G&gt;$617F055EF883302AD66AFAF0ACA83DC6.&lt;M&gt;$EC1D7D4A917708DFCF09E47742550750">
             <param name="character">Character to repeat.</param>
@@ -3646,11 +3671,16 @@
             </summary>
         </member>
         <member name="M:Catharsis.Extensions.ICloneableExtensions.Clone``1(System.ICloneable)">
+            <inheritdoc cref="M:Catharsis.Extensions.ICloneableExtensions.&lt;G&gt;$C24138A4FE2FCD2CBEC4C5CB0B87391D.Clone``1"/>
+        </member>
+        <member name="T:Catharsis.Extensions.ICloneableExtensions.&lt;G&gt;$C24138A4FE2FCD2CBEC4C5CB0B87391D.&lt;M&gt;$0AB642DDC5BDEA1A0886A5B94A504AD5">
+            <param name="cloneable"></param>
+        </member>
+        <member name="M:Catharsis.Extensions.ICloneableExtensions.&lt;G&gt;$C24138A4FE2FCD2CBEC4C5CB0B87391D.Clone``1">
             <summary>
               <para></para>
             </summary>
             <typeparam name="T"></typeparam>
-            <param name="cloneable"></param>
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">If <paramref name="cloneable"/> is <see langword="null"/>.</exception>
         </member>

@@ -6,36 +6,48 @@
 /// <seealso cref="Math"/>
 public static class BasicTypesExtensions
 {
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="value"></param>
-  /// <returns></returns>
-  public static bool ToBoolean(this byte value) => value > 0;
+  extension(byte value)
+  {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    public bool ToBoolean() => value > 0;
+  }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="value"></param>
-  /// <returns></returns>
-  [CLSCompliant(false)]
-  public static bool ToBoolean(this ushort value) => value > 0;
+  extension(ushort value)
+  {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    [CLSCompliant(false)]
+    public bool ToBoolean() => value > 0;
+  }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="value"></param>
-  /// <returns></returns>
-  [CLSCompliant(false)]
-  public static bool ToBoolean(this uint value) => value > 0;
+  extension(uint value)
+  {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    [CLSCompliant(false)]
+    public bool ToBoolean() => value > 0;
+  }
 
-  /// <summary>
-  ///   <para></para>
-  /// </summary>
   /// <param name="value"></param>
-  /// <returns></returns>
-  [CLSCompliant(false)]
-  public static bool ToBoolean(this ulong value) => value > 0;
+  extension(ulong value)
+  {
+    /// <summary>
+    ///   <para></para>
+    /// </summary>
+    /// <returns></returns>
+    [CLSCompliant(false)]
+    public bool ToBoolean() => value > 0;
+  }
 
   /// <param name="character">Character to repeat.</param>
   extension(char character)
